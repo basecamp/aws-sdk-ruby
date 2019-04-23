@@ -159,6 +159,17 @@ module AWS
 
         end
 
+        context 'with the :storage_class option' do
+
+          it 'should use the given :storage_class' do
+            client.should_receive(:put_object).
+              with(hash_including(:storage_class => 'INTELLIGENT_TIERING')).
+              and_return(client.stub_for(:put_object))
+            object.write "data", :storage_class => 'INTELLIGENT_TIERING'
+          end
+
+        end
+
         context 'with no arguments' do
 
           it 'should raise an argument error' do

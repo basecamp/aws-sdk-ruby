@@ -110,6 +110,12 @@ module AWS
           obj1.copy_from('bucket/key', :reduced_redundancy => true)
         end
 
+        it 'allows you to store the copied object with a custom storage class' do
+          client.should_receive(:copy_object).with(hash_including(
+            :storage_class => 'INTELLIGENT_TIERING'))
+          obj1.copy_from('bucket/key', :storage_class => 'INTELLIGENT_TIERING')
+        end
+
         it 'allows you to set a canned ACL' do
           client.should_receive(:copy_object).
             with(hash_including(:acl => :public_read))
@@ -228,6 +234,12 @@ module AWS
           client.should_receive(:copy_object).with(hash_including(
             :storage_class => 'REDUCED_REDUNDANCY'))
           obj1.copy_to('bucket/key', :reduced_redundancy => true)
+        end
+
+        it 'allows you to store the copied object with a custom storage class' do
+          client.should_receive(:copy_object).with(hash_including(
+            :storage_class => 'INTELLIGENT_TIERING'))
+          obj1.copy_from('bucket/key', :storage_class => 'INTELLIGENT_TIERING')
         end
 
         it 'allows you to set a canned ACL' do

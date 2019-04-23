@@ -905,8 +905,11 @@ module AWS
 
         add_sse_options(options)
 
-        options[:storage_class] = options.delete(:reduced_redundancy) ?
-          'REDUCED_REDUNDANCY' : 'STANDARD'
+        if options.delete(:reduced_redundancy)
+          options[:storage_class] = 'REDUCED_REDUNDANCY'
+        else
+          options[:storage_class] ||= 'STANDARD'
+        end
 
         options[:bucket_name] = bucket.name
         options[:key] = key
