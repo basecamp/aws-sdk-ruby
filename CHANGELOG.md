@@ -1,6 +1,12 @@
 Unreleased Changes
 ------------------
 
+1.67.1 Basecamp (2019-04-24)
+------------------
+
+* Issue - AWS::S3 - Fixed that `S3Object#copy_from` would ignore the given
+  storage class, always setting its value to "STANDARD".
+
 1.67.0 (2017-04-03)
 ------------------
 
