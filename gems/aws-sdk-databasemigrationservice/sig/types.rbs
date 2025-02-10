@@ -445,6 +445,8 @@ module Aws::DatabaseMigrationService
       attr_accessor microsoft_sql_server_settings: Types::MicrosoftSqlServerDataProviderSettings
       attr_accessor doc_db_settings: Types::DocDbDataProviderSettings
       attr_accessor maria_db_settings: Types::MariaDbDataProviderSettings
+      attr_accessor ibm_db_2_luw_settings: Types::IbmDb2LuwDataProviderSettings
+      attr_accessor ibm_db_2z_os_settings: Types::IbmDb2zOsDataProviderSettings
       attr_accessor mongo_db_settings: Types::MongoDbDataProviderSettings
       attr_accessor unknown: untyped
       SENSITIVE: []
@@ -462,6 +464,10 @@ module Aws::DatabaseMigrationService
       class DocDbSettings < DataProviderSettings
       end
       class MariaDbSettings < DataProviderSettings
+      end
+      class IbmDb2LuwSettings < DataProviderSettings
+      end
+      class IbmDb2zOsSettings < DataProviderSettings
       end
       class MongoDbSettings < DataProviderSettings
       end
@@ -1469,6 +1475,24 @@ module Aws::DatabaseMigrationService
       attr_accessor max_file_size: ::Integer
       attr_accessor keep_csv_files: bool
       SENSITIVE: [:password]
+    end
+
+    class IbmDb2LuwDataProviderSettings
+      attr_accessor server_name: ::String
+      attr_accessor port: ::Integer
+      attr_accessor database_name: ::String
+      attr_accessor ssl_mode: ("none" | "require" | "verify-ca" | "verify-full")
+      attr_accessor certificate_arn: ::String
+      SENSITIVE: []
+    end
+
+    class IbmDb2zOsDataProviderSettings
+      attr_accessor server_name: ::String
+      attr_accessor port: ::Integer
+      attr_accessor database_name: ::String
+      attr_accessor ssl_mode: ("none" | "require" | "verify-ca" | "verify-full")
+      attr_accessor certificate_arn: ::String
+      SENSITIVE: []
     end
 
     class ImportCertificateMessage

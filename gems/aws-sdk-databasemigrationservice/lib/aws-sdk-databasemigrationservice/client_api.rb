@@ -255,6 +255,8 @@ module Aws::DatabaseMigrationService
     FleetAdvisorSchemaObjectResponse = Shapes::StructureShape.new(name: 'FleetAdvisorSchemaObjectResponse')
     GcpMySQLSettings = Shapes::StructureShape.new(name: 'GcpMySQLSettings')
     IBMDb2Settings = Shapes::StructureShape.new(name: 'IBMDb2Settings')
+    IbmDb2LuwDataProviderSettings = Shapes::StructureShape.new(name: 'IbmDb2LuwDataProviderSettings')
+    IbmDb2zOsDataProviderSettings = Shapes::StructureShape.new(name: 'IbmDb2zOsDataProviderSettings')
     ImportCertificateMessage = Shapes::StructureShape.new(name: 'ImportCertificateMessage')
     ImportCertificateResponse = Shapes::StructureShape.new(name: 'ImportCertificateResponse')
     IncludeTestList = Shapes::ListShape.new(name: 'IncludeTestList')
@@ -865,6 +867,8 @@ module Aws::DatabaseMigrationService
     DataProviderSettings.add_member(:microsoft_sql_server_settings, Shapes::ShapeRef.new(shape: MicrosoftSqlServerDataProviderSettings, location_name: "MicrosoftSqlServerSettings"))
     DataProviderSettings.add_member(:doc_db_settings, Shapes::ShapeRef.new(shape: DocDbDataProviderSettings, location_name: "DocDbSettings"))
     DataProviderSettings.add_member(:maria_db_settings, Shapes::ShapeRef.new(shape: MariaDbDataProviderSettings, location_name: "MariaDbSettings"))
+    DataProviderSettings.add_member(:ibm_db_2_luw_settings, Shapes::ShapeRef.new(shape: IbmDb2LuwDataProviderSettings, location_name: "IbmDb2LuwSettings"))
+    DataProviderSettings.add_member(:ibm_db_2z_os_settings, Shapes::ShapeRef.new(shape: IbmDb2zOsDataProviderSettings, location_name: "IbmDb2zOsSettings"))
     DataProviderSettings.add_member(:mongo_db_settings, Shapes::ShapeRef.new(shape: MongoDbDataProviderSettings, location_name: "MongoDbSettings"))
     DataProviderSettings.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     DataProviderSettings.add_member_subclass(:redshift_settings, Types::DataProviderSettings::RedshiftSettings)
@@ -874,6 +878,8 @@ module Aws::DatabaseMigrationService
     DataProviderSettings.add_member_subclass(:microsoft_sql_server_settings, Types::DataProviderSettings::MicrosoftSqlServerSettings)
     DataProviderSettings.add_member_subclass(:doc_db_settings, Types::DataProviderSettings::DocDbSettings)
     DataProviderSettings.add_member_subclass(:maria_db_settings, Types::DataProviderSettings::MariaDbSettings)
+    DataProviderSettings.add_member_subclass(:ibm_db_2_luw_settings, Types::DataProviderSettings::IbmDb2LuwSettings)
+    DataProviderSettings.add_member_subclass(:ibm_db_2z_os_settings, Types::DataProviderSettings::IbmDb2zOsSettings)
     DataProviderSettings.add_member_subclass(:mongo_db_settings, Types::DataProviderSettings::MongoDbSettings)
     DataProviderSettings.add_member_subclass(:unknown, Types::DataProviderSettings::Unknown)
     DataProviderSettings.struct_class = Types::DataProviderSettings
@@ -1622,6 +1628,20 @@ module Aws::DatabaseMigrationService
     IBMDb2Settings.add_member(:max_file_size, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "MaxFileSize"))
     IBMDb2Settings.add_member(:keep_csv_files, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "KeepCsvFiles"))
     IBMDb2Settings.struct_class = Types::IBMDb2Settings
+
+    IbmDb2LuwDataProviderSettings.add_member(:server_name, Shapes::ShapeRef.new(shape: String, location_name: "ServerName"))
+    IbmDb2LuwDataProviderSettings.add_member(:port, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "Port"))
+    IbmDb2LuwDataProviderSettings.add_member(:database_name, Shapes::ShapeRef.new(shape: String, location_name: "DatabaseName"))
+    IbmDb2LuwDataProviderSettings.add_member(:ssl_mode, Shapes::ShapeRef.new(shape: DmsSslModeValue, location_name: "SslMode"))
+    IbmDb2LuwDataProviderSettings.add_member(:certificate_arn, Shapes::ShapeRef.new(shape: String, location_name: "CertificateArn"))
+    IbmDb2LuwDataProviderSettings.struct_class = Types::IbmDb2LuwDataProviderSettings
+
+    IbmDb2zOsDataProviderSettings.add_member(:server_name, Shapes::ShapeRef.new(shape: String, location_name: "ServerName"))
+    IbmDb2zOsDataProviderSettings.add_member(:port, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "Port"))
+    IbmDb2zOsDataProviderSettings.add_member(:database_name, Shapes::ShapeRef.new(shape: String, location_name: "DatabaseName"))
+    IbmDb2zOsDataProviderSettings.add_member(:ssl_mode, Shapes::ShapeRef.new(shape: DmsSslModeValue, location_name: "SslMode"))
+    IbmDb2zOsDataProviderSettings.add_member(:certificate_arn, Shapes::ShapeRef.new(shape: String, location_name: "CertificateArn"))
+    IbmDb2zOsDataProviderSettings.struct_class = Types::IbmDb2zOsDataProviderSettings
 
     ImportCertificateMessage.add_member(:certificate_identifier, Shapes::ShapeRef.new(shape: String, required: true, location_name: "CertificateIdentifier"))
     ImportCertificateMessage.add_member(:certificate_pem, Shapes::ShapeRef.new(shape: SecretString, location_name: "CertificatePem"))

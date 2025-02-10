@@ -552,7 +552,7 @@ module Aws::DatabaseMigrationService
     # @option params [required, String] :apply_action
     #   The pending maintenance action to apply to this resource.
     #
-    #   Valid values: `os-upgrade`, `system-update`, `db-upgrade`
+    #   Valid values: `os-upgrade`, `system-update`, `db-upgrade`, `os-patch`
     #
     # @option params [required, String] :opt_in_type
     #   A value that specifies the type of opt-in request, or undoes an opt-in
@@ -842,8 +842,8 @@ module Aws::DatabaseMigrationService
     # @option params [required, String] :engine
     #   The type of database engine for the data provider. Valid values
     #   include `"aurora"`, `"aurora-postgresql"`, `"mysql"`, `"oracle"`,
-    #   `"postgres"`, `"sqlserver"`, `redshift`, `mariadb`, `mongodb`, and
-    #   `docdb`. A value of `"aurora"` represents Amazon Aurora
+    #   `"postgres"`, `"sqlserver"`, `redshift`, `mariadb`, `mongodb`, `db2`,
+    #   `db2-zos` and `docdb`. A value of `"aurora"` represents Amazon Aurora
     #   MySQL-Compatible Edition.
     #
     # @option params [required, Types::DataProviderSettings] :settings
@@ -956,6 +956,20 @@ module Aws::DatabaseMigrationService
     #         ssl_mode: "none", # accepts none, require, verify-ca, verify-full
     #         certificate_arn: "String",
     #       },
+    #       ibm_db_2_luw_settings: {
+    #         server_name: "String",
+    #         port: 1,
+    #         database_name: "String",
+    #         ssl_mode: "none", # accepts none, require, verify-ca, verify-full
+    #         certificate_arn: "String",
+    #       },
+    #       ibm_db_2z_os_settings: {
+    #         server_name: "String",
+    #         port: 1,
+    #         database_name: "String",
+    #         ssl_mode: "none", # accepts none, require, verify-ca, verify-full
+    #         certificate_arn: "String",
+    #       },
     #       mongo_db_settings: {
     #         server_name: "String",
     #         port: 1,
@@ -1019,6 +1033,16 @@ module Aws::DatabaseMigrationService
     #   resp.data_provider.settings.maria_db_settings.port #=> Integer
     #   resp.data_provider.settings.maria_db_settings.ssl_mode #=> String, one of "none", "require", "verify-ca", "verify-full"
     #   resp.data_provider.settings.maria_db_settings.certificate_arn #=> String
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.server_name #=> String
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.port #=> Integer
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.database_name #=> String
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.ssl_mode #=> String, one of "none", "require", "verify-ca", "verify-full"
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.certificate_arn #=> String
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.server_name #=> String
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.port #=> Integer
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.database_name #=> String
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.ssl_mode #=> String, one of "none", "require", "verify-ca", "verify-full"
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.certificate_arn #=> String
     #   resp.data_provider.settings.mongo_db_settings.server_name #=> String
     #   resp.data_provider.settings.mongo_db_settings.port #=> Integer
     #   resp.data_provider.settings.mongo_db_settings.database_name #=> String
@@ -2781,8 +2805,8 @@ module Aws::DatabaseMigrationService
     #   addressing. IPv6 only is not yet supported.
     #
     # @option params [Types::KerberosAuthenticationSettings] :kerberos_authentication_settings
-    #   Specifies the ID of the secret that stores the key cache file required
-    #   for kerberos authentication, when creating a replication instance.
+    #   Specifies the settings required for kerberos authentication when
+    #   creating the replication instance.
     #
     # @return [Types::CreateReplicationInstanceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3543,6 +3567,16 @@ module Aws::DatabaseMigrationService
     #   resp.data_provider.settings.maria_db_settings.port #=> Integer
     #   resp.data_provider.settings.maria_db_settings.ssl_mode #=> String, one of "none", "require", "verify-ca", "verify-full"
     #   resp.data_provider.settings.maria_db_settings.certificate_arn #=> String
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.server_name #=> String
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.port #=> Integer
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.database_name #=> String
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.ssl_mode #=> String, one of "none", "require", "verify-ca", "verify-full"
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.certificate_arn #=> String
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.server_name #=> String
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.port #=> Integer
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.database_name #=> String
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.ssl_mode #=> String, one of "none", "require", "verify-ca", "verify-full"
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.certificate_arn #=> String
     #   resp.data_provider.settings.mongo_db_settings.server_name #=> String
     #   resp.data_provider.settings.mongo_db_settings.port #=> Integer
     #   resp.data_provider.settings.mongo_db_settings.database_name #=> String
@@ -5135,6 +5169,16 @@ module Aws::DatabaseMigrationService
     #   resp.data_providers[0].settings.maria_db_settings.port #=> Integer
     #   resp.data_providers[0].settings.maria_db_settings.ssl_mode #=> String, one of "none", "require", "verify-ca", "verify-full"
     #   resp.data_providers[0].settings.maria_db_settings.certificate_arn #=> String
+    #   resp.data_providers[0].settings.ibm_db_2_luw_settings.server_name #=> String
+    #   resp.data_providers[0].settings.ibm_db_2_luw_settings.port #=> Integer
+    #   resp.data_providers[0].settings.ibm_db_2_luw_settings.database_name #=> String
+    #   resp.data_providers[0].settings.ibm_db_2_luw_settings.ssl_mode #=> String, one of "none", "require", "verify-ca", "verify-full"
+    #   resp.data_providers[0].settings.ibm_db_2_luw_settings.certificate_arn #=> String
+    #   resp.data_providers[0].settings.ibm_db_2z_os_settings.server_name #=> String
+    #   resp.data_providers[0].settings.ibm_db_2z_os_settings.port #=> Integer
+    #   resp.data_providers[0].settings.ibm_db_2z_os_settings.database_name #=> String
+    #   resp.data_providers[0].settings.ibm_db_2z_os_settings.ssl_mode #=> String, one of "none", "require", "verify-ca", "verify-full"
+    #   resp.data_providers[0].settings.ibm_db_2z_os_settings.certificate_arn #=> String
     #   resp.data_providers[0].settings.mongo_db_settings.server_name #=> String
     #   resp.data_providers[0].settings.mongo_db_settings.port #=> Integer
     #   resp.data_providers[0].settings.mongo_db_settings.database_name #=> String
@@ -7196,7 +7240,8 @@ module Aws::DatabaseMigrationService
       req.send_request(options)
     end
 
-    # For internal use only
+    # Returns a list of upcoming maintenance events for replication
+    # instances in your account in the current Region.
     #
     # @option params [String] :replication_instance_arn
     #   The Amazon Resource Name (ARN) of the replication instance.
@@ -8891,8 +8936,8 @@ module Aws::DatabaseMigrationService
     # @option params [String] :engine
     #   The type of database engine for the data provider. Valid values
     #   include `"aurora"`, `"aurora-postgresql"`, `"mysql"`, `"oracle"`,
-    #   `"postgres"`, `"sqlserver"`, `redshift`, `mariadb`, `mongodb`, and
-    #   `docdb`. A value of `"aurora"` represents Amazon Aurora
+    #   `"postgres"`, `"sqlserver"`, `redshift`, `mariadb`, `mongodb`, `db2`,
+    #   `db2-zos` and `docdb`. A value of `"aurora"` represents Amazon Aurora
     #   MySQL-Compatible Edition.
     #
     # @option params [Boolean] :exact_settings
@@ -9011,6 +9056,20 @@ module Aws::DatabaseMigrationService
     #         ssl_mode: "none", # accepts none, require, verify-ca, verify-full
     #         certificate_arn: "String",
     #       },
+    #       ibm_db_2_luw_settings: {
+    #         server_name: "String",
+    #         port: 1,
+    #         database_name: "String",
+    #         ssl_mode: "none", # accepts none, require, verify-ca, verify-full
+    #         certificate_arn: "String",
+    #       },
+    #       ibm_db_2z_os_settings: {
+    #         server_name: "String",
+    #         port: 1,
+    #         database_name: "String",
+    #         ssl_mode: "none", # accepts none, require, verify-ca, verify-full
+    #         certificate_arn: "String",
+    #       },
     #       mongo_db_settings: {
     #         server_name: "String",
     #         port: 1,
@@ -9067,6 +9126,16 @@ module Aws::DatabaseMigrationService
     #   resp.data_provider.settings.maria_db_settings.port #=> Integer
     #   resp.data_provider.settings.maria_db_settings.ssl_mode #=> String, one of "none", "require", "verify-ca", "verify-full"
     #   resp.data_provider.settings.maria_db_settings.certificate_arn #=> String
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.server_name #=> String
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.port #=> Integer
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.database_name #=> String
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.ssl_mode #=> String, one of "none", "require", "verify-ca", "verify-full"
+    #   resp.data_provider.settings.ibm_db_2_luw_settings.certificate_arn #=> String
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.server_name #=> String
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.port #=> Integer
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.database_name #=> String
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.ssl_mode #=> String, one of "none", "require", "verify-ca", "verify-full"
+    #   resp.data_provider.settings.ibm_db_2z_os_settings.certificate_arn #=> String
     #   resp.data_provider.settings.mongo_db_settings.server_name #=> String
     #   resp.data_provider.settings.mongo_db_settings.port #=> Integer
     #   resp.data_provider.settings.mongo_db_settings.database_name #=> String
@@ -10588,8 +10657,8 @@ module Aws::DatabaseMigrationService
     #   addressing. IPv6 only is not yet supported.
     #
     # @option params [Types::KerberosAuthenticationSettings] :kerberos_authentication_settings
-    #   Specifies the ID of the secret that stores the key cache file required
-    #   for kerberos authentication, when modifying a replication instance.
+    #   Specifies the settings required for kerberos authentication when
+    #   modifying a replication instance.
     #
     # @return [Types::ModifyReplicationInstanceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -12589,7 +12658,7 @@ module Aws::DatabaseMigrationService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-databasemigrationservice'
-      context[:gem_version] = '1.114.0'
+      context[:gem_version] = '1.115.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

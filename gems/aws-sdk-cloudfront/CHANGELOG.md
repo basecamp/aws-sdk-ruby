@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.111.0 (2025-02-10)
+------------------
+
+* Feature - Doc-only update that adds defaults for CloudFront VpcOriginEndpointConfig values.
+
 1.110.0 (2025-02-06)
 ------------------
 

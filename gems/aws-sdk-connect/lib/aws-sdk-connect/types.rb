@@ -3628,10 +3628,19 @@ module Aws::Connect
     #
     # @!attribute [rw] channel
     #   The channel for the contact
+    #
+    #   CreateContact only supports the EMAIL channel. The following
+    #   information that states other channels are supported is incorrect.
+    #   We are working to update this topic.
     #   @return [String]
     #
     # @!attribute [rw] initiation_method
     #   Indicates how the contact was initiated.
+    #
+    #   CreateContact only supports the following initiation methods:
+    #   OUTBOUND, AGENT\_REPLY, and FLOW. The following information that
+    #   states other initiation methods are supported is incorrect. We are
+    #   working to update this topic.
     #   @return [String]
     #
     # @!attribute [rw] expiry_duration_in_minutes
@@ -4775,9 +4784,13 @@ module Aws::Connect
     #
     # @!attribute [rw] tag_restricted_resources
     #   The list of resources that a security profile applies tag
-    #   restrictions to in Amazon Connect. Following are acceptable
-    #   ResourceNames: `User` \| `SecurityProfile` \| `Queue` \|
-    #   `RoutingProfile`
+    #   restrictions to in Amazon Connect. For a list of Amazon Connect
+    #   resources that you can tag, see [Add tags to resources in Amazon
+    #   Connect][1] in the *Amazon Connect Administrator Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/tagging.html
     #   @return [Array<String>]
     #
     # @!attribute [rw] applications
@@ -16428,7 +16441,9 @@ module Aws::Connect
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] user_ids
-    #   A list of user IDs.
+    #   A list of user IDs. Supports variable injection of
+    #   `$.ContactLens.ContactEvaluation.Agent.AgentId` for
+    #   `OnContactEvaluationSubmit` event source.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/NotificationRecipientType AWS API Documentation
@@ -20238,25 +20253,30 @@ module Aws::Connect
     # @!attribute [rw] resource_types
     #   The list of resource types to be used to search tags from. If not
     #   provided or if any empty list is provided, this API will search from
-    #   all supported resource types.
+    #   all supported resource types. Note that lowercase and - are
+    #   required.
     #
     #   **Supported resource types**
     #
-    #   * AGENT
+    #   * agent
     #
-    #   * ROUTING\_PROFILE
+    #   * agent-state
     #
-    #   * STANDARD\_QUEUE
+    #   * routing-profile
     #
-    #   * SECURITY\_PROFILE
+    #   * standard-queue
     #
-    #   * OPERATING\_HOURS
+    #   * security-profile
     #
-    #   * PROMPT
+    #   * operating-hours
     #
-    #   * CONTACT\_FLOW
+    #   * prompt
     #
-    #   * FLOW\_MODULE
+    #   * contact-flow
+    #
+    #   * flow- module
+    #
+    #   * transfer-destination (also known as quick connect)
     #   @return [Array<String>]
     #
     # @!attribute [rw] next_token
@@ -20508,11 +20528,6 @@ module Aws::Connect
     # @!attribute [rw] instance_id
     #   The identifier of the Amazon Connect instance. You can [find the
     #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
-    #
-    #   <note markdown="1"> InstanceID is a required field. The "Required: No" below is
-    #   incorrect.
-    #
-    #    </note>
     #
     #
     #
@@ -23818,9 +23833,9 @@ module Aws::Connect
     #   contact. Attribute keys can include only alphanumeric, dash, and
     #   underscore characters.
     #
-    #   When the attributes for a contact exceed 32 KB, the contact is
-    #   routed down the Error branch of the flow. As a mitigation, consider
-    #   the following options:
+    #   In the [Set contact attributes][1] block, when the attributes for a
+    #   contact exceed 32 KB, the contact is routed down the Error branch of
+    #   the flow. As a mitigation, consider the following options:
     #
     #   * Remove unnecessary attributes by setting their values to empty.
     #

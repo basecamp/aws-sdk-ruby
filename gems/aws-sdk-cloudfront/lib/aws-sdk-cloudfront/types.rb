@@ -211,7 +211,13 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
-    # An Anycast static IP list.
+    # An Anycast static IP list. For more information, see [Request Anycast
+    # static IPs to use for allowlisting][1] in the *Amazon CloudFront
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/request-static-ips.html
     #
     # @!attribute [rw] id
     #   The ID of the Anycast static IP list.
@@ -3615,7 +3621,8 @@ module Aws::CloudFront
     #   @return [String]
     #
     # @!attribute [rw] if_match
-    #   The VPC origin to delete, if a match occurs.
+    #   The version identifier of the VPC origin to delete. This is the
+    #   `ETag` value returned in the response to GetVpcOrigin.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DeleteVpcOriginRequest AWS API Documentation
@@ -13964,10 +13971,12 @@ module Aws::CloudFront
     #
     # @!attribute [rw] http_port
     #   The HTTP port for the CloudFront VPC origin endpoint configuration.
+    #   The default value is `80`.
     #   @return [Integer]
     #
     # @!attribute [rw] https_port
     #   The HTTPS port of the CloudFront VPC origin endpoint configuration.
+    #   The default value is `443`.
     #   @return [Integer]
     #
     # @!attribute [rw] origin_protocol_policy

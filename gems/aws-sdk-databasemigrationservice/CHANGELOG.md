@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.115.0 (2025-02-10)
+------------------
+
+* Feature - New vendors for DMS Data Providers: DB2 LUW and DB2 for z/OS
+
 1.114.0 (2025-02-06)
 ------------------
 

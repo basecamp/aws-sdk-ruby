@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.196.0 (2025-02-10)
+------------------
+
+* Feature - Updated the CreateContact API documentation to indicate that it only applies to EMAIL contacts.
+
 1.195.0 (2025-02-06)
 ------------------
 

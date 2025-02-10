@@ -1685,7 +1685,10 @@ module Aws::Connect
       req.send_request(options)
     end
 
-    # Creates a new contact.
+    # Only the EMAIL channel is supported. The supported initiation methods
+    # are: OUTBOUND, AGENT\_REPLY, and FLOW.
+    #
+    # Creates a new EMAIL contact.
     #
     # @option params [required, String] :instance_id
     #   The identifier of the Amazon Connect instance. You can [find the
@@ -1728,8 +1731,17 @@ module Aws::Connect
     # @option params [required, String] :channel
     #   The channel for the contact
     #
+    #   CreateContact only supports the EMAIL channel. The following
+    #   information that states other channels are supported is incorrect. We
+    #   are working to update this topic.
+    #
     # @option params [required, String] :initiation_method
     #   Indicates how the contact was initiated.
+    #
+    #   CreateContact only supports the following initiation methods:
+    #   OUTBOUND, AGENT\_REPLY, and FLOW. The following information that
+    #   states other initiation methods are supported is incorrect. We are
+    #   working to update this topic.
     #
     # @option params [Integer] :expiry_duration_in_minutes
     #   Number of minutes the contact will be active for before expiring
@@ -3376,8 +3388,13 @@ module Aws::Connect
     #
     # @option params [Array<String>] :tag_restricted_resources
     #   The list of resources that a security profile applies tag restrictions
-    #   to in Amazon Connect. Following are acceptable ResourceNames: `User`
-    #   \| `SecurityProfile` \| `Queue` \| `RoutingProfile`
+    #   to in Amazon Connect. For a list of Amazon Connect resources that you
+    #   can tag, see [Add tags to resources in Amazon Connect][1] in the
+    #   *Amazon Connect Administrator Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/tagging.html
     #
     # @option params [Array<Types::Application>] :applications
     #   A list of third-party applications that the security profile will give
@@ -14640,25 +14657,29 @@ module Aws::Connect
     # @option params [Array<String>] :resource_types
     #   The list of resource types to be used to search tags from. If not
     #   provided or if any empty list is provided, this API will search from
-    #   all supported resource types.
+    #   all supported resource types. Note that lowercase and - are required.
     #
     #   **Supported resource types**
     #
-    #   * AGENT
+    #   * agent
     #
-    #   * ROUTING\_PROFILE
+    #   * agent-state
     #
-    #   * STANDARD\_QUEUE
+    #   * routing-profile
     #
-    #   * SECURITY\_PROFILE
+    #   * standard-queue
     #
-    #   * OPERATING\_HOURS
+    #   * security-profile
     #
-    #   * PROMPT
+    #   * operating-hours
     #
-    #   * CONTACT\_FLOW
+    #   * prompt
     #
-    #   * FLOW\_MODULE
+    #   * contact-flow
+    #
+    #   * flow- module
+    #
+    #   * transfer-destination (also known as quick connect)
     #
     # @option params [String] :next_token
     #   The token for the next set of results. Use the value returned in the
@@ -15096,11 +15117,6 @@ module Aws::Connect
     # @option params [required, String] :instance_id
     #   The identifier of the Amazon Connect instance. You can [find the
     #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
-    #
-    #   <note markdown="1"> InstanceID is a required field. The "Required: No" below is
-    #   incorrect.
-    #
-    #    </note>
     #
     #
     #
@@ -17925,9 +17941,9 @@ module Aws::Connect
     #   contact. Attribute keys can include only alphanumeric, dash, and
     #   underscore characters.
     #
-    #   When the attributes for a contact exceed 32 KB, the contact is routed
-    #   down the Error branch of the flow. As a mitigation, consider the
-    #   following options:
+    #   In the [Set contact attributes][1] block, when the attributes for a
+    #   contact exceed 32 KB, the contact is routed down the Error branch of
+    #   the flow. As a mitigation, consider the following options:
     #
     #   * Remove unnecessary attributes by setting their values to empty.
     #
@@ -20140,6 +20156,11 @@ module Aws::Connect
     # Updates the traffic distribution for a given traffic distribution
     # group.
     #
+    # When you shift telephony traffic, also shift agents and/or agent
+    # sign-ins to ensure they can handle the calls in the other Region. If
+    # you don't shift the agents, voice calls will go to the shifted Region
+    # but there won't be any agents available to receive the calls.
+    #
     # <note markdown="1"> The `SignInConfig` distribution is available only on a default
     # `TrafficDistributionGroup` (see the `IsDefault` parameter in the
     # [TrafficDistributionGroup][1] data type). If you call
@@ -20661,7 +20682,7 @@ module Aws::Connect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-connect'
-      context[:gem_version] = '1.195.0'
+      context[:gem_version] = '1.196.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

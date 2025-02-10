@@ -3912,7 +3912,8 @@ module Aws::CloudFront
     #   The VPC origin ID.
     #
     # @option params [required, String] :if_match
-    #   The VPC origin to delete, if a match occurs.
+    #   The version identifier of the VPC origin to delete. This is the `ETag`
+    #   value returned in the response to GetVpcOrigin.
     #
     # @return [Types::DeleteVpcOriginResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -10519,7 +10520,7 @@ module Aws::CloudFront
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloudfront'
-      context[:gem_version] = '1.110.0'
+      context[:gem_version] = '1.111.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

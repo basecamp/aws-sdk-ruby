@@ -84,7 +84,8 @@ module Aws::DatabaseMigrationService
     # @!attribute [rw] apply_action
     #   The pending maintenance action to apply to this resource.
     #
-    #   Valid values: `os-upgrade`, `system-update`, `db-upgrade`
+    #   Valid values: `os-upgrade`, `system-update`, `db-upgrade`,
+    #   `os-patch`
     #   @return [String]
     #
     # @!attribute [rw] opt_in_type
@@ -681,9 +682,9 @@ module Aws::DatabaseMigrationService
     # @!attribute [rw] engine
     #   The type of database engine for the data provider. Valid values
     #   include `"aurora"`, `"aurora-postgresql"`, `"mysql"`, `"oracle"`,
-    #   `"postgres"`, `"sqlserver"`, `redshift`, `mariadb`, `mongodb`, and
-    #   `docdb`. A value of `"aurora"` represents Amazon Aurora
-    #   MySQL-Compatible Edition.
+    #   `"postgres"`, `"sqlserver"`, `redshift`, `mariadb`, `mongodb`,
+    #   `db2`, `db2-zos` and `docdb`. A value of `"aurora"` represents
+    #   Amazon Aurora MySQL-Compatible Edition.
     #   @return [String]
     #
     # @!attribute [rw] settings
@@ -1633,9 +1634,8 @@ module Aws::DatabaseMigrationService
     #   @return [String]
     #
     # @!attribute [rw] kerberos_authentication_settings
-    #   Specifies the ID of the secret that stores the key cache file
-    #   required for kerberos authentication, when creating a replication
-    #   instance.
+    #   Specifies the settings required for kerberos authentication when
+    #   creating the replication instance.
     #   @return [Types::KerberosAuthenticationSettings]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/CreateReplicationInstanceMessage AWS API Documentation
@@ -2090,9 +2090,9 @@ module Aws::DatabaseMigrationService
     # @!attribute [rw] engine
     #   The type of database engine for the data provider. Valid values
     #   include `"aurora"`, `"aurora-postgresql"`, `"mysql"`, `"oracle"`,
-    #   `"postgres"`, `"sqlserver"`, `redshift`, `mariadb`, `mongodb`, and
-    #   `docdb`. A value of `"aurora"` represents Amazon Aurora
-    #   MySQL-Compatible Edition.
+    #   `"postgres"`, `"sqlserver"`, `redshift`, `mariadb`, `mongodb`,
+    #   `db2`, `db2-zos` and `docdb`. A value of `"aurora"` represents
+    #   Amazon Aurora MySQL-Compatible Edition.
     #   @return [String]
     #
     # @!attribute [rw] settings
@@ -2204,6 +2204,14 @@ module Aws::DatabaseMigrationService
     #   Provides information that defines a MariaDB data provider.
     #   @return [Types::MariaDbDataProviderSettings]
     #
+    # @!attribute [rw] ibm_db_2_luw_settings
+    #   Provides information that defines an IBM DB2 LUW data provider.
+    #   @return [Types::IbmDb2LuwDataProviderSettings]
+    #
+    # @!attribute [rw] ibm_db_2z_os_settings
+    #   Provides information that defines an IBM DB2 for z/OS data provider.
+    #   @return [Types::IbmDb2zOsDataProviderSettings]
+    #
     # @!attribute [rw] mongo_db_settings
     #   Provides information that defines a MongoDB data provider.
     #   @return [Types::MongoDbDataProviderSettings]
@@ -2218,6 +2226,8 @@ module Aws::DatabaseMigrationService
       :microsoft_sql_server_settings,
       :doc_db_settings,
       :maria_db_settings,
+      :ibm_db_2_luw_settings,
+      :ibm_db_2z_os_settings,
       :mongo_db_settings,
       :unknown)
       SENSITIVE = []
@@ -2231,6 +2241,8 @@ module Aws::DatabaseMigrationService
       class MicrosoftSqlServerSettings < DataProviderSettings; end
       class DocDbSettings < DataProviderSettings; end
       class MariaDbSettings < DataProviderSettings; end
+      class IbmDb2LuwSettings < DataProviderSettings; end
+      class IbmDb2zOsSettings < DataProviderSettings; end
       class MongoDbSettings < DataProviderSettings; end
       class Unknown < DataProviderSettings; end
     end
@@ -6338,6 +6350,78 @@ module Aws::DatabaseMigrationService
       include Aws::Structure
     end
 
+    # Provides information about an IBM DB2 LUW data provider.
+    #
+    # @!attribute [rw] server_name
+    #   The name of the DB2 LUW server.
+    #   @return [String]
+    #
+    # @!attribute [rw] port
+    #   The port value for the DB2 LUW data provider.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] database_name
+    #   The database name on the DB2 LUW data provider.
+    #   @return [String]
+    #
+    # @!attribute [rw] ssl_mode
+    #   The SSL mode used to connect to the DB2 LUW data provider. The
+    #   default value is `none`. Valid Values: `none` and `verify-ca`.
+    #   @return [String]
+    #
+    # @!attribute [rw] certificate_arn
+    #   The Amazon Resource Name (ARN) of the certificate used for SSL
+    #   connection.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/IbmDb2LuwDataProviderSettings AWS API Documentation
+    #
+    class IbmDb2LuwDataProviderSettings < Struct.new(
+      :server_name,
+      :port,
+      :database_name,
+      :ssl_mode,
+      :certificate_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Provides information about an IBM DB2 for z/OS data provider.
+    #
+    # @!attribute [rw] server_name
+    #   The name of the DB2 for z/OS server.
+    #   @return [String]
+    #
+    # @!attribute [rw] port
+    #   The port value for the DB2 for z/OS data provider.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] database_name
+    #   The database name on the DB2 for z/OS data provider.
+    #   @return [String]
+    #
+    # @!attribute [rw] ssl_mode
+    #   The SSL mode used to connect to the DB2 for z/OS data provider. The
+    #   default value is `none`. Valid Values: `none` and `verify-ca`.
+    #   @return [String]
+    #
+    # @!attribute [rw] certificate_arn
+    #   The Amazon Resource Name (ARN) of the certificate used for SSL
+    #   connection.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/IbmDb2zOsDataProviderSettings AWS API Documentation
+    #
+    class IbmDb2zOsDataProviderSettings < Struct.new(
+      :server_name,
+      :port,
+      :database_name,
+      :ssl_mode,
+      :certificate_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] certificate_identifier
     #   A customer-assigned name for the certificate. Identifiers must begin
     #   with a letter and must contain only ASCII letters, digits, and
@@ -7441,9 +7525,9 @@ module Aws::DatabaseMigrationService
     # @!attribute [rw] engine
     #   The type of database engine for the data provider. Valid values
     #   include `"aurora"`, `"aurora-postgresql"`, `"mysql"`, `"oracle"`,
-    #   `"postgres"`, `"sqlserver"`, `redshift`, `mariadb`, `mongodb`, and
-    #   `docdb`. A value of `"aurora"` represents Amazon Aurora
-    #   MySQL-Compatible Edition.
+    #   `"postgres"`, `"sqlserver"`, `redshift`, `mariadb`, `mongodb`,
+    #   `db2`, `db2-zos` and `docdb`. A value of `"aurora"` represents
+    #   Amazon Aurora MySQL-Compatible Edition.
     #   @return [String]
     #
     # @!attribute [rw] exact_settings
@@ -8212,9 +8296,8 @@ module Aws::DatabaseMigrationService
     #   @return [String]
     #
     # @!attribute [rw] kerberos_authentication_settings
-    #   Specifies the ID of the secret that stores the key cache file
-    #   required for kerberos authentication, when modifying a replication
-    #   instance.
+    #   Specifies the settings required for kerberos authentication when
+    #   modifying a replication instance.
     #   @return [Types::KerberosAuthenticationSettings]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyReplicationInstanceMessage AWS API Documentation
@@ -11159,8 +11242,8 @@ module Aws::DatabaseMigrationService
     #   @return [String]
     #
     # @!attribute [rw] kerberos_authentication_settings
-    #   Specifies the ID of the secret that stores the key cache file
-    #   required for kerberos authentication, when replicating an instance.
+    #   Specifies the settings required for kerberos authentication when
+    #   replicating an instance.
     #   @return [Types::KerberosAuthenticationSettings]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ReplicationInstance AWS API Documentation
