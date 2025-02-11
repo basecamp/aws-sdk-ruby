@@ -1449,12 +1449,12 @@ module Aws::EC2
       req.send_request(options)
     end
 
-    # Assigns one or more IPv6 addresses to the specified network interface.
-    # You can specify one or more specific IPv6 addresses, or you can
-    # specify the number of IPv6 addresses to be automatically assigned from
-    # within the subnet's IPv6 CIDR block range. You can assign as many
-    # IPv6 addresses to a network interface as you can assign private IPv4
-    # addresses, and the limit varies per instance type.
+    # Assigns the specified IPv6 addresses to the specified network
+    # interface. You can specify specific IPv6 addresses, or you can specify
+    # the number of IPv6 addresses to be automatically assigned from the
+    # subnet's IPv6 CIDR block range. You can assign as many IPv6 addresses
+    # to a network interface as you can assign private IPv4 addresses, and
+    # the limit varies by instance type.
     #
     # You must specify either the IPv6 addresses or the IPv6 address count
     # in the request.
@@ -1475,7 +1475,7 @@ module Aws::EC2
     #
     # @option params [Array<String>] :ipv_6_prefixes
     #   One or more IPv6 prefixes assigned to the network interface. You
-    #   cannot use this option if you use the `Ipv6PrefixCount` option.
+    #   can't use this option if you use the `Ipv6PrefixCount` option.
     #
     # @option params [required, String] :network_interface_id
     #   The ID of the network interface.
@@ -1525,15 +1525,15 @@ module Aws::EC2
       req.send_request(options)
     end
 
-    # Assigns one or more secondary private IP addresses to the specified
+    # Assigns the specified secondary private IP addresses to the specified
     # network interface.
     #
-    # You can specify one or more specific secondary IP addresses, or you
-    # can specify the number of secondary IP addresses to be automatically
-    # assigned within the subnet's CIDR block range. The number of
-    # secondary IP addresses that you can assign to an instance varies by
-    # instance type. For more information about Elastic IP addresses, see
-    # [Elastic IP Addresses][1] in the *Amazon EC2 User Guide*.
+    # You can specify specific secondary IP addresses, or you can specify
+    # the number of secondary IP addresses to be automatically assigned from
+    # the subnet's CIDR block range. The number of secondary IP addresses
+    # that you can assign to an instance varies by instance type. For more
+    # information about Elastic IP addresses, see [Elastic IP Addresses][1]
+    # in the *Amazon EC2 User Guide*.
     #
     # When you move a secondary private IP address to another network
     # interface, any Elastic IP address that is associated with the IP
@@ -1559,11 +1559,11 @@ module Aws::EC2
     #
     # @option params [Array<String>] :ipv_4_prefixes
     #   One or more IPv4 prefixes assigned to the network interface. You
-    #   cannot use this option if you use the `Ipv4PrefixCount` option.
+    #   can't use this option if you use the `Ipv4PrefixCount` option.
     #
     # @option params [Integer] :ipv_4_prefix_count
     #   The number of IPv4 prefixes that Amazon Web Services automatically
-    #   assigns to the network interface. You cannot use this option if you
+    #   assigns to the network interface. You can't use this option if you
     #   use the `Ipv4 Prefixes` option.
     #
     # @option params [required, String] :network_interface_id
@@ -3722,10 +3722,26 @@ module Aws::EC2
     # @option params [String] :cidr_ip
     #   The IPv4 address range, in CIDR format.
     #
+    #   <note markdown="1"> Amazon Web Services [canonicalizes][1] IPv4 and IPv6 CIDRs. For
+    #   example, if you specify 100.68.0.18/18 for the CIDR block, Amazon Web
+    #   Services canonicalizes the CIDR block to 100.68.0.0/18. Any subsequent
+    #   DescribeSecurityGroups and DescribeSecurityGroupRules calls will
+    #   return the canonicalized form of the CIDR block. Additionally, if you
+    #   attempt to add another rule with the non-canonical form of the CIDR
+    #   (such as 100.68.0.18/18) and there is already a rule for the
+    #   canonicalized form of the CIDR block (such as 100.68.0.0/18), the API
+    #   throws an duplicate rule error.
+    #
+    #    </note>
+    #
     #   To specify an IPv6 address range, use IP permissions instead.
     #
     #   To specify multiple rules and descriptions for the rules, use IP
     #   permissions instead.
+    #
+    #
+    #
+    #   [1]: https://en.wikipedia.org/wiki/Canonicalization
     #
     # @option params [Integer] :from_port
     #   If the protocol is TCP or UDP, this is the start of the port range. If
@@ -4969,7 +4985,7 @@ module Aws::EC2
     # Snapshots copied to an Outpost are encrypted by default using the
     # default encryption key for the Region, or a different key that you
     # specify in the request using **KmsKeyId**. Outposts do not support
-    # unencrypted snapshots. For more information, [ Amazon EBS local
+    # unencrypted snapshots. For more information, see [Amazon EBS local
     # snapshots on Outposts][1] in the *Amazon EBS User Guide*.
     #
     # Snapshots created by copying another snapshot have an arbitrary volume
@@ -5261,7 +5277,7 @@ module Aws::EC2
     #   The number of instances for which to reserve capacity.
     #
     #   <note markdown="1"> You can request future-dated Capacity Reservations for an instance
-    #   count with a minimum of 100 VPUs. For example, if you request a
+    #   count with a minimum of 100 vCPUs. For example, if you request a
     #   future-dated Capacity Reservation for `m5.xlarge` instances, you must
     #   request at least 25 instances (*25 * m5.xlarge = 100 vCPUs*).
     #
@@ -9999,9 +10015,8 @@ module Aws::EC2
       req.send_request(options)
     end
 
-    # Creates a managed prefix list. You can specify one or more entries for
-    # the prefix list. Each entry consists of a CIDR block and an optional
-    # description.
+    # Creates a managed prefix list. You can specify entries for the prefix
+    # list. Each entry consists of a CIDR block and an optional description.
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -11059,7 +11074,7 @@ module Aws::EC2
     #   primary (only one IP address can be designated as primary).
     #
     # @option params [Array<String>] :groups
-    #   The IDs of one or more security groups.
+    #   The IDs of the security groups.
     #
     # @option params [Array<Types::PrivateIpAddressSpecification>] :private_ip_addresses
     #   The private IPv4 addresses.
@@ -12221,7 +12236,7 @@ module Aws::EC2
     #   the same Region as the volume.
     #
     # * If the source volume is in a Local Zone, you can create the snapshot
-    #   in the same Local Zone or in parent Amazon Web Services Region.
+    #   in the same Local Zone or in its parent Amazon Web Services Region.
     #
     # * If the source volume is on an Outpost, you can create the snapshot
     #   on the same Outpost or in its parent Amazon Web Services Region.
@@ -12249,8 +12264,8 @@ module Aws::EC2
     # Snapshots that are taken from encrypted volumes are automatically
     # encrypted. Volumes that are created from encrypted snapshots are also
     # automatically encrypted. Your encrypted volumes and any associated
-    # snapshots always remain protected. For more information, [Amazon EBS
-    # encryption][1] in the *Amazon EBS User Guide*.
+    # snapshots always remain protected. For more information, see [Amazon
+    # EBS encryption][1] in the *Amazon EBS User Guide*.
     #
     #
     #
@@ -12317,6 +12332,7 @@ module Aws::EC2
     #   * {Types::Snapshot#transfer_type #transfer_type} => String
     #   * {Types::Snapshot#completion_duration_minutes #completion_duration_minutes} => Integer
     #   * {Types::Snapshot#completion_time #completion_time} => Time
+    #   * {Types::Snapshot#full_snapshot_size_in_bytes #full_snapshot_size_in_bytes} => Integer
     #   * {Types::Snapshot#snapshot_id #snapshot_id} => String
     #   * {Types::Snapshot#volume_id #volume_id} => String
     #   * {Types::Snapshot#state #state} => String
@@ -12389,6 +12405,7 @@ module Aws::EC2
     #   resp.transfer_type #=> String, one of "time-based", "standard"
     #   resp.completion_duration_minutes #=> Integer
     #   resp.completion_time #=> Time
+    #   resp.full_snapshot_size_in_bytes #=> Integer
     #   resp.snapshot_id #=> String
     #   resp.volume_id #=> String
     #   resp.state #=> String, one of "pending", "completed", "error", "recoverable", "recovering"
@@ -12426,8 +12443,8 @@ module Aws::EC2
     #   in the same Region as the instance.
     #
     # * If the source instance is in a Local Zone, you can create the
-    #   snapshots in the same Local Zone or in parent Amazon Web Services
-    #   Region.
+    #   snapshots in the same Local Zone or in its parent Amazon Web
+    #   Services Region.
     #
     # * If the source instance is on an Outpost, you can create the
     #   snapshots on the same Outpost or in its parent Amazon Web Services
@@ -18526,7 +18543,7 @@ module Aws::EC2
     # the volume.
     #
     # You cannot delete a snapshot of the root device of an EBS volume used
-    # by a registered AMI. You must first de-register the AMI before you can
+    # by a registered AMI. You must first deregister the AMI before you can
     # delete the snapshot.
     #
     # For more information, see [Delete an Amazon EBS snapshot][1] in the
@@ -21074,10 +21091,9 @@ module Aws::EC2
     # @option params [Array<Types::Filter>] :filters
     #   The filters.
     #
-    #   * `group-name` - For Availability Zones, use the Region name. For
-    #     Local Zones, use the name of the group associated with the Local
-    #     Zone (for example, `us-west-2-lax-1`) For Wavelength Zones, use the
-    #     name of the group associated with the Wavelength Zone (for example,
+    #   * `group-name` - The name of the zone group for the Availability Zone
+    #     (for example, `us-east-1-zg-1`), the Local Zone (for example,
+    #     `us-west-2-lax-1`), or the Wavelength Zone (for example,
     #     `us-east-1-wl1`).
     #
     #   * `message` - The Zone message.
@@ -25501,11 +25517,7 @@ module Aws::EC2
     end
 
     # Describes the specified attribute of the specified instance. You can
-    # specify only one attribute at a time. Valid attribute values are:
-    # `instanceType` \| `kernel` \| `ramdisk` \| `userData` \|
-    # `disableApiTermination` \| `instanceInitiatedShutdownBehavior` \|
-    # `rootDeviceName` \| `blockDeviceMapping` \| `productCodes` \|
-    # `sourceDestCheck` \| `groupSet` \| `ebsOptimized` \| `sriovNetSupport`
+    # specify only one attribute at a time.
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the operation,
@@ -25519,7 +25531,7 @@ module Aws::EC2
     # @option params [required, String] :attribute
     #   The instance attribute.
     #
-    #   Note: The `enaSupport` attribute is not supported at this time.
+    #   Note that the `enaSupport` attribute is not supported.
     #
     # @return [Types::InstanceAttribute] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -31695,7 +31707,8 @@ module Aws::EC2
       req.send_request(options)
     end
 
-    # Describes one or more of your network interfaces.
+    # Describes the specified network interfaces or all your network
+    # interfaces.
     #
     # If you have a large number of network interfaces, the operation fails
     # unless you use pagination or one of the following filters: `group-id`,
@@ -31805,6 +31818,13 @@ module Aws::EC2
     #   * `mac-address` - The MAC address of the network interface.
     #
     #   * `network-interface-id` - The ID of the network interface.
+    #
+    #   * `operator.managed` - A Boolean that indicates whether this is a
+    #     managed network interface.
+    #
+    #   * `operator.principal` - The principal that manages the network
+    #     interface. Only valid for managed network interfaces, where
+    #     `managed` is `true`.
     #
     #   * `owner-id` - The Amazon Web Services account ID of the network
     #     interface owner.
@@ -34449,6 +34469,7 @@ module Aws::EC2
     #   resp.snapshots[0].transfer_type #=> String, one of "time-based", "standard"
     #   resp.snapshots[0].completion_duration_minutes #=> Integer
     #   resp.snapshots[0].completion_time #=> Time
+    #   resp.snapshots[0].full_snapshot_size_in_bytes #=> Integer
     #   resp.snapshots[0].snapshot_id #=> String
     #   resp.snapshots[0].volume_id #=> String
     #   resp.snapshots[0].state #=> String, one of "pending", "completed", "error", "recoverable", "recovering"
@@ -39543,7 +39564,8 @@ module Aws::EC2
     #     `deleted` \| `rejected` \| `failed`).
     #
     #   * `vpc-endpoint-type` - The type of VPC endpoint (`Interface` \|
-    #     `Gateway` \| `GatewayLoadBalancer`).
+    #     `Gateway` \| `GatewayLoadBalancer` \| `Resource` \|
+    #     `ServiceNetwork`).
     #
     # @option params [Integer] :max_results
     #   The maximum number of items to return for this request. The request
@@ -50021,9 +50043,10 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html#Using_OverridingAMIBDM
     #
     # @option params [Types::AttributeBooleanValue] :disable_api_termination
-    #   If the value is `true`, you can't terminate the instance using the
-    #   Amazon EC2 console, CLI, or API; otherwise, you can. You cannot use
-    #   this parameter for Spot Instances.
+    #   Enable or disable termination protection for the instance. If the
+    #   value is `true`, you can't terminate the instance using the Amazon
+    #   EC2 console, command line interface, or API. You can't enable
+    #   termination protection for Spot Instances.
     #
     # @option params [Types::AttributeValue] :instance_type
     #   Changes the instance type to the specified value. For more
@@ -51290,9 +51313,18 @@ module Aws::EC2
     #   number of exclusions you can create. For more information, see [Quotas
     #   for your IPAM][1] in the *Amazon VPC IPAM User Guide*.
     #
+    #   <note markdown="1"> The resulting set of exclusions must not result in "overlap",
+    #   meaning two or more OU exclusions must not exclude the same OU. For
+    #   more information and examples, see the Amazon Web Services CLI request
+    #   process in [Add or remove OU exclusions ][2] in the *Amazon VPC User
+    #   Guide*.
+    #
+    #    </note>
+    #
     #
     #
     #   [1]: https://docs.aws.amazon.com/vpc/latest/ipam/quotas-ipam.html
+    #   [2]: https://docs.aws.amazon.com/vpc/latest/ipam/exclude-ous.html#exclude-ous-create-delete
     #
     # @option params [Array<Types::RemoveIpamOrganizationalUnitExclusion>] :remove_organizational_unit_exclusions
     #   Remove an Organizational Unit (OU) exclusion to your IPAM. If your
@@ -51302,9 +51334,18 @@ module Aws::EC2
     #   number of exclusions you can create. For more information, see [Quotas
     #   for your IPAM][1] in the *Amazon VPC IPAM User Guide*.
     #
+    #   <note markdown="1"> The resulting set of exclusions must not result in "overlap",
+    #   meaning two or more OU exclusions must not exclude the same OU. For
+    #   more information and examples, see the Amazon Web Services CLI request
+    #   process in [Add or remove OU exclusions ][2] in the *Amazon VPC User
+    #   Guide*.
+    #
+    #    </note>
+    #
     #
     #
     #   [1]: https://docs.aws.amazon.com/vpc/latest/ipam/quotas-ipam.html
+    #   [2]: https://docs.aws.amazon.com/vpc/latest/ipam/exclude-ous.html#exclude-ous-create-delete
     #
     # @return [Types::ModifyIpamResourceDiscoveryResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -60087,18 +60128,11 @@ module Aws::EC2
     #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
     #
     # @option params [Boolean] :disable_api_termination
-    #   If you set this parameter to `true`, you can't terminate the instance
-    #   using the Amazon EC2 console, CLI, or API; otherwise, you can. To
-    #   change this attribute after launch, use [ModifyInstanceAttribute][1].
-    #   Alternatively, if you set `InstanceInitiatedShutdownBehavior` to
-    #   `terminate`, you can terminate the instance by running the shutdown
-    #   command from the instance.
-    #
-    #   Default: `false`
-    #
-    #
-    #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyInstanceAttribute.html
+    #   Indicates whether termination protection is enabled for the instance.
+    #   The default is `false`, which means that you can terminate the
+    #   instance using the Amazon EC2 console, command line tools, or API. You
+    #   can enable termination protection when you launch an instance, while
+    #   the instance is running, or while the instance is stopped.
     #
     # @option params [String] :instance_initiated_shutdown_behavior
     #   Indicates whether an instance stops or terminates when you initiate
@@ -62617,7 +62651,7 @@ module Aws::EC2
       req.send_request(options)
     end
 
-    # Unassigns one or more IPv6 addresses IPv4 Prefix Delegation prefixes
+    # Unassigns the specified IPv6 addresses or Prefix Delegation prefixes
     # from a network interface.
     #
     # @option params [Array<String>] :ipv_6_prefixes
@@ -62660,7 +62694,7 @@ module Aws::EC2
       req.send_request(options)
     end
 
-    # Unassigns one or more secondary private IP addresses, or IPv4 Prefix
+    # Unassigns the specified secondary private IP addresses or IPv4 Prefix
     # Delegation prefixes from a network interface.
     #
     # @option params [Array<String>] :ipv_4_prefixes
@@ -63178,7 +63212,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.504.0'
+      context[:gem_version] = '1.505.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

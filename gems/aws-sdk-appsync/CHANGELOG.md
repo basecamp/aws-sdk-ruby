@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.100.0 (2025-02-11)
+------------------
+
+* Feature - Add support for operation level caching
+
 1.99.0 (2025-02-06)
 ------------------
 

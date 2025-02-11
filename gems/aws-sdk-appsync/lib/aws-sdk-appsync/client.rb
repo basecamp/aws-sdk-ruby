@@ -766,10 +766,15 @@ module Aws::AppSync
     # @option params [required, String] :api_caching_behavior
     #   Caching behavior.
     #
-    #   * **FULL\_REQUEST\_CACHING**: All requests are fully cached.
+    #   * **FULL\_REQUEST\_CACHING**: All requests from the same user are
+    #     cached. Individual resolvers are automatically cached. All API calls
+    #     will try to return responses from the cache.
     #
     #   * **PER\_RESOLVER\_CACHING**: Individual resolvers that you specify
     #     are cached.
+    #
+    #   * **OPERATION\_LEVEL\_CACHING**: Full requests are cached together and
+    #     returned without executing resolvers.
     #
     # @option params [required, String] :type
     #   The cache instance type. Valid values are
@@ -837,7 +842,7 @@ module Aws::AppSync
     #     ttl: 1, # required
     #     transit_encryption_enabled: false,
     #     at_rest_encryption_enabled: false,
-    #     api_caching_behavior: "FULL_REQUEST_CACHING", # required, accepts FULL_REQUEST_CACHING, PER_RESOLVER_CACHING
+    #     api_caching_behavior: "FULL_REQUEST_CACHING", # required, accepts FULL_REQUEST_CACHING, PER_RESOLVER_CACHING, OPERATION_LEVEL_CACHING
     #     type: "T2_SMALL", # required, accepts T2_SMALL, T2_MEDIUM, R4_LARGE, R4_XLARGE, R4_2XLARGE, R4_4XLARGE, R4_8XLARGE, SMALL, MEDIUM, LARGE, XLARGE, LARGE_2X, LARGE_4X, LARGE_8X, LARGE_12X
     #     health_metrics_config: "ENABLED", # accepts ENABLED, DISABLED
     #   })
@@ -845,7 +850,7 @@ module Aws::AppSync
     # @example Response structure
     #
     #   resp.api_cache.ttl #=> Integer
-    #   resp.api_cache.api_caching_behavior #=> String, one of "FULL_REQUEST_CACHING", "PER_RESOLVER_CACHING"
+    #   resp.api_cache.api_caching_behavior #=> String, one of "FULL_REQUEST_CACHING", "PER_RESOLVER_CACHING", "OPERATION_LEVEL_CACHING"
     #   resp.api_cache.transit_encryption_enabled #=> Boolean
     #   resp.api_cache.at_rest_encryption_enabled #=> Boolean
     #   resp.api_cache.type #=> String, one of "T2_SMALL", "T2_MEDIUM", "R4_LARGE", "R4_XLARGE", "R4_2XLARGE", "R4_4XLARGE", "R4_8XLARGE", "SMALL", "MEDIUM", "LARGE", "XLARGE", "LARGE_2X", "LARGE_4X", "LARGE_8X", "LARGE_12X"
@@ -2293,7 +2298,7 @@ module Aws::AppSync
     # @example Response structure
     #
     #   resp.api_cache.ttl #=> Integer
-    #   resp.api_cache.api_caching_behavior #=> String, one of "FULL_REQUEST_CACHING", "PER_RESOLVER_CACHING"
+    #   resp.api_cache.api_caching_behavior #=> String, one of "FULL_REQUEST_CACHING", "PER_RESOLVER_CACHING", "OPERATION_LEVEL_CACHING"
     #   resp.api_cache.transit_encryption_enabled #=> Boolean
     #   resp.api_cache.at_rest_encryption_enabled #=> Boolean
     #   resp.api_cache.type #=> String, one of "T2_SMALL", "T2_MEDIUM", "R4_LARGE", "R4_XLARGE", "R4_2XLARGE", "R4_4XLARGE", "R4_8XLARGE", "SMALL", "MEDIUM", "LARGE", "XLARGE", "LARGE_2X", "LARGE_4X", "LARGE_8X", "LARGE_12X"
@@ -4039,10 +4044,15 @@ module Aws::AppSync
     # @option params [required, String] :api_caching_behavior
     #   Caching behavior.
     #
-    #   * **FULL\_REQUEST\_CACHING**: All requests are fully cached.
+    #   * **FULL\_REQUEST\_CACHING**: All requests from the same user are
+    #     cached. Individual resolvers are automatically cached. All API calls
+    #     will try to return responses from the cache.
     #
     #   * **PER\_RESOLVER\_CACHING**: Individual resolvers that you specify
     #     are cached.
+    #
+    #   * **OPERATION\_LEVEL\_CACHING**: Full requests are cached together and
+    #     returned without executing resolvers.
     #
     # @option params [required, String] :type
     #   The cache instance type. Valid values are
@@ -4108,7 +4118,7 @@ module Aws::AppSync
     #   resp = client.update_api_cache({
     #     api_id: "String", # required
     #     ttl: 1, # required
-    #     api_caching_behavior: "FULL_REQUEST_CACHING", # required, accepts FULL_REQUEST_CACHING, PER_RESOLVER_CACHING
+    #     api_caching_behavior: "FULL_REQUEST_CACHING", # required, accepts FULL_REQUEST_CACHING, PER_RESOLVER_CACHING, OPERATION_LEVEL_CACHING
     #     type: "T2_SMALL", # required, accepts T2_SMALL, T2_MEDIUM, R4_LARGE, R4_XLARGE, R4_2XLARGE, R4_4XLARGE, R4_8XLARGE, SMALL, MEDIUM, LARGE, XLARGE, LARGE_2X, LARGE_4X, LARGE_8X, LARGE_12X
     #     health_metrics_config: "ENABLED", # accepts ENABLED, DISABLED
     #   })
@@ -4116,7 +4126,7 @@ module Aws::AppSync
     # @example Response structure
     #
     #   resp.api_cache.ttl #=> Integer
-    #   resp.api_cache.api_caching_behavior #=> String, one of "FULL_REQUEST_CACHING", "PER_RESOLVER_CACHING"
+    #   resp.api_cache.api_caching_behavior #=> String, one of "FULL_REQUEST_CACHING", "PER_RESOLVER_CACHING", "OPERATION_LEVEL_CACHING"
     #   resp.api_cache.transit_encryption_enabled #=> Boolean
     #   resp.api_cache.at_rest_encryption_enabled #=> Boolean
     #   resp.api_cache.type #=> String, one of "T2_SMALL", "T2_MEDIUM", "R4_LARGE", "R4_XLARGE", "R4_2XLARGE", "R4_4XLARGE", "R4_8XLARGE", "SMALL", "MEDIUM", "LARGE", "XLARGE", "LARGE_2X", "LARGE_4X", "LARGE_8X", "LARGE_12X"
@@ -5011,7 +5021,7 @@ module Aws::AppSync
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-appsync'
-      context[:gem_version] = '1.99.0'
+      context[:gem_version] = '1.100.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

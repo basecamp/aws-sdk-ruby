@@ -14979,6 +14979,7 @@ module Aws::EC2
     Snapshot.add_member(:transfer_type, Shapes::ShapeRef.new(shape: TransferType, location_name: "transferType"))
     Snapshot.add_member(:completion_duration_minutes, Shapes::ShapeRef.new(shape: SnapshotCompletionDurationMinutesResponse, location_name: "completionDurationMinutes"))
     Snapshot.add_member(:completion_time, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "completionTime"))
+    Snapshot.add_member(:full_snapshot_size_in_bytes, Shapes::ShapeRef.new(shape: Long, location_name: "fullSnapshotSizeInBytes"))
     Snapshot.add_member(:snapshot_id, Shapes::ShapeRef.new(shape: String, location_name: "snapshotId"))
     Snapshot.add_member(:volume_id, Shapes::ShapeRef.new(shape: String, location_name: "volumeId"))
     Snapshot.add_member(:state, Shapes::ShapeRef.new(shape: SnapshotState, location_name: "status"))

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.76.0 (2025-02-11)
+------------------
+
+* Feature - Documentation only update for RDS Performance Insights dimensions for execution plans and locking analysis.
+
 1.75.0 (2025-02-07)
 ------------------
 

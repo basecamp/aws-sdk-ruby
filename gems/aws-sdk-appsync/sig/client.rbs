@@ -182,7 +182,7 @@ module Aws
                               ttl: ::Integer,
                               ?transit_encryption_enabled: bool,
                               ?at_rest_encryption_enabled: bool,
-                              api_caching_behavior: ("FULL_REQUEST_CACHING" | "PER_RESOLVER_CACHING"),
+                              api_caching_behavior: ("FULL_REQUEST_CACHING" | "PER_RESOLVER_CACHING" | "OPERATION_LEVEL_CACHING"),
                               type: ("T2_SMALL" | "T2_MEDIUM" | "R4_LARGE" | "R4_XLARGE" | "R4_2XLARGE" | "R4_4XLARGE" | "R4_8XLARGE" | "SMALL" | "MEDIUM" | "LARGE" | "XLARGE" | "LARGE_2X" | "LARGE_4X" | "LARGE_8X" | "LARGE_12X"),
                               ?health_metrics_config: ("ENABLED" | "DISABLED")
                             ) -> _CreateApiCacheResponseSuccess
@@ -1079,7 +1079,7 @@ module Aws
       def update_api_cache: (
                               api_id: ::String,
                               ttl: ::Integer,
-                              api_caching_behavior: ("FULL_REQUEST_CACHING" | "PER_RESOLVER_CACHING"),
+                              api_caching_behavior: ("FULL_REQUEST_CACHING" | "PER_RESOLVER_CACHING" | "OPERATION_LEVEL_CACHING"),
                               type: ("T2_SMALL" | "T2_MEDIUM" | "R4_LARGE" | "R4_XLARGE" | "R4_2XLARGE" | "R4_4XLARGE" | "R4_8XLARGE" | "SMALL" | "MEDIUM" | "LARGE" | "XLARGE" | "LARGE_2X" | "LARGE_4X" | "LARGE_8X" | "LARGE_12X"),
                               ?health_metrics_config: ("ENABLED" | "DISABLED")
                             ) -> _UpdateApiCacheResponseSuccess

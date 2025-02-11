@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.88.0 (2025-02-11)
+------------------
+
+* Feature - Private Certificate Authority service now supports Partitioned CRL as a revocation configuration option.
+
 1.87.0 (2025-02-06)
 ------------------
 

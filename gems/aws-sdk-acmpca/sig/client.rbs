@@ -177,7 +177,9 @@ module Aws
                                               s3_object_acl: ("PUBLIC_READ" | "BUCKET_OWNER_FULL_CONTROL")?,
                                               crl_distribution_point_extension_configuration: {
                                                 omit_extension: bool
-                                              }?
+                                              }?,
+                                              crl_type: ("COMPLETE" | "PARTITIONED")?,
+                                              custom_path: ::String?
                                             }?,
                                             ocsp_configuration: {
                                               enabled: bool,
@@ -535,7 +537,9 @@ module Aws
                                               s3_object_acl: ("PUBLIC_READ" | "BUCKET_OWNER_FULL_CONTROL")?,
                                               crl_distribution_point_extension_configuration: {
                                                 omit_extension: bool
-                                              }?
+                                              }?,
+                                              crl_type: ("COMPLETE" | "PARTITIONED")?,
+                                              custom_path: ::String?
                                             }?,
                                             ocsp_configuration: {
                                               enabled: bool,

@@ -126,6 +126,8 @@ module Aws::ACMPCA
       attr_accessor s3_bucket_name: ::String
       attr_accessor s3_object_acl: ("PUBLIC_READ" | "BUCKET_OWNER_FULL_CONTROL")
       attr_accessor crl_distribution_point_extension_configuration: Types::CrlDistributionPointExtensionConfiguration
+      attr_accessor crl_type: ("COMPLETE" | "PARTITIONED")
+      attr_accessor custom_path: ::String
       SENSITIVE: []
     end
 

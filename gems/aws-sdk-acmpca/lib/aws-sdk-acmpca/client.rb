@@ -702,6 +702,8 @@ module Aws::ACMPCA
     #         crl_distribution_point_extension_configuration: {
     #           omit_extension: false, # required
     #         },
+    #         crl_type: "COMPLETE", # accepts COMPLETE, PARTITIONED
+    #         custom_path: "CrlPathString",
     #       },
     #       ocsp_configuration: {
     #         enabled: false, # required
@@ -1215,6 +1217,8 @@ module Aws::ACMPCA
     #   resp.certificate_authority.revocation_configuration.crl_configuration.s3_bucket_name #=> String
     #   resp.certificate_authority.revocation_configuration.crl_configuration.s3_object_acl #=> String, one of "PUBLIC_READ", "BUCKET_OWNER_FULL_CONTROL"
     #   resp.certificate_authority.revocation_configuration.crl_configuration.crl_distribution_point_extension_configuration.omit_extension #=> Boolean
+    #   resp.certificate_authority.revocation_configuration.crl_configuration.crl_type #=> String, one of "COMPLETE", "PARTITIONED"
+    #   resp.certificate_authority.revocation_configuration.crl_configuration.custom_path #=> String
     #   resp.certificate_authority.revocation_configuration.ocsp_configuration.enabled #=> Boolean
     #   resp.certificate_authority.revocation_configuration.ocsp_configuration.ocsp_custom_cname #=> String
     #   resp.certificate_authority.restorable_until #=> Time
@@ -2064,6 +2068,8 @@ module Aws::ACMPCA
     #   resp.certificate_authorities[0].revocation_configuration.crl_configuration.s3_bucket_name #=> String
     #   resp.certificate_authorities[0].revocation_configuration.crl_configuration.s3_object_acl #=> String, one of "PUBLIC_READ", "BUCKET_OWNER_FULL_CONTROL"
     #   resp.certificate_authorities[0].revocation_configuration.crl_configuration.crl_distribution_point_extension_configuration.omit_extension #=> Boolean
+    #   resp.certificate_authorities[0].revocation_configuration.crl_configuration.crl_type #=> String, one of "COMPLETE", "PARTITIONED"
+    #   resp.certificate_authorities[0].revocation_configuration.crl_configuration.custom_path #=> String
     #   resp.certificate_authorities[0].revocation_configuration.ocsp_configuration.enabled #=> Boolean
     #   resp.certificate_authorities[0].revocation_configuration.ocsp_configuration.ocsp_custom_cname #=> String
     #   resp.certificate_authorities[0].restorable_until #=> Time
@@ -2653,6 +2659,8 @@ module Aws::ACMPCA
     #         crl_distribution_point_extension_configuration: {
     #           omit_extension: false, # required
     #         },
+    #         crl_type: "COMPLETE", # accepts COMPLETE, PARTITIONED
+    #         custom_path: "CrlPathString",
     #       },
     #       ocsp_configuration: {
     #         enabled: false, # required
@@ -2689,7 +2697,7 @@ module Aws::ACMPCA
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-acmpca'
-      context[:gem_version] = '1.87.0'
+      context[:gem_version] = '1.88.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

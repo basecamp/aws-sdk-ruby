@@ -48,6 +48,9 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Snapshot.html#completion_time-instance_method
       def completion_time: () -> ::Time
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Snapshot.html#full_snapshot_size_in_bytes-instance_method
+      def full_snapshot_size_in_bytes: () -> ::Integer
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Snapshot.html#volume_id-instance_method
       def volume_id: () -> ::String
 

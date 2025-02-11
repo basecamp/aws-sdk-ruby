@@ -169,10 +169,15 @@ module Aws::AppSync
     # @!attribute [rw] api_caching_behavior
     #   Caching behavior.
     #
-    #   * **FULL\_REQUEST\_CACHING**: All requests are fully cached.
+    #   * **FULL\_REQUEST\_CACHING**: All requests from the same user are
+    #     cached. Individual resolvers are automatically cached. All API
+    #     calls will try to return responses from the cache.
     #
     #   * **PER\_RESOLVER\_CACHING**: Individual resolvers that you specify
     #     are cached.
+    #
+    #   * **OPERATION\_LEVEL\_CACHING**: Full requests are cached together
+    #     and returned without executing resolvers.
     #   @return [String]
     #
     # @!attribute [rw] transit_encryption_enabled
@@ -918,10 +923,15 @@ module Aws::AppSync
     # @!attribute [rw] api_caching_behavior
     #   Caching behavior.
     #
-    #   * **FULL\_REQUEST\_CACHING**: All requests are fully cached.
+    #   * **FULL\_REQUEST\_CACHING**: All requests from the same user are
+    #     cached. Individual resolvers are automatically cached. All API
+    #     calls will try to return responses from the cache.
     #
     #   * **PER\_RESOLVER\_CACHING**: Individual resolvers that you specify
     #     are cached.
+    #
+    #   * **OPERATION\_LEVEL\_CACHING**: Full requests are cached together
+    #     and returned without executing resolvers.
     #   @return [String]
     #
     # @!attribute [rw] type
@@ -4936,10 +4946,15 @@ module Aws::AppSync
     # @!attribute [rw] api_caching_behavior
     #   Caching behavior.
     #
-    #   * **FULL\_REQUEST\_CACHING**: All requests are fully cached.
+    #   * **FULL\_REQUEST\_CACHING**: All requests from the same user are
+    #     cached. Individual resolvers are automatically cached. All API
+    #     calls will try to return responses from the cache.
     #
     #   * **PER\_RESOLVER\_CACHING**: Individual resolvers that you specify
     #     are cached.
+    #
+    #   * **OPERATION\_LEVEL\_CACHING**: Full requests are cached together
+    #     and returned without executing resolvers.
     #   @return [String]
     #
     # @!attribute [rw] type

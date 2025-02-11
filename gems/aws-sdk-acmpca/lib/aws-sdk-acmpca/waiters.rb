@@ -93,20 +93,20 @@ module Aws::ACMPCA
             operation_name: :describe_certificate_authority_audit_report,
             acceptors: [
               {
-                "state" => "success",
                 "matcher" => "path",
                 "argument" => "audit_report_status",
+                "state" => "success",
                 "expected" => "SUCCESS"
               },
               {
-                "state" => "failure",
                 "matcher" => "path",
                 "argument" => "audit_report_status",
+                "state" => "failure",
                 "expected" => "FAILED"
               },
               {
-                "state" => "failure",
                 "matcher" => "error",
+                "state" => "failure",
                 "expected" => "AccessDeniedException"
               }
             ]
@@ -143,18 +143,18 @@ module Aws::ACMPCA
             operation_name: :get_certificate_authority_csr,
             acceptors: [
               {
+                "matcher" => "error",
                 "state" => "success",
-                "matcher" => "status",
-                "expected" => 200
+                "expected" => false
               },
               {
-                "state" => "retry",
                 "matcher" => "error",
+                "state" => "retry",
                 "expected" => "RequestInProgressException"
               },
               {
-                "state" => "failure",
                 "matcher" => "error",
+                "state" => "failure",
                 "expected" => "AccessDeniedException"
               }
             ]
@@ -191,18 +191,18 @@ module Aws::ACMPCA
             operation_name: :get_certificate,
             acceptors: [
               {
+                "matcher" => "error",
                 "state" => "success",
-                "matcher" => "status",
-                "expected" => 200
+                "expected" => false
               },
               {
-                "state" => "retry",
                 "matcher" => "error",
+                "state" => "retry",
                 "expected" => "RequestInProgressException"
               },
               {
-                "state" => "failure",
                 "matcher" => "error",
+                "state" => "failure",
                 "expected" => "AccessDeniedException"
               }
             ]

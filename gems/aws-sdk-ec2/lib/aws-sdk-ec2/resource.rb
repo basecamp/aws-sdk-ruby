@@ -561,18 +561,11 @@ module Aws::EC2
     #   If you have the required permissions, the error response is
     #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
     # @option options [Boolean] :disable_api_termination
-    #   If you set this parameter to `true`, you can't terminate the instance
-    #   using the Amazon EC2 console, CLI, or API; otherwise, you can. To
-    #   change this attribute after launch, use [ModifyInstanceAttribute][1].
-    #   Alternatively, if you set `InstanceInitiatedShutdownBehavior` to
-    #   `terminate`, you can terminate the instance by running the shutdown
-    #   command from the instance.
-    #
-    #   Default: `false`
-    #
-    #
-    #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyInstanceAttribute.html
+    #   Indicates whether termination protection is enabled for the instance.
+    #   The default is `false`, which means that you can terminate the
+    #   instance using the Amazon EC2 console, command line tools, or API. You
+    #   can enable termination protection when you launch an instance, while
+    #   the instance is running, or while the instance is stopped.
     # @option options [String] :instance_initiated_shutdown_behavior
     #   Indicates whether an instance stops or terminates when you initiate
     #   shutdown from the instance (using the operating system command for
@@ -998,7 +991,7 @@ module Aws::EC2
     #   cannot indicate any IP addresses specified in `privateIpAddresses` as
     #   primary (only one IP address can be designated as primary).
     # @option options [Array<String>] :groups
-    #   The IDs of one or more security groups.
+    #   The IDs of the security groups.
     # @option options [Array<Types::PrivateIpAddressSpecification>] :private_ip_addresses
     #   The private IPv4 addresses.
     #
@@ -3379,6 +3372,13 @@ module Aws::EC2
     #   * `mac-address` - The MAC address of the network interface.
     #
     #   * `network-interface-id` - The ID of the network interface.
+    #
+    #   * `operator.managed` - A Boolean that indicates whether this is a
+    #     managed network interface.
+    #
+    #   * `operator.principal` - The principal that manages the network
+    #     interface. Only valid for managed network interfaces, where
+    #     `managed` is `true`.
     #
     #   * `owner-id` - The Amazon Web Services account ID of the network
     #     interface owner.

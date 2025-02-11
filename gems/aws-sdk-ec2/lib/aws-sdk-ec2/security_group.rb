@@ -373,10 +373,26 @@ module Aws::EC2
     # @option options [String] :cidr_ip
     #   The IPv4 address range, in CIDR format.
     #
+    #   <note markdown="1"> Amazon Web Services [canonicalizes][1] IPv4 and IPv6 CIDRs. For
+    #   example, if you specify 100.68.0.18/18 for the CIDR block, Amazon Web
+    #   Services canonicalizes the CIDR block to 100.68.0.0/18. Any subsequent
+    #   DescribeSecurityGroups and DescribeSecurityGroupRules calls will
+    #   return the canonicalized form of the CIDR block. Additionally, if you
+    #   attempt to add another rule with the non-canonical form of the CIDR
+    #   (such as 100.68.0.18/18) and there is already a rule for the
+    #   canonicalized form of the CIDR block (such as 100.68.0.0/18), the API
+    #   throws an duplicate rule error.
+    #
+    #    </note>
+    #
     #   To specify an IPv6 address range, use IP permissions instead.
     #
     #   To specify multiple rules and descriptions for the rules, use IP
     #   permissions instead.
+    #
+    #
+    #
+    #   [1]: https://en.wikipedia.org/wiki/Canonicalization
     # @option options [Integer] :from_port
     #   If the protocol is TCP or UDP, this is the start of the port range. If
     #   the protocol is ICMP, this is the ICMP type or -1 (all ICMP types).

@@ -1748,7 +1748,7 @@ module Aws::EC2
     #
     # @!attribute [rw] ipv_6_prefixes
     #   One or more IPv6 prefixes assigned to the network interface. You
-    #   cannot use this option if you use the `Ipv6PrefixCount` option.
+    #   can't use this option if you use the `Ipv6PrefixCount` option.
     #   @return [Array<String>]
     #
     # @!attribute [rw] network_interface_id
@@ -1810,12 +1810,12 @@ module Aws::EC2
     #
     # @!attribute [rw] ipv_4_prefixes
     #   One or more IPv4 prefixes assigned to the network interface. You
-    #   cannot use this option if you use the `Ipv4PrefixCount` option.
+    #   can't use this option if you use the `Ipv4PrefixCount` option.
     #   @return [Array<String>]
     #
     # @!attribute [rw] ipv_4_prefix_count
     #   The number of IPv4 prefixes that Amazon Web Services automatically
-    #   assigns to the network interface. You cannot use this option if you
+    #   assigns to the network interface. You can't use this option if you
     #   use the `Ipv4 Prefixes` option.
     #   @return [Integer]
     #
@@ -3505,10 +3505,26 @@ module Aws::EC2
     # @!attribute [rw] cidr_ip
     #   The IPv4 address range, in CIDR format.
     #
+    #   <note markdown="1"> Amazon Web Services [canonicalizes][1] IPv4 and IPv6 CIDRs. For
+    #   example, if you specify 100.68.0.18/18 for the CIDR block, Amazon
+    #   Web Services canonicalizes the CIDR block to 100.68.0.0/18. Any
+    #   subsequent DescribeSecurityGroups and DescribeSecurityGroupRules
+    #   calls will return the canonicalized form of the CIDR block.
+    #   Additionally, if you attempt to add another rule with the
+    #   non-canonical form of the CIDR (such as 100.68.0.18/18) and there is
+    #   already a rule for the canonicalized form of the CIDR block (such as
+    #   100.68.0.0/18), the API throws an duplicate rule error.
+    #
+    #    </note>
+    #
     #   To specify an IPv6 address range, use IP permissions instead.
     #
     #   To specify multiple rules and descriptions for the rules, use IP
     #   permissions instead.
+    #
+    #
+    #
+    #   [1]: https://en.wikipedia.org/wiki/Canonicalization
     #   @return [String]
     #
     # @!attribute [rw] from_port
@@ -3654,14 +3670,13 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] group_name
-    #   For Availability Zones, this parameter has the same value as the
-    #   Region name.
+    #   The name of the zone group. For example:
     #
-    #   For Local Zones, the name of the associated group, for example
-    #   `us-west-2-lax-1`.
+    #   * Availability Zones - `us-east-1-zg-1`
     #
-    #   For Wavelength Zones, the name of the associated group, for example
-    #   `us-east-1-wl1-bos-wlz-1`.
+    #   * Local Zones - `us-west-2-lax-1`
+    #
+    #   * Wavelength Zones - `us-east-1-wl1-bos-wlz-1`
     #   @return [String]
     #
     # @!attribute [rw] network_border_group
@@ -7732,7 +7747,7 @@ module Aws::EC2
     #   The number of instances for which to reserve capacity.
     #
     #   <note markdown="1"> You can request future-dated Capacity Reservations for an instance
-    #   count with a minimum of 100 VPUs. For example, if you request a
+    #   count with a minimum of 100 vCPUs. For example, if you request a
     #   future-dated Capacity Reservation for `m5.xlarge` instances, you
     #   must request at least 25 instances (*25 * m5.xlarge = 100 vCPUs*).
     #
@@ -10884,7 +10899,7 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] groups
-    #   The IDs of one or more security groups.
+    #   The IDs of the security groups.
     #   @return [Array<String>]
     #
     # @!attribute [rw] private_ip_addresses
@@ -18012,11 +18027,10 @@ module Aws::EC2
     # @!attribute [rw] filters
     #   The filters.
     #
-    #   * `group-name` - For Availability Zones, use the Region name. For
-    #     Local Zones, use the name of the group associated with the Local
-    #     Zone (for example, `us-west-2-lax-1`) For Wavelength Zones, use
-    #     the name of the group associated with the Wavelength Zone (for
-    #     example, `us-east-1-wl1`).
+    #   * `group-name` - The name of the zone group for the Availability
+    #     Zone (for example, `us-east-1-zg-1`), the Local Zone (for example,
+    #     `us-west-2-lax-1`), or the Wavelength Zone (for example,
+    #     `us-east-1-wl1`).
     #
     #   * `message` - The Zone message.
     #
@@ -21285,7 +21299,7 @@ module Aws::EC2
     # @!attribute [rw] attribute
     #   The instance attribute.
     #
-    #   Note: The `enaSupport` attribute is not supported at this time.
+    #   Note that the `enaSupport` attribute is not supported.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeInstanceAttributeRequest AWS API Documentation
@@ -24989,6 +25003,13 @@ module Aws::EC2
     #   * `mac-address` - The MAC address of the network interface.
     #
     #   * `network-interface-id` - The ID of the network interface.
+    #
+    #   * `operator.managed` - A Boolean that indicates whether this is a
+    #     managed network interface.
+    #
+    #   * `operator.principal` - The principal that manages the network
+    #     interface. Only valid for managed network interfaces, where
+    #     `managed` is `true`.
     #
     #   * `owner-id` - The Amazon Web Services account ID of the network
     #     interface owner.
@@ -30034,7 +30055,8 @@ module Aws::EC2
     #     `deleted` \| `rejected` \| `failed`).
     #
     #   * `vpc-endpoint-type` - The type of VPC endpoint (`Interface` \|
-    #     `Gateway` \| `GatewayLoadBalancer`).
+    #     `Gateway` \| `GatewayLoadBalancer` \| `Resource` \|
+    #     `ServiceNetwork`).
     #   @return [Array<Types::Filter>]
     #
     # @!attribute [rw] max_results
@@ -42254,8 +42276,9 @@ module Aws::EC2
     #   @return [Array<Types::InstanceBlockDeviceMapping>]
     #
     # @!attribute [rw] disable_api_termination
-    #   If the value is `true`, you can't terminate the instance through
-    #   the Amazon EC2 console, CLI, or API; otherwise, you can.
+    #   Indicates whether termination protection is enabled. If the value is
+    #   `true`, you can't terminate the instance using the Amazon EC2
+    #   console, command line tools, or API.
     #   @return [Types::AttributeBooleanValue]
     #
     # @!attribute [rw] ena_support
@@ -42263,8 +42286,8 @@ module Aws::EC2
     #   @return [Types::AttributeBooleanValue]
     #
     # @!attribute [rw] enclave_options
-    #   To enable the instance for Amazon Web Services Nitro Enclaves, set
-    #   this parameter to `true`; otherwise, set it to `false`.
+    #   Indicates whether the instance is enabled for Amazon Web Services
+    #   Nitro Enclaves.
     #   @return [Types::EnclaveOptions]
     #
     # @!attribute [rw] ebs_optimized
@@ -42290,7 +42313,7 @@ module Aws::EC2
     #   @return [Types::AttributeValue]
     #
     # @!attribute [rw] product_codes
-    #   A list of product codes.
+    #   The product codes.
     #   @return [Array<Types::ProductCode>]
     #
     # @!attribute [rw] ramdisk_id
@@ -42303,12 +42326,7 @@ module Aws::EC2
     #   @return [Types::AttributeValue]
     #
     # @!attribute [rw] source_dest_check
-    #   Enable or disable source/destination checks, which ensure that the
-    #   instance is either the source or the destination of any traffic that
-    #   it receives. If the value is `true`, source/destination checks are
-    #   enabled; otherwise, they are disabled. The default value is `true`.
-    #   You must disable source/destination checks if the instance runs
-    #   services such as network address translation, routing, or firewalls.
+    #   Indicates whether source/destination checks are enabled.
     #   @return [Types::AttributeBooleanValue]
     #
     # @!attribute [rw] sriov_net_support
@@ -42321,8 +42339,7 @@ module Aws::EC2
     #   @return [Types::AttributeValue]
     #
     # @!attribute [rw] disable_api_stop
-    #   To enable the instance for Amazon Web Services Stop Protection, set
-    #   this parameter to `true`; otherwise, set it to `false`.
+    #   Indicates whether stop protection is enabled for the instance.
     #   @return [Types::AttributeBooleanValue]
     #
     # @!attribute [rw] groups
@@ -43441,15 +43458,9 @@ module Aws::EC2
     #   @return [Array<Types::PrivateIpAddressSpecification>]
     #
     # @!attribute [rw] secondary_private_ip_address_count
-    #   The number of secondary private IPv4 addresses. You can't specify
-    #   this option and specify more than one private IP address using the
-    #   private IP addresses option. You cannot specify this option if
-    #   you're launching more than one instance in a [RunInstances][1]
-    #   request.
-    #
-    #
-    #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html
+    #   The number of secondary private IPv4 addresses. You can’t specify
+    #   this parameter and also specify a secondary private IP address using
+    #   the `PrivateIpAddress` parameter.
     #   @return [Integer]
     #
     # @!attribute [rw] subnet_id
@@ -45393,6 +45404,22 @@ module Aws::EC2
     #   The IPv4 address range. You can either specify a CIDR block or a
     #   source security group, not both. To specify a single IPv4 address,
     #   use the /32 prefix length.
+    #
+    #   <note markdown="1"> Amazon Web Services [canonicalizes][1] IPv4 and IPv6 CIDRs. For
+    #   example, if you specify 100.68.0.18/18 for the CIDR block, Amazon
+    #   Web Services canonicalizes the CIDR block to 100.68.0.0/18. Any
+    #   subsequent DescribeSecurityGroups and DescribeSecurityGroupRules
+    #   calls will return the canonicalized form of the CIDR block.
+    #   Additionally, if you attempt to add another rule with the
+    #   non-canonical form of the CIDR (such as 100.68.0.18/18) and there is
+    #   already a rule for the canonicalized form of the CIDR block (such as
+    #   100.68.0.0/18), the API throws an duplicate rule error.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://en.wikipedia.org/wiki/Canonicalization
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/IpRange AWS API Documentation
@@ -47051,7 +47078,7 @@ module Aws::EC2
       include Aws::Structure
     end
 
-    # Describes the IPv4 prefix option for a network interface.
+    # Describes the IPv6 prefix option for a network interface.
     #
     # @!attribute [rw] ipv_6_prefix
     #   The IPv6 prefix.
@@ -47094,6 +47121,22 @@ module Aws::EC2
     #   The IPv6 address range. You can either specify a CIDR block or a
     #   source security group, not both. To specify a single IPv6 address,
     #   use the /128 prefix length.
+    #
+    #   <note markdown="1"> Amazon Web Services [canonicalizes][1] IPv4 and IPv6 CIDRs. For
+    #   example, if you specify 100.68.0.18/18 for the CIDR block, Amazon
+    #   Web Services canonicalizes the CIDR block to 100.68.0.0/18. Any
+    #   subsequent DescribeSecurityGroups and DescribeSecurityGroupRules
+    #   calls will return the canonicalized form of the CIDR block.
+    #   Additionally, if you attempt to add another rule with the
+    #   non-canonical form of the CIDR (such as 100.68.0.18/18) and there is
+    #   already a rule for the canonicalized form of the CIDR block (such as
+    #   100.68.0.0/18), the API throws an duplicate rule error.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://en.wikipedia.org/wiki/Canonicalization
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/Ipv6Range AWS API Documentation
@@ -51282,9 +51325,10 @@ module Aws::EC2
     #   @return [Array<Types::InstanceBlockDeviceMappingSpecification>]
     #
     # @!attribute [rw] disable_api_termination
-    #   If the value is `true`, you can't terminate the instance using the
-    #   Amazon EC2 console, CLI, or API; otherwise, you can. You cannot use
-    #   this parameter for Spot Instances.
+    #   Enable or disable termination protection for the instance. If the
+    #   value is `true`, you can't terminate the instance using the Amazon
+    #   EC2 console, command line interface, or API. You can't enable
+    #   termination protection for Spot Instances.
     #   @return [Types::AttributeBooleanValue]
     #
     # @!attribute [rw] instance_type
@@ -52266,9 +52310,18 @@ module Aws::EC2
     #   number of exclusions you can create. For more information, see
     #   [Quotas for your IPAM][1] in the *Amazon VPC IPAM User Guide*.
     #
+    #   <note markdown="1"> The resulting set of exclusions must not result in "overlap",
+    #   meaning two or more OU exclusions must not exclude the same OU. For
+    #   more information and examples, see the Amazon Web Services CLI
+    #   request process in [Add or remove OU exclusions ][2] in the *Amazon
+    #   VPC User Guide*.
+    #
+    #    </note>
+    #
     #
     #
     #   [1]: https://docs.aws.amazon.com/vpc/latest/ipam/quotas-ipam.html
+    #   [2]: https://docs.aws.amazon.com/vpc/latest/ipam/exclude-ous.html#exclude-ous-create-delete
     #   @return [Array<Types::AddIpamOrganizationalUnitExclusion>]
     #
     # @!attribute [rw] remove_organizational_unit_exclusions
@@ -52279,9 +52332,18 @@ module Aws::EC2
     #   the number of exclusions you can create. For more information, see
     #   [Quotas for your IPAM][1] in the *Amazon VPC IPAM User Guide*.
     #
+    #   <note markdown="1"> The resulting set of exclusions must not result in "overlap",
+    #   meaning two or more OU exclusions must not exclude the same OU. For
+    #   more information and examples, see the Amazon Web Services CLI
+    #   request process in [Add or remove OU exclusions ][2] in the *Amazon
+    #   VPC User Guide*.
+    #
+    #    </note>
+    #
     #
     #
     #   [1]: https://docs.aws.amazon.com/vpc/latest/ipam/quotas-ipam.html
+    #   [2]: https://docs.aws.amazon.com/vpc/latest/ipam/exclude-ous.html#exclude-ous-create-delete
     #   @return [Array<Types::RemoveIpamOrganizationalUnitExclusion>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyIpamResourceDiscoveryRequest AWS API Documentation
@@ -60907,17 +60969,12 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] disable_api_termination
-    #   If you set this parameter to `true`, you can't terminate the
-    #   instance using the Amazon EC2 console, CLI, or API; otherwise, you
-    #   can. To change this attribute after launch, use
-    #   [ModifyInstanceAttribute][1]. Alternatively, if you set
-    #   `InstanceInitiatedShutdownBehavior` to `terminate`, you can
-    #   terminate the instance by running the shutdown command from the
-    #   instance.
-    #
-    #
-    #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyInstanceAttribute.html
+    #   Indicates whether termination protection is enabled for the
+    #   instance. The default is `false`, which means that you can terminate
+    #   the instance using the Amazon EC2 console, command line tools, or
+    #   API. You can enable termination protection when you launch an
+    #   instance, while the instance is running, or while the instance is
+    #   stopped.
     #   @return [Boolean]
     #
     # @!attribute [rw] instance_initiated_shutdown_behavior
@@ -63809,19 +63866,12 @@ module Aws::EC2
     #   @return [Boolean]
     #
     # @!attribute [rw] disable_api_termination
-    #   If you set this parameter to `true`, you can't terminate the
-    #   instance using the Amazon EC2 console, CLI, or API; otherwise, you
-    #   can. To change this attribute after launch, use
-    #   [ModifyInstanceAttribute][1]. Alternatively, if you set
-    #   `InstanceInitiatedShutdownBehavior` to `terminate`, you can
-    #   terminate the instance by running the shutdown command from the
-    #   instance.
-    #
-    #   Default: `false`
-    #
-    #
-    #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyInstanceAttribute.html
+    #   Indicates whether termination protection is enabled for the
+    #   instance. The default is `false`, which means that you can terminate
+    #   the instance using the Amazon EC2 console, command line tools, or
+    #   API. You can enable termination protection when you launch an
+    #   instance, while the instance is running, or while the instance is
+    #   stopped.
     #   @return [Boolean]
     #
     # @!attribute [rw] instance_initiated_shutdown_behavior
@@ -65183,9 +65233,25 @@ module Aws::EC2
     #
     # * ReferencedGroupId
     #
+    # <note markdown="1"> Amazon Web Services [canonicalizes][1] IPv4 and IPv6 CIDRs. For
+    # example, if you specify 100.68.0.18/18 for the CIDR block, Amazon Web
+    # Services canonicalizes the CIDR block to 100.68.0.0/18. Any subsequent
+    # DescribeSecurityGroups and DescribeSecurityGroupRules calls will
+    # return the canonicalized form of the CIDR block. Additionally, if you
+    # attempt to add another rule with the non-canonical form of the CIDR
+    # (such as 100.68.0.18/18) and there is already a rule for the
+    # canonicalized form of the CIDR block (such as 100.68.0.0/18), the API
+    # throws an duplicate rule error.
+    #
+    #  </note>
+    #
     # When you modify a rule, you cannot change the rule type. For example,
     # if the rule uses an IPv4 address range, you must use `CidrIpv4` to
     # specify a new IPv4 address range.
+    #
+    #
+    #
+    # [1]: https://en.wikipedia.org/wiki/Canonicalization
     #
     # @!attribute [rw] ip_protocol
     #   The IP protocol name (`tcp`, `udp`, `icmp`, `icmpv6`) or number (see
@@ -65659,6 +65725,15 @@ module Aws::EC2
     #   The time stamp when the snapshot was completed.
     #   @return [Time]
     #
+    # @!attribute [rw] full_snapshot_size_in_bytes
+    #   The full size of the snapshot, in bytes.
+    #
+    #   This is **not** the incremental size of the snapshot. This is the
+    #   full snapshot size and represents the size of all the blocks that
+    #   were written to the source volume at the time the snapshot was
+    #   created.
+    #   @return [Integer]
+    #
     # @!attribute [rw] snapshot_id
     #   The ID of the snapshot. Each snapshot receives a unique identifier
     #   when it is created.
@@ -65736,6 +65811,7 @@ module Aws::EC2
       :transfer_type,
       :completion_duration_minutes,
       :completion_time,
+      :full_snapshot_size_in_bytes,
       :snapshot_id,
       :volume_id,
       :state,
@@ -65933,7 +66009,7 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] recycle_bin_enter_time
-    #   The date and time when the snaphsot entered the Recycle Bin.
+    #   The date and time when the snapshot entered the Recycle Bin.
     #   @return [Time]
     #
     # @!attribute [rw] recycle_bin_exit_time
@@ -70968,7 +71044,7 @@ module Aws::EC2
     #   @return [Array<String>]
     #
     # @!attribute [rw] unassigned_ipv_6_prefixes
-    #   The IPv4 prefixes that have been unassigned from the network
+    #   The IPv6 prefixes that have been unassigned from the network
     #   interface.
     #   @return [Array<String>]
     #

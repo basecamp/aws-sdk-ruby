@@ -14317,6 +14317,7 @@ module Aws::EC2
       attr_accessor transfer_type: ("time-based" | "standard")
       attr_accessor completion_duration_minutes: ::Integer
       attr_accessor completion_time: ::Time
+      attr_accessor full_snapshot_size_in_bytes: ::Integer
       attr_accessor snapshot_id: ::String
       attr_accessor volume_id: ::String
       attr_accessor state: ("pending" | "completed" | "error" | "recoverable" | "recovering")

@@ -3129,6 +3129,7 @@ module Aws
         def transfer_type: () -> ("time-based" | "standard")
         def completion_duration_minutes: () -> ::Integer
         def completion_time: () -> ::Time
+        def full_snapshot_size_in_bytes: () -> ::Integer
         def snapshot_id: () -> ::String
         def volume_id: () -> ::String
         def state: () -> ("pending" | "completed" | "error" | "recoverable" | "recovering")

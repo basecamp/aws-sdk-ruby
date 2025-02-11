@@ -53,6 +53,8 @@ module Aws::ACMPCA
     CreatePermissionRequest = Shapes::StructureShape.new(name: 'CreatePermissionRequest')
     CrlConfiguration = Shapes::StructureShape.new(name: 'CrlConfiguration')
     CrlDistributionPointExtensionConfiguration = Shapes::StructureShape.new(name: 'CrlDistributionPointExtensionConfiguration')
+    CrlPathString = Shapes::StringShape.new(name: 'CrlPathString')
+    CrlType = Shapes::StringShape.new(name: 'CrlType')
     CsrBlob = Shapes::BlobShape.new(name: 'CsrBlob')
     CsrBody = Shapes::StringShape.new(name: 'CsrBody')
     CsrExtensions = Shapes::StructureShape.new(name: 'CsrExtensions')
@@ -261,6 +263,8 @@ module Aws::ACMPCA
     CrlConfiguration.add_member(:s3_bucket_name, Shapes::ShapeRef.new(shape: S3BucketName3To255, location_name: "S3BucketName"))
     CrlConfiguration.add_member(:s3_object_acl, Shapes::ShapeRef.new(shape: S3ObjectAcl, location_name: "S3ObjectAcl"))
     CrlConfiguration.add_member(:crl_distribution_point_extension_configuration, Shapes::ShapeRef.new(shape: CrlDistributionPointExtensionConfiguration, location_name: "CrlDistributionPointExtensionConfiguration"))
+    CrlConfiguration.add_member(:crl_type, Shapes::ShapeRef.new(shape: CrlType, location_name: "CrlType"))
+    CrlConfiguration.add_member(:custom_path, Shapes::ShapeRef.new(shape: CrlPathString, location_name: "CustomPath"))
     CrlConfiguration.struct_class = Types::CrlConfiguration
 
     CrlDistributionPointExtensionConfiguration.add_member(:omit_extension, Shapes::ShapeRef.new(shape: Boolean, required: true, location_name: "OmitExtension", metadata: {"box"=>true}))

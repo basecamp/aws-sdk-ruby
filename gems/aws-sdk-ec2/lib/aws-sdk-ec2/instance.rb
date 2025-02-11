@@ -979,7 +979,7 @@ module Aws::EC2
     # @option options [required, String] :attribute
     #   The instance attribute.
     #
-    #   Note: The `enaSupport` attribute is not supported at this time.
+    #   Note that the `enaSupport` attribute is not supported.
     # @return [Types::InstanceAttribute]
     def describe_attribute(options = {})
       options = options.merge(instance_id: @id)
@@ -1142,9 +1142,10 @@ module Aws::EC2
     #
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html#Using_OverridingAMIBDM
     # @option options [Types::AttributeBooleanValue] :disable_api_termination
-    #   If the value is `true`, you can't terminate the instance using the
-    #   Amazon EC2 console, CLI, or API; otherwise, you can. You cannot use
-    #   this parameter for Spot Instances.
+    #   Enable or disable termination protection for the instance. If the
+    #   value is `true`, you can't terminate the instance using the Amazon
+    #   EC2 console, command line interface, or API. You can't enable
+    #   termination protection for Spot Instances.
     # @option options [Types::AttributeValue] :instance_type
     #   Changes the instance type to the specified value. For more
     #   information, see [Instance types][1] in the *Amazon EC2 User Guide*.

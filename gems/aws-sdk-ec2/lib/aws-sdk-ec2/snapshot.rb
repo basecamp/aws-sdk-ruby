@@ -129,6 +129,16 @@ module Aws::EC2
       data[:completion_time]
     end
 
+    # The full size of the snapshot, in bytes.
+    #
+    # This is **not** the incremental size of the snapshot. This is the full
+    # snapshot size and represents the size of all the blocks that were
+    # written to the source volume at the time the snapshot was created.
+    # @return [Integer]
+    def full_snapshot_size_in_bytes
+      data[:full_snapshot_size_in_bytes]
+    end
+
     # The ID of the volume that was used to create the snapshot. Snapshots
     # created by the CopySnapshot action have an arbitrary volume ID that
     # should not be used for any purpose.
