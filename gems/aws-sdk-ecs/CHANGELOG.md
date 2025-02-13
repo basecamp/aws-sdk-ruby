@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.178.0 (2025-02-13)
+------------------
+
+* Feature - This is a documentation only release to support migrating Amazon ECS service ARNs to the long ARN format.
+
 1.177.0 (2025-02-06)
 ------------------
 

@@ -3780,7 +3780,7 @@ module Aws::SageMaker
     #         routing_config: {
     #           routing_strategy: "LEAST_OUTSTANDING_REQUESTS", # required, accepts LEAST_OUTSTANDING_REQUESTS, RANDOM
     #         },
-    #         inference_ami_version: "al2-ami-sagemaker-inference-gpu-2", # accepts al2-ami-sagemaker-inference-gpu-2
+    #         inference_ami_version: "al2-ami-sagemaker-inference-gpu-2", # accepts al2-ami-sagemaker-inference-gpu-2, al2-ami-sagemaker-inference-gpu-2-1, al2-ami-sagemaker-inference-gpu-3-1
     #       },
     #     ],
     #     data_capture_config: {
@@ -3881,7 +3881,7 @@ module Aws::SageMaker
     #         routing_config: {
     #           routing_strategy: "LEAST_OUTSTANDING_REQUESTS", # required, accepts LEAST_OUTSTANDING_REQUESTS, RANDOM
     #         },
-    #         inference_ami_version: "al2-ami-sagemaker-inference-gpu-2", # accepts al2-ami-sagemaker-inference-gpu-2
+    #         inference_ami_version: "al2-ami-sagemaker-inference-gpu-2", # accepts al2-ami-sagemaker-inference-gpu-2, al2-ami-sagemaker-inference-gpu-2-1, al2-ami-sagemaker-inference-gpu-3-1
     #       },
     #     ],
     #     execution_role_arn: "RoleArn",
@@ -14026,7 +14026,7 @@ module Aws::SageMaker
     #   resp.production_variants[0].managed_instance_scaling.min_instance_count #=> Integer
     #   resp.production_variants[0].managed_instance_scaling.max_instance_count #=> Integer
     #   resp.production_variants[0].routing_config.routing_strategy #=> String, one of "LEAST_OUTSTANDING_REQUESTS", "RANDOM"
-    #   resp.production_variants[0].inference_ami_version #=> String, one of "al2-ami-sagemaker-inference-gpu-2"
+    #   resp.production_variants[0].inference_ami_version #=> String, one of "al2-ami-sagemaker-inference-gpu-2", "al2-ami-sagemaker-inference-gpu-2-1", "al2-ami-sagemaker-inference-gpu-3-1"
     #   resp.data_capture_config.enable_capture #=> Boolean
     #   resp.data_capture_config.initial_sampling_percentage #=> Integer
     #   resp.data_capture_config.destination_s3_uri #=> String
@@ -14090,7 +14090,7 @@ module Aws::SageMaker
     #   resp.shadow_production_variants[0].managed_instance_scaling.min_instance_count #=> Integer
     #   resp.shadow_production_variants[0].managed_instance_scaling.max_instance_count #=> Integer
     #   resp.shadow_production_variants[0].routing_config.routing_strategy #=> String, one of "LEAST_OUTSTANDING_REQUESTS", "RANDOM"
-    #   resp.shadow_production_variants[0].inference_ami_version #=> String, one of "al2-ami-sagemaker-inference-gpu-2"
+    #   resp.shadow_production_variants[0].inference_ami_version #=> String, one of "al2-ami-sagemaker-inference-gpu-2", "al2-ami-sagemaker-inference-gpu-2-1", "al2-ami-sagemaker-inference-gpu-3-1"
     #   resp.execution_role_arn #=> String
     #   resp.vpc_config.security_group_ids #=> Array
     #   resp.vpc_config.security_group_ids[0] #=> String
@@ -29482,7 +29482,7 @@ module Aws::SageMaker
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sagemaker'
-      context[:gem_version] = '1.286.0'
+      context[:gem_version] = '1.287.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

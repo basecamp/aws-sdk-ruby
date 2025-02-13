@@ -214,6 +214,16 @@ module Aws
                            ) -> _CancelArchivalResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CancelArchivalResponseSuccess
 
+      interface _CancelCacheReportResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CancelCacheReportOutput]
+        def cache_report_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/StorageGateway/Client.html#cancel_cache_report-instance_method
+      def cancel_cache_report: (
+                                 cache_report_arn: ::String
+                               ) -> _CancelCacheReportResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CancelCacheReportResponseSuccess
+
       interface _CancelRetrievalResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CancelRetrievalOutput]
         def tape_arn: () -> ::String
@@ -484,6 +494,16 @@ module Aws
                                        ) -> _DeleteBandwidthRateLimitResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteBandwidthRateLimitResponseSuccess
 
+      interface _DeleteCacheReportResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteCacheReportOutput]
+        def cache_report_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/StorageGateway/Client.html#delete_cache_report-instance_method
+      def delete_cache_report: (
+                                 cache_report_arn: ::String
+                               ) -> _DeleteCacheReportResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteCacheReportResponseSuccess
+
       interface _DeleteChapCredentialsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteChapCredentialsOutput]
         def target_arn: () -> ::String
@@ -620,6 +640,16 @@ module Aws
                             gateway_arn: ::String
                           ) -> _DescribeCacheResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeCacheResponseSuccess
+
+      interface _DescribeCacheReportResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeCacheReportOutput]
+        def cache_report_info: () -> Types::CacheReportInfo
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/StorageGateway/Client.html#describe_cache_report-instance_method
+      def describe_cache_report: (
+                                   cache_report_arn: ::String
+                                 ) -> _DescribeCacheReportResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeCacheReportResponseSuccess
 
       interface _DescribeCachediSCSIVolumesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeCachediSCSIVolumesOutput]
@@ -900,6 +930,17 @@ module Aws
                                                  ) -> _ListAutomaticTapeCreationPoliciesResponseSuccess
                                                | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAutomaticTapeCreationPoliciesResponseSuccess
 
+      interface _ListCacheReportsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListCacheReportsOutput]
+        def cache_report_list: () -> ::Array[Types::CacheReportInfo]
+        def marker: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/StorageGateway/Client.html#list_cache_reports-instance_method
+      def list_cache_reports: (
+                                ?marker: ::String
+                              ) -> _ListCacheReportsResponseSuccess
+                            | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListCacheReportsResponseSuccess
+
       interface _ListFileSharesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListFileSharesOutput]
         def marker: () -> ::String
@@ -1134,6 +1175,39 @@ module Aws
                                              gateway_arn: ::String
                                            ) -> _StartAvailabilityMonitorTestResponseSuccess
                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartAvailabilityMonitorTestResponseSuccess
+
+      interface _StartCacheReportResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartCacheReportOutput]
+        def cache_report_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/StorageGateway/Client.html#start_cache_report-instance_method
+      def start_cache_report: (
+                                file_share_arn: ::String,
+                                role: ::String,
+                                location_arn: ::String,
+                                bucket_region: ::String,
+                                ?vpc_endpoint_dns_name: ::String,
+                                ?inclusion_filters: Array[
+                                  {
+                                    name: ("UploadState" | "UploadFailureReason"),
+                                    values: Array[::String]
+                                  },
+                                ],
+                                ?exclusion_filters: Array[
+                                  {
+                                    name: ("UploadState" | "UploadFailureReason"),
+                                    values: Array[::String]
+                                  },
+                                ],
+                                client_token: ::String,
+                                ?tags: Array[
+                                  {
+                                    key: ::String,
+                                    value: ::String
+                                  },
+                                ]
+                              ) -> _StartCacheReportResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartCacheReportResponseSuccess
 
       interface _StartGatewayResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StartGatewayOutput]

@@ -414,6 +414,17 @@ module Aws
                           ) -> _GetFindingV2ResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetFindingV2ResponseSuccess
 
+      interface _GetFindingsStatisticsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetFindingsStatisticsResponse]
+        def findings_statistics: () -> ::Array[Types::FindingsStatistics]
+        def last_updated_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/AccessAnalyzer/Client.html#get_findings_statistics-instance_method
+      def get_findings_statistics: (
+                                     analyzer_arn: ::String
+                                   ) -> _GetFindingsStatisticsResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetFindingsStatisticsResponseSuccess
+
       interface _GetGeneratedPolicyResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetGeneratedPolicyResponse]
         def job_details: () -> Types::JobDetails

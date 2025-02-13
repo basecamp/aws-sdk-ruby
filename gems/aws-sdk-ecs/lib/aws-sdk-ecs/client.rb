@@ -1040,8 +1040,8 @@ module Aws::ECS
     #   service.
     #
     #   For more information, see [Balancing an Amazon ECS service across
-    #   Availability Zones][1] in the *Amazon Elastic Container Service
-    #   Developer Guide*.
+    #   Availability Zones][1] in the <i> <i>Amazon Elastic Container Service
+    #   Developer Guide</i> </i>.
     #
     #
     #
@@ -9635,7 +9635,7 @@ module Aws::ECS
     #   cluster is assumed.
     #
     # @option params [required, String] :task
-    #   The task ID of the task to stop.
+    #   Thefull Amazon Resource Name (ARN) of the task.
     #
     # @option params [String] :reason
     #   An optional message specified when a task is stopped. For example, if
@@ -10064,6 +10064,25 @@ module Aws::ECS
     #   The Amazon Resource Name (ARN) of the resource to add tags to.
     #   Currently, the supported resources are Amazon ECS capacity providers,
     #   tasks, services, task definitions, clusters, and container instances.
+    #
+    #   In order to tag a service that has the following ARN format, you need
+    #   to migrate the service to the long ARN. For more information, see
+    #   [Migrate an Amazon ECS short service ARN to a long ARN][1] in the
+    #   *Amazon Elastic Container Service Developer Guide*.
+    #
+    #   `arn:aws:ecs:region:aws_account_id:service/service-name`
+    #
+    #   After the migration is complete, the service has the long ARN format,
+    #   as shown below. Use this ARN to tag the service.
+    #
+    #   `arn:aws:ecs:region:aws_account_id:service/cluster-name/service-name`
+    #
+    #   If you try to tag a service with a short ARN, you receive an
+    #   `InvalidParameterException` error.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-arn-migration.html
     #
     # @option params [required, Array<Types::Tag>] :tags
     #   The tags to add to the resource. A tag is an array of key-value pairs.
@@ -11411,8 +11430,8 @@ module Aws::ECS
     #   service.
     #
     #   For more information, see [Balancing an Amazon ECS service across
-    #   Availability Zones][1] in the *Amazon Elastic Container Service
-    #   Developer Guide*.
+    #   Availability Zones][1] in the <i> <i>Amazon Elastic Container Service
+    #   Developer Guide</i> </i>.
     #
     #
     #
@@ -12429,7 +12448,7 @@ module Aws::ECS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ecs'
-      context[:gem_version] = '1.177.0'
+      context[:gem_version] = '1.178.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -145,6 +145,28 @@ module Aws::StorageGateway
       SENSITIVE: []
     end
 
+    class CacheReportFilter
+      attr_accessor name: ("UploadState" | "UploadFailureReason")
+      attr_accessor values: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class CacheReportInfo
+      attr_accessor cache_report_arn: ::String
+      attr_accessor cache_report_status: ("IN_PROGRESS" | "COMPLETED" | "CANCELED" | "FAILED" | "ERROR")
+      attr_accessor report_completion_percent: ::Integer
+      attr_accessor end_time: ::Time
+      attr_accessor role: ::String
+      attr_accessor file_share_arn: ::String
+      attr_accessor location_arn: ::String
+      attr_accessor start_time: ::Time
+      attr_accessor inclusion_filters: ::Array[Types::CacheReportFilter]
+      attr_accessor exclusion_filters: ::Array[Types::CacheReportFilter]
+      attr_accessor report_name: ::String
+      attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: []
+    end
+
     class CachediSCSIVolume
       attr_accessor volume_arn: ::String
       attr_accessor volume_id: ::String
@@ -170,6 +192,16 @@ module Aws::StorageGateway
 
     class CancelArchivalOutput
       attr_accessor tape_arn: ::String
+      SENSITIVE: []
+    end
+
+    class CancelCacheReportInput
+      attr_accessor cache_report_arn: ::String
+      SENSITIVE: []
+    end
+
+    class CancelCacheReportOutput
+      attr_accessor cache_report_arn: ::String
       SENSITIVE: []
     end
 
@@ -397,6 +429,16 @@ module Aws::StorageGateway
       SENSITIVE: []
     end
 
+    class DeleteCacheReportInput
+      attr_accessor cache_report_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteCacheReportOutput
+      attr_accessor cache_report_arn: ::String
+      SENSITIVE: []
+    end
+
     class DeleteChapCredentialsInput
       attr_accessor target_arn: ::String
       attr_accessor initiator_name: ::String
@@ -531,6 +573,16 @@ module Aws::StorageGateway
       attr_accessor cache_dirty_percentage: ::Float
       attr_accessor cache_hit_percentage: ::Float
       attr_accessor cache_miss_percentage: ::Float
+      SENSITIVE: []
+    end
+
+    class DescribeCacheReportInput
+      attr_accessor cache_report_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeCacheReportOutput
+      attr_accessor cache_report_info: Types::CacheReportInfo
       SENSITIVE: []
     end
 
@@ -900,6 +952,17 @@ module Aws::StorageGateway
       SENSITIVE: []
     end
 
+    class ListCacheReportsInput
+      attr_accessor marker: ::String
+      SENSITIVE: []
+    end
+
+    class ListCacheReportsOutput
+      attr_accessor cache_report_list: ::Array[Types::CacheReportInfo]
+      attr_accessor marker: ::String
+      SENSITIVE: []
+    end
+
     class ListFileSharesInput
       attr_accessor gateway_arn: ::String
       attr_accessor limit: ::Integer
@@ -1236,6 +1299,24 @@ module Aws::StorageGateway
 
     class StartAvailabilityMonitorTestOutput
       attr_accessor gateway_arn: ::String
+      SENSITIVE: []
+    end
+
+    class StartCacheReportInput
+      attr_accessor file_share_arn: ::String
+      attr_accessor role: ::String
+      attr_accessor location_arn: ::String
+      attr_accessor bucket_region: ::String
+      attr_accessor vpc_endpoint_dns_name: ::String
+      attr_accessor inclusion_filters: ::Array[Types::CacheReportFilter]
+      attr_accessor exclusion_filters: ::Array[Types::CacheReportFilter]
+      attr_accessor client_token: ::String
+      attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: []
+    end
+
+    class StartCacheReportOutput
+      attr_accessor cache_report_arn: ::String
       SENSITIVE: []
     end
 

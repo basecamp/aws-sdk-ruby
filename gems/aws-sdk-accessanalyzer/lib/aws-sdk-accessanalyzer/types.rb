@@ -1494,6 +1494,40 @@ module Aws::AccessAnalyzer
       include Aws::Structure
     end
 
+    # Provides aggregate statistics about the findings for the specified
+    # external access analyzer.
+    #
+    # @!attribute [rw] resource_type_statistics
+    #   The total number of active cross-account and public findings for
+    #   each resource type of the specified external access analyzer.
+    #   @return [Hash<String,Types::ResourceTypeDetails>]
+    #
+    # @!attribute [rw] total_active_findings
+    #   The number of active findings for the specified external access
+    #   analyzer.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] total_archived_findings
+    #   The number of archived findings for the specified external access
+    #   analyzer.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] total_resolved_findings
+    #   The number of resolved findings for the specified external access
+    #   analyzer.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/ExternalAccessFindingsStatistics AWS API Documentation
+    #
+    class ExternalAccessFindingsStatistics < Struct.new(
+      :resource_type_statistics,
+      :total_active_findings,
+      :total_archived_findings,
+      :total_resolved_findings)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains information about a finding.
     #
     # @!attribute [rw] id
@@ -1581,6 +1615,34 @@ module Aws::AccessAnalyzer
       :error,
       :sources,
       :resource_control_policy_restriction)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the findings for an Amazon Web Services
+    # account in an organization unused access analyzer.
+    #
+    # @!attribute [rw] account
+    #   The ID of the Amazon Web Services account for which unused access
+    #   finding details are provided.
+    #   @return [String]
+    #
+    # @!attribute [rw] number_of_active_findings
+    #   The number of active unused access findings for the specified Amazon
+    #   Web Services account.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] details
+    #   Provides the number of active findings for each type of unused
+    #   access for the specified Amazon Web Services account.
+    #   @return [Hash<String,Integer>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/FindingAggregationAccountDetails AWS API Documentation
+    #
+    class FindingAggregationAccountDetails < Struct.new(
+      :account,
+      :number_of_active_findings,
+      :details)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1830,6 +1892,35 @@ module Aws::AccessAnalyzer
       :finding_type)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # Contains information about the aggregate statistics for an external or
+    # unused access analyzer. Only one parameter can be used in a
+    # `FindingsStatistics` object.
+    #
+    # @note FindingsStatistics is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of FindingsStatistics corresponding to the set member.
+    #
+    # @!attribute [rw] external_access_findings_statistics
+    #   The aggregate statistics for an external access analyzer.
+    #   @return [Types::ExternalAccessFindingsStatistics]
+    #
+    # @!attribute [rw] unused_access_findings_statistics
+    #   The aggregate statistics for an unused access analyzer.
+    #   @return [Types::UnusedAccessFindingsStatistics]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/FindingsStatistics AWS API Documentation
+    #
+    class FindingsStatistics < Struct.new(
+      :external_access_findings_statistics,
+      :unused_access_findings_statistics,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class ExternalAccessFindingsStatistics < FindingsStatistics; end
+      class UnusedAccessFindingsStatistics < FindingsStatistics; end
+      class Unknown < FindingsStatistics; end
     end
 
     # @!attribute [rw] analyzer_arn
@@ -2278,6 +2369,42 @@ module Aws::AccessAnalyzer
       :updated_at,
       :finding_details,
       :finding_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] analyzer_arn
+    #   The [ARN of the analyzer][1] used to generate the statistics.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html#permission-resources
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/GetFindingsStatisticsRequest AWS API Documentation
+    #
+    class GetFindingsStatisticsRequest < Struct.new(
+      :analyzer_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] findings_statistics
+    #   A group of external access or unused access findings statistics.
+    #   @return [Array<Types::FindingsStatistics>]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The time at which the retrieval of the findings statistics was last
+    #   updated. If the findings statistics have not been previously
+    #   retrieved for the specified analyzer, this field will not be
+    #   populated.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/GetFindingsStatisticsResponse AWS API Documentation
+    #
+    class GetFindingsStatisticsResponse < Struct.new(
+      :findings_statistics,
+      :last_updated_at)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3485,6 +3612,28 @@ module Aws::AccessAnalyzer
       include Aws::Structure
     end
 
+    # Contains information about the total number of active cross-account
+    # and public findings for a resource type of an external access
+    # analyzer.
+    #
+    # @!attribute [rw] total_active_public
+    #   The total number of active public findings for the resource type.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] total_active_cross_account
+    #   The total number of active cross-account findings for the resource
+    #   type.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/ResourceTypeDetails AWS API Documentation
+    #
+    class ResourceTypeDetails < Struct.new(
+      :total_active_public,
+      :total_active_cross_account)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The configuration for an Amazon S3 access point or multi-region access
     # point for the bucket. You can propose up to 10 access points or
     # multi-region access points per bucket. If the proposed Amazon S3
@@ -4113,6 +4262,65 @@ module Aws::AccessAnalyzer
     class UnusedAccessConfiguration < Struct.new(
       :unused_access_age,
       :analysis_rule)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Provides aggregate statistics about the findings for the specified
+    # unused access analyzer.
+    #
+    # @!attribute [rw] unused_access_type_statistics
+    #   A list of details about the total number of findings for each type
+    #   of unused access for the analyzer.
+    #   @return [Array<Types::UnusedAccessTypeStatistics>]
+    #
+    # @!attribute [rw] top_accounts
+    #   A list of one to ten Amazon Web Services accounts that have the most
+    #   active findings for the unused access analyzer.
+    #   @return [Array<Types::FindingAggregationAccountDetails>]
+    #
+    # @!attribute [rw] total_active_findings
+    #   The total number of active findings for the unused access analyzer.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] total_archived_findings
+    #   The total number of archived findings for the unused access
+    #   analyzer.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] total_resolved_findings
+    #   The total number of resolved findings for the unused access
+    #   analyzer.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/UnusedAccessFindingsStatistics AWS API Documentation
+    #
+    class UnusedAccessFindingsStatistics < Struct.new(
+      :unused_access_type_statistics,
+      :top_accounts,
+      :total_active_findings,
+      :total_archived_findings,
+      :total_resolved_findings)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the total number of findings for a type of
+    # unused access.
+    #
+    # @!attribute [rw] unused_access_type
+    #   The type of unused access.
+    #   @return [String]
+    #
+    # @!attribute [rw] total
+    #   The total number of findings for the specified unused access type.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/UnusedAccessTypeStatistics AWS API Documentation
+    #
+    class UnusedAccessTypeStatistics < Struct.new(
+      :unused_access_type,
+      :total)
       SENSITIVE = []
       include Aws::Structure
     end

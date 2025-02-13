@@ -2650,8 +2650,8 @@ module Aws::ECS
     #   service.
     #
     #   For more information, see [Balancing an Amazon ECS service across
-    #   Availability Zones][1] in the *Amazon Elastic Container Service
-    #   Developer Guide*.
+    #   Availability Zones][1] in the <i> <i>Amazon Elastic Container
+    #   Service Developer Guide</i> </i>.
     #
     #
     #
@@ -5415,10 +5415,16 @@ module Aws::ECS
     # * Container health checks aren't supported for tasks that are part of
     #   a service that's configured to use a Classic Load Balancer.
     #
+    # For an example of how to specify a task definition with multiple
+    # containers where container dependency is specified, see [Container
+    # dependency][3] in the *Amazon Elastic Container Service Developer
+    # Guide*.
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-agent-update.html
     # [2]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform_versions.html
+    # [3]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/example_task_definitions.html#example_task_definition-containerdependency
     #
     # @!attribute [rw] command
     #   A string array representing the command that the container runs to
@@ -5445,26 +5451,29 @@ module Aws::ECS
     # @!attribute [rw] interval
     #   The time period in seconds between each health check execution. You
     #   may specify between 5 and 300 seconds. The default value is 30
-    #   seconds.
+    #   seconds. This value applies only when you specify a `command`.
     #   @return [Integer]
     #
     # @!attribute [rw] timeout
     #   The time period in seconds to wait for a health check to succeed
     #   before it is considered a failure. You may specify between 2 and 60
-    #   seconds. The default value is 5.
+    #   seconds. The default value is 5. This value applies only when you
+    #   specify a `command`.
     #   @return [Integer]
     #
     # @!attribute [rw] retries
     #   The number of times to retry a failed health check before the
     #   container is considered unhealthy. You may specify between 1 and 10
-    #   retries. The default value is 3.
+    #   retries. The default value is 3. This value applies only when you
+    #   specify a `command`.
     #   @return [Integer]
     #
     # @!attribute [rw] start_period
     #   The optional grace period to provide containers time to bootstrap
     #   before failed health checks count towards the maximum number of
     #   retries. You can specify between 0 and 300 seconds. By default, the
-    #   `startPeriod` is off.
+    #   `startPeriod` is off. This value applies only when you specify a
+    #   `command`.
     #
     #   <note markdown="1"> If a health check succeeds within the `startPeriod`, then the
     #   container is considered healthy and any subsequent failures count
@@ -5639,9 +5648,36 @@ module Aws::ECS
     # detailed information about these Linux capabilities, see the
     # [capabilities(7)][1] Linux manual page.
     #
+    # The following describes how Docker processes the Linux capabilities
+    # specified in the `add` and `drop` request parameters. For information
+    # about the latest behavior, see [Docker Compose: order of cap\_drop and
+    # cap\_add][2] in the Docker Community Forum.
+    #
+    # * When the container is a privleged container, the container
+    #   capabilities are all of the default Docker capabilities. The
+    #   capabilities specified in the `add` request parameter, and the
+    #   `drop` request parameter are ignored.
+    #
+    # * When the `add` request parameter is set to ALL, the container
+    #   capabilities are all of the default Docker capabilities, excluding
+    #   those specified in the `drop` request parameter.
+    #
+    # * When the `drop` request parameter is set to ALL, the container
+    #   capabilities are the capabilities specified in the `add` request
+    #   parameter.
+    #
+    # * When the `add` request parameter and the `drop` request parameter
+    #   are both empty, the capabilities the container capabilities are all
+    #   of the default Docker capabilities.
+    #
+    # * The default is to first drop the capabilities specified in the
+    #   `drop` request parameter, and then add the capabilities specified in
+    #   the `add` request parameter.
+    #
     #
     #
     # [1]: http://man7.org/linux/man-pages/man7/capabilities.7.html
+    # [2]: https://forums.docker.com/t/docker-compose-order-of-cap-drop-and-cap-add/97136/1
     #
     # @!attribute [rw] add
     #   The Linux capabilities for the container that have been added to the
@@ -7199,11 +7235,15 @@ module Aws::ECS
     # @!attribute [rw] kms_key_id
     #   Specify a Key Management Service key ID to encrypt the managed
     #   storage.
+    #
+    #   The key must be a single Region key.
     #   @return [String]
     #
     # @!attribute [rw] fargate_ephemeral_storage_kms_key_id
     #   Specify the Key Management Service key ID for the Fargate ephemeral
     #   storage.
+    #
+    #   The key must be a single Region key.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/ManagedStorageConfiguration AWS API Documentation
@@ -9612,8 +9652,8 @@ module Aws::ECS
     #   service.
     #
     #   For more information, see [Balancing an Amazon ECS service across
-    #   Availability Zones][1] in the *Amazon Elastic Container Service
-    #   Developer Guide*.
+    #   Availability Zones][1] in the <i> <i>Amazon Elastic Container
+    #   Service Developer Guide</i> </i>.
     #
     #
     #
@@ -10993,7 +11033,7 @@ module Aws::ECS
     #   @return [String]
     #
     # @!attribute [rw] task
-    #   The task ID of the task to stop.
+    #   Thefull Amazon Resource Name (ARN) of the task.
     #   @return [String]
     #
     # @!attribute [rw] reason
@@ -11316,6 +11356,25 @@ module Aws::ECS
     #   Currently, the supported resources are Amazon ECS capacity
     #   providers, tasks, services, task definitions, clusters, and
     #   container instances.
+    #
+    #   In order to tag a service that has the following ARN format, you
+    #   need to migrate the service to the long ARN. For more information,
+    #   see [Migrate an Amazon ECS short service ARN to a long ARN][1] in
+    #   the *Amazon Elastic Container Service Developer Guide*.
+    #
+    #   `arn:aws:ecs:region:aws_account_id:service/service-name`
+    #
+    #   After the migration is complete, the service has the long ARN
+    #   format, as shown below. Use this ARN to tag the service.
+    #
+    #   `arn:aws:ecs:region:aws_account_id:service/cluster-name/service-name`
+    #
+    #   If you try to tag a service with a short ARN, you receive an
+    #   `InvalidParameterException` error.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-arn-migration.html
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -13279,8 +13338,8 @@ module Aws::ECS
     #   service.
     #
     #   For more information, see [Balancing an Amazon ECS service across
-    #   Availability Zones][1] in the *Amazon Elastic Container Service
-    #   Developer Guide*.
+    #   Availability Zones][1] in the <i> <i>Amazon Elastic Container
+    #   Service Developer Guide</i> </i>.
     #
     #
     #

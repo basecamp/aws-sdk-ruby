@@ -33,6 +33,7 @@ module Aws::AccessAnalyzer
     AccessPreviewSummary = Shapes::StructureShape.new(name: 'AccessPreviewSummary')
     AccessPreviewsList = Shapes::ListShape.new(name: 'AccessPreviewsList')
     AccessResourcesList = Shapes::ListShape.new(name: 'AccessResourcesList')
+    AccountAggregations = Shapes::ListShape.new(name: 'AccountAggregations')
     AccountIdsList = Shapes::ListShape.new(name: 'AccountIdsList')
     AclCanonicalId = Shapes::StringShape.new(name: 'AclCanonicalId')
     AclGrantee = Shapes::UnionShape.new(name: 'AclGrantee')
@@ -98,8 +99,11 @@ module Aws::AccessAnalyzer
     EfsFileSystemConfiguration = Shapes::StructureShape.new(name: 'EfsFileSystemConfiguration')
     EfsFileSystemPolicy = Shapes::StringShape.new(name: 'EfsFileSystemPolicy')
     ExternalAccessDetails = Shapes::StructureShape.new(name: 'ExternalAccessDetails')
+    ExternalAccessFindingsStatistics = Shapes::StructureShape.new(name: 'ExternalAccessFindingsStatistics')
     FilterCriteriaMap = Shapes::MapShape.new(name: 'FilterCriteriaMap')
     Finding = Shapes::StructureShape.new(name: 'Finding')
+    FindingAggregationAccountDetails = Shapes::StructureShape.new(name: 'FindingAggregationAccountDetails')
+    FindingAggregationAccountDetailsMap = Shapes::MapShape.new(name: 'FindingAggregationAccountDetailsMap')
     FindingChangeType = Shapes::StringShape.new(name: 'FindingChangeType')
     FindingDetails = Shapes::UnionShape.new(name: 'FindingDetails')
     FindingDetailsList = Shapes::ListShape.new(name: 'FindingDetailsList')
@@ -116,6 +120,8 @@ module Aws::AccessAnalyzer
     FindingType = Shapes::StringShape.new(name: 'FindingType')
     FindingsList = Shapes::ListShape.new(name: 'FindingsList')
     FindingsListV2 = Shapes::ListShape.new(name: 'FindingsListV2')
+    FindingsStatistics = Shapes::UnionShape.new(name: 'FindingsStatistics')
+    FindingsStatisticsList = Shapes::ListShape.new(name: 'FindingsStatisticsList')
     GenerateFindingRecommendationRequest = Shapes::StructureShape.new(name: 'GenerateFindingRecommendationRequest')
     GenerateFindingRecommendationRequestIdString = Shapes::StringShape.new(name: 'GenerateFindingRecommendationRequestIdString')
     GeneratedPolicy = Shapes::StructureShape.new(name: 'GeneratedPolicy')
@@ -138,6 +144,8 @@ module Aws::AccessAnalyzer
     GetFindingResponse = Shapes::StructureShape.new(name: 'GetFindingResponse')
     GetFindingV2Request = Shapes::StructureShape.new(name: 'GetFindingV2Request')
     GetFindingV2Response = Shapes::StructureShape.new(name: 'GetFindingV2Response')
+    GetFindingsStatisticsRequest = Shapes::StructureShape.new(name: 'GetFindingsStatisticsRequest')
+    GetFindingsStatisticsResponse = Shapes::StructureShape.new(name: 'GetFindingsStatisticsResponse')
     GetGeneratedPolicyRequest = Shapes::StructureShape.new(name: 'GetGeneratedPolicyRequest')
     GetGeneratedPolicyResponse = Shapes::StructureShape.new(name: 'GetGeneratedPolicyResponse')
     GranteePrincipal = Shapes::StringShape.new(name: 'GranteePrincipal')
@@ -232,6 +240,8 @@ module Aws::AccessAnalyzer
     ResourceControlPolicyRestriction = Shapes::StringShape.new(name: 'ResourceControlPolicyRestriction')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     ResourceType = Shapes::StringShape.new(name: 'ResourceType')
+    ResourceTypeDetails = Shapes::StructureShape.new(name: 'ResourceTypeDetails')
+    ResourceTypeStatisticsMap = Shapes::MapShape.new(name: 'ResourceTypeStatisticsMap')
     RetiringPrincipal = Shapes::StringShape.new(name: 'RetiringPrincipal')
     RoleArn = Shapes::StringShape.new(name: 'RoleArn')
     S3AccessPointConfiguration = Shapes::StructureShape.new(name: 'S3AccessPointConfiguration')
@@ -278,6 +288,9 @@ module Aws::AccessAnalyzer
     UntagResourceRequest = Shapes::StructureShape.new(name: 'UntagResourceRequest')
     UntagResourceResponse = Shapes::StructureShape.new(name: 'UntagResourceResponse')
     UnusedAccessConfiguration = Shapes::StructureShape.new(name: 'UnusedAccessConfiguration')
+    UnusedAccessFindingsStatistics = Shapes::StructureShape.new(name: 'UnusedAccessFindingsStatistics')
+    UnusedAccessTypeStatistics = Shapes::StructureShape.new(name: 'UnusedAccessTypeStatistics')
+    UnusedAccessTypeStatisticsList = Shapes::ListShape.new(name: 'UnusedAccessTypeStatisticsList')
     UnusedAction = Shapes::StructureShape.new(name: 'UnusedAction')
     UnusedActionList = Shapes::ListShape.new(name: 'UnusedActionList')
     UnusedIamRoleDetails = Shapes::StructureShape.new(name: 'UnusedIamRoleDetails')
@@ -353,6 +366,8 @@ module Aws::AccessAnalyzer
     AccessPreviewsList.member = Shapes::ShapeRef.new(shape: AccessPreviewSummary)
 
     AccessResourcesList.member = Shapes::ShapeRef.new(shape: Resource)
+
+    AccountAggregations.member = Shapes::ShapeRef.new(shape: FindingAggregationAccountDetails)
 
     AccountIdsList.member = Shapes::ShapeRef.new(shape: String)
 
@@ -587,6 +602,12 @@ module Aws::AccessAnalyzer
     ExternalAccessDetails.add_member(:resource_control_policy_restriction, Shapes::ShapeRef.new(shape: ResourceControlPolicyRestriction, location_name: "resourceControlPolicyRestriction"))
     ExternalAccessDetails.struct_class = Types::ExternalAccessDetails
 
+    ExternalAccessFindingsStatistics.add_member(:resource_type_statistics, Shapes::ShapeRef.new(shape: ResourceTypeStatisticsMap, location_name: "resourceTypeStatistics"))
+    ExternalAccessFindingsStatistics.add_member(:total_active_findings, Shapes::ShapeRef.new(shape: Integer, location_name: "totalActiveFindings"))
+    ExternalAccessFindingsStatistics.add_member(:total_archived_findings, Shapes::ShapeRef.new(shape: Integer, location_name: "totalArchivedFindings"))
+    ExternalAccessFindingsStatistics.add_member(:total_resolved_findings, Shapes::ShapeRef.new(shape: Integer, location_name: "totalResolvedFindings"))
+    ExternalAccessFindingsStatistics.struct_class = Types::ExternalAccessFindingsStatistics
+
     FilterCriteriaMap.key = Shapes::ShapeRef.new(shape: String)
     FilterCriteriaMap.value = Shapes::ShapeRef.new(shape: Criterion)
 
@@ -606,6 +627,14 @@ module Aws::AccessAnalyzer
     Finding.add_member(:sources, Shapes::ShapeRef.new(shape: FindingSourceList, location_name: "sources"))
     Finding.add_member(:resource_control_policy_restriction, Shapes::ShapeRef.new(shape: ResourceControlPolicyRestriction, location_name: "resourceControlPolicyRestriction"))
     Finding.struct_class = Types::Finding
+
+    FindingAggregationAccountDetails.add_member(:account, Shapes::ShapeRef.new(shape: String, location_name: "account"))
+    FindingAggregationAccountDetails.add_member(:number_of_active_findings, Shapes::ShapeRef.new(shape: Integer, location_name: "numberOfActiveFindings"))
+    FindingAggregationAccountDetails.add_member(:details, Shapes::ShapeRef.new(shape: FindingAggregationAccountDetailsMap, location_name: "details"))
+    FindingAggregationAccountDetails.struct_class = Types::FindingAggregationAccountDetails
+
+    FindingAggregationAccountDetailsMap.key = Shapes::ShapeRef.new(shape: String)
+    FindingAggregationAccountDetailsMap.value = Shapes::ShapeRef.new(shape: Integer)
 
     FindingDetails.add_member(:external_access_details, Shapes::ShapeRef.new(shape: ExternalAccessDetails, location_name: "externalAccessDetails"))
     FindingDetails.add_member(:unused_permission_details, Shapes::ShapeRef.new(shape: UnusedPermissionDetails, location_name: "unusedPermissionDetails"))
@@ -667,6 +696,16 @@ module Aws::AccessAnalyzer
     FindingsList.member = Shapes::ShapeRef.new(shape: FindingSummary)
 
     FindingsListV2.member = Shapes::ShapeRef.new(shape: FindingSummaryV2)
+
+    FindingsStatistics.add_member(:external_access_findings_statistics, Shapes::ShapeRef.new(shape: ExternalAccessFindingsStatistics, location_name: "externalAccessFindingsStatistics"))
+    FindingsStatistics.add_member(:unused_access_findings_statistics, Shapes::ShapeRef.new(shape: UnusedAccessFindingsStatistics, location_name: "unusedAccessFindingsStatistics"))
+    FindingsStatistics.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    FindingsStatistics.add_member_subclass(:external_access_findings_statistics, Types::FindingsStatistics::ExternalAccessFindingsStatistics)
+    FindingsStatistics.add_member_subclass(:unused_access_findings_statistics, Types::FindingsStatistics::UnusedAccessFindingsStatistics)
+    FindingsStatistics.add_member_subclass(:unknown, Types::FindingsStatistics::Unknown)
+    FindingsStatistics.struct_class = Types::FindingsStatistics
+
+    FindingsStatisticsList.member = Shapes::ShapeRef.new(shape: FindingsStatistics)
 
     GenerateFindingRecommendationRequest.add_member(:analyzer_arn, Shapes::ShapeRef.new(shape: AnalyzerArn, required: true, location: "querystring", location_name: "analyzerArn"))
     GenerateFindingRecommendationRequest.add_member(:id, Shapes::ShapeRef.new(shape: GenerateFindingRecommendationRequestIdString, required: true, location: "uri", location_name: "id"))
@@ -755,6 +794,13 @@ module Aws::AccessAnalyzer
     GetFindingV2Response.add_member(:finding_details, Shapes::ShapeRef.new(shape: FindingDetailsList, required: true, location_name: "findingDetails"))
     GetFindingV2Response.add_member(:finding_type, Shapes::ShapeRef.new(shape: FindingType, location_name: "findingType"))
     GetFindingV2Response.struct_class = Types::GetFindingV2Response
+
+    GetFindingsStatisticsRequest.add_member(:analyzer_arn, Shapes::ShapeRef.new(shape: AnalyzerArn, required: true, location_name: "analyzerArn"))
+    GetFindingsStatisticsRequest.struct_class = Types::GetFindingsStatisticsRequest
+
+    GetFindingsStatisticsResponse.add_member(:findings_statistics, Shapes::ShapeRef.new(shape: FindingsStatisticsList, location_name: "findingsStatistics"))
+    GetFindingsStatisticsResponse.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastUpdatedAt"))
+    GetFindingsStatisticsResponse.struct_class = Types::GetFindingsStatisticsResponse
 
     GetGeneratedPolicyRequest.add_member(:job_id, Shapes::ShapeRef.new(shape: JobId, required: true, location: "uri", location_name: "jobId"))
     GetGeneratedPolicyRequest.add_member(:include_resource_placeholders, Shapes::ShapeRef.new(shape: Boolean, location: "querystring", location_name: "includeResourcePlaceholders"))
@@ -1008,6 +1054,13 @@ module Aws::AccessAnalyzer
     ResourceNotFoundException.add_member(:resource_type, Shapes::ShapeRef.new(shape: String, required: true, location_name: "resourceType"))
     ResourceNotFoundException.struct_class = Types::ResourceNotFoundException
 
+    ResourceTypeDetails.add_member(:total_active_public, Shapes::ShapeRef.new(shape: Integer, location_name: "totalActivePublic"))
+    ResourceTypeDetails.add_member(:total_active_cross_account, Shapes::ShapeRef.new(shape: Integer, location_name: "totalActiveCrossAccount"))
+    ResourceTypeDetails.struct_class = Types::ResourceTypeDetails
+
+    ResourceTypeStatisticsMap.key = Shapes::ShapeRef.new(shape: ResourceType)
+    ResourceTypeStatisticsMap.value = Shapes::ShapeRef.new(shape: ResourceTypeDetails)
+
     S3AccessPointConfiguration.add_member(:access_point_policy, Shapes::ShapeRef.new(shape: AccessPointPolicy, location_name: "accessPointPolicy"))
     S3AccessPointConfiguration.add_member(:public_access_block, Shapes::ShapeRef.new(shape: S3PublicAccessBlockConfiguration, location_name: "publicAccessBlock"))
     S3AccessPointConfiguration.add_member(:network_origin, Shapes::ShapeRef.new(shape: NetworkOriginConfiguration, location_name: "networkOrigin"))
@@ -1123,6 +1176,19 @@ module Aws::AccessAnalyzer
     UnusedAccessConfiguration.add_member(:unused_access_age, Shapes::ShapeRef.new(shape: Integer, location_name: "unusedAccessAge"))
     UnusedAccessConfiguration.add_member(:analysis_rule, Shapes::ShapeRef.new(shape: AnalysisRule, location_name: "analysisRule"))
     UnusedAccessConfiguration.struct_class = Types::UnusedAccessConfiguration
+
+    UnusedAccessFindingsStatistics.add_member(:unused_access_type_statistics, Shapes::ShapeRef.new(shape: UnusedAccessTypeStatisticsList, location_name: "unusedAccessTypeStatistics"))
+    UnusedAccessFindingsStatistics.add_member(:top_accounts, Shapes::ShapeRef.new(shape: AccountAggregations, location_name: "topAccounts"))
+    UnusedAccessFindingsStatistics.add_member(:total_active_findings, Shapes::ShapeRef.new(shape: Integer, location_name: "totalActiveFindings"))
+    UnusedAccessFindingsStatistics.add_member(:total_archived_findings, Shapes::ShapeRef.new(shape: Integer, location_name: "totalArchivedFindings"))
+    UnusedAccessFindingsStatistics.add_member(:total_resolved_findings, Shapes::ShapeRef.new(shape: Integer, location_name: "totalResolvedFindings"))
+    UnusedAccessFindingsStatistics.struct_class = Types::UnusedAccessFindingsStatistics
+
+    UnusedAccessTypeStatistics.add_member(:unused_access_type, Shapes::ShapeRef.new(shape: String, location_name: "unusedAccessType"))
+    UnusedAccessTypeStatistics.add_member(:total, Shapes::ShapeRef.new(shape: Integer, location_name: "total"))
+    UnusedAccessTypeStatistics.struct_class = Types::UnusedAccessTypeStatistics
+
+    UnusedAccessTypeStatisticsList.member = Shapes::ShapeRef.new(shape: UnusedAccessTypeStatistics)
 
     UnusedAction.add_member(:action, Shapes::ShapeRef.new(shape: String, required: true, location_name: "action"))
     UnusedAction.add_member(:last_accessed, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastAccessed"))
@@ -1477,6 +1543,19 @@ module Aws::AccessAnalyzer
             "next_token" => "next_token"
           }
         )
+      end)
+
+      api.add_operation(:get_findings_statistics, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetFindingsStatistics"
+        o.http_method = "POST"
+        o.http_request_uri = "/analyzer/findings/statistics"
+        o.input = Shapes::ShapeRef.new(shape: GetFindingsStatisticsRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetFindingsStatisticsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
       api.add_operation(:get_generated_policy, Seahorse::Model::Operation.new.tap do |o|

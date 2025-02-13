@@ -1162,6 +1162,39 @@ module Aws::StorageGateway
       req.send_request(options)
     end
 
+    # Cancels generation of a specified cache report. You can use this
+    # operation to manually cancel an IN-PROGRESS report for any reason.
+    # This action changes the report status from IN-PROGRESS to CANCELLED.
+    # You can only cancel in-progress reports. If the the report you attempt
+    # to cancel is in FAILED, ERROR, or COMPLETED state, the cancel
+    # operation returns an error.
+    #
+    # @option params [required, String] :cache_report_arn
+    #   The Amazon Resource Name (ARN) of the cache report you want to cancel.
+    #
+    # @return [Types::CancelCacheReportOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CancelCacheReportOutput#cache_report_arn #cache_report_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.cancel_cache_report({
+    #     cache_report_arn: "CacheReportARN", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.cache_report_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/CancelCacheReport AWS API Documentation
+    #
+    # @overload cancel_cache_report(params = {})
+    # @param [Hash] params ({})
+    def cancel_cache_report(params = {}, options = {})
+      req = build_request(:cancel_cache_report, params)
+      req.send_request(options)
+    end
+
     # Cancels retrieval of a virtual tape from the virtual tape shelf (VTS)
     # to a gateway after the retrieval process is initiated. The virtual
     # tape is returned to the VTS. This operation is only supported in the
@@ -2782,6 +2815,43 @@ module Aws::StorageGateway
       req.send_request(options)
     end
 
+    # Deletes the specified cache report and any associated tags from the
+    # Storage Gateway database. You can only delete completed reports. If
+    # the status of the report you attempt to delete still IN-PROGRESS, the
+    # delete operation returns an error. You can use `CancelCacheReport` to
+    # cancel an IN-PROGRESS report.
+    #
+    # <note markdown="1"> `DeleteCacheReport` does not delete the report object from your Amazon
+    # S3 bucket.
+    #
+    #  </note>
+    #
+    # @option params [required, String] :cache_report_arn
+    #   The Amazon Resource Name (ARN) of the cache report you want to delete.
+    #
+    # @return [Types::DeleteCacheReportOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteCacheReportOutput#cache_report_arn #cache_report_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_cache_report({
+    #     cache_report_arn: "CacheReportARN", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.cache_report_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/DeleteCacheReport AWS API Documentation
+    #
+    # @overload delete_cache_report(params = {})
+    # @param [Hash] params ({})
+    def delete_cache_report(params = {}, options = {})
+      req = build_request(:delete_cache_report, params)
+      req.send_request(options)
+    end
+
     # Deletes Challenge-Handshake Authentication Protocol (CHAP) credentials
     # for a specified iSCSI target and initiator pair. This operation is
     # supported in volume and tape gateway types.
@@ -3427,6 +3497,55 @@ module Aws::StorageGateway
     # @param [Hash] params ({})
     def describe_cache(params = {}, options = {})
       req = build_request(:describe_cache, params)
+      req.send_request(options)
+    end
+
+    # Returns information about the specified cache report, including
+    # completion status and generation progress.
+    #
+    # @option params [required, String] :cache_report_arn
+    #   The Amazon Resource Name (ARN) of the cache report you want to
+    #   describe.
+    #
+    # @return [Types::DescribeCacheReportOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeCacheReportOutput#cache_report_info #cache_report_info} => Types::CacheReportInfo
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_cache_report({
+    #     cache_report_arn: "CacheReportARN", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.cache_report_info.cache_report_arn #=> String
+    #   resp.cache_report_info.cache_report_status #=> String, one of "IN_PROGRESS", "COMPLETED", "CANCELED", "FAILED", "ERROR"
+    #   resp.cache_report_info.report_completion_percent #=> Integer
+    #   resp.cache_report_info.end_time #=> Time
+    #   resp.cache_report_info.role #=> String
+    #   resp.cache_report_info.file_share_arn #=> String
+    #   resp.cache_report_info.location_arn #=> String
+    #   resp.cache_report_info.start_time #=> Time
+    #   resp.cache_report_info.inclusion_filters #=> Array
+    #   resp.cache_report_info.inclusion_filters[0].name #=> String, one of "UploadState", "UploadFailureReason"
+    #   resp.cache_report_info.inclusion_filters[0].values #=> Array
+    #   resp.cache_report_info.inclusion_filters[0].values[0] #=> String
+    #   resp.cache_report_info.exclusion_filters #=> Array
+    #   resp.cache_report_info.exclusion_filters[0].name #=> String, one of "UploadState", "UploadFailureReason"
+    #   resp.cache_report_info.exclusion_filters[0].values #=> Array
+    #   resp.cache_report_info.exclusion_filters[0].values[0] #=> String
+    #   resp.cache_report_info.report_name #=> String
+    #   resp.cache_report_info.tags #=> Array
+    #   resp.cache_report_info.tags[0].key #=> String
+    #   resp.cache_report_info.tags[0].value #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/DescribeCacheReport AWS API Documentation
+    #
+    # @overload describe_cache_report(params = {})
+    # @param [Hash] params ({})
+    def describe_cache_report(params = {}, options = {})
+      req = build_request(:describe_cache_report, params)
       req.send_request(options)
     end
 
@@ -4944,6 +5063,62 @@ module Aws::StorageGateway
       req.send_request(options)
     end
 
+    # Returns a list of existing cache reports for all file shares
+    # associated with your Amazon Web Services account. This list includes
+    # all information provided by the `DescribeCacheReport` action, such as
+    # report name, status, completion progress, start time, end time,
+    # filters, and tags.
+    #
+    # @option params [String] :marker
+    #   Opaque pagination token returned from a previous `ListCacheReports`
+    #   operation. If present, `Marker` specifies where to continue the list
+    #   from after a previous call to `ListCacheReports`. Optional.
+    #
+    # @return [Types::ListCacheReportsOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListCacheReportsOutput#cache_report_list #cache_report_list} => Array&lt;Types::CacheReportInfo&gt;
+    #   * {Types::ListCacheReportsOutput#marker #marker} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_cache_reports({
+    #     marker: "Marker",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.cache_report_list #=> Array
+    #   resp.cache_report_list[0].cache_report_arn #=> String
+    #   resp.cache_report_list[0].cache_report_status #=> String, one of "IN_PROGRESS", "COMPLETED", "CANCELED", "FAILED", "ERROR"
+    #   resp.cache_report_list[0].report_completion_percent #=> Integer
+    #   resp.cache_report_list[0].end_time #=> Time
+    #   resp.cache_report_list[0].role #=> String
+    #   resp.cache_report_list[0].file_share_arn #=> String
+    #   resp.cache_report_list[0].location_arn #=> String
+    #   resp.cache_report_list[0].start_time #=> Time
+    #   resp.cache_report_list[0].inclusion_filters #=> Array
+    #   resp.cache_report_list[0].inclusion_filters[0].name #=> String, one of "UploadState", "UploadFailureReason"
+    #   resp.cache_report_list[0].inclusion_filters[0].values #=> Array
+    #   resp.cache_report_list[0].inclusion_filters[0].values[0] #=> String
+    #   resp.cache_report_list[0].exclusion_filters #=> Array
+    #   resp.cache_report_list[0].exclusion_filters[0].name #=> String, one of "UploadState", "UploadFailureReason"
+    #   resp.cache_report_list[0].exclusion_filters[0].values #=> Array
+    #   resp.cache_report_list[0].exclusion_filters[0].values[0] #=> String
+    #   resp.cache_report_list[0].report_name #=> String
+    #   resp.cache_report_list[0].tags #=> Array
+    #   resp.cache_report_list[0].tags[0].key #=> String
+    #   resp.cache_report_list[0].tags[0].value #=> String
+    #   resp.marker #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/ListCacheReports AWS API Documentation
+    #
+    # @overload list_cache_reports(params = {})
+    # @param [Hash] params ({})
+    def list_cache_reports(params = {}, options = {})
+      req = build_request(:list_cache_reports, params)
+      req.send_request(options)
+    end
+
     # Gets a list of the file shares for a specific S3 File Gateway, or the
     # list of file shares that belong to the calling Amazon Web Services
     # account. This operation is only supported for S3 File Gateways.
@@ -5615,18 +5790,18 @@ module Aws::StorageGateway
       req.send_request(options)
     end
 
-    # Sends you notification through CloudWatch Events when all files
+    # Sends you notification through Amazon EventBridge when all files
     # written to your file share have been uploaded to Amazon S3.
     #
-    # Storage Gateway can send a notification through Amazon CloudWatch
-    # Events when all files written to your file share up to that point in
-    # time have been uploaded to Amazon S3. These files include files
-    # written to the file share up to the time that you make a request for
+    # Storage Gateway can send a notification through Amazon EventBridge
+    # when all files written to your file share up to that point in time
+    # have been uploaded to Amazon S3. These files include files written to
+    # the file share up to the time that you make a request for
     # notification. When the upload is done, Storage Gateway sends you
-    # notification through an Amazon CloudWatch Event. You can configure
-    # CloudWatch Events to send the notification through event targets such
-    # as Amazon SNS or Lambda function. This operation is only supported for
-    # S3 File Gateways.
+    # notification through EventBridge. You can configure EventBridge to
+    # send the notification through event targets such as Amazon SNS or
+    # Lambda function. This operation is only supported for S3 File
+    # Gateways.
     #
     # For more information, see [Getting file upload notification][1] in the
     # *Amazon S3 File Gateway User Guide*.
@@ -6201,6 +6376,134 @@ module Aws::StorageGateway
     # @param [Hash] params ({})
     def start_availability_monitor_test(params = {}, options = {})
       req = build_request(:start_availability_monitor_test, params)
+      req.send_request(options)
+    end
+
+    # Starts generating a report of the file metadata currently cached by an
+    # S3 File Gateway for a specific file share. You can use this report to
+    # identify and resolve issues if you have files failing upload from your
+    # gateway to Amazon S3. The report is a CSV file containing a list of
+    # files which match the set of filter parameters you specify in the
+    # request.
+    #
+    # <note markdown="1"> The **Files Failing Upload** flag is reset every 24 hours and during
+    # gateway reboot. If this report captures the files after the reset, but
+    # before they become flagged again, they will not be reported as **Files
+    # Failing Upload**.
+    #
+    #  </note>
+    #
+    # The following requirements must be met to successfully generate a
+    # cache report:
+    #
+    # * You must have permissions to list the entire Amazon S3 bucket
+    #   associated with the specified file share.
+    #
+    # * No other cache reports can currently be in-progress for the
+    #   specified file share.
+    #
+    # * There must be fewer than 10 existing cache reports for the specified
+    #   file share.
+    #
+    # * The gateway must be online and connected to Amazon Web Services.
+    #
+    # * The root disk must have at least 20GB of free space when report
+    #   generation starts.
+    #
+    # * You must specify at least one value for `InclusionFilters` or
+    #   `ExclusionFilters` in the request.
+    #
+    # @option params [required, String] :file_share_arn
+    #   The Amazon Resource Name (ARN) of the file share.
+    #
+    # @option params [required, String] :role
+    #   The ARN of the IAM role used when saving the cache report to Amazon
+    #   S3.
+    #
+    # @option params [required, String] :location_arn
+    #   The ARN of the Amazon S3 bucket where the cache report will be saved.
+    #
+    #   <note markdown="1"> We do not recommend saving the cache report to the same Amazon S3
+    #   bucket for which you are generating the report.
+    #
+    #    This field does not accept access point ARNs.
+    #
+    #    </note>
+    #
+    # @option params [required, String] :bucket_region
+    #   The Amazon Web Services Region of the Amazon S3 bucket associated with
+    #   the file share for which you want to generate the cache report.
+    #
+    # @option params [String] :vpc_endpoint_dns_name
+    #   The DNS name of the VPC endpoint associated with the Amazon S3 where
+    #   you want to save the cache report. Optional.
+    #
+    # @option params [Array<Types::CacheReportFilter>] :inclusion_filters
+    #   The list of filters and parameters that determine which files are
+    #   included in the report. You must specify at least one value for
+    #   `InclusionFilters` or `ExclusionFilters` in a `StartCacheReport`
+    #   request.
+    #
+    # @option params [Array<Types::CacheReportFilter>] :exclusion_filters
+    #   The list of filters and parameters that determine which files are
+    #   excluded from the report. You must specify at least one value for
+    #   `InclusionFilters` or `ExclusionFilters` in a `StartCacheReport`
+    #   request.
+    #
+    # @option params [required, String] :client_token
+    #   A unique identifier that you use to ensure idempotent report
+    #   generation if you need to retry an unsuccessful `StartCacheReport`
+    #   request. If you retry a request, use the same `ClientToken` you
+    #   specified in the initial request.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   A list of up to 50 key/value tags that you can assign to the cache
+    #   report. Using tags can help you categorize your reports and more
+    #   easily locate them in search results.
+    #
+    # @return [Types::StartCacheReportOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartCacheReportOutput#cache_report_arn #cache_report_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_cache_report({
+    #     file_share_arn: "FileShareARN", # required
+    #     role: "Role", # required
+    #     location_arn: "LocationARN", # required
+    #     bucket_region: "RegionId", # required
+    #     vpc_endpoint_dns_name: "DNSHostName",
+    #     inclusion_filters: [
+    #       {
+    #         name: "UploadState", # required, accepts UploadState, UploadFailureReason
+    #         values: ["CacheReportFilterValue"], # required
+    #       },
+    #     ],
+    #     exclusion_filters: [
+    #       {
+    #         name: "UploadState", # required, accepts UploadState, UploadFailureReason
+    #         values: ["CacheReportFilterValue"], # required
+    #       },
+    #     ],
+    #     client_token: "ClientToken", # required
+    #     tags: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue", # required
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.cache_report_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/StartCacheReport AWS API Documentation
+    #
+    # @overload start_cache_report(params = {})
+    # @param [Hash] params ({})
+    def start_cache_report(params = {}, options = {})
+      req = build_request(:start_cache_report, params)
       req.send_request(options)
     end
 
@@ -7603,7 +7906,7 @@ module Aws::StorageGateway
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-storagegateway'
-      context[:gem_version] = '1.103.0'
+      context[:gem_version] = '1.104.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

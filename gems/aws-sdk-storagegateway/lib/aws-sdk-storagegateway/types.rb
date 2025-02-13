@@ -699,6 +699,122 @@ module Aws::StorageGateway
       include Aws::Structure
     end
 
+    # A list of filter parameters and associated values that determine which
+    # files are included or excluded from a cache report created by a
+    # `StartCacheReport` request. Multiple instances of the same filter
+    # parameter are combined with an OR operation, while different
+    # parameters are combined with an AND operation.
+    #
+    # @!attribute [rw] name
+    #   The parameter name for a filter that determines which files are
+    #   included or excluded from a cache report.
+    #
+    #   **Valid Names:**
+    #
+    #   UploadFailureReason \| UploadState
+    #   @return [String]
+    #
+    # @!attribute [rw] values
+    #   The parameter value for a filter that determines which files are
+    #   included or excluded from a cache report.
+    #
+    #   **Valid `UploadFailureReason` Values:**
+    #
+    #   `InaccessibleStorageClass` \| `InvalidObjectState` \|
+    #   `ObjectMissing` \| `S3AccessDenied`
+    #
+    #   **Valid `UploadState` Values:**
+    #
+    #   `FailingUpload`
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/CacheReportFilter AWS API Documentation
+    #
+    class CacheReportFilter < Struct.new(
+      :name,
+      :values)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains all informational fields associated with a cache report.
+    # Includes name, ARN, tags, status, progress, filters, start time, and
+    # end time.
+    #
+    # @!attribute [rw] cache_report_arn
+    #   The Amazon Resource Name (ARN) of the cache report you want to
+    #   describe.
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_report_status
+    #   The status of the specified cache report.
+    #   @return [String]
+    #
+    # @!attribute [rw] report_completion_percent
+    #   The percentage of the report generation process that has been
+    #   completed at time of inquiry.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] end_time
+    #   The time at which the gateway stopped generating the cache report.
+    #   @return [Time]
+    #
+    # @!attribute [rw] role
+    #   The ARN of the IAM role that an S3 File Gateway assumes when it
+    #   accesses the underlying storage.
+    #   @return [String]
+    #
+    # @!attribute [rw] file_share_arn
+    #   The Amazon Resource Name (ARN) of the file share.
+    #   @return [String]
+    #
+    # @!attribute [rw] location_arn
+    #   The ARN of the Amazon S3 bucket location where the cache report is
+    #   saved.
+    #   @return [String]
+    #
+    # @!attribute [rw] start_time
+    #   The time at which the gateway started generating the cache report.
+    #   @return [Time]
+    #
+    # @!attribute [rw] inclusion_filters
+    #   The list of filters and parameters that determine which files are
+    #   included in the report.
+    #   @return [Array<Types::CacheReportFilter>]
+    #
+    # @!attribute [rw] exclusion_filters
+    #   The list of filters and parameters that determine which files are
+    #   excluded from the report.
+    #   @return [Array<Types::CacheReportFilter>]
+    #
+    # @!attribute [rw] report_name
+    #   The file name of the completed cache report object stored in Amazon
+    #   S3.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The list of key/value tags associated with the report.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/CacheReportInfo AWS API Documentation
+    #
+    class CacheReportInfo < Struct.new(
+      :cache_report_arn,
+      :cache_report_status,
+      :report_completion_percent,
+      :end_time,
+      :role,
+      :file_share_arn,
+      :location_arn,
+      :start_time,
+      :inclusion_filters,
+      :exclusion_filters,
+      :report_name,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes an iSCSI cached volume.
     #
     # @!attribute [rw] volume_arn
@@ -850,6 +966,32 @@ module Aws::StorageGateway
     #
     class CancelArchivalOutput < Struct.new(
       :tape_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] cache_report_arn
+    #   The Amazon Resource Name (ARN) of the cache report you want to
+    #   cancel.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/CancelCacheReportInput AWS API Documentation
+    #
+    class CancelCacheReportInput < Struct.new(
+      :cache_report_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] cache_report_arn
+    #   The Amazon Resource Name (ARN) of the cache report you want to
+    #   cancel.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/CancelCacheReportOutput AWS API Documentation
+    #
+    class CancelCacheReportOutput < Struct.new(
+      :cache_report_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2288,6 +2430,32 @@ module Aws::StorageGateway
       include Aws::Structure
     end
 
+    # @!attribute [rw] cache_report_arn
+    #   The Amazon Resource Name (ARN) of the cache report you want to
+    #   delete.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/DeleteCacheReportInput AWS API Documentation
+    #
+    class DeleteCacheReportInput < Struct.new(
+      :cache_report_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] cache_report_arn
+    #   The Amazon Resource Name (ARN) of the cache report you want to
+    #   delete.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/DeleteCacheReportOutput AWS API Documentation
+    #
+    class DeleteCacheReportOutput < Struct.new(
+      :cache_report_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A JSON object containing one or more of the following fields:
     #
     # * DeleteChapCredentialsInput$InitiatorName
@@ -2750,6 +2918,33 @@ module Aws::StorageGateway
       :cache_dirty_percentage,
       :cache_hit_percentage,
       :cache_miss_percentage)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] cache_report_arn
+    #   The Amazon Resource Name (ARN) of the cache report you want to
+    #   describe.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/DescribeCacheReportInput AWS API Documentation
+    #
+    class DescribeCacheReportInput < Struct.new(
+      :cache_report_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] cache_report_info
+    #   Contains all informational fields associated with a cache report.
+    #   Includes name, ARN, tags, status, progress, filters, start time, and
+    #   end time.
+    #   @return [Types::CacheReportInfo]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/DescribeCacheReportOutput AWS API Documentation
+    #
+    class DescribeCacheReportOutput < Struct.new(
+      :cache_report_info)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3219,6 +3414,12 @@ module Aws::StorageGateway
     # @!attribute [rw] active_directory_status
     #   Indicates the status of a gateway that is a member of the Active
     #   Directory domain.
+    #
+    #   <note markdown="1"> This field is only used as part of a `JoinDomain` request. It is not
+    #   affected by Active Directory connectivity changes that occur after
+    #   the `JoinDomain` request succeeds.
+    #
+    #    </note>
     #
     #   * `ACCESS_DENIED`: Indicates that the `JoinDomain` operation failed
     #     due to an authentication error.
@@ -4363,6 +4564,12 @@ module Aws::StorageGateway
     #   Indicates the status of the gateway as a member of the Active
     #   Directory domain.
     #
+    #   <note markdown="1"> This field is only used as part of a `JoinDomain` request. It is not
+    #   affected by Active Directory connectivity changes that occur after
+    #   the `JoinDomain` request succeeds.
+    #
+    #    </note>
+    #
     #   * `ACCESS_DENIED`: Indicates that the `JoinDomain` operation failed
     #     due to an authentication error.
     #
@@ -4416,6 +4623,41 @@ module Aws::StorageGateway
     #
     class ListAutomaticTapeCreationPoliciesOutput < Struct.new(
       :automatic_tape_creation_policy_infos)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] marker
+    #   Opaque pagination token returned from a previous `ListCacheReports`
+    #   operation. If present, `Marker` specifies where to continue the list
+    #   from after a previous call to `ListCacheReports`. Optional.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/ListCacheReportsInput AWS API Documentation
+    #
+    class ListCacheReportsInput < Struct.new(
+      :marker)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] cache_report_list
+    #   A list of existing cache reports for all file shares associated with
+    #   your Amazon Web Services account. This list includes all information
+    #   provided by the `DescribeCacheReport` action, such as report status,
+    #   completion progress, start time, end time, filters, and tags.
+    #   @return [Array<Types::CacheReportInfo>]
+    #
+    # @!attribute [rw] marker
+    #   If the request includes `Marker`, the response returns that value in
+    #   this field.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/ListCacheReportsOutput AWS API Documentation
+    #
+    class ListCacheReportsOutput < Struct.new(
+      :cache_report_list,
+      :marker)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6084,6 +6326,93 @@ module Aws::StorageGateway
     #
     class StartAvailabilityMonitorTestOutput < Struct.new(
       :gateway_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] file_share_arn
+    #   The Amazon Resource Name (ARN) of the file share.
+    #   @return [String]
+    #
+    # @!attribute [rw] role
+    #   The ARN of the IAM role used when saving the cache report to Amazon
+    #   S3.
+    #   @return [String]
+    #
+    # @!attribute [rw] location_arn
+    #   The ARN of the Amazon S3 bucket where the cache report will be
+    #   saved.
+    #
+    #   <note markdown="1"> We do not recommend saving the cache report to the same Amazon S3
+    #   bucket for which you are generating the report.
+    #
+    #    This field does not accept access point ARNs.
+    #
+    #    </note>
+    #   @return [String]
+    #
+    # @!attribute [rw] bucket_region
+    #   The Amazon Web Services Region of the Amazon S3 bucket associated
+    #   with the file share for which you want to generate the cache report.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_endpoint_dns_name
+    #   The DNS name of the VPC endpoint associated with the Amazon S3 where
+    #   you want to save the cache report. Optional.
+    #   @return [String]
+    #
+    # @!attribute [rw] inclusion_filters
+    #   The list of filters and parameters that determine which files are
+    #   included in the report. You must specify at least one value for
+    #   `InclusionFilters` or `ExclusionFilters` in a `StartCacheReport`
+    #   request.
+    #   @return [Array<Types::CacheReportFilter>]
+    #
+    # @!attribute [rw] exclusion_filters
+    #   The list of filters and parameters that determine which files are
+    #   excluded from the report. You must specify at least one value for
+    #   `InclusionFilters` or `ExclusionFilters` in a `StartCacheReport`
+    #   request.
+    #   @return [Array<Types::CacheReportFilter>]
+    #
+    # @!attribute [rw] client_token
+    #   A unique identifier that you use to ensure idempotent report
+    #   generation if you need to retry an unsuccessful `StartCacheReport`
+    #   request. If you retry a request, use the same `ClientToken` you
+    #   specified in the initial request.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   A list of up to 50 key/value tags that you can assign to the cache
+    #   report. Using tags can help you categorize your reports and more
+    #   easily locate them in search results.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/StartCacheReportInput AWS API Documentation
+    #
+    class StartCacheReportInput < Struct.new(
+      :file_share_arn,
+      :role,
+      :location_arn,
+      :bucket_region,
+      :vpc_endpoint_dns_name,
+      :inclusion_filters,
+      :exclusion_filters,
+      :client_token,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] cache_report_arn
+    #   The Amazon Resource Name (ARN) of the cache report generated by the
+    #   `StartCacheReport` request.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/StartCacheReportOutput AWS API Documentation
+    #
+    class StartCacheReportOutput < Struct.new(
+      :cache_report_arn)
       SENSITIVE = []
       include Aws::Structure
     end

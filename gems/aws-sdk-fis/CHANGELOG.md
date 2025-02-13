@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.47.0 (2025-02-13)
+------------------
+
+* Feature - Adds auto-pagination for the following operations: ListActions, ListExperimentTemplates, ListTargetAccountConfigurations, ListExperiments, ListExperimentResolvedTargets, ListTargetResourceTypes. Reduces length constraints of prefixes for logConfiguration and experimentReportConfiguration.
+
 1.46.0 (2025-02-06)
 ------------------
 

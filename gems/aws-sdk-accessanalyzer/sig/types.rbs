@@ -364,6 +364,14 @@ module Aws::AccessAnalyzer
       SENSITIVE: []
     end
 
+    class ExternalAccessFindingsStatistics
+      attr_accessor resource_type_statistics: ::Hash[("AWS::S3::Bucket" | "AWS::IAM::Role" | "AWS::SQS::Queue" | "AWS::Lambda::Function" | "AWS::Lambda::LayerVersion" | "AWS::KMS::Key" | "AWS::SecretsManager::Secret" | "AWS::EFS::FileSystem" | "AWS::EC2::Snapshot" | "AWS::ECR::Repository" | "AWS::RDS::DBSnapshot" | "AWS::RDS::DBClusterSnapshot" | "AWS::SNS::Topic" | "AWS::S3Express::DirectoryBucket" | "AWS::DynamoDB::Table" | "AWS::DynamoDB::Stream" | "AWS::IAM::User"), Types::ResourceTypeDetails]
+      attr_accessor total_active_findings: ::Integer
+      attr_accessor total_archived_findings: ::Integer
+      attr_accessor total_resolved_findings: ::Integer
+      SENSITIVE: []
+    end
+
     class Finding
       attr_accessor id: ::String
       attr_accessor principal: ::Hash[::String, ::String]
@@ -380,6 +388,13 @@ module Aws::AccessAnalyzer
       attr_accessor error: ::String
       attr_accessor sources: ::Array[Types::FindingSource]
       attr_accessor resource_control_policy_restriction: ("APPLICABLE" | "FAILED_TO_EVALUATE_RCP" | "NOT_APPLICABLE")
+      SENSITIVE: []
+    end
+
+    class FindingAggregationAccountDetails
+      attr_accessor account: ::String
+      attr_accessor number_of_active_findings: ::Integer
+      attr_accessor details: ::Hash[::String, ::Integer]
       SENSITIVE: []
     end
 
@@ -449,6 +464,20 @@ module Aws::AccessAnalyzer
       attr_accessor updated_at: ::Time
       attr_accessor finding_type: ("ExternalAccess" | "UnusedIAMRole" | "UnusedIAMUserAccessKey" | "UnusedIAMUserPassword" | "UnusedPermission")
       SENSITIVE: []
+    end
+
+    class FindingsStatistics
+      attr_accessor external_access_findings_statistics: Types::ExternalAccessFindingsStatistics
+      attr_accessor unused_access_findings_statistics: Types::UnusedAccessFindingsStatistics
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class ExternalAccessFindingsStatistics < FindingsStatistics
+      end
+      class UnusedAccessFindingsStatistics < FindingsStatistics
+      end
+      class Unknown < FindingsStatistics
+      end
     end
 
     class GenerateFindingRecommendationRequest
@@ -570,6 +599,17 @@ module Aws::AccessAnalyzer
       attr_accessor updated_at: ::Time
       attr_accessor finding_details: ::Array[Types::FindingDetails]
       attr_accessor finding_type: ("ExternalAccess" | "UnusedIAMRole" | "UnusedIAMUserAccessKey" | "UnusedIAMUserPassword" | "UnusedPermission")
+      SENSITIVE: []
+    end
+
+    class GetFindingsStatisticsRequest
+      attr_accessor analyzer_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetFindingsStatisticsResponse
+      attr_accessor findings_statistics: ::Array[Types::FindingsStatistics]
+      attr_accessor last_updated_at: ::Time
       SENSITIVE: []
     end
 
@@ -894,6 +934,12 @@ module Aws::AccessAnalyzer
       SENSITIVE: []
     end
 
+    class ResourceTypeDetails
+      attr_accessor total_active_public: ::Integer
+      attr_accessor total_active_cross_account: ::Integer
+      SENSITIVE: []
+    end
+
     class S3AccessPointConfiguration
       attr_accessor access_point_policy: ::String
       attr_accessor public_access_block: Types::S3PublicAccessBlockConfiguration
@@ -1037,6 +1083,21 @@ module Aws::AccessAnalyzer
     class UnusedAccessConfiguration
       attr_accessor unused_access_age: ::Integer
       attr_accessor analysis_rule: Types::AnalysisRule
+      SENSITIVE: []
+    end
+
+    class UnusedAccessFindingsStatistics
+      attr_accessor unused_access_type_statistics: ::Array[Types::UnusedAccessTypeStatistics]
+      attr_accessor top_accounts: ::Array[Types::FindingAggregationAccountDetails]
+      attr_accessor total_active_findings: ::Integer
+      attr_accessor total_archived_findings: ::Integer
+      attr_accessor total_resolved_findings: ::Integer
+      SENSITIVE: []
+    end
+
+    class UnusedAccessTypeStatistics
+      attr_accessor unused_access_type: ::String
+      attr_accessor total: ::Integer
       SENSITIVE: []
     end
 

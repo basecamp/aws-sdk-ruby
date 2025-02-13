@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.104.0 (2025-02-13)
+------------------
+
+* Feature - This release adds support for generating cache reports on S3 File Gateways for files that fail to upload.
+
 1.103.0 (2025-02-06)
 ------------------
 

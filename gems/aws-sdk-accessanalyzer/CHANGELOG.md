@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.67.0 (2025-02-13)
+------------------
+
+* Feature - This release introduces the getFindingsStatistics API, enabling users to retrieve aggregated finding statistics for IAM Access Analyzer's external access and unused access analysis features. Updated service API and documentation.
+
 1.66.0 (2025-02-06)
 ------------------
 

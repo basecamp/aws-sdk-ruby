@@ -208,6 +208,7 @@ module Aws::FIS
     ReportConfigurationDuration = Shapes::StringShape.new(name: 'ReportConfigurationDuration')
     ReportConfigurationS3Output = Shapes::StructureShape.new(name: 'ReportConfigurationS3Output')
     ReportConfigurationS3OutputInput = Shapes::StructureShape.new(name: 'ReportConfigurationS3OutputInput')
+    ReportConfigurationS3OutputPrefix = Shapes::StringShape.new(name: 'ReportConfigurationS3OutputPrefix')
     ResolvedTarget = Shapes::StructureShape.new(name: 'ResolvedTarget')
     ResolvedTargetList = Shapes::ListShape.new(name: 'ResolvedTargetList')
     ResourceArn = Shapes::StringShape.new(name: 'ResourceArn')
@@ -473,7 +474,7 @@ module Aws::FIS
     ExperimentReportConfigurationOutputs.struct_class = Types::ExperimentReportConfigurationOutputs
 
     ExperimentReportConfigurationOutputsS3Configuration.add_member(:bucket_name, Shapes::ShapeRef.new(shape: S3BucketName, location_name: "bucketName"))
-    ExperimentReportConfigurationOutputsS3Configuration.add_member(:prefix, Shapes::ShapeRef.new(shape: S3ObjectKey, location_name: "prefix"))
+    ExperimentReportConfigurationOutputsS3Configuration.add_member(:prefix, Shapes::ShapeRef.new(shape: ReportConfigurationS3OutputPrefix, location_name: "prefix"))
     ExperimentReportConfigurationOutputsS3Configuration.struct_class = Types::ExperimentReportConfigurationOutputsS3Configuration
 
     ExperimentReportError.add_member(:code, Shapes::ShapeRef.new(shape: ExperimentReportErrorCode, location_name: "code"))
@@ -790,11 +791,11 @@ module Aws::FIS
     ReportConfigurationCloudWatchDashboardInputList.member = Shapes::ShapeRef.new(shape: ReportConfigurationCloudWatchDashboardInput)
 
     ReportConfigurationS3Output.add_member(:bucket_name, Shapes::ShapeRef.new(shape: S3BucketName, location_name: "bucketName"))
-    ReportConfigurationS3Output.add_member(:prefix, Shapes::ShapeRef.new(shape: S3ObjectKey, location_name: "prefix"))
+    ReportConfigurationS3Output.add_member(:prefix, Shapes::ShapeRef.new(shape: ReportConfigurationS3OutputPrefix, location_name: "prefix"))
     ReportConfigurationS3Output.struct_class = Types::ReportConfigurationS3Output
 
     ReportConfigurationS3OutputInput.add_member(:bucket_name, Shapes::ShapeRef.new(shape: S3BucketName, location_name: "bucketName"))
-    ReportConfigurationS3OutputInput.add_member(:prefix, Shapes::ShapeRef.new(shape: S3ObjectKey, location_name: "prefix"))
+    ReportConfigurationS3OutputInput.add_member(:prefix, Shapes::ShapeRef.new(shape: ReportConfigurationS3OutputPrefix, location_name: "prefix"))
     ReportConfigurationS3OutputInput.struct_class = Types::ReportConfigurationS3OutputInput
 
     ResolvedTarget.add_member(:resource_type, Shapes::ShapeRef.new(shape: TargetResourceTypeId, location_name: "resourceType"))

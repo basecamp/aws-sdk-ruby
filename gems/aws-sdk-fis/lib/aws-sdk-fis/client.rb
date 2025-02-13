@@ -597,7 +597,7 @@ module Aws::FIS
     #       outputs: {
     #         s3_configuration: {
     #           bucket_name: "S3BucketName",
-    #           prefix: "S3ObjectKey",
+    #           prefix: "ReportConfigurationS3OutputPrefix",
     #         },
     #       },
     #       data_sources: {
@@ -1866,7 +1866,7 @@ module Aws::FIS
     #       outputs: {
     #         s3_configuration: {
     #           bucket_name: "S3BucketName",
-    #           prefix: "S3ObjectKey",
+    #           prefix: "ReportConfigurationS3OutputPrefix",
     #         },
     #       },
     #       data_sources: {
@@ -2038,7 +2038,7 @@ module Aws::FIS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-fis'
-      context[:gem_version] = '1.46.0'
+      context[:gem_version] = '1.47.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

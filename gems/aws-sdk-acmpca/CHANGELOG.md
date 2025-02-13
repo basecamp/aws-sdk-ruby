@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.89.0 (2025-02-13)
+------------------
+
+* Feature - Private Certificate Authority (PCA) documentation updates
+
 1.88.0 (2025-02-11)
 ------------------
 

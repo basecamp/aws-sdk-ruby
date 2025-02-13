@@ -805,41 +805,37 @@ module Aws::ACMPCA
     #   @return [Types::CrlDistributionPointExtensionConfiguration]
     #
     # @!attribute [rw] crl_type
-    #   Choose whether to use a partitioned or complete CRL. Your choice
-    #   determines the maximum number of certificates that the certificate
-    #   authority can issue and revoke, as described in the [Amazon Web
-    #   Services Private CA quotas][1].
+    #   Specifies whether to create a complete or partitioned CRL. This
+    #   setting determines the maximum number of certificates that the
+    #   certificate authority can issue and revoke. For more information,
+    #   see [Amazon Web Services Private CA
+    #   quotas](privateca/latest/userguide/pca.html#limits_pca).
     #
-    #   * `PARTITIONED` - The default setting. Partitioned CRLs are an
-    #     especially good option for devices that have limited processing
-    #     power or storage capacity, such as certain IoT devices. Compared
-    #     to complete CRLs, partitioned CRLs dramatically increase the
-    #     number of certificates your private CA can issue. Each certificate
-    #     that Amazon Web Services Private CA issues is bound to a specific
-    #     CRL partition through the CRL distribution point (CDP) defined in
-    #     [RFC 5280][2].
+    #   * `COMPLETE` - The default setting. Amazon Web Services Private CA
+    #     maintains a single CRL ﬁle for all unexpired certiﬁcates issued by
+    #     a CA that have been revoked for any reason. Each certiﬁcate that
+    #     Amazon Web Services Private CA issues is bound to a speciﬁc CRL
+    #     through its CRL distribution point (CDP) extension, deﬁned in [
+    #     RFC 5280][1].
     #
-    #     To make sure that your client fetches the CRL from a valid
-    #     endpoint, we recommend that you programmatically validate that the
-    #     CRL's issuing distribution point (IDP) URI matches the
-    #     certificate's CDP URI. Amazon Web Services Private CA marks the
-    #     IDP extension as critical, which your client must be able to
-    #     process.
+    #   * `PARTITIONED` - Compared to complete CRLs, partitioned CRLs
+    #     dramatically increase the number of certiﬁcates your private CA
+    #     can issue.
     #
-    #   * `COMPLETE` - Amazon Web Services Private CA maintains a single CRL
-    #     file for all unexpired certificates issued by a CA that have been
-    #     revoked for any reason.
+    #     When using partitioned CRLs, you must validate that the CRL's
+    #     associated issuing distribution point (IDP) URI matches the
+    #     certiﬁcate's CDP URI to ensure the right CRL has been fetched.
+    #     Amazon Web Services Private CA marks the IDP extension as
+    #     critical, which your client must be able to process.
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/general/latest/gr/pca.html#limits_pca-connector-ad
-    #   [2]: https://datatracker.ietf.org/doc/html/rfc5280
+    #   [1]: https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.9
     #   @return [String]
     #
     # @!attribute [rw] custom_path
-    #   Designates a custom file path in S3 for CRL(s). For example,
-    #   `http://<CustomName>/<CustomPath>/<CrlPartition_GUID>.crl`. You can
-    #   change the custom path up to five times.
+    #   Designates a custom ﬁle path in S3 for CRL(s). For example,
+    #   `http://<CustomName>/ <CustomPath>/<CrlPartition_GUID>.crl`.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/acm-pca-2017-08-22/CrlConfiguration AWS API Documentation

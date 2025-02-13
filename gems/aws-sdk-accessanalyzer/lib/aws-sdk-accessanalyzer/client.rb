@@ -1747,6 +1747,58 @@ module Aws::AccessAnalyzer
       req.send_request(options)
     end
 
+    # Retrieves a list of aggregated finding statistics for an external
+    # access or unused access analyzer.
+    #
+    # @option params [required, String] :analyzer_arn
+    #   The [ARN of the analyzer][1] used to generate the statistics.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html#permission-resources
+    #
+    # @return [Types::GetFindingsStatisticsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetFindingsStatisticsResponse#findings_statistics #findings_statistics} => Array&lt;Types::FindingsStatistics&gt;
+    #   * {Types::GetFindingsStatisticsResponse#last_updated_at #last_updated_at} => Time
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_findings_statistics({
+    #     analyzer_arn: "AnalyzerArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.findings_statistics #=> Array
+    #   resp.findings_statistics[0].external_access_findings_statistics.resource_type_statistics #=> Hash
+    #   resp.findings_statistics[0].external_access_findings_statistics.resource_type_statistics["ResourceType"].total_active_public #=> Integer
+    #   resp.findings_statistics[0].external_access_findings_statistics.resource_type_statistics["ResourceType"].total_active_cross_account #=> Integer
+    #   resp.findings_statistics[0].external_access_findings_statistics.total_active_findings #=> Integer
+    #   resp.findings_statistics[0].external_access_findings_statistics.total_archived_findings #=> Integer
+    #   resp.findings_statistics[0].external_access_findings_statistics.total_resolved_findings #=> Integer
+    #   resp.findings_statistics[0].unused_access_findings_statistics.unused_access_type_statistics #=> Array
+    #   resp.findings_statistics[0].unused_access_findings_statistics.unused_access_type_statistics[0].unused_access_type #=> String
+    #   resp.findings_statistics[0].unused_access_findings_statistics.unused_access_type_statistics[0].total #=> Integer
+    #   resp.findings_statistics[0].unused_access_findings_statistics.top_accounts #=> Array
+    #   resp.findings_statistics[0].unused_access_findings_statistics.top_accounts[0].account #=> String
+    #   resp.findings_statistics[0].unused_access_findings_statistics.top_accounts[0].number_of_active_findings #=> Integer
+    #   resp.findings_statistics[0].unused_access_findings_statistics.top_accounts[0].details #=> Hash
+    #   resp.findings_statistics[0].unused_access_findings_statistics.top_accounts[0].details["String"] #=> Integer
+    #   resp.findings_statistics[0].unused_access_findings_statistics.total_active_findings #=> Integer
+    #   resp.findings_statistics[0].unused_access_findings_statistics.total_archived_findings #=> Integer
+    #   resp.findings_statistics[0].unused_access_findings_statistics.total_resolved_findings #=> Integer
+    #   resp.last_updated_at #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/GetFindingsStatistics AWS API Documentation
+    #
+    # @overload get_findings_statistics(params = {})
+    # @param [Hash] params ({})
+    def get_findings_statistics(params = {}, options = {})
+      req = build_request(:get_findings_statistics, params)
+      req.send_request(options)
+    end
+
     # Retrieves the policy that was generated using `StartPolicyGeneration`.
     #
     # @option params [required, String] :job_id
@@ -2774,7 +2826,7 @@ module Aws::AccessAnalyzer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-accessanalyzer'
-      context[:gem_version] = '1.66.0'
+      context[:gem_version] = '1.67.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
