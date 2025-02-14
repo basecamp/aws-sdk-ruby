@@ -345,6 +345,8 @@ module Aws::DatabaseMigrationService
     PluginNameValue = Shapes::StringShape.new(name: 'PluginNameValue')
     PostgreSQLSettings = Shapes::StructureShape.new(name: 'PostgreSQLSettings')
     PostgreSqlDataProviderSettings = Shapes::StructureShape.new(name: 'PostgreSqlDataProviderSettings')
+    PremigrationAssessmentStatus = Shapes::StructureShape.new(name: 'PremigrationAssessmentStatus')
+    PremigrationAssessmentStatusList = Shapes::ListShape.new(name: 'PremigrationAssessmentStatusList')
     ProvisionData = Shapes::StructureShape.new(name: 'ProvisionData')
     PublicIpAddressList = Shapes::ListShape.new(name: 'PublicIpAddressList')
     RdsConfiguration = Shapes::StructureShape.new(name: 'RdsConfiguration')
@@ -2165,6 +2167,21 @@ module Aws::DatabaseMigrationService
     PostgreSqlDataProviderSettings.add_member(:certificate_arn, Shapes::ShapeRef.new(shape: String, location_name: "CertificateArn"))
     PostgreSqlDataProviderSettings.struct_class = Types::PostgreSqlDataProviderSettings
 
+    PremigrationAssessmentStatus.add_member(:premigration_assessment_run_arn, Shapes::ShapeRef.new(shape: String, location_name: "PremigrationAssessmentRunArn"))
+    PremigrationAssessmentStatus.add_member(:fail_on_assessment_failure, Shapes::ShapeRef.new(shape: Boolean, location_name: "FailOnAssessmentFailure"))
+    PremigrationAssessmentStatus.add_member(:status, Shapes::ShapeRef.new(shape: String, location_name: "Status"))
+    PremigrationAssessmentStatus.add_member(:premigration_assessment_run_creation_date, Shapes::ShapeRef.new(shape: TStamp, location_name: "PremigrationAssessmentRunCreationDate"))
+    PremigrationAssessmentStatus.add_member(:assessment_progress, Shapes::ShapeRef.new(shape: ReplicationTaskAssessmentRunProgress, location_name: "AssessmentProgress"))
+    PremigrationAssessmentStatus.add_member(:last_failure_message, Shapes::ShapeRef.new(shape: String, location_name: "LastFailureMessage"))
+    PremigrationAssessmentStatus.add_member(:result_location_bucket, Shapes::ShapeRef.new(shape: String, location_name: "ResultLocationBucket"))
+    PremigrationAssessmentStatus.add_member(:result_location_folder, Shapes::ShapeRef.new(shape: String, location_name: "ResultLocationFolder"))
+    PremigrationAssessmentStatus.add_member(:result_encryption_mode, Shapes::ShapeRef.new(shape: String, location_name: "ResultEncryptionMode"))
+    PremigrationAssessmentStatus.add_member(:result_kms_key_arn, Shapes::ShapeRef.new(shape: String, location_name: "ResultKmsKeyArn"))
+    PremigrationAssessmentStatus.add_member(:result_statistic, Shapes::ShapeRef.new(shape: ReplicationTaskAssessmentRunResultStatistic, location_name: "ResultStatistic"))
+    PremigrationAssessmentStatus.struct_class = Types::PremigrationAssessmentStatus
+
+    PremigrationAssessmentStatusList.member = Shapes::ShapeRef.new(shape: PremigrationAssessmentStatus)
+
     ProvisionData.add_member(:provision_state, Shapes::ShapeRef.new(shape: String, location_name: "ProvisionState"))
     ProvisionData.add_member(:provisioned_capacity_units, Shapes::ShapeRef.new(shape: Integer, location_name: "ProvisionedCapacityUnits"))
     ProvisionData.add_member(:date_provisioned, Shapes::ShapeRef.new(shape: TStamp, location_name: "DateProvisioned"))
@@ -2315,6 +2332,7 @@ module Aws::DatabaseMigrationService
     Replication.add_member(:replication_type, Shapes::ShapeRef.new(shape: MigrationTypeValue, location_name: "ReplicationType"))
     Replication.add_member(:status, Shapes::ShapeRef.new(shape: String, location_name: "Status"))
     Replication.add_member(:provision_data, Shapes::ShapeRef.new(shape: ProvisionData, location_name: "ProvisionData"))
+    Replication.add_member(:premigration_assessment_statuses, Shapes::ShapeRef.new(shape: PremigrationAssessmentStatusList, location_name: "PremigrationAssessmentStatuses"))
     Replication.add_member(:stop_reason, Shapes::ShapeRef.new(shape: String, location_name: "StopReason"))
     Replication.add_member(:failure_messages, Shapes::ShapeRef.new(shape: StringList, location_name: "FailureMessages"))
     Replication.add_member(:replication_stats, Shapes::ShapeRef.new(shape: ReplicationStats, location_name: "ReplicationStats"))
@@ -2695,6 +2713,7 @@ module Aws::DatabaseMigrationService
 
     StartReplicationMessage.add_member(:replication_config_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ReplicationConfigArn"))
     StartReplicationMessage.add_member(:start_replication_type, Shapes::ShapeRef.new(shape: String, required: true, location_name: "StartReplicationType"))
+    StartReplicationMessage.add_member(:premigration_assessment_settings, Shapes::ShapeRef.new(shape: String, location_name: "PremigrationAssessmentSettings"))
     StartReplicationMessage.add_member(:cdc_start_time, Shapes::ShapeRef.new(shape: TStamp, location_name: "CdcStartTime"))
     StartReplicationMessage.add_member(:cdc_start_position, Shapes::ShapeRef.new(shape: String, location_name: "CdcStartPosition"))
     StartReplicationMessage.add_member(:cdc_stop_position, Shapes::ShapeRef.new(shape: String, location_name: "CdcStopPosition"))

@@ -55,6 +55,7 @@ module Aws::RDSDataService
     Id = Shapes::StringShape.new(name: 'Id')
     Integer = Shapes::IntegerShape.new(name: 'Integer')
     InternalServerErrorException = Shapes::StructureShape.new(name: 'InternalServerErrorException')
+    InvalidResourceStateException = Shapes::StructureShape.new(name: 'InvalidResourceStateException')
     InvalidSecretException = Shapes::StructureShape.new(name: 'InvalidSecretException')
     Long = Shapes::IntegerShape.new(name: 'Long')
     LongArray = Shapes::ListShape.new(name: 'LongArray')
@@ -235,6 +236,9 @@ module Aws::RDSDataService
 
     InternalServerErrorException.struct_class = Types::InternalServerErrorException
 
+    InvalidResourceStateException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
+    InvalidResourceStateException.struct_class = Types::InvalidResourceStateException
+
     InvalidSecretException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
     InvalidSecretException.struct_class = Types::InvalidSecretException
 
@@ -370,6 +374,7 @@ module Aws::RDSDataService
         o.errors << Shapes::ShapeRef.new(shape: DatabaseUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: TransactionNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidSecretException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidResourceStateException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableError)
         o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
         o.errors << Shapes::ShapeRef.new(shape: DatabaseNotFoundException)
@@ -392,6 +397,7 @@ module Aws::RDSDataService
         o.errors << Shapes::ShapeRef.new(shape: DatabaseUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: TransactionNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidSecretException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidResourceStateException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableError)
         o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
         o.errors << Shapes::ShapeRef.new(shape: DatabaseNotFoundException)
@@ -413,6 +419,7 @@ module Aws::RDSDataService
         o.errors << Shapes::ShapeRef.new(shape: DatabaseUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: TransactionNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidSecretException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidResourceStateException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableError)
         o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
         o.errors << Shapes::ShapeRef.new(shape: DatabaseNotFoundException)
@@ -450,6 +457,7 @@ module Aws::RDSDataService
         o.errors << Shapes::ShapeRef.new(shape: DatabaseUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: TransactionNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidSecretException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidResourceStateException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableError)
         o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
         o.errors << Shapes::ShapeRef.new(shape: DatabaseNotFoundException)
@@ -472,6 +480,7 @@ module Aws::RDSDataService
         o.errors << Shapes::ShapeRef.new(shape: DatabaseUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: TransactionNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidSecretException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidResourceStateException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableError)
         o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
         o.errors << Shapes::ShapeRef.new(shape: DatabaseNotFoundException)

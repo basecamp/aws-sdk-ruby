@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.144.0 (2025-02-14)
+------------------
+
+* Feature - Added test suite names to test case metadata
+
 1.143.0 (2025-02-12)
 ------------------
 

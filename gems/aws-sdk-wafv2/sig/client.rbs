@@ -2654,6 +2654,19 @@ module Aws
                               cloud_watch_metrics_enabled: bool,
                               metric_name: ::String
                             },
+                            ?data_protection_config: {
+                              data_protections: Array[
+                                {
+                                  field: {
+                                    field_type: ("SINGLE_HEADER" | "SINGLE_COOKIE" | "SINGLE_QUERY_ARGUMENT" | "QUERY_STRING" | "BODY"),
+                                    field_keys: Array[::String]?
+                                  },
+                                  action: ("SUBSTITUTION" | "HASH"),
+                                  exclude_rule_match_details: bool?,
+                                  exclude_rate_based_details: bool?
+                                },
+                              ]
+                            },
                             ?tags: Array[
                               {
                                 key: ::String,
@@ -5028,6 +5041,19 @@ module Aws
                               sampled_requests_enabled: bool,
                               cloud_watch_metrics_enabled: bool,
                               metric_name: ::String
+                            },
+                            ?data_protection_config: {
+                              data_protections: Array[
+                                {
+                                  field: {
+                                    field_type: ("SINGLE_HEADER" | "SINGLE_COOKIE" | "SINGLE_QUERY_ARGUMENT" | "QUERY_STRING" | "BODY"),
+                                    field_keys: Array[::String]?
+                                  },
+                                  action: ("SUBSTITUTION" | "HASH"),
+                                  exclude_rule_match_details: bool?,
+                                  exclude_rate_based_details: bool?
+                                },
+                              ]
                             },
                             lock_token: ::String,
                             ?custom_response_bodies: Hash[::String, {

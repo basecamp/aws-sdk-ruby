@@ -874,11 +874,8 @@ module Aws::WAFV2
     end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -1061,11 +1058,8 @@ module Aws::WAFV2
     end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -1114,11 +1108,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -1218,11 +1209,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -1279,11 +1267,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -1394,11 +1379,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -1429,6 +1411,19 @@ module Aws::WAFV2
     #   Defines and enables Amazon CloudWatch metrics and web request sample
     #   collection.
     #   @return [Types::VisibilityConfig]
+    #
+    # @!attribute [rw] data_protection_config
+    #   Specifies data protection to apply to the web request data that WAF
+    #   stores for the web ACL. This is a web ACL level data protection
+    #   option.
+    #
+    #   The data protection that you configure for the web ACL alters the
+    #   data that's available for any other data collection activity,
+    #   including WAF logging, web ACL request sampling, Amazon Web Services
+    #   Managed Rules, and Amazon Security Lake data collection and
+    #   management. Your other option for data protection is in the logging
+    #   configuration, which only affects logging.
+    #   @return [Types::DataProtectionConfig]
     #
     # @!attribute [rw] tags
     #   An array of key:value pairs to associate with the resource.
@@ -1516,6 +1511,7 @@ module Aws::WAFV2
       :description,
       :rules,
       :visibility_config,
+      :data_protection_config,
       :tags,
       :custom_response_bodies,
       :captcha_config,
@@ -1692,6 +1688,90 @@ module Aws::WAFV2
       include Aws::Structure
     end
 
+    # Specifies the protection behavior for a field type. This is part of
+    # the data protection configuration for a web ACL.
+    #
+    # @!attribute [rw] field
+    #   Specifies the field type and optional keys to apply the protection
+    #   behavior to.
+    #   @return [Types::FieldToProtect]
+    #
+    # @!attribute [rw] action
+    #   Specifies how to protect the field. WAF can apply a one-way hash to
+    #   the field or hard code a string substitution.
+    #
+    #   * One-way hash example:
+    #     `ade099751dEXAMPLEHASH2ea9f3393f80dd5d3bEXAMPLEHASH966ae0d3cd5a1e`
+    #
+    #   * Substitution example: `REDACTED`
+    #   @return [String]
+    #
+    # @!attribute [rw] exclude_rule_match_details
+    #   Specifies whether to also protect any rule match details from the
+    #   web ACL logs when applying data protection this field type and keys.
+    #   WAF logs these details for non-terminating matching rules and for
+    #   the terminating matching rule. For additional information, see [Log
+    #   fields for web ACL traffic][1] in the *WAF Developer Guide*.
+    #
+    #   Default: `FALSE`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] exclude_rate_based_details
+    #   Specifies whether to also protect any rate-based rule details from
+    #   the web ACL logs when applying data protection for this field type
+    #   and keys. For additional information, see the log field
+    #   `rateBasedRuleList` at [Log fields for web ACL traffic][1] in the
+    #   *WAF Developer Guide*.
+    #
+    #   Default: `FALSE`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/DataProtection AWS API Documentation
+    #
+    class DataProtection < Struct.new(
+      :field,
+      :action,
+      :exclude_rule_match_details,
+      :exclude_rate_based_details)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies data protection to apply to the web request data that WAF
+    # stores for the web ACL. This is a web ACL level data protection
+    # option.
+    #
+    # The data protection that you configure for the web ACL alters the data
+    # that's available for any other data collection activity, including
+    # WAF logging, web ACL request sampling, Amazon Web Services Managed
+    # Rules, and Amazon Security Lake data collection and management. Your
+    # other option for data protection is in the logging configuration,
+    # which only affects logging.
+    #
+    # This is part of the data protection configuration for a web ACL.
+    #
+    # @!attribute [rw] data_protections
+    #   An array of data protection configurations for specific web request
+    #   field types. This is defined for each web ACL. WAF applies the
+    #   specified protection to all web requests that the web ACL inspects.
+    #   @return [Array<Types::DataProtection>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/DataProtectionConfig AWS API Documentation
+    #
+    class DataProtectionConfig < Struct.new(
+      :data_protections)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # In a WebACL, this is the action that you want WAF to perform when a
     # web request doesn't match any of the rules in the `WebACL`. The
     # default action must be a terminating action.
@@ -1714,11 +1794,8 @@ module Aws::WAFV2
     end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -1797,11 +1874,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -1914,11 +1988,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -1968,11 +2039,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -2022,11 +2090,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -2071,11 +2136,8 @@ module Aws::WAFV2
     class DeleteWebACLResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -2113,11 +2175,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -2161,11 +2220,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -2407,9 +2463,10 @@ module Aws::WAFV2
     #     redact from the logs.
     #
     #   * If you have request sampling enabled, the redacted fields
-    #     configuration for logging has no impact on sampling. The only way
-    #     to exclude fields from request sampling is by disabling sampling
-    #     in the web ACL visibility configuration.
+    #     configuration for logging has no impact on sampling. You can only
+    #     exclude fields from request sampling by disabling sampling in the
+    #     web ACL visibility configuration or by configuring data protection
+    #     for the web ACL.
     #
     # @!attribute [rw] single_header
     #   Inspect a single header. Provide the name of the header to inspect,
@@ -2577,6 +2634,28 @@ module Aws::WAFV2
       :cookies,
       :header_order,
       :ja3_fingerprint)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies a field type and keys to protect in stored web request data.
+    # This is part of the data protection configuration for a web ACL.
+    #
+    # @!attribute [rw] field_type
+    #   Specifies the web request component type to protect.
+    #   @return [String]
+    #
+    # @!attribute [rw] field_keys
+    #   Specifies the keys to protect for the specified field type. If you
+    #   don't specify any key, then all keys for the field type are
+    #   protected.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/FieldToProtect AWS API Documentation
+    #
+    class FieldToProtect < Struct.new(
+      :field_type,
+      :field_keys)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2847,11 +2926,8 @@ module Aws::WAFV2
     end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -2898,11 +2974,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -3014,11 +3087,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -3127,11 +3197,8 @@ module Aws::WAFV2
     end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -3201,11 +3268,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -3262,11 +3326,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -3333,11 +3394,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -3466,11 +3524,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -4324,11 +4379,8 @@ module Aws::WAFV2
     end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -4403,11 +4455,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -4474,11 +4523,8 @@ module Aws::WAFV2
     end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -4537,11 +4583,8 @@ module Aws::WAFV2
     end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -4600,11 +4643,8 @@ module Aws::WAFV2
     end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -4682,11 +4722,8 @@ module Aws::WAFV2
     end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -4797,11 +4834,8 @@ module Aws::WAFV2
     end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -4864,11 +4898,12 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] resource_type
-    #   Used for web ACLs that are scoped for regional applications. A
-    #   regional application can be an Application Load Balancer (ALB), an
-    #   Amazon API Gateway REST API, an AppSync GraphQL API, an Amazon
-    #   Cognito user pool, an App Runner service, or an Amazon Web Services
-    #   Verified Access instance.
+    #   Retrieves the web ACLs that are used by the specified resource type.
+    #
+    #   For Amazon CloudFront, don't use this call. Instead, use the
+    #   CloudFront call `ListDistributionsByWebACLId`. For information, see
+    #   [ListDistributionsByWebACLId][1] in the *Amazon CloudFront API
+    #   Reference*.
     #
     #   <note markdown="1"> If you don't provide a resource type, the call uses the resource
     #   type `APPLICATION_LOAD_BALANCER`.
@@ -4876,6 +4911,10 @@ module Aws::WAFV2
     #    </note>
     #
     #   Default: `APPLICATION_LOAD_BALANCER`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListDistributionsByWebACLId.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/ListResourcesForWebACLRequest AWS API Documentation
@@ -4901,11 +4940,8 @@ module Aws::WAFV2
     end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -5016,11 +5052,8 @@ module Aws::WAFV2
     end
 
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -5084,6 +5117,9 @@ module Aws::WAFV2
     # and you can specify filters so that you log only a subset of the
     # logging records.
     #
+    # If you configure data protection for the web ACL, the protection
+    # applies to the data that WAF sends to the logs.
+    #
     # <note markdown="1"> You can define one logging destination per web ACL.
     #
     #  </note>
@@ -5141,6 +5177,9 @@ module Aws::WAFV2
     #   field in the logs will be `REDACTED` for all rules that use the
     #   `SingleHeader` `FieldToMatch` setting.
     #
+    #   If you configure data protection for the web ACL, the protection
+    #   applies to the data that WAF sends to the logs.
+    #
     #   Redaction applies only to the component that's specified in the
     #   rule's `FieldToMatch` setting, so the `SingleHeader` redaction
     #   doesn't apply to rules that use the `Headers` `FieldToMatch`.
@@ -5150,9 +5189,10 @@ module Aws::WAFV2
     #
     #    </note>
     #
-    #   <note markdown="1"> This setting has no impact on request sampling. With request
-    #   sampling, the only way to exclude fields is by disabling sampling in
-    #   the web ACL visibility configuration.
+    #   <note markdown="1"> This setting has no impact on request sampling. You can only exclude
+    #   fields from request sampling by disabling sampling in the web ACL
+    #   visibility configuration or by configuring data protection for the
+    #   web ACL.
     #
     #    </note>
     #   @return [Array<Types::FieldToMatch>]
@@ -5530,6 +5570,13 @@ module Aws::WAFV2
     #   Action settings to use in the place of the rule actions that are
     #   configured inside the rule group. You specify one override for each
     #   rule whose action you want to change.
+    #
+    #   <note markdown="1"> Take care to verify the rule names in your overrides. If you provide
+    #   a rule name that doesn't match the name of any rule in the rule
+    #   group, WAF doesn't return an error and doesn't apply the override
+    #   setting.
+    #
+    #    </note>
     #
     #   You can use overrides for testing, for example you can override all
     #   of rule actions to `Count` and then monitor the resulting count
@@ -6102,11 +6149,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -6335,10 +6379,10 @@ module Aws::WAFV2
     # [1]: https://docs.aws.amazon.com/waf/latest/developerguide/waf-rate-based-rules.html
     #
     # @!attribute [rw] limit
-    #   The limit on requests per 5-minute period for a single aggregation
-    #   instance for the rate-based rule. If the rate-based statement
-    #   includes a `ScopeDownStatement`, this limit is applied only to the
-    #   requests that match the statement.
+    #   The limit on requests during the specified evaluation window for a
+    #   single aggregation instance for the rate-based rule. If the
+    #   rate-based statement includes a `ScopeDownStatement`, this limit is
+    #   applied only to the requests that match the statement.
     #
     #   Examples:
     #
@@ -7610,6 +7654,11 @@ module Aws::WAFV2
     #   label. The rule's rule group or web ACL defines the label
     #   namespace.
     #
+    #   <note markdown="1"> Any rule that isn't a rule group reference statement or managed
+    #   rule group statement can add labels to matching web requests.
+    #
+    #    </note>
+    #
     #   Rules that run after this rule in the web ACL can match against
     #   these labels using a `LabelMatchStatement`.
     #
@@ -7707,6 +7756,12 @@ module Aws::WAFV2
     # inside the rule group. You specify one override for each rule whose
     # action you want to change.
     #
+    # <note markdown="1"> Take care to verify the rule names in your overrides. If you provide a
+    # rule name that doesn't match the name of any rule in the rule group,
+    # WAF doesn't return an error and doesn't apply the override setting.
+    #
+    #  </note>
+    #
     # You can use overrides for testing, for example you can override all of
     # rule actions to `Count` and then monitor the resulting count metrics
     # to understand how the rule group would handle your web traffic. You
@@ -7715,6 +7770,13 @@ module Aws::WAFV2
     #
     # @!attribute [rw] name
     #   The name of the rule to override.
+    #
+    #   <note markdown="1"> Take care to verify the rule names in your overrides. If you provide
+    #   a rule name that doesn't match the name of any rule in the rule
+    #   group, WAF doesn't return an error and doesn't apply the override
+    #   setting.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] action_to_use
@@ -7886,6 +7948,13 @@ module Aws::WAFV2
     #   Action settings to use in the place of the rule actions that are
     #   configured inside the rule group. You specify one override for each
     #   rule whose action you want to change.
+    #
+    #   <note markdown="1"> Take care to verify the rule names in your overrides. If you provide
+    #   a rule name that doesn't match the name of any rule in the rule
+    #   group, WAF doesn't return an error and doesn't apply the override
+    #   setting.
+    #
+    #    </note>
     #
     #   You can use overrides for testing, for example you can override all
     #   of rule actions to `Count` and then monitor the resulting count
@@ -8712,11 +8781,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -8828,11 +8894,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -8927,11 +8990,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -9000,11 +9060,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -9104,11 +9161,8 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Specifies whether this is for an Amazon CloudFront distribution or
-    #   for a regional application. A regional application can be an
-    #   Application Load Balancer (ALB), an Amazon API Gateway REST API, an
-    #   AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-    #   service, or an Amazon Web Services Verified Access instance.
+    #   Specifies whether this is for a global resource type, such as a
+    #   Amazon CloudFront distribution.
     #
     #   To work with CloudFront, you must also specify the Region US East
     #   (N. Virginia) as follows:
@@ -9145,6 +9199,19 @@ module Aws::WAFV2
     #   Defines and enables Amazon CloudWatch metrics and web request sample
     #   collection.
     #   @return [Types::VisibilityConfig]
+    #
+    # @!attribute [rw] data_protection_config
+    #   Specifies data protection to apply to the web request data that WAF
+    #   stores for the web ACL. This is a web ACL level data protection
+    #   option.
+    #
+    #   The data protection that you configure for the web ACL alters the
+    #   data that's available for any other data collection activity,
+    #   including WAF logging, web ACL request sampling, Amazon Web Services
+    #   Managed Rules, and Amazon Security Lake data collection and
+    #   management. Your other option for data protection is in the logging
+    #   configuration, which only affects logging.
+    #   @return [Types::DataProtectionConfig]
     #
     # @!attribute [rw] lock_token
     #   A token used for optimistic locking. WAF returns a token to your
@@ -9241,6 +9308,7 @@ module Aws::WAFV2
       :description,
       :rules,
       :visibility_config,
+      :data_protection_config,
       :lock_token,
       :custom_response_bodies,
       :captcha_config,
@@ -9359,11 +9427,14 @@ module Aws::WAFV2
     #   that match the rules. You can view the sampled requests through the
     #   WAF console.
     #
+    #   If you configure data protection for the web ACL, the protection
+    #   applies to the web ACL's sampled web request data.
+    #
     #   <note markdown="1"> Request sampling doesn't provide a field redaction option, and any
     #   field redaction that you specify in your logging configuration
-    #   doesn't affect sampling. The only way to exclude fields from
-    #   request sampling is by disabling sampling in the web ACL visibility
-    #   configuration.
+    #   doesn't affect sampling. You can only exclude fields from request
+    #   sampling by disabling sampling in the web ACL visibility
+    #   configuration or by configuring data protection for the web ACL.
     #
     #    </note>
     #   @return [Boolean]
@@ -9731,8 +9802,8 @@ module Aws::WAFV2
     # operation. If you've just created a resource that you're using in
     # this operation, you might just need to wait a few minutes. It can take
     # from a few seconds to a number of minutes for changes to propagate.
-    # Verify the resources that you are specifying in your request
-    # parameters and then retry the operation.
+    # Verify the resource specifications in your request parameters and then
+    # retry the operation.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -9768,11 +9839,11 @@ module Aws::WAFV2
     # (allow, block) for any request that does not match any of the rules.
     # The rules in a web ACL can be a combination of the types Rule,
     # RuleGroup, and managed rule group. You can associate a web ACL with
-    # one or more Amazon Web Services resources to protect. The resources
-    # can be an Amazon CloudFront distribution, an Amazon API Gateway REST
-    # API, an Application Load Balancer, an AppSync GraphQL API, an Amazon
-    # Cognito user pool, an App Runner service, or an Amazon Web Services
-    # Verified Access instance.
+    # one or more Amazon Web Services resources to protect. The resource
+    # types include Amazon CloudFront distribution, Amazon API Gateway REST
+    # API, Application Load Balancer, AppSync GraphQL API, Amazon Cognito
+    # user pool, App Runner service, and Amazon Web Services Verified Access
+    # instance.
     #
     # @!attribute [rw] name
     #   The name of the web ACL. You cannot change the name of a web ACL
@@ -9810,6 +9881,19 @@ module Aws::WAFV2
     #   Defines and enables Amazon CloudWatch metrics and web request sample
     #   collection.
     #   @return [Types::VisibilityConfig]
+    #
+    # @!attribute [rw] data_protection_config
+    #   Specifies data protection to apply to the web request data that WAF
+    #   stores for the web ACL. This is a web ACL level data protection
+    #   option.
+    #
+    #   The data protection that you configure for the web ACL alters the
+    #   data that's available for any other data collection activity,
+    #   including WAF logging, web ACL request sampling, Amazon Web Services
+    #   Managed Rules, and Amazon Security Lake data collection and
+    #   management. Your other option for data protection is in the logging
+    #   configuration, which only affects logging.
+    #   @return [Types::DataProtectionConfig]
     #
     # @!attribute [rw] capacity
     #   The web ACL capacity units (WCUs) currently being used by this web
@@ -9970,6 +10054,7 @@ module Aws::WAFV2
       :description,
       :rules,
       :visibility_config,
+      :data_protection_config,
       :capacity,
       :pre_process_firewall_manager_rule_groups,
       :post_process_firewall_manager_rule_groups,

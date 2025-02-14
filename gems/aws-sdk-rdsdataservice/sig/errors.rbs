@@ -36,6 +36,9 @@ module Aws
       end
       class InternalServerErrorException < ::Aws::Errors::ServiceError
       end
+      class InvalidResourceStateException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
       class InvalidSecretException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end

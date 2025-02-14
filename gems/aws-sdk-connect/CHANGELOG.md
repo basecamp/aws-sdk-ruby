@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.197.0 (2025-02-14)
+------------------
+
+* Feature - Release Notes: 1) Analytics API enhancements: Added new ListAnalyticsDataLakeDataSets API. 2)  Onboarding API Idempotency: Adds ClientToken to instance creation and management APIs to support idempotency.
+
 1.196.0 (2025-02-10)
 ------------------
 

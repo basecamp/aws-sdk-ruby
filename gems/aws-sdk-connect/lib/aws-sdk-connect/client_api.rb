@@ -64,6 +64,8 @@ module Aws::Connect
     AllowedMonitorCapabilities = Shapes::ListShape.new(name: 'AllowedMonitorCapabilities')
     AnalyticsDataAssociationResult = Shapes::StructureShape.new(name: 'AnalyticsDataAssociationResult')
     AnalyticsDataAssociationResults = Shapes::ListShape.new(name: 'AnalyticsDataAssociationResults')
+    AnalyticsDataSetsResult = Shapes::StructureShape.new(name: 'AnalyticsDataSetsResult')
+    AnalyticsDataSetsResults = Shapes::ListShape.new(name: 'AnalyticsDataSetsResults')
     AnswerMachineDetectionConfig = Shapes::StructureShape.new(name: 'AnswerMachineDetectionConfig')
     AnsweringMachineDetectionStatus = Shapes::StringShape.new(name: 'AnsweringMachineDetectionStatus')
     Application = Shapes::StructureShape.new(name: 'Application')
@@ -730,6 +732,8 @@ module Aws::Connect
     ListAgentStatusResponse = Shapes::StructureShape.new(name: 'ListAgentStatusResponse')
     ListAnalyticsDataAssociationsRequest = Shapes::StructureShape.new(name: 'ListAnalyticsDataAssociationsRequest')
     ListAnalyticsDataAssociationsResponse = Shapes::StructureShape.new(name: 'ListAnalyticsDataAssociationsResponse')
+    ListAnalyticsDataLakeDataSetsRequest = Shapes::StructureShape.new(name: 'ListAnalyticsDataLakeDataSetsRequest')
+    ListAnalyticsDataLakeDataSetsResponse = Shapes::StructureShape.new(name: 'ListAnalyticsDataLakeDataSetsResponse')
     ListApprovedOriginsRequest = Shapes::StructureShape.new(name: 'ListApprovedOriginsRequest')
     ListApprovedOriginsResponse = Shapes::StructureShape.new(name: 'ListApprovedOriginsResponse')
     ListAssociatedContactsRequest = Shapes::StructureShape.new(name: 'ListAssociatedContactsRequest')
@@ -1641,9 +1645,16 @@ module Aws::Connect
     AnalyticsDataAssociationResult.add_member(:target_account_id, Shapes::ShapeRef.new(shape: AWSAccountId, location_name: "TargetAccountId"))
     AnalyticsDataAssociationResult.add_member(:resource_share_id, Shapes::ShapeRef.new(shape: String, location_name: "ResourceShareId"))
     AnalyticsDataAssociationResult.add_member(:resource_share_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "ResourceShareArn"))
+    AnalyticsDataAssociationResult.add_member(:resource_share_status, Shapes::ShapeRef.new(shape: String, location_name: "ResourceShareStatus"))
     AnalyticsDataAssociationResult.struct_class = Types::AnalyticsDataAssociationResult
 
     AnalyticsDataAssociationResults.member = Shapes::ShapeRef.new(shape: AnalyticsDataAssociationResult)
+
+    AnalyticsDataSetsResult.add_member(:data_set_id, Shapes::ShapeRef.new(shape: DataSetId, location_name: "DataSetId"))
+    AnalyticsDataSetsResult.add_member(:data_set_name, Shapes::ShapeRef.new(shape: String, location_name: "DataSetName"))
+    AnalyticsDataSetsResult.struct_class = Types::AnalyticsDataSetsResult
+
+    AnalyticsDataSetsResults.member = Shapes::ShapeRef.new(shape: AnalyticsDataSetsResult)
 
     AnswerMachineDetectionConfig.add_member(:enable_answer_machine_detection, Shapes::ShapeRef.new(shape: Boolean, location_name: "EnableAnswerMachineDetection"))
     AnswerMachineDetectionConfig.add_member(:await_answer_machine_prompt, Shapes::ShapeRef.new(shape: Boolean, location_name: "AwaitAnswerMachinePrompt"))
@@ -1672,11 +1683,13 @@ module Aws::Connect
 
     AssociateApprovedOriginRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     AssociateApprovedOriginRequest.add_member(:origin, Shapes::ShapeRef.new(shape: Origin, required: true, location_name: "Origin"))
+    AssociateApprovedOriginRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
     AssociateApprovedOriginRequest.struct_class = Types::AssociateApprovedOriginRequest
 
     AssociateBotRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     AssociateBotRequest.add_member(:lex_bot, Shapes::ShapeRef.new(shape: LexBot, location_name: "LexBot"))
     AssociateBotRequest.add_member(:lex_v2_bot, Shapes::ShapeRef.new(shape: LexV2Bot, location_name: "LexV2Bot"))
+    AssociateBotRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
     AssociateBotRequest.struct_class = Types::AssociateBotRequest
 
     AssociateDefaultVocabularyRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
@@ -1697,6 +1710,7 @@ module Aws::Connect
     AssociateInstanceStorageConfigRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     AssociateInstanceStorageConfigRequest.add_member(:resource_type, Shapes::ShapeRef.new(shape: InstanceStorageResourceType, required: true, location_name: "ResourceType"))
     AssociateInstanceStorageConfigRequest.add_member(:storage_config, Shapes::ShapeRef.new(shape: InstanceStorageConfig, required: true, location_name: "StorageConfig"))
+    AssociateInstanceStorageConfigRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
     AssociateInstanceStorageConfigRequest.struct_class = Types::AssociateInstanceStorageConfigRequest
 
     AssociateInstanceStorageConfigResponse.add_member(:association_id, Shapes::ShapeRef.new(shape: AssociationId, location_name: "AssociationId"))
@@ -1704,10 +1718,12 @@ module Aws::Connect
 
     AssociateLambdaFunctionRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     AssociateLambdaFunctionRequest.add_member(:function_arn, Shapes::ShapeRef.new(shape: FunctionArn, required: true, location_name: "FunctionArn"))
+    AssociateLambdaFunctionRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
     AssociateLambdaFunctionRequest.struct_class = Types::AssociateLambdaFunctionRequest
 
     AssociateLexBotRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     AssociateLexBotRequest.add_member(:lex_bot, Shapes::ShapeRef.new(shape: LexBot, required: true, location_name: "LexBot"))
+    AssociateLexBotRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
     AssociateLexBotRequest.struct_class = Types::AssociateLexBotRequest
 
     AssociatePhoneNumberContactFlowRequest.add_member(:phone_number_id, Shapes::ShapeRef.new(shape: PhoneNumberId, required: true, location: "uri", location_name: "PhoneNumberId"))
@@ -1727,6 +1743,7 @@ module Aws::Connect
 
     AssociateSecurityKeyRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     AssociateSecurityKeyRequest.add_member(:key, Shapes::ShapeRef.new(shape: PEM, required: true, location_name: "Key"))
+    AssociateSecurityKeyRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
     AssociateSecurityKeyRequest.struct_class = Types::AssociateSecurityKeyRequest
 
     AssociateSecurityKeyResponse.add_member(:association_id, Shapes::ShapeRef.new(shape: AssociationId, location_name: "AssociationId"))
@@ -2299,7 +2316,7 @@ module Aws::Connect
     CreateHoursOfOperationResponse.add_member(:hours_of_operation_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "HoursOfOperationArn"))
     CreateHoursOfOperationResponse.struct_class = Types::CreateHoursOfOperationResponse
 
-    CreateInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken"))
+    CreateInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
     CreateInstanceRequest.add_member(:identity_management_type, Shapes::ShapeRef.new(shape: DirectoryType, required: true, location_name: "IdentityManagementType"))
     CreateInstanceRequest.add_member(:instance_alias, Shapes::ShapeRef.new(shape: DirectoryAlias, location_name: "InstanceAlias"))
     CreateInstanceRequest.add_member(:directory_id, Shapes::ShapeRef.new(shape: DirectoryId, location_name: "DirectoryId"))
@@ -2670,6 +2687,7 @@ module Aws::Connect
     DeleteHoursOfOperationRequest.struct_class = Types::DeleteHoursOfOperationRequest
 
     DeleteInstanceRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
+    DeleteInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location: "querystring", location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     DeleteInstanceRequest.struct_class = Types::DeleteInstanceRequest
 
     DeleteIntegrationAssociationRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
@@ -2978,11 +2996,13 @@ module Aws::Connect
 
     DisassociateApprovedOriginRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     DisassociateApprovedOriginRequest.add_member(:origin, Shapes::ShapeRef.new(shape: Origin, required: true, location: "querystring", location_name: "origin"))
+    DisassociateApprovedOriginRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location: "querystring", location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     DisassociateApprovedOriginRequest.struct_class = Types::DisassociateApprovedOriginRequest
 
     DisassociateBotRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     DisassociateBotRequest.add_member(:lex_bot, Shapes::ShapeRef.new(shape: LexBot, location_name: "LexBot"))
     DisassociateBotRequest.add_member(:lex_v2_bot, Shapes::ShapeRef.new(shape: LexV2Bot, location_name: "LexV2Bot"))
+    DisassociateBotRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
     DisassociateBotRequest.struct_class = Types::DisassociateBotRequest
 
     DisassociateFlowRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
@@ -2995,15 +3015,18 @@ module Aws::Connect
     DisassociateInstanceStorageConfigRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     DisassociateInstanceStorageConfigRequest.add_member(:association_id, Shapes::ShapeRef.new(shape: AssociationId, required: true, location: "uri", location_name: "AssociationId"))
     DisassociateInstanceStorageConfigRequest.add_member(:resource_type, Shapes::ShapeRef.new(shape: InstanceStorageResourceType, required: true, location: "querystring", location_name: "resourceType"))
+    DisassociateInstanceStorageConfigRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location: "querystring", location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     DisassociateInstanceStorageConfigRequest.struct_class = Types::DisassociateInstanceStorageConfigRequest
 
     DisassociateLambdaFunctionRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     DisassociateLambdaFunctionRequest.add_member(:function_arn, Shapes::ShapeRef.new(shape: FunctionArn, required: true, location: "querystring", location_name: "functionArn"))
+    DisassociateLambdaFunctionRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location: "querystring", location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     DisassociateLambdaFunctionRequest.struct_class = Types::DisassociateLambdaFunctionRequest
 
     DisassociateLexBotRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     DisassociateLexBotRequest.add_member(:bot_name, Shapes::ShapeRef.new(shape: BotName, required: true, location: "querystring", location_name: "botName"))
     DisassociateLexBotRequest.add_member(:lex_region, Shapes::ShapeRef.new(shape: LexRegion, required: true, location: "querystring", location_name: "lexRegion"))
+    DisassociateLexBotRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location: "querystring", location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     DisassociateLexBotRequest.struct_class = Types::DisassociateLexBotRequest
 
     DisassociatePhoneNumberContactFlowRequest.add_member(:phone_number_id, Shapes::ShapeRef.new(shape: PhoneNumberId, required: true, location: "uri", location_name: "PhoneNumberId"))
@@ -3022,6 +3045,7 @@ module Aws::Connect
 
     DisassociateSecurityKeyRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     DisassociateSecurityKeyRequest.add_member(:association_id, Shapes::ShapeRef.new(shape: AssociationId, required: true, location: "uri", location_name: "AssociationId"))
+    DisassociateSecurityKeyRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location: "querystring", location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     DisassociateSecurityKeyRequest.struct_class = Types::DisassociateSecurityKeyRequest
 
     DisassociateTrafficDistributionGroupUserRequest.add_member(:traffic_distribution_group_id, Shapes::ShapeRef.new(shape: TrafficDistributionGroupIdOrArn, required: true, location: "uri", location_name: "TrafficDistributionGroupId"))
@@ -3886,6 +3910,15 @@ module Aws::Connect
     ListAnalyticsDataAssociationsResponse.add_member(:results, Shapes::ShapeRef.new(shape: AnalyticsDataAssociationResults, location_name: "Results"))
     ListAnalyticsDataAssociationsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
     ListAnalyticsDataAssociationsResponse.struct_class = Types::ListAnalyticsDataAssociationsResponse
+
+    ListAnalyticsDataLakeDataSetsRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
+    ListAnalyticsDataLakeDataSetsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListAnalyticsDataLakeDataSetsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResult1000, location: "querystring", location_name: "maxResults"))
+    ListAnalyticsDataLakeDataSetsRequest.struct_class = Types::ListAnalyticsDataLakeDataSetsRequest
+
+    ListAnalyticsDataLakeDataSetsResponse.add_member(:results, Shapes::ShapeRef.new(shape: AnalyticsDataSetsResults, location_name: "Results"))
+    ListAnalyticsDataLakeDataSetsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    ListAnalyticsDataLakeDataSetsResponse.struct_class = Types::ListAnalyticsDataLakeDataSetsResponse
 
     ListApprovedOriginsRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     ListApprovedOriginsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
@@ -6047,12 +6080,14 @@ module Aws::Connect
     UpdateInstanceAttributeRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     UpdateInstanceAttributeRequest.add_member(:attribute_type, Shapes::ShapeRef.new(shape: InstanceAttributeType, required: true, location: "uri", location_name: "AttributeType"))
     UpdateInstanceAttributeRequest.add_member(:value, Shapes::ShapeRef.new(shape: InstanceAttributeValue, required: true, location_name: "Value"))
+    UpdateInstanceAttributeRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
     UpdateInstanceAttributeRequest.struct_class = Types::UpdateInstanceAttributeRequest
 
     UpdateInstanceStorageConfigRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     UpdateInstanceStorageConfigRequest.add_member(:association_id, Shapes::ShapeRef.new(shape: AssociationId, required: true, location: "uri", location_name: "AssociationId"))
     UpdateInstanceStorageConfigRequest.add_member(:resource_type, Shapes::ShapeRef.new(shape: InstanceStorageResourceType, required: true, location: "querystring", location_name: "resourceType"))
     UpdateInstanceStorageConfigRequest.add_member(:storage_config, Shapes::ShapeRef.new(shape: InstanceStorageConfig, required: true, location_name: "StorageConfig"))
+    UpdateInstanceStorageConfigRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
     UpdateInstanceStorageConfigRequest.struct_class = Types::UpdateInstanceStorageConfigRequest
 
     UpdateParticipantAuthenticationRequest.add_member(:state, Shapes::ShapeRef.new(shape: ParticipantToken, required: true, location_name: "State"))
@@ -8405,6 +8440,19 @@ module Aws::Connect
         o.http_request_uri = "/analytics-data/instance/{InstanceId}/association"
         o.input = Shapes::ShapeRef.new(shape: ListAnalyticsDataAssociationsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListAnalyticsDataAssociationsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+      end)
+
+      api.add_operation(:list_analytics_data_lake_data_sets, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListAnalyticsDataLakeDataSets"
+        o.http_method = "GET"
+        o.http_request_uri = "/analytics-data/instance/{InstanceId}/datasets"
+        o.input = Shapes::ShapeRef.new(shape: ListAnalyticsDataLakeDataSetsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListAnalyticsDataLakeDataSetsResponse)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)

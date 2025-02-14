@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.102.0 (2025-02-14)
+------------------
+
+* Feature - The WAFv2 API now supports configuring data protection in webACLs.
+
 1.101.0 (2025-02-06)
 ------------------
 

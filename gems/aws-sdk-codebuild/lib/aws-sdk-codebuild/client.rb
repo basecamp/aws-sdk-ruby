@@ -2495,6 +2495,7 @@ module Aws::CodeBuild
     #   resp.test_cases[0].duration_in_nano_seconds #=> Integer
     #   resp.test_cases[0].message #=> String
     #   resp.test_cases[0].expired #=> Time
+    #   resp.test_cases[0].test_suite_name #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/DescribeTestCases AWS API Documentation
     #
@@ -6205,7 +6206,7 @@ module Aws::CodeBuild
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-codebuild'
-      context[:gem_version] = '1.143.0'
+      context[:gem_version] = '1.144.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -989,7 +989,7 @@ module Aws::S3
     # @option params [String] :checksum_crc32
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 32-bit `CRC-32` checksum of the object.
+    #   specifies the Base64 encoded, 32-bit `CRC32` checksum of the object.
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #
@@ -1000,7 +1000,7 @@ module Aws::S3
     # @option params [String] :checksum_crc32c
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 32-bit `CRC-32C` checksum of the object.
+    #   specifies the Base64 encoded, 32-bit `CRC32C` checksum of the object.
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #
@@ -1011,10 +1011,10 @@ module Aws::S3
     # @option params [String] :checksum_crc64nvme
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 64-bit `CRC-64NVME` checksum of the
-    #   object. The `CRC-64NVME` checksum is always a full object checksum.
-    #   For more information, see [Checking object integrity in the Amazon S3
-    #   User Guide][1].
+    #   specifies the Base64 encoded, 64-bit `CRC64NVME` checksum of the
+    #   object. The `CRC64NVME` checksum is always a full object checksum. For
+    #   more information, see [Checking object integrity in the Amazon S3 User
+    #   Guide][1].
     #
     #
     #
@@ -1023,9 +1023,9 @@ module Aws::S3
     # @option params [String] :checksum_sha1
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 160-bit `SHA-1` digest of the object.
-    #   For more information, see [Checking object integrity][1] in the
-    #   *Amazon S3 User Guide*.
+    #   specifies the Base64 encoded, 160-bit `SHA1` digest of the object. For
+    #   more information, see [Checking object integrity][1] in the *Amazon S3
+    #   User Guide*.
     #
     #
     #
@@ -1034,7 +1034,7 @@ module Aws::S3
     # @option params [String] :checksum_sha256
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 256-bit `SHA-256` digest of the object.
+    #   specifies the Base64 encoded, 256-bit `SHA256` digest of the object.
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #
@@ -2601,6 +2601,19 @@ module Aws::S3
     #   * {Types::CreateBucketOutput#location #location} => String
     #
     #
+    # @example Example: To create a bucket 
+    #
+    #   # The following example creates a bucket.
+    #
+    #   resp = client.create_bucket({
+    #     bucket: "examplebucket", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     location: "/examplebucket", 
+    #   }
+    #
     # @example Example: To create a bucket in a specific region
     #
     #   # The following example creates a bucket. The request specifies an AWS region where to create the bucket.
@@ -2615,19 +2628,6 @@ module Aws::S3
     #   resp.to_h outputs the following:
     #   {
     #     location: "http://examplebucket.<Region>.s3.amazonaws.com/", 
-    #   }
-    #
-    # @example Example: To create a bucket 
-    #
-    #   # The following example creates a bucket.
-    #
-    #   resp = client.create_bucket({
-    #     bucket: "examplebucket", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     location: "/examplebucket", 
     #   }
     #
     # @example Request syntax with placeholder values
@@ -5469,6 +5469,21 @@ module Aws::S3
     #   * {Types::DeleteObjectTaggingOutput#version_id #version_id} => String
     #
     #
+    # @example Example: To remove tag set from an object
+    #
+    #   # The following example removes tag set associated with the specified object. If the bucket is versioning enabled, the
+    #   # operation removes tag set from the latest object version.
+    #
+    #   resp = client.delete_object_tagging({
+    #     bucket: "examplebucket", 
+    #     key: "HappyFace.jpg", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     version_id: "null", 
+    #   }
+    #
     # @example Example: To remove tag set from an object version
     #
     #   # The following example removes tag set associated with the specified object version. The request specifies both the
@@ -5483,21 +5498,6 @@ module Aws::S3
     #   resp.to_h outputs the following:
     #   {
     #     version_id: "ydlaNkwWm0SfKJR.T1b1fIdPRbldTYRI", 
-    #   }
-    #
-    # @example Example: To remove tag set from an object
-    #
-    #   # The following example removes tag set associated with the specified object. If the bucket is versioning enabled, the
-    #   # operation removes tag set from the latest object version.
-    #
-    #   resp = client.delete_object_tagging({
-    #     bucket: "examplebucket", 
-    #     key: "HappyFace.jpg", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     version_id: "null", 
     #   }
     #
     # @example Request syntax with placeholder values
@@ -5754,15 +5754,15 @@ module Aws::S3
     #   For the `x-amz-checksum-algorithm ` header, replace ` algorithm ` with
     #   the supported algorithm from the following list:
     #
-    #   * `CRC-32`
+    #   * `CRC32`
     #
-    #   * `CRC-32C`
+    #   * `CRC32C`
     #
-    #   * `CRC-64NVME`
+    #   * `CRC64NVME`
     #
-    #   * `SHA-1`
+    #   * `SHA1`
     #
-    #   * `SHA-256`
+    #   * `SHA256`
     #
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
@@ -8739,6 +8739,28 @@ module Aws::S3
     #   * {Types::GetObjectOutput#object_lock_legal_hold_status #object_lock_legal_hold_status} => String
     #
     #
+    # @example Example: To retrieve an object
+    #
+    #   # The following example retrieves an object for an S3 bucket.
+    #
+    #   resp = client.get_object({
+    #     bucket: "examplebucket", 
+    #     key: "HappyFace.jpg", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     accept_ranges: "bytes", 
+    #     content_length: 3191, 
+    #     content_type: "image/jpeg", 
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     last_modified: Time.parse("2016-12-15T01:19:41.000Z"), 
+    #     metadata: {
+    #     }, 
+    #     tag_count: 2, 
+    #     version_id: "null", 
+    #   }
+    #
     # @example Example: To retrieve a byte range of an object 
     #
     #   # The following example retrieves an object for an S3 bucket. The request specifies the range header to retrieve a
@@ -8760,28 +8782,6 @@ module Aws::S3
     #     last_modified: Time.parse("2014-10-09T22:57:28.000Z"), 
     #     metadata: {
     #     }, 
-    #     version_id: "null", 
-    #   }
-    #
-    # @example Example: To retrieve an object
-    #
-    #   # The following example retrieves an object for an S3 bucket.
-    #
-    #   resp = client.get_object({
-    #     bucket: "examplebucket", 
-    #     key: "HappyFace.jpg", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     accept_ranges: "bytes", 
-    #     content_length: 3191, 
-    #     content_type: "image/jpeg", 
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     last_modified: Time.parse("2016-12-15T01:19:41.000Z"), 
-    #     metadata: {
-    #     }, 
-    #     tag_count: 2, 
     #     version_id: "null", 
     #   }
     #
@@ -9804,6 +9804,27 @@ module Aws::S3
     #   * {Types::GetObjectTaggingOutput#tag_set #tag_set} => Array&lt;Types::Tag&gt;
     #
     #
+    # @example Example: To retrieve tag set of a specific object version
+    #
+    #   # The following example retrieves tag set of an object. The request specifies object version.
+    #
+    #   resp = client.get_object_tagging({
+    #     bucket: "examplebucket", 
+    #     key: "exampleobject", 
+    #     version_id: "ydlaNkwWm0SfKJR.T1b1fIdPRbldTYRI", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     tag_set: [
+    #       {
+    #         key: "Key1", 
+    #         value: "Value1", 
+    #       }, 
+    #     ], 
+    #     version_id: "ydlaNkwWm0SfKJR.T1b1fIdPRbldTYRI", 
+    #   }
+    #
     # @example Example: To retrieve tag set of an object
     #
     #   # The following example retrieves tag set of an object.
@@ -9826,27 +9847,6 @@ module Aws::S3
     #       }, 
     #     ], 
     #     version_id: "null", 
-    #   }
-    #
-    # @example Example: To retrieve tag set of a specific object version
-    #
-    #   # The following example retrieves tag set of an object. The request specifies object version.
-    #
-    #   resp = client.get_object_tagging({
-    #     bucket: "examplebucket", 
-    #     key: "exampleobject", 
-    #     version_id: "ydlaNkwWm0SfKJR.T1b1fIdPRbldTYRI", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     tag_set: [
-    #       {
-    #         key: "Key1", 
-    #         value: "Value1", 
-    #       }, 
-    #     ], 
-    #     version_id: "ydlaNkwWm0SfKJR.T1b1fIdPRbldTYRI", 
     #   }
     #
     # @example Request syntax with placeholder values
@@ -10642,6 +10642,7 @@ module Aws::S3
     #   * {Types::HeadObjectOutput#content_encoding #content_encoding} => String
     #   * {Types::HeadObjectOutput#content_language #content_language} => String
     #   * {Types::HeadObjectOutput#content_type #content_type} => String
+    #   * {Types::HeadObjectOutput#content_range #content_range} => String
     #   * {Types::HeadObjectOutput#expires #expires} => Time
     #   * {Types::HeadObjectOutput#expires_string #expires_string} => String
     #   * {Types::HeadObjectOutput#website_redirect_location #website_redirect_location} => String
@@ -10730,6 +10731,7 @@ module Aws::S3
     #   resp.content_encoding #=> String
     #   resp.content_language #=> String
     #   resp.content_type #=> String
+    #   resp.content_range #=> String
     #   resp.expires #=> Time
     #   resp.expires_string #=> String
     #   resp.website_redirect_location #=> String
@@ -15398,15 +15400,15 @@ module Aws::S3
     #   For the `x-amz-checksum-algorithm ` header, replace ` algorithm ` with
     #   the supported algorithm from the following list:
     #
-    #   * `CRC-32`
+    #   * `CRC32`
     #
-    #   * `CRC-32C`
+    #   * `CRC32C`
     #
-    #   * `CRC-64NVME`
+    #   * `CRC64NVME`
     #
-    #   * `SHA-1`
+    #   * `SHA1`
     #
-    #   * `SHA-256`
+    #   * `SHA256`
     #
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
@@ -16606,15 +16608,15 @@ module Aws::S3
     #   For the `x-amz-checksum-algorithm ` header, replace ` algorithm ` with
     #   the supported algorithm from the following list:
     #
-    #   * `CRC-32`
+    #   * `CRC32`
     #
-    #   * `CRC-32C`
+    #   * `CRC32C`
     #
-    #   * `CRC-64NVME`
+    #   * `CRC64NVME`
     #
-    #   * `SHA-1`
+    #   * `SHA1`
     #
-    #   * `SHA-256`
+    #   * `SHA256`
     #
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
@@ -16643,7 +16645,7 @@ module Aws::S3
     # @option params [String] :checksum_crc32
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 32-bit `CRC-32` checksum of the object.
+    #   specifies the Base64 encoded, 32-bit `CRC32` checksum of the object.
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #
@@ -16654,7 +16656,7 @@ module Aws::S3
     # @option params [String] :checksum_crc32c
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 32-bit `CRC-32C` checksum of the object.
+    #   specifies the Base64 encoded, 32-bit `CRC32C` checksum of the object.
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #
@@ -16665,10 +16667,10 @@ module Aws::S3
     # @option params [String] :checksum_crc64nvme
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 64-bit `CRC-64NVME` checksum of the
-    #   object. The `CRC-64NVME` checksum is always a full object checksum.
-    #   For more information, see [Checking object integrity in the Amazon S3
-    #   User Guide][1].
+    #   specifies the Base64 encoded, 64-bit `CRC64NVME` checksum of the
+    #   object. The `CRC64NVME` checksum is always a full object checksum. For
+    #   more information, see [Checking object integrity in the Amazon S3 User
+    #   Guide][1].
     #
     #
     #
@@ -16677,9 +16679,9 @@ module Aws::S3
     # @option params [String] :checksum_sha1
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 160-bit `SHA-1` digest of the object.
-    #   For more information, see [Checking object integrity][1] in the
-    #   *Amazon S3 User Guide*.
+    #   specifies the Base64 encoded, 160-bit `SHA1` digest of the object. For
+    #   more information, see [Checking object integrity][1] in the *Amazon S3
+    #   User Guide*.
     #
     #
     #
@@ -16688,7 +16690,7 @@ module Aws::S3
     # @option params [String] :checksum_sha256
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 256-bit `SHA-256` digest of the object.
+    #   specifies the Base64 encoded, 256-bit `SHA256` digest of the object.
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #
@@ -17100,6 +17102,77 @@ module Aws::S3
     #   * {Types::PutObjectOutput#request_charged #request_charged} => String
     #
     #
+    # @example Example: To upload an object
+    #
+    #   # The following example uploads an object to a versioning-enabled bucket. The source file is specified using Windows file
+    #   # syntax. S3 returns VersionId of the newly created object.
+    #
+    #   resp = client.put_object({
+    #     body: "HappyFace.jpg", 
+    #     bucket: "examplebucket", 
+    #     key: "HappyFace.jpg", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     version_id: "tpf3zF08nBplQK1XLOefGskR7mGDwcDk", 
+    #   }
+    #
+    # @example Example: To upload an object (specify optional headers)
+    #
+    #   # The following example uploads an object. The request specifies optional request headers to directs S3 to use specific
+    #   # storage class and use server-side encryption.
+    #
+    #   resp = client.put_object({
+    #     body: "HappyFace.jpg", 
+    #     bucket: "examplebucket", 
+    #     key: "HappyFace.jpg", 
+    #     server_side_encryption: "AES256", 
+    #     storage_class: "STANDARD_IA", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     server_side_encryption: "AES256", 
+    #     version_id: "CG612hodqujkf8FaaNfp8U..FIhLROcp", 
+    #   }
+    #
+    # @example Example: To create an object.
+    #
+    #   # The following example creates an object. If the bucket is versioning enabled, S3 returns version ID in response.
+    #
+    #   resp = client.put_object({
+    #     body: "filetoupload", 
+    #     bucket: "examplebucket", 
+    #     key: "objectkey", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     version_id: "Bvq0EDKxOcXLJXNo_Lkz37eM3R4pfzyQ", 
+    #   }
+    #
+    # @example Example: To upload an object and specify optional tags
+    #
+    #   # The following example uploads an object. The request specifies optional object tags. The bucket is versioned, therefore
+    #   # S3 returns version ID of the newly created object.
+    #
+    #   resp = client.put_object({
+    #     body: "c:\\HappyFace.jpg", 
+    #     bucket: "examplebucket", 
+    #     key: "HappyFace.jpg", 
+    #     tagging: "key1=value1&key2=value2", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     version_id: "psM2sYY4.o1501dSx8wMvnkOzSBB.V4a", 
+    #   }
+    #
     # @example Example: To upload an object and specify server-side encryption and object tags
     #
     #   # The following example uploads an object. The request specifies the optional server-side encryption option. The request
@@ -17141,40 +17214,6 @@ module Aws::S3
     #     version_id: "pSKidl4pHBiNwukdbcPXAIs.sshFFOc0", 
     #   }
     #
-    # @example Example: To create an object.
-    #
-    #   # The following example creates an object. If the bucket is versioning enabled, S3 returns version ID in response.
-    #
-    #   resp = client.put_object({
-    #     body: "filetoupload", 
-    #     bucket: "examplebucket", 
-    #     key: "objectkey", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     version_id: "Bvq0EDKxOcXLJXNo_Lkz37eM3R4pfzyQ", 
-    #   }
-    #
-    # @example Example: To upload an object and specify optional tags
-    #
-    #   # The following example uploads an object. The request specifies optional object tags. The bucket is versioned, therefore
-    #   # S3 returns version ID of the newly created object.
-    #
-    #   resp = client.put_object({
-    #     body: "c:\\HappyFace.jpg", 
-    #     bucket: "examplebucket", 
-    #     key: "HappyFace.jpg", 
-    #     tagging: "key1=value1&key2=value2", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     version_id: "psM2sYY4.o1501dSx8wMvnkOzSBB.V4a", 
-    #   }
-    #
     # @example Example: To upload an object and specify canned ACL.
     #
     #   # The following example uploads and object. The request specifies optional canned ACL (access control list) to all READ
@@ -17191,43 +17230,6 @@ module Aws::S3
     #   {
     #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
     #     version_id: "Kirh.unyZwjQ69YxcQLA8z4F5j3kJJKr", 
-    #   }
-    #
-    # @example Example: To upload an object (specify optional headers)
-    #
-    #   # The following example uploads an object. The request specifies optional request headers to directs S3 to use specific
-    #   # storage class and use server-side encryption.
-    #
-    #   resp = client.put_object({
-    #     body: "HappyFace.jpg", 
-    #     bucket: "examplebucket", 
-    #     key: "HappyFace.jpg", 
-    #     server_side_encryption: "AES256", 
-    #     storage_class: "STANDARD_IA", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     server_side_encryption: "AES256", 
-    #     version_id: "CG612hodqujkf8FaaNfp8U..FIhLROcp", 
-    #   }
-    #
-    # @example Example: To upload an object
-    #
-    #   # The following example uploads an object to a versioning-enabled bucket. The source file is specified using Windows file
-    #   # syntax. S3 returns VersionId of the newly created object.
-    #
-    #   resp = client.put_object({
-    #     body: "HappyFace.jpg", 
-    #     bucket: "examplebucket", 
-    #     key: "HappyFace.jpg", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     version_id: "tpf3zF08nBplQK1XLOefGskR7mGDwcDk", 
     #   }
     #
     # @example Streaming a file from disk
@@ -19429,7 +19431,7 @@ module Aws::S3
     # @option params [String] :checksum_crc32
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 32-bit `CRC-32` checksum of the object.
+    #   specifies the Base64 encoded, 32-bit `CRC32` checksum of the object.
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #
@@ -19440,7 +19442,7 @@ module Aws::S3
     # @option params [String] :checksum_crc32c
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 32-bit `CRC-32C` checksum of the object.
+    #   specifies the Base64 encoded, 32-bit `CRC32C` checksum of the object.
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #
@@ -19451,8 +19453,8 @@ module Aws::S3
     # @option params [String] :checksum_crc64nvme
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 64-bit `CRC-64NVME` checksum of the
-    #   part. For more information, see [Checking object integrity][1] in the
+    #   specifies the Base64 encoded, 64-bit `CRC64NVME` checksum of the part.
+    #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #
     #
@@ -19462,9 +19464,9 @@ module Aws::S3
     # @option params [String] :checksum_sha1
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 160-bit `SHA-1` digest of the object.
-    #   For more information, see [Checking object integrity][1] in the
-    #   *Amazon S3 User Guide*.
+    #   specifies the Base64 encoded, 160-bit `SHA1` digest of the object. For
+    #   more information, see [Checking object integrity][1] in the *Amazon S3
+    #   User Guide*.
     #
     #
     #
@@ -19473,7 +19475,7 @@ module Aws::S3
     # @option params [String] :checksum_sha256
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 256-bit `SHA-256` digest of the object.
+    #   specifies the Base64 encoded, 256-bit `SHA256` digest of the object.
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #
@@ -20113,26 +20115,6 @@ module Aws::S3
     #   * {Types::UploadPartCopyOutput#request_charged #request_charged} => String
     #
     #
-    # @example Example: To upload a part by copying data from an existing object as data source
-    #
-    #   # The following example uploads a part of a multipart upload by copying data from an existing object as data source.
-    #
-    #   resp = client.upload_part_copy({
-    #     bucket: "examplebucket", 
-    #     copy_source: "/bucketname/sourceobjectkey", 
-    #     key: "examplelargeobject", 
-    #     part_number: 1, 
-    #     upload_id: "exampleuoh_10OhKhT7YukE9bjzTPRiuaCotmZM_pFngJFir9OZNrSr5cWa3cq3LZSUsfjI4FI7PkP91We7Nrw--", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     copy_part_result: {
-    #       etag: "\"b0c6f0e7e054ab8fa2536a2677f8734d\"", 
-    #       last_modified: Time.parse("2016-12-29T21:24:43.000Z"), 
-    #     }, 
-    #   }
-    #
     # @example Example: To upload a part by copying byte range from an existing object as data source
     #
     #   # The following example uploads a part of a multipart upload by copying a specified byte range from an existing object as
@@ -20152,6 +20134,26 @@ module Aws::S3
     #     copy_part_result: {
     #       etag: "\"65d16d19e65a7508a51f043180edcc36\"", 
     #       last_modified: Time.parse("2016-12-29T21:44:28.000Z"), 
+    #     }, 
+    #   }
+    #
+    # @example Example: To upload a part by copying data from an existing object as data source
+    #
+    #   # The following example uploads a part of a multipart upload by copying data from an existing object as data source.
+    #
+    #   resp = client.upload_part_copy({
+    #     bucket: "examplebucket", 
+    #     copy_source: "/bucketname/sourceobjectkey", 
+    #     key: "examplelargeobject", 
+    #     part_number: 1, 
+    #     upload_id: "exampleuoh_10OhKhT7YukE9bjzTPRiuaCotmZM_pFngJFir9OZNrSr5cWa3cq3LZSUsfjI4FI7PkP91We7Nrw--", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     copy_part_result: {
+    #       etag: "\"b0c6f0e7e054ab8fa2536a2677f8734d\"", 
+    #       last_modified: Time.parse("2016-12-29T21:24:43.000Z"), 
     #     }, 
     #   }
     #
@@ -20351,7 +20353,7 @@ module Aws::S3
     # @option params [String] :checksum_crc32
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This
-    #   specifies the Base64 encoded, 32-bit `CRC-32` checksum of the object
+    #   specifies the Base64 encoded, 32-bit `CRC32` checksum of the object
     #   returned by the Object Lambda function. This may not match the
     #   checksum for the object stored in Amazon S3. Amazon S3 will perform
     #   validation of the checksum values only when the original `GetObject`
@@ -20371,7 +20373,7 @@ module Aws::S3
     # @option params [String] :checksum_crc32c
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This
-    #   specifies the Base64 encoded, 32-bit `CRC-32C` checksum of the object
+    #   specifies the Base64 encoded, 32-bit `CRC32C` checksum of the object
     #   returned by the Object Lambda function. This may not match the
     #   checksum for the object stored in Amazon S3. Amazon S3 will perform
     #   validation of the checksum values only when the original `GetObject`
@@ -20389,8 +20391,8 @@ module Aws::S3
     # @option params [String] :checksum_crc64nvme
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 64-bit `CRC-64NVME` checksum of the
-    #   part. For more information, see [Checking object integrity][1] in the
+    #   specifies the Base64 encoded, 64-bit `CRC64NVME` checksum of the part.
+    #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #
     #
@@ -20400,7 +20402,7 @@ module Aws::S3
     # @option params [String] :checksum_sha1
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This
-    #   specifies the Base64 encoded, 160-bit `SHA-1` digest of the object
+    #   specifies the Base64 encoded, 160-bit `SHA1` digest of the object
     #   returned by the Object Lambda function. This may not match the
     #   checksum for the object stored in Amazon S3. Amazon S3 will perform
     #   validation of the checksum values only when the original `GetObject`
@@ -20418,7 +20420,7 @@ module Aws::S3
     # @option params [String] :checksum_sha256
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This
-    #   specifies the Base64 encoded, 256-bit `SHA-256` digest of the object
+    #   specifies the Base64 encoded, 256-bit `SHA256` digest of the object
     #   returned by the Object Lambda function. This may not match the
     #   checksum for the object stored in Amazon S3. Amazon S3 will perform
     #   validation of the checksum values only when the original `GetObject`
@@ -20631,7 +20633,7 @@ module Aws::S3
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-s3'
-      context[:gem_version] = '1.180.0'
+      context[:gem_version] = '1.181.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

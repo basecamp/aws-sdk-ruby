@@ -1193,6 +1193,7 @@ module Aws::CodeBuild
       attr_accessor duration_in_nano_seconds: ::Integer
       attr_accessor message: ::String
       attr_accessor expired: ::Time
+      attr_accessor test_suite_name: ::String
       SENSITIVE: []
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.116.0 (2025-02-14)
+------------------
+
+* Feature - Introduces premigration assessment feature to DMS Serverless API for start-replication and describe-replications
+
 1.115.0 (2025-02-10)
 ------------------
 

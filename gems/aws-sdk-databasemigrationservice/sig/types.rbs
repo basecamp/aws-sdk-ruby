@@ -2119,6 +2119,21 @@ module Aws::DatabaseMigrationService
       SENSITIVE: []
     end
 
+    class PremigrationAssessmentStatus
+      attr_accessor premigration_assessment_run_arn: ::String
+      attr_accessor fail_on_assessment_failure: bool
+      attr_accessor status: ::String
+      attr_accessor premigration_assessment_run_creation_date: ::Time
+      attr_accessor assessment_progress: Types::ReplicationTaskAssessmentRunProgress
+      attr_accessor last_failure_message: ::String
+      attr_accessor result_location_bucket: ::String
+      attr_accessor result_location_folder: ::String
+      attr_accessor result_encryption_mode: ::String
+      attr_accessor result_kms_key_arn: ::String
+      attr_accessor result_statistic: Types::ReplicationTaskAssessmentRunResultStatistic
+      SENSITIVE: []
+    end
+
     class ProvisionData
       attr_accessor provision_state: ::String
       attr_accessor provisioned_capacity_units: ::Integer
@@ -2307,6 +2322,7 @@ module Aws::DatabaseMigrationService
       attr_accessor replication_type: ("full-load" | "cdc" | "full-load-and-cdc")
       attr_accessor status: ::String
       attr_accessor provision_data: Types::ProvisionData
+      attr_accessor premigration_assessment_statuses: ::Array[Types::PremigrationAssessmentStatus]
       attr_accessor stop_reason: ::String
       attr_accessor failure_messages: ::Array[::String]
       attr_accessor replication_stats: Types::ReplicationStats
@@ -2745,6 +2761,7 @@ module Aws::DatabaseMigrationService
     class StartReplicationMessage
       attr_accessor replication_config_arn: ::String
       attr_accessor start_replication_type: ::String
+      attr_accessor premigration_assessment_settings: ::String
       attr_accessor cdc_start_time: ::Time
       attr_accessor cdc_start_position: ::String
       attr_accessor cdc_stop_position: ::String

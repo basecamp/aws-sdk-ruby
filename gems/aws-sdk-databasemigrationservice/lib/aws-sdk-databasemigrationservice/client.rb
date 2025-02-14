@@ -8331,6 +8331,23 @@ module Aws::DatabaseMigrationService
     #   resp.replications[0].provision_data.is_new_provisioning_available #=> Boolean
     #   resp.replications[0].provision_data.date_new_provisioning_data_available #=> Time
     #   resp.replications[0].provision_data.reason_for_new_provisioning_data #=> String
+    #   resp.replications[0].premigration_assessment_statuses #=> Array
+    #   resp.replications[0].premigration_assessment_statuses[0].premigration_assessment_run_arn #=> String
+    #   resp.replications[0].premigration_assessment_statuses[0].fail_on_assessment_failure #=> Boolean
+    #   resp.replications[0].premigration_assessment_statuses[0].status #=> String
+    #   resp.replications[0].premigration_assessment_statuses[0].premigration_assessment_run_creation_date #=> Time
+    #   resp.replications[0].premigration_assessment_statuses[0].assessment_progress.individual_assessment_count #=> Integer
+    #   resp.replications[0].premigration_assessment_statuses[0].assessment_progress.individual_assessment_completed_count #=> Integer
+    #   resp.replications[0].premigration_assessment_statuses[0].last_failure_message #=> String
+    #   resp.replications[0].premigration_assessment_statuses[0].result_location_bucket #=> String
+    #   resp.replications[0].premigration_assessment_statuses[0].result_location_folder #=> String
+    #   resp.replications[0].premigration_assessment_statuses[0].result_encryption_mode #=> String
+    #   resp.replications[0].premigration_assessment_statuses[0].result_kms_key_arn #=> String
+    #   resp.replications[0].premigration_assessment_statuses[0].result_statistic.passed #=> Integer
+    #   resp.replications[0].premigration_assessment_statuses[0].result_statistic.failed #=> Integer
+    #   resp.replications[0].premigration_assessment_statuses[0].result_statistic.error #=> Integer
+    #   resp.replications[0].premigration_assessment_statuses[0].result_statistic.warning #=> Integer
+    #   resp.replications[0].premigration_assessment_statuses[0].result_statistic.cancelled #=> Integer
     #   resp.replications[0].stop_reason #=> String
     #   resp.replications[0].failure_messages #=> Array
     #   resp.replications[0].failure_messages[0] #=> String
@@ -11880,6 +11897,41 @@ module Aws::DatabaseMigrationService
     #   Otherwise use `resume-processing`, to replicate the changes from the
     #   last stop position.
     #
+    # @option params [String] :premigration_assessment_settings
+    #   User-defined settings for the premigration assessment. The possible
+    #   values are:
+    #
+    #   * `ResultLocationFinder`: The folder within an Amazon Amazon S3 bucket
+    #     where you want DMS to store the results of this assessment run.
+    #
+    #   * `ResultEncryptionMode`: The supported values are `SSE_KMS` and
+    #     `SSE_S3`. If these values are not provided, then the files are not
+    #     encrypted at rest. For more information, see [Creating Amazon Web
+    #     Services KMS keys to encrypt Amazon Amazon S3 target objects][1].
+    #
+    #   * `ResultKmsKeyArn`: The ARN of a customer KMS encryption key that you
+    #     specify when you set `ResultEncryptionMode` to `SSE_KMS`.
+    #
+    #   * `IncludeOnly`: A space-separated list of names for specific
+    #     individual assessments that you want to include. These names come
+    #     from the default list of individual assessments that Database
+    #     Migration Service supports for the associated migration.
+    #
+    #   * `Exclude`: A space-separated list of names for specific individual
+    #     assessments that you want to exclude. These names come from the
+    #     default list of individual assessments that Database Migration
+    #     Service supports for the associated migration.
+    #
+    #   * `FailOnAssessmentFailure`: A configurable setting you can set to
+    #     `true` (the default setting) or `false`. Use this setting to to stop
+    #     the replication from starting automatically if the assessment fails.
+    #     This can help you evaluate the issue that is preventing the
+    #     replication from running successfully.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html#CHAP_Target.S3.KMSKeys
+    #
     # @option params [Time,DateTime,Date,Integer,String] :cdc_start_time
     #   Indicates the start time for a change data capture (CDC) operation.
     #   Use either `CdcStartTime` or `CdcStartPosition` to specify when you
@@ -11907,6 +11959,7 @@ module Aws::DatabaseMigrationService
     #   resp = client.start_replication({
     #     replication_config_arn: "String", # required
     #     start_replication_type: "String", # required
+    #     premigration_assessment_settings: "String",
     #     cdc_start_time: Time.now,
     #     cdc_start_position: "String",
     #     cdc_stop_position: "String",
@@ -11926,6 +11979,23 @@ module Aws::DatabaseMigrationService
     #   resp.replication.provision_data.is_new_provisioning_available #=> Boolean
     #   resp.replication.provision_data.date_new_provisioning_data_available #=> Time
     #   resp.replication.provision_data.reason_for_new_provisioning_data #=> String
+    #   resp.replication.premigration_assessment_statuses #=> Array
+    #   resp.replication.premigration_assessment_statuses[0].premigration_assessment_run_arn #=> String
+    #   resp.replication.premigration_assessment_statuses[0].fail_on_assessment_failure #=> Boolean
+    #   resp.replication.premigration_assessment_statuses[0].status #=> String
+    #   resp.replication.premigration_assessment_statuses[0].premigration_assessment_run_creation_date #=> Time
+    #   resp.replication.premigration_assessment_statuses[0].assessment_progress.individual_assessment_count #=> Integer
+    #   resp.replication.premigration_assessment_statuses[0].assessment_progress.individual_assessment_completed_count #=> Integer
+    #   resp.replication.premigration_assessment_statuses[0].last_failure_message #=> String
+    #   resp.replication.premigration_assessment_statuses[0].result_location_bucket #=> String
+    #   resp.replication.premigration_assessment_statuses[0].result_location_folder #=> String
+    #   resp.replication.premigration_assessment_statuses[0].result_encryption_mode #=> String
+    #   resp.replication.premigration_assessment_statuses[0].result_kms_key_arn #=> String
+    #   resp.replication.premigration_assessment_statuses[0].result_statistic.passed #=> Integer
+    #   resp.replication.premigration_assessment_statuses[0].result_statistic.failed #=> Integer
+    #   resp.replication.premigration_assessment_statuses[0].result_statistic.error #=> Integer
+    #   resp.replication.premigration_assessment_statuses[0].result_statistic.warning #=> Integer
+    #   resp.replication.premigration_assessment_statuses[0].result_statistic.cancelled #=> Integer
     #   resp.replication.stop_reason #=> String
     #   resp.replication.failure_messages #=> Array
     #   resp.replication.failure_messages[0] #=> String
@@ -12422,6 +12492,23 @@ module Aws::DatabaseMigrationService
     #   resp.replication.provision_data.is_new_provisioning_available #=> Boolean
     #   resp.replication.provision_data.date_new_provisioning_data_available #=> Time
     #   resp.replication.provision_data.reason_for_new_provisioning_data #=> String
+    #   resp.replication.premigration_assessment_statuses #=> Array
+    #   resp.replication.premigration_assessment_statuses[0].premigration_assessment_run_arn #=> String
+    #   resp.replication.premigration_assessment_statuses[0].fail_on_assessment_failure #=> Boolean
+    #   resp.replication.premigration_assessment_statuses[0].status #=> String
+    #   resp.replication.premigration_assessment_statuses[0].premigration_assessment_run_creation_date #=> Time
+    #   resp.replication.premigration_assessment_statuses[0].assessment_progress.individual_assessment_count #=> Integer
+    #   resp.replication.premigration_assessment_statuses[0].assessment_progress.individual_assessment_completed_count #=> Integer
+    #   resp.replication.premigration_assessment_statuses[0].last_failure_message #=> String
+    #   resp.replication.premigration_assessment_statuses[0].result_location_bucket #=> String
+    #   resp.replication.premigration_assessment_statuses[0].result_location_folder #=> String
+    #   resp.replication.premigration_assessment_statuses[0].result_encryption_mode #=> String
+    #   resp.replication.premigration_assessment_statuses[0].result_kms_key_arn #=> String
+    #   resp.replication.premigration_assessment_statuses[0].result_statistic.passed #=> Integer
+    #   resp.replication.premigration_assessment_statuses[0].result_statistic.failed #=> Integer
+    #   resp.replication.premigration_assessment_statuses[0].result_statistic.error #=> Integer
+    #   resp.replication.premigration_assessment_statuses[0].result_statistic.warning #=> Integer
+    #   resp.replication.premigration_assessment_statuses[0].result_statistic.cancelled #=> Integer
     #   resp.replication.stop_reason #=> String
     #   resp.replication.failure_messages #=> Array
     #   resp.replication.failure_messages[0] #=> String
@@ -12658,7 +12745,7 @@ module Aws::DatabaseMigrationService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-databasemigrationservice'
-      context[:gem_version] = '1.115.0'
+      context[:gem_version] = '1.116.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

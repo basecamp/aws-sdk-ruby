@@ -142,6 +142,13 @@ module Aws::Connect
       attr_accessor target_account_id: ::String
       attr_accessor resource_share_id: ::String
       attr_accessor resource_share_arn: ::String
+      attr_accessor resource_share_status: ::String
+      SENSITIVE: []
+    end
+
+    class AnalyticsDataSetsResult
+      attr_accessor data_set_id: ::String
+      attr_accessor data_set_name: ::String
       SENSITIVE: []
     end
 
@@ -178,6 +185,7 @@ module Aws::Connect
     class AssociateApprovedOriginRequest
       attr_accessor instance_id: ::String
       attr_accessor origin: ::String
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
@@ -185,6 +193,7 @@ module Aws::Connect
       attr_accessor instance_id: ::String
       attr_accessor lex_bot: Types::LexBot
       attr_accessor lex_v2_bot: Types::LexV2Bot
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
@@ -213,6 +222,7 @@ module Aws::Connect
       attr_accessor instance_id: ::String
       attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS" | "EMAIL_MESSAGES")
       attr_accessor storage_config: Types::InstanceStorageConfig
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
@@ -224,12 +234,14 @@ module Aws::Connect
     class AssociateLambdaFunctionRequest
       attr_accessor instance_id: ::String
       attr_accessor function_arn: ::String
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
     class AssociateLexBotRequest
       attr_accessor instance_id: ::String
       attr_accessor lex_bot: Types::LexBot
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
@@ -257,6 +269,7 @@ module Aws::Connect
     class AssociateSecurityKeyRequest
       attr_accessor instance_id: ::String
       attr_accessor key: ::String
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
@@ -1428,6 +1441,7 @@ module Aws::Connect
 
     class DeleteInstanceRequest
       attr_accessor instance_id: ::String
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
@@ -1892,6 +1906,7 @@ module Aws::Connect
     class DisassociateApprovedOriginRequest
       attr_accessor instance_id: ::String
       attr_accessor origin: ::String
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
@@ -1899,6 +1914,7 @@ module Aws::Connect
       attr_accessor instance_id: ::String
       attr_accessor lex_bot: Types::LexBot
       attr_accessor lex_v2_bot: Types::LexV2Bot
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
@@ -1916,12 +1932,14 @@ module Aws::Connect
       attr_accessor instance_id: ::String
       attr_accessor association_id: ::String
       attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS" | "EMAIL_MESSAGES")
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
     class DisassociateLambdaFunctionRequest
       attr_accessor instance_id: ::String
       attr_accessor function_arn: ::String
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
@@ -1929,6 +1947,7 @@ module Aws::Connect
       attr_accessor instance_id: ::String
       attr_accessor bot_name: ::String
       attr_accessor lex_region: ::String
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
@@ -1955,6 +1974,7 @@ module Aws::Connect
     class DisassociateSecurityKeyRequest
       attr_accessor instance_id: ::String
       attr_accessor association_id: ::String
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
@@ -2998,6 +3018,19 @@ module Aws::Connect
 
     class ListAnalyticsDataAssociationsResponse
       attr_accessor results: ::Array[Types::AnalyticsDataAssociationResult]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListAnalyticsDataLakeDataSetsRequest
+      attr_accessor instance_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListAnalyticsDataLakeDataSetsResponse
+      attr_accessor results: ::Array[Types::AnalyticsDataSetsResult]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -5727,6 +5760,7 @@ module Aws::Connect
       attr_accessor instance_id: ::String
       attr_accessor attribute_type: ("INBOUND_CALLS" | "OUTBOUND_CALLS" | "CONTACTFLOW_LOGS" | "CONTACT_LENS" | "AUTO_RESOLVE_BEST_VOICES" | "USE_CUSTOM_TTS_VOICES" | "EARLY_MEDIA" | "MULTI_PARTY_CONFERENCE" | "HIGH_VOLUME_OUTBOUND" | "ENHANCED_CONTACT_MONITORING" | "ENHANCED_CHAT_MONITORING" | "MULTI_PARTY_CHAT_CONFERENCE")
       attr_accessor value: ::String
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 
@@ -5735,6 +5769,7 @@ module Aws::Connect
       attr_accessor association_id: ::String
       attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS" | "EMAIL_MESSAGES")
       attr_accessor storage_config: Types::InstanceStorageConfig
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 

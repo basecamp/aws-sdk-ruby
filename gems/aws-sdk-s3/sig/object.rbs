@@ -83,6 +83,9 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Object.html#content_type-instance_method
       def content_type: () -> ::String
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Object.html#content_range-instance_method
+      def content_range: () -> ::String
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Object.html#expires-instance_method
       def expires: () -> ::Time
 

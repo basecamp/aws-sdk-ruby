@@ -1297,6 +1297,7 @@ module Aws::CodeBuild
     TestCase.add_member(:duration_in_nano_seconds, Shapes::ShapeRef.new(shape: WrapperLong, location_name: "durationInNanoSeconds"))
     TestCase.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "message"))
     TestCase.add_member(:expired, Shapes::ShapeRef.new(shape: Timestamp, location_name: "expired"))
+    TestCase.add_member(:test_suite_name, Shapes::ShapeRef.new(shape: String, location_name: "testSuiteName"))
     TestCase.struct_class = Types::TestCase
 
     TestCaseFilter.add_member(:status, Shapes::ShapeRef.new(shape: String, location_name: "status"))

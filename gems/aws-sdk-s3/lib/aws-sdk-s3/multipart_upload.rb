@@ -335,7 +335,7 @@ module Aws::S3
     # @option options [String] :checksum_crc32
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 32-bit `CRC-32` checksum of the object.
+    #   specifies the Base64 encoded, 32-bit `CRC32` checksum of the object.
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #
@@ -345,7 +345,7 @@ module Aws::S3
     # @option options [String] :checksum_crc32c
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 32-bit `CRC-32C` checksum of the object.
+    #   specifies the Base64 encoded, 32-bit `CRC32C` checksum of the object.
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #
@@ -355,10 +355,10 @@ module Aws::S3
     # @option options [String] :checksum_crc64nvme
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 64-bit `CRC-64NVME` checksum of the
-    #   object. The `CRC-64NVME` checksum is always a full object checksum.
-    #   For more information, see [Checking object integrity in the Amazon S3
-    #   User Guide][1].
+    #   specifies the Base64 encoded, 64-bit `CRC64NVME` checksum of the
+    #   object. The `CRC64NVME` checksum is always a full object checksum. For
+    #   more information, see [Checking object integrity in the Amazon S3 User
+    #   Guide][1].
     #
     #
     #
@@ -366,9 +366,9 @@ module Aws::S3
     # @option options [String] :checksum_sha1
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 160-bit `SHA-1` digest of the object.
-    #   For more information, see [Checking object integrity][1] in the
-    #   *Amazon S3 User Guide*.
+    #   specifies the Base64 encoded, 160-bit `SHA1` digest of the object. For
+    #   more information, see [Checking object integrity][1] in the *Amazon S3
+    #   User Guide*.
     #
     #
     #
@@ -376,7 +376,7 @@ module Aws::S3
     # @option options [String] :checksum_sha256
     #   This header can be used as a data integrity check to verify that the
     #   data received is the same data that was originally sent. This header
-    #   specifies the Base64 encoded, 256-bit `SHA-256` digest of the object.
+    #   specifies the Base64 encoded, 256-bit `SHA256` digest of the object.
     #   For more information, see [Checking object integrity][1] in the
     #   *Amazon S3 User Guide*.
     #

@@ -1180,6 +1180,7 @@ module Aws::S3
       attr_accessor content_encoding: ::String
       attr_accessor content_language: ::String
       attr_accessor content_type: ::String
+      attr_accessor content_range: ::String
       attr_accessor expires: ::Time
       attr_accessor expires_string: ::String
       attr_accessor website_redirect_location: ::String

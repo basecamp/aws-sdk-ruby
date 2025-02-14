@@ -1005,6 +1005,7 @@ module Aws
         def content_encoding: () -> ::String
         def content_language: () -> ::String
         def content_type: () -> ::String
+        def content_range: () -> ::String
         def expires: () -> ::Time
         def expires_string: () -> ::String
         def website_redirect_location: () -> ::String

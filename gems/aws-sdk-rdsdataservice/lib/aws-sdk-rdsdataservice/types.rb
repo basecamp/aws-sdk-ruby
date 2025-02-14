@@ -367,9 +367,9 @@ module Aws::RDSDataService
       include Aws::Structure
     end
 
-    # A request was canceled because the Aurora Serverless v2 DB instance
-    # was in a paused state. The Data API request automatically causes the
-    # DB instance to begin resuming. Wait a few seconds and try again.
+    # A request was cancelled because the Aurora Serverless v2 DB instance
+    # was paused. The Data API request automatically resumes the DB
+    # instance. Wait a few seconds and try again.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -704,6 +704,19 @@ module Aws::RDSDataService
     # @see http://docs.aws.amazon.com/goto/WebAPI/rds-data-2018-08-01/InternalServerErrorException AWS API Documentation
     #
     class InternalServerErrorException < Aws::EmptyStructure; end
+
+    # The resource is in an invalid state.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/rds-data-2018-08-01/InvalidResourceStateException AWS API Documentation
+    #
+    class InvalidResourceStateException < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # The Secrets Manager secret used with the request isn't valid.
     #

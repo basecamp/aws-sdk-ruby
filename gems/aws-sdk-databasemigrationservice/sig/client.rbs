@@ -2614,6 +2614,7 @@ module Aws
       def start_replication: (
                                replication_config_arn: ::String,
                                start_replication_type: ::String,
+                               ?premigration_assessment_settings: ::String,
                                ?cdc_start_time: ::Time,
                                ?cdc_start_position: ::String,
                                ?cdc_stop_position: ::String

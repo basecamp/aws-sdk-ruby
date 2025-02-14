@@ -36,6 +36,7 @@ module Aws::RDSDataService
   # * {ForbiddenException}
   # * {HttpEndpointNotEnabledException}
   # * {InternalServerErrorException}
+  # * {InvalidResourceStateException}
   # * {InvalidSecretException}
   # * {NotFoundException}
   # * {SecretsErrorException}
@@ -172,6 +173,21 @@ module Aws::RDSDataService
       # @param [Aws::RDSDataService::Types::InternalServerErrorException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
+      end
+    end
+
+    class InvalidResourceStateException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::RDSDataService::Types::InvalidResourceStateException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
       end
     end
 

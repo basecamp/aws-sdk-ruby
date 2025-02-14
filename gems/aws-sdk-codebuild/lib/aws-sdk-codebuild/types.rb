@@ -6626,6 +6626,10 @@ module Aws::CodeBuild
     #   in CodeBuild.
     #   @return [Time]
     #
+    # @!attribute [rw] test_suite_name
+    #   The name of the test suite that the test case is a part of.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/TestCase AWS API Documentation
     #
     class TestCase < Struct.new(
@@ -6636,7 +6640,8 @@ module Aws::CodeBuild
       :status,
       :duration_in_nano_seconds,
       :message,
-      :expired)
+      :expired,
+      :test_suite_name)
       SENSITIVE = []
       include Aws::Structure
     end

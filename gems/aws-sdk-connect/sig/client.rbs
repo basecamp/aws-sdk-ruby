@@ -109,7 +109,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#associate_approved_origin-instance_method
       def associate_approved_origin: (
                                        instance_id: ::String,
-                                       origin: ::String
+                                       origin: ::String,
+                                       ?client_token: ::String
                                      ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -122,7 +123,8 @@ module Aws
                            },
                            ?lex_v2_bot: {
                              alias_arn: ::String?
-                           }
+                           },
+                           ?client_token: ::String
                          ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -182,14 +184,16 @@ module Aws
                                                  kinesis_firehose_config: {
                                                    firehose_arn: ::String
                                                  }?
-                                               }
+                                               },
+                                               ?client_token: ::String
                                              ) -> _AssociateInstanceStorageConfigResponseSuccess
                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _AssociateInstanceStorageConfigResponseSuccess
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#associate_lambda_function-instance_method
       def associate_lambda_function: (
                                        instance_id: ::String,
-                                       function_arn: ::String
+                                       function_arn: ::String,
+                                       ?client_token: ::String
                                      ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -199,7 +203,8 @@ module Aws
                                lex_bot: {
                                  name: ::String,
                                  lex_region: ::String
-                               }
+                               },
+                               ?client_token: ::String
                              ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -243,7 +248,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#associate_security_key-instance_method
       def associate_security_key: (
                                     instance_id: ::String,
-                                    key: ::String
+                                    key: ::String,
+                                    ?client_token: ::String
                                   ) -> _AssociateSecurityKeyResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _AssociateSecurityKeyResponseSuccess
 
@@ -1221,7 +1227,8 @@ module Aws
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#delete_instance-instance_method
       def delete_instance: (
-                             instance_id: ::String
+                             instance_id: ::String,
+                             ?client_token: ::String
                            ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -1683,7 +1690,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#disassociate_approved_origin-instance_method
       def disassociate_approved_origin: (
                                           instance_id: ::String,
-                                          origin: ::String
+                                          origin: ::String,
+                                          ?client_token: ::String
                                         ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -1696,7 +1704,8 @@ module Aws
                               },
                               ?lex_v2_bot: {
                                 alias_arn: ::String?
-                              }
+                              },
+                              ?client_token: ::String
                             ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -1715,14 +1724,16 @@ module Aws
       def disassociate_instance_storage_config: (
                                                   instance_id: ::String,
                                                   association_id: ::String,
-                                                  resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS" | "EMAIL_MESSAGES")
+                                                  resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS" | "EMAIL_MESSAGES"),
+                                                  ?client_token: ::String
                                                 ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#disassociate_lambda_function-instance_method
       def disassociate_lambda_function: (
                                           instance_id: ::String,
-                                          function_arn: ::String
+                                          function_arn: ::String,
+                                          ?client_token: ::String
                                         ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -1730,7 +1741,8 @@ module Aws
       def disassociate_lex_bot: (
                                   instance_id: ::String,
                                   bot_name: ::String,
-                                  lex_region: ::String
+                                  lex_region: ::String,
+                                  ?client_token: ::String
                                 ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -1765,7 +1777,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#disassociate_security_key-instance_method
       def disassociate_security_key: (
                                        instance_id: ::String,
-                                       association_id: ::String
+                                       association_id: ::String,
+                                       ?client_token: ::String
                                      ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -2107,6 +2120,19 @@ module Aws
                                               ?max_results: ::Integer
                                             ) -> _ListAnalyticsDataAssociationsResponseSuccess
                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAnalyticsDataAssociationsResponseSuccess
+
+      interface _ListAnalyticsDataLakeDataSetsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListAnalyticsDataLakeDataSetsResponse]
+        def results: () -> ::Array[Types::AnalyticsDataSetsResult]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#list_analytics_data_lake_data_sets-instance_method
+      def list_analytics_data_lake_data_sets: (
+                                                instance_id: ::String,
+                                                ?next_token: ::String,
+                                                ?max_results: ::Integer
+                                              ) -> _ListAnalyticsDataLakeDataSetsResponseSuccess
+                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAnalyticsDataLakeDataSetsResponseSuccess
 
       interface _ListApprovedOriginsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListApprovedOriginsResponse]
@@ -4628,7 +4654,8 @@ module Aws
       def update_instance_attribute: (
                                        instance_id: ::String,
                                        attribute_type: ("INBOUND_CALLS" | "OUTBOUND_CALLS" | "CONTACTFLOW_LOGS" | "CONTACT_LENS" | "AUTO_RESOLVE_BEST_VOICES" | "USE_CUSTOM_TTS_VOICES" | "EARLY_MEDIA" | "MULTI_PARTY_CONFERENCE" | "HIGH_VOLUME_OUTBOUND" | "ENHANCED_CONTACT_MONITORING" | "ENHANCED_CHAT_MONITORING" | "MULTI_PARTY_CHAT_CONFERENCE"),
-                                       value: ::String
+                                       value: ::String,
+                                       ?client_token: ::String
                                      ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -4662,7 +4689,8 @@ module Aws
                                               kinesis_firehose_config: {
                                                 firehose_arn: ::String
                                               }?
-                                            }
+                                            },
+                                            ?client_token: ::String
                                           ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 

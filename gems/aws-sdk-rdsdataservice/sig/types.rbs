@@ -198,6 +198,11 @@ module Aws::RDSDataService
     class InternalServerErrorException < Aws::EmptyStructure
     end
 
+    class InvalidResourceStateException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
     class InvalidSecretException
       attr_accessor message: ::String
       SENSITIVE: []

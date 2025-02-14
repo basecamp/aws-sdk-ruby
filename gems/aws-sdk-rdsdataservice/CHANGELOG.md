@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.69.0 (2025-02-14)
+------------------
+
+* Feature - Add support for Stop DB feature.
+
 1.68.0 (2025-02-06)
 ------------------
 

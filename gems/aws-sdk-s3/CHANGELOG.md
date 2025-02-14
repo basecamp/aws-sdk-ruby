@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.181.0 (2025-02-14)
+------------------
+
+* Feature - Added support for Content-Range header in HeadObject response.
+
 1.180.0 (2025-02-06)
 ------------------
 

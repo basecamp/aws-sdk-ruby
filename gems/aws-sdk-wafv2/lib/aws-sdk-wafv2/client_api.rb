@@ -79,6 +79,10 @@ module Aws::WAFV2
     CustomResponse = Shapes::StructureShape.new(name: 'CustomResponse')
     CustomResponseBodies = Shapes::MapShape.new(name: 'CustomResponseBodies')
     CustomResponseBody = Shapes::StructureShape.new(name: 'CustomResponseBody')
+    DataProtection = Shapes::StructureShape.new(name: 'DataProtection')
+    DataProtectionAction = Shapes::StringShape.new(name: 'DataProtectionAction')
+    DataProtectionConfig = Shapes::StructureShape.new(name: 'DataProtectionConfig')
+    DataProtections = Shapes::ListShape.new(name: 'DataProtections')
     DefaultAction = Shapes::StructureShape.new(name: 'DefaultAction')
     DeleteAPIKeyRequest = Shapes::StructureShape.new(name: 'DeleteAPIKeyRequest')
     DeleteAPIKeyResponse = Shapes::StructureShape.new(name: 'DeleteAPIKeyResponse')
@@ -122,6 +126,10 @@ module Aws::WAFV2
     FieldIdentifier = Shapes::StringShape.new(name: 'FieldIdentifier')
     FieldToMatch = Shapes::StructureShape.new(name: 'FieldToMatch')
     FieldToMatchData = Shapes::StringShape.new(name: 'FieldToMatchData')
+    FieldToProtect = Shapes::StructureShape.new(name: 'FieldToProtect')
+    FieldToProtectKeyName = Shapes::StringShape.new(name: 'FieldToProtectKeyName')
+    FieldToProtectKeys = Shapes::ListShape.new(name: 'FieldToProtectKeys')
+    FieldToProtectType = Shapes::StringShape.new(name: 'FieldToProtectType')
     Filter = Shapes::StructureShape.new(name: 'Filter')
     FilterBehavior = Shapes::StringShape.new(name: 'FilterBehavior')
     FilterRequirement = Shapes::StringShape.new(name: 'FilterRequirement')
@@ -589,6 +597,7 @@ module Aws::WAFV2
     CreateWebACLRequest.add_member(:description, Shapes::ShapeRef.new(shape: EntityDescription, location_name: "Description"))
     CreateWebACLRequest.add_member(:rules, Shapes::ShapeRef.new(shape: Rules, location_name: "Rules"))
     CreateWebACLRequest.add_member(:visibility_config, Shapes::ShapeRef.new(shape: VisibilityConfig, required: true, location_name: "VisibilityConfig"))
+    CreateWebACLRequest.add_member(:data_protection_config, Shapes::ShapeRef.new(shape: DataProtectionConfig, location_name: "DataProtectionConfig"))
     CreateWebACLRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CreateWebACLRequest.add_member(:custom_response_bodies, Shapes::ShapeRef.new(shape: CustomResponseBodies, location_name: "CustomResponseBodies"))
     CreateWebACLRequest.add_member(:captcha_config, Shapes::ShapeRef.new(shape: CaptchaConfig, location_name: "CaptchaConfig"))
@@ -620,6 +629,17 @@ module Aws::WAFV2
     CustomResponseBody.add_member(:content_type, Shapes::ShapeRef.new(shape: ResponseContentType, required: true, location_name: "ContentType"))
     CustomResponseBody.add_member(:content, Shapes::ShapeRef.new(shape: ResponseContent, required: true, location_name: "Content"))
     CustomResponseBody.struct_class = Types::CustomResponseBody
+
+    DataProtection.add_member(:field, Shapes::ShapeRef.new(shape: FieldToProtect, required: true, location_name: "Field"))
+    DataProtection.add_member(:action, Shapes::ShapeRef.new(shape: DataProtectionAction, required: true, location_name: "Action"))
+    DataProtection.add_member(:exclude_rule_match_details, Shapes::ShapeRef.new(shape: Boolean, location_name: "ExcludeRuleMatchDetails"))
+    DataProtection.add_member(:exclude_rate_based_details, Shapes::ShapeRef.new(shape: Boolean, location_name: "ExcludeRateBasedDetails"))
+    DataProtection.struct_class = Types::DataProtection
+
+    DataProtectionConfig.add_member(:data_protections, Shapes::ShapeRef.new(shape: DataProtections, required: true, location_name: "DataProtections"))
+    DataProtectionConfig.struct_class = Types::DataProtectionConfig
+
+    DataProtections.member = Shapes::ShapeRef.new(shape: DataProtection)
 
     DefaultAction.add_member(:block, Shapes::ShapeRef.new(shape: BlockAction, location_name: "Block"))
     DefaultAction.add_member(:allow, Shapes::ShapeRef.new(shape: AllowAction, location_name: "Allow"))
@@ -736,6 +756,12 @@ module Aws::WAFV2
     FieldToMatch.add_member(:header_order, Shapes::ShapeRef.new(shape: HeaderOrder, location_name: "HeaderOrder"))
     FieldToMatch.add_member(:ja3_fingerprint, Shapes::ShapeRef.new(shape: JA3Fingerprint, location_name: "JA3Fingerprint"))
     FieldToMatch.struct_class = Types::FieldToMatch
+
+    FieldToProtect.add_member(:field_type, Shapes::ShapeRef.new(shape: FieldToProtectType, required: true, location_name: "FieldType"))
+    FieldToProtect.add_member(:field_keys, Shapes::ShapeRef.new(shape: FieldToProtectKeys, location_name: "FieldKeys"))
+    FieldToProtect.struct_class = Types::FieldToProtect
+
+    FieldToProtectKeys.member = Shapes::ShapeRef.new(shape: FieldToProtectKeyName)
 
     Filter.add_member(:behavior, Shapes::ShapeRef.new(shape: FilterBehavior, required: true, location_name: "Behavior"))
     Filter.add_member(:requirement, Shapes::ShapeRef.new(shape: FilterRequirement, required: true, location_name: "Requirement"))
@@ -1580,6 +1606,7 @@ module Aws::WAFV2
     UpdateWebACLRequest.add_member(:description, Shapes::ShapeRef.new(shape: EntityDescription, location_name: "Description"))
     UpdateWebACLRequest.add_member(:rules, Shapes::ShapeRef.new(shape: Rules, location_name: "Rules"))
     UpdateWebACLRequest.add_member(:visibility_config, Shapes::ShapeRef.new(shape: VisibilityConfig, required: true, location_name: "VisibilityConfig"))
+    UpdateWebACLRequest.add_member(:data_protection_config, Shapes::ShapeRef.new(shape: DataProtectionConfig, location_name: "DataProtectionConfig"))
     UpdateWebACLRequest.add_member(:lock_token, Shapes::ShapeRef.new(shape: LockToken, required: true, location_name: "LockToken"))
     UpdateWebACLRequest.add_member(:custom_response_bodies, Shapes::ShapeRef.new(shape: CustomResponseBodies, location_name: "CustomResponseBodies"))
     UpdateWebACLRequest.add_member(:captcha_config, Shapes::ShapeRef.new(shape: CaptchaConfig, location_name: "CaptchaConfig"))
@@ -1676,6 +1703,7 @@ module Aws::WAFV2
     WebACL.add_member(:description, Shapes::ShapeRef.new(shape: EntityDescription, location_name: "Description"))
     WebACL.add_member(:rules, Shapes::ShapeRef.new(shape: Rules, location_name: "Rules"))
     WebACL.add_member(:visibility_config, Shapes::ShapeRef.new(shape: VisibilityConfig, required: true, location_name: "VisibilityConfig"))
+    WebACL.add_member(:data_protection_config, Shapes::ShapeRef.new(shape: DataProtectionConfig, location_name: "DataProtectionConfig"))
     WebACL.add_member(:capacity, Shapes::ShapeRef.new(shape: ConsumedCapacity, location_name: "Capacity"))
     WebACL.add_member(:pre_process_firewall_manager_rule_groups, Shapes::ShapeRef.new(shape: FirewallManagerRuleGroups, location_name: "PreProcessFirewallManagerRuleGroups"))
     WebACL.add_member(:post_process_firewall_manager_rule_groups, Shapes::ShapeRef.new(shape: FirewallManagerRuleGroups, location_name: "PostProcessFirewallManagerRuleGroups"))

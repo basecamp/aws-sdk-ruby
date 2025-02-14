@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.22.0 (2025-02-14)
+------------------
+
+* Feature - Update Environment and Device name field definitions
+
 1.21.0 (2025-02-06)
 ------------------
 

@@ -231,6 +231,7 @@ module Aws::WAFV2
       attr_accessor description: ::String
       attr_accessor rules: ::Array[Types::Rule]
       attr_accessor visibility_config: Types::VisibilityConfig
+      attr_accessor data_protection_config: Types::DataProtectionConfig
       attr_accessor tags: ::Array[Types::Tag]
       attr_accessor custom_response_bodies: ::Hash[::String, Types::CustomResponseBody]
       attr_accessor captcha_config: Types::CaptchaConfig
@@ -266,6 +267,19 @@ module Aws::WAFV2
     class CustomResponseBody
       attr_accessor content_type: ("TEXT_PLAIN" | "TEXT_HTML" | "APPLICATION_JSON")
       attr_accessor content: ::String
+      SENSITIVE: []
+    end
+
+    class DataProtection
+      attr_accessor field: Types::FieldToProtect
+      attr_accessor action: ("SUBSTITUTION" | "HASH")
+      attr_accessor exclude_rule_match_details: bool
+      attr_accessor exclude_rate_based_details: bool
+      SENSITIVE: []
+    end
+
+    class DataProtectionConfig
+      attr_accessor data_protections: ::Array[Types::DataProtection]
       SENSITIVE: []
     end
 
@@ -428,6 +442,12 @@ module Aws::WAFV2
       attr_accessor cookies: Types::Cookies
       attr_accessor header_order: Types::HeaderOrder
       attr_accessor ja3_fingerprint: Types::JA3Fingerprint
+      SENSITIVE: []
+    end
+
+    class FieldToProtect
+      attr_accessor field_type: ("SINGLE_HEADER" | "SINGLE_COOKIE" | "SINGLE_QUERY_ARGUMENT" | "QUERY_STRING" | "BODY")
+      attr_accessor field_keys: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -1482,6 +1502,7 @@ module Aws::WAFV2
       attr_accessor description: ::String
       attr_accessor rules: ::Array[Types::Rule]
       attr_accessor visibility_config: Types::VisibilityConfig
+      attr_accessor data_protection_config: Types::DataProtectionConfig
       attr_accessor lock_token: ::String
       attr_accessor custom_response_bodies: ::Hash[::String, Types::CustomResponseBody]
       attr_accessor captcha_config: Types::CaptchaConfig
@@ -1549,7 +1570,7 @@ module Aws::WAFV2
 
     class WAFInvalidParameterException
       attr_accessor message: ::String
-      attr_accessor field: ("WEB_ACL" | "RULE_GROUP" | "REGEX_PATTERN_SET" | "IP_SET" | "MANAGED_RULE_SET" | "RULE" | "EXCLUDED_RULE" | "STATEMENT" | "BYTE_MATCH_STATEMENT" | "SQLI_MATCH_STATEMENT" | "XSS_MATCH_STATEMENT" | "SIZE_CONSTRAINT_STATEMENT" | "GEO_MATCH_STATEMENT" | "RATE_BASED_STATEMENT" | "RULE_GROUP_REFERENCE_STATEMENT" | "REGEX_PATTERN_REFERENCE_STATEMENT" | "IP_SET_REFERENCE_STATEMENT" | "MANAGED_RULE_SET_STATEMENT" | "LABEL_MATCH_STATEMENT" | "AND_STATEMENT" | "OR_STATEMENT" | "NOT_STATEMENT" | "IP_ADDRESS" | "IP_ADDRESS_VERSION" | "FIELD_TO_MATCH" | "TEXT_TRANSFORMATION" | "SINGLE_QUERY_ARGUMENT" | "SINGLE_HEADER" | "DEFAULT_ACTION" | "RULE_ACTION" | "ENTITY_LIMIT" | "OVERRIDE_ACTION" | "SCOPE_VALUE" | "RESOURCE_ARN" | "RESOURCE_TYPE" | "TAGS" | "TAG_KEYS" | "METRIC_NAME" | "FIREWALL_MANAGER_STATEMENT" | "FALLBACK_BEHAVIOR" | "POSITION" | "FORWARDED_IP_CONFIG" | "IP_SET_FORWARDED_IP_CONFIG" | "HEADER_NAME" | "CUSTOM_REQUEST_HANDLING" | "RESPONSE_CONTENT_TYPE" | "CUSTOM_RESPONSE" | "CUSTOM_RESPONSE_BODY" | "JSON_MATCH_PATTERN" | "JSON_MATCH_SCOPE" | "BODY_PARSING_FALLBACK_BEHAVIOR" | "LOGGING_FILTER" | "FILTER_CONDITION" | "EXPIRE_TIMESTAMP" | "CHANGE_PROPAGATION_STATUS" | "ASSOCIABLE_RESOURCE" | "LOG_DESTINATION" | "MANAGED_RULE_GROUP_CONFIG" | "PAYLOAD_TYPE" | "HEADER_MATCH_PATTERN" | "COOKIE_MATCH_PATTERN" | "MAP_MATCH_SCOPE" | "OVERSIZE_HANDLING" | "CHALLENGE_CONFIG" | "TOKEN_DOMAIN" | "ATP_RULE_SET_RESPONSE_INSPECTION" | "ASSOCIATED_RESOURCE_TYPE" | "SCOPE_DOWN" | "CUSTOM_KEYS" | "ACP_RULE_SET_RESPONSE_INSPECTION")
+      attr_accessor field: ("WEB_ACL" | "RULE_GROUP" | "REGEX_PATTERN_SET" | "IP_SET" | "MANAGED_RULE_SET" | "RULE" | "EXCLUDED_RULE" | "STATEMENT" | "BYTE_MATCH_STATEMENT" | "SQLI_MATCH_STATEMENT" | "XSS_MATCH_STATEMENT" | "SIZE_CONSTRAINT_STATEMENT" | "GEO_MATCH_STATEMENT" | "RATE_BASED_STATEMENT" | "RULE_GROUP_REFERENCE_STATEMENT" | "REGEX_PATTERN_REFERENCE_STATEMENT" | "IP_SET_REFERENCE_STATEMENT" | "MANAGED_RULE_SET_STATEMENT" | "LABEL_MATCH_STATEMENT" | "AND_STATEMENT" | "OR_STATEMENT" | "NOT_STATEMENT" | "IP_ADDRESS" | "IP_ADDRESS_VERSION" | "FIELD_TO_MATCH" | "TEXT_TRANSFORMATION" | "SINGLE_QUERY_ARGUMENT" | "SINGLE_HEADER" | "DEFAULT_ACTION" | "RULE_ACTION" | "ENTITY_LIMIT" | "OVERRIDE_ACTION" | "SCOPE_VALUE" | "RESOURCE_ARN" | "RESOURCE_TYPE" | "TAGS" | "TAG_KEYS" | "METRIC_NAME" | "FIREWALL_MANAGER_STATEMENT" | "FALLBACK_BEHAVIOR" | "POSITION" | "FORWARDED_IP_CONFIG" | "IP_SET_FORWARDED_IP_CONFIG" | "HEADER_NAME" | "CUSTOM_REQUEST_HANDLING" | "RESPONSE_CONTENT_TYPE" | "CUSTOM_RESPONSE" | "CUSTOM_RESPONSE_BODY" | "JSON_MATCH_PATTERN" | "JSON_MATCH_SCOPE" | "BODY_PARSING_FALLBACK_BEHAVIOR" | "LOGGING_FILTER" | "FILTER_CONDITION" | "EXPIRE_TIMESTAMP" | "CHANGE_PROPAGATION_STATUS" | "ASSOCIABLE_RESOURCE" | "LOG_DESTINATION" | "MANAGED_RULE_GROUP_CONFIG" | "PAYLOAD_TYPE" | "HEADER_MATCH_PATTERN" | "COOKIE_MATCH_PATTERN" | "MAP_MATCH_SCOPE" | "OVERSIZE_HANDLING" | "CHALLENGE_CONFIG" | "TOKEN_DOMAIN" | "ATP_RULE_SET_RESPONSE_INSPECTION" | "ASSOCIATED_RESOURCE_TYPE" | "SCOPE_DOWN" | "CUSTOM_KEYS" | "ACP_RULE_SET_RESPONSE_INSPECTION" | "DATA_PROTECTION_CONFIG")
       attr_accessor parameter: ::String
       attr_accessor reason: ::String
       SENSITIVE: []
@@ -1624,6 +1645,7 @@ module Aws::WAFV2
       attr_accessor description: ::String
       attr_accessor rules: ::Array[Types::Rule]
       attr_accessor visibility_config: Types::VisibilityConfig
+      attr_accessor data_protection_config: Types::DataProtectionConfig
       attr_accessor capacity: ::Integer
       attr_accessor pre_process_firewall_manager_rule_groups: ::Array[Types::FirewallManagerRuleGroup]
       attr_accessor post_process_firewall_manager_rule_groups: ::Array[Types::FirewallManagerRuleGroup]
