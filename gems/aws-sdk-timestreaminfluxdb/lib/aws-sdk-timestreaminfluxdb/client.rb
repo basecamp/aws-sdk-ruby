@@ -477,6 +477,157 @@ module Aws::TimestreamInfluxDB
 
     # @!group API Operations
 
+    # Creates a new Timestream for InfluxDB cluster.
+    #
+    # @option params [required, String] :name
+    #   The name that uniquely identifies the DB cluster when interacting with
+    #   the Amazon Timestream for InfluxDB API and CLI commands. This name
+    #   will also be a prefix included in the endpoint. DB cluster names must
+    #   be unique per customer and per region.
+    #
+    # @option params [String] :username
+    #   The username of the initial admin user created in InfluxDB. Must start
+    #   with a letter and can't end with a hyphen or contain two consecutive
+    #   hyphens. For example, my-user1. This username will allow you to access
+    #   the InfluxDB UI to perform various administrative tasks and also use
+    #   the InfluxDB CLI to create an operator token. These attributes will be
+    #   stored in a secret created in Amazon Web Services Secrets Manager in
+    #   your account.
+    #
+    # @option params [required, String] :password
+    #   The password of the initial admin user created in InfluxDB. This
+    #   password will allow you to access the InfluxDB UI to perform various
+    #   administrative tasks and also use the InfluxDB CLI to create an
+    #   operator token. These attributes will be stored in a secret created in
+    #   Amazon Web Services Secrets Manager in your account.
+    #
+    # @option params [String] :organization
+    #   The name of the initial organization for the initial admin user in
+    #   InfluxDB. An InfluxDB organization is a workspace for a group of
+    #   users.
+    #
+    # @option params [String] :bucket
+    #   The name of the initial InfluxDB bucket. All InfluxDB data is stored
+    #   in a bucket. A bucket combines the concept of a database and a
+    #   retention period (the duration of time that each data point persists).
+    #   A bucket belongs to an organization.
+    #
+    # @option params [Integer] :port
+    #   The port number on which InfluxDB accepts connections.
+    #
+    #   Valid Values: 1024-65535
+    #
+    #   Default: 8086
+    #
+    #   Constraints: The value can't be 2375-2376, 7788-7799, 8090, or
+    #   51678-51680
+    #
+    # @option params [String] :db_parameter_group_identifier
+    #   The ID of the DB parameter group to assign to your DB cluster. DB
+    #   parameter groups specify how the database is configured. For example,
+    #   DB parameter groups can specify the limit for query concurrency.
+    #
+    # @option params [required, String] :db_instance_type
+    #   The Timestream for InfluxDB DB instance type to run InfluxDB on.
+    #
+    # @option params [String] :db_storage_type
+    #   The Timestream for InfluxDB DB storage type to read and write InfluxDB
+    #   data.
+    #
+    #   You can choose between three different types of provisioned Influx
+    #   IOPS Included storage according to your workload requirements:
+    #
+    #   * Influx I/O Included 3000 IOPS
+    #
+    #   * Influx I/O Included 12000 IOPS
+    #
+    #   * Influx I/O Included 16000 IOPS
+    #
+    # @option params [required, Integer] :allocated_storage
+    #   The amount of storage to allocate for your DB storage type in GiB
+    #   (gibibytes).
+    #
+    # @option params [String] :network_type
+    #   Specifies whether the network type of the Timestream for InfluxDB
+    #   cluster is IPv4, which can communicate over IPv4 protocol only, or
+    #   DUAL, which can communicate over both IPv4 and IPv6 protocols.
+    #
+    # @option params [Boolean] :publicly_accessible
+    #   Configures the Timestream for InfluxDB cluster with a public IP to
+    #   facilitate access from outside the VPC.
+    #
+    # @option params [required, Array<String>] :vpc_subnet_ids
+    #   A list of VPC subnet IDs to associate with the DB cluster. Provide at
+    #   least two VPC subnet IDs in different Availability Zones when
+    #   deploying with a Multi-AZ standby.
+    #
+    # @option params [required, Array<String>] :vpc_security_group_ids
+    #   A list of VPC security group IDs to associate with the Timestream for
+    #   InfluxDB cluster.
+    #
+    # @option params [required, String] :deployment_type
+    #   Specifies the type of cluster to create.
+    #
+    # @option params [String] :failover_mode
+    #   Specifies the behavior of failure recovery when the primary node of
+    #   the cluster fails.
+    #
+    # @option params [Types::LogDeliveryConfiguration] :log_delivery_configuration
+    #   Configuration for sending InfluxDB engine logs to a specified S3
+    #   bucket.
+    #
+    # @option params [Hash<String,String>] :tags
+    #   A list of key-value pairs to associate with the DB instance.
+    #
+    # @return [Types::CreateDbClusterOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateDbClusterOutput#db_cluster_id #db_cluster_id} => String
+    #   * {Types::CreateDbClusterOutput#db_cluster_status #db_cluster_status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_db_cluster({
+    #     name: "DbClusterName", # required
+    #     username: "Username",
+    #     password: "Password", # required
+    #     organization: "Organization",
+    #     bucket: "Bucket",
+    #     port: 1,
+    #     db_parameter_group_identifier: "DbParameterGroupIdentifier",
+    #     db_instance_type: "db.influx.medium", # required, accepts db.influx.medium, db.influx.large, db.influx.xlarge, db.influx.2xlarge, db.influx.4xlarge, db.influx.8xlarge, db.influx.12xlarge, db.influx.16xlarge
+    #     db_storage_type: "InfluxIOIncludedT1", # accepts InfluxIOIncludedT1, InfluxIOIncludedT2, InfluxIOIncludedT3
+    #     allocated_storage: 1, # required
+    #     network_type: "IPV4", # accepts IPV4, DUAL
+    #     publicly_accessible: false,
+    #     vpc_subnet_ids: ["VpcSubnetId"], # required
+    #     vpc_security_group_ids: ["VpcSecurityGroupId"], # required
+    #     deployment_type: "MULTI_NODE_READ_REPLICAS", # required, accepts MULTI_NODE_READ_REPLICAS
+    #     failover_mode: "AUTOMATIC", # accepts AUTOMATIC, NO_FAILOVER
+    #     log_delivery_configuration: {
+    #       s3_configuration: { # required
+    #         bucket_name: "S3ConfigurationBucketNameString", # required
+    #         enabled: false, # required
+    #       },
+    #     },
+    #     tags: {
+    #       "TagKey" => "TagValue",
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.db_cluster_id #=> String
+    #   resp.db_cluster_status #=> String, one of "CREATING", "UPDATING", "DELETING", "AVAILABLE", "FAILED", "DELETED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/CreateDbCluster AWS API Documentation
+    #
+    # @overload create_db_cluster(params = {})
+    # @param [Hash] params ({})
+    def create_db_cluster(params = {}, options = {})
+      req = build_request(:create_db_cluster, params)
+      req.send_request(options)
+    end
+
     # Creates a new Timestream for InfluxDB DB instance.
     #
     # @option params [required, String] :name
@@ -594,6 +745,8 @@ module Aws::TimestreamInfluxDB
     #   * {Types::CreateDbInstanceOutput#secondary_availability_zone #secondary_availability_zone} => String
     #   * {Types::CreateDbInstanceOutput#log_delivery_configuration #log_delivery_configuration} => Types::LogDeliveryConfiguration
     #   * {Types::CreateDbInstanceOutput#influx_auth_parameters_secret_arn #influx_auth_parameters_secret_arn} => String
+    #   * {Types::CreateDbInstanceOutput#db_cluster_id #db_cluster_id} => String
+    #   * {Types::CreateDbInstanceOutput#instance_mode #instance_mode} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -648,6 +801,8 @@ module Aws::TimestreamInfluxDB
     #   resp.log_delivery_configuration.s3_configuration.bucket_name #=> String
     #   resp.log_delivery_configuration.s3_configuration.enabled #=> Boolean
     #   resp.influx_auth_parameters_secret_arn #=> String
+    #   resp.db_cluster_id #=> String
+    #   resp.instance_mode #=> String, one of "PRIMARY", "STANDBY", "REPLICA"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/CreateDbInstance AWS API Documentation
     #
@@ -812,6 +967,34 @@ module Aws::TimestreamInfluxDB
       req.send_request(options)
     end
 
+    # Deletes a Timestream for InfluxDB cluster.
+    #
+    # @option params [required, String] :db_cluster_id
+    #   Service-generated unique identifier of the DB cluster.
+    #
+    # @return [Types::DeleteDbClusterOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteDbClusterOutput#db_cluster_status #db_cluster_status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_db_cluster({
+    #     db_cluster_id: "DbClusterId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.db_cluster_status #=> String, one of "CREATING", "UPDATING", "DELETING", "AVAILABLE", "FAILED", "DELETED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/DeleteDbCluster AWS API Documentation
+    #
+    # @overload delete_db_cluster(params = {})
+    # @param [Hash] params ({})
+    def delete_db_cluster(params = {}, options = {})
+      req = build_request(:delete_db_cluster, params)
+      req.send_request(options)
+    end
+
     # Deletes a Timestream for InfluxDB DB instance.
     #
     # @option params [required, String] :identifier
@@ -838,6 +1021,8 @@ module Aws::TimestreamInfluxDB
     #   * {Types::DeleteDbInstanceOutput#secondary_availability_zone #secondary_availability_zone} => String
     #   * {Types::DeleteDbInstanceOutput#log_delivery_configuration #log_delivery_configuration} => Types::LogDeliveryConfiguration
     #   * {Types::DeleteDbInstanceOutput#influx_auth_parameters_secret_arn #influx_auth_parameters_secret_arn} => String
+    #   * {Types::DeleteDbInstanceOutput#db_cluster_id #db_cluster_id} => String
+    #   * {Types::DeleteDbInstanceOutput#instance_mode #instance_mode} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -869,6 +1054,8 @@ module Aws::TimestreamInfluxDB
     #   resp.log_delivery_configuration.s3_configuration.bucket_name #=> String
     #   resp.log_delivery_configuration.s3_configuration.enabled #=> Boolean
     #   resp.influx_auth_parameters_secret_arn #=> String
+    #   resp.db_cluster_id #=> String
+    #   resp.instance_mode #=> String, one of "PRIMARY", "STANDBY", "REPLICA"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/DeleteDbInstance AWS API Documentation
     #
@@ -876,6 +1063,73 @@ module Aws::TimestreamInfluxDB
     # @param [Hash] params ({})
     def delete_db_instance(params = {}, options = {})
       req = build_request(:delete_db_instance, params)
+      req.send_request(options)
+    end
+
+    # Retrieves information about a Timestream for InfluxDB cluster.
+    #
+    # @option params [required, String] :db_cluster_id
+    #   Service-generated unique identifier of the DB cluster to retrieve.
+    #
+    # @return [Types::GetDbClusterOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetDbClusterOutput#id #id} => String
+    #   * {Types::GetDbClusterOutput#name #name} => String
+    #   * {Types::GetDbClusterOutput#arn #arn} => String
+    #   * {Types::GetDbClusterOutput#status #status} => String
+    #   * {Types::GetDbClusterOutput#endpoint #endpoint} => String
+    #   * {Types::GetDbClusterOutput#reader_endpoint #reader_endpoint} => String
+    #   * {Types::GetDbClusterOutput#port #port} => Integer
+    #   * {Types::GetDbClusterOutput#deployment_type #deployment_type} => String
+    #   * {Types::GetDbClusterOutput#db_instance_type #db_instance_type} => String
+    #   * {Types::GetDbClusterOutput#network_type #network_type} => String
+    #   * {Types::GetDbClusterOutput#db_storage_type #db_storage_type} => String
+    #   * {Types::GetDbClusterOutput#allocated_storage #allocated_storage} => Integer
+    #   * {Types::GetDbClusterOutput#publicly_accessible #publicly_accessible} => Boolean
+    #   * {Types::GetDbClusterOutput#db_parameter_group_identifier #db_parameter_group_identifier} => String
+    #   * {Types::GetDbClusterOutput#log_delivery_configuration #log_delivery_configuration} => Types::LogDeliveryConfiguration
+    #   * {Types::GetDbClusterOutput#influx_auth_parameters_secret_arn #influx_auth_parameters_secret_arn} => String
+    #   * {Types::GetDbClusterOutput#vpc_subnet_ids #vpc_subnet_ids} => Array&lt;String&gt;
+    #   * {Types::GetDbClusterOutput#vpc_security_group_ids #vpc_security_group_ids} => Array&lt;String&gt;
+    #   * {Types::GetDbClusterOutput#failover_mode #failover_mode} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_db_cluster({
+    #     db_cluster_id: "DbClusterId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.id #=> String
+    #   resp.name #=> String
+    #   resp.arn #=> String
+    #   resp.status #=> String, one of "CREATING", "UPDATING", "DELETING", "AVAILABLE", "FAILED", "DELETED"
+    #   resp.endpoint #=> String
+    #   resp.reader_endpoint #=> String
+    #   resp.port #=> Integer
+    #   resp.deployment_type #=> String, one of "MULTI_NODE_READ_REPLICAS"
+    #   resp.db_instance_type #=> String, one of "db.influx.medium", "db.influx.large", "db.influx.xlarge", "db.influx.2xlarge", "db.influx.4xlarge", "db.influx.8xlarge", "db.influx.12xlarge", "db.influx.16xlarge"
+    #   resp.network_type #=> String, one of "IPV4", "DUAL"
+    #   resp.db_storage_type #=> String, one of "InfluxIOIncludedT1", "InfluxIOIncludedT2", "InfluxIOIncludedT3"
+    #   resp.allocated_storage #=> Integer
+    #   resp.publicly_accessible #=> Boolean
+    #   resp.db_parameter_group_identifier #=> String
+    #   resp.log_delivery_configuration.s3_configuration.bucket_name #=> String
+    #   resp.log_delivery_configuration.s3_configuration.enabled #=> Boolean
+    #   resp.influx_auth_parameters_secret_arn #=> String
+    #   resp.vpc_subnet_ids #=> Array
+    #   resp.vpc_subnet_ids[0] #=> String
+    #   resp.vpc_security_group_ids #=> Array
+    #   resp.vpc_security_group_ids[0] #=> String
+    #   resp.failover_mode #=> String, one of "AUTOMATIC", "NO_FAILOVER"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/GetDbCluster AWS API Documentation
+    #
+    # @overload get_db_cluster(params = {})
+    # @param [Hash] params ({})
+    def get_db_cluster(params = {}, options = {})
+      req = build_request(:get_db_cluster, params)
       req.send_request(options)
     end
 
@@ -905,6 +1159,8 @@ module Aws::TimestreamInfluxDB
     #   * {Types::GetDbInstanceOutput#secondary_availability_zone #secondary_availability_zone} => String
     #   * {Types::GetDbInstanceOutput#log_delivery_configuration #log_delivery_configuration} => Types::LogDeliveryConfiguration
     #   * {Types::GetDbInstanceOutput#influx_auth_parameters_secret_arn #influx_auth_parameters_secret_arn} => String
+    #   * {Types::GetDbInstanceOutput#db_cluster_id #db_cluster_id} => String
+    #   * {Types::GetDbInstanceOutput#instance_mode #instance_mode} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -936,6 +1192,8 @@ module Aws::TimestreamInfluxDB
     #   resp.log_delivery_configuration.s3_configuration.bucket_name #=> String
     #   resp.log_delivery_configuration.s3_configuration.enabled #=> Boolean
     #   resp.influx_auth_parameters_secret_arn #=> String
+    #   resp.db_cluster_id #=> String
+    #   resp.instance_mode #=> String, one of "PRIMARY", "STANDBY", "REPLICA"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/GetDbInstance AWS API Documentation
     #
@@ -1023,6 +1281,58 @@ module Aws::TimestreamInfluxDB
       req.send_request(options)
     end
 
+    # Returns a list of Timestream for InfluxDB DB clusters.
+    #
+    # @option params [String] :next_token
+    #   The pagination token. To resume pagination, provide the nextToken
+    #   value as an argument of a subsequent API invocation.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of items to return in the output. If the total
+    #   number of items available is more than the value specified, a
+    #   nextToken is provided in the output. To resume pagination, provide the
+    #   nextToken value as an argument of a subsequent API invocation.
+    #
+    # @return [Types::ListDbClustersOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListDbClustersOutput#items #items} => Array&lt;Types::DbClusterSummary&gt;
+    #   * {Types::ListDbClustersOutput#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_db_clusters({
+    #     next_token: "NextToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].id #=> String
+    #   resp.items[0].name #=> String
+    #   resp.items[0].arn #=> String
+    #   resp.items[0].status #=> String, one of "CREATING", "UPDATING", "DELETING", "AVAILABLE", "FAILED", "DELETED"
+    #   resp.items[0].endpoint #=> String
+    #   resp.items[0].reader_endpoint #=> String
+    #   resp.items[0].port #=> Integer
+    #   resp.items[0].deployment_type #=> String, one of "MULTI_NODE_READ_REPLICAS"
+    #   resp.items[0].db_instance_type #=> String, one of "db.influx.medium", "db.influx.large", "db.influx.xlarge", "db.influx.2xlarge", "db.influx.4xlarge", "db.influx.8xlarge", "db.influx.12xlarge", "db.influx.16xlarge"
+    #   resp.items[0].network_type #=> String, one of "IPV4", "DUAL"
+    #   resp.items[0].db_storage_type #=> String, one of "InfluxIOIncludedT1", "InfluxIOIncludedT2", "InfluxIOIncludedT3"
+    #   resp.items[0].allocated_storage #=> Integer
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/ListDbClusters AWS API Documentation
+    #
+    # @overload list_db_clusters(params = {})
+    # @param [Hash] params ({})
+    def list_db_clusters(params = {}, options = {})
+      req = build_request(:list_db_clusters, params)
+      req.send_request(options)
+    end
+
     # Returns a list of Timestream for InfluxDB DB instances.
     #
     # @option params [String] :next_token
@@ -1071,6 +1381,62 @@ module Aws::TimestreamInfluxDB
     # @param [Hash] params ({})
     def list_db_instances(params = {}, options = {})
       req = build_request(:list_db_instances, params)
+      req.send_request(options)
+    end
+
+    # Returns a list of Timestream for InfluxDB clusters.
+    #
+    # @option params [required, String] :db_cluster_id
+    #   Service-generated unique identifier of the DB cluster.
+    #
+    # @option params [String] :next_token
+    #   The pagination token. To resume pagination, provide the nextToken
+    #   value as an argument of a subsequent API invocation.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of items to return in the output. If the total
+    #   number of items available is more than the value specified, a
+    #   nextToken is provided in the output. To resume pagination, provide the
+    #   nextToken value as an argument of a subsequent API invocation.
+    #
+    # @return [Types::ListDbInstancesForClusterOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListDbInstancesForClusterOutput#items #items} => Array&lt;Types::DbInstanceForClusterSummary&gt;
+    #   * {Types::ListDbInstancesForClusterOutput#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_db_instances_for_cluster({
+    #     db_cluster_id: "DbClusterId", # required
+    #     next_token: "NextToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].id #=> String
+    #   resp.items[0].name #=> String
+    #   resp.items[0].arn #=> String
+    #   resp.items[0].status #=> String, one of "CREATING", "AVAILABLE", "DELETING", "MODIFYING", "UPDATING", "DELETED", "FAILED", "UPDATING_DEPLOYMENT_TYPE", "UPDATING_INSTANCE_TYPE"
+    #   resp.items[0].endpoint #=> String
+    #   resp.items[0].port #=> Integer
+    #   resp.items[0].network_type #=> String, one of "IPV4", "DUAL"
+    #   resp.items[0].db_instance_type #=> String, one of "db.influx.medium", "db.influx.large", "db.influx.xlarge", "db.influx.2xlarge", "db.influx.4xlarge", "db.influx.8xlarge", "db.influx.12xlarge", "db.influx.16xlarge"
+    #   resp.items[0].db_storage_type #=> String, one of "InfluxIOIncludedT1", "InfluxIOIncludedT2", "InfluxIOIncludedT3"
+    #   resp.items[0].allocated_storage #=> Integer
+    #   resp.items[0].deployment_type #=> String, one of "SINGLE_AZ", "WITH_MULTIAZ_STANDBY"
+    #   resp.items[0].instance_mode #=> String, one of "PRIMARY", "STANDBY", "REPLICA"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/ListDbInstancesForCluster AWS API Documentation
+    #
+    # @overload list_db_instances_for_cluster(params = {})
+    # @param [Hash] params ({})
+    def list_db_instances_for_cluster(params = {}, options = {})
+      req = build_request(:list_db_instances_for_cluster, params)
       req.send_request(options)
     end
 
@@ -1202,6 +1568,59 @@ module Aws::TimestreamInfluxDB
       req.send_request(options)
     end
 
+    # Updates a Timestream for InfluxDB cluster.
+    #
+    # @option params [required, String] :db_cluster_id
+    #   Service-generated unique identifier of the DB cluster to update.
+    #
+    # @option params [Types::LogDeliveryConfiguration] :log_delivery_configuration
+    #   The log delivery configuration to apply to the DB cluster.
+    #
+    # @option params [String] :db_parameter_group_identifier
+    #   Update the DB cluster to use the specified DB parameter group.
+    #
+    # @option params [Integer] :port
+    #   Update the DB cluster to use the specified port.
+    #
+    # @option params [String] :db_instance_type
+    #   Update the DB cluster to use the specified DB instance Type.
+    #
+    # @option params [String] :failover_mode
+    #   Update the DB cluster's failover behavior.
+    #
+    # @return [Types::UpdateDbClusterOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateDbClusterOutput#db_cluster_status #db_cluster_status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_db_cluster({
+    #     db_cluster_id: "DbClusterId", # required
+    #     log_delivery_configuration: {
+    #       s3_configuration: { # required
+    #         bucket_name: "S3ConfigurationBucketNameString", # required
+    #         enabled: false, # required
+    #       },
+    #     },
+    #     db_parameter_group_identifier: "DbParameterGroupIdentifier",
+    #     port: 1,
+    #     db_instance_type: "db.influx.medium", # accepts db.influx.medium, db.influx.large, db.influx.xlarge, db.influx.2xlarge, db.influx.4xlarge, db.influx.8xlarge, db.influx.12xlarge, db.influx.16xlarge
+    #     failover_mode: "AUTOMATIC", # accepts AUTOMATIC, NO_FAILOVER
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.db_cluster_status #=> String, one of "CREATING", "UPDATING", "DELETING", "AVAILABLE", "FAILED", "DELETED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/UpdateDbCluster AWS API Documentation
+    #
+    # @overload update_db_cluster(params = {})
+    # @param [Hash] params ({})
+    def update_db_cluster(params = {}, options = {})
+      req = build_request(:update_db_cluster, params)
+      req.send_request(options)
+    end
+
     # Updates a Timestream for InfluxDB DB instance.
     #
     # @option params [required, String] :identifier
@@ -1264,6 +1683,8 @@ module Aws::TimestreamInfluxDB
     #   * {Types::UpdateDbInstanceOutput#secondary_availability_zone #secondary_availability_zone} => String
     #   * {Types::UpdateDbInstanceOutput#log_delivery_configuration #log_delivery_configuration} => Types::LogDeliveryConfiguration
     #   * {Types::UpdateDbInstanceOutput#influx_auth_parameters_secret_arn #influx_auth_parameters_secret_arn} => String
+    #   * {Types::UpdateDbInstanceOutput#db_cluster_id #db_cluster_id} => String
+    #   * {Types::UpdateDbInstanceOutput#instance_mode #instance_mode} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -1307,6 +1728,8 @@ module Aws::TimestreamInfluxDB
     #   resp.log_delivery_configuration.s3_configuration.bucket_name #=> String
     #   resp.log_delivery_configuration.s3_configuration.enabled #=> Boolean
     #   resp.influx_auth_parameters_secret_arn #=> String
+    #   resp.db_cluster_id #=> String
+    #   resp.instance_mode #=> String, one of "PRIMARY", "STANDBY", "REPLICA"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/UpdateDbInstance AWS API Documentation
     #
@@ -1335,7 +1758,7 @@ module Aws::TimestreamInfluxDB
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-timestreaminfluxdb'
-      context[:gem_version] = '1.19.0'
+      context[:gem_version] = '1.20.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

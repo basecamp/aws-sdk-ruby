@@ -23,7 +23,7 @@ Aws::Plugins::GlobalConfiguration.add_identifier(:timestreaminfluxdb)
 # structure.
 #
 #     timestream_influx_db = Aws::TimestreamInfluxDB::Client.new
-#     resp = timestream_influx_db.create_db_instance(params)
+#     resp = timestream_influx_db.create_db_cluster(params)
 #
 # See {Client} for more information.
 #
@@ -54,7 +54,7 @@ module Aws::TimestreamInfluxDB
   autoload :EndpointProvider, 'aws-sdk-timestreaminfluxdb/endpoint_provider'
   autoload :Endpoints, 'aws-sdk-timestreaminfluxdb/endpoints'
 
-  GEM_VERSION = '1.19.0'
+  GEM_VERSION = '1.20.0'
 
 end
 

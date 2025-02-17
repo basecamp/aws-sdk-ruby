@@ -499,9 +499,20 @@ module Aws::Amplify
     #
     #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/deploy-nextjs-app.html#build-setting-detection-ssg-14
     #
+    # @option params [String] :compute_role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role to assign to an SSR
+    #   app. The SSR Compute role allows the Amplify Hosting compute service
+    #   to securely access specific Amazon Web Services resources based on the
+    #   role's permissions. For more information about the SSR Compute role,
+    #   see [Adding an SSR Compute role][1] in the *Amplify User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #
     # @option params [String] :iam_service_role_arn
-    #   The AWS Identity and Access Management (IAM) service role for an
-    #   Amplify app.
+    #   The Amazon Resource Name (ARN) of the IAM service role for the Amplify
+    #   app.
     #
     # @option params [String] :oauth_token
     #   The OAuth token for a third-party source control system for an Amplify
@@ -609,6 +620,7 @@ module Aws::Amplify
     #     description: "Description",
     #     repository: "Repository",
     #     platform: "WEB", # accepts WEB, WEB_DYNAMIC, WEB_COMPUTE
+    #     compute_role_arn: "ComputeRoleArn",
     #     iam_service_role_arn: "ServiceRoleArn",
     #     oauth_token: "OauthToken",
     #     access_token: "AccessToken",
@@ -665,6 +677,7 @@ module Aws::Amplify
     #   resp.app.platform #=> String, one of "WEB", "WEB_DYNAMIC", "WEB_COMPUTE"
     #   resp.app.create_time #=> Time
     #   resp.app.update_time #=> Time
+    #   resp.app.compute_role_arn #=> String
     #   resp.app.iam_service_role_arn #=> String
     #   resp.app.environment_variables #=> Hash
     #   resp.app.environment_variables["EnvKey"] #=> String
@@ -842,6 +855,18 @@ module Aws::Amplify
     #   application with Amplify Gen 2, you provision the app's backend
     #   infrastructure using Typescript code.
     #
+    # @option params [String] :compute_role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role to assign to a branch
+    #   of an SSR app. The SSR Compute role allows the Amplify Hosting compute
+    #   service to securely access specific Amazon Web Services resources
+    #   based on the role's permissions. For more information about the SSR
+    #   Compute role, see [Adding an SSR Compute role][1] in the *Amplify User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #
     # @return [Types::CreateBranchResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateBranchResult#branch #branch} => Types::Branch
@@ -874,6 +899,7 @@ module Aws::Amplify
     #     backend: {
     #       stack_arn: "StackArn",
     #     },
+    #     compute_role_arn: "ComputeRoleArn",
     #   })
     #
     # @example Response structure
@@ -910,6 +936,7 @@ module Aws::Amplify
     #   resp.branch.source_branch #=> String
     #   resp.branch.backend_environment_arn #=> String
     #   resp.branch.backend.stack_arn #=> String
+    #   resp.branch.compute_role_arn #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/CreateBranch AWS API Documentation
     #
@@ -1122,6 +1149,7 @@ module Aws::Amplify
     #   resp.app.platform #=> String, one of "WEB", "WEB_DYNAMIC", "WEB_COMPUTE"
     #   resp.app.create_time #=> Time
     #   resp.app.update_time #=> Time
+    #   resp.app.compute_role_arn #=> String
     #   resp.app.iam_service_role_arn #=> String
     #   resp.app.environment_variables #=> Hash
     #   resp.app.environment_variables["EnvKey"] #=> String
@@ -1267,6 +1295,7 @@ module Aws::Amplify
     #   resp.branch.source_branch #=> String
     #   resp.branch.backend_environment_arn #=> String
     #   resp.branch.backend.stack_arn #=> String
+    #   resp.branch.compute_role_arn #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/DeleteBranch AWS API Documentation
     #
@@ -1476,6 +1505,7 @@ module Aws::Amplify
     #   resp.app.platform #=> String, one of "WEB", "WEB_DYNAMIC", "WEB_COMPUTE"
     #   resp.app.create_time #=> Time
     #   resp.app.update_time #=> Time
+    #   resp.app.compute_role_arn #=> String
     #   resp.app.iam_service_role_arn #=> String
     #   resp.app.environment_variables #=> Hash
     #   resp.app.environment_variables["EnvKey"] #=> String
@@ -1651,6 +1681,7 @@ module Aws::Amplify
     #   resp.branch.source_branch #=> String
     #   resp.branch.backend_environment_arn #=> String
     #   resp.branch.backend.stack_arn #=> String
+    #   resp.branch.compute_role_arn #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/GetBranch AWS API Documentation
     #
@@ -1840,6 +1871,7 @@ module Aws::Amplify
     #   resp.apps[0].platform #=> String, one of "WEB", "WEB_DYNAMIC", "WEB_COMPUTE"
     #   resp.apps[0].create_time #=> Time
     #   resp.apps[0].update_time #=> Time
+    #   resp.apps[0].compute_role_arn #=> String
     #   resp.apps[0].iam_service_role_arn #=> String
     #   resp.apps[0].environment_variables #=> Hash
     #   resp.apps[0].environment_variables["EnvKey"] #=> String
@@ -2059,6 +2091,7 @@ module Aws::Amplify
     #   resp.branches[0].source_branch #=> String
     #   resp.branches[0].backend_environment_arn #=> String
     #   resp.branches[0].backend.stack_arn #=> String
+    #   resp.branches[0].compute_role_arn #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/ListBranches AWS API Documentation
@@ -2523,9 +2556,20 @@ module Aws::Amplify
     #   If you are deploying an SSG only app with Next.js version 14 or later,
     #   you must set the platform type to `WEB_COMPUTE`.
     #
+    # @option params [String] :compute_role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role to assign to an SSR
+    #   app. The SSR Compute role allows the Amplify Hosting compute service
+    #   to securely access specific Amazon Web Services resources based on the
+    #   role's permissions. For more information about the SSR Compute role,
+    #   see [Adding an SSR Compute role][1] in the *Amplify User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #
     # @option params [String] :iam_service_role_arn
-    #   The AWS Identity and Access Management (IAM) service role for an
-    #   Amplify app.
+    #   The Amazon Resource Name (ARN) of the IAM service role for the Amplify
+    #   app.
     #
     # @option params [Hash<String,String>] :environment_variables
     #   The environment variables for an Amplify app.
@@ -2627,6 +2671,7 @@ module Aws::Amplify
     #     name: "Name",
     #     description: "Description",
     #     platform: "WEB", # accepts WEB, WEB_DYNAMIC, WEB_COMPUTE
+    #     compute_role_arn: "ComputeRoleArn",
     #     iam_service_role_arn: "ServiceRoleArn",
     #     environment_variables: {
     #       "EnvKey" => "EnvValue",
@@ -2681,6 +2726,7 @@ module Aws::Amplify
     #   resp.app.platform #=> String, one of "WEB", "WEB_DYNAMIC", "WEB_COMPUTE"
     #   resp.app.create_time #=> Time
     #   resp.app.update_time #=> Time
+    #   resp.app.compute_role_arn #=> String
     #   resp.app.iam_service_role_arn #=> String
     #   resp.app.environment_variables #=> Hash
     #   resp.app.environment_variables["EnvKey"] #=> String
@@ -2804,6 +2850,18 @@ module Aws::Amplify
     #   application with Amplify Gen 2, you provision the app's backend
     #   infrastructure using Typescript code.
     #
+    # @option params [String] :compute_role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role to assign to a branch
+    #   of an SSR app. The SSR Compute role allows the Amplify Hosting compute
+    #   service to securely access specific Amazon Web Services resources
+    #   based on the role's permissions. For more information about the SSR
+    #   Compute role, see [Adding an SSR Compute role][1] in the *Amplify User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #
     # @return [Types::UpdateBranchResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateBranchResult#branch #branch} => Types::Branch
@@ -2833,6 +2891,7 @@ module Aws::Amplify
     #     backend: {
     #       stack_arn: "StackArn",
     #     },
+    #     compute_role_arn: "ComputeRoleArn",
     #   })
     #
     # @example Response structure
@@ -2869,6 +2928,7 @@ module Aws::Amplify
     #   resp.branch.source_branch #=> String
     #   resp.branch.backend_environment_arn #=> String
     #   resp.branch.backend.stack_arn #=> String
+    #   resp.branch.compute_role_arn #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/UpdateBranch AWS API Documentation
     #
@@ -3017,7 +3077,7 @@ module Aws::Amplify
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-amplify'
-      context[:gem_version] = '1.78.0'
+      context[:gem_version] = '1.79.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

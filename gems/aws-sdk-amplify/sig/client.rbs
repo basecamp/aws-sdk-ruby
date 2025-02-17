@@ -87,6 +87,7 @@ module Aws
                         ?description: ::String,
                         ?repository: ::String,
                         ?platform: ("WEB" | "WEB_DYNAMIC" | "WEB_COMPUTE"),
+                        ?compute_role_arn: ::String,
                         ?iam_service_role_arn: ::String,
                         ?oauth_token: ::String,
                         ?access_token: ::String,
@@ -165,7 +166,8 @@ module Aws
                            ?backend_environment_arn: ::String,
                            ?backend: {
                              stack_arn: ::String?
-                           }
+                           },
+                           ?compute_role_arn: ::String
                          ) -> _CreateBranchResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateBranchResponseSuccess
 
@@ -550,6 +552,7 @@ module Aws
                         ?name: ::String,
                         ?description: ::String,
                         ?platform: ("WEB" | "WEB_DYNAMIC" | "WEB_COMPUTE"),
+                        ?compute_role_arn: ::String,
                         ?iam_service_role_arn: ::String,
                         ?environment_variables: Hash[::String, ::String],
                         ?enable_branch_auto_build: bool,
@@ -614,7 +617,8 @@ module Aws
                            ?backend_environment_arn: ::String,
                            ?backend: {
                              stack_arn: ::String?
-                           }
+                           },
+                           ?compute_role_arn: ::String
                          ) -> _UpdateBranchResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateBranchResponseSuccess
 

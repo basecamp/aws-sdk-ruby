@@ -2785,6 +2785,11 @@ module Aws::DatabaseMigrationService
     #   list of individual assessments.
     #   @return [String]
     #
+    # @!attribute [rw] replication_config_arn
+    #   Amazon Resource Name (ARN) of a serverless replication on which you
+    #   want to base the default list of individual assessments.
+    #   @return [String]
+    #
     # @!attribute [rw] source_engine_name
     #   Name of a database engine that the specified replication instance
     #   supports as a source.
@@ -2818,6 +2823,7 @@ module Aws::DatabaseMigrationService
     class DescribeApplicableIndividualAssessmentsMessage < Struct.new(
       :replication_task_arn,
       :replication_instance_arn,
+      :replication_config_arn,
       :source_engine_name,
       :target_engine_name,
       :migration_type,

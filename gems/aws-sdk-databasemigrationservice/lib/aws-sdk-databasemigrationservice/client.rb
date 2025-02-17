@@ -4648,6 +4648,10 @@ module Aws::DatabaseMigrationService
     #   ARN of a replication instance on which you want to base the default
     #   list of individual assessments.
     #
+    # @option params [String] :replication_config_arn
+    #   Amazon Resource Name (ARN) of a serverless replication on which you
+    #   want to base the default list of individual assessments.
+    #
     # @option params [String] :source_engine_name
     #   Name of a database engine that the specified replication instance
     #   supports as a source.
@@ -4683,6 +4687,7 @@ module Aws::DatabaseMigrationService
     #   resp = client.describe_applicable_individual_assessments({
     #     replication_task_arn: "String",
     #     replication_instance_arn: "String",
+    #     replication_config_arn: "String",
     #     source_engine_name: "String",
     #     target_engine_name: "String",
     #     migration_type: "full-load", # accepts full-load, cdc, full-load-and-cdc
@@ -12745,7 +12750,7 @@ module Aws::DatabaseMigrationService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-databasemigrationservice'
-      context[:gem_version] = '1.116.0'
+      context[:gem_version] = '1.117.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

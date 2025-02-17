@@ -1010,6 +1010,7 @@ module Aws::DatabaseMigrationService
 
     DescribeApplicableIndividualAssessmentsMessage.add_member(:replication_task_arn, Shapes::ShapeRef.new(shape: String, location_name: "ReplicationTaskArn"))
     DescribeApplicableIndividualAssessmentsMessage.add_member(:replication_instance_arn, Shapes::ShapeRef.new(shape: String, location_name: "ReplicationInstanceArn"))
+    DescribeApplicableIndividualAssessmentsMessage.add_member(:replication_config_arn, Shapes::ShapeRef.new(shape: String, location_name: "ReplicationConfigArn"))
     DescribeApplicableIndividualAssessmentsMessage.add_member(:source_engine_name, Shapes::ShapeRef.new(shape: String, location_name: "SourceEngineName"))
     DescribeApplicableIndividualAssessmentsMessage.add_member(:target_engine_name, Shapes::ShapeRef.new(shape: String, location_name: "TargetEngineName"))
     DescribeApplicableIndividualAssessmentsMessage.add_member(:migration_type, Shapes::ShapeRef.new(shape: MigrationTypeValue, location_name: "MigrationType"))

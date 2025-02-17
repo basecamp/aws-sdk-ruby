@@ -56,6 +56,7 @@ module Aws::Amplify
     CommitId = Shapes::StringShape.new(name: 'CommitId')
     CommitMessage = Shapes::StringShape.new(name: 'CommitMessage')
     CommitTime = Shapes::TimestampShape.new(name: 'CommitTime')
+    ComputeRoleArn = Shapes::StringShape.new(name: 'ComputeRoleArn')
     Condition = Shapes::StringShape.new(name: 'Condition')
     Context = Shapes::StringShape.new(name: 'Context')
     CreateAppRequest = Shapes::StructureShape.new(name: 'CreateAppRequest')
@@ -248,6 +249,7 @@ module Aws::Amplify
     App.add_member(:platform, Shapes::ShapeRef.new(shape: Platform, required: true, location_name: "platform"))
     App.add_member(:create_time, Shapes::ShapeRef.new(shape: CreateTime, required: true, location_name: "createTime"))
     App.add_member(:update_time, Shapes::ShapeRef.new(shape: UpdateTime, required: true, location_name: "updateTime"))
+    App.add_member(:compute_role_arn, Shapes::ShapeRef.new(shape: ComputeRoleArn, location_name: "computeRoleArn"))
     App.add_member(:iam_service_role_arn, Shapes::ShapeRef.new(shape: ServiceRoleArn, location_name: "iamServiceRoleArn"))
     App.add_member(:environment_variables, Shapes::ShapeRef.new(shape: EnvironmentVariables, required: true, location_name: "environmentVariables"))
     App.add_member(:default_domain, Shapes::ShapeRef.new(shape: DefaultDomain, required: true, location_name: "defaultDomain"))
@@ -338,6 +340,7 @@ module Aws::Amplify
     Branch.add_member(:source_branch, Shapes::ShapeRef.new(shape: BranchName, location_name: "sourceBranch"))
     Branch.add_member(:backend_environment_arn, Shapes::ShapeRef.new(shape: BackendEnvironmentArn, location_name: "backendEnvironmentArn"))
     Branch.add_member(:backend, Shapes::ShapeRef.new(shape: Backend, location_name: "backend"))
+    Branch.add_member(:compute_role_arn, Shapes::ShapeRef.new(shape: ComputeRoleArn, location_name: "computeRoleArn"))
     Branch.struct_class = Types::Branch
 
     Branches.member = Shapes::ShapeRef.new(shape: Branch)
@@ -358,6 +361,7 @@ module Aws::Amplify
     CreateAppRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     CreateAppRequest.add_member(:repository, Shapes::ShapeRef.new(shape: Repository, location_name: "repository"))
     CreateAppRequest.add_member(:platform, Shapes::ShapeRef.new(shape: Platform, location_name: "platform"))
+    CreateAppRequest.add_member(:compute_role_arn, Shapes::ShapeRef.new(shape: ComputeRoleArn, location_name: "computeRoleArn"))
     CreateAppRequest.add_member(:iam_service_role_arn, Shapes::ShapeRef.new(shape: ServiceRoleArn, location_name: "iamServiceRoleArn"))
     CreateAppRequest.add_member(:oauth_token, Shapes::ShapeRef.new(shape: OauthToken, location_name: "oauthToken"))
     CreateAppRequest.add_member(:access_token, Shapes::ShapeRef.new(shape: AccessToken, location_name: "accessToken"))
@@ -407,6 +411,7 @@ module Aws::Amplify
     CreateBranchRequest.add_member(:pull_request_environment_name, Shapes::ShapeRef.new(shape: PullRequestEnvironmentName, location_name: "pullRequestEnvironmentName"))
     CreateBranchRequest.add_member(:backend_environment_arn, Shapes::ShapeRef.new(shape: BackendEnvironmentArn, location_name: "backendEnvironmentArn"))
     CreateBranchRequest.add_member(:backend, Shapes::ShapeRef.new(shape: Backend, location_name: "backend"))
+    CreateBranchRequest.add_member(:compute_role_arn, Shapes::ShapeRef.new(shape: ComputeRoleArn, location_name: "computeRoleArn"))
     CreateBranchRequest.struct_class = Types::CreateBranchRequest
 
     CreateBranchResult.add_member(:branch, Shapes::ShapeRef.new(shape: Branch, required: true, location_name: "branch"))
@@ -773,6 +778,7 @@ module Aws::Amplify
     UpdateAppRequest.add_member(:name, Shapes::ShapeRef.new(shape: Name, location_name: "name"))
     UpdateAppRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     UpdateAppRequest.add_member(:platform, Shapes::ShapeRef.new(shape: Platform, location_name: "platform"))
+    UpdateAppRequest.add_member(:compute_role_arn, Shapes::ShapeRef.new(shape: ComputeRoleArn, location_name: "computeRoleArn"))
     UpdateAppRequest.add_member(:iam_service_role_arn, Shapes::ShapeRef.new(shape: ServiceRoleArn, location_name: "iamServiceRoleArn"))
     UpdateAppRequest.add_member(:environment_variables, Shapes::ShapeRef.new(shape: EnvironmentVariables, location_name: "environmentVariables"))
     UpdateAppRequest.add_member(:enable_branch_auto_build, Shapes::ShapeRef.new(shape: EnableAutoBuild, location_name: "enableBranchAutoBuild"))
@@ -812,6 +818,7 @@ module Aws::Amplify
     UpdateBranchRequest.add_member(:pull_request_environment_name, Shapes::ShapeRef.new(shape: PullRequestEnvironmentName, location_name: "pullRequestEnvironmentName"))
     UpdateBranchRequest.add_member(:backend_environment_arn, Shapes::ShapeRef.new(shape: BackendEnvironmentArn, location_name: "backendEnvironmentArn"))
     UpdateBranchRequest.add_member(:backend, Shapes::ShapeRef.new(shape: Backend, location_name: "backend"))
+    UpdateBranchRequest.add_member(:compute_role_arn, Shapes::ShapeRef.new(shape: ComputeRoleArn, location_name: "computeRoleArn"))
     UpdateBranchRequest.struct_class = Types::UpdateBranchRequest
 
     UpdateBranchResult.add_member(:branch, Shapes::ShapeRef.new(shape: Branch, required: true, location_name: "branch"))

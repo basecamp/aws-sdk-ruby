@@ -56,9 +56,21 @@ module Aws::Amplify
     #   A timestamp of when Amplify updated the application.
     #   @return [Time]
     #
+    # @!attribute [rw] compute_role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role for an SSR app. The
+    #   Compute role allows the Amplify Hosting compute service to securely
+    #   access specific Amazon Web Services resources based on the role's
+    #   permissions. For more information about the SSR Compute role, see
+    #   [Adding an SSR Compute role][1] in the *Amplify User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   @return [String]
+    #
     # @!attribute [rw] iam_service_role_arn
-    #   The AWS Identity and Access Management (IAM) service role for the
-    #   Amazon Resource Name (ARN) of the Amplify app.
+    #   The Amazon Resource Name (ARN) of the IAM service role for the
+    #   Amplify app.
     #   @return [String]
     #
     # @!attribute [rw] environment_variables
@@ -169,6 +181,7 @@ module Aws::Amplify
       :platform,
       :create_time,
       :update_time,
+      :compute_role_arn,
       :iam_service_role_arn,
       :environment_variables,
       :default_domain,
@@ -485,6 +498,19 @@ module Aws::Amplify
     #   backend infrastructure using Typescript code.
     #   @return [Types::Backend]
     #
+    # @!attribute [rw] compute_role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role for a branch of an
+    #   SSR app. The Compute role allows the Amplify Hosting compute service
+    #   to securely access specific Amazon Web Services resources based on
+    #   the role's permissions. For more information about the SSR Compute
+    #   role, see [Adding an SSR Compute role][1] in the *Amplify User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/Branch AWS API Documentation
     #
     class Branch < Struct.new(
@@ -515,7 +541,8 @@ module Aws::Amplify
       :destination_branch,
       :source_branch,
       :backend_environment_arn,
-      :backend)
+      :backend,
+      :compute_role_arn)
       SENSITIVE = [:basic_auth_credentials, :build_spec]
       include Aws::Structure
     end
@@ -668,8 +695,21 @@ module Aws::Amplify
     #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/deploy-nextjs-app.html#build-setting-detection-ssg-14
     #   @return [String]
     #
+    # @!attribute [rw] compute_role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role to assign to an SSR
+    #   app. The SSR Compute role allows the Amplify Hosting compute service
+    #   to securely access specific Amazon Web Services resources based on
+    #   the role's permissions. For more information about the SSR Compute
+    #   role, see [Adding an SSR Compute role][1] in the *Amplify User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   @return [String]
+    #
     # @!attribute [rw] iam_service_role_arn
-    #   The AWS Identity and Access Management (IAM) service role for an
+    #   The Amazon Resource Name (ARN) of the IAM service role for the
     #   Amplify app.
     #   @return [String]
     #
@@ -792,6 +832,7 @@ module Aws::Amplify
       :description,
       :repository,
       :platform,
+      :compute_role_arn,
       :iam_service_role_arn,
       :oauth_token,
       :access_token,
@@ -964,6 +1005,19 @@ module Aws::Amplify
     #   infrastructure using Typescript code.
     #   @return [Types::Backend]
     #
+    # @!attribute [rw] compute_role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role to assign to a branch
+    #   of an SSR app. The SSR Compute role allows the Amplify Hosting
+    #   compute service to securely access specific Amazon Web Services
+    #   resources based on the role's permissions. For more information
+    #   about the SSR Compute role, see [Adding an SSR Compute role][1] in
+    #   the *Amplify User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/CreateBranchRequest AWS API Documentation
     #
     class CreateBranchRequest < Struct.new(
@@ -985,7 +1039,8 @@ module Aws::Amplify
       :enable_pull_request_preview,
       :pull_request_environment_name,
       :backend_environment_arn,
-      :backend)
+      :backend,
+      :compute_role_arn)
       SENSITIVE = [:basic_auth_credentials, :build_spec]
       include Aws::Structure
     end
@@ -2716,8 +2771,21 @@ module Aws::Amplify
     #   later, you must set the platform type to `WEB_COMPUTE`.
     #   @return [String]
     #
+    # @!attribute [rw] compute_role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role to assign to an SSR
+    #   app. The SSR Compute role allows the Amplify Hosting compute service
+    #   to securely access specific Amazon Web Services resources based on
+    #   the role's permissions. For more information about the SSR Compute
+    #   role, see [Adding an SSR Compute role][1] in the *Amplify User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   @return [String]
+    #
     # @!attribute [rw] iam_service_role_arn
-    #   The AWS Identity and Access Management (IAM) service role for an
+    #   The Amazon Resource Name (ARN) of the IAM service role for the
     #   Amplify app.
     #   @return [String]
     #
@@ -2834,6 +2902,7 @@ module Aws::Amplify
       :name,
       :description,
       :platform,
+      :compute_role_arn,
       :iam_service_role_arn,
       :environment_variables,
       :enable_branch_auto_build,
@@ -2960,6 +3029,19 @@ module Aws::Amplify
     #   infrastructure using Typescript code.
     #   @return [Types::Backend]
     #
+    # @!attribute [rw] compute_role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role to assign to a branch
+    #   of an SSR app. The SSR Compute role allows the Amplify Hosting
+    #   compute service to securely access specific Amazon Web Services
+    #   resources based on the role's permissions. For more information
+    #   about the SSR Compute role, see [Adding an SSR Compute role][1] in
+    #   the *Amplify User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/UpdateBranchRequest AWS API Documentation
     #
     class UpdateBranchRequest < Struct.new(
@@ -2980,7 +3062,8 @@ module Aws::Amplify
       :enable_pull_request_preview,
       :pull_request_environment_name,
       :backend_environment_arn,
-      :backend)
+      :backend,
+      :compute_role_arn)
       SENSITIVE = [:basic_auth_credentials, :build_spec]
       include Aws::Structure
     end

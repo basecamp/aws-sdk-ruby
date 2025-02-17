@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.79.0 (2025-02-17)
+------------------
+
+* Feature - Add ComputeRoleArn to CreateApp, UpdateApp, CreateBranch, and UpdateBranch, allowing caller to specify a role to be assumed by Amplify Hosting for server-side rendered applications.
+
 1.78.0 (2025-02-06)
 ------------------
 

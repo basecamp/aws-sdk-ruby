@@ -78,6 +78,39 @@ module Aws
                   | (?Hash[Symbol, untyped]) -> instance
 
 
+      interface _CreateDbClusterResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateDbClusterOutput]
+        def db_cluster_id: () -> ::String
+        def db_cluster_status: () -> ("CREATING" | "UPDATING" | "DELETING" | "AVAILABLE" | "FAILED" | "DELETED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TimestreamInfluxDB/Client.html#create_db_cluster-instance_method
+      def create_db_cluster: (
+                               name: ::String,
+                               ?username: ::String,
+                               password: ::String,
+                               ?organization: ::String,
+                               ?bucket: ::String,
+                               ?port: ::Integer,
+                               ?db_parameter_group_identifier: ::String,
+                               db_instance_type: ("db.influx.medium" | "db.influx.large" | "db.influx.xlarge" | "db.influx.2xlarge" | "db.influx.4xlarge" | "db.influx.8xlarge" | "db.influx.12xlarge" | "db.influx.16xlarge"),
+                               ?db_storage_type: ("InfluxIOIncludedT1" | "InfluxIOIncludedT2" | "InfluxIOIncludedT3"),
+                               allocated_storage: ::Integer,
+                               ?network_type: ("IPV4" | "DUAL"),
+                               ?publicly_accessible: bool,
+                               vpc_subnet_ids: Array[::String],
+                               vpc_security_group_ids: Array[::String],
+                               deployment_type: ("MULTI_NODE_READ_REPLICAS"),
+                               ?failover_mode: ("AUTOMATIC" | "NO_FAILOVER"),
+                               ?log_delivery_configuration: {
+                                 s3_configuration: {
+                                   bucket_name: ::String,
+                                   enabled: bool
+                                 }
+                               },
+                               ?tags: Hash[::String, ::String]
+                             ) -> _CreateDbClusterResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDbClusterResponseSuccess
+
       interface _CreateDbInstanceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateDbInstanceOutput]
         def id: () -> ::String
@@ -99,6 +132,8 @@ module Aws
         def secondary_availability_zone: () -> ::String
         def log_delivery_configuration: () -> Types::LogDeliveryConfiguration
         def influx_auth_parameters_secret_arn: () -> ::String
+        def db_cluster_id: () -> ::String
+        def instance_mode: () -> ("PRIMARY" | "STANDBY" | "REPLICA")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TimestreamInfluxDB/Client.html#create_db_instance-instance_method
       def create_db_instance: (
@@ -205,6 +240,16 @@ module Aws
                                      ) -> _CreateDbParameterGroupResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDbParameterGroupResponseSuccess
 
+      interface _DeleteDbClusterResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteDbClusterOutput]
+        def db_cluster_status: () -> ("CREATING" | "UPDATING" | "DELETING" | "AVAILABLE" | "FAILED" | "DELETED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TimestreamInfluxDB/Client.html#delete_db_cluster-instance_method
+      def delete_db_cluster: (
+                               db_cluster_id: ::String
+                             ) -> _DeleteDbClusterResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteDbClusterResponseSuccess
+
       interface _DeleteDbInstanceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteDbInstanceOutput]
         def id: () -> ::String
@@ -226,12 +271,42 @@ module Aws
         def secondary_availability_zone: () -> ::String
         def log_delivery_configuration: () -> Types::LogDeliveryConfiguration
         def influx_auth_parameters_secret_arn: () -> ::String
+        def db_cluster_id: () -> ::String
+        def instance_mode: () -> ("PRIMARY" | "STANDBY" | "REPLICA")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TimestreamInfluxDB/Client.html#delete_db_instance-instance_method
       def delete_db_instance: (
                                 identifier: ::String
                               ) -> _DeleteDbInstanceResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteDbInstanceResponseSuccess
+
+      interface _GetDbClusterResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetDbClusterOutput]
+        def id: () -> ::String
+        def name: () -> ::String
+        def arn: () -> ::String
+        def status: () -> ("CREATING" | "UPDATING" | "DELETING" | "AVAILABLE" | "FAILED" | "DELETED")
+        def endpoint: () -> ::String
+        def reader_endpoint: () -> ::String
+        def port: () -> ::Integer
+        def deployment_type: () -> ("MULTI_NODE_READ_REPLICAS")
+        def db_instance_type: () -> ("db.influx.medium" | "db.influx.large" | "db.influx.xlarge" | "db.influx.2xlarge" | "db.influx.4xlarge" | "db.influx.8xlarge" | "db.influx.12xlarge" | "db.influx.16xlarge")
+        def network_type: () -> ("IPV4" | "DUAL")
+        def db_storage_type: () -> ("InfluxIOIncludedT1" | "InfluxIOIncludedT2" | "InfluxIOIncludedT3")
+        def allocated_storage: () -> ::Integer
+        def publicly_accessible: () -> bool
+        def db_parameter_group_identifier: () -> ::String
+        def log_delivery_configuration: () -> Types::LogDeliveryConfiguration
+        def influx_auth_parameters_secret_arn: () -> ::String
+        def vpc_subnet_ids: () -> ::Array[::String]
+        def vpc_security_group_ids: () -> ::Array[::String]
+        def failover_mode: () -> ("AUTOMATIC" | "NO_FAILOVER")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TimestreamInfluxDB/Client.html#get_db_cluster-instance_method
+      def get_db_cluster: (
+                            db_cluster_id: ::String
+                          ) -> _GetDbClusterResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDbClusterResponseSuccess
 
       interface _GetDbInstanceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetDbInstanceOutput]
@@ -254,6 +329,8 @@ module Aws
         def secondary_availability_zone: () -> ::String
         def log_delivery_configuration: () -> Types::LogDeliveryConfiguration
         def influx_auth_parameters_secret_arn: () -> ::String
+        def db_cluster_id: () -> ::String
+        def instance_mode: () -> ("PRIMARY" | "STANDBY" | "REPLICA")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TimestreamInfluxDB/Client.html#get_db_instance-instance_method
       def get_db_instance: (
@@ -275,6 +352,18 @@ module Aws
                                   ) -> _GetDbParameterGroupResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDbParameterGroupResponseSuccess
 
+      interface _ListDbClustersResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListDbClustersOutput]
+        def items: () -> ::Array[Types::DbClusterSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TimestreamInfluxDB/Client.html#list_db_clusters-instance_method
+      def list_db_clusters: (
+                              ?next_token: ::String,
+                              ?max_results: ::Integer
+                            ) -> _ListDbClustersResponseSuccess
+                          | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDbClustersResponseSuccess
+
       interface _ListDbInstancesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListDbInstancesOutput]
         def items: () -> ::Array[Types::DbInstanceSummary]
@@ -286,6 +375,19 @@ module Aws
                                ?max_results: ::Integer
                              ) -> _ListDbInstancesResponseSuccess
                            | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDbInstancesResponseSuccess
+
+      interface _ListDbInstancesForClusterResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListDbInstancesForClusterOutput]
+        def items: () -> ::Array[Types::DbInstanceForClusterSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TimestreamInfluxDB/Client.html#list_db_instances_for_cluster-instance_method
+      def list_db_instances_for_cluster: (
+                                           db_cluster_id: ::String,
+                                           ?next_token: ::String,
+                                           ?max_results: ::Integer
+                                         ) -> _ListDbInstancesForClusterResponseSuccess
+                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDbInstancesForClusterResponseSuccess
 
       interface _ListDbParameterGroupsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListDbParameterGroupsOutput]
@@ -323,6 +425,26 @@ module Aws
                           ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
+      interface _UpdateDbClusterResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateDbClusterOutput]
+        def db_cluster_status: () -> ("CREATING" | "UPDATING" | "DELETING" | "AVAILABLE" | "FAILED" | "DELETED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TimestreamInfluxDB/Client.html#update_db_cluster-instance_method
+      def update_db_cluster: (
+                               db_cluster_id: ::String,
+                               ?log_delivery_configuration: {
+                                 s3_configuration: {
+                                   bucket_name: ::String,
+                                   enabled: bool
+                                 }
+                               },
+                               ?db_parameter_group_identifier: ::String,
+                               ?port: ::Integer,
+                               ?db_instance_type: ("db.influx.medium" | "db.influx.large" | "db.influx.xlarge" | "db.influx.2xlarge" | "db.influx.4xlarge" | "db.influx.8xlarge" | "db.influx.12xlarge" | "db.influx.16xlarge"),
+                               ?failover_mode: ("AUTOMATIC" | "NO_FAILOVER")
+                             ) -> _UpdateDbClusterResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateDbClusterResponseSuccess
+
       interface _UpdateDbInstanceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateDbInstanceOutput]
         def id: () -> ::String
@@ -344,6 +466,8 @@ module Aws
         def secondary_availability_zone: () -> ::String
         def log_delivery_configuration: () -> Types::LogDeliveryConfiguration
         def influx_auth_parameters_secret_arn: () -> ::String
+        def db_cluster_id: () -> ::String
+        def instance_mode: () -> ("PRIMARY" | "STANDBY" | "REPLICA")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TimestreamInfluxDB/Client.html#update_db_instance-instance_method
       def update_db_instance: (

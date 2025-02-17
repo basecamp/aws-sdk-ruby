@@ -50,6 +50,167 @@ module Aws::TimestreamInfluxDB
     end
 
     # @!attribute [rw] name
+    #   The name that uniquely identifies the DB cluster when interacting
+    #   with the Amazon Timestream for InfluxDB API and CLI commands. This
+    #   name will also be a prefix included in the endpoint. DB cluster
+    #   names must be unique per customer and per region.
+    #   @return [String]
+    #
+    # @!attribute [rw] username
+    #   The username of the initial admin user created in InfluxDB. Must
+    #   start with a letter and can't end with a hyphen or contain two
+    #   consecutive hyphens. For example, my-user1. This username will allow
+    #   you to access the InfluxDB UI to perform various administrative
+    #   tasks and also use the InfluxDB CLI to create an operator token.
+    #   These attributes will be stored in a secret created in Amazon Web
+    #   Services Secrets Manager in your account.
+    #   @return [String]
+    #
+    # @!attribute [rw] password
+    #   The password of the initial admin user created in InfluxDB. This
+    #   password will allow you to access the InfluxDB UI to perform various
+    #   administrative tasks and also use the InfluxDB CLI to create an
+    #   operator token. These attributes will be stored in a secret created
+    #   in Amazon Web Services Secrets Manager in your account.
+    #   @return [String]
+    #
+    # @!attribute [rw] organization
+    #   The name of the initial organization for the initial admin user in
+    #   InfluxDB. An InfluxDB organization is a workspace for a group of
+    #   users.
+    #   @return [String]
+    #
+    # @!attribute [rw] bucket
+    #   The name of the initial InfluxDB bucket. All InfluxDB data is stored
+    #   in a bucket. A bucket combines the concept of a database and a
+    #   retention period (the duration of time that each data point
+    #   persists). A bucket belongs to an organization.
+    #   @return [String]
+    #
+    # @!attribute [rw] port
+    #   The port number on which InfluxDB accepts connections.
+    #
+    #   Valid Values: 1024-65535
+    #
+    #   Default: 8086
+    #
+    #   Constraints: The value can't be 2375-2376, 7788-7799, 8090, or
+    #   51678-51680
+    #   @return [Integer]
+    #
+    # @!attribute [rw] db_parameter_group_identifier
+    #   The ID of the DB parameter group to assign to your DB cluster. DB
+    #   parameter groups specify how the database is configured. For
+    #   example, DB parameter groups can specify the limit for query
+    #   concurrency.
+    #   @return [String]
+    #
+    # @!attribute [rw] db_instance_type
+    #   The Timestream for InfluxDB DB instance type to run InfluxDB on.
+    #   @return [String]
+    #
+    # @!attribute [rw] db_storage_type
+    #   The Timestream for InfluxDB DB storage type to read and write
+    #   InfluxDB data.
+    #
+    #   You can choose between three different types of provisioned Influx
+    #   IOPS Included storage according to your workload requirements:
+    #
+    #   * Influx I/O Included 3000 IOPS
+    #
+    #   * Influx I/O Included 12000 IOPS
+    #
+    #   * Influx I/O Included 16000 IOPS
+    #   @return [String]
+    #
+    # @!attribute [rw] allocated_storage
+    #   The amount of storage to allocate for your DB storage type in GiB
+    #   (gibibytes).
+    #   @return [Integer]
+    #
+    # @!attribute [rw] network_type
+    #   Specifies whether the network type of the Timestream for InfluxDB
+    #   cluster is IPv4, which can communicate over IPv4 protocol only, or
+    #   DUAL, which can communicate over both IPv4 and IPv6 protocols.
+    #   @return [String]
+    #
+    # @!attribute [rw] publicly_accessible
+    #   Configures the Timestream for InfluxDB cluster with a public IP to
+    #   facilitate access from outside the VPC.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] vpc_subnet_ids
+    #   A list of VPC subnet IDs to associate with the DB cluster. Provide
+    #   at least two VPC subnet IDs in different Availability Zones when
+    #   deploying with a Multi-AZ standby.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] vpc_security_group_ids
+    #   A list of VPC security group IDs to associate with the Timestream
+    #   for InfluxDB cluster.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] deployment_type
+    #   Specifies the type of cluster to create.
+    #   @return [String]
+    #
+    # @!attribute [rw] failover_mode
+    #   Specifies the behavior of failure recovery when the primary node of
+    #   the cluster fails.
+    #   @return [String]
+    #
+    # @!attribute [rw] log_delivery_configuration
+    #   Configuration for sending InfluxDB engine logs to a specified S3
+    #   bucket.
+    #   @return [Types::LogDeliveryConfiguration]
+    #
+    # @!attribute [rw] tags
+    #   A list of key-value pairs to associate with the DB instance.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/CreateDbClusterInput AWS API Documentation
+    #
+    class CreateDbClusterInput < Struct.new(
+      :name,
+      :username,
+      :password,
+      :organization,
+      :bucket,
+      :port,
+      :db_parameter_group_identifier,
+      :db_instance_type,
+      :db_storage_type,
+      :allocated_storage,
+      :network_type,
+      :publicly_accessible,
+      :vpc_subnet_ids,
+      :vpc_security_group_ids,
+      :deployment_type,
+      :failover_mode,
+      :log_delivery_configuration,
+      :tags)
+      SENSITIVE = [:username, :password]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] db_cluster_id
+    #   A service-generated unique identifier.
+    #   @return [String]
+    #
+    # @!attribute [rw] db_cluster_status
+    #   The status of the DB cluster.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/CreateDbClusterOutput AWS API Documentation
+    #
+    class CreateDbClusterOutput < Struct.new(
+      :db_cluster_id,
+      :db_cluster_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] name
     #   The name that uniquely identifies the DB instance when interacting
     #   with the Amazon Timestream for InfluxDB API and CLI commands. This
     #   name will also be a prefix included in the endpoint. DB instance
@@ -277,6 +438,14 @@ module Aws::TimestreamInfluxDB
     #   username, and password.
     #   @return [String]
     #
+    # @!attribute [rw] db_cluster_id
+    #   Specifies the DbCluster to which this DbInstance belongs to.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_mode
+    #   Specifies the DbInstance's role in the cluster.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/CreateDbInstanceOutput AWS API Documentation
     #
     class CreateDbInstanceOutput < Struct.new(
@@ -298,7 +467,9 @@ module Aws::TimestreamInfluxDB
       :availability_zone,
       :secondary_availability_zone,
       :log_delivery_configuration,
-      :influx_auth_parameters_secret_arn)
+      :influx_auth_parameters_secret_arn,
+      :db_cluster_id,
+      :instance_mode)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -361,6 +532,155 @@ module Aws::TimestreamInfluxDB
       :arn,
       :description,
       :parameters)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a summary of a Timestream for InfluxDB cluster.
+    #
+    # @!attribute [rw] id
+    #   Service-generated unique identifier of the DB cluster to retrieve.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   Customer supplied name of the Timestream for InfluxDB cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the DB cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the DB cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] endpoint
+    #   The endpoint used to connect to the Timestream for InfluxDB cluster
+    #   for write and read operations.
+    #   @return [String]
+    #
+    # @!attribute [rw] reader_endpoint
+    #   The endpoint used to connect to the Timestream for InfluxDB cluster
+    #   for read-only operations.
+    #   @return [String]
+    #
+    # @!attribute [rw] port
+    #   The port number on which InfluxDB accepts connections.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] deployment_type
+    #   Deployment type of the DB cluster
+    #   @return [String]
+    #
+    # @!attribute [rw] db_instance_type
+    #   The Timestream for InfluxDB DB instance type that InfluxDB runs on.
+    #   @return [String]
+    #
+    # @!attribute [rw] network_type
+    #   Specifies whether the network type of the Timestream for InfluxDB
+    #   Cluster is IPv4, which can communicate over IPv4 protocol only, or
+    #   DUAL, which can communicate over both IPv4 and IPv6 protocols.
+    #   @return [String]
+    #
+    # @!attribute [rw] db_storage_type
+    #   The Timestream for InfluxDB DB storage type that InfluxDB stores
+    #   data on.
+    #   @return [String]
+    #
+    # @!attribute [rw] allocated_storage
+    #   The amount of storage allocated for your DB storage type (in
+    #   gibibytes).
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/DbClusterSummary AWS API Documentation
+    #
+    class DbClusterSummary < Struct.new(
+      :id,
+      :name,
+      :arn,
+      :status,
+      :endpoint,
+      :reader_endpoint,
+      :port,
+      :deployment_type,
+      :db_instance_type,
+      :network_type,
+      :db_storage_type,
+      :allocated_storage)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains a summary of a DB instance belonging to a DB cluster.
+    #
+    # @!attribute [rw] id
+    #   The service-generated unique identifier of the DB instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   A service-generated name for the DB instance based on the
+    #   customer-supplied name for the DB cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the DB instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the DB instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] endpoint
+    #   The endpoint used to connect to InfluxDB. The default InfluxDB port
+    #   is 8086.
+    #   @return [String]
+    #
+    # @!attribute [rw] port
+    #   The port number on which InfluxDB accepts connections.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] network_type
+    #   Specifies whether the network type of the Timestream for InfluxDB
+    #   instance is IPv4, which can communicate over IPv4 protocol only, or
+    #   DUAL, which can communicate over both IPv4 and IPv6 protocols.
+    #   @return [String]
+    #
+    # @!attribute [rw] db_instance_type
+    #   The Timestream for InfluxDB instance type to run InfluxDB on.
+    #   @return [String]
+    #
+    # @!attribute [rw] db_storage_type
+    #   The storage type for your DB instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] allocated_storage
+    #   The amount of storage allocated for your DB storage type in GiB
+    #   (gibibytes).
+    #   @return [Integer]
+    #
+    # @!attribute [rw] deployment_type
+    #   Specifies the deployment type if applicable.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_mode
+    #   Specifies the DB instance's role in the cluster.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/DbInstanceForClusterSummary AWS API Documentation
+    #
+    class DbInstanceForClusterSummary < Struct.new(
+      :id,
+      :name,
+      :arn,
+      :status,
+      :endpoint,
+      :port,
+      :network_type,
+      :db_instance_type,
+      :db_storage_type,
+      :allocated_storage,
+      :deployment_type,
+      :instance_mode)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -460,6 +780,30 @@ module Aws::TimestreamInfluxDB
       :name,
       :arn,
       :description)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] db_cluster_id
+    #   Service-generated unique identifier of the DB cluster.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/DeleteDbClusterInput AWS API Documentation
+    #
+    class DeleteDbClusterInput < Struct.new(
+      :db_cluster_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] db_cluster_status
+    #   The status of the DB cluster.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/DeleteDbClusterOutput AWS API Documentation
+    #
+    class DeleteDbClusterOutput < Struct.new(
+      :db_cluster_status)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -566,6 +910,14 @@ module Aws::TimestreamInfluxDB
     #   username, and password.
     #   @return [String]
     #
+    # @!attribute [rw] db_cluster_id
+    #   Specifies the DbCluster to which this DbInstance belongs to.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_mode
+    #   Specifies the DbInstance's role in the cluster.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/DeleteDbInstanceOutput AWS API Documentation
     #
     class DeleteDbInstanceOutput < Struct.new(
@@ -587,7 +939,9 @@ module Aws::TimestreamInfluxDB
       :availability_zone,
       :secondary_availability_zone,
       :log_delivery_configuration,
-      :influx_auth_parameters_secret_arn)
+      :influx_auth_parameters_secret_arn,
+      :db_cluster_id,
+      :instance_mode)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -607,6 +961,132 @@ module Aws::TimestreamInfluxDB
     class Duration < Struct.new(
       :duration_type,
       :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] db_cluster_id
+    #   Service-generated unique identifier of the DB cluster to retrieve.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/GetDbClusterInput AWS API Documentation
+    #
+    class GetDbClusterInput < Struct.new(
+      :db_cluster_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] id
+    #   Service-generated unique identifier of the DB cluster to retrieve.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   Customer-supplied name of the Timestream for InfluxDB cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the DB cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the DB cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] endpoint
+    #   The endpoint used to connect to the Timestream for InfluxDB cluster
+    #   for write and read operations.
+    #   @return [String]
+    #
+    # @!attribute [rw] reader_endpoint
+    #   The endpoint used to connect to the Timestream for InfluxDB cluster
+    #   for read-only operations.
+    #   @return [String]
+    #
+    # @!attribute [rw] port
+    #   The port number on which InfluxDB accepts connections.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] deployment_type
+    #   Deployment type of the DB cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] db_instance_type
+    #   The Timestream for InfluxDB instance type that InfluxDB runs on.
+    #   @return [String]
+    #
+    # @!attribute [rw] network_type
+    #   Specifies whether the network type of the Timestream for InfluxDB
+    #   cluster is IPv4, which can communicate over IPv4 protocol only, or
+    #   DUAL, which can communicate over both IPv4 and IPv6 protocols.
+    #   @return [String]
+    #
+    # @!attribute [rw] db_storage_type
+    #   The Timestream for InfluxDB DB storage type that InfluxDB stores
+    #   data on.
+    #   @return [String]
+    #
+    # @!attribute [rw] allocated_storage
+    #   The amount of storage allocated for your DB storage type (in
+    #   gibibytes).
+    #   @return [Integer]
+    #
+    # @!attribute [rw] publicly_accessible
+    #   Indicates if the DB cluster has a public IP to facilitate access
+    #   from outside the VPC.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] db_parameter_group_identifier
+    #   The ID of the DB parameter group assigned to your DB cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] log_delivery_configuration
+    #   Configuration for sending InfluxDB engine logs to send to specified
+    #   S3 bucket.
+    #   @return [Types::LogDeliveryConfiguration]
+    #
+    # @!attribute [rw] influx_auth_parameters_secret_arn
+    #   The Amazon Resource Name (ARN) of the Amazon Web Services Secrets
+    #   Manager secret containing the initial InfluxDB authorization
+    #   parameters. The secret value is a JSON formatted key-value pair
+    #   holding InfluxDB authorization values: organization, bucket,
+    #   username, and password.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_subnet_ids
+    #   A list of VPC subnet IDs associated with the DB cluster.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] vpc_security_group_ids
+    #   A list of VPC security group IDs associated with the DB cluster.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] failover_mode
+    #   The configured failover mode for the DB cluster.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/GetDbClusterOutput AWS API Documentation
+    #
+    class GetDbClusterOutput < Struct.new(
+      :id,
+      :name,
+      :arn,
+      :status,
+      :endpoint,
+      :reader_endpoint,
+      :port,
+      :deployment_type,
+      :db_instance_type,
+      :network_type,
+      :db_storage_type,
+      :allocated_storage,
+      :publicly_accessible,
+      :db_parameter_group_identifier,
+      :log_delivery_configuration,
+      :influx_auth_parameters_secret_arn,
+      :vpc_subnet_ids,
+      :vpc_security_group_ids,
+      :failover_mode)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -713,6 +1193,14 @@ module Aws::TimestreamInfluxDB
     #   username, and password.
     #   @return [String]
     #
+    # @!attribute [rw] db_cluster_id
+    #   Specifies the DbCluster to which this DbInstance belongs to.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_mode
+    #   Specifies the DbInstance's role in the cluster.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/GetDbInstanceOutput AWS API Documentation
     #
     class GetDbInstanceOutput < Struct.new(
@@ -734,7 +1222,9 @@ module Aws::TimestreamInfluxDB
       :availability_zone,
       :secondary_availability_zone,
       :log_delivery_configuration,
-      :influx_auth_parameters_secret_arn)
+      :influx_auth_parameters_secret_arn,
+      :db_cluster_id,
+      :instance_mode)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1111,6 +1601,92 @@ module Aws::TimestreamInfluxDB
     end
 
     # @!attribute [rw] next_token
+    #   The pagination token. To resume pagination, provide the nextToken
+    #   value as an argument of a subsequent API invocation.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of items to return in the output. If the total
+    #   number of items available is more than the value specified, a
+    #   nextToken is provided in the output. To resume pagination, provide
+    #   the nextToken value as an argument of a subsequent API invocation.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/ListDbClustersInput AWS API Documentation
+    #
+    class ListDbClustersInput < Struct.new(
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] items
+    #   A list of Timestream for InfluxDB cluster summaries.
+    #   @return [Array<Types::DbClusterSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   Token from a previous call of the operation. When this value is
+    #   provided, the service returns results from where the previous
+    #   response left off.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/ListDbClustersOutput AWS API Documentation
+    #
+    class ListDbClustersOutput < Struct.new(
+      :items,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] db_cluster_id
+    #   Service-generated unique identifier of the DB cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   The pagination token. To resume pagination, provide the nextToken
+    #   value as an argument of a subsequent API invocation.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of items to return in the output. If the total
+    #   number of items available is more than the value specified, a
+    #   nextToken is provided in the output. To resume pagination, provide
+    #   the nextToken value as an argument of a subsequent API invocation.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/ListDbInstancesForClusterInput AWS API Documentation
+    #
+    class ListDbInstancesForClusterInput < Struct.new(
+      :db_cluster_id,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] items
+    #   A list of Timestream for InfluxDB instance summaries belonging to
+    #   the cluster.
+    #   @return [Array<Types::DbInstanceForClusterSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   Token from a previous call of the operation. When this value is
+    #   provided, the service returns results from where the previous
+    #   response left off.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/ListDbInstancesForClusterOutput AWS API Documentation
+    #
+    class ListDbInstancesForClusterOutput < Struct.new(
+      :items,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
     #   The pagination token. To resume pagination, provide the NextToken
     #   value as argument of a subsequent API invocation.
     #   @return [String]
@@ -1362,6 +1938,55 @@ module Aws::TimestreamInfluxDB
       include Aws::Structure
     end
 
+    # @!attribute [rw] db_cluster_id
+    #   Service-generated unique identifier of the DB cluster to update.
+    #   @return [String]
+    #
+    # @!attribute [rw] log_delivery_configuration
+    #   The log delivery configuration to apply to the DB cluster.
+    #   @return [Types::LogDeliveryConfiguration]
+    #
+    # @!attribute [rw] db_parameter_group_identifier
+    #   Update the DB cluster to use the specified DB parameter group.
+    #   @return [String]
+    #
+    # @!attribute [rw] port
+    #   Update the DB cluster to use the specified port.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] db_instance_type
+    #   Update the DB cluster to use the specified DB instance Type.
+    #   @return [String]
+    #
+    # @!attribute [rw] failover_mode
+    #   Update the DB cluster's failover behavior.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/UpdateDbClusterInput AWS API Documentation
+    #
+    class UpdateDbClusterInput < Struct.new(
+      :db_cluster_id,
+      :log_delivery_configuration,
+      :db_parameter_group_identifier,
+      :port,
+      :db_instance_type,
+      :failover_mode)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] db_cluster_status
+    #   The status of the DB cluster.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/UpdateDbClusterOutput AWS API Documentation
+    #
+    class UpdateDbClusterOutput < Struct.new(
+      :db_cluster_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] identifier
     #   The id of the DB instance.
     #   @return [String]
@@ -1515,6 +2140,14 @@ module Aws::TimestreamInfluxDB
     #   username, and password.
     #   @return [String]
     #
+    # @!attribute [rw] db_cluster_id
+    #   Specifies the DbCluster to which this DbInstance belongs to.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_mode
+    #   Specifies the DbInstance's role in the cluster.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/UpdateDbInstanceOutput AWS API Documentation
     #
     class UpdateDbInstanceOutput < Struct.new(
@@ -1536,7 +2169,9 @@ module Aws::TimestreamInfluxDB
       :availability_zone,
       :secondary_availability_zone,
       :log_delivery_configuration,
-      :influx_auth_parameters_secret_arn)
+      :influx_auth_parameters_secret_arn,
+      :db_cluster_id,
+      :instance_mode)
       SENSITIVE = []
       include Aws::Structure
     end

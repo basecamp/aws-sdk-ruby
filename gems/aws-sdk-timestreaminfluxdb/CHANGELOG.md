@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.20.0 (2025-02-17)
+------------------
+
+* Feature - This release introduces APIs to manage DbClusters and adds support for read replicas
+
 1.19.0 (2025-02-06)
 ------------------
 

@@ -1015,6 +1015,7 @@ module Aws
       def describe_applicable_individual_assessments: (
                                                         ?replication_task_arn: ::String,
                                                         ?replication_instance_arn: ::String,
+                                                        ?replication_config_arn: ::String,
                                                         ?source_engine_name: ::String,
                                                         ?target_engine_name: ::String,
                                                         ?migration_type: ("full-load" | "cdc" | "full-load-and-cdc"),

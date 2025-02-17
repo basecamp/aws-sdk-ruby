@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.117.0 (2025-02-17)
+------------------
+
+* Feature - Support replicationConfigArn in DMS DescribeApplicableIndividualAssessments API.
+
 1.116.0 (2025-02-14)
 ------------------
 

@@ -666,6 +666,7 @@ module Aws::DatabaseMigrationService
     class DescribeApplicableIndividualAssessmentsMessage
       attr_accessor replication_task_arn: ::String
       attr_accessor replication_instance_arn: ::String
+      attr_accessor replication_config_arn: ::String
       attr_accessor source_engine_name: ::String
       attr_accessor target_engine_name: ::String
       attr_accessor migration_type: ("full-load" | "cdc" | "full-load-and-cdc")

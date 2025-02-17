@@ -20,6 +20,34 @@ module Aws::TimestreamInfluxDB
       SENSITIVE: []
     end
 
+    class CreateDbClusterInput
+      attr_accessor name: ::String
+      attr_accessor username: ::String
+      attr_accessor password: ::String
+      attr_accessor organization: ::String
+      attr_accessor bucket: ::String
+      attr_accessor port: ::Integer
+      attr_accessor db_parameter_group_identifier: ::String
+      attr_accessor db_instance_type: ("db.influx.medium" | "db.influx.large" | "db.influx.xlarge" | "db.influx.2xlarge" | "db.influx.4xlarge" | "db.influx.8xlarge" | "db.influx.12xlarge" | "db.influx.16xlarge")
+      attr_accessor db_storage_type: ("InfluxIOIncludedT1" | "InfluxIOIncludedT2" | "InfluxIOIncludedT3")
+      attr_accessor allocated_storage: ::Integer
+      attr_accessor network_type: ("IPV4" | "DUAL")
+      attr_accessor publicly_accessible: bool
+      attr_accessor vpc_subnet_ids: ::Array[::String]
+      attr_accessor vpc_security_group_ids: ::Array[::String]
+      attr_accessor deployment_type: ("MULTI_NODE_READ_REPLICAS")
+      attr_accessor failover_mode: ("AUTOMATIC" | "NO_FAILOVER")
+      attr_accessor log_delivery_configuration: Types::LogDeliveryConfiguration
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: [:username, :password]
+    end
+
+    class CreateDbClusterOutput
+      attr_accessor db_cluster_id: ::String
+      attr_accessor db_cluster_status: ("CREATING" | "UPDATING" | "DELETING" | "AVAILABLE" | "FAILED" | "DELETED")
+      SENSITIVE: []
+    end
+
     class CreateDbInstanceInput
       attr_accessor name: ::String
       attr_accessor username: ::String
@@ -61,6 +89,8 @@ module Aws::TimestreamInfluxDB
       attr_accessor secondary_availability_zone: ::String
       attr_accessor log_delivery_configuration: Types::LogDeliveryConfiguration
       attr_accessor influx_auth_parameters_secret_arn: ::String
+      attr_accessor db_cluster_id: ::String
+      attr_accessor instance_mode: ("PRIMARY" | "STANDBY" | "REPLICA")
       SENSITIVE: []
     end
 
@@ -78,6 +108,38 @@ module Aws::TimestreamInfluxDB
       attr_accessor arn: ::String
       attr_accessor description: ::String
       attr_accessor parameters: Types::Parameters
+      SENSITIVE: []
+    end
+
+    class DbClusterSummary
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor arn: ::String
+      attr_accessor status: ("CREATING" | "UPDATING" | "DELETING" | "AVAILABLE" | "FAILED" | "DELETED")
+      attr_accessor endpoint: ::String
+      attr_accessor reader_endpoint: ::String
+      attr_accessor port: ::Integer
+      attr_accessor deployment_type: ("MULTI_NODE_READ_REPLICAS")
+      attr_accessor db_instance_type: ("db.influx.medium" | "db.influx.large" | "db.influx.xlarge" | "db.influx.2xlarge" | "db.influx.4xlarge" | "db.influx.8xlarge" | "db.influx.12xlarge" | "db.influx.16xlarge")
+      attr_accessor network_type: ("IPV4" | "DUAL")
+      attr_accessor db_storage_type: ("InfluxIOIncludedT1" | "InfluxIOIncludedT2" | "InfluxIOIncludedT3")
+      attr_accessor allocated_storage: ::Integer
+      SENSITIVE: []
+    end
+
+    class DbInstanceForClusterSummary
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor arn: ::String
+      attr_accessor status: ("CREATING" | "AVAILABLE" | "DELETING" | "MODIFYING" | "UPDATING" | "DELETED" | "FAILED" | "UPDATING_DEPLOYMENT_TYPE" | "UPDATING_INSTANCE_TYPE")
+      attr_accessor endpoint: ::String
+      attr_accessor port: ::Integer
+      attr_accessor network_type: ("IPV4" | "DUAL")
+      attr_accessor db_instance_type: ("db.influx.medium" | "db.influx.large" | "db.influx.xlarge" | "db.influx.2xlarge" | "db.influx.4xlarge" | "db.influx.8xlarge" | "db.influx.12xlarge" | "db.influx.16xlarge")
+      attr_accessor db_storage_type: ("InfluxIOIncludedT1" | "InfluxIOIncludedT2" | "InfluxIOIncludedT3")
+      attr_accessor allocated_storage: ::Integer
+      attr_accessor deployment_type: ("SINGLE_AZ" | "WITH_MULTIAZ_STANDBY")
+      attr_accessor instance_mode: ("PRIMARY" | "STANDBY" | "REPLICA")
       SENSITIVE: []
     end
 
@@ -101,6 +163,16 @@ module Aws::TimestreamInfluxDB
       attr_accessor name: ::String
       attr_accessor arn: ::String
       attr_accessor description: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteDbClusterInput
+      attr_accessor db_cluster_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteDbClusterOutput
+      attr_accessor db_cluster_status: ("CREATING" | "UPDATING" | "DELETING" | "AVAILABLE" | "FAILED" | "DELETED")
       SENSITIVE: []
     end
 
@@ -129,12 +201,42 @@ module Aws::TimestreamInfluxDB
       attr_accessor secondary_availability_zone: ::String
       attr_accessor log_delivery_configuration: Types::LogDeliveryConfiguration
       attr_accessor influx_auth_parameters_secret_arn: ::String
+      attr_accessor db_cluster_id: ::String
+      attr_accessor instance_mode: ("PRIMARY" | "STANDBY" | "REPLICA")
       SENSITIVE: []
     end
 
     class Duration
       attr_accessor duration_type: ("hours" | "minutes" | "seconds" | "milliseconds")
       attr_accessor value: ::Integer
+      SENSITIVE: []
+    end
+
+    class GetDbClusterInput
+      attr_accessor db_cluster_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetDbClusterOutput
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor arn: ::String
+      attr_accessor status: ("CREATING" | "UPDATING" | "DELETING" | "AVAILABLE" | "FAILED" | "DELETED")
+      attr_accessor endpoint: ::String
+      attr_accessor reader_endpoint: ::String
+      attr_accessor port: ::Integer
+      attr_accessor deployment_type: ("MULTI_NODE_READ_REPLICAS")
+      attr_accessor db_instance_type: ("db.influx.medium" | "db.influx.large" | "db.influx.xlarge" | "db.influx.2xlarge" | "db.influx.4xlarge" | "db.influx.8xlarge" | "db.influx.12xlarge" | "db.influx.16xlarge")
+      attr_accessor network_type: ("IPV4" | "DUAL")
+      attr_accessor db_storage_type: ("InfluxIOIncludedT1" | "InfluxIOIncludedT2" | "InfluxIOIncludedT3")
+      attr_accessor allocated_storage: ::Integer
+      attr_accessor publicly_accessible: bool
+      attr_accessor db_parameter_group_identifier: ::String
+      attr_accessor log_delivery_configuration: Types::LogDeliveryConfiguration
+      attr_accessor influx_auth_parameters_secret_arn: ::String
+      attr_accessor vpc_subnet_ids: ::Array[::String]
+      attr_accessor vpc_security_group_ids: ::Array[::String]
+      attr_accessor failover_mode: ("AUTOMATIC" | "NO_FAILOVER")
       SENSITIVE: []
     end
 
@@ -163,6 +265,8 @@ module Aws::TimestreamInfluxDB
       attr_accessor secondary_availability_zone: ::String
       attr_accessor log_delivery_configuration: Types::LogDeliveryConfiguration
       attr_accessor influx_auth_parameters_secret_arn: ::String
+      attr_accessor db_cluster_id: ::String
+      attr_accessor instance_mode: ("PRIMARY" | "STANDBY" | "REPLICA")
       SENSITIVE: []
     end
 
@@ -220,6 +324,31 @@ module Aws::TimestreamInfluxDB
 
     class InternalServerException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ListDbClustersInput
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListDbClustersOutput
+      attr_accessor items: ::Array[Types::DbClusterSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListDbInstancesForClusterInput
+      attr_accessor db_cluster_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListDbInstancesForClusterOutput
+      attr_accessor items: ::Array[Types::DbInstanceForClusterSummary]
+      attr_accessor next_token: ::String
       SENSITIVE: []
     end
 
@@ -309,6 +438,21 @@ module Aws::TimestreamInfluxDB
       SENSITIVE: []
     end
 
+    class UpdateDbClusterInput
+      attr_accessor db_cluster_id: ::String
+      attr_accessor log_delivery_configuration: Types::LogDeliveryConfiguration
+      attr_accessor db_parameter_group_identifier: ::String
+      attr_accessor port: ::Integer
+      attr_accessor db_instance_type: ("db.influx.medium" | "db.influx.large" | "db.influx.xlarge" | "db.influx.2xlarge" | "db.influx.4xlarge" | "db.influx.8xlarge" | "db.influx.12xlarge" | "db.influx.16xlarge")
+      attr_accessor failover_mode: ("AUTOMATIC" | "NO_FAILOVER")
+      SENSITIVE: []
+    end
+
+    class UpdateDbClusterOutput
+      attr_accessor db_cluster_status: ("CREATING" | "UPDATING" | "DELETING" | "AVAILABLE" | "FAILED" | "DELETED")
+      SENSITIVE: []
+    end
+
     class UpdateDbInstanceInput
       attr_accessor identifier: ::String
       attr_accessor log_delivery_configuration: Types::LogDeliveryConfiguration
@@ -341,6 +485,8 @@ module Aws::TimestreamInfluxDB
       attr_accessor secondary_availability_zone: ::String
       attr_accessor log_delivery_configuration: Types::LogDeliveryConfiguration
       attr_accessor influx_auth_parameters_secret_arn: ::String
+      attr_accessor db_cluster_id: ::String
+      attr_accessor instance_mode: ("PRIMARY" | "STANDBY" | "REPLICA")
       SENSITIVE: []
     end
 
