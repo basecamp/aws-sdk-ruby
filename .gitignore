@@ -16,3 +16,5 @@ coverage
 /developer_guide/output
 /developer_guide/tmp
 /developer_guide/crash.log
+
+.idea/
