@@ -1,6 +1,15 @@
 Unreleased Changes
 ------------------
 
+3.219.0 (2025-02-18)
+------------------
+
+* Feature - Updated Aws::STS::Client with the latest API changes.
+
+* Feature - Updated Aws::SSOOIDC::Client with the latest API changes.
+
+* Feature - Updated Aws::SSO::Client with the latest API changes.
+
 3.218.1 (2025-02-07)
 ------------------
 

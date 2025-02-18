@@ -1518,7 +1518,30 @@ module Aws::EMRContainers
       include Aws::Structure
     end
 
+    # The entity that provides configuration control over managed logs.
+    #
+    # @!attribute [rw] allow_aws_to_retain_logs
+    #   Determines whether Amazon Web Services can retain logs.
+    #   @return [String]
+    #
+    # @!attribute [rw] encryption_key_arn
+    #   The Amazon resource name (ARN) of the encryption key for logs.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ManagedLogs AWS API Documentation
+    #
+    class ManagedLogs < Struct.new(
+      :allow_aws_to_retain_logs,
+      :encryption_key_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Configuration setting for monitoring.
+    #
+    # @!attribute [rw] managed_logs
+    #   The entity that controls configuration for managed logs.
+    #   @return [Types::ManagedLogs]
     #
     # @!attribute [rw] persistent_app_ui
     #   Monitoring configurations for the persistent application UI.
@@ -1539,6 +1562,7 @@ module Aws::EMRContainers
     # @see http://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/MonitoringConfiguration AWS API Documentation
     #
     class MonitoringConfiguration < Struct.new(
+      :managed_logs,
       :persistent_app_ui,
       :cloud_watch_monitoring_configuration,
       :s3_monitoring_configuration,

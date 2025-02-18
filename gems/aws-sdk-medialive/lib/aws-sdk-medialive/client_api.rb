@@ -4640,11 +4640,9 @@ module Aws::MediaLive
 
     StartMonitorDeploymentRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: __boolean, location_name: "dryRun"))
     StartMonitorDeploymentRequest.add_member(:identifier, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "identifier"))
-    StartMonitorDeploymentRequest.add_member(:request_id, Shapes::ShapeRef.new(shape: __stringMin1Max256PatternS, location_name: "requestId", metadata: {"idempotencyToken"=>true}))
     StartMonitorDeploymentRequest.struct_class = Types::StartMonitorDeploymentRequest
 
     StartMonitorDeploymentRequestContent.add_member(:dry_run, Shapes::ShapeRef.new(shape: __boolean, location_name: "dryRun"))
-    StartMonitorDeploymentRequestContent.add_member(:request_id, Shapes::ShapeRef.new(shape: __stringMin1Max256PatternS, location_name: "requestId", metadata: {"idempotencyToken"=>true}))
     StartMonitorDeploymentRequestContent.struct_class = Types::StartMonitorDeploymentRequestContent
 
     StartMonitorDeploymentResponse.add_member(:arn, Shapes::ShapeRef.new(shape: __stringPatternArnMedialiveSignalMap, location_name: "arn"))

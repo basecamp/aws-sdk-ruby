@@ -56,7 +56,7 @@ module Aws::STS
   autoload :EndpointProvider, 'aws-sdk-sts/endpoint_provider'
   autoload :Endpoints, 'aws-sdk-sts/endpoints'
 
-  GEM_VERSION = '3.218.1'
+  GEM_VERSION = '3.219.0'
 
 end
 

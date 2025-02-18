@@ -168,6 +168,10 @@ module Aws
                                          },
                                        ]?,
                                        monitoring_configuration: {
+                                         managed_logs: {
+                                           allow_aws_to_retain_logs: ("ENABLED" | "DISABLED")?,
+                                           encryption_key_arn: ::String?
+                                         }?,
                                          persistent_app_ui: ("ENABLED" | "DISABLED")?,
                                          cloud_watch_monitoring_configuration: {
                                            log_group_name: ::String,
@@ -472,6 +476,10 @@ module Aws
                                },
                              ]?,
                              monitoring_configuration: {
+                               managed_logs: {
+                                 allow_aws_to_retain_logs: ("ENABLED" | "DISABLED")?,
+                                 encryption_key_arn: ::String?
+                               }?,
                                persistent_app_ui: ("ENABLED" | "DISABLED")?,
                                cloud_watch_monitoring_configuration: {
                                  log_group_name: ::String,

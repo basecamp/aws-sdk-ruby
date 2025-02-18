@@ -15,6 +15,7 @@ module Aws::EMRContainers
     include Seahorse::Model
 
     ACMCertArn = Shapes::StringShape.new(name: 'ACMCertArn')
+    AllowAWSToRetainLogs = Shapes::StringShape.new(name: 'AllowAWSToRetainLogs')
     AuthorizationConfiguration = Shapes::StructureShape.new(name: 'AuthorizationConfiguration')
     Base64Encoded = Shapes::StringShape.new(name: 'Base64Encoded')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
@@ -106,6 +107,7 @@ module Aws::EMRContainers
     ListVirtualClustersResponse = Shapes::StructureShape.new(name: 'ListVirtualClustersResponse')
     LogContext = Shapes::StringShape.new(name: 'LogContext')
     LogGroupName = Shapes::StringShape.new(name: 'LogGroupName')
+    ManagedLogs = Shapes::StructureShape.new(name: 'ManagedLogs')
     MaxFilesToKeep = Shapes::IntegerShape.new(name: 'MaxFilesToKeep')
     MonitoringConfiguration = Shapes::StructureShape.new(name: 'MonitoringConfiguration')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
@@ -503,6 +505,11 @@ module Aws::EMRContainers
     ListVirtualClustersResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListVirtualClustersResponse.struct_class = Types::ListVirtualClustersResponse
 
+    ManagedLogs.add_member(:allow_aws_to_retain_logs, Shapes::ShapeRef.new(shape: AllowAWSToRetainLogs, location_name: "allowAWSToRetainLogs"))
+    ManagedLogs.add_member(:encryption_key_arn, Shapes::ShapeRef.new(shape: KmsKeyArn, location_name: "encryptionKeyArn"))
+    ManagedLogs.struct_class = Types::ManagedLogs
+
+    MonitoringConfiguration.add_member(:managed_logs, Shapes::ShapeRef.new(shape: ManagedLogs, location_name: "managedLogs"))
     MonitoringConfiguration.add_member(:persistent_app_ui, Shapes::ShapeRef.new(shape: PersistentAppUI, location_name: "persistentAppUI"))
     MonitoringConfiguration.add_member(:cloud_watch_monitoring_configuration, Shapes::ShapeRef.new(shape: CloudWatchMonitoringConfiguration, location_name: "cloudWatchMonitoringConfiguration"))
     MonitoringConfiguration.add_member(:s3_monitoring_configuration, Shapes::ShapeRef.new(shape: S3MonitoringConfiguration, location_name: "s3MonitoringConfiguration"))

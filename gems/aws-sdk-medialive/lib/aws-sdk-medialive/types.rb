@@ -16693,17 +16693,11 @@ module Aws::MediaLive
     # @!attribute [rw] identifier
     #   @return [String]
     #
-    # @!attribute [rw] request_id
-    #   **A suitable default value is auto-generated.** You should normally
-    #   not need to pass this option.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/StartMonitorDeploymentRequest AWS API Documentation
     #
     class StartMonitorDeploymentRequest < Struct.new(
       :dry_run,
-      :identifier,
-      :request_id)
+      :identifier)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -16711,16 +16705,10 @@ module Aws::MediaLive
     # @!attribute [rw] dry_run
     #   @return [Boolean]
     #
-    # @!attribute [rw] request_id
-    #   An ID that you assign to a create request. This ID ensures idempotency when creating resources.**A suitable default value is auto-generated.** You should normally
-    #   not need to pass this option.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/StartMonitorDeploymentRequestContent AWS API Documentation
     #
     class StartMonitorDeploymentRequestContent < Struct.new(
-      :dry_run,
-      :request_id)
+      :dry_run)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -19085,7 +19073,7 @@ module Aws::MediaLive
     #   @return [String]
     #
     # @!attribute [rw] nodes
-    #   An array with one item, which is the signle Node that is associated
+    #   An array with one item, which is the single Node that is associated
     #   with the ChannelPlacementGroup.
     #   @return [Array<String>]
     #
@@ -19132,7 +19120,7 @@ module Aws::MediaLive
     #   @return [String]
     #
     # @!attribute [rw] nodes
-    #   An array with one item, which is the signle Node that is associated
+    #   An array with one item, which is the single Node that is associated
     #   with the ChannelPlacementGroup.
     #   @return [Array<String>]
     #

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.110.0 (2025-02-18)
+------------------
+
+* Feature - This documentation-only update corrects some typos.
+
 1.109.0 (2025-02-06)
 ------------------
 

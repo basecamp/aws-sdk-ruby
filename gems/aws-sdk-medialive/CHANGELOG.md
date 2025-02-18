@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.146.0 (2025-02-18)
+------------------
+
+* Feature - Adds support for creating CloudWatchAlarmTemplates for AWS Elemental MediaTailor Playback Configuration resources.
+
 1.145.0 (2025-02-12)
 ------------------
 

@@ -7,34 +7,34 @@
 #
 # WARNING ABOUT GENERATED CODE
 
-require 'seahorse/client/plugins/content_length.rb'
-require 'aws-sdk-core/plugins/credentials_configuration.rb'
-require 'aws-sdk-core/plugins/logging.rb'
-require 'aws-sdk-core/plugins/param_converter.rb'
-require 'aws-sdk-core/plugins/param_validator.rb'
-require 'aws-sdk-core/plugins/user_agent.rb'
-require 'aws-sdk-core/plugins/helpful_socket_errors.rb'
-require 'aws-sdk-core/plugins/retry_errors.rb'
-require 'aws-sdk-core/plugins/global_configuration.rb'
-require 'aws-sdk-core/plugins/regional_endpoint.rb'
-require 'aws-sdk-core/plugins/endpoint_discovery.rb'
-require 'aws-sdk-core/plugins/endpoint_pattern.rb'
-require 'aws-sdk-core/plugins/response_paging.rb'
-require 'aws-sdk-core/plugins/stub_responses.rb'
-require 'aws-sdk-core/plugins/idempotency_token.rb'
-require 'aws-sdk-core/plugins/invocation_id.rb'
-require 'aws-sdk-core/plugins/jsonvalue_converter.rb'
-require 'aws-sdk-core/plugins/client_metrics_plugin.rb'
-require 'aws-sdk-core/plugins/client_metrics_send_plugin.rb'
-require 'aws-sdk-core/plugins/transfer_encoding.rb'
-require 'aws-sdk-core/plugins/http_checksum.rb'
-require 'aws-sdk-core/plugins/checksum_algorithm.rb'
-require 'aws-sdk-core/plugins/request_compression.rb'
-require 'aws-sdk-core/plugins/defaults_mode.rb'
-require 'aws-sdk-core/plugins/recursion_detection.rb'
-require 'aws-sdk-core/plugins/telemetry.rb'
-require 'aws-sdk-core/plugins/sign.rb'
-require 'aws-sdk-core/plugins/protocols/rest_json.rb'
+require 'seahorse/client/plugins/content_length'
+require 'aws-sdk-core/plugins/credentials_configuration'
+require 'aws-sdk-core/plugins/logging'
+require 'aws-sdk-core/plugins/param_converter'
+require 'aws-sdk-core/plugins/param_validator'
+require 'aws-sdk-core/plugins/user_agent'
+require 'aws-sdk-core/plugins/helpful_socket_errors'
+require 'aws-sdk-core/plugins/retry_errors'
+require 'aws-sdk-core/plugins/global_configuration'
+require 'aws-sdk-core/plugins/regional_endpoint'
+require 'aws-sdk-core/plugins/endpoint_discovery'
+require 'aws-sdk-core/plugins/endpoint_pattern'
+require 'aws-sdk-core/plugins/response_paging'
+require 'aws-sdk-core/plugins/stub_responses'
+require 'aws-sdk-core/plugins/idempotency_token'
+require 'aws-sdk-core/plugins/invocation_id'
+require 'aws-sdk-core/plugins/jsonvalue_converter'
+require 'aws-sdk-core/plugins/client_metrics_plugin'
+require 'aws-sdk-core/plugins/client_metrics_send_plugin'
+require 'aws-sdk-core/plugins/transfer_encoding'
+require 'aws-sdk-core/plugins/http_checksum'
+require 'aws-sdk-core/plugins/checksum_algorithm'
+require 'aws-sdk-core/plugins/request_compression'
+require 'aws-sdk-core/plugins/defaults_mode'
+require 'aws-sdk-core/plugins/recursion_detection'
+require 'aws-sdk-core/plugins/telemetry'
+require 'aws-sdk-core/plugins/sign'
+require 'aws-sdk-core/plugins/protocols/rest_json'
 
 module Aws::Batch
   # An API client for Batch.  To construct a client, you need to configure a `:region` and `:credentials`.
@@ -686,9 +686,9 @@ module Aws::Batch
     #
     # @option params [Integer] :unmanagedv_cpus
     #   The maximum number of vCPUs for an unmanaged compute environment. This
-    #   parameter is only used for fair share scheduling to reserve vCPU
+    #   parameter is only used for fair-share scheduling to reserve vCPU
     #   capacity for new share identifiers. If this parameter isn't provided
-    #   for a fair share job queue, no vCPU capacity is reserved.
+    #   for a fair-share job queue, no vCPU capacity is reserved.
     #
     #   <note markdown="1"> This parameter is only supported when the `type` parameter is set to
     #   `UNMANAGED`.
@@ -946,10 +946,11 @@ module Aws::Batch
     #   finish.
     #
     # @option params [String] :scheduling_policy_arn
-    #   The Amazon Resource Name (ARN) of the fair share scheduling policy.
-    #   Job queues that don't have a scheduling policy are scheduled in a
-    #   first-in, first-out (FIFO) model. After a job queue has a scheduling
-    #   policy, it can be replaced but can't be removed.
+    #   The Amazon Resource Name (ARN) of the fair-share scheduling policy.
+    #   Job queues that don't have a fair-share scheduling policy are
+    #   scheduled in a first-in, first-out (FIFO) model. After a job queue has
+    #   a fair-share scheduling policy, it can be replaced but can't be
+    #   removed.
     #
     #   The format is
     #   `aws:Partition:batch:Region:Account:scheduling-policy/Name `.
@@ -957,11 +958,11 @@ module Aws::Batch
     #   An example is
     #   `aws:aws:batch:us-west-2:123456789012:scheduling-policy/MySchedulingPolicy`.
     #
-    #   A job queue without a scheduling policy is scheduled as a FIFO job
-    #   queue and can't have a scheduling policy added. Jobs queues with a
-    #   scheduling policy can have a maximum of 500 active fair share
-    #   identifiers. When the limit has been reached, submissions of any jobs
-    #   that add a new fair share identifier fail.
+    #   A job queue without a fair-share scheduling policy is scheduled as a
+    #   FIFO job queue and can't have a fair-share scheduling policy added.
+    #   Jobs queues with a fair-share scheduling policy can have a maximum of
+    #   500 active share identifiers. When the limit has been reached,
+    #   submissions of any jobs that add a new share identifier fail.
     #
     # @option params [required, Integer] :priority
     #   The priority of the job queue. Job queues with a higher priority (or a
@@ -1104,12 +1105,12 @@ module Aws::Batch
     # Creates an Batch scheduling policy.
     #
     # @option params [required, String] :name
-    #   The name of the scheduling policy. It can be up to 128 letters long.
-    #   It can contain uppercase and lowercase letters, numbers, hyphens (-),
-    #   and underscores (\_).
+    #   The name of the fair-share scheduling policy. It can be up to 128
+    #   letters long. It can contain uppercase and lowercase letters, numbers,
+    #   hyphens (-), and underscores (\_).
     #
     # @option params [Types::FairsharePolicy] :fairshare_policy
-    #   The fair share policy of the scheduling policy.
+    #   The fair-share scheduling policy details.
     #
     # @option params [Hash<String,String>] :tags
     #   The tags that you apply to the scheduling policy to help you
@@ -3143,7 +3144,7 @@ module Aws::Batch
     #
     # @option params [Integer] :scheduling_priority
     #   The scheduling priority for jobs that are submitted with this job
-    #   definition. This only affects jobs in job queues with a fair share
+    #   definition. This only affects jobs in job queues with a fair-share
     #   policy. Jobs with a higher scheduling priority are scheduled before
     #   jobs with a lower scheduling priority.
     #
@@ -4090,8 +4091,8 @@ module Aws::Batch
     # parameters in a `resourceRequirements` object that's included in the
     # `containerOverrides` parameter.
     #
-    # <note markdown="1"> Job queues with a scheduling policy are limited to 500 active fair
-    # share identifiers at a time.
+    # <note markdown="1"> Job queues with a scheduling policy are limited to 500 active share
+    # identifiers at a time.
     #
     #  </note>
     #
@@ -4110,15 +4111,16 @@ module Aws::Batch
     #
     # @option params [String] :share_identifier
     #   The share identifier for the job. Don't specify this parameter if the
-    #   job queue doesn't have a scheduling policy. If the job queue has a
-    #   scheduling policy, then this parameter must be specified.
+    #   job queue doesn't have a fair-share scheduling policy. If the job
+    #   queue has a fair-share scheduling policy, then this parameter must be
+    #   specified.
     #
     #   This string is limited to 255 alphanumeric characters, and can be
     #   followed by an asterisk (*).
     #
     # @option params [Integer] :scheduling_priority_override
     #   The scheduling priority for the job. This only affects jobs in job
-    #   queues with a fair share policy. Jobs with a higher scheduling
+    #   queues with a fair-share policy. Jobs with a higher scheduling
     #   priority are scheduled before jobs with a lower scheduling priority.
     #   This overrides any scheduling priority in the job definition and works
     #   only within a single share identifier.
@@ -4710,9 +4712,9 @@ module Aws::Batch
     # @option params [Integer] :unmanagedv_cpus
     #   The maximum number of vCPUs expected to be used for an unmanaged
     #   compute environment. Don't specify this parameter for a managed
-    #   compute environment. This parameter is only used for fair share
+    #   compute environment. This parameter is only used for fair-share
     #   scheduling to reserve vCPU capacity for new share identifiers. If this
-    #   parameter isn't provided for a fair share job queue, no vCPU capacity
+    #   parameter isn't provided for a fair-share job queue, no vCPU capacity
     #   is reserved.
     #
     # @option params [Types::ComputeResourceUpdate] :compute_resources
@@ -4869,8 +4871,8 @@ module Aws::Batch
     #   the queue can finish.
     #
     # @option params [String] :scheduling_policy_arn
-    #   Amazon Resource Name (ARN) of the fair share scheduling policy. Once a
-    #   job queue is created, the fair share scheduling policy can be replaced
+    #   Amazon Resource Name (ARN) of the fair-share scheduling policy. Once a
+    #   job queue is created, the fair-share scheduling policy can be replaced
     #   but not removed. The format is
     #   `aws:Partition:batch:Region:Account:scheduling-policy/Name `. For
     #   example,
@@ -4973,7 +4975,7 @@ module Aws::Batch
     #   The Amazon Resource Name (ARN) of the scheduling policy to update.
     #
     # @option params [Types::FairsharePolicy] :fairshare_policy
-    #   The fair share policy.
+    #   The fair-share policy scheduling details.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -5020,7 +5022,7 @@ module Aws::Batch
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-batch'
-      context[:gem_version] = '1.109.0'
+      context[:gem_version] = '1.110.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -2141,9 +2141,9 @@ module Aws::Batch
     #
     # @!attribute [rw] unmanagedv_cpus
     #   The maximum number of vCPUs for an unmanaged compute environment.
-    #   This parameter is only used for fair share scheduling to reserve
+    #   This parameter is only used for fair-share scheduling to reserve
     #   vCPU capacity for new share identifiers. If this parameter isn't
-    #   provided for a fair share job queue, no vCPU capacity is reserved.
+    #   provided for a fair-share job queue, no vCPU capacity is reserved.
     #
     #   <note markdown="1"> This parameter is only supported when the `type` parameter is set to
     #   `UNMANAGED`.
@@ -2274,10 +2274,11 @@ module Aws::Batch
     #   @return [String]
     #
     # @!attribute [rw] scheduling_policy_arn
-    #   The Amazon Resource Name (ARN) of the fair share scheduling policy.
-    #   Job queues that don't have a scheduling policy are scheduled in a
-    #   first-in, first-out (FIFO) model. After a job queue has a scheduling
-    #   policy, it can be replaced but can't be removed.
+    #   The Amazon Resource Name (ARN) of the fair-share scheduling policy.
+    #   Job queues that don't have a fair-share scheduling policy are
+    #   scheduled in a first-in, first-out (FIFO) model. After a job queue
+    #   has a fair-share scheduling policy, it can be replaced but can't be
+    #   removed.
     #
     #   The format is
     #   `aws:Partition:batch:Region:Account:scheduling-policy/Name `.
@@ -2285,11 +2286,11 @@ module Aws::Batch
     #   An example is
     #   `aws:aws:batch:us-west-2:123456789012:scheduling-policy/MySchedulingPolicy`.
     #
-    #   A job queue without a scheduling policy is scheduled as a FIFO job
-    #   queue and can't have a scheduling policy added. Jobs queues with a
-    #   scheduling policy can have a maximum of 500 active fair share
-    #   identifiers. When the limit has been reached, submissions of any
-    #   jobs that add a new fair share identifier fail.
+    #   A job queue without a fair-share scheduling policy is scheduled as a
+    #   FIFO job queue and can't have a fair-share scheduling policy added.
+    #   Jobs queues with a fair-share scheduling policy can have a maximum
+    #   of 500 active share identifiers. When the limit has been reached,
+    #   submissions of any jobs that add a new share identifier fail.
     #   @return [String]
     #
     # @!attribute [rw] priority
@@ -2375,13 +2376,13 @@ module Aws::Batch
     # Contains the parameters for `CreateSchedulingPolicy`.
     #
     # @!attribute [rw] name
-    #   The name of the scheduling policy. It can be up to 128 letters long.
-    #   It can contain uppercase and lowercase letters, numbers, hyphens
-    #   (-), and underscores (\_).
+    #   The name of the fair-share scheduling policy. It can be up to 128
+    #   letters long. It can contain uppercase and lowercase letters,
+    #   numbers, hyphens (-), and underscores (\_).
     #   @return [String]
     #
     # @!attribute [rw] fairshare_policy
-    #   The fair share policy of the scheduling policy.
+    #   The fair-share scheduling policy details.
     #   @return [Types::FairsharePolicy]
     #
     # @!attribute [rw] tags
@@ -4449,7 +4450,7 @@ module Aws::Batch
     #
     # @!attribute [rw] init_containers
     #   The overrides for the `initContainers` defined in the Amazon EKS
-    #   pod. These containers run before application containers, always runs
+    #   pod. These containers run before application containers, always run
     #   to completion, and must complete successfully before the next
     #   container starts. These containers are registered with the Amazon
     #   EKS Connector agent and persists the registration information in the
@@ -4682,13 +4683,13 @@ module Aws::Batch
       include Aws::Structure
     end
 
-    # The fair share policy for a scheduling policy.
+    # The fair-share scheduling policy details.
     #
     # @!attribute [rw] share_decay_seconds
-    #   The amount of time (in seconds) to use to calculate a fair share
-    #   percentage for each fair share identifier in use. A value of zero
-    #   (0) indicates the default minimum time window (600 seconds). The
-    #   maximum supported value is 604800 (1 week).
+    #   The amount of time (in seconds) to use to calculate a fair-share
+    #   percentage for each share identifier in use. A value of zero (0)
+    #   indicates the default minimum time window (600 seconds). The maximum
+    #   supported value is 604800 (1 week).
     #
     #   The decay allows for more recently run jobs to have more weight than
     #   jobs that ran earlier. Consider adjusting this number if you have
@@ -4698,29 +4699,29 @@ module Aws::Batch
     #   @return [Integer]
     #
     # @!attribute [rw] compute_reservation
-    #   A value used to reserve some of the available maximum vCPU for fair
-    #   share identifiers that aren't already used.
+    #   A value used to reserve some of the available maximum vCPU for share
+    #   identifiers that aren't already used.
     #
     #   The reserved ratio is `(computeReservation/100)^ActiveFairShares `
-    #   where ` ActiveFairShares ` is the number of active fair share
+    #   where ` ActiveFairShares ` is the number of active share
     #   identifiers.
     #
     #   For example, a `computeReservation` value of 50 indicates that Batch
-    #   reserves 50% of the maximum available vCPU if there's only one fair
-    #   share identifier. It reserves 25% if there are two fair share
-    #   identifiers. It reserves 12.5% if there are three fair share
-    #   identifiers. A `computeReservation` value of 25 indicates that Batch
-    #   should reserve 25% of the maximum available vCPU if there's only
-    #   one fair share identifier, 6.25% if there are two fair share
-    #   identifiers, and 1.56% if there are three fair share identifiers.
+    #   reserves 50% of the maximum available vCPU if there's only one
+    #   share identifier. It reserves 25% if there are two share
+    #   identifiers. It reserves 12.5% if there are three share identifiers.
+    #   A `computeReservation` value of 25 indicates that Batch should
+    #   reserve 25% of the maximum available vCPU if there's only one share
+    #   identifier, 6.25% if there are two fair share identifiers, and 1.56%
+    #   if there are three share identifiers.
     #
     #   The minimum value is 0 and the maximum value is 99.
     #   @return [Integer]
     #
     # @!attribute [rw] share_distribution
     #   An array of `SharedIdentifier` objects that contain the weights for
-    #   the fair share identifiers for the fair share policy. Fair share
-    #   identifiers that aren't included have a default weight of `1.0`.
+    #   the share identifiers for the fair-share policy. Share identifiers
+    #   that aren't included have a default weight of `1.0`.
     #   @return [Array<Types::ShareAttributes>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/FairsharePolicy AWS API Documentation
@@ -4765,7 +4766,7 @@ module Aws::Batch
     # @!attribute [rw] jobs
     #   The Amazon Resource Names (ARNs) of the first 100 `RUNNABLE` jobs in
     #   a named job queue. For first-in-first-out (FIFO) job queues, jobs
-    #   are ordered based on their submission time. For fair share
+    #   are ordered based on their submission time. For fair-share
     #   scheduling (FSS) job queues, jobs are ordered based on their job
     #   priority and share usage.
     #   @return [Array<Types::FrontOfQueueJobSummary>]
@@ -4820,7 +4821,7 @@ module Aws::Batch
     # @!attribute [rw] front_of_queue
     #   The list of the first 100 `RUNNABLE` jobs in each job queue. For
     #   first-in-first-out (FIFO) job queues, jobs are ordered based on
-    #   their submission time. For fair share scheduling (FSS) job queues,
+    #   their submission time. For fair-share scheduling (FSS) job queues,
     #   jobs are ordered based on their job priority and share usage.
     #   @return [Types::FrontOfQueueDetail]
     #
@@ -4912,7 +4913,7 @@ module Aws::Batch
     #
     # @!attribute [rw] scheduling_priority
     #   The scheduling priority of the job definition. This only affects
-    #   jobs in job queues with a fair share policy. Jobs with a higher
+    #   jobs in job queues with a fair-share policy. Jobs with a higher
     #   scheduling priority are scheduled before jobs with a lower
     #   scheduling priority.
     #   @return [Integer]
@@ -5081,7 +5082,7 @@ module Aws::Batch
     #
     # @!attribute [rw] scheduling_priority
     #   The scheduling policy of the job definition. This only affects jobs
-    #   in job queues with a fair share policy. Jobs with a higher
+    #   in job queues with a fair-share policy. Jobs with a higher
     #   scheduling priority are scheduled before jobs with a lower
     #   scheduling priority.
     #   @return [Integer]
@@ -5822,7 +5823,7 @@ module Aws::Batch
     #   If a `maxSwap` value of `0` is specified, the container doesn't use
     #   swap. Accepted values are `0` or any positive integer. If the
     #   `maxSwap` parameter is omitted, the container doesn't use the swap
-    #   configuration for the container instance that it's running on. A
+    #   configuration for the container instance on which it runs. A
     #   `maxSwap` value must be set for the `swappiness` parameter to be
     #   used.
     #
@@ -6594,7 +6595,7 @@ module Aws::Batch
     #
     # @!attribute [rw] scheduling_priority
     #   The scheduling priority for jobs that are submitted with this job
-    #   definition. This only affects jobs in job queues with a fair share
+    #   definition. This only affects jobs in job queues with a fair-share
     #   policy. Jobs with a higher scheduling priority are scheduled before
     #   jobs with a lower scheduling priority.
     #
@@ -7033,7 +7034,7 @@ module Aws::Batch
     # An object that represents a scheduling policy.
     #
     # @!attribute [rw] name
-    #   The name of the scheduling policy.
+    #   The name of the fair-share scheduling policy.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -7044,14 +7045,14 @@ module Aws::Batch
     #   @return [String]
     #
     # @!attribute [rw] fairshare_policy
-    #   The fair share policy for the scheduling policy.
+    #   The fair-share scheduling policy details.
     #   @return [Types::FairsharePolicy]
     #
     # @!attribute [rw] tags
-    #   The tags that you apply to the scheduling policy to categorize and
-    #   organize your resources. Each tag consists of a key and an optional
-    #   value. For more information, see [Tagging Amazon Web Services
-    #   resources][1] in *Amazon Web Services General Reference*.
+    #   The tags that you apply to the fair-share scheduling policy to
+    #   categorize and organize your resources. Each tag consists of a key
+    #   and an optional value. For more information, see [Tagging Amazon Web
+    #   Services resources][1] in *Amazon Web Services General Reference*.
     #
     #
     #
@@ -7141,20 +7142,19 @@ module Aws::Batch
       include Aws::Structure
     end
 
-    # Specifies the weights for the fair share identifiers for the fair
-    # share policy. Fair share identifiers that aren't included have a
-    # default weight of `1.0`.
+    # Specifies the weights for the share identifiers for the fair-share
+    # policy. Share identifiers that aren't included have a default weight
+    # of `1.0`.
     #
     # @!attribute [rw] share_identifier
-    #   A fair share identifier or fair share identifier prefix. If the
-    #   string ends with an asterisk (*), this entry specifies the weight
-    #   factor to use for fair share identifiers that start with that
-    #   prefix. The list of fair share identifiers in a fair share policy
-    #   can't overlap. For example, you can't have one that specifies a
-    #   `shareIdentifier` of `UserA*` and another that specifies a
-    #   `shareIdentifier` of `UserA-1`.
+    #   A share identifier or share identifier prefix. If the string ends
+    #   with an asterisk (*), this entry specifies the weight factor to use
+    #   for share identifiers that start with that prefix. The list of share
+    #   identifiers in a fair-share policy can't overlap. For example, you
+    #   can't have one that specifies a `shareIdentifier` of `UserA*` and
+    #   another that specifies a `shareIdentifier` of `UserA-1`.
     #
-    #   There can be no more than 500 fair share identifiers active in a job
+    #   There can be no more than 500 share identifiers active in a job
     #   queue.
     #
     #   The string is limited to 255 alphanumeric characters, and can be
@@ -7162,10 +7162,10 @@ module Aws::Batch
     #   @return [String]
     #
     # @!attribute [rw] weight_factor
-    #   The weight factor for the fair share identifier. The default value
-    #   is 1.0. A lower value has a higher priority for compute resources.
-    #   For example, jobs that use a share identifier with a weight factor
-    #   of 0.125 (1/8) get 8 times the compute resources of jobs that use a
+    #   The weight factor for the share identifier. The default value is
+    #   1.0. A lower value has a higher priority for compute resources. For
+    #   example, jobs that use a share identifier with a weight factor of
+    #   0.125 (1/8) get 8 times the compute resources of jobs that use a
     #   share identifier with a weight factor of 1.
     #
     #   The smallest supported value is 0.0001, and the largest supported
@@ -7196,8 +7196,9 @@ module Aws::Batch
     #
     # @!attribute [rw] share_identifier
     #   The share identifier for the job. Don't specify this parameter if
-    #   the job queue doesn't have a scheduling policy. If the job queue
-    #   has a scheduling policy, then this parameter must be specified.
+    #   the job queue doesn't have a fair-share scheduling policy. If the
+    #   job queue has a fair-share scheduling policy, then this parameter
+    #   must be specified.
     #
     #   This string is limited to 255 alphanumeric characters, and can be
     #   followed by an asterisk (*).
@@ -7205,7 +7206,7 @@ module Aws::Batch
     #
     # @!attribute [rw] scheduling_priority_override
     #   The scheduling priority for the job. This only affects jobs in job
-    #   queues with a fair share policy. Jobs with a higher scheduling
+    #   queues with a fair-share policy. Jobs with a higher scheduling
     #   priority are scheduled before jobs with a lower scheduling priority.
     #   This overrides any scheduling priority in the job definition and
     #   works only within a single share identifier.
@@ -8316,9 +8317,9 @@ module Aws::Batch
     # @!attribute [rw] unmanagedv_cpus
     #   The maximum number of vCPUs expected to be used for an unmanaged
     #   compute environment. Don't specify this parameter for a managed
-    #   compute environment. This parameter is only used for fair share
+    #   compute environment. This parameter is only used for fair-share
     #   scheduling to reserve vCPU capacity for new share identifiers. If
-    #   this parameter isn't provided for a fair share job queue, no vCPU
+    #   this parameter isn't provided for a fair-share job queue, no vCPU
     #   capacity is reserved.
     #   @return [Integer]
     #
@@ -8427,8 +8428,8 @@ module Aws::Batch
     #   @return [String]
     #
     # @!attribute [rw] scheduling_policy_arn
-    #   Amazon Resource Name (ARN) of the fair share scheduling policy. Once
-    #   a job queue is created, the fair share scheduling policy can be
+    #   Amazon Resource Name (ARN) of the fair-share scheduling policy. Once
+    #   a job queue is created, the fair-share scheduling policy can be
     #   replaced but not removed. The format is
     #   `aws:Partition:batch:Region:Account:scheduling-policy/Name `. For
     #   example,
@@ -8537,7 +8538,7 @@ module Aws::Batch
     #   @return [String]
     #
     # @!attribute [rw] fairshare_policy
-    #   The fair share policy.
+    #   The fair-share policy scheduling details.
     #   @return [Types::FairsharePolicy]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/UpdateSchedulingPolicyRequest AWS API Documentation

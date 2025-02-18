@@ -7,34 +7,34 @@
 #
 # WARNING ABOUT GENERATED CODE
 
-require 'seahorse/client/plugins/content_length.rb'
-require 'aws-sdk-core/plugins/credentials_configuration.rb'
-require 'aws-sdk-core/plugins/logging.rb'
-require 'aws-sdk-core/plugins/param_converter.rb'
-require 'aws-sdk-core/plugins/param_validator.rb'
-require 'aws-sdk-core/plugins/user_agent.rb'
-require 'aws-sdk-core/plugins/helpful_socket_errors.rb'
-require 'aws-sdk-core/plugins/retry_errors.rb'
-require 'aws-sdk-core/plugins/global_configuration.rb'
-require 'aws-sdk-core/plugins/regional_endpoint.rb'
-require 'aws-sdk-core/plugins/endpoint_discovery.rb'
-require 'aws-sdk-core/plugins/endpoint_pattern.rb'
-require 'aws-sdk-core/plugins/response_paging.rb'
-require 'aws-sdk-core/plugins/stub_responses.rb'
-require 'aws-sdk-core/plugins/idempotency_token.rb'
-require 'aws-sdk-core/plugins/invocation_id.rb'
-require 'aws-sdk-core/plugins/jsonvalue_converter.rb'
-require 'aws-sdk-core/plugins/client_metrics_plugin.rb'
-require 'aws-sdk-core/plugins/client_metrics_send_plugin.rb'
-require 'aws-sdk-core/plugins/transfer_encoding.rb'
-require 'aws-sdk-core/plugins/http_checksum.rb'
-require 'aws-sdk-core/plugins/checksum_algorithm.rb'
-require 'aws-sdk-core/plugins/request_compression.rb'
-require 'aws-sdk-core/plugins/defaults_mode.rb'
-require 'aws-sdk-core/plugins/recursion_detection.rb'
-require 'aws-sdk-core/plugins/telemetry.rb'
-require 'aws-sdk-core/plugins/sign.rb'
-require 'aws-sdk-core/plugins/protocols/rest_json.rb'
+require 'seahorse/client/plugins/content_length'
+require 'aws-sdk-core/plugins/credentials_configuration'
+require 'aws-sdk-core/plugins/logging'
+require 'aws-sdk-core/plugins/param_converter'
+require 'aws-sdk-core/plugins/param_validator'
+require 'aws-sdk-core/plugins/user_agent'
+require 'aws-sdk-core/plugins/helpful_socket_errors'
+require 'aws-sdk-core/plugins/retry_errors'
+require 'aws-sdk-core/plugins/global_configuration'
+require 'aws-sdk-core/plugins/regional_endpoint'
+require 'aws-sdk-core/plugins/endpoint_discovery'
+require 'aws-sdk-core/plugins/endpoint_pattern'
+require 'aws-sdk-core/plugins/response_paging'
+require 'aws-sdk-core/plugins/stub_responses'
+require 'aws-sdk-core/plugins/idempotency_token'
+require 'aws-sdk-core/plugins/invocation_id'
+require 'aws-sdk-core/plugins/jsonvalue_converter'
+require 'aws-sdk-core/plugins/client_metrics_plugin'
+require 'aws-sdk-core/plugins/client_metrics_send_plugin'
+require 'aws-sdk-core/plugins/transfer_encoding'
+require 'aws-sdk-core/plugins/http_checksum'
+require 'aws-sdk-core/plugins/checksum_algorithm'
+require 'aws-sdk-core/plugins/request_compression'
+require 'aws-sdk-core/plugins/defaults_mode'
+require 'aws-sdk-core/plugins/recursion_detection'
+require 'aws-sdk-core/plugins/telemetry'
+require 'aws-sdk-core/plugins/sign'
+require 'aws-sdk-core/plugins/protocols/rest_json'
 
 module Aws::EMRContainers
   # An API client for EMRContainers.  To construct a client, you need to configure a `:region` and `:credentials`.
@@ -675,6 +675,10 @@ module Aws::EMRContainers
     #         },
     #       ],
     #       monitoring_configuration: {
+    #         managed_logs: {
+    #           allow_aws_to_retain_logs: "ENABLED", # accepts ENABLED, DISABLED
+    #           encryption_key_arn: "KmsKeyArn",
+    #         },
     #         persistent_app_ui: "ENABLED", # accepts ENABLED, DISABLED
     #         cloud_watch_monitoring_configuration: {
     #           log_group_name: "LogGroupName", # required
@@ -987,6 +991,8 @@ module Aws::EMRContainers
     #   resp.job_run.configuration_overrides.application_configuration[0].properties #=> Hash
     #   resp.job_run.configuration_overrides.application_configuration[0].properties["String1024"] #=> String
     #   resp.job_run.configuration_overrides.application_configuration[0].configurations #=> Types::ConfigurationList
+    #   resp.job_run.configuration_overrides.monitoring_configuration.managed_logs.allow_aws_to_retain_logs #=> String, one of "ENABLED", "DISABLED"
+    #   resp.job_run.configuration_overrides.monitoring_configuration.managed_logs.encryption_key_arn #=> String
     #   resp.job_run.configuration_overrides.monitoring_configuration.persistent_app_ui #=> String, one of "ENABLED", "DISABLED"
     #   resp.job_run.configuration_overrides.monitoring_configuration.cloud_watch_monitoring_configuration.log_group_name #=> String
     #   resp.job_run.configuration_overrides.monitoring_configuration.cloud_watch_monitoring_configuration.log_stream_name_prefix #=> String
@@ -1120,6 +1126,8 @@ module Aws::EMRContainers
     #   resp.endpoint.configuration_overrides.application_configuration[0].properties #=> Hash
     #   resp.endpoint.configuration_overrides.application_configuration[0].properties["String1024"] #=> String
     #   resp.endpoint.configuration_overrides.application_configuration[0].configurations #=> Types::ConfigurationList
+    #   resp.endpoint.configuration_overrides.monitoring_configuration.managed_logs.allow_aws_to_retain_logs #=> String, one of "ENABLED", "DISABLED"
+    #   resp.endpoint.configuration_overrides.monitoring_configuration.managed_logs.encryption_key_arn #=> String
     #   resp.endpoint.configuration_overrides.monitoring_configuration.persistent_app_ui #=> String, one of "ENABLED", "DISABLED"
     #   resp.endpoint.configuration_overrides.monitoring_configuration.cloud_watch_monitoring_configuration.log_group_name #=> String
     #   resp.endpoint.configuration_overrides.monitoring_configuration.cloud_watch_monitoring_configuration.log_stream_name_prefix #=> String
@@ -1357,6 +1365,8 @@ module Aws::EMRContainers
     #   resp.job_runs[0].configuration_overrides.application_configuration[0].properties #=> Hash
     #   resp.job_runs[0].configuration_overrides.application_configuration[0].properties["String1024"] #=> String
     #   resp.job_runs[0].configuration_overrides.application_configuration[0].configurations #=> Types::ConfigurationList
+    #   resp.job_runs[0].configuration_overrides.monitoring_configuration.managed_logs.allow_aws_to_retain_logs #=> String, one of "ENABLED", "DISABLED"
+    #   resp.job_runs[0].configuration_overrides.monitoring_configuration.managed_logs.encryption_key_arn #=> String
     #   resp.job_runs[0].configuration_overrides.monitoring_configuration.persistent_app_ui #=> String, one of "ENABLED", "DISABLED"
     #   resp.job_runs[0].configuration_overrides.monitoring_configuration.cloud_watch_monitoring_configuration.log_group_name #=> String
     #   resp.job_runs[0].configuration_overrides.monitoring_configuration.cloud_watch_monitoring_configuration.log_stream_name_prefix #=> String
@@ -1532,6 +1542,8 @@ module Aws::EMRContainers
     #   resp.endpoints[0].configuration_overrides.application_configuration[0].properties #=> Hash
     #   resp.endpoints[0].configuration_overrides.application_configuration[0].properties["String1024"] #=> String
     #   resp.endpoints[0].configuration_overrides.application_configuration[0].configurations #=> Types::ConfigurationList
+    #   resp.endpoints[0].configuration_overrides.monitoring_configuration.managed_logs.allow_aws_to_retain_logs #=> String, one of "ENABLED", "DISABLED"
+    #   resp.endpoints[0].configuration_overrides.monitoring_configuration.managed_logs.encryption_key_arn #=> String
     #   resp.endpoints[0].configuration_overrides.monitoring_configuration.persistent_app_ui #=> String, one of "ENABLED", "DISABLED"
     #   resp.endpoints[0].configuration_overrides.monitoring_configuration.cloud_watch_monitoring_configuration.log_group_name #=> String
     #   resp.endpoints[0].configuration_overrides.monitoring_configuration.cloud_watch_monitoring_configuration.log_stream_name_prefix #=> String
@@ -1810,6 +1822,10 @@ module Aws::EMRContainers
     #         },
     #       ],
     #       monitoring_configuration: {
+    #         managed_logs: {
+    #           allow_aws_to_retain_logs: "ENABLED", # accepts ENABLED, DISABLED
+    #           encryption_key_arn: "KmsKeyArn",
+    #         },
     #         persistent_app_ui: "ENABLED", # accepts ENABLED, DISABLED
     #         cloud_watch_monitoring_configuration: {
     #           log_group_name: "LogGroupName", # required
@@ -1934,7 +1950,7 @@ module Aws::EMRContainers
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-emrcontainers'
-      context[:gem_version] = '1.51.0'
+      context[:gem_version] = '1.52.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

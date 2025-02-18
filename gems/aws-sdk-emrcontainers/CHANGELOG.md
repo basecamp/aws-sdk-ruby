@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.52.0 (2025-02-18)
+------------------
+
+* Feature - EMR on EKS StartJobRun Api will be supporting the configuration of log storage in AWS by using "managedLogs" under "MonitoringConfiguration".
+
 1.51.0 (2025-02-06)
 ------------------
 

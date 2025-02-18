@@ -452,7 +452,14 @@ module Aws::EMRContainers
       SENSITIVE: []
     end
 
+    class ManagedLogs
+      attr_accessor allow_aws_to_retain_logs: ("ENABLED" | "DISABLED")
+      attr_accessor encryption_key_arn: ::String
+      SENSITIVE: []
+    end
+
     class MonitoringConfiguration
+      attr_accessor managed_logs: Types::ManagedLogs
       attr_accessor persistent_app_ui: ("ENABLED" | "DISABLED")
       attr_accessor cloud_watch_monitoring_configuration: Types::CloudWatchMonitoringConfiguration
       attr_accessor s3_monitoring_configuration: Types::S3MonitoringConfiguration

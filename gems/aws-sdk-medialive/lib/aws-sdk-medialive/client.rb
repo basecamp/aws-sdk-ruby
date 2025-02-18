@@ -7,34 +7,34 @@
 #
 # WARNING ABOUT GENERATED CODE
 
-require 'seahorse/client/plugins/content_length.rb'
-require 'aws-sdk-core/plugins/credentials_configuration.rb'
-require 'aws-sdk-core/plugins/logging.rb'
-require 'aws-sdk-core/plugins/param_converter.rb'
-require 'aws-sdk-core/plugins/param_validator.rb'
-require 'aws-sdk-core/plugins/user_agent.rb'
-require 'aws-sdk-core/plugins/helpful_socket_errors.rb'
-require 'aws-sdk-core/plugins/retry_errors.rb'
-require 'aws-sdk-core/plugins/global_configuration.rb'
-require 'aws-sdk-core/plugins/regional_endpoint.rb'
-require 'aws-sdk-core/plugins/endpoint_discovery.rb'
-require 'aws-sdk-core/plugins/endpoint_pattern.rb'
-require 'aws-sdk-core/plugins/response_paging.rb'
-require 'aws-sdk-core/plugins/stub_responses.rb'
-require 'aws-sdk-core/plugins/idempotency_token.rb'
-require 'aws-sdk-core/plugins/invocation_id.rb'
-require 'aws-sdk-core/plugins/jsonvalue_converter.rb'
-require 'aws-sdk-core/plugins/client_metrics_plugin.rb'
-require 'aws-sdk-core/plugins/client_metrics_send_plugin.rb'
-require 'aws-sdk-core/plugins/transfer_encoding.rb'
-require 'aws-sdk-core/plugins/http_checksum.rb'
-require 'aws-sdk-core/plugins/checksum_algorithm.rb'
-require 'aws-sdk-core/plugins/request_compression.rb'
-require 'aws-sdk-core/plugins/defaults_mode.rb'
-require 'aws-sdk-core/plugins/recursion_detection.rb'
-require 'aws-sdk-core/plugins/telemetry.rb'
-require 'aws-sdk-core/plugins/sign.rb'
-require 'aws-sdk-core/plugins/protocols/rest_json.rb'
+require 'seahorse/client/plugins/content_length'
+require 'aws-sdk-core/plugins/credentials_configuration'
+require 'aws-sdk-core/plugins/logging'
+require 'aws-sdk-core/plugins/param_converter'
+require 'aws-sdk-core/plugins/param_validator'
+require 'aws-sdk-core/plugins/user_agent'
+require 'aws-sdk-core/plugins/helpful_socket_errors'
+require 'aws-sdk-core/plugins/retry_errors'
+require 'aws-sdk-core/plugins/global_configuration'
+require 'aws-sdk-core/plugins/regional_endpoint'
+require 'aws-sdk-core/plugins/endpoint_discovery'
+require 'aws-sdk-core/plugins/endpoint_pattern'
+require 'aws-sdk-core/plugins/response_paging'
+require 'aws-sdk-core/plugins/stub_responses'
+require 'aws-sdk-core/plugins/idempotency_token'
+require 'aws-sdk-core/plugins/invocation_id'
+require 'aws-sdk-core/plugins/jsonvalue_converter'
+require 'aws-sdk-core/plugins/client_metrics_plugin'
+require 'aws-sdk-core/plugins/client_metrics_send_plugin'
+require 'aws-sdk-core/plugins/transfer_encoding'
+require 'aws-sdk-core/plugins/http_checksum'
+require 'aws-sdk-core/plugins/checksum_algorithm'
+require 'aws-sdk-core/plugins/request_compression'
+require 'aws-sdk-core/plugins/defaults_mode'
+require 'aws-sdk-core/plugins/recursion_detection'
+require 'aws-sdk-core/plugins/telemetry'
+require 'aws-sdk-core/plugins/sign'
+require 'aws-sdk-core/plugins/protocols/rest_json'
 
 module Aws::MediaLive
   # An API client for MediaLive.  To construct a client, you need to configure a `:region` and `:credentials`.
@@ -10962,7 +10962,7 @@ module Aws::MediaLive
     #     tags: {
     #       "__string" => "__string",
     #     },
-    #     target_resource_type: "CLOUDFRONT_DISTRIBUTION", # required, accepts CLOUDFRONT_DISTRIBUTION, MEDIALIVE_MULTIPLEX, MEDIALIVE_CHANNEL, MEDIALIVE_INPUT_DEVICE, MEDIAPACKAGE_CHANNEL, MEDIAPACKAGE_ORIGIN_ENDPOINT, MEDIACONNECT_FLOW, S3_BUCKET
+    #     target_resource_type: "CLOUDFRONT_DISTRIBUTION", # required, accepts CLOUDFRONT_DISTRIBUTION, MEDIALIVE_MULTIPLEX, MEDIALIVE_CHANNEL, MEDIALIVE_INPUT_DEVICE, MEDIAPACKAGE_CHANNEL, MEDIAPACKAGE_ORIGIN_ENDPOINT, MEDIACONNECT_FLOW, S3_BUCKET, MEDIATAILOR_PLAYBACK_CONFIGURATION
     #     threshold: 1.0, # required
     #     treat_missing_data: "notBreaching", # required, accepts notBreaching, breaching, ignore, missing
     #     request_id: "__stringMin1Max256PatternS",
@@ -10985,7 +10985,7 @@ module Aws::MediaLive
     #   resp.statistic #=> String, one of "SampleCount", "Average", "Sum", "Minimum", "Maximum"
     #   resp.tags #=> Hash
     #   resp.tags["__string"] #=> String
-    #   resp.target_resource_type #=> String, one of "CLOUDFRONT_DISTRIBUTION", "MEDIALIVE_MULTIPLEX", "MEDIALIVE_CHANNEL", "MEDIALIVE_INPUT_DEVICE", "MEDIAPACKAGE_CHANNEL", "MEDIAPACKAGE_ORIGIN_ENDPOINT", "MEDIACONNECT_FLOW", "S3_BUCKET"
+    #   resp.target_resource_type #=> String, one of "CLOUDFRONT_DISTRIBUTION", "MEDIALIVE_MULTIPLEX", "MEDIALIVE_CHANNEL", "MEDIALIVE_INPUT_DEVICE", "MEDIAPACKAGE_CHANNEL", "MEDIAPACKAGE_ORIGIN_ENDPOINT", "MEDIACONNECT_FLOW", "S3_BUCKET", "MEDIATAILOR_PLAYBACK_CONFIGURATION"
     #   resp.threshold #=> Float
     #   resp.treat_missing_data #=> String, one of "notBreaching", "breaching", "ignore", "missing"
     #
@@ -11447,7 +11447,7 @@ module Aws::MediaLive
     #   resp.statistic #=> String, one of "SampleCount", "Average", "Sum", "Minimum", "Maximum"
     #   resp.tags #=> Hash
     #   resp.tags["__string"] #=> String
-    #   resp.target_resource_type #=> String, one of "CLOUDFRONT_DISTRIBUTION", "MEDIALIVE_MULTIPLEX", "MEDIALIVE_CHANNEL", "MEDIALIVE_INPUT_DEVICE", "MEDIAPACKAGE_CHANNEL", "MEDIAPACKAGE_ORIGIN_ENDPOINT", "MEDIACONNECT_FLOW", "S3_BUCKET"
+    #   resp.target_resource_type #=> String, one of "CLOUDFRONT_DISTRIBUTION", "MEDIALIVE_MULTIPLEX", "MEDIALIVE_CHANNEL", "MEDIALIVE_INPUT_DEVICE", "MEDIAPACKAGE_CHANNEL", "MEDIAPACKAGE_ORIGIN_ENDPOINT", "MEDIACONNECT_FLOW", "S3_BUCKET", "MEDIATAILOR_PLAYBACK_CONFIGURATION"
     #   resp.threshold #=> Float
     #   resp.treat_missing_data #=> String, one of "notBreaching", "breaching", "ignore", "missing"
     #
@@ -11772,7 +11772,7 @@ module Aws::MediaLive
     #   resp.cloud_watch_alarm_templates[0].statistic #=> String, one of "SampleCount", "Average", "Sum", "Minimum", "Maximum"
     #   resp.cloud_watch_alarm_templates[0].tags #=> Hash
     #   resp.cloud_watch_alarm_templates[0].tags["__string"] #=> String
-    #   resp.cloud_watch_alarm_templates[0].target_resource_type #=> String, one of "CLOUDFRONT_DISTRIBUTION", "MEDIALIVE_MULTIPLEX", "MEDIALIVE_CHANNEL", "MEDIALIVE_INPUT_DEVICE", "MEDIAPACKAGE_CHANNEL", "MEDIAPACKAGE_ORIGIN_ENDPOINT", "MEDIACONNECT_FLOW", "S3_BUCKET"
+    #   resp.cloud_watch_alarm_templates[0].target_resource_type #=> String, one of "CLOUDFRONT_DISTRIBUTION", "MEDIALIVE_MULTIPLEX", "MEDIALIVE_CHANNEL", "MEDIALIVE_INPUT_DEVICE", "MEDIAPACKAGE_CHANNEL", "MEDIAPACKAGE_ORIGIN_ENDPOINT", "MEDIACONNECT_FLOW", "S3_BUCKET", "MEDIATAILOR_PLAYBACK_CONFIGURATION"
     #   resp.cloud_watch_alarm_templates[0].threshold #=> Float
     #   resp.cloud_watch_alarm_templates[0].treat_missing_data #=> String, one of "notBreaching", "breaching", "ignore", "missing"
     #   resp.next_token #=> String
@@ -12022,10 +12022,6 @@ module Aws::MediaLive
     #
     # @option params [required, String] :identifier
     #
-    # @option params [String] :request_id
-    #   **A suitable default value is auto-generated.** You should normally
-    #   not need to pass this option.**
-    #
     # @return [Types::StartMonitorDeploymentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::StartMonitorDeploymentResponse#arn #arn} => String
@@ -12052,7 +12048,6 @@ module Aws::MediaLive
     #   resp = client.start_monitor_deployment({
     #     dry_run: false,
     #     identifier: "__string", # required
-    #     request_id: "__stringMin1Max256PatternS",
     #   })
     #
     # @example Response structure
@@ -12273,7 +12268,7 @@ module Aws::MediaLive
     #     name: "__stringMin1Max255PatternS",
     #     period: 1,
     #     statistic: "SampleCount", # accepts SampleCount, Average, Sum, Minimum, Maximum
-    #     target_resource_type: "CLOUDFRONT_DISTRIBUTION", # accepts CLOUDFRONT_DISTRIBUTION, MEDIALIVE_MULTIPLEX, MEDIALIVE_CHANNEL, MEDIALIVE_INPUT_DEVICE, MEDIAPACKAGE_CHANNEL, MEDIAPACKAGE_ORIGIN_ENDPOINT, MEDIACONNECT_FLOW, S3_BUCKET
+    #     target_resource_type: "CLOUDFRONT_DISTRIBUTION", # accepts CLOUDFRONT_DISTRIBUTION, MEDIALIVE_MULTIPLEX, MEDIALIVE_CHANNEL, MEDIALIVE_INPUT_DEVICE, MEDIAPACKAGE_CHANNEL, MEDIAPACKAGE_ORIGIN_ENDPOINT, MEDIACONNECT_FLOW, S3_BUCKET, MEDIATAILOR_PLAYBACK_CONFIGURATION
     #     threshold: 1.0,
     #     treat_missing_data: "notBreaching", # accepts notBreaching, breaching, ignore, missing
     #   })
@@ -12295,7 +12290,7 @@ module Aws::MediaLive
     #   resp.statistic #=> String, one of "SampleCount", "Average", "Sum", "Minimum", "Maximum"
     #   resp.tags #=> Hash
     #   resp.tags["__string"] #=> String
-    #   resp.target_resource_type #=> String, one of "CLOUDFRONT_DISTRIBUTION", "MEDIALIVE_MULTIPLEX", "MEDIALIVE_CHANNEL", "MEDIALIVE_INPUT_DEVICE", "MEDIAPACKAGE_CHANNEL", "MEDIAPACKAGE_ORIGIN_ENDPOINT", "MEDIACONNECT_FLOW", "S3_BUCKET"
+    #   resp.target_resource_type #=> String, one of "CLOUDFRONT_DISTRIBUTION", "MEDIALIVE_MULTIPLEX", "MEDIALIVE_CHANNEL", "MEDIALIVE_INPUT_DEVICE", "MEDIAPACKAGE_CHANNEL", "MEDIAPACKAGE_ORIGIN_ENDPOINT", "MEDIACONNECT_FLOW", "S3_BUCKET", "MEDIATAILOR_PLAYBACK_CONFIGURATION"
     #   resp.threshold #=> Float
     #   resp.treat_missing_data #=> String, one of "notBreaching", "breaching", "ignore", "missing"
     #
@@ -13796,7 +13791,7 @@ module Aws::MediaLive
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-medialive'
-      context[:gem_version] = '1.145.0'
+      context[:gem_version] = '1.146.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
