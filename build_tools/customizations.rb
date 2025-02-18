@@ -61,11 +61,9 @@ module BuildTools
           subsegment
         end
       end
-
     end
 
     api('CloudFront') do |api|
-
       api['shapes'].each do |_, shape|
         if shape['members'] && shape['members']['MaxItems'] && shape['members']['MaxItems']['shape'] == 'string'
           shape['members']['MaxItems']['shape'] = 'integer'
@@ -76,7 +74,6 @@ module BuildTools
         symbolized = name.sub(/\d{4}_\d{2}_\d{2}$/, '')
         api['operations'][symbolized] = api['operations'].delete(name)
       end
-
     end
 
     api('EC2') do |api|
@@ -116,10 +113,6 @@ module BuildTools
 
     api('Lambda') do |api|
       api['shapes']['Timestamp']['type'] = 'timestamp'
-    end
-
-    smoke('MTurk') do |smoke|
-      smoke['testCases'] = []
     end
 
     # Cross Region Copying
@@ -229,10 +222,6 @@ module BuildTools
       end
     end
 
-    smoke('SMS') do |smoke|
-      smoke['testCases'] = []
-    end
-
     api('SQS') do |api|
       api['metadata']['errorPrefix'] = 'AWS.SimpleQueueService.'
       api['shapes']['StringList']['flattened'] = true
@@ -246,6 +235,36 @@ module BuildTools
       operations.each do |operation|
         api['operations'][operation]['auth'] = ['smithy.api#noAuth']
       end
+    end
+
+    smoke('DSQL') do |smoke|
+      test = smoke['testCases'].find do |test_case|
+        test_case['id'] == 'GetClusterNotFound'
+      end
+      test['input']['identifier'] = 'a' * 26
+    end
+
+    smoke('ElasticTranscoder') do |smoke|
+      # discontinued service
+      smoke['testCases'] = []
+    end
+
+    smoke('NetworkFlowMonitor') do |smoke|
+      test = smoke['testCases'].find do |test_case|
+        test_case['id'] == 'GetMonitorSuccess'
+      end
+      test['expectation'] = { 'failure' => {} }
+    end
+
+    smoke('ObservabilityAdmin') do |smoke|
+      test = smoke['testCases'].find do |test_case|
+        test_case['id'] == 'GetTelemetryEvaluationStatusForOrganization'
+      end
+      test['expectation'] = { 'failure' => { 'errorId' => 'ValidationException' } }
+      test = smoke['testCases'].find do |test_case|
+        test_case['id'] == 'GetTelemetryEvaluationStatus'
+      end
+      test['expectation'] = { 'success' => {} }
     end
   end
 end
