@@ -72,6 +72,21 @@ module Aws::SESV2
     #
     class AlreadyExistsException < Aws::EmptyStructure; end
 
+    # Used to associate a configuration set with a MailManager archive.
+    #
+    # @!attribute [rw] archive_arn
+    #   The Amazon Resource Name (ARN) of the MailManager archive where the
+    #   Amazon SES API v2 will archive sent emails.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/ArchivingOptions AWS API Documentation
+    #
+    class ArchivingOptions < Struct.new(
+      :archive_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The input you provided is invalid.
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/BadRequestException AWS API Documentation
@@ -734,6 +749,11 @@ module Aws::SESV2
     #   using the configuration set.
     #   @return [Types::VdmOptions]
     #
+    # @!attribute [rw] archiving_options
+    #   An object that defines the MailManager archiving options for emails
+    #   that you send using the configuration set.
+    #   @return [Types::ArchivingOptions]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/CreateConfigurationSetRequest AWS API Documentation
     #
     class CreateConfigurationSetRequest < Struct.new(
@@ -744,7 +764,8 @@ module Aws::SESV2
       :sending_options,
       :tags,
       :suppression_options,
-      :vdm_options)
+      :vdm_options,
+      :archiving_options)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3164,6 +3185,11 @@ module Aws::SESV2
     #   your configuration set.
     #   @return [Types::VdmOptions]
     #
+    # @!attribute [rw] archiving_options
+    #   An object that defines the MailManager archive where sent emails are
+    #   archived that you send using the configuration set.
+    #   @return [Types::ArchivingOptions]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/GetConfigurationSetResponse AWS API Documentation
     #
     class GetConfigurationSetResponse < Struct.new(
@@ -3174,7 +3200,8 @@ module Aws::SESV2
       :sending_options,
       :tags,
       :suppression_options,
-      :vdm_options)
+      :vdm_options,
+      :archiving_options)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5956,6 +5983,34 @@ module Aws::SESV2
     #
     class PutAccountVdmAttributesResponse < Aws::EmptyStructure; end
 
+    # A request to associate a configuration set with a MailManager archive.
+    #
+    # @!attribute [rw] configuration_set_name
+    #   The name of the configuration set to associate with a MailManager
+    #   archive.
+    #   @return [String]
+    #
+    # @!attribute [rw] archive_arn
+    #   The Amazon Resource Name (ARN) of the MailManager archive that the
+    #   Amazon SES API v2 sends email to.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/PutConfigurationSetArchivingOptionsRequest AWS API Documentation
+    #
+    class PutConfigurationSetArchivingOptionsRequest < Struct.new(
+      :configuration_set_name,
+      :archive_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An HTTP 200 response if the request succeeds, or an error message if
+    # the request fails.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/PutConfigurationSetArchivingOptionsResponse AWS API Documentation
+    #
+    class PutConfigurationSetArchivingOptionsResponse < Aws::EmptyStructure; end
+
     # A request to associate a configuration set with a dedicated IP pool.
     #
     # @!attribute [rw] configuration_set_name
@@ -6627,8 +6682,8 @@ module Aws::SESV2
     #   @return [String]
     #
     # @!attribute [rw] type
-    #   The recommendation type, with values like `DKIM`, `SPF`, `DMARC` or
-    #   `BIMI`.
+    #   The recommendation type, with values like `DKIM`, `SPF`, `DMARC`,
+    #   `BIMI`, or `COMPLAINT`.
     #   @return [String]
     #
     # @!attribute [rw] description
@@ -7998,8 +8053,8 @@ module Aws::SESV2
     #
     #   * `REPLICATION_PRIMARY_INVALID_REGION` – The verification failed due
     #     to an invalid primary region specified. Ensure you provide a valid
-    #     AWS region where Amazon SES is available and different from the
-    #     replica region.
+    #     Amazon Web Services region where Amazon SES is available and
+    #     different from the replica region.
     #   @return [String]
     #
     # @!attribute [rw] soa_record

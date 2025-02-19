@@ -649,7 +649,7 @@ module Aws::LocationService
     #           horizontal: 1.0, # required
     #         },
     #         position_properties: {
-    #           "PropertyMapKeyString" => "PropertyMapValueString",
+    #           "PositionPropertyMapKeyString" => "PositionPropertyMapValueString",
     #         },
     #       },
     #     ],
@@ -711,7 +711,7 @@ module Aws::LocationService
     #   resp.device_positions[0].position[0] #=> Float
     #   resp.device_positions[0].accuracy.horizontal #=> Float
     #   resp.device_positions[0].position_properties #=> Hash
-    #   resp.device_positions[0].position_properties["PropertyMapKeyString"] #=> String
+    #   resp.device_positions[0].position_properties["PositionPropertyMapKeyString"] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/location-2020-11-19/BatchGetDevicePosition AWS API Documentation
     #
@@ -836,7 +836,7 @@ module Aws::LocationService
     #           horizontal: 1.0, # required
     #         },
     #         position_properties: {
-    #           "PropertyMapKeyString" => "PropertyMapValueString",
+    #           "PositionPropertyMapKeyString" => "PositionPropertyMapValueString",
     #         },
     #       },
     #     ],
@@ -2758,7 +2758,7 @@ module Aws::LocationService
     #   resp.position[0] #=> Float
     #   resp.accuracy.horizontal #=> Float
     #   resp.position_properties #=> Hash
-    #   resp.position_properties["PropertyMapKeyString"] #=> String
+    #   resp.position_properties["PositionPropertyMapKeyString"] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/location-2020-11-19/GetDevicePosition AWS API Documentation
     #
@@ -2855,7 +2855,7 @@ module Aws::LocationService
     #   resp.device_positions[0].position[0] #=> Float
     #   resp.device_positions[0].accuracy.horizontal #=> Float
     #   resp.device_positions[0].position_properties #=> Hash
-    #   resp.device_positions[0].position_properties["PropertyMapKeyString"] #=> String
+    #   resp.device_positions[0].position_properties["PositionPropertyMapKeyString"] #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/location-2020-11-19/GetDevicePositionHistory AWS API Documentation
@@ -3350,7 +3350,7 @@ module Aws::LocationService
     #   resp.data.entries[0].position[0] #=> Float
     #   resp.data.entries[0].accuracy.horizontal #=> Float
     #   resp.data.entries[0].position_properties #=> Hash
-    #   resp.data.entries[0].position_properties["PropertyMapKeyString"] #=> String
+    #   resp.data.entries[0].position_properties["PositionPropertyMapKeyString"] #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/location-2020-11-19/ListDevicePositions AWS API Documentation
@@ -4914,7 +4914,7 @@ module Aws::LocationService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-locationservice'
-      context[:gem_version] = '1.67.0'
+      context[:gem_version] = '1.68.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

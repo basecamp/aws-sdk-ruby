@@ -655,6 +655,9 @@ module Aws::NetworkFirewall
     # To retrieve information about firewalls, use ListFirewalls and
     # DescribeFirewall.
     #
+    # To generate a report on the last 30 days of traffic monitored by a
+    # firewall, use StartAnalysisReport.
+    #
     # @option params [required, String] :firewall_name
     #   The descriptive name of the firewall. You can't change the name of a
     #   firewall after you create it.
@@ -663,13 +666,13 @@ module Aws::NetworkFirewall
     #   The Amazon Resource Name (ARN) of the FirewallPolicy that you want to
     #   use for the firewall.
     #
-    # @option params [required, String] :vpc_id
+    # @option params [String] :vpc_id
     #   The unique identifier of the VPC where Network Firewall should create
     #   the firewall.
     #
     #   You can't change this setting after you create the firewall.
     #
-    # @option params [required, Array<Types::SubnetMapping>] :subnet_mappings
+    # @option params [Array<Types::SubnetMapping>] :subnet_mappings
     #   The public subnets to use for your Network Firewall firewalls. Each
     #   subnet must belong to a different Availability Zone in the VPC.
     #   Network Firewall creates a firewall endpoint in each subnet.
@@ -705,6 +708,10 @@ module Aws::NetworkFirewall
     #   A complex type that contains settings for encryption of your firewall
     #   resources.
     #
+    # @option params [Array<String>] :enabled_analysis_types
+    #   An optional setting indicating the specific traffic analysis types to
+    #   enable on the firewall.
+    #
     # @return [Types::CreateFirewallResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateFirewallResponse#firewall #firewall} => Types::Firewall
@@ -715,8 +722,8 @@ module Aws::NetworkFirewall
     #   resp = client.create_firewall({
     #     firewall_name: "ResourceName", # required
     #     firewall_policy_arn: "ResourceArn", # required
-    #     vpc_id: "VpcId", # required
-    #     subnet_mappings: [ # required
+    #     vpc_id: "VpcId",
+    #     subnet_mappings: [
     #       {
     #         subnet_id: "CollectionMember_String", # required
     #         ip_address_type: "DUALSTACK", # accepts DUALSTACK, IPV4, IPV6
@@ -736,6 +743,7 @@ module Aws::NetworkFirewall
     #       key_id: "KeyId",
     #       type: "CUSTOMER_KMS", # required, accepts CUSTOMER_KMS, AWS_OWNED_KMS_KEY
     #     },
+    #     enabled_analysis_types: ["TLS_SNI"], # accepts TLS_SNI, HTTP_HOST
     #   })
     #
     # @example Response structure
@@ -757,6 +765,8 @@ module Aws::NetworkFirewall
     #   resp.firewall.tags[0].value #=> String
     #   resp.firewall.encryption_configuration.key_id #=> String
     #   resp.firewall.encryption_configuration.type #=> String, one of "CUSTOMER_KMS", "AWS_OWNED_KMS_KEY"
+    #   resp.firewall.enabled_analysis_types #=> Array
+    #   resp.firewall.enabled_analysis_types[0] #=> String, one of "TLS_SNI", "HTTP_HOST"
     #   resp.firewall_status.status #=> String, one of "PROVISIONING", "DELETING", "READY"
     #   resp.firewall_status.configuration_sync_state_summary #=> String, one of "PENDING", "IN_SYNC", "CAPACITY_CONSTRAINED"
     #   resp.firewall_status.sync_states #=> Hash
@@ -1453,6 +1463,8 @@ module Aws::NetworkFirewall
     #   resp.firewall.tags[0].value #=> String
     #   resp.firewall.encryption_configuration.key_id #=> String
     #   resp.firewall.encryption_configuration.type #=> String, one of "CUSTOMER_KMS", "AWS_OWNED_KMS_KEY"
+    #   resp.firewall.enabled_analysis_types #=> Array
+    #   resp.firewall.enabled_analysis_types[0] #=> String, one of "TLS_SNI", "HTTP_HOST"
     #   resp.firewall_status.status #=> String, one of "PROVISIONING", "DELETING", "READY"
     #   resp.firewall_status.configuration_sync_state_summary #=> String, one of "PENDING", "IN_SYNC", "CAPACITY_CONSTRAINED"
     #   resp.firewall_status.sync_states #=> Hash
@@ -1724,6 +1736,8 @@ module Aws::NetworkFirewall
     #   resp.firewall.tags[0].value #=> String
     #   resp.firewall.encryption_configuration.key_id #=> String
     #   resp.firewall.encryption_configuration.type #=> String, one of "CUSTOMER_KMS", "AWS_OWNED_KMS_KEY"
+    #   resp.firewall.enabled_analysis_types #=> Array
+    #   resp.firewall.enabled_analysis_types[0] #=> String, one of "TLS_SNI", "HTTP_HOST"
     #   resp.firewall_status.status #=> String, one of "PROVISIONING", "DELETING", "READY"
     #   resp.firewall_status.configuration_sync_state_summary #=> String, one of "PENDING", "IN_SYNC", "CAPACITY_CONSTRAINED"
     #   resp.firewall_status.sync_states #=> Hash
@@ -2244,6 +2258,147 @@ module Aws::NetworkFirewall
       req.send_request(options)
     end
 
+    # The results of a `COMPLETED` analysis report generated with
+    # StartAnalysisReport.
+    #
+    # For more information, see AnalysisTypeReportResult.
+    #
+    # @option params [String] :firewall_name
+    #   The descriptive name of the firewall. You can't change the name of a
+    #   firewall after you create it.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #
+    # @option params [required, String] :analysis_report_id
+    #   The unique ID of the query that ran when you requested an analysis
+    #   report.
+    #
+    # @option params [String] :firewall_arn
+    #   The Amazon Resource Name (ARN) of the firewall.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #
+    # @option params [String] :next_token
+    #   When you request a list of objects with a `MaxResults` setting, if the
+    #   number of objects that are still available for retrieval exceeds the
+    #   maximum you requested, Network Firewall returns a `NextToken` value in
+    #   the response. To retrieve the next batch of objects, use the token
+    #   returned from the prior request in your next request.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of objects that you want Network Firewall to return
+    #   for this request. If more objects are available, in the response,
+    #   Network Firewall provides a `NextToken` value that you can use in a
+    #   subsequent call to get the next batch of objects.
+    #
+    # @return [Types::GetAnalysisReportResultsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetAnalysisReportResultsResponse#status #status} => String
+    #   * {Types::GetAnalysisReportResultsResponse#start_time #start_time} => Time
+    #   * {Types::GetAnalysisReportResultsResponse#end_time #end_time} => Time
+    #   * {Types::GetAnalysisReportResultsResponse#report_time #report_time} => Time
+    #   * {Types::GetAnalysisReportResultsResponse#analysis_type #analysis_type} => String
+    #   * {Types::GetAnalysisReportResultsResponse#next_token #next_token} => String
+    #   * {Types::GetAnalysisReportResultsResponse#analysis_report_results #analysis_report_results} => Array&lt;Types::AnalysisTypeReportResult&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_analysis_report_results({
+    #     firewall_name: "ResourceName",
+    #     analysis_report_id: "AnalysisReportId", # required
+    #     firewall_arn: "ResourceArn",
+    #     next_token: "AnalysisReportNextToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.status #=> String
+    #   resp.start_time #=> Time
+    #   resp.end_time #=> Time
+    #   resp.report_time #=> Time
+    #   resp.analysis_type #=> String, one of "TLS_SNI", "HTTP_HOST"
+    #   resp.next_token #=> String
+    #   resp.analysis_report_results #=> Array
+    #   resp.analysis_report_results[0].protocol #=> String
+    #   resp.analysis_report_results[0].first_accessed #=> Time
+    #   resp.analysis_report_results[0].last_accessed #=> Time
+    #   resp.analysis_report_results[0].domain #=> String
+    #   resp.analysis_report_results[0].hits.count #=> Integer
+    #   resp.analysis_report_results[0].unique_sources.count #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/GetAnalysisReportResults AWS API Documentation
+    #
+    # @overload get_analysis_report_results(params = {})
+    # @param [Hash] params ({})
+    def get_analysis_report_results(params = {}, options = {})
+      req = build_request(:get_analysis_report_results, params)
+      req.send_request(options)
+    end
+
+    # Returns a list of all traffic analysis reports generated within the
+    # last 30 days.
+    #
+    # @option params [String] :firewall_name
+    #   The descriptive name of the firewall. You can't change the name of a
+    #   firewall after you create it.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #
+    # @option params [String] :firewall_arn
+    #   The Amazon Resource Name (ARN) of the firewall.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #
+    # @option params [String] :next_token
+    #   When you request a list of objects with a `MaxResults` setting, if the
+    #   number of objects that are still available for retrieval exceeds the
+    #   maximum you requested, Network Firewall returns a `NextToken` value in
+    #   the response. To retrieve the next batch of objects, use the token
+    #   returned from the prior request in your next request.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of objects that you want Network Firewall to return
+    #   for this request. If more objects are available, in the response,
+    #   Network Firewall provides a `NextToken` value that you can use in a
+    #   subsequent call to get the next batch of objects.
+    #
+    # @return [Types::ListAnalysisReportsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListAnalysisReportsResponse#analysis_reports #analysis_reports} => Array&lt;Types::AnalysisReport&gt;
+    #   * {Types::ListAnalysisReportsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_analysis_reports({
+    #     firewall_name: "ResourceName",
+    #     firewall_arn: "ResourceArn",
+    #     next_token: "PaginationToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.analysis_reports #=> Array
+    #   resp.analysis_reports[0].analysis_report_id #=> String
+    #   resp.analysis_reports[0].analysis_type #=> String, one of "TLS_SNI", "HTTP_HOST"
+    #   resp.analysis_reports[0].report_time #=> Time
+    #   resp.analysis_reports[0].status #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/ListAnalysisReports AWS API Documentation
+    #
+    # @overload list_analysis_reports(params = {})
+    # @param [Hash] params ({})
+    def list_analysis_reports(params = {}, options = {})
+      req = build_request(:list_analysis_reports, params)
+      req.send_request(options)
+    end
+
     # Retrieves the metadata for the firewall policies that you have
     # defined. Depending on your setting for max results and the number of
     # firewall policies, a single call might not return the full list.
@@ -2593,6 +2748,51 @@ module Aws::NetworkFirewall
       req.send_request(options)
     end
 
+    # Generates a traffic analysis report for the timeframe and traffic type
+    # you specify.
+    #
+    # For information on the contents of a traffic analysis report, see
+    # AnalysisReport.
+    #
+    # @option params [String] :firewall_name
+    #   The descriptive name of the firewall. You can't change the name of a
+    #   firewall after you create it.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #
+    # @option params [String] :firewall_arn
+    #   The Amazon Resource Name (ARN) of the firewall.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #
+    # @option params [required, String] :analysis_type
+    #   The type of traffic that will be used to generate a report.
+    #
+    # @return [Types::StartAnalysisReportResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartAnalysisReportResponse#analysis_report_id #analysis_report_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_analysis_report({
+    #     firewall_name: "ResourceName",
+    #     firewall_arn: "ResourceArn",
+    #     analysis_type: "TLS_SNI", # required, accepts TLS_SNI, HTTP_HOST
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.analysis_report_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/StartAnalysisReport AWS API Documentation
+    #
+    # @overload start_analysis_report(params = {})
+    # @param [Hash] params ({})
+    def start_analysis_report(params = {}, options = {})
+      req = build_request(:start_analysis_report, params)
+      req.send_request(options)
+    end
+
     # Adds the specified tags to the specified resource. Tags are key:value
     # pairs that you can use to categorize and manage your resources, for
     # purposes like billing. For example, you might set the tag key to
@@ -2662,6 +2862,76 @@ module Aws::NetworkFirewall
     # @param [Hash] params ({})
     def untag_resource(params = {}, options = {})
       req = build_request(:untag_resource, params)
+      req.send_request(options)
+    end
+
+    # Enables specific types of firewall analysis on a specific firewall you
+    # define.
+    #
+    # @option params [Array<String>] :enabled_analysis_types
+    #   An optional setting indicating the specific traffic analysis types to
+    #   enable on the firewall.
+    #
+    # @option params [String] :firewall_arn
+    #   The Amazon Resource Name (ARN) of the firewall.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #
+    # @option params [String] :firewall_name
+    #   The descriptive name of the firewall. You can't change the name of a
+    #   firewall after you create it.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #
+    # @option params [String] :update_token
+    #   An optional token that you can use for optimistic locking. Network
+    #   Firewall returns a token to your requests that access the firewall.
+    #   The token marks the state of the firewall resource at the time of the
+    #   request.
+    #
+    #   To make an unconditional change to the firewall, omit the token in
+    #   your update request. Without the token, Network Firewall performs your
+    #   updates regardless of whether the firewall has changed since you last
+    #   retrieved it.
+    #
+    #   To make a conditional change to the firewall, provide the token in
+    #   your update request. Network Firewall uses the token to ensure that
+    #   the firewall hasn't changed since you last retrieved it. If it has
+    #   changed, the operation fails with an `InvalidTokenException`. If this
+    #   happens, retrieve the firewall again to get a current copy of it with
+    #   a new token. Reapply your changes as needed, then try the operation
+    #   again using the new token.
+    #
+    # @return [Types::UpdateFirewallAnalysisSettingsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateFirewallAnalysisSettingsResponse#enabled_analysis_types #enabled_analysis_types} => Array&lt;String&gt;
+    #   * {Types::UpdateFirewallAnalysisSettingsResponse#firewall_arn #firewall_arn} => String
+    #   * {Types::UpdateFirewallAnalysisSettingsResponse#firewall_name #firewall_name} => String
+    #   * {Types::UpdateFirewallAnalysisSettingsResponse#update_token #update_token} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_firewall_analysis_settings({
+    #     enabled_analysis_types: ["TLS_SNI"], # accepts TLS_SNI, HTTP_HOST
+    #     firewall_arn: "ResourceArn",
+    #     firewall_name: "ResourceName",
+    #     update_token: "UpdateToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.enabled_analysis_types #=> Array
+    #   resp.enabled_analysis_types[0] #=> String, one of "TLS_SNI", "HTTP_HOST"
+    #   resp.firewall_arn #=> String
+    #   resp.firewall_name #=> String
+    #   resp.update_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/UpdateFirewallAnalysisSettings AWS API Documentation
+    #
+    # @overload update_firewall_analysis_settings(params = {})
+    # @param [Hash] params ({})
+    def update_firewall_analysis_settings(params = {}, options = {})
+      req = build_request(:update_firewall_analysis_settings, params)
       req.send_request(options)
     end
 
@@ -3708,7 +3978,7 @@ module Aws::NetworkFirewall
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-networkfirewall'
-      context[:gem_version] = '1.61.0'
+      context[:gem_version] = '1.62.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

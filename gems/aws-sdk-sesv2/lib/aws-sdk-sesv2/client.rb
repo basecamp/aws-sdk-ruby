@@ -594,6 +594,10 @@ module Aws::SESV2
     #   An object that defines the VDM options for emails that you send using
     #   the configuration set.
     #
+    # @option params [Types::ArchivingOptions] :archiving_options
+    #   An object that defines the MailManager archiving options for emails
+    #   that you send using the configuration set.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -632,6 +636,9 @@ module Aws::SESV2
     #       guardian_options: {
     #         optimized_shared_delivery: "ENABLED", # accepts ENABLED, DISABLED
     #       },
+    #     },
+    #     archiving_options: {
+    #       archive_arn: "ArchiveArn",
     #     },
     #   })
     #
@@ -1872,6 +1879,7 @@ module Aws::SESV2
     #   * {Types::GetConfigurationSetResponse#tags #tags} => Array&lt;Types::Tag&gt;
     #   * {Types::GetConfigurationSetResponse#suppression_options #suppression_options} => Types::SuppressionOptions
     #   * {Types::GetConfigurationSetResponse#vdm_options #vdm_options} => Types::VdmOptions
+    #   * {Types::GetConfigurationSetResponse#archiving_options #archiving_options} => Types::ArchivingOptions
     #
     # @example Request syntax with placeholder values
     #
@@ -1897,6 +1905,7 @@ module Aws::SESV2
     #   resp.suppression_options.suppressed_reasons[0] #=> String, one of "BOUNCE", "COMPLAINT"
     #   resp.vdm_options.dashboard_options.engagement_metrics #=> String, one of "ENABLED", "DISABLED"
     #   resp.vdm_options.guardian_options.optimized_shared_delivery #=> String, one of "ENABLED", "DISABLED"
+    #   resp.archiving_options.archive_arn #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/GetConfigurationSet AWS API Documentation
     #
@@ -3948,6 +3957,51 @@ module Aws::SESV2
       req.send_request(options)
     end
 
+    # Associate the configuration set with a MailManager archive. When you
+    # send email using the `SendEmail` or `SendBulkEmail` operations the
+    # message as it will be given to the receiving SMTP server will be
+    # archived, along with the recipient information.
+    #
+    # @option params [required, String] :configuration_set_name
+    #   The name of the configuration set to associate with a MailManager
+    #   archive.
+    #
+    # @option params [String] :archive_arn
+    #   The Amazon Resource Name (ARN) of the MailManager archive that the
+    #   Amazon SES API v2 sends email to.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    #
+    # @example Example: Used to associate an MailManager archive with a ConfigurationSet.
+    #
+    #   # This example associates an archive arn with a configuration set.
+    #
+    #   resp = client.put_configuration_set_archiving_options({
+    #     archive_arn: "arn:aws:ses:us-west-2:123456789012:mailmanager-archive/a-abcdefghijklmnopqrstuvwxyz", 
+    #     configuration_set_name: "sample-configuration-name", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_configuration_set_archiving_options({
+    #     configuration_set_name: "ConfigurationSetName", # required
+    #     archive_arn: "ArchiveArn",
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/PutConfigurationSetArchivingOptions AWS API Documentation
+    #
+    # @overload put_configuration_set_archiving_options(params = {})
+    # @param [Hash] params ({})
+    def put_configuration_set_archiving_options(params = {}, options = {})
+      req = build_request(:put_configuration_set_archiving_options, params)
+      req.send_request(options)
+    end
+
     # Associate a configuration set with a dedicated IP pool. You can use
     # dedicated IP pools to create groups of dedicated IP addresses for
     # sending specific types of email.
@@ -5416,7 +5470,7 @@ module Aws::SESV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sesv2'
-      context[:gem_version] = '1.71.0'
+      context[:gem_version] = '1.72.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

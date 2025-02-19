@@ -144,6 +144,9 @@ module Aws
                                         guardian_options: {
                                           optimized_shared_delivery: ("ENABLED" | "DISABLED")?
                                         }?
+                                      },
+                                      ?archiving_options: {
+                                        archive_arn: ::String?
                                       }
                                     ) -> _CreateConfigurationSetResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateConfigurationSetResponseSuccess
@@ -600,6 +603,7 @@ module Aws
         def tags: () -> ::Array[Types::Tag]
         def suppression_options: () -> Types::SuppressionOptions
         def vdm_options: () -> Types::VdmOptions
+        def archiving_options: () -> Types::ArchivingOptions
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SESV2/Client.html#get_configuration_set-instance_method
       def get_configuration_set: (
@@ -1116,6 +1120,16 @@ module Aws
                                         }
                                       ) -> _PutAccountVdmAttributesResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutAccountVdmAttributesResponseSuccess
+
+      interface _PutConfigurationSetArchivingOptionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::PutConfigurationSetArchivingOptionsResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SESV2/Client.html#put_configuration_set_archiving_options-instance_method
+      def put_configuration_set_archiving_options: (
+                                                     configuration_set_name: ::String,
+                                                     ?archive_arn: ::String
+                                                   ) -> _PutConfigurationSetArchivingOptionsResponseSuccess
+                                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutConfigurationSetArchivingOptionsResponseSuccess
 
       interface _PutConfigurationSetDeliveryOptionsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::PutConfigurationSetDeliveryOptionsResponse]

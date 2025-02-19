@@ -305,6 +305,10 @@ module Aws::CodePipeline
     #   [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/limits.html
     #   @return [Integer]
     #
+    # @!attribute [rw] environment_variables
+    #   The environment variables for the action.
+    #   @return [Array<Types::EnvironmentVariable>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/ActionDeclaration AWS API Documentation
     #
     class ActionDeclaration < Struct.new(
@@ -319,7 +323,8 @@ module Aws::CodePipeline
       :role_arn,
       :region,
       :namespace,
-      :timeout_in_minutes)
+      :timeout_in_minutes,
+      :environment_variables)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1296,7 +1301,14 @@ module Aws::CodePipeline
       include Aws::Structure
     end
 
-    # The conditions for making checks for entry to a stage.
+    # The conditions for making checks for entry to a stage. For more
+    # information about conditions, see [Stage conditions][1] and [How do
+    # stage conditions work?][2].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html
+    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html
     #
     # @!attribute [rw] conditions
     #   The conditions that are configured as entry conditions.
@@ -1357,13 +1369,15 @@ module Aws::CodePipeline
 
     # The condition for the stage. A condition is made up of the rules and
     # the result for the condition. For more information about conditions,
-    # see [Stage conditions][1]. For more information about rules, see the
-    # [CodePipeline rule reference][2].
+    # see [Stage conditions][1] and [How do stage conditions work?][2].. For
+    # more information about rules, see the [CodePipeline rule
+    # reference][3].
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html
-    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html
+    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html
+    # [3]: https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html
     #
     # @!attribute [rw] result
     #   The action to be done when the condition is met. For example,
@@ -1795,6 +1809,25 @@ module Aws::CodePipeline
       include Aws::Structure
     end
 
+    # The environment variables for the action.
+    #
+    # @!attribute [rw] name
+    #   The environment variable name in the key-value pair.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The environment variable value in the key-value pair.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/EnvironmentVariable AWS API Documentation
+    #
+    class EnvironmentVariable < Struct.new(
+      :name,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Represents information about an error in CodePipeline.
     #
     # @!attribute [rw] code
@@ -1886,7 +1919,13 @@ module Aws::CodePipeline
     end
 
     # The configuration that specifies the result, such as rollback, to
-    # occur upon stage failure.
+    # occur upon stage failure. For more information about conditions, see
+    # [Stage conditions][1] and [How do stage conditions work?][2].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html
+    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html
     #
     # @!attribute [rw] result
     #   The specified result for when the failure conditions are met, such
@@ -1899,7 +1938,14 @@ module Aws::CodePipeline
     #   @return [Types::RetryConfiguration]
     #
     # @!attribute [rw] conditions
-    #   The conditions that are configured as failure conditions.
+    #   The conditions that are configured as failure conditions. For more
+    #   information about conditions, see [Stage conditions][1] and [How do
+    #   stage conditions work?][2].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html
+    #   [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html
     #   @return [Array<Types::Condition>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/FailureConditions AWS API Documentation
@@ -2282,9 +2328,17 @@ module Aws::CodePipeline
     # The event criteria for the pull request trigger configuration, such as
     # the lists of branches or file paths to include and exclude.
     #
+    # The following are valid values for the events for this filter:
+    #
+    # * CLOSED
+    #
+    # * OPEN
+    #
+    # * UPDATED
+    #
     # @!attribute [rw] events
     #   The field that specifies which pull request events to filter on
-    #   (opened, updated, closed) for the trigger configuration.
+    #   (OPEN, UPDATED, CLOSED) for the trigger configuration.
     #   @return [Array<String>]
     #
     # @!attribute [rw] branches
@@ -3943,9 +3997,10 @@ module Aws::CodePipeline
     #   approval request corresponding to this token is still valid.
     #
     #   For a pipeline where the execution mode is set to PARALLEL, the
-    #   token required to approve/reject approval request as detailed above
-    #   is not available. Instead, use the `externalExecutionId` from the
-    #   `GetPipelineState` action as the token in the approval request.
+    #   token required to approve/reject an approval request as detailed
+    #   above is not available. Instead, use the `externalExecutionId` in
+    #   the response output from the ListActionExecutions action as the
+    #   token in the approval request.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/PutApprovalResultInput AWS API Documentation
@@ -4383,13 +4438,15 @@ module Aws::CodePipeline
     # condition. An example would be creating a new rule for an entry
     # condition, such as a rule that checks for a test result before
     # allowing the run to enter the deployment stage. For more information
-    # about conditions, see [Stage conditions][1]. For more information
-    # about rules, see the [CodePipeline rule reference][2].
+    # about conditions, see [Stage conditions][1] and [How do stage
+    # conditions work?][2]. For more information about rules, see the
+    # [CodePipeline rule reference][3].
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html
-    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html
+    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html
+    # [3]: https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html
     #
     # @!attribute [rw] name
     #   The name of the rule that is created for the condition, such as
@@ -4606,7 +4663,14 @@ module Aws::CodePipeline
     #
     # @!attribute [rw] rule_type_id
     #   The ID for the rule type, which is made up of the combined values
-    #   for category, owner, provider, and version.
+    #   for category, owner, provider, and version. For more information
+    #   about conditions, see [Stage conditions][1]. For more information
+    #   about rules, see the [CodePipeline rule reference][2].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html
+    #   [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html
     #   @return [Types::RuleTypeId]
     #
     # @!attribute [rw] configuration
@@ -4793,7 +4857,14 @@ module Aws::CodePipeline
     end
 
     # The ID for the rule type, which is made up of the combined values for
-    # category, owner, provider, and version.
+    # category, owner, provider, and version. For more information about
+    # conditions, see [Stage conditions][1]. For more information about
+    # rules, see the [CodePipeline rule reference][2].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html
+    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html
     #
     # @!attribute [rw] category
     #   A category defines what kind of rule can be run in the stage, and
@@ -4807,7 +4878,13 @@ module Aws::CodePipeline
     #   @return [String]
     #
     # @!attribute [rw] provider
-    #   The rule provider, such as the `DeploymentWindow` rule.
+    #   The rule provider, such as the `DeploymentWindow` rule. For a list
+    #   of rule provider names, see the rules listed in the [CodePipeline
+    #   rule reference][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html
     #   @return [String]
     #
     # @!attribute [rw] version
@@ -5316,7 +5393,14 @@ module Aws::CodePipeline
       include Aws::Structure
     end
 
-    # The conditions for making checks that, if met, succeed a stage.
+    # The conditions for making checks that, if met, succeed a stage. For
+    # more information about conditions, see [Stage conditions][1] and [How
+    # do stage conditions work?][2].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html
+    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html
     #
     # @!attribute [rw] conditions
     #   The conditions that are success conditions.

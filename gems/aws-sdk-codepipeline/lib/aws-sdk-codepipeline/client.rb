@@ -761,6 +761,12 @@ module Aws::CodePipeline
     #               region: "AWSRegionName",
     #               namespace: "ActionNamespace",
     #               timeout_in_minutes: 1,
+    #               environment_variables: [
+    #                 {
+    #                   name: "EnvironmentVariableName", # required
+    #                   value: "EnvironmentVariableValue", # required
+    #                 },
+    #               ],
     #             },
     #           ],
     #           on_failure: {
@@ -956,6 +962,9 @@ module Aws::CodePipeline
     #   resp.pipeline.stages[0].actions[0].region #=> String
     #   resp.pipeline.stages[0].actions[0].namespace #=> String
     #   resp.pipeline.stages[0].actions[0].timeout_in_minutes #=> Integer
+    #   resp.pipeline.stages[0].actions[0].environment_variables #=> Array
+    #   resp.pipeline.stages[0].actions[0].environment_variables[0].name #=> String
+    #   resp.pipeline.stages[0].actions[0].environment_variables[0].value #=> String
     #   resp.pipeline.stages[0].on_failure.result #=> String, one of "ROLLBACK", "FAIL", "RETRY", "SKIP"
     #   resp.pipeline.stages[0].on_failure.retry_configuration.retry_mode #=> String, one of "FAILED_ACTIONS", "ALL_ACTIONS"
     #   resp.pipeline.stages[0].on_failure.conditions #=> Array
@@ -1468,6 +1477,9 @@ module Aws::CodePipeline
     #   resp.pipeline.stages[0].actions[0].region #=> String
     #   resp.pipeline.stages[0].actions[0].namespace #=> String
     #   resp.pipeline.stages[0].actions[0].timeout_in_minutes #=> Integer
+    #   resp.pipeline.stages[0].actions[0].environment_variables #=> Array
+    #   resp.pipeline.stages[0].actions[0].environment_variables[0].name #=> String
+    #   resp.pipeline.stages[0].actions[0].environment_variables[0].value #=> String
     #   resp.pipeline.stages[0].on_failure.result #=> String, one of "ROLLBACK", "FAIL", "RETRY", "SKIP"
     #   resp.pipeline.stages[0].on_failure.retry_configuration.retry_mode #=> String, one of "FAILED_ACTIONS", "ALL_ACTIONS"
     #   resp.pipeline.stages[0].on_failure.conditions #=> Array
@@ -2209,13 +2221,15 @@ module Aws::CodePipeline
     end
 
     # Lists the rules for the condition. For more information about
-    # conditions, see [Stage conditions][1]. For more information about
-    # rules, see the [CodePipeline rule reference][2].
+    # conditions, see [Stage conditions][1] and [How do stage conditions
+    # work?][2].For more information about rules, see the [CodePipeline rule
+    # reference][3].
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html
-    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html
+    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html
+    # [3]: https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html
     #
     # @option params [String] :rule_owner_filter
     #   The rule owner to filter on.
@@ -2372,7 +2386,14 @@ module Aws::CodePipeline
       req.send_request(options)
     end
 
-    # Used to override a stage condition.
+    # Used to override a stage condition. For more information about
+    # conditions, see [Stage conditions][1] and [How do stage conditions
+    # work?][2].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html
+    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html
     #
     # @option params [required, String] :pipeline_name
     #   The name of the pipeline with the stage that will override the
@@ -2612,9 +2633,10 @@ module Aws::CodePipeline
     #   request corresponding to this token is still valid.
     #
     #   For a pipeline where the execution mode is set to PARALLEL, the token
-    #   required to approve/reject approval request as detailed above is not
-    #   available. Instead, use the `externalExecutionId` from the
-    #   `GetPipelineState` action as the token in the approval request.
+    #   required to approve/reject an approval request as detailed above is
+    #   not available. Instead, use the `externalExecutionId` in the response
+    #   output from the ListActionExecutions action as the token in the
+    #   approval request.
     #
     # @return [Types::PutApprovalResultOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3359,6 +3381,12 @@ module Aws::CodePipeline
     #               region: "AWSRegionName",
     #               namespace: "ActionNamespace",
     #               timeout_in_minutes: 1,
+    #               environment_variables: [
+    #                 {
+    #                   name: "EnvironmentVariableName", # required
+    #                   value: "EnvironmentVariableValue", # required
+    #                 },
+    #               ],
     #             },
     #           ],
     #           on_failure: {
@@ -3548,6 +3576,9 @@ module Aws::CodePipeline
     #   resp.pipeline.stages[0].actions[0].region #=> String
     #   resp.pipeline.stages[0].actions[0].namespace #=> String
     #   resp.pipeline.stages[0].actions[0].timeout_in_minutes #=> Integer
+    #   resp.pipeline.stages[0].actions[0].environment_variables #=> Array
+    #   resp.pipeline.stages[0].actions[0].environment_variables[0].name #=> String
+    #   resp.pipeline.stages[0].actions[0].environment_variables[0].value #=> String
     #   resp.pipeline.stages[0].on_failure.result #=> String, one of "ROLLBACK", "FAIL", "RETRY", "SKIP"
     #   resp.pipeline.stages[0].on_failure.retry_configuration.retry_mode #=> String, one of "FAILED_ACTIONS", "ALL_ACTIONS"
     #   resp.pipeline.stages[0].on_failure.conditions #=> Array
@@ -3663,7 +3694,7 @@ module Aws::CodePipeline
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-codepipeline'
-      context[:gem_version] = '1.95.0'
+      context[:gem_version] = '1.96.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

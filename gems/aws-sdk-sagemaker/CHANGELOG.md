@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.289.0 (2025-02-19)
+------------------
+
+* Feature - Adds r8g instance type support to SageMaker Realtime Endpoints
+
 1.288.0 (2025-02-18)
 ------------------
 

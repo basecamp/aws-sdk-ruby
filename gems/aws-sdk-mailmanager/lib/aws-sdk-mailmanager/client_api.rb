@@ -1003,10 +1003,15 @@ module Aws::MailManager
     MessageBody.add_member(:text, Shapes::ShapeRef.new(shape: String, location_name: "Text"))
     MessageBody.struct_class = Types::MessageBody
 
+    Metadata.add_member(:configuration_set, Shapes::ShapeRef.new(shape: String, location_name: "ConfigurationSet"))
     Metadata.add_member(:ingress_point_id, Shapes::ShapeRef.new(shape: IngressPointId, location_name: "IngressPointId"))
     Metadata.add_member(:rule_set_id, Shapes::ShapeRef.new(shape: RuleSetId, location_name: "RuleSetId"))
     Metadata.add_member(:sender_hostname, Shapes::ShapeRef.new(shape: String, location_name: "SenderHostname"))
     Metadata.add_member(:sender_ip_address, Shapes::ShapeRef.new(shape: SenderIpAddress, location_name: "SenderIpAddress"))
+    Metadata.add_member(:sending_method, Shapes::ShapeRef.new(shape: String, location_name: "SendingMethod"))
+    Metadata.add_member(:sending_pool, Shapes::ShapeRef.new(shape: String, location_name: "SendingPool"))
+    Metadata.add_member(:source_arn, Shapes::ShapeRef.new(shape: String, location_name: "SourceArn"))
+    Metadata.add_member(:source_identity, Shapes::ShapeRef.new(shape: String, location_name: "SourceIdentity"))
     Metadata.add_member(:timestamp, Shapes::ShapeRef.new(shape: Timestamp, location_name: "Timestamp"))
     Metadata.add_member(:tls_cipher_suite, Shapes::ShapeRef.new(shape: String, location_name: "TlsCipherSuite"))
     Metadata.add_member(:tls_protocol, Shapes::ShapeRef.new(shape: String, location_name: "TlsProtocol"))
@@ -1082,6 +1087,7 @@ module Aws::MailManager
     Row.add_member(:received_timestamp, Shapes::ShapeRef.new(shape: Timestamp, location_name: "ReceivedTimestamp"))
     Row.add_member(:sender_hostname, Shapes::ShapeRef.new(shape: String, location_name: "SenderHostname"))
     Row.add_member(:sender_ip_address, Shapes::ShapeRef.new(shape: SenderIpAddress, location_name: "SenderIpAddress"))
+    Row.add_member(:source_arn, Shapes::ShapeRef.new(shape: String, location_name: "SourceArn"))
     Row.add_member(:subject, Shapes::ShapeRef.new(shape: String, location_name: "Subject"))
     Row.add_member(:to, Shapes::ShapeRef.new(shape: String, location_name: "To"))
     Row.add_member(:x_mailer, Shapes::ShapeRef.new(shape: String, location_name: "XMailer"))

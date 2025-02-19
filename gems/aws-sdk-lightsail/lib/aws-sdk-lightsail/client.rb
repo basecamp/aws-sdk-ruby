@@ -602,7 +602,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :disk_name
     #   The unique Lightsail disk name (`my-disk`).
@@ -671,7 +671,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :load_balancer_name
     #   The name of the load balancer.
@@ -742,7 +742,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :load_balancer_name
     #   The name of the load balancer to which you want to associate the
@@ -842,7 +842,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, Types::PortInfo] :port_info
     #   An object to describe the ports to close for the specified instance.
@@ -932,7 +932,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-keeping-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-keeping-automatic-snapshots
     #
     # @option params [String] :restore_date
     #   The date of the source automatic snapshot to copy. Use the `get auto
@@ -953,7 +953,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-keeping-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-keeping-automatic-snapshots
     #
     # @option params [Boolean] :use_latest_restorable_auto_snapshot
     #   A Boolean value to indicate whether to use the latest available
@@ -971,7 +971,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-keeping-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-keeping-automatic-snapshots
     #
     # @option params [required, String] :target_snapshot_name
     #   The name of the new manual snapshot to be created as a copy.
@@ -1030,7 +1030,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/buckets-in-amazon-lightsail
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/buckets-in-amazon-lightsail
     #
     # @option params [required, String] :bucket_name
     #   The name for the bucket.
@@ -1040,7 +1040,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/bucket-naming-rules-in-amazon-lightsail
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/bucket-naming-rules-in-amazon-lightsail
     #
     # @option params [required, String] :bundle_id
     #   The ID of the bundle to use for the bucket.
@@ -1078,7 +1078,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-managing-bucket-object-versioning
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-managing-bucket-object-versioning
     #
     # @return [Types::CreateBucketResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1171,7 +1171,7 @@ module Aws::Lightsail
     #
     #
     # [1]: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBucketAccessKeys.html
-    # [2]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-bucket-access-keys
+    # [2]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-creating-bucket-access-keys
     #
     # @option params [required, String] :bucket_name
     #   The name of the bucket that the new access key will belong to, and
@@ -1422,7 +1422,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-notifications
     #
     # @option params [required, String] :protocol
     #   The protocol of the contact method, such as `Email` or `SMS` (text
@@ -1454,7 +1454,7 @@ module Aws::Lightsail
     #
     #
     #   [1]: https://docs.aws.amazon.com/sns/latest/dg/sns-supported-regions-countries.html
-    #   [2]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications
+    #   [2]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-notifications
     #
     # @option params [required, String] :contact_endpoint
     #   The destination of the contact method, such as an email address or a
@@ -1517,7 +1517,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-services
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-services
     #
     # @option params [required, String] :service_name
     #   The name for the container service.
@@ -1577,7 +1577,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #
     # @option params [Hash<String,Array>] :public_domain_names
     #   The public domain names to use with the container service, such as
@@ -1620,7 +1620,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-service-ecr-private-repo-access
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-service-ecr-private-repo-access
     #
     # @return [Types::CreateContainerServiceResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1765,7 +1765,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-container-images
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-creating-container-images
     #
     # @option params [required, String] :service_name
     #   The name of the container service for which to create the deployment.
@@ -1916,7 +1916,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-pushing-container-images
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-pushing-container-images
     #
     # @return [Types::CreateContainerServiceRegistryLoginResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1947,7 +1947,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :disk_name
     #   The unique Lightsail disk name (`my-disk`).
@@ -2039,7 +2039,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :disk_name
     #   The unique Lightsail disk name (`my-disk`).
@@ -2092,7 +2092,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #
     # @option params [String] :restore_date
     #   The date of the automatic snapshot to use for the new disk. Use the
@@ -2113,7 +2113,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #
     # @option params [Boolean] :use_latest_restorable_auto_snapshot
     #   A Boolean value to indicate whether to use the latest available
@@ -2131,7 +2131,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #
     # @return [Types::CreateDiskFromSnapshotResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2225,7 +2225,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [String] :disk_name
     #   The unique name of the source disk (`Disk-Virginia-1`).
@@ -2310,7 +2310,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-content-delivery-network-distributions
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-content-delivery-network-distributions
     #
     # @option params [required, String] :distribution_name
     #   The name for the distribution.
@@ -2503,7 +2503,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :domain_name
     #   The domain name to manage (`example.com`).
@@ -2565,7 +2565,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :domain_name
     #   The domain name (`example.com`) for which you want to create the
@@ -2622,9 +2622,9 @@ module Aws::Lightsail
 
     # Creates two URLs that are used to access a virtual computer’s
     # graphical user interface (GUI) session. The primary URL initiates a
-    # web-based NICE DCV session to the virtual computer's application. The
-    # secondary URL initiates a web-based NICE DCV session to the virtual
-    # computer's operating session.
+    # web-based Amazon DCV session to the virtual computer's application.
+    # The secondary URL initiates a web-based Amazon DCV session to the
+    # virtual computer's operating session.
     #
     # Use `StartGUISession` to open the session.
     #
@@ -2675,7 +2675,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :instance_snapshot_name
     #   The name for your new snapshot.
@@ -2739,7 +2739,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, Array<String>] :instance_names
     #   The names to use for your new Lightsail instances. Separate multiple
@@ -2795,7 +2795,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/compare-options-choose-lightsail-instance-image
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/compare-options-choose-lightsail-instance-image
     #
     # @option params [String] :key_pair_name
     #   The name of your key pair.
@@ -2888,7 +2888,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, Array<String>] :instance_names
     #   The names for your new instances.
@@ -2937,7 +2937,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/compare-options-choose-lightsail-instance-image
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/compare-options-choose-lightsail-instance-image
     #
     # @option params [String] :key_pair_name
     #   The name for your key pair.
@@ -2975,7 +2975,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #
     # @option params [String] :restore_date
     #   The date of the automatic snapshot to use for the new instance. Use
@@ -2996,7 +2996,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #
     # @option params [Boolean] :use_latest_restorable_auto_snapshot
     #   A Boolean value to indicate whether to use the latest available
@@ -3014,7 +3014,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #
     # @return [Types::CreateInstancesFromSnapshotResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3103,7 +3103,7 @@ module Aws::Lightsail
     #
     #
     # [1]: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DownloadDefaultKeyPair.html
-    # [2]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [2]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :key_pair_name
     #   The name for your new key pair.
@@ -3185,8 +3185,8 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/configure-lightsail-instances-for-load-balancing
-    # [2]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/configure-lightsail-instances-for-load-balancing
+    # [2]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :load_balancer_name
     #   The name of your load balancer.
@@ -3247,7 +3247,7 @@ module Aws::Lightsail
     #
     #
     #   [1]: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetLoadBalancerTlsPolicies.html
-    #   [2]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configure-load-balancer-tls-security-policy
+    #   [2]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configure-load-balancer-tls-security-policy
     #
     # @return [Types::CreateLoadBalancerResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3310,7 +3310,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :load_balancer_name
     #   The load balancer name where you want to create the SSL/TLS
@@ -3396,7 +3396,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :relational_database_name
     #   The name to use for your new Lightsail database resource.
@@ -3662,7 +3662,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :relational_database_name
     #   The name to use for your new Lightsail database resource.
@@ -3795,7 +3795,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :relational_database_name
     #   The name of the database on which to base your new snapshot.
@@ -3866,7 +3866,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-alarms
     #
     # @option params [required, String] :alarm_name
     #   The name of the alarm to delete.
@@ -3912,7 +3912,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #
     # @option params [required, String] :resource_name
     #   The name of the source instance or disk from which to delete the
@@ -4049,7 +4049,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-bucket-access-keys
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-creating-bucket-access-keys
     #
     # @option params [required, String] :bucket_name
     #   The name of the bucket that the access key belongs to.
@@ -4162,7 +4162,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-notifications
     #
     # @option params [required, String] :protocol
     #   The protocol that will be deleted, such as `Email` or `SMS` (text
@@ -4284,7 +4284,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :disk_name
     #   The unique name of the disk you want to delete (`my-disk`).
@@ -4347,7 +4347,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :disk_snapshot_name
     #   The name of the disk snapshot you want to delete (`my-disk-snapshot`).
@@ -4440,7 +4440,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :domain_name
     #   The specific domain name to delete.
@@ -4488,7 +4488,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :domain_name
     #   The name of the domain entry to delete.
@@ -4550,7 +4550,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :instance_name
     #   The name of the instance to delete.
@@ -4606,7 +4606,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :instance_snapshot_name
     #   The name of the snapshot to delete.
@@ -4665,7 +4665,7 @@ module Aws::Lightsail
     # [1]: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ImportKeyPair.html
     # [2]: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateKeyPair.html
     # [3]: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DownloadDefaultKeyPair.html
-    # [4]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [4]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :key_pair_name
     #   The name of the key pair to delete.
@@ -4727,7 +4727,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-troubleshooting-browser-based-ssh-rdp-client-connection
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-troubleshooting-browser-based-ssh-rdp-client-connection
     #
     # @option params [required, String] :instance_name
     #   The name of the instance for which you want to reset the host key or
@@ -4781,7 +4781,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :load_balancer_name
     #   The name of the load balancer you want to delete.
@@ -4832,7 +4832,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :load_balancer_name
     #   The load balancer name.
@@ -4895,7 +4895,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :relational_database_name
     #   The name of the database that you are deleting.
@@ -4973,7 +4973,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :relational_database_snapshot_name
     #   The name of the database snapshot that you are deleting.
@@ -5072,7 +5072,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :disk_name
     #   The unique name of the disk you want to detach from your instance
@@ -5126,7 +5126,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :load_balancer_name
     #   The name of the Lightsail load balancer.
@@ -5219,7 +5219,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #
     # @option params [required, String] :add_on_type
     #   The add-on type to disable.
@@ -5295,7 +5295,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #
     # @option params [required, String] :resource_name
     #   The name of the source resource for which to enable or modify the
@@ -5376,7 +5376,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :source_snapshot_name
     #   The name of the instance or disk snapshot to be exported to Amazon
@@ -5465,7 +5465,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-alarms
     #
     # @option params [String] :alarm_name
     #   The name of the alarm.
@@ -5542,7 +5542,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #
     # @option params [required, String] :resource_name
     #   The name of the source instance or disk from which to get automatic
@@ -5877,7 +5877,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/buckets-in-amazon-lightsail
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/buckets-in-amazon-lightsail
     #
     # @option params [String] :bucket_name
     #   The name of the bucket for which to return information.
@@ -6208,7 +6208,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-notifications
     #
     # @option params [Array<String>] :protocols
     #   The protocols used to send notifications, such as `Email`, or `SMS`
@@ -7656,7 +7656,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :instance_name
     #   The name of the instance to access.
@@ -7833,7 +7833,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-viewing-instance-burst-capacity
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-viewing-instance-burst-capacity
     #
     # @option params [required, Integer] :period
     #   The granularity, in seconds, of the returned data points.
@@ -8693,7 +8693,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configure-load-balancer-tls-security-policy
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configure-load-balancer-tls-security-policy
     #
     # @option params [String] :page_token
     #   The token to advance to the next page of results from your request.
@@ -9982,7 +9982,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, Types::PortInfo] :port_info
     #   An object to describe the ports to open for the specified instance.
@@ -10083,7 +10083,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-alarms
     #
     # @option params [required, String] :alarm_name
     #   The name for the alarm. Specify the name of an existing alarm to
@@ -10116,7 +10116,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-resource-health-metrics#available-metrics
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-resource-health-metrics#available-metrics
     #
     # @option params [required, String] :monitored_resource_name
     #   The name of the Lightsail resource that will be monitored.
@@ -10286,7 +10286,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, Array<Types::PortInfo>] :port_infos
     #   An array of objects to describe the ports to open for the specified
@@ -10348,7 +10348,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :instance_name
     #   The name of the instance to reboot.
@@ -10398,7 +10398,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :relational_database_name
     #   The name of your database to reboot.
@@ -10452,7 +10452,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-pushing-container-images
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-pushing-container-images
     #
     # @option params [required, String] :service_name
     #   The name of the container service for which to register a container
@@ -10629,7 +10629,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-notifications
     #
     # @option params [required, String] :protocol
     #   The protocol to verify, such as `Email` or `SMS` (text messaging).
@@ -10935,8 +10935,8 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/lightsail-create-static-ip
-    # [2]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/lightsail-create-static-ip
+    # [2]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :instance_name
     #   The name of the instance (a virtual private server) to start.
@@ -10987,7 +10987,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :relational_database_name
     #   The name of your database to start.
@@ -11028,7 +11028,7 @@ module Aws::Lightsail
       req.send_request(options)
     end
 
-    # Terminates a web-based NICE DCV session that’s used to access a
+    # Terminates a web-based Amazon DCV session that’s used to access a
     # virtual computer’s operating system or application. The session will
     # close and any unsaved data will be lost.
     #
@@ -11087,8 +11087,8 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/lightsail-create-static-ip
-    # [2]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/lightsail-create-static-ip
+    # [2]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :instance_name
     #   The name of the instance (a virtual private server) to stop.
@@ -11141,6 +11141,13 @@ module Aws::Lightsail
     # Stops a specific database that is currently running in Amazon
     # Lightsail.
     #
+    # <note markdown="1"> If you don't manually start your database instance after it has been
+    # stopped for seven consecutive days, Amazon Lightsail automatically
+    # starts it for you. This action helps ensure that your database
+    # instance doesn't fall behind on any required maintenance updates.
+    #
+    #  </note>
+    #
     # The `stop relational database` operation supports tag-based access
     # control via resource tags applied to the resource identified by
     # relationalDatabaseName. For more information, see the [Amazon
@@ -11148,7 +11155,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :relational_database_name
     #   The name of your database to stop.
@@ -11206,8 +11213,8 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
-    # [2]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
+    # [2]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :resource_name
     #   The name of the resource to which you are adding tags.
@@ -11274,7 +11281,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-alarms
     #
     # @option params [required, String] :alarm_name
     #   The name of the alarm to test.
@@ -11370,7 +11377,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :resource_name
     #   The name of the resource from which you are removing a tag.
@@ -11663,7 +11670,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-service-ecr-private-repo-access
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-service-ecr-private-repo-access
     #
     # @return [Types::UpdateContainerServiceResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -11970,7 +11977,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :domain_name
     #   The name of the domain recordset to update.
@@ -12036,7 +12043,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-instance-metadata-service
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-instance-metadata-service
     #
     # @option params [required, String] :instance_name
     #   The name of the instance for which to update metadata parameters.
@@ -12130,7 +12137,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :load_balancer_name
     #   The name of the load balancer that you want to modify
@@ -12227,7 +12234,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :relational_database_name
     #   The name of your Lightsail database resource to update.
@@ -12397,7 +12404,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags
     #
     # @option params [required, String] :relational_database_name
     #   The name of your database for which to update parameters.
@@ -12471,7 +12478,7 @@ module Aws::Lightsail
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-lightsail'
-      context[:gem_version] = '1.107.0'
+      context[:gem_version] = '1.108.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

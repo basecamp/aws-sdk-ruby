@@ -4282,9 +4282,9 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] override_vpc_config
-    #   The customized VPC configuration at the instance group level that
-    #   overrides the default VPC configuration of the SageMaker HyperPod
-    #   cluster.
+    #   The customized Amazon VPC configuration at the instance group level
+    #   that overrides the default Amazon VPC configuration of the SageMaker
+    #   HyperPod cluster.
     #   @return [Types::VpcConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ClusterInstanceGroupDetails AWS API Documentation
@@ -4364,32 +4364,47 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] override_vpc_config
-    #   To configure multi-AZ deployments, customize the VPC configuration
-    #   at the instance group level. You can specify different subnets and
-    #   security groups across different AZs in the instance group
-    #   specification to override a SageMaker HyperPod cluster's default
-    #   VPC configuration. For more information about deploying a cluster in
-    #   multiple AZs, see [Setting up SageMaker HyperPod clusters across
-    #   multiple AZs][1].
+    #   To configure multi-AZ deployments, customize the Amazon VPC
+    #   configuration at the instance group level. You can specify different
+    #   subnets and security groups across different AZs in the instance
+    #   group specification to override a SageMaker HyperPod cluster's
+    #   default Amazon VPC configuration. For more information about
+    #   deploying a cluster in multiple AZs, see [Setting up SageMaker
+    #   HyperPod clusters across multiple AZs][1].
     #
-    #   <note markdown="1"> If you configure your VPC with IPv6 support and specify subnets with
-    #   IPv6 addressing enabled in your instance group VPC configuration,
-    #   the nodes automatically use IPv6 addressing for network
-    #   communication.
+    #   <note markdown="1"> When your Amazon VPC and subnets support IPv6, network
+    #   communications differ based on the cluster orchestration platform:
     #
-    #    For information about adding IPv6 support for your VPC, see [IPv6
-    #   support for your VPC][2].
+    #    * Slurm-orchestrated clusters automatically configure nodes with
+    #     dual IPv6 and IPv4 addresses, allowing immediate IPv6 network
+    #     communications.
     #
-    #    For information about creating a new VPC for use with IPv6, see
-    #   [Create a VPC][3].
+    #   * In Amazon EKS-orchestrated clusters, nodes receive dual-stack
+    #     addressing, but pods can only use IPv6 when the Amazon EKS cluster
+    #     is explicitly IPv6-enabled. For information about deploying an
+    #     IPv6 Amazon EKS cluster, see [Amazon EKS IPv6 Cluster
+    #     Deployment][2].
+    #
+    #    Additional resources for IPv6 configuration:
+    #
+    #    * For information about adding IPv6 support to your VPC, see to
+    #     [IPv6 Support for VPC][3].
+    #
+    #   * For information about creating a new IPv6-compatible VPC, see
+    #     [Amazon VPC Creation Guide][4].
+    #
+    #   * To configure SageMaker HyperPod with a custom Amazon VPC, see
+    #     [Custom Amazon VPC Setup for SageMaker HyperPod][5].
     #
     #    </note>
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-prerequisites.html#sagemaker-hyperpod-prerequisites-multiple-availability-zones
-    #   [2]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-migrate-ipv6.html
-    #   [3]: https://docs.aws.amazon.com/vpc/latest/userguide/create-vpc.html
+    #   [2]: https://docs.aws.amazon.com/eks/latest/userguide/deploy-ipv6-cluster.html#_deploy_an_ipv6_cluster_with_eksctl
+    #   [3]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-migrate-ipv6.html
+    #   [4]: https://docs.aws.amazon.com/vpc/latest/userguide/create-vpc.html
+    #   [5]: https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-prerequisites.html#sagemaker-hyperpod-prerequisites-optional-vpc
     #   @return [Types::VpcConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ClusterInstanceGroupSpecification AWS API Documentation
@@ -4542,9 +4557,9 @@ module Aws::SageMaker
     #   @return [Types::ClusterLifeCycleConfig]
     #
     # @!attribute [rw] override_vpc_config
-    #   The customized VPC configuration at the instance group level that
-    #   overrides the default VPC configuration of the SageMaker HyperPod
-    #   cluster.
+    #   The customized Amazon VPC configuration at the instance group level
+    #   that overrides the default Amazon VPC configuration of the SageMaker
+    #   HyperPod cluster.
     #   @return [Types::VpcConfig]
     #
     # @!attribute [rw] threads_per_core
@@ -4566,7 +4581,8 @@ module Aws::SageMaker
     #   The private primary IPv6 address of the SageMaker HyperPod cluster
     #   node when configured with an Amazon VPC that supports IPv6 and
     #   includes subnets with IPv6 addressing enabled in either the cluster
-    #   VPC configuration or the instance group VPC configuration.
+    #   Amazon VPC configuration or the instance group Amazon VPC
+    #   configuration.
     #   @return [String]
     #
     # @!attribute [rw] private_dns_hostname
@@ -6168,23 +6184,39 @@ module Aws::SageMaker
     #   information, see [Give SageMaker access to resources in your Amazon
     #   VPC][1].
     #
-    #   <note markdown="1"> If you configure your VPC with IPv6 support and specify subnets with
-    #   IPv6 addressing enabled in your VPC configuration, the cluster
-    #   automatically uses IPv6 addressing for network communication.
+    #   <note markdown="1"> When your Amazon VPC and subnets support IPv6, network
+    #   communications differ based on the cluster orchestration platform:
     #
-    #    For information about adding IPv6 support for your VPC, see [IPv6
-    #   support for your VPC][2].
+    #    * Slurm-orchestrated clusters automatically configure nodes with
+    #     dual IPv6 and IPv4 addresses, allowing immediate IPv6 network
+    #     communications.
     #
-    #    For information about creating a new VPC for use with IPv6, see
-    #   [Create a VPC][3].
+    #   * In Amazon EKS-orchestrated clusters, nodes receive dual-stack
+    #     addressing, but pods can only use IPv6 when the Amazon EKS cluster
+    #     is explicitly IPv6-enabled. For information about deploying an
+    #     IPv6 Amazon EKS cluster, see [Amazon EKS IPv6 Cluster
+    #     Deployment][2].
+    #
+    #    Additional resources for IPv6 configuration:
+    #
+    #    * For information about adding IPv6 support to your VPC, see to
+    #     [IPv6 Support for VPC][3].
+    #
+    #   * For information about creating a new IPv6-compatible VPC, see
+    #     [Amazon VPC Creation Guide][4].
+    #
+    #   * To configure SageMaker HyperPod with a custom Amazon VPC, see
+    #     [Custom Amazon VPC Setup for SageMaker HyperPod][5].
     #
     #    </note>
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-give-access.html
-    #   [2]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-migrate-ipv6.html
-    #   [3]: https://docs.aws.amazon.com/vpc/latest/userguide/create-vpc.html
+    #   [2]: https://docs.aws.amazon.com/eks/latest/userguide/deploy-ipv6-cluster.html#_deploy_an_ipv6_cluster_with_eksctl
+    #   [3]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-migrate-ipv6.html
+    #   [4]: https://docs.aws.amazon.com/vpc/latest/userguide/create-vpc.html
+    #   [5]: https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-prerequisites.html#sagemaker-hyperpod-prerequisites-optional-vpc
     #   @return [Types::VpcConfig]
     #
     # @!attribute [rw] tags
@@ -39041,27 +39073,27 @@ module Aws::SageMaker
     #   al2-ami-sagemaker-inference-gpu-2
     #   : * Accelerator: GPU
     #
-    #     * NVIDIA driver version: 535.54.03
+    #     * NVIDIA driver version: 535
     #
     #     * CUDA version: 12.2
     #
     #   al2-ami-sagemaker-inference-gpu-2-1
     #   : * Accelerator: GPU
     #
-    #     * NVIDIA driver version: 535.54.03
+    #     * NVIDIA driver version: 535
     #
-    #     * CUDA driver version: 12.2
+    #     * CUDA version: 12.2
     #
-    #     * CUDA Container Toolkit with disabled CUDA-compat mounting
+    #     * NVIDIA Container Toolkit with disabled CUDA-compat mounting
     #
     #   al2-ami-sagemaker-inference-gpu-3-1
     #   : * Accelerator: GPU
     #
-    #     * NVIDIA driver version: 550.144.01
+    #     * NVIDIA driver version: 550
     #
     #     * CUDA version: 12.4
     #
-    #     * Container Toolkit with disabled CUDA-compat mounting
+    #     * NVIDIA Container Toolkit with disabled CUDA-compat mounting
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ProductionVariant AWS API Documentation

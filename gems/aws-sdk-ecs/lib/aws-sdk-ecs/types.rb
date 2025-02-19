@@ -266,7 +266,18 @@ module Aws::ECS
     #
     # @!attribute [rw] assign_public_ip
     #   Whether the task's elastic network interface receives a public IP
-    #   address. The default value is `ENABLED`.
+    #   address.
+    #
+    #   Consider the following when you set this value:
+    #
+    #   * When you use `create-service` or `update-service`, the default is
+    #     `DISABLED`.
+    #
+    #   * When the service `deploymentController` is `ECS`, the value must
+    #     be `DISABLED`.
+    #
+    #   * When you use `create-service` or `update-service`, the default is
+    #     `ENABLED`.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/AwsVpcConfiguration AWS API Documentation
@@ -280,7 +291,7 @@ module Aws::ECS
     end
 
     # Your Amazon Web Services account was blocked. For more information,
-    # contact [ Amazon Web Services Support][1].
+    # contact [ Amazon Web ServicesSupport][1].
     #
     #
     #
@@ -8520,10 +8531,10 @@ module Aws::ECS
     #
     #    </note>
     #
-    #   If you're using the EC2 launch type, this field is optional.
-    #   Supported values are between `128` CPU units (`0.125` vCPUs) and
-    #   `10240` CPU units (`10` vCPUs). If you do not specify a value, the
-    #   parameter is ignored.
+    #   If you're using the EC2 launch type or external launch type, this
+    #   field is optional. Supported values are between `128` CPU units
+    #   (`0.125` vCPUs) and `196608` CPU units (`192` vCPUs). If you do not
+    #   specify a value, the parameter is ignored.
     #
     #   If you're using the Fargate launch type, this field is required and
     #   you must use one of the following values, which determines your
@@ -11502,13 +11513,14 @@ module Aws::ECS
     #   an integer that indicates the CPU units when the task definition is
     #   registered.
     #
-    #   If you use the EC2 launch type, this field is optional. Supported
-    #   values are between `128` CPU units (`0.125` vCPUs) and `10240` CPU
-    #   units (`10` vCPUs).
+    #   If you're using the EC2 launch type or the external launch type,
+    #   this field is optional. Supported values are between `128` CPU units
+    #   (`0.125` vCPUs) and `196608` CPU units (`192` vCPUs). If you do not
+    #   specify a value, the parameter is ignored.
     #
-    #   If you use the Fargate launch type, this field is required. You must
-    #   use one of the following values. These values determine the range of
-    #   supported values for the `memory` parameter:
+    #   If you're using the Fargate launch type, this field is required.
+    #   You must use one of the following values. These values determine the
+    #   range of supported values for the `memory` parameter:
     #
     #   The CPU units cannot be less than 1 vCPU when you use Windows
     #   containers on Fargate.
@@ -12019,12 +12031,15 @@ module Aws::ECS
     #   one of the following values. The value that you choose determines
     #   your range of valid values for the `memory` parameter.
     #
-    #   If you use the EC2 launch type, this field is optional. Supported
-    #   values are between `128` CPU units (`0.125` vCPUs) and `10240` CPU
-    #   units (`10` vCPUs).
+    #   If you're using the EC2 launch type or the external launch type,
+    #   this field is optional. Supported values are between `128` CPU units
+    #   (`0.125` vCPUs) and `196608` CPU units (`192` vCPUs).
     #
-    #   The CPU units cannot be less than 1 vCPU when you use Windows
-    #   containers on Fargate.
+    #   If you're using the Fargate launch type, this field is required and
+    #   you must use one of the following values, which determines your
+    #   range of supported values for the `memory` parameter. The CPU units
+    #   cannot be less than 1 vCPU when you use Windows containers on
+    #   Fargate.
     #
     #   * 256 (.25 vCPU) - Available `memory` values: 512 (0.5 GB), 1024 (1
     #     GB), 2048 (2 GB)

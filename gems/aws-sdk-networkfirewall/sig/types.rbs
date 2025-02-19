@@ -18,10 +18,28 @@ module Aws::NetworkFirewall
       SENSITIVE: []
     end
 
+    class AnalysisReport
+      attr_accessor analysis_report_id: ::String
+      attr_accessor analysis_type: ("TLS_SNI" | "HTTP_HOST")
+      attr_accessor report_time: ::Time
+      attr_accessor status: ::String
+      SENSITIVE: []
+    end
+
     class AnalysisResult
       attr_accessor identified_rule_ids: ::Array[::String]
       attr_accessor identified_type: ("STATELESS_RULE_FORWARDING_ASYMMETRICALLY" | "STATELESS_RULE_CONTAINS_TCP_FLAGS")
       attr_accessor analysis_detail: ::String
+      SENSITIVE: []
+    end
+
+    class AnalysisTypeReportResult
+      attr_accessor protocol: ::String
+      attr_accessor first_accessed: ::Time
+      attr_accessor last_accessed: ::Time
+      attr_accessor domain: ::String
+      attr_accessor hits: Types::Hits
+      attr_accessor unique_sources: Types::UniqueSources
       SENSITIVE: []
     end
 
@@ -110,6 +128,7 @@ module Aws::NetworkFirewall
       attr_accessor description: ::String
       attr_accessor tags: ::Array[Types::Tag]
       attr_accessor encryption_configuration: Types::EncryptionConfiguration
+      attr_accessor enabled_analysis_types: ::Array[("TLS_SNI" | "HTTP_HOST")]
       SENSITIVE: []
     end
 
@@ -349,6 +368,7 @@ module Aws::NetworkFirewall
       attr_accessor firewall_id: ::String
       attr_accessor tags: ::Array[Types::Tag]
       attr_accessor encryption_configuration: Types::EncryptionConfiguration
+      attr_accessor enabled_analysis_types: ::Array[("TLS_SNI" | "HTTP_HOST")]
       SENSITIVE: []
     end
 
@@ -405,6 +425,26 @@ module Aws::NetworkFirewall
       SENSITIVE: []
     end
 
+    class GetAnalysisReportResultsRequest
+      attr_accessor firewall_name: ::String
+      attr_accessor analysis_report_id: ::String
+      attr_accessor firewall_arn: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class GetAnalysisReportResultsResponse
+      attr_accessor status: ::String
+      attr_accessor start_time: ::Time
+      attr_accessor end_time: ::Time
+      attr_accessor report_time: ::Time
+      attr_accessor analysis_type: ("TLS_SNI" | "HTTP_HOST")
+      attr_accessor next_token: ::String
+      attr_accessor analysis_report_results: ::Array[Types::AnalysisTypeReportResult]
+      SENSITIVE: []
+    end
+
     class Header
       attr_accessor protocol: ("IP" | "TCP" | "UDP" | "ICMP" | "HTTP" | "FTP" | "TLS" | "SMB" | "DNS" | "DCERPC" | "SSH" | "SMTP" | "IMAP" | "MSN" | "KRB5" | "IKEV2" | "TFTP" | "NTP" | "DHCP")
       attr_accessor source: ::String
@@ -412,6 +452,11 @@ module Aws::NetworkFirewall
       attr_accessor direction: ("FORWARD" | "ANY")
       attr_accessor destination: ::String
       attr_accessor destination_port: ::String
+      SENSITIVE: []
+    end
+
+    class Hits
+      attr_accessor count: ::Integer
       SENSITIVE: []
     end
 
@@ -462,6 +507,20 @@ module Aws::NetworkFirewall
 
     class LimitExceededException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ListAnalysisReportsRequest
+      attr_accessor firewall_name: ::String
+      attr_accessor firewall_arn: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListAnalysisReportsResponse
+      attr_accessor analysis_reports: ::Array[Types::AnalysisReport]
+      attr_accessor next_token: ::String
       SENSITIVE: []
     end
 
@@ -702,6 +761,18 @@ module Aws::NetworkFirewall
       SENSITIVE: []
     end
 
+    class StartAnalysisReportRequest
+      attr_accessor firewall_name: ::String
+      attr_accessor firewall_arn: ::String
+      attr_accessor analysis_type: ("TLS_SNI" | "HTTP_HOST")
+      SENSITIVE: []
+    end
+
+    class StartAnalysisReportResponse
+      attr_accessor analysis_report_id: ::String
+      SENSITIVE: []
+    end
+
     class StatefulEngineOptions
       attr_accessor rule_order: ("DEFAULT_ACTION_ORDER" | "STRICT_ORDER")
       attr_accessor stream_exception_policy: ("DROP" | "CONTINUE" | "REJECT")
@@ -823,6 +894,11 @@ module Aws::NetworkFirewall
       SENSITIVE: []
     end
 
+    class UniqueSources
+      attr_accessor count: ::Integer
+      SENSITIVE: []
+    end
+
     class UnsupportedOperationException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -835,6 +911,22 @@ module Aws::NetworkFirewall
     end
 
     class UntagResourceResponse < Aws::EmptyStructure
+    end
+
+    class UpdateFirewallAnalysisSettingsRequest
+      attr_accessor enabled_analysis_types: ::Array[("TLS_SNI" | "HTTP_HOST")]
+      attr_accessor firewall_arn: ::String
+      attr_accessor firewall_name: ::String
+      attr_accessor update_token: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateFirewallAnalysisSettingsResponse
+      attr_accessor enabled_analysis_types: ::Array[("TLS_SNI" | "HTTP_HOST")]
+      attr_accessor firewall_arn: ::String
+      attr_accessor firewall_name: ::String
+      attr_accessor update_token: ::String
+      SENSITIVE: []
     end
 
     class UpdateFirewallDeleteProtectionRequest

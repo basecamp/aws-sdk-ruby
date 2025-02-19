@@ -2953,6 +2953,11 @@ module Aws::MailManager
 
     # The metadata about the email.
     #
+    # @!attribute [rw] configuration_set
+    #   The name of the configuration set used when sent through a
+    #   configuration set with archiving enabled.
+    #   @return [String]
+    #
     # @!attribute [rw] ingress_point_id
     #   The ID of the ingress endpoint through which the email was received.
     #   @return [String]
@@ -2967,6 +2972,27 @@ module Aws::MailManager
     #
     # @!attribute [rw] sender_ip_address
     #   The IP address of the host from which the email was received.
+    #   @return [String]
+    #
+    # @!attribute [rw] sending_method
+    #   The name of the API call used when sent through a configuration set
+    #   with archiving enabled.
+    #   @return [String]
+    #
+    # @!attribute [rw] sending_pool
+    #   The name of the dedicated IP pool used when sent through a
+    #   configuration set with archiving enabled.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_arn
+    #   Specifies the archived email source, identified by either a Rule
+    #   Set's ARN with an Archive action, or a Configuration Set's Archive
+    #   ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_identity
+    #   The identity name used to authorize the sending action when sent
+    #   through a configuration set with archiving enabled.
     #   @return [String]
     #
     # @!attribute [rw] timestamp
@@ -2991,10 +3017,15 @@ module Aws::MailManager
     # @see http://docs.aws.amazon.com/goto/WebAPI/mailmanager-2023-10-17/Metadata AWS API Documentation
     #
     class Metadata < Struct.new(
+      :configuration_set,
       :ingress_point_id,
       :rule_set_id,
       :sender_hostname,
       :sender_ip_address,
+      :sending_method,
+      :sending_pool,
+      :source_arn,
+      :source_identity,
       :timestamp,
       :tls_cipher_suite,
       :tls_protocol,
@@ -3276,7 +3307,18 @@ module Aws::MailManager
     #   @return [String]
     #
     # @!attribute [rw] sender_ip_address
-    #   The IP address of the host from which the email was received.
+    #   * Mail archived with Mail Manager: The IP address of the client that
+    #     connects to the ingress endpoint.
+    #
+    #   * Mail sent through a configuration set with the archiving option
+    #     enabled: The IP address of the client that makes the SendEmail API
+    #     call.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_arn
+    #   Specifies the archived email source, identified by either a Rule
+    #   Set's ARN with an Archive action, or a Configuration Set's Archive
+    #   ARN.
     #   @return [String]
     #
     # @!attribute [rw] subject
@@ -3315,6 +3357,7 @@ module Aws::MailManager
       :received_timestamp,
       :sender_hostname,
       :sender_ip_address,
+      :source_arn,
       :subject,
       :to,
       :x_mailer,

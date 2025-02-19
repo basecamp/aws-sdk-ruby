@@ -918,10 +918,15 @@ module Aws::MailManager
     end
 
     class Metadata
+      attr_accessor configuration_set: ::String
       attr_accessor ingress_point_id: ::String
       attr_accessor rule_set_id: ::String
       attr_accessor sender_hostname: ::String
       attr_accessor sender_ip_address: ::String
+      attr_accessor sending_method: ::String
+      attr_accessor sending_pool: ::String
+      attr_accessor source_arn: ::String
+      attr_accessor source_identity: ::String
       attr_accessor timestamp: ::Time
       attr_accessor tls_cipher_suite: ::String
       attr_accessor tls_protocol: ::String
@@ -1019,6 +1024,7 @@ module Aws::MailManager
       attr_accessor received_timestamp: ::Time
       attr_accessor sender_hostname: ::String
       attr_accessor sender_ip_address: ::String
+      attr_accessor source_arn: ::String
       attr_accessor subject: ::String
       attr_accessor to: ::String
       attr_accessor x_mailer: ::String

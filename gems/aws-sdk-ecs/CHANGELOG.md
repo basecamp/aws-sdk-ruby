@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.180.0 (2025-02-19)
+------------------
+
+* Feature - This is a documentation only release for Amazon ECS that supports the CPU task limit increase.
+
 1.179.0 (2025-02-18)
 ------------------
 

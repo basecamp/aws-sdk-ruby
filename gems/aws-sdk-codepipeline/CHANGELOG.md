@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.96.0 (2025-02-19)
+------------------
+
+* Feature - Add environment variables to codepipeline action declaration.
+
 1.95.0 (2025-02-18)
 ------------------
 

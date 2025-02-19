@@ -207,7 +207,13 @@ module Aws
                                        role_arn: ::String?,
                                        region: ::String?,
                                        namespace: ::String?,
-                                       timeout_in_minutes: ::Integer?
+                                       timeout_in_minutes: ::Integer?,
+                                       environment_variables: Array[
+                                         {
+                                           name: ::String,
+                                           value: ::String
+                                         },
+                                       ]?
                                      },
                                    ],
                                    on_failure: {
@@ -977,7 +983,13 @@ module Aws
                                        role_arn: ::String?,
                                        region: ::String?,
                                        namespace: ::String?,
-                                       timeout_in_minutes: ::Integer?
+                                       timeout_in_minutes: ::Integer?,
+                                       environment_variables: Array[
+                                         {
+                                           name: ::String,
+                                           value: ::String
+                                         },
+                                       ]?
                                      },
                                    ],
                                    on_failure: {

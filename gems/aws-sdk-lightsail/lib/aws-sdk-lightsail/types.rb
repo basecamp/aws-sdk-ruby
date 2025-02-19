@@ -54,7 +54,7 @@ module Aws::Lightsail
     #
     #
     # [1]: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateBucketAccessKey.html
-    # [2]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-bucket-access-keys
+    # [2]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-creating-bucket-access-keys
     #
     # @!attribute [rw] access_key_id
     #   The ID of the access key.
@@ -157,7 +157,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-understanding-bucket-permissions
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-understanding-bucket-permissions
     #
     # @!attribute [rw] get_object
     #   Specifies the anonymous access to all objects in a bucket.
@@ -224,7 +224,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-block-public-access-for-buckets
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-block-public-access-for-buckets
     #
     # @!attribute [rw] status
     #   The status of the account-level BPA synchronization.
@@ -290,11 +290,11 @@ module Aws::Lightsail
     #     *Amazon Lightsail Developer Guide*.
     #
     #   * `Unknown` - The reason that synchronization failed is unknown.
-    #     Contact Amazon Web Services Support for more information.
+    #     Contact Amazon Web ServicesSupport for more information.
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-using-service-linked-roles
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-using-service-linked-roles
     #   @return [String]
     #
     # @!attribute [rw] bpa_impacts_lightsail
@@ -440,7 +440,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-alarms
     #
     # @!attribute [rw] name
     #   The name of the alarm.
@@ -1192,7 +1192,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-bucket-access-logs
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-bucket-access-logs
     #
     # @!attribute [rw] enabled
     #   A Boolean value that indicates whether bucket access logging is
@@ -1761,7 +1761,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] support_code
@@ -1824,7 +1824,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/CertificateSummary AWS API Documentation
@@ -1961,7 +1961,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-notifications
     #
     # @!attribute [rw] contact_endpoint
     #   The destination of the contact method, such as an email address or a
@@ -2131,7 +2131,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] power
@@ -2260,7 +2260,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-service-ecr-private-repo-access
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-service-ecr-private-repo-access
     #   @return [Types::PrivateRegistryAccess]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/ContainerService AWS API Documentation
@@ -2383,7 +2383,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-service-ecr-private-repo-access
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-service-ecr-private-repo-access
     #
     # @!attribute [rw] is_active
     #   A Boolean value that indicates whether the role is activated.
@@ -2418,7 +2418,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-service-ecr-private-repo-access
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-service-ecr-private-repo-access
     #
     # @!attribute [rw] is_active
     #   A Boolean value that indicates whether to activate the role.
@@ -2735,7 +2735,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-keeping-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-keeping-automatic-snapshots
     #   @return [String]
     #
     # @!attribute [rw] restore_date
@@ -2758,7 +2758,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-keeping-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-keeping-automatic-snapshots
     #   @return [String]
     #
     # @!attribute [rw] use_latest_restorable_auto_snapshot
@@ -2777,7 +2777,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-keeping-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-keeping-automatic-snapshots
     #   @return [Boolean]
     #
     # @!attribute [rw] target_snapshot_name
@@ -2877,7 +2877,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/bucket-naming-rules-in-amazon-lightsail
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/bucket-naming-rules-in-amazon-lightsail
     #   @return [String]
     #
     # @!attribute [rw] bundle_id
@@ -2920,7 +2920,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-managing-bucket-object-versioning
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-managing-bucket-object-versioning
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/CreateBucketRequest AWS API Documentation
@@ -3068,7 +3068,7 @@ module Aws::Lightsail
     #
     #
     #   [1]: https://docs.aws.amazon.com/sns/latest/dg/sns-supported-regions-countries.html
-    #   [2]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications
+    #   [2]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-notifications
     #   @return [String]
     #
     # @!attribute [rw] contact_endpoint
@@ -3229,7 +3229,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] public_domain_names
@@ -3275,7 +3275,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-service-ecr-private-repo-access
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-service-ecr-private-repo-access
     #   @return [Types::PrivateRegistryAccessRequest]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/CreateContainerServiceRequest AWS API Documentation
@@ -3362,7 +3362,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #   @return [String]
     #
     # @!attribute [rw] restore_date
@@ -3385,7 +3385,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #   @return [String]
     #
     # @!attribute [rw] use_latest_restorable_auto_snapshot
@@ -3404,7 +3404,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/CreateDiskFromSnapshotRequest AWS API Documentation
@@ -3752,7 +3752,7 @@ module Aws::Lightsail
     #   @return [String]
     #
     # @!attribute [rw] sessions
-    #   Returns information about the specified NICE DCV GUI session.
+    #   Returns information about the specified Amazon DCV GUI session.
     #   @return [Array<Types::Session>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/CreateGUISessionAccessDetailsResult AWS API Documentation
@@ -3858,7 +3858,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/compare-options-choose-lightsail-instance-image
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/compare-options-choose-lightsail-instance-image
     #   @return [String]
     #
     # @!attribute [rw] key_pair_name
@@ -3902,7 +3902,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #   @return [String]
     #
     # @!attribute [rw] restore_date
@@ -3925,7 +3925,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #   @return [String]
     #
     # @!attribute [rw] use_latest_restorable_auto_snapshot
@@ -3944,7 +3944,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/CreateInstancesFromSnapshotRequest AWS API Documentation
@@ -4041,7 +4041,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/compare-options-choose-lightsail-instance-image
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/compare-options-choose-lightsail-instance-image
     #   @return [String]
     #
     # @!attribute [rw] key_pair_name
@@ -4218,7 +4218,7 @@ module Aws::Lightsail
     #
     #
     #   [1]: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetLoadBalancerTlsPolicies.html
-    #   [2]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configure-load-balancer-tls-security-policy
+    #   [2]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configure-load-balancer-tls-security-policy
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/CreateLoadBalancerRequest AWS API Documentation
@@ -5598,7 +5598,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] add_ons
@@ -5773,7 +5773,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] size_in_gb
@@ -5901,7 +5901,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/verify-tls-ssl-certificate-using-dns-cname-https
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/verify-tls-ssl-certificate-using-dns-cname-https
     #
     # @!attribute [rw] code
     #   The status code for the automated DNS record creation.
@@ -5968,7 +5968,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] domain_entries
@@ -6786,7 +6786,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-block-public-access-for-buckets
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-block-public-access-for-buckets
     #   @return [Types::AccountLevelBpaSync]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/GetBucketsResult AWS API Documentation
@@ -8050,7 +8050,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-viewing-instance-burst-capacity
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-viewing-instance-burst-capacity
     #   @return [String]
     #
     # @!attribute [rw] period
@@ -9872,7 +9872,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] blueprint_id
@@ -10286,7 +10286,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-viewing-instance-health-metrics
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-viewing-instance-health-metrics
     #   @return [String]
     #
     # @!attribute [rw] http_endpoint
@@ -10711,7 +10711,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] state
@@ -10919,7 +10919,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] fingerprint
@@ -11053,7 +11053,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] viewer_minimum_tls_protocol_version
@@ -11127,7 +11127,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] dns_name
@@ -11284,7 +11284,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] load_balancer_name
@@ -11652,7 +11652,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configure-load-balancer-tls-security-policy
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configure-load-balancer-tls-security-policy
     #
     # @!attribute [rw] name
     #   The name of the TLS security policy.
@@ -11759,7 +11759,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-alarms
     #
     # @!attribute [rw] arn
     #   The Amazon Resource Name (ARN) of the resource being monitored.
@@ -11809,7 +11809,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/understanding-dns-in-amazon-lightsail
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/understanding-dns-in-amazon-lightsail
     #
     # @!attribute [rw] code
     #   The status code for the name servers update.
@@ -12309,7 +12309,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-service-ecr-private-repo-access
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-service-ecr-private-repo-access
     #
     # @!attribute [rw] ecr_image_puller_role
     #   An object that describes the activation status of the role that you
@@ -12336,7 +12336,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-service-ecr-private-repo-access
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-service-ecr-private-repo-access
     #
     # @!attribute [rw] ecr_image_puller_role
     #   An object to describe a request to activate or deactivate the role
@@ -12385,7 +12385,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-resource-health-metrics#available-metrics
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-resource-health-metrics#available-metrics
     #   @return [String]
     #
     # @!attribute [rw] monitored_resource_name
@@ -12821,7 +12821,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/lightsail-how-to-create-dns-entry
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/lightsail-how-to-create-dns-entry
     #
     # @!attribute [rw] name_servers_update_state
     #   An object that describes the state of the name server records that
@@ -12880,7 +12880,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] relational_database_blueprint_id
@@ -13267,7 +13267,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] engine
@@ -13600,9 +13600,9 @@ module Aws::Lightsail
       include Aws::Structure
     end
 
-    # Describes a web-based, remote graphical user interface (GUI), NICE DCV
-    # session. The session is used to access a virtual computer’s operating
-    # system or application.
+    # Describes a web-based, remote graphical user interface (GUI), Amazon
+    # DCV session. The session is used to access a virtual computer’s
+    # operating system or application.
     #
     # @!attribute [rw] name
     #   The session name.
@@ -14176,7 +14176,7 @@ module Aws::Lightsail
     #
     #
     #
-    # [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags
+    # [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags
     #
     # @!attribute [rw] key
     #   The key of the tag.
@@ -14560,7 +14560,7 @@ module Aws::Lightsail
     #
     #
     #
-    #   [1]: https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-service-ecr-private-repo-access
+    #   [1]: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-service-ecr-private-repo-access
     #   @return [Types::PrivateRegistryAccessRequest]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/UpdateContainerServiceRequest AWS API Documentation

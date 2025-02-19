@@ -7868,10 +7868,10 @@ module Aws::ECS
     #
     #    </note>
     #
-    #   If you're using the EC2 launch type, this field is optional.
-    #   Supported values are between `128` CPU units (`0.125` vCPUs) and
-    #   `10240` CPU units (`10` vCPUs). If you do not specify a value, the
-    #   parameter is ignored.
+    #   If you're using the EC2 launch type or external launch type, this
+    #   field is optional. Supported values are between `128` CPU units
+    #   (`0.125` vCPUs) and `196608` CPU units (`192` vCPUs). If you do not
+    #   specify a value, the parameter is ignored.
     #
     #   If you're using the Fargate launch type, this field is required and
     #   you must use one of the following values, which determines your range
@@ -12448,7 +12448,7 @@ module Aws::ECS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ecs'
-      context[:gem_version] = '1.179.0'
+      context[:gem_version] = '1.180.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

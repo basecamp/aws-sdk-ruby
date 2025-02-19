@@ -133,6 +133,10 @@ module Aws::CodePipeline
     EncryptionKey = Shapes::StructureShape.new(name: 'EncryptionKey')
     EncryptionKeyId = Shapes::StringShape.new(name: 'EncryptionKeyId')
     EncryptionKeyType = Shapes::StringShape.new(name: 'EncryptionKeyType')
+    EnvironmentVariable = Shapes::StructureShape.new(name: 'EnvironmentVariable')
+    EnvironmentVariableList = Shapes::ListShape.new(name: 'EnvironmentVariableList')
+    EnvironmentVariableName = Shapes::StringShape.new(name: 'EnvironmentVariableName')
+    EnvironmentVariableValue = Shapes::StringShape.new(name: 'EnvironmentVariableValue')
     ErrorDetails = Shapes::StructureShape.new(name: 'ErrorDetails')
     ExecutionDetails = Shapes::StructureShape.new(name: 'ExecutionDetails')
     ExecutionId = Shapes::StringShape.new(name: 'ExecutionId')
@@ -492,6 +496,7 @@ module Aws::CodePipeline
     ActionDeclaration.add_member(:region, Shapes::ShapeRef.new(shape: AWSRegionName, location_name: "region"))
     ActionDeclaration.add_member(:namespace, Shapes::ShapeRef.new(shape: ActionNamespace, location_name: "namespace"))
     ActionDeclaration.add_member(:timeout_in_minutes, Shapes::ShapeRef.new(shape: ActionTimeout, location_name: "timeoutInMinutes"))
+    ActionDeclaration.add_member(:environment_variables, Shapes::ShapeRef.new(shape: EnvironmentVariableList, location_name: "environmentVariables"))
     ActionDeclaration.struct_class = Types::ActionDeclaration
 
     ActionExecution.add_member(:action_execution_id, Shapes::ShapeRef.new(shape: ActionExecutionId, location_name: "actionExecutionId"))
@@ -781,6 +786,12 @@ module Aws::CodePipeline
     EncryptionKey.add_member(:id, Shapes::ShapeRef.new(shape: EncryptionKeyId, required: true, location_name: "id"))
     EncryptionKey.add_member(:type, Shapes::ShapeRef.new(shape: EncryptionKeyType, required: true, location_name: "type"))
     EncryptionKey.struct_class = Types::EncryptionKey
+
+    EnvironmentVariable.add_member(:name, Shapes::ShapeRef.new(shape: EnvironmentVariableName, required: true, location_name: "name"))
+    EnvironmentVariable.add_member(:value, Shapes::ShapeRef.new(shape: EnvironmentVariableValue, required: true, location_name: "value"))
+    EnvironmentVariable.struct_class = Types::EnvironmentVariable
+
+    EnvironmentVariableList.member = Shapes::ShapeRef.new(shape: EnvironmentVariable)
 
     ErrorDetails.add_member(:code, Shapes::ShapeRef.new(shape: Code, location_name: "code"))
     ErrorDetails.add_member(:message, Shapes::ShapeRef.new(shape: Message, location_name: "message"))

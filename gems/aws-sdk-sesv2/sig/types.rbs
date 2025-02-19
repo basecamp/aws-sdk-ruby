@@ -24,6 +24,11 @@ module Aws::SESV2
     class AlreadyExistsException < Aws::EmptyStructure
     end
 
+    class ArchivingOptions
+      attr_accessor archive_arn: ::String
+      SENSITIVE: []
+    end
+
     class BadRequestException < Aws::EmptyStructure
     end
 
@@ -166,6 +171,7 @@ module Aws::SESV2
       attr_accessor tags: ::Array[Types::Tag]
       attr_accessor suppression_options: Types::SuppressionOptions
       attr_accessor vdm_options: Types::VdmOptions
+      attr_accessor archiving_options: Types::ArchivingOptions
       SENSITIVE: []
     end
 
@@ -665,6 +671,7 @@ module Aws::SESV2
       attr_accessor tags: ::Array[Types::Tag]
       attr_accessor suppression_options: Types::SuppressionOptions
       attr_accessor vdm_options: Types::VdmOptions
+      attr_accessor archiving_options: Types::ArchivingOptions
       SENSITIVE: []
     end
 
@@ -1340,6 +1347,15 @@ module Aws::SESV2
     end
 
     class PutAccountVdmAttributesResponse < Aws::EmptyStructure
+    end
+
+    class PutConfigurationSetArchivingOptionsRequest
+      attr_accessor configuration_set_name: ::String
+      attr_accessor archive_arn: ::String
+      SENSITIVE: []
+    end
+
+    class PutConfigurationSetArchivingOptionsResponse < Aws::EmptyStructure
     end
 
     class PutConfigurationSetDeliveryOptionsRequest

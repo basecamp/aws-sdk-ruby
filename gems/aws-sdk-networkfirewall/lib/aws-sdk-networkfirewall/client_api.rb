@@ -19,8 +19,14 @@ module Aws::NetworkFirewall
     Address = Shapes::StructureShape.new(name: 'Address')
     AddressDefinition = Shapes::StringShape.new(name: 'AddressDefinition')
     Addresses = Shapes::ListShape.new(name: 'Addresses')
+    AnalysisReport = Shapes::StructureShape.new(name: 'AnalysisReport')
+    AnalysisReportId = Shapes::StringShape.new(name: 'AnalysisReportId')
+    AnalysisReportNextToken = Shapes::StringShape.new(name: 'AnalysisReportNextToken')
+    AnalysisReportResults = Shapes::ListShape.new(name: 'AnalysisReportResults')
+    AnalysisReports = Shapes::ListShape.new(name: 'AnalysisReports')
     AnalysisResult = Shapes::StructureShape.new(name: 'AnalysisResult')
     AnalysisResultList = Shapes::ListShape.new(name: 'AnalysisResultList')
+    AnalysisTypeReportResult = Shapes::StructureShape.new(name: 'AnalysisTypeReportResult')
     AssociateFirewallPolicyRequest = Shapes::StructureShape.new(name: 'AssociateFirewallPolicyRequest')
     AssociateFirewallPolicyResponse = Shapes::StructureShape.new(name: 'AssociateFirewallPolicyResponse')
     AssociateSubnetsRequest = Shapes::StructureShape.new(name: 'AssociateSubnetsRequest')
@@ -38,6 +44,7 @@ module Aws::NetworkFirewall
     CheckCertificateRevocationStatusActions = Shapes::StructureShape.new(name: 'CheckCertificateRevocationStatusActions')
     CollectionMember_String = Shapes::StringShape.new(name: 'CollectionMember_String')
     ConfigurationSyncState = Shapes::StringShape.new(name: 'ConfigurationSyncState')
+    Count = Shapes::IntegerShape.new(name: 'Count')
     CreateFirewallPolicyRequest = Shapes::StructureShape.new(name: 'CreateFirewallPolicyRequest')
     CreateFirewallPolicyResponse = Shapes::StructureShape.new(name: 'CreateFirewallPolicyResponse')
     CreateFirewallRequest = Shapes::StructureShape.new(name: 'CreateFirewallRequest')
@@ -79,8 +86,12 @@ module Aws::NetworkFirewall
     Dimensions = Shapes::ListShape.new(name: 'Dimensions')
     DisassociateSubnetsRequest = Shapes::StructureShape.new(name: 'DisassociateSubnetsRequest')
     DisassociateSubnetsResponse = Shapes::StructureShape.new(name: 'DisassociateSubnetsResponse')
+    Domain = Shapes::StringShape.new(name: 'Domain')
+    EnabledAnalysisType = Shapes::StringShape.new(name: 'EnabledAnalysisType')
+    EnabledAnalysisTypes = Shapes::ListShape.new(name: 'EnabledAnalysisTypes')
     EncryptionConfiguration = Shapes::StructureShape.new(name: 'EncryptionConfiguration')
     EncryptionType = Shapes::StringShape.new(name: 'EncryptionType')
+    EndTime = Shapes::TimestampShape.new(name: 'EndTime')
     EndpointId = Shapes::StringShape.new(name: 'EndpointId')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
     Firewall = Shapes::StructureShape.new(name: 'Firewall')
@@ -92,12 +103,16 @@ module Aws::NetworkFirewall
     FirewallStatus = Shapes::StructureShape.new(name: 'FirewallStatus')
     FirewallStatusValue = Shapes::StringShape.new(name: 'FirewallStatusValue')
     Firewalls = Shapes::ListShape.new(name: 'Firewalls')
+    FirstAccessed = Shapes::TimestampShape.new(name: 'FirstAccessed')
     Flags = Shapes::ListShape.new(name: 'Flags')
     FlowTimeouts = Shapes::StructureShape.new(name: 'FlowTimeouts')
     GeneratedRulesType = Shapes::StringShape.new(name: 'GeneratedRulesType')
+    GetAnalysisReportResultsRequest = Shapes::StructureShape.new(name: 'GetAnalysisReportResultsRequest')
+    GetAnalysisReportResultsResponse = Shapes::StructureShape.new(name: 'GetAnalysisReportResultsResponse')
     HashMapKey = Shapes::StringShape.new(name: 'HashMapKey')
     HashMapValue = Shapes::StringShape.new(name: 'HashMapValue')
     Header = Shapes::StructureShape.new(name: 'Header')
+    Hits = Shapes::StructureShape.new(name: 'Hits')
     IPAddressType = Shapes::StringShape.new(name: 'IPAddressType')
     IPSet = Shapes::StructureShape.new(name: 'IPSet')
     IPSetArn = Shapes::StringShape.new(name: 'IPSetArn')
@@ -116,8 +131,11 @@ module Aws::NetworkFirewall
     InvalidTokenException = Shapes::StructureShape.new(name: 'InvalidTokenException')
     KeyId = Shapes::StringShape.new(name: 'KeyId')
     Keyword = Shapes::StringShape.new(name: 'Keyword')
+    LastAccessed = Shapes::TimestampShape.new(name: 'LastAccessed')
     LastUpdateTime = Shapes::TimestampShape.new(name: 'LastUpdateTime')
     LimitExceededException = Shapes::StructureShape.new(name: 'LimitExceededException')
+    ListAnalysisReportsRequest = Shapes::StructureShape.new(name: 'ListAnalysisReportsRequest')
+    ListAnalysisReportsResponse = Shapes::StructureShape.new(name: 'ListAnalysisReportsResponse')
     ListFirewallPoliciesRequest = Shapes::StructureShape.new(name: 'ListFirewallPoliciesRequest')
     ListFirewallPoliciesResponse = Shapes::StructureShape.new(name: 'ListFirewallPoliciesResponse')
     ListFirewallsRequest = Shapes::StructureShape.new(name: 'ListFirewallsRequest')
@@ -157,6 +175,7 @@ module Aws::NetworkFirewall
     PutResourcePolicyRequest = Shapes::StructureShape.new(name: 'PutResourcePolicyRequest')
     PutResourcePolicyResponse = Shapes::StructureShape.new(name: 'PutResourcePolicyResponse')
     ReferenceSets = Shapes::StructureShape.new(name: 'ReferenceSets')
+    ReportTime = Shapes::TimestampShape.new(name: 'ReportTime')
     ResourceArn = Shapes::StringShape.new(name: 'ResourceArn')
     ResourceId = Shapes::StringShape.new(name: 'ResourceId')
     ResourceManagedStatus = Shapes::StringShape.new(name: 'ResourceManagedStatus')
@@ -193,6 +212,9 @@ module Aws::NetworkFirewall
     Settings = Shapes::ListShape.new(name: 'Settings')
     Source = Shapes::StringShape.new(name: 'Source')
     SourceMetadata = Shapes::StructureShape.new(name: 'SourceMetadata')
+    StartAnalysisReportRequest = Shapes::StructureShape.new(name: 'StartAnalysisReportRequest')
+    StartAnalysisReportResponse = Shapes::StructureShape.new(name: 'StartAnalysisReportResponse')
+    StartTime = Shapes::TimestampShape.new(name: 'StartTime')
     StatefulAction = Shapes::StringShape.new(name: 'StatefulAction')
     StatefulActions = Shapes::ListShape.new(name: 'StatefulActions')
     StatefulEngineOptions = Shapes::StructureShape.new(name: 'StatefulEngineOptions')
@@ -210,6 +232,7 @@ module Aws::NetworkFirewall
     StatelessRuleGroupReferences = Shapes::ListShape.new(name: 'StatelessRuleGroupReferences')
     StatelessRules = Shapes::ListShape.new(name: 'StatelessRules')
     StatelessRulesAndCustomActions = Shapes::StructureShape.new(name: 'StatelessRulesAndCustomActions')
+    Status = Shapes::StringShape.new(name: 'Status')
     StatusMessage = Shapes::StringShape.new(name: 'StatusMessage')
     StatusReason = Shapes::StringShape.new(name: 'StatusReason')
     StreamExceptionPolicy = Shapes::StringShape.new(name: 'StreamExceptionPolicy')
@@ -238,9 +261,12 @@ module Aws::NetworkFirewall
     TcpIdleTimeoutRangeBound = Shapes::IntegerShape.new(name: 'TcpIdleTimeoutRangeBound')
     ThrottlingException = Shapes::StructureShape.new(name: 'ThrottlingException')
     TlsCertificateData = Shapes::StructureShape.new(name: 'TlsCertificateData')
+    UniqueSources = Shapes::StructureShape.new(name: 'UniqueSources')
     UnsupportedOperationException = Shapes::StructureShape.new(name: 'UnsupportedOperationException')
     UntagResourceRequest = Shapes::StructureShape.new(name: 'UntagResourceRequest')
     UntagResourceResponse = Shapes::StructureShape.new(name: 'UntagResourceResponse')
+    UpdateFirewallAnalysisSettingsRequest = Shapes::StructureShape.new(name: 'UpdateFirewallAnalysisSettingsRequest')
+    UpdateFirewallAnalysisSettingsResponse = Shapes::StructureShape.new(name: 'UpdateFirewallAnalysisSettingsResponse')
     UpdateFirewallDeleteProtectionRequest = Shapes::StructureShape.new(name: 'UpdateFirewallDeleteProtectionRequest')
     UpdateFirewallDeleteProtectionResponse = Shapes::StructureShape.new(name: 'UpdateFirewallDeleteProtectionResponse')
     UpdateFirewallDescriptionRequest = Shapes::StructureShape.new(name: 'UpdateFirewallDescriptionRequest')
@@ -273,12 +299,30 @@ module Aws::NetworkFirewall
 
     Addresses.member = Shapes::ShapeRef.new(shape: Address)
 
+    AnalysisReport.add_member(:analysis_report_id, Shapes::ShapeRef.new(shape: AnalysisReportId, location_name: "AnalysisReportId"))
+    AnalysisReport.add_member(:analysis_type, Shapes::ShapeRef.new(shape: EnabledAnalysisType, location_name: "AnalysisType"))
+    AnalysisReport.add_member(:report_time, Shapes::ShapeRef.new(shape: ReportTime, location_name: "ReportTime"))
+    AnalysisReport.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "Status"))
+    AnalysisReport.struct_class = Types::AnalysisReport
+
+    AnalysisReportResults.member = Shapes::ShapeRef.new(shape: AnalysisTypeReportResult)
+
+    AnalysisReports.member = Shapes::ShapeRef.new(shape: AnalysisReport)
+
     AnalysisResult.add_member(:identified_rule_ids, Shapes::ShapeRef.new(shape: RuleIdList, location_name: "IdentifiedRuleIds"))
     AnalysisResult.add_member(:identified_type, Shapes::ShapeRef.new(shape: IdentifiedType, location_name: "IdentifiedType"))
     AnalysisResult.add_member(:analysis_detail, Shapes::ShapeRef.new(shape: CollectionMember_String, location_name: "AnalysisDetail"))
     AnalysisResult.struct_class = Types::AnalysisResult
 
     AnalysisResultList.member = Shapes::ShapeRef.new(shape: AnalysisResult)
+
+    AnalysisTypeReportResult.add_member(:protocol, Shapes::ShapeRef.new(shape: CollectionMember_String, location_name: "Protocol"))
+    AnalysisTypeReportResult.add_member(:first_accessed, Shapes::ShapeRef.new(shape: FirstAccessed, location_name: "FirstAccessed"))
+    AnalysisTypeReportResult.add_member(:last_accessed, Shapes::ShapeRef.new(shape: LastAccessed, location_name: "LastAccessed"))
+    AnalysisTypeReportResult.add_member(:domain, Shapes::ShapeRef.new(shape: Domain, location_name: "Domain"))
+    AnalysisTypeReportResult.add_member(:hits, Shapes::ShapeRef.new(shape: Hits, location_name: "Hits"))
+    AnalysisTypeReportResult.add_member(:unique_sources, Shapes::ShapeRef.new(shape: UniqueSources, location_name: "UniqueSources"))
+    AnalysisTypeReportResult.struct_class = Types::AnalysisTypeReportResult
 
     AssociateFirewallPolicyRequest.add_member(:update_token, Shapes::ShapeRef.new(shape: UpdateToken, location_name: "UpdateToken"))
     AssociateFirewallPolicyRequest.add_member(:firewall_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "FirewallArn"))
@@ -340,14 +384,15 @@ module Aws::NetworkFirewall
 
     CreateFirewallRequest.add_member(:firewall_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location_name: "FirewallName"))
     CreateFirewallRequest.add_member(:firewall_policy_arn, Shapes::ShapeRef.new(shape: ResourceArn, required: true, location_name: "FirewallPolicyArn"))
-    CreateFirewallRequest.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, required: true, location_name: "VpcId"))
-    CreateFirewallRequest.add_member(:subnet_mappings, Shapes::ShapeRef.new(shape: SubnetMappings, required: true, location_name: "SubnetMappings"))
+    CreateFirewallRequest.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, location_name: "VpcId"))
+    CreateFirewallRequest.add_member(:subnet_mappings, Shapes::ShapeRef.new(shape: SubnetMappings, location_name: "SubnetMappings"))
     CreateFirewallRequest.add_member(:delete_protection, Shapes::ShapeRef.new(shape: Boolean, location_name: "DeleteProtection"))
     CreateFirewallRequest.add_member(:subnet_change_protection, Shapes::ShapeRef.new(shape: Boolean, location_name: "SubnetChangeProtection"))
     CreateFirewallRequest.add_member(:firewall_policy_change_protection, Shapes::ShapeRef.new(shape: Boolean, location_name: "FirewallPolicyChangeProtection"))
     CreateFirewallRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "Description"))
     CreateFirewallRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CreateFirewallRequest.add_member(:encryption_configuration, Shapes::ShapeRef.new(shape: EncryptionConfiguration, location_name: "EncryptionConfiguration"))
+    CreateFirewallRequest.add_member(:enabled_analysis_types, Shapes::ShapeRef.new(shape: EnabledAnalysisTypes, location_name: "EnabledAnalysisTypes"))
     CreateFirewallRequest.struct_class = Types::CreateFirewallRequest
 
     CreateFirewallResponse.add_member(:firewall, Shapes::ShapeRef.new(shape: Firewall, location_name: "Firewall"))
@@ -506,6 +551,8 @@ module Aws::NetworkFirewall
     DisassociateSubnetsResponse.add_member(:update_token, Shapes::ShapeRef.new(shape: UpdateToken, location_name: "UpdateToken"))
     DisassociateSubnetsResponse.struct_class = Types::DisassociateSubnetsResponse
 
+    EnabledAnalysisTypes.member = Shapes::ShapeRef.new(shape: EnabledAnalysisType)
+
     EncryptionConfiguration.add_member(:key_id, Shapes::ShapeRef.new(shape: KeyId, location_name: "KeyId"))
     EncryptionConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: EncryptionType, required: true, location_name: "Type"))
     EncryptionConfiguration.struct_class = Types::EncryptionConfiguration
@@ -522,6 +569,7 @@ module Aws::NetworkFirewall
     Firewall.add_member(:firewall_id, Shapes::ShapeRef.new(shape: ResourceId, required: true, location_name: "FirewallId"))
     Firewall.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     Firewall.add_member(:encryption_configuration, Shapes::ShapeRef.new(shape: EncryptionConfiguration, location_name: "EncryptionConfiguration"))
+    Firewall.add_member(:enabled_analysis_types, Shapes::ShapeRef.new(shape: EnabledAnalysisTypes, location_name: "EnabledAnalysisTypes"))
     Firewall.struct_class = Types::Firewall
 
     FirewallMetadata.add_member(:firewall_name, Shapes::ShapeRef.new(shape: ResourceName, location_name: "FirewallName"))
@@ -571,6 +619,22 @@ module Aws::NetworkFirewall
     FlowTimeouts.add_member(:tcp_idle_timeout_seconds, Shapes::ShapeRef.new(shape: TcpIdleTimeoutRangeBound, location_name: "TcpIdleTimeoutSeconds"))
     FlowTimeouts.struct_class = Types::FlowTimeouts
 
+    GetAnalysisReportResultsRequest.add_member(:firewall_name, Shapes::ShapeRef.new(shape: ResourceName, location_name: "FirewallName"))
+    GetAnalysisReportResultsRequest.add_member(:analysis_report_id, Shapes::ShapeRef.new(shape: AnalysisReportId, required: true, location_name: "AnalysisReportId"))
+    GetAnalysisReportResultsRequest.add_member(:firewall_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "FirewallArn"))
+    GetAnalysisReportResultsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: AnalysisReportNextToken, location_name: "NextToken"))
+    GetAnalysisReportResultsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: PaginationMaxResults, location_name: "MaxResults"))
+    GetAnalysisReportResultsRequest.struct_class = Types::GetAnalysisReportResultsRequest
+
+    GetAnalysisReportResultsResponse.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "Status"))
+    GetAnalysisReportResultsResponse.add_member(:start_time, Shapes::ShapeRef.new(shape: StartTime, location_name: "StartTime"))
+    GetAnalysisReportResultsResponse.add_member(:end_time, Shapes::ShapeRef.new(shape: EndTime, location_name: "EndTime"))
+    GetAnalysisReportResultsResponse.add_member(:report_time, Shapes::ShapeRef.new(shape: ReportTime, location_name: "ReportTime"))
+    GetAnalysisReportResultsResponse.add_member(:analysis_type, Shapes::ShapeRef.new(shape: EnabledAnalysisType, location_name: "AnalysisType"))
+    GetAnalysisReportResultsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: AnalysisReportNextToken, location_name: "NextToken"))
+    GetAnalysisReportResultsResponse.add_member(:analysis_report_results, Shapes::ShapeRef.new(shape: AnalysisReportResults, location_name: "AnalysisReportResults"))
+    GetAnalysisReportResultsResponse.struct_class = Types::GetAnalysisReportResultsResponse
+
     Header.add_member(:protocol, Shapes::ShapeRef.new(shape: StatefulRuleProtocol, required: true, location_name: "Protocol"))
     Header.add_member(:source, Shapes::ShapeRef.new(shape: Source, required: true, location_name: "Source"))
     Header.add_member(:source_port, Shapes::ShapeRef.new(shape: Port, required: true, location_name: "SourcePort"))
@@ -578,6 +642,9 @@ module Aws::NetworkFirewall
     Header.add_member(:destination, Shapes::ShapeRef.new(shape: Destination, required: true, location_name: "Destination"))
     Header.add_member(:destination_port, Shapes::ShapeRef.new(shape: Port, required: true, location_name: "DestinationPort"))
     Header.struct_class = Types::Header
+
+    Hits.add_member(:count, Shapes::ShapeRef.new(shape: Count, location_name: "Count"))
+    Hits.struct_class = Types::Hits
 
     IPSet.add_member(:definition, Shapes::ShapeRef.new(shape: VariableDefinitionList, required: true, location_name: "Definition"))
     IPSet.struct_class = Types::IPSet
@@ -617,6 +684,16 @@ module Aws::NetworkFirewall
 
     LimitExceededException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     LimitExceededException.struct_class = Types::LimitExceededException
+
+    ListAnalysisReportsRequest.add_member(:firewall_name, Shapes::ShapeRef.new(shape: ResourceName, location_name: "FirewallName"))
+    ListAnalysisReportsRequest.add_member(:firewall_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "FirewallArn"))
+    ListAnalysisReportsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "NextToken"))
+    ListAnalysisReportsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: PaginationMaxResults, location_name: "MaxResults"))
+    ListAnalysisReportsRequest.struct_class = Types::ListAnalysisReportsRequest
+
+    ListAnalysisReportsResponse.add_member(:analysis_reports, Shapes::ShapeRef.new(shape: AnalysisReports, location_name: "AnalysisReports"))
+    ListAnalysisReportsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "NextToken"))
+    ListAnalysisReportsResponse.struct_class = Types::ListAnalysisReportsResponse
 
     ListFirewallPoliciesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "NextToken"))
     ListFirewallPoliciesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: PaginationMaxResults, location_name: "MaxResults"))
@@ -812,6 +889,14 @@ module Aws::NetworkFirewall
     SourceMetadata.add_member(:source_update_token, Shapes::ShapeRef.new(shape: UpdateToken, location_name: "SourceUpdateToken"))
     SourceMetadata.struct_class = Types::SourceMetadata
 
+    StartAnalysisReportRequest.add_member(:firewall_name, Shapes::ShapeRef.new(shape: ResourceName, location_name: "FirewallName"))
+    StartAnalysisReportRequest.add_member(:firewall_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "FirewallArn"))
+    StartAnalysisReportRequest.add_member(:analysis_type, Shapes::ShapeRef.new(shape: EnabledAnalysisType, required: true, location_name: "AnalysisType"))
+    StartAnalysisReportRequest.struct_class = Types::StartAnalysisReportRequest
+
+    StartAnalysisReportResponse.add_member(:analysis_report_id, Shapes::ShapeRef.new(shape: AnalysisReportId, required: true, location_name: "AnalysisReportId"))
+    StartAnalysisReportResponse.struct_class = Types::StartAnalysisReportResponse
+
     StatefulActions.member = Shapes::ShapeRef.new(shape: CollectionMember_String)
 
     StatefulEngineOptions.add_member(:rule_order, Shapes::ShapeRef.new(shape: RuleOrder, location_name: "RuleOrder"))
@@ -926,6 +1011,9 @@ module Aws::NetworkFirewall
     TlsCertificateData.add_member(:status_message, Shapes::ShapeRef.new(shape: StatusReason, location_name: "StatusMessage"))
     TlsCertificateData.struct_class = Types::TlsCertificateData
 
+    UniqueSources.add_member(:count, Shapes::ShapeRef.new(shape: Count, location_name: "Count"))
+    UniqueSources.struct_class = Types::UniqueSources
+
     UnsupportedOperationException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     UnsupportedOperationException.struct_class = Types::UnsupportedOperationException
 
@@ -934,6 +1022,18 @@ module Aws::NetworkFirewall
     UntagResourceRequest.struct_class = Types::UntagResourceRequest
 
     UntagResourceResponse.struct_class = Types::UntagResourceResponse
+
+    UpdateFirewallAnalysisSettingsRequest.add_member(:enabled_analysis_types, Shapes::ShapeRef.new(shape: EnabledAnalysisTypes, location_name: "EnabledAnalysisTypes"))
+    UpdateFirewallAnalysisSettingsRequest.add_member(:firewall_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "FirewallArn"))
+    UpdateFirewallAnalysisSettingsRequest.add_member(:firewall_name, Shapes::ShapeRef.new(shape: ResourceName, location_name: "FirewallName"))
+    UpdateFirewallAnalysisSettingsRequest.add_member(:update_token, Shapes::ShapeRef.new(shape: UpdateToken, location_name: "UpdateToken"))
+    UpdateFirewallAnalysisSettingsRequest.struct_class = Types::UpdateFirewallAnalysisSettingsRequest
+
+    UpdateFirewallAnalysisSettingsResponse.add_member(:enabled_analysis_types, Shapes::ShapeRef.new(shape: EnabledAnalysisTypes, location_name: "EnabledAnalysisTypes"))
+    UpdateFirewallAnalysisSettingsResponse.add_member(:firewall_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "FirewallArn"))
+    UpdateFirewallAnalysisSettingsResponse.add_member(:firewall_name, Shapes::ShapeRef.new(shape: ResourceName, location_name: "FirewallName"))
+    UpdateFirewallAnalysisSettingsResponse.add_member(:update_token, Shapes::ShapeRef.new(shape: UpdateToken, location_name: "UpdateToken"))
+    UpdateFirewallAnalysisSettingsResponse.struct_class = Types::UpdateFirewallAnalysisSettingsResponse
 
     UpdateFirewallDeleteProtectionRequest.add_member(:update_token, Shapes::ShapeRef.new(shape: UpdateToken, location_name: "UpdateToken"))
     UpdateFirewallDeleteProtectionRequest.add_member(:firewall_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "FirewallArn"))
@@ -1321,6 +1421,42 @@ module Aws::NetworkFirewall
         o.errors << Shapes::ShapeRef.new(shape: InvalidOperationException)
       end)
 
+      api.add_operation(:get_analysis_report_results, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetAnalysisReportResults"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetAnalysisReportResultsRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetAnalysisReportResultsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_analysis_reports, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListAnalysisReports"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListAnalysisReportsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListAnalysisReportsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_firewall_policies, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListFirewallPolicies"
         o.http_method = "POST"
@@ -1420,6 +1556,18 @@ module Aws::NetworkFirewall
         o.errors << Shapes::ShapeRef.new(shape: InvalidResourcePolicyException)
       end)
 
+      api.add_operation(:start_analysis_report, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartAnalysisReport"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: StartAnalysisReportRequest)
+        o.output = Shapes::ShapeRef.new(shape: StartAnalysisReportResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
       api.add_operation(:tag_resource, Seahorse::Model::Operation.new.tap do |o|
         o.name = "TagResource"
         o.http_method = "POST"
@@ -1442,6 +1590,18 @@ module Aws::NetworkFirewall
         o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+      end)
+
+      api.add_operation(:update_firewall_analysis_settings, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateFirewallAnalysisSettings"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateFirewallAnalysisSettingsRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateFirewallAnalysisSettingsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
 
       api.add_operation(:update_firewall_delete_protection, Seahorse::Model::Operation.new.tap do |o|

@@ -124,8 +124,8 @@ module Aws
       def create_firewall: (
                              firewall_name: ::String,
                              firewall_policy_arn: ::String,
-                             vpc_id: ::String,
-                             subnet_mappings: Array[
+                             ?vpc_id: ::String,
+                             ?subnet_mappings: Array[
                                {
                                  subnet_id: ::String,
                                  ip_address_type: ("DUALSTACK" | "IPV4" | "IPV6")?
@@ -144,7 +144,8 @@ module Aws
                              ?encryption_configuration: {
                                key_id: ::String?,
                                type: ("CUSTOMER_KMS" | "AWS_OWNED_KMS_KEY")
-                             }
+                             },
+                             ?enabled_analysis_types: Array[("TLS_SNI" | "HTTP_HOST")]
                            ) -> _CreateFirewallResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateFirewallResponseSuccess
 
@@ -579,6 +580,40 @@ module Aws
                                 ) -> _DisassociateSubnetsResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DisassociateSubnetsResponseSuccess
 
+      interface _GetAnalysisReportResultsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetAnalysisReportResultsResponse]
+        def status: () -> ::String
+        def start_time: () -> ::Time
+        def end_time: () -> ::Time
+        def report_time: () -> ::Time
+        def analysis_type: () -> ("TLS_SNI" | "HTTP_HOST")
+        def next_token: () -> ::String
+        def analysis_report_results: () -> ::Array[Types::AnalysisTypeReportResult]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFirewall/Client.html#get_analysis_report_results-instance_method
+      def get_analysis_report_results: (
+                                         ?firewall_name: ::String,
+                                         analysis_report_id: ::String,
+                                         ?firewall_arn: ::String,
+                                         ?next_token: ::String,
+                                         ?max_results: ::Integer
+                                       ) -> _GetAnalysisReportResultsResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAnalysisReportResultsResponseSuccess
+
+      interface _ListAnalysisReportsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListAnalysisReportsResponse]
+        def analysis_reports: () -> ::Array[Types::AnalysisReport]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFirewall/Client.html#list_analysis_reports-instance_method
+      def list_analysis_reports: (
+                                   ?firewall_name: ::String,
+                                   ?firewall_arn: ::String,
+                                   ?next_token: ::String,
+                                   ?max_results: ::Integer
+                                 ) -> _ListAnalysisReportsResponseSuccess
+                               | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAnalysisReportsResponseSuccess
+
       interface _ListFirewallPoliciesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListFirewallPoliciesResponse]
         def next_token: () -> ::String
@@ -654,6 +689,18 @@ module Aws
                                ) -> _PutResourcePolicyResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutResourcePolicyResponseSuccess
 
+      interface _StartAnalysisReportResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartAnalysisReportResponse]
+        def analysis_report_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFirewall/Client.html#start_analysis_report-instance_method
+      def start_analysis_report: (
+                                   ?firewall_name: ::String,
+                                   ?firewall_arn: ::String,
+                                   analysis_type: ("TLS_SNI" | "HTTP_HOST")
+                                 ) -> _StartAnalysisReportResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartAnalysisReportResponseSuccess
+
       interface _TagResourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::TagResourceResponse]
       end
@@ -678,6 +725,22 @@ module Aws
                             tag_keys: Array[::String]
                           ) -> _UntagResourceResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UntagResourceResponseSuccess
+
+      interface _UpdateFirewallAnalysisSettingsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateFirewallAnalysisSettingsResponse]
+        def enabled_analysis_types: () -> ::Array[("TLS_SNI" | "HTTP_HOST")]
+        def firewall_arn: () -> ::String
+        def firewall_name: () -> ::String
+        def update_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFirewall/Client.html#update_firewall_analysis_settings-instance_method
+      def update_firewall_analysis_settings: (
+                                               ?enabled_analysis_types: Array[("TLS_SNI" | "HTTP_HOST")],
+                                               ?firewall_arn: ::String,
+                                               ?firewall_name: ::String,
+                                               ?update_token: ::String
+                                             ) -> _UpdateFirewallAnalysisSettingsResponseSuccess
+                                           | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateFirewallAnalysisSettingsResponseSuccess
 
       interface _UpdateFirewallDeleteProtectionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateFirewallDeleteProtectionResponse]

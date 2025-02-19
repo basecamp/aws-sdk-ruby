@@ -1655,10 +1655,15 @@ module Aws::MailManager
     #   resp.envelope.to #=> Array
     #   resp.envelope.to[0] #=> String
     #   resp.message_download_link #=> String
+    #   resp.metadata.configuration_set #=> String
     #   resp.metadata.ingress_point_id #=> String
     #   resp.metadata.rule_set_id #=> String
     #   resp.metadata.sender_hostname #=> String
     #   resp.metadata.sender_ip_address #=> String
+    #   resp.metadata.sending_method #=> String
+    #   resp.metadata.sending_pool #=> String
+    #   resp.metadata.source_arn #=> String
+    #   resp.metadata.source_identity #=> String
     #   resp.metadata.timestamp #=> Time
     #   resp.metadata.tls_cipher_suite #=> String
     #   resp.metadata.tls_protocol #=> String
@@ -1794,6 +1799,7 @@ module Aws::MailManager
     #   resp.rows[0].received_timestamp #=> Time
     #   resp.rows[0].sender_hostname #=> String
     #   resp.rows[0].sender_ip_address #=> String
+    #   resp.rows[0].source_arn #=> String
     #   resp.rows[0].subject #=> String
     #   resp.rows[0].to #=> String
     #   resp.rows[0].x_mailer #=> String
@@ -3441,7 +3447,7 @@ module Aws::MailManager
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mailmanager'
-      context[:gem_version] = '1.20.0'
+      context[:gem_version] = '1.21.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

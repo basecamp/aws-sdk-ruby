@@ -74,6 +74,45 @@ module Aws::NetworkFirewall
       include Aws::Structure
     end
 
+    # A report that captures key activity from the last 30 days of network
+    # traffic monitored by your firewall.
+    #
+    # You can generate up to one report per traffic type, per 30 day period.
+    # For example, when you successfully create an HTTP traffic report, you
+    # cannot create another HTTP traffic report until 30 days pass.
+    # Alternatively, if you generate a report that combines metrics on both
+    # HTTP and HTTPS traffic, you cannot create another report for either
+    # traffic type until 30 days pass.
+    #
+    # @!attribute [rw] analysis_report_id
+    #   The unique ID of the query that ran when you requested an analysis
+    #   report.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_type
+    #   The type of traffic that will be used to generate a report.
+    #   @return [String]
+    #
+    # @!attribute [rw] report_time
+    #   The date and time the analysis report was ran.
+    #   @return [Time]
+    #
+    # @!attribute [rw] status
+    #   The status of the analysis report you specify. Statuses include
+    #   `RUNNING`, `COMPLETED`, or `FAILED`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/AnalysisReport AWS API Documentation
+    #
+    class AnalysisReport < Struct.new(
+      :analysis_report_id,
+      :analysis_type,
+      :report_time,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The analysis result for Network Firewall's stateless rule group
     # analyzer. Every time you call CreateRuleGroup, UpdateRuleGroup, or
     # DescribeRuleGroup on a stateless rule group, Network Firewall analyzes
@@ -83,6 +122,10 @@ module Aws::NetworkFirewall
     # asymmetrically, which impacts the service's ability to properly
     # process traffic, the service includes the rule in a list of analysis
     # results.
+    #
+    # The `AnalysisResult` data type is not related to traffic analysis
+    # reports you generate using StartAnalysisReport. For information on
+    # traffic analysis report results, see AnalysisTypeReportResult.
     #
     # @!attribute [rw] identified_rule_ids
     #   The priority number of the stateless rules identified in the
@@ -134,6 +177,51 @@ module Aws::NetworkFirewall
       :identified_rule_ids,
       :identified_type,
       :analysis_detail)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The results of a `COMPLETED` analysis report generated with
+    # StartAnalysisReport.
+    #
+    # For an example of traffic analysis report results, see the response
+    # syntax of GetAnalysisReportResults.
+    #
+    # @!attribute [rw] protocol
+    #   The type of traffic captured by the analysis report.
+    #   @return [String]
+    #
+    # @!attribute [rw] first_accessed
+    #   The date and time any domain was first accessed (within the last 30
+    #   day period).
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_accessed
+    #   The date and time any domain was last accessed (within the last 30
+    #   day period).
+    #   @return [Time]
+    #
+    # @!attribute [rw] domain
+    #   The most frequently accessed domains.
+    #   @return [String]
+    #
+    # @!attribute [rw] hits
+    #   The number of attempts made to access a observed domain.
+    #   @return [Types::Hits]
+    #
+    # @!attribute [rw] unique_sources
+    #   The number of unique source IP addresses that connected to a domain.
+    #   @return [Types::UniqueSources]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/AnalysisTypeReportResult AWS API Documentation
+    #
+    class AnalysisTypeReportResult < Struct.new(
+      :protocol,
+      :first_accessed,
+      :last_accessed,
+      :domain,
+      :hits,
+      :unique_sources)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -608,6 +696,11 @@ module Aws::NetworkFirewall
     #   firewall resources.
     #   @return [Types::EncryptionConfiguration]
     #
+    # @!attribute [rw] enabled_analysis_types
+    #   An optional setting indicating the specific traffic analysis types
+    #   to enable on the firewall.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/CreateFirewallRequest AWS API Documentation
     #
     class CreateFirewallRequest < Struct.new(
@@ -620,7 +713,8 @@ module Aws::NetworkFirewall
       :firewall_policy_change_protection,
       :description,
       :tags,
-      :encryption_configuration)
+      :encryption_configuration,
+      :enabled_analysis_types)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1837,6 +1931,11 @@ module Aws::NetworkFirewall
     #   configuration settings for your firewall.
     #   @return [Types::EncryptionConfiguration]
     #
+    # @!attribute [rw] enabled_analysis_types
+    #   An optional setting indicating the specific traffic analysis types
+    #   to enable on the firewall.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/Firewall AWS API Documentation
     #
     class Firewall < Struct.new(
@@ -1851,7 +1950,8 @@ module Aws::NetworkFirewall
       :description,
       :firewall_id,
       :tags,
-      :encryption_configuration)
+      :encryption_configuration,
+      :enabled_analysis_types)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2178,6 +2278,102 @@ module Aws::NetworkFirewall
       include Aws::Structure
     end
 
+    # @!attribute [rw] firewall_name
+    #   The descriptive name of the firewall. You can't change the name of
+    #   a firewall after you create it.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_report_id
+    #   The unique ID of the query that ran when you requested an analysis
+    #   report.
+    #   @return [String]
+    #
+    # @!attribute [rw] firewall_arn
+    #   The Amazon Resource Name (ARN) of the firewall.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   When you request a list of objects with a `MaxResults` setting, if
+    #   the number of objects that are still available for retrieval exceeds
+    #   the maximum you requested, Network Firewall returns a `NextToken`
+    #   value in the response. To retrieve the next batch of objects, use
+    #   the token returned from the prior request in your next request.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of objects that you want Network Firewall to
+    #   return for this request. If more objects are available, in the
+    #   response, Network Firewall provides a `NextToken` value that you can
+    #   use in a subsequent call to get the next batch of objects.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/GetAnalysisReportResultsRequest AWS API Documentation
+    #
+    class GetAnalysisReportResultsRequest < Struct.new(
+      :firewall_name,
+      :analysis_report_id,
+      :firewall_arn,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] status
+    #   The status of the analysis report you specify. Statuses include
+    #   `RUNNING`, `COMPLETED`, or `FAILED`.
+    #   @return [String]
+    #
+    # @!attribute [rw] start_time
+    #   The date and time within the last 30 days from which to start
+    #   retrieving analysis data, in UTC format (for example,
+    #   `YYYY-MM-DDTHH:MM:SSZ`.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The date and time, up to the current date, from which to stop
+    #   retrieving analysis data, in UTC format (for example,
+    #   `YYYY-MM-DDTHH:MM:SSZ`).
+    #   @return [Time]
+    #
+    # @!attribute [rw] report_time
+    #   The date and time the analysis report was ran.
+    #   @return [Time]
+    #
+    # @!attribute [rw] analysis_type
+    #   The type of traffic that will be used to generate a report.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   When you request a list of objects with a `MaxResults` setting, if
+    #   the number of objects that are still available for retrieval exceeds
+    #   the maximum you requested, Network Firewall returns a `NextToken`
+    #   value in the response. To retrieve the next batch of objects, use
+    #   the token returned from the prior request in your next request.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_report_results
+    #   Retrieves the results of a traffic analysis report.
+    #   @return [Array<Types::AnalysisTypeReportResult>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/GetAnalysisReportResultsResponse AWS API Documentation
+    #
+    class GetAnalysisReportResultsResponse < Struct.new(
+      :status,
+      :start_time,
+      :end_time,
+      :report_time,
+      :analysis_type,
+      :next_token,
+      :analysis_report_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The basic rule criteria for Network Firewall to use to inspect packet
     # headers in stateful traffic flow inspection. Traffic flows that match
     # the criteria are a match for the corresponding StatefulRule.
@@ -2283,6 +2479,20 @@ module Aws::NetworkFirewall
       :direction,
       :destination,
       :destination_port)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Attempts made to a access domain.
+    #
+    # @!attribute [rw] count
+    #   The number of attempts made to access a domain.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/Hits AWS API Documentation
+    #
+    class Hits < Struct.new(
+      :count)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2453,6 +2663,67 @@ module Aws::NetworkFirewall
     #
     class LimitExceededException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] firewall_name
+    #   The descriptive name of the firewall. You can't change the name of
+    #   a firewall after you create it.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #   @return [String]
+    #
+    # @!attribute [rw] firewall_arn
+    #   The Amazon Resource Name (ARN) of the firewall.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   When you request a list of objects with a `MaxResults` setting, if
+    #   the number of objects that are still available for retrieval exceeds
+    #   the maximum you requested, Network Firewall returns a `NextToken`
+    #   value in the response. To retrieve the next batch of objects, use
+    #   the token returned from the prior request in your next request.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of objects that you want Network Firewall to
+    #   return for this request. If more objects are available, in the
+    #   response, Network Firewall provides a `NextToken` value that you can
+    #   use in a subsequent call to get the next batch of objects.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/ListAnalysisReportsRequest AWS API Documentation
+    #
+    class ListAnalysisReportsRequest < Struct.new(
+      :firewall_name,
+      :firewall_arn,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] analysis_reports
+    #   The `id` and `ReportTime` associated with a requested analysis
+    #   report. Does not provide the status of the analysis report.
+    #   @return [Array<Types::AnalysisReport>]
+    #
+    # @!attribute [rw] next_token
+    #   When you request a list of objects with a `MaxResults` setting, if
+    #   the number of objects that are still available for retrieval exceeds
+    #   the maximum you requested, Network Firewall returns a `NextToken`
+    #   value in the response. To retrieve the next batch of objects, use
+    #   the token returned from the prior request in your next request.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/ListAnalysisReportsResponse AWS API Documentation
+    #
+    class ListAnalysisReportsResponse < Struct.new(
+      :analysis_reports,
+      :next_token)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3331,7 +3602,7 @@ module Aws::NetworkFirewall
     #
     #
     #
-    #   [1]: https://suricata.readthedocs.io/en/suricata-6.0.9/rules/intro.html#rule-options
+    #   [1]: https://suricata.readthedocs.io/en/suricata-7.0.3/rules/intro.html#rule-options
     #   @return [String]
     #
     # @!attribute [rw] settings
@@ -3342,7 +3613,7 @@ module Aws::NetworkFirewall
     #
     #
     #
-    #   [1]: https://suricata.readthedocs.io/en/suricata-6.0.9/rules/intro.html#rule-options
+    #   [1]: https://suricata.readthedocs.io/en/suricata-7.0.3/rules/intro.html#rule-options
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/RuleOption AWS API Documentation
@@ -3406,7 +3677,7 @@ module Aws::NetworkFirewall
     #
     #
     #
-    #   [1]: https://suricata.readthedocs.io/en/suricata-6.0.9/rules/intro.html
+    #   [1]: https://suricata.readthedocs.io/en/suricata-7.0.3/rules/intro.html
     #   @return [Array<Types::StatefulRule>]
     #
     # @!attribute [rw] stateless_rules_and_custom_actions
@@ -3665,6 +3936,46 @@ module Aws::NetworkFirewall
       include Aws::Structure
     end
 
+    # @!attribute [rw] firewall_name
+    #   The descriptive name of the firewall. You can't change the name of
+    #   a firewall after you create it.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #   @return [String]
+    #
+    # @!attribute [rw] firewall_arn
+    #   The Amazon Resource Name (ARN) of the firewall.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_type
+    #   The type of traffic that will be used to generate a report.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/StartAnalysisReportRequest AWS API Documentation
+    #
+    class StartAnalysisReportRequest < Struct.new(
+      :firewall_name,
+      :firewall_arn,
+      :analysis_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] analysis_report_id
+    #   The unique ID of the query that ran when you requested an analysis
+    #   report.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/StartAnalysisReportResponse AWS API Documentation
+    #
+    class StartAnalysisReportResponse < Struct.new(
+      :analysis_report_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Configuration settings for the handling of the stateful rule groups in
     # a firewall policy.
     #
@@ -3738,7 +4049,7 @@ module Aws::NetworkFirewall
     #
     #
     #
-    # [1]: https://suricata.readthedocs.io/en/suricata-6.0.9/rules/intro.html
+    # [1]: https://suricata.readthedocs.io/en/suricata-7.0.3/rules/intro.html
     #
     # @!attribute [rw] action
     #   Defines what Network Firewall should do with the packets in a
@@ -4281,6 +4592,20 @@ module Aws::NetworkFirewall
       include Aws::Structure
     end
 
+    # A unique source IP address that connected to a domain.
+    #
+    # @!attribute [rw] count
+    #   The number of unique source IP addresses that connected to a domain.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/UniqueSources AWS API Documentation
+    #
+    class UniqueSources < Struct.new(
+      :count)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The operation you requested isn't supported by Network Firewall.
     #
     # @!attribute [rw] message
@@ -4313,6 +4638,104 @@ module Aws::NetworkFirewall
     # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/UntagResourceResponse AWS API Documentation
     #
     class UntagResourceResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] enabled_analysis_types
+    #   An optional setting indicating the specific traffic analysis types
+    #   to enable on the firewall.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] firewall_arn
+    #   The Amazon Resource Name (ARN) of the firewall.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #   @return [String]
+    #
+    # @!attribute [rw] firewall_name
+    #   The descriptive name of the firewall. You can't change the name of
+    #   a firewall after you create it.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #   @return [String]
+    #
+    # @!attribute [rw] update_token
+    #   An optional token that you can use for optimistic locking. Network
+    #   Firewall returns a token to your requests that access the firewall.
+    #   The token marks the state of the firewall resource at the time of
+    #   the request.
+    #
+    #   To make an unconditional change to the firewall, omit the token in
+    #   your update request. Without the token, Network Firewall performs
+    #   your updates regardless of whether the firewall has changed since
+    #   you last retrieved it.
+    #
+    #   To make a conditional change to the firewall, provide the token in
+    #   your update request. Network Firewall uses the token to ensure that
+    #   the firewall hasn't changed since you last retrieved it. If it has
+    #   changed, the operation fails with an `InvalidTokenException`. If
+    #   this happens, retrieve the firewall again to get a current copy of
+    #   it with a new token. Reapply your changes as needed, then try the
+    #   operation again using the new token.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/UpdateFirewallAnalysisSettingsRequest AWS API Documentation
+    #
+    class UpdateFirewallAnalysisSettingsRequest < Struct.new(
+      :enabled_analysis_types,
+      :firewall_arn,
+      :firewall_name,
+      :update_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] enabled_analysis_types
+    #   An optional setting indicating the specific traffic analysis types
+    #   to enable on the firewall.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] firewall_arn
+    #   The Amazon Resource Name (ARN) of the firewall.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #   @return [String]
+    #
+    # @!attribute [rw] firewall_name
+    #   The descriptive name of the firewall. You can't change the name of
+    #   a firewall after you create it.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #   @return [String]
+    #
+    # @!attribute [rw] update_token
+    #   An optional token that you can use for optimistic locking. Network
+    #   Firewall returns a token to your requests that access the firewall.
+    #   The token marks the state of the firewall resource at the time of
+    #   the request.
+    #
+    #   To make an unconditional change to the firewall, omit the token in
+    #   your update request. Without the token, Network Firewall performs
+    #   your updates regardless of whether the firewall has changed since
+    #   you last retrieved it.
+    #
+    #   To make a conditional change to the firewall, provide the token in
+    #   your update request. Network Firewall uses the token to ensure that
+    #   the firewall hasn't changed since you last retrieved it. If it has
+    #   changed, the operation fails with an `InvalidTokenException`. If
+    #   this happens, retrieve the firewall again to get a current copy of
+    #   it with a new token. Reapply your changes as needed, then try the
+    #   operation again using the new token.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/UpdateFirewallAnalysisSettingsResponse AWS API Documentation
+    #
+    class UpdateFirewallAnalysisSettingsResponse < Struct.new(
+      :enabled_analysis_types,
+      :firewall_arn,
+      :firewall_name,
+      :update_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # @!attribute [rw] update_token
     #   An optional token that you can use for optimistic locking. Network

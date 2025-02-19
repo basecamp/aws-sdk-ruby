@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.108.0 (2025-02-19)
+------------------
+
+* Feature - Documentation updates for Amazon Lightsail.
+
 1.107.0 (2025-02-18)
 ------------------
 

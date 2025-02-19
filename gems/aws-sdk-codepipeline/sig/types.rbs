@@ -73,6 +73,7 @@ module Aws::CodePipeline
       attr_accessor region: ::String
       attr_accessor namespace: ::String
       attr_accessor timeout_in_minutes: ::Integer
+      attr_accessor environment_variables: ::Array[Types::EnvironmentVariable]
       SENSITIVE: []
     end
 
@@ -436,6 +437,12 @@ module Aws::CodePipeline
     class EncryptionKey
       attr_accessor id: ::String
       attr_accessor type: ("KMS")
+      SENSITIVE: []
+    end
+
+    class EnvironmentVariable
+      attr_accessor name: ::String
+      attr_accessor value: ::String
       SENSITIVE: []
     end
 

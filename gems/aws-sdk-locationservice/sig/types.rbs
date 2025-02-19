@@ -1326,7 +1326,7 @@ module Aws::LocationService
 
     class ValidationException
       attr_accessor message: ::String
-      attr_accessor reason: ("UnknownOperation" | "Missing" | "CannotParse" | "FieldValidationFailed" | "Other")
+      attr_accessor reason: ("UnknownOperation" | "Missing" | "CannotParse" | "FieldValidationFailed" | "Other" | "UnknownField")
       attr_accessor field_list: ::Array[Types::ValidationExceptionField]
       SENSITIVE: []
     end

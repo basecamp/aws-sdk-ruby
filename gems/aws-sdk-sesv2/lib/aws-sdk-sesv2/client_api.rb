@@ -21,6 +21,8 @@ module Aws::SESV2
     AdminEmail = Shapes::StringShape.new(name: 'AdminEmail')
     AlreadyExistsException = Shapes::StructureShape.new(name: 'AlreadyExistsException')
     AmazonResourceName = Shapes::StringShape.new(name: 'AmazonResourceName')
+    ArchiveArn = Shapes::StringShape.new(name: 'ArchiveArn')
+    ArchivingOptions = Shapes::StructureShape.new(name: 'ArchivingOptions')
     AttributesData = Shapes::StringShape.new(name: 'AttributesData')
     BadRequestException = Shapes::StructureShape.new(name: 'BadRequestException')
     BatchGetMetricDataQueries = Shapes::ListShape.new(name: 'BatchGetMetricDataQueries')
@@ -386,6 +388,8 @@ module Aws::SESV2
     PutAccountSuppressionAttributesResponse = Shapes::StructureShape.new(name: 'PutAccountSuppressionAttributesResponse')
     PutAccountVdmAttributesRequest = Shapes::StructureShape.new(name: 'PutAccountVdmAttributesRequest')
     PutAccountVdmAttributesResponse = Shapes::StructureShape.new(name: 'PutAccountVdmAttributesResponse')
+    PutConfigurationSetArchivingOptionsRequest = Shapes::StructureShape.new(name: 'PutConfigurationSetArchivingOptionsRequest')
+    PutConfigurationSetArchivingOptionsResponse = Shapes::StructureShape.new(name: 'PutConfigurationSetArchivingOptionsResponse')
     PutConfigurationSetDeliveryOptionsRequest = Shapes::StructureShape.new(name: 'PutConfigurationSetDeliveryOptionsRequest')
     PutConfigurationSetDeliveryOptionsResponse = Shapes::StructureShape.new(name: 'PutConfigurationSetDeliveryOptionsResponse')
     PutConfigurationSetReputationOptionsRequest = Shapes::StructureShape.new(name: 'PutConfigurationSetReputationOptionsRequest')
@@ -538,6 +542,9 @@ module Aws::SESV2
 
     AlreadyExistsException.struct_class = Types::AlreadyExistsException
 
+    ArchivingOptions.add_member(:archive_arn, Shapes::ShapeRef.new(shape: ArchiveArn, location_name: "ArchiveArn"))
+    ArchivingOptions.struct_class = Types::ArchivingOptions
+
     BadRequestException.struct_class = Types::BadRequestException
 
     BatchGetMetricDataQueries.member = Shapes::ShapeRef.new(shape: BatchGetMetricDataQuery)
@@ -655,6 +662,7 @@ module Aws::SESV2
     CreateConfigurationSetRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CreateConfigurationSetRequest.add_member(:suppression_options, Shapes::ShapeRef.new(shape: SuppressionOptions, location_name: "SuppressionOptions"))
     CreateConfigurationSetRequest.add_member(:vdm_options, Shapes::ShapeRef.new(shape: VdmOptions, location_name: "VdmOptions"))
+    CreateConfigurationSetRequest.add_member(:archiving_options, Shapes::ShapeRef.new(shape: ArchivingOptions, location_name: "ArchivingOptions"))
     CreateConfigurationSetRequest.struct_class = Types::CreateConfigurationSetRequest
 
     CreateConfigurationSetResponse.struct_class = Types::CreateConfigurationSetResponse
@@ -1052,6 +1060,7 @@ module Aws::SESV2
     GetConfigurationSetResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     GetConfigurationSetResponse.add_member(:suppression_options, Shapes::ShapeRef.new(shape: SuppressionOptions, location_name: "SuppressionOptions"))
     GetConfigurationSetResponse.add_member(:vdm_options, Shapes::ShapeRef.new(shape: VdmOptions, location_name: "VdmOptions"))
+    GetConfigurationSetResponse.add_member(:archiving_options, Shapes::ShapeRef.new(shape: ArchivingOptions, location_name: "ArchivingOptions"))
     GetConfigurationSetResponse.struct_class = Types::GetConfigurationSetResponse
 
     GetContactListRequest.add_member(:contact_list_name, Shapes::ShapeRef.new(shape: ContactListName, required: true, location: "uri", location_name: "ContactListName"))
@@ -1567,6 +1576,12 @@ module Aws::SESV2
     PutAccountVdmAttributesRequest.struct_class = Types::PutAccountVdmAttributesRequest
 
     PutAccountVdmAttributesResponse.struct_class = Types::PutAccountVdmAttributesResponse
+
+    PutConfigurationSetArchivingOptionsRequest.add_member(:configuration_set_name, Shapes::ShapeRef.new(shape: ConfigurationSetName, required: true, location: "uri", location_name: "ConfigurationSetName"))
+    PutConfigurationSetArchivingOptionsRequest.add_member(:archive_arn, Shapes::ShapeRef.new(shape: ArchiveArn, location_name: "ArchiveArn"))
+    PutConfigurationSetArchivingOptionsRequest.struct_class = Types::PutConfigurationSetArchivingOptionsRequest
+
+    PutConfigurationSetArchivingOptionsResponse.struct_class = Types::PutConfigurationSetArchivingOptionsResponse
 
     PutConfigurationSetDeliveryOptionsRequest.add_member(:configuration_set_name, Shapes::ShapeRef.new(shape: ConfigurationSetName, required: true, location: "uri", location_name: "ConfigurationSetName"))
     PutConfigurationSetDeliveryOptionsRequest.add_member(:tls_policy, Shapes::ShapeRef.new(shape: TlsPolicy, location_name: "TlsPolicy"))
@@ -2797,6 +2812,17 @@ module Aws::SESV2
         o.output = Shapes::ShapeRef.new(shape: PutAccountVdmAttributesResponse)
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
         o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+      end)
+
+      api.add_operation(:put_configuration_set_archiving_options, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "PutConfigurationSetArchivingOptions"
+        o.http_method = "PUT"
+        o.http_request_uri = "/v2/email/configuration-sets/{ConfigurationSetName}/archiving-options"
+        o.input = Shapes::ShapeRef.new(shape: PutConfigurationSetArchivingOptionsRequest)
+        o.output = Shapes::ShapeRef.new(shape: PutConfigurationSetArchivingOptionsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
       end)
 
       api.add_operation(:put_configuration_set_delivery_options, Seahorse::Model::Operation.new.tap do |o|

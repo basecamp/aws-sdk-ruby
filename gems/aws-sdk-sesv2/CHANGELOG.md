@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.72.0 (2025-02-19)
+------------------
+
+* Feature - This release adds the ability for outbound email sent with SES to preserve emails to a Mail Manager archive.
+
 1.71.0 (2025-02-18)
 ------------------
 
