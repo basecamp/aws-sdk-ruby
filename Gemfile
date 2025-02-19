@@ -22,7 +22,7 @@ end
 gem 'json', '1.8.3' if RUBY_VERSION == '1.9.3'
 gem 'libxml-ruby' unless ENV['PURE_RUBY']
 # nokogiri dropped support for Ruby <= 2.0.0 in version 1.7.0
-gem 'nokogiri', '1.6.8.1' unless ENV['PURE_RUBY']
+gem 'nokogiri' unless ENV['PURE_RUBY']
 # oga dropped support for Ruby 1.9.3 on version 3
 gem 'oga', '~> 2'
 
@@ -57,7 +57,7 @@ group :test do
 end
 
 group :docs do
-  gem 'yard', '0.9.5'
+  gem 'yard'
   gem 'yard-sitemap', '~> 1.0'
   gem 'rdiscount'
   gem 'kramdown' # using this to fix poorly formatted HTML in API docs

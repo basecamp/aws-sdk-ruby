@@ -12,5 +12,9 @@ def groups(list, type = "Method")
     # see implementation from base template
   end
 
-  scopes(others) {|items, scope| yield(items, "#{scope.to_s.capitalize} #{type} Summary") }
+  if others.first.respond_to?(:scope)
+    scopes(others) {|items, scope| yield(items, "#{scope.to_s.capitalize} #{type} Summary") }
+  else
+    yield(others, "#{type} Summary")
+  end
 end
