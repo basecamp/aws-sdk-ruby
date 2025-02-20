@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.113.0 (2025-02-20)
+------------------
+
+* Feature - Reduce the minimum number of required attack sequence signals from 2 to 1
+
 1.112.0 (2025-02-18)
 ------------------
 

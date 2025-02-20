@@ -261,7 +261,8 @@ module Aws::LicenseManagerUserSubscriptions
     #   The name of the user-based subscription product.
     #
     #   Valid values: `VISUAL_STUDIO_ENTERPRISE` \|
-    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS`
+    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS` \|
+    #   `REMOTE_DESKTOP_SERVICES`
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/license-manager-user-subscriptions-2018-05-10/DeregisterIdentityProviderRequest AWS API Documentation
@@ -826,7 +827,8 @@ module Aws::LicenseManagerUserSubscriptions
     #   The name of the user-based subscription product.
     #
     #   Valid values: `VISUAL_STUDIO_ENTERPRISE` \|
-    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS`
+    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS` \|
+    #   `REMOTE_DESKTOP_SERVICES`
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/license-manager-user-subscriptions-2018-05-10/ListProductSubscriptionsRequest AWS API Documentation
@@ -1026,7 +1028,8 @@ module Aws::LicenseManagerUserSubscriptions
     #   The name of the user-based subscription product.
     #
     #   Valid values: `VISUAL_STUDIO_ENTERPRISE` \|
-    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS`
+    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS` \|
+    #   `REMOTE_DESKTOP_SERVICES`
     #   @return [String]
     #
     # @!attribute [rw] settings
@@ -1176,7 +1179,8 @@ module Aws::LicenseManagerUserSubscriptions
     #   The name of the user-based subscription product.
     #
     #   Valid values: `VISUAL_STUDIO_ENTERPRISE` \|
-    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS`
+    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS` \|
+    #   `REMOTE_DESKTOP_SERVICES`
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -1224,7 +1228,8 @@ module Aws::LicenseManagerUserSubscriptions
     #   The name of the user-based subscription product.
     #
     #   Valid values: `VISUAL_STUDIO_ENTERPRISE` \|
-    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS`
+    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS` \|
+    #   `REMOTE_DESKTOP_SERVICES`
     #   @return [String]
     #
     # @!attribute [rw] product_user_arn
@@ -1328,7 +1333,8 @@ module Aws::LicenseManagerUserSubscriptions
     #   The name of the user-based subscription product.
     #
     #   Valid values: `VISUAL_STUDIO_ENTERPRISE` \|
-    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS`
+    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS` \|
+    #   `REMOTE_DESKTOP_SERVICES`
     #   @return [String]
     #
     # @!attribute [rw] update_settings

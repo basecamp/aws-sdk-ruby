@@ -26207,6 +26207,10 @@ module Aws::SageMaker
     #   The node recovery mode to be applied to the SageMaker HyperPod
     #   cluster.
     #
+    # @option params [Array<String>] :instance_groups_to_delete
+    #   Specify the names of the instance groups to delete. Use a single `,`
+    #   as the separator between multiple names.
+    #
     # @return [Types::UpdateClusterResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateClusterResponse#cluster_arn #cluster_arn} => String
@@ -26242,6 +26246,7 @@ module Aws::SageMaker
     #       },
     #     ],
     #     node_recovery: "Automatic", # accepts Automatic, None
+    #     instance_groups_to_delete: ["ClusterInstanceGroupName"],
     #   })
     #
     # @example Response structure
@@ -29497,7 +29502,7 @@ module Aws::SageMaker
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sagemaker'
-      context[:gem_version] = '1.289.0'
+      context[:gem_version] = '1.290.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

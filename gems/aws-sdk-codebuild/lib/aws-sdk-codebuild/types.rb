@@ -7441,6 +7441,22 @@ module Aws::CodeBuild
     #    </note>
     #   @return [Types::ScopeConfiguration]
     #
+    # @!attribute [rw] status
+    #   The status of the webhook. Valid values include:
+    #
+    #   * `CREATING`: The webhook is being created.
+    #
+    #   * `CREATE_FAILED`: The webhook has failed to create.
+    #
+    #   * `ACTIVE`: The webhook has succeeded and is active.
+    #
+    #   * `DELETING`: The webhook is being deleted.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   A message associated with the status of a webhook.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/Webhook AWS API Documentation
     #
     class Webhook < Struct.new(
@@ -7452,7 +7468,9 @@ module Aws::CodeBuild
       :build_type,
       :manual_creation,
       :last_modified_secret,
-      :scope_configuration)
+      :scope_configuration,
+      :status,
+      :status_message)
       SENSITIVE = []
       include Aws::Structure
     end

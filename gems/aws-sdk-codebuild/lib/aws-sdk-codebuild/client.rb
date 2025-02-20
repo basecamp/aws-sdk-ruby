@@ -1030,6 +1030,8 @@ module Aws::CodeBuild
     #   resp.projects[0].webhook.scope_configuration.name #=> String
     #   resp.projects[0].webhook.scope_configuration.domain #=> String
     #   resp.projects[0].webhook.scope_configuration.scope #=> String, one of "GITHUB_ORGANIZATION", "GITHUB_GLOBAL", "GITLAB_GROUP"
+    #   resp.projects[0].webhook.status #=> String, one of "CREATING", "CREATE_FAILED", "ACTIVE", "DELETING"
+    #   resp.projects[0].webhook.status_message #=> String
     #   resp.projects[0].vpc_config.vpc_id #=> String
     #   resp.projects[0].vpc_config.subnets #=> Array
     #   resp.projects[0].vpc_config.subnets[0] #=> String
@@ -1901,6 +1903,8 @@ module Aws::CodeBuild
     #   resp.project.webhook.scope_configuration.name #=> String
     #   resp.project.webhook.scope_configuration.domain #=> String
     #   resp.project.webhook.scope_configuration.scope #=> String, one of "GITHUB_ORGANIZATION", "GITHUB_GLOBAL", "GITLAB_GROUP"
+    #   resp.project.webhook.status #=> String, one of "CREATING", "CREATE_FAILED", "ACTIVE", "DELETING"
+    #   resp.project.webhook.status_message #=> String
     #   resp.project.vpc_config.vpc_id #=> String
     #   resp.project.vpc_config.subnets #=> Array
     #   resp.project.vpc_config.subnets[0] #=> String
@@ -2138,6 +2142,8 @@ module Aws::CodeBuild
     #   resp.webhook.scope_configuration.name #=> String
     #   resp.webhook.scope_configuration.domain #=> String
     #   resp.webhook.scope_configuration.scope #=> String, one of "GITHUB_ORGANIZATION", "GITHUB_GLOBAL", "GITLAB_GROUP"
+    #   resp.webhook.status #=> String, one of "CREATING", "CREATE_FAILED", "ACTIVE", "DELETING"
+    #   resp.webhook.status_message #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/CreateWebhook AWS API Documentation
     #
@@ -5892,6 +5898,8 @@ module Aws::CodeBuild
     #   resp.project.webhook.scope_configuration.name #=> String
     #   resp.project.webhook.scope_configuration.domain #=> String
     #   resp.project.webhook.scope_configuration.scope #=> String, one of "GITHUB_ORGANIZATION", "GITHUB_GLOBAL", "GITLAB_GROUP"
+    #   resp.project.webhook.status #=> String, one of "CREATING", "CREATE_FAILED", "ACTIVE", "DELETING"
+    #   resp.project.webhook.status_message #=> String
     #   resp.project.vpc_config.vpc_id #=> String
     #   resp.project.vpc_config.subnets #=> Array
     #   resp.project.vpc_config.subnets[0] #=> String
@@ -6178,6 +6186,8 @@ module Aws::CodeBuild
     #   resp.webhook.scope_configuration.name #=> String
     #   resp.webhook.scope_configuration.domain #=> String
     #   resp.webhook.scope_configuration.scope #=> String, one of "GITHUB_ORGANIZATION", "GITHUB_GLOBAL", "GITLAB_GROUP"
+    #   resp.webhook.status #=> String, one of "CREATING", "CREATE_FAILED", "ACTIVE", "DELETING"
+    #   resp.webhook.status_message #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/UpdateWebhook AWS API Documentation
     #
@@ -6206,7 +6216,7 @@ module Aws::CodeBuild
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-codebuild'
-      context[:gem_version] = '1.145.0'
+      context[:gem_version] = '1.146.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

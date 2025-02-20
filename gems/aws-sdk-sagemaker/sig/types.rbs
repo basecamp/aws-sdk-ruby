@@ -9869,6 +9869,7 @@ module Aws::SageMaker
       attr_accessor cluster_name: ::String
       attr_accessor instance_groups: ::Array[Types::ClusterInstanceGroupSpecification]
       attr_accessor node_recovery: ("Automatic" | "None")
+      attr_accessor instance_groups_to_delete: ::Array[::String]
       SENSITIVE: []
     end
 

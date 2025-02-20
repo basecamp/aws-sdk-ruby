@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.271.0 (2025-02-20)
+------------------
+
+* Feature - CloudWatch Database Insights now supports Amazon RDS.
+
 1.270.0 (2025-02-18)
 ------------------
 

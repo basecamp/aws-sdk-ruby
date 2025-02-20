@@ -1399,6 +1399,13 @@ module Aws::WorkSpacesWeb
     #   The tags to add to the user settings resource. A tag is a key-value
     #   pair.
     #
+    # @option params [Types::ToolbarConfiguration] :toolbar_configuration
+    #   The configuration of the toolbar. This allows administrators to select
+    #   the toolbar type and visual mode, set maximum display resolution for
+    #   sessions, and choose which items are visible to end users during their
+    #   sessions. If administrators do not modify these settings, end users
+    #   retain control over their toolbar preferences.
+    #
     # @option params [required, String] :upload_allowed
     #   Specifies whether the user can upload files from the local device to
     #   the streaming session.
@@ -1444,6 +1451,12 @@ module Aws::WorkSpacesWeb
     #         value: "TagValue", # required
     #       },
     #     ],
+    #     toolbar_configuration: {
+    #       hidden_toolbar_items: ["Windows"], # accepts Windows, DualMonitor, FullScreen, Webcam, Microphone
+    #       max_display_resolution: "size4096X2160", # accepts size4096X2160, size3840X2160, size3440X1440, size2560X1440, size1920X1080, size1280X720, size1024X768, size800X600
+    #       toolbar_type: "Floating", # accepts Floating, Docked
+    #       visual_mode: "Dark", # accepts Dark, Light
+    #     },
     #     upload_allowed: "Disabled", # required, accepts Disabled, Enabled
     #   })
     #
@@ -2286,6 +2299,11 @@ module Aws::WorkSpacesWeb
     #   resp.user_settings.idle_disconnect_timeout_in_minutes #=> Integer
     #   resp.user_settings.paste_allowed #=> String, one of "Disabled", "Enabled"
     #   resp.user_settings.print_allowed #=> String, one of "Disabled", "Enabled"
+    #   resp.user_settings.toolbar_configuration.hidden_toolbar_items #=> Array
+    #   resp.user_settings.toolbar_configuration.hidden_toolbar_items[0] #=> String, one of "Windows", "DualMonitor", "FullScreen", "Webcam", "Microphone"
+    #   resp.user_settings.toolbar_configuration.max_display_resolution #=> String, one of "size4096X2160", "size3840X2160", "size3440X1440", "size2560X1440", "size1920X1080", "size1280X720", "size1024X768", "size800X600"
+    #   resp.user_settings.toolbar_configuration.toolbar_type #=> String, one of "Floating", "Docked"
+    #   resp.user_settings.toolbar_configuration.visual_mode #=> String, one of "Dark", "Light"
     #   resp.user_settings.upload_allowed #=> String, one of "Disabled", "Enabled"
     #   resp.user_settings.user_settings_arn #=> String
     #
@@ -2816,6 +2834,11 @@ module Aws::WorkSpacesWeb
     #   resp.user_settings[0].idle_disconnect_timeout_in_minutes #=> Integer
     #   resp.user_settings[0].paste_allowed #=> String, one of "Disabled", "Enabled"
     #   resp.user_settings[0].print_allowed #=> String, one of "Disabled", "Enabled"
+    #   resp.user_settings[0].toolbar_configuration.hidden_toolbar_items #=> Array
+    #   resp.user_settings[0].toolbar_configuration.hidden_toolbar_items[0] #=> String, one of "Windows", "DualMonitor", "FullScreen", "Webcam", "Microphone"
+    #   resp.user_settings[0].toolbar_configuration.max_display_resolution #=> String, one of "size4096X2160", "size3840X2160", "size3440X1440", "size2560X1440", "size1920X1080", "size1280X720", "size1024X768", "size800X600"
+    #   resp.user_settings[0].toolbar_configuration.toolbar_type #=> String, one of "Floating", "Docked"
+    #   resp.user_settings[0].toolbar_configuration.visual_mode #=> String, one of "Dark", "Light"
     #   resp.user_settings[0].upload_allowed #=> String, one of "Disabled", "Enabled"
     #   resp.user_settings[0].user_settings_arn #=> String
     #
@@ -3539,6 +3562,13 @@ module Aws::WorkSpacesWeb
     # @option params [String] :print_allowed
     #   Specifies whether the user can print to the local device.
     #
+    # @option params [Types::ToolbarConfiguration] :toolbar_configuration
+    #   The configuration of the toolbar. This allows administrators to select
+    #   the toolbar type and visual mode, set maximum display resolution for
+    #   sessions, and choose which items are visible to end users during their
+    #   sessions. If administrators do not modify these settings, end users
+    #   retain control over their toolbar preferences.
+    #
     # @option params [String] :upload_allowed
     #   Specifies whether the user can upload files from the local device to
     #   the streaming session.
@@ -3577,6 +3607,12 @@ module Aws::WorkSpacesWeb
     #     idle_disconnect_timeout_in_minutes: 1,
     #     paste_allowed: "Disabled", # accepts Disabled, Enabled
     #     print_allowed: "Disabled", # accepts Disabled, Enabled
+    #     toolbar_configuration: {
+    #       hidden_toolbar_items: ["Windows"], # accepts Windows, DualMonitor, FullScreen, Webcam, Microphone
+    #       max_display_resolution: "size4096X2160", # accepts size4096X2160, size3840X2160, size3440X1440, size2560X1440, size1920X1080, size1280X720, size1024X768, size800X600
+    #       toolbar_type: "Floating", # accepts Floating, Docked
+    #       visual_mode: "Dark", # accepts Dark, Light
+    #     },
     #     upload_allowed: "Disabled", # accepts Disabled, Enabled
     #     user_settings_arn: "ARN", # required
     #   })
@@ -3603,6 +3639,11 @@ module Aws::WorkSpacesWeb
     #   resp.user_settings.idle_disconnect_timeout_in_minutes #=> Integer
     #   resp.user_settings.paste_allowed #=> String, one of "Disabled", "Enabled"
     #   resp.user_settings.print_allowed #=> String, one of "Disabled", "Enabled"
+    #   resp.user_settings.toolbar_configuration.hidden_toolbar_items #=> Array
+    #   resp.user_settings.toolbar_configuration.hidden_toolbar_items[0] #=> String, one of "Windows", "DualMonitor", "FullScreen", "Webcam", "Microphone"
+    #   resp.user_settings.toolbar_configuration.max_display_resolution #=> String, one of "size4096X2160", "size3840X2160", "size3440X1440", "size2560X1440", "size1920X1080", "size1280X720", "size1024X768", "size800X600"
+    #   resp.user_settings.toolbar_configuration.toolbar_type #=> String, one of "Floating", "Docked"
+    #   resp.user_settings.toolbar_configuration.visual_mode #=> String, one of "Dark", "Light"
     #   resp.user_settings.upload_allowed #=> String, one of "Disabled", "Enabled"
     #   resp.user_settings.user_settings_arn #=> String
     #
@@ -3633,7 +3674,7 @@ module Aws::WorkSpacesWeb
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-workspacesweb'
-      context[:gem_version] = '1.39.0'
+      context[:gem_version] = '1.40.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.290.0 (2025-02-20)
+------------------
+
+* Feature - Added new capability in the UpdateCluster operation to remove instance groups from your SageMaker HyperPod cluster.
+
 1.289.0 (2025-02-19)
 ------------------
 

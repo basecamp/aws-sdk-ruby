@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.40.0 (2025-02-20)
+------------------
+
+* Feature - Add support for toolbar configuration under user settings.
+
 1.39.0 (2025-02-18)
 ------------------
 

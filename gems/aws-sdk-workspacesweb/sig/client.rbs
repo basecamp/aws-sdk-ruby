@@ -383,6 +383,12 @@ module Aws
                                       value: ::String
                                     },
                                   ],
+                                  ?toolbar_configuration: {
+                                    hidden_toolbar_items: Array[("Windows" | "DualMonitor" | "FullScreen" | "Webcam" | "Microphone")]?,
+                                    max_display_resolution: ("size4096X2160" | "size3840X2160" | "size3440X1440" | "size2560X1440" | "size1920X1080" | "size1280X720" | "size1024X768" | "size800X600")?,
+                                    toolbar_type: ("Floating" | "Docked")?,
+                                    visual_mode: ("Dark" | "Light")?
+                                  },
                                   upload_allowed: ("Disabled" | "Enabled")
                                 ) -> _CreateUserSettingsResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateUserSettingsResponseSuccess
@@ -1005,6 +1011,12 @@ module Aws
                                   ?idle_disconnect_timeout_in_minutes: ::Integer,
                                   ?paste_allowed: ("Disabled" | "Enabled"),
                                   ?print_allowed: ("Disabled" | "Enabled"),
+                                  ?toolbar_configuration: {
+                                    hidden_toolbar_items: Array[("Windows" | "DualMonitor" | "FullScreen" | "Webcam" | "Microphone")]?,
+                                    max_display_resolution: ("size4096X2160" | "size3840X2160" | "size3440X1440" | "size2560X1440" | "size1920X1080" | "size1280X720" | "size1024X768" | "size800X600")?,
+                                    toolbar_type: ("Floating" | "Docked")?,
+                                    visual_mode: ("Dark" | "Light")?
+                                  },
                                   ?upload_allowed: ("Disabled" | "Enabled"),
                                   user_settings_arn: ::String
                                 ) -> _UpdateUserSettingsResponseSuccess

@@ -1945,10 +1945,8 @@ module Aws::RDS
     # @option options [String] :database_insights_mode
     #   The mode of Database Insights to enable for the DB instance.
     #
-    #   This setting only applies to Amazon Aurora DB instances.
-    #
-    #   <note markdown="1"> Currently, this value is inherited from the DB cluster and can't be
-    #   changed.
+    #   <note markdown="1"> Aurora DB instances inherit this value from the DB cluster, so you
+    #   can't change this value.
     #
     #    </note>
     # @option options [Boolean] :enable_performance_insights
@@ -2626,7 +2624,7 @@ module Aws::RDS
     # @option options [String] :database_insights_mode
     #   The mode of Database Insights to enable for the read replica.
     #
-    #   <note markdown="1"> Currently, this setting is not supported.
+    #   <note markdown="1"> This setting isn't supported.
     #
     #    </note>
     # @option options [Boolean] :enable_performance_insights
@@ -3804,10 +3802,8 @@ module Aws::RDS
     # @option options [String] :database_insights_mode
     #   Specifies the mode of Database Insights to enable for the DB instance.
     #
-    #   This setting only applies to Amazon Aurora DB instances.
-    #
-    #   <note markdown="1"> Currently, this value is inherited from the DB cluster and can't be
-    #   changed.
+    #   <note markdown="1"> Aurora DB instances inherit this value from the DB cluster, so you
+    #   can't change this value.
     #
     #    </note>
     # @option options [Boolean] :enable_performance_insights

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.31.0 (2025-02-20)
+------------------
+
+* Feature - Updates entity to include Microsoft RDS SAL as a valid type of user subscription.
+
 1.30.0 (2025-02-18)
 ------------------
 

@@ -47402,12 +47402,18 @@ module Aws::SageMaker
     #   cluster.
     #   @return [String]
     #
+    # @!attribute [rw] instance_groups_to_delete
+    #   Specify the names of the instance groups to delete. Use a single `,`
+    #   as the separator between multiple names.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/UpdateClusterRequest AWS API Documentation
     #
     class UpdateClusterRequest < Struct.new(
       :cluster_name,
       :instance_groups,
-      :node_recovery)
+      :node_recovery,
+      :instance_groups_to_delete)
       SENSITIVE = []
       include Aws::Structure
     end

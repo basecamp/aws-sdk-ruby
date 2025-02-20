@@ -301,6 +301,7 @@ module Aws::CodeBuild
     WebhookFilter = Shapes::StructureShape.new(name: 'WebhookFilter')
     WebhookFilterType = Shapes::StringShape.new(name: 'WebhookFilterType')
     WebhookScopeType = Shapes::StringShape.new(name: 'WebhookScopeType')
+    WebhookStatus = Shapes::StringShape.new(name: 'WebhookStatus')
     WrapperBoolean = Shapes::BooleanShape.new(name: 'WrapperBoolean')
     WrapperDouble = Shapes::FloatShape.new(name: 'WrapperDouble')
     WrapperInt = Shapes::IntegerShape.new(name: 'WrapperInt')
@@ -1397,6 +1398,8 @@ module Aws::CodeBuild
     Webhook.add_member(:manual_creation, Shapes::ShapeRef.new(shape: WrapperBoolean, location_name: "manualCreation"))
     Webhook.add_member(:last_modified_secret, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastModifiedSecret"))
     Webhook.add_member(:scope_configuration, Shapes::ShapeRef.new(shape: ScopeConfiguration, location_name: "scopeConfiguration"))
+    Webhook.add_member(:status, Shapes::ShapeRef.new(shape: WebhookStatus, location_name: "status"))
+    Webhook.add_member(:status_message, Shapes::ShapeRef.new(shape: String, location_name: "statusMessage"))
     Webhook.struct_class = Types::Webhook
 
     WebhookFilter.add_member(:type, Shapes::ShapeRef.new(shape: WebhookFilterType, required: true, location_name: "type"))

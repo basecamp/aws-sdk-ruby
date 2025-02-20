@@ -1319,6 +1319,8 @@ module Aws::CodeBuild
       attr_accessor manual_creation: bool
       attr_accessor last_modified_secret: ::Time
       attr_accessor scope_configuration: Types::ScopeConfiguration
+      attr_accessor status: ("CREATING" | "CREATE_FAILED" | "ACTIVE" | "DELETING")
+      attr_accessor status_message: ::String
       SENSITIVE: []
     end
 

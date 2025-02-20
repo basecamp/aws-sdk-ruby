@@ -281,6 +281,7 @@ module Aws::SageMaker
     ClusterInstanceGroupName = Shapes::StringShape.new(name: 'ClusterInstanceGroupName')
     ClusterInstanceGroupSpecification = Shapes::StructureShape.new(name: 'ClusterInstanceGroupSpecification')
     ClusterInstanceGroupSpecifications = Shapes::ListShape.new(name: 'ClusterInstanceGroupSpecifications')
+    ClusterInstanceGroupsToDelete = Shapes::ListShape.new(name: 'ClusterInstanceGroupsToDelete')
     ClusterInstancePlacement = Shapes::StructureShape.new(name: 'ClusterInstancePlacement')
     ClusterInstanceStatus = Shapes::StringShape.new(name: 'ClusterInstanceStatus')
     ClusterInstanceStatusDetails = Shapes::StructureShape.new(name: 'ClusterInstanceStatusDetails')
@@ -3146,6 +3147,8 @@ module Aws::SageMaker
     ClusterInstanceGroupSpecification.struct_class = Types::ClusterInstanceGroupSpecification
 
     ClusterInstanceGroupSpecifications.member = Shapes::ShapeRef.new(shape: ClusterInstanceGroupSpecification)
+
+    ClusterInstanceGroupsToDelete.member = Shapes::ShapeRef.new(shape: ClusterInstanceGroupName)
 
     ClusterInstancePlacement.add_member(:availability_zone, Shapes::ShapeRef.new(shape: ClusterAvailabilityZone, location_name: "AvailabilityZone"))
     ClusterInstancePlacement.add_member(:availability_zone_id, Shapes::ShapeRef.new(shape: ClusterAvailabilityZoneId, location_name: "AvailabilityZoneId"))
@@ -10561,6 +10564,7 @@ module Aws::SageMaker
     UpdateClusterRequest.add_member(:cluster_name, Shapes::ShapeRef.new(shape: ClusterNameOrArn, required: true, location_name: "ClusterName"))
     UpdateClusterRequest.add_member(:instance_groups, Shapes::ShapeRef.new(shape: ClusterInstanceGroupSpecifications, required: true, location_name: "InstanceGroups"))
     UpdateClusterRequest.add_member(:node_recovery, Shapes::ShapeRef.new(shape: ClusterNodeRecovery, location_name: "NodeRecovery"))
+    UpdateClusterRequest.add_member(:instance_groups_to_delete, Shapes::ShapeRef.new(shape: ClusterInstanceGroupsToDelete, location_name: "InstanceGroupsToDelete"))
     UpdateClusterRequest.struct_class = Types::UpdateClusterRequest
 
     UpdateClusterResponse.add_member(:cluster_arn, Shapes::ShapeRef.new(shape: ClusterArn, required: true, location_name: "ClusterArn"))

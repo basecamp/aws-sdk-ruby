@@ -1549,7 +1549,7 @@ module Aws::GuardDuty
     #
     #   * service.runtimeDetails.process.name
     #
-    #   * service.runtimeDetails.process.name
+    #   * service.runtimeDetails.process.executablePath
     #
     #   * resource.lambdaDetails.functionName
     #
@@ -4539,7 +4539,13 @@ module Aws::GuardDuty
     # signals observed in an attack sequence.
     #
     # @!attribute [rw] key
-    #   Specific indicator keys observed in the attack sequence.
+    #   Specific indicator keys observed in the attack sequence. For
+    #   description of the valid values for key, see [Attack sequence
+    #   finding details][1] in the *Amazon GuardDuty User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-summary.html#guardduty-extended-threat-detection-attack-sequence-finding-details
     #   @return [String]
     #
     # @!attribute [rw] values
@@ -4547,9 +4553,6 @@ module Aws::GuardDuty
     #   indicator key is `SUSPICIOUS_NETWORK`, then the value will be the
     #   name of the network. If the indicator key is `ATTACK_TACTIC`, then
     #   the value will be one of the MITRE tactics.
-    #
-    #   For more information about the values associated with the key, see
-    #   GuardDuty Extended Threat Detection in the *GuardDuty User Guide.*
     #   @return [Array<String>]
     #
     # @!attribute [rw] title
@@ -6082,7 +6085,8 @@ module Aws::GuardDuty
     # @!attribute [rw] message
     #   Issue message that specifies the reason. For information about
     #   potential troubleshooting steps, see [Troubleshooting Malware
-    #   Protection for S3 status issues][1] in the *GuardDuty User Guide*.
+    #   Protection for S3 status issues][1] in the *Amazon GuardDuty User
+    #   Guide*.
     #
     #
     #
@@ -8854,7 +8858,7 @@ module Aws::GuardDuty
     #
     #   Signals can be GuardDuty findings or activities observed in data
     #   sources that GuardDuty monitors. For more information, see
-    #   [Foundational data sources][1] in the *GuardDuty User Guide*.
+    #   [Foundational data sources][1] in the *Amazon GuardDuty User Guide*.
     #
     #   A signal type can be one of the valid values listed in this API.
     #   Here are the related descriptions:
@@ -8867,7 +8871,8 @@ module Aws::GuardDuty
     #     for S3. Activities associated with this type will show up only
     #     when you have enabled GuardDuty S3 Protection feature in your
     #     account. For more information about S3 Protection and steps to
-    #     enable it, see [S3 Protection][2] in the *GuardDuty User Guide*.
+    #     enable it, see [S3 Protection][2] in the *Amazon GuardDuty User
+    #     Guide*.
     #
     #
     #
@@ -8905,8 +8910,8 @@ module Aws::GuardDuty
     #
     # @!attribute [rw] severity
     #   The severity associated with the signal. For more information about
-    #   severity, see [Findings severity levels][1] in the *GuardDuty User
-    #   Guide*.
+    #   severity, see [Findings severity levels][1] in the *Amazon GuardDuty
+    #   User Guide*.
     #
     #
     #

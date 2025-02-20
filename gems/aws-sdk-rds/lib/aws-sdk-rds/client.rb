@@ -3380,7 +3380,7 @@ module Aws::RDS
     #   `PerformanceInsightsEnabled` parameter to `true` and the
     #   `PerformanceInsightsRetentionPeriod` parameter to 465.
     #
-    #   Valid for Cluster Type: Aurora DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #
     # @option params [Boolean] :enable_performance_insights
     #   Specifies whether to turn on Performance Insights for the DB cluster.
@@ -5384,10 +5384,8 @@ module Aws::RDS
     # @option params [String] :database_insights_mode
     #   The mode of Database Insights to enable for the DB instance.
     #
-    #   This setting only applies to Amazon Aurora DB instances.
-    #
-    #   <note markdown="1"> Currently, this value is inherited from the DB cluster and can't be
-    #   changed.
+    #   <note markdown="1"> Aurora DB instances inherit this value from the DB cluster, so you
+    #   can't change this value.
     #
     #    </note>
     #
@@ -6460,7 +6458,7 @@ module Aws::RDS
     # @option params [String] :database_insights_mode
     #   The mode of Database Insights to enable for the read replica.
     #
-    #   <note markdown="1"> Currently, this setting is not supported.
+    #   <note markdown="1"> This setting isn't supported.
     #
     #    </note>
     #
@@ -19299,7 +19297,7 @@ module Aws::RDS
     #   If you change the value from `advanced` to `standard`, you must set
     #   the `PerformanceInsightsEnabled` parameter to `false`.
     #
-    #   Valid for Cluster Type: Aurora DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #
     # @option params [Boolean] :enable_performance_insights
     #   Specifies whether to turn on Performance Insights for the DB cluster.
@@ -20915,10 +20913,8 @@ module Aws::RDS
     # @option params [String] :database_insights_mode
     #   Specifies the mode of Database Insights to enable for the DB instance.
     #
-    #   This setting only applies to Amazon Aurora DB instances.
-    #
-    #   <note markdown="1"> Currently, this value is inherited from the DB cluster and can't be
-    #   changed.
+    #   <note markdown="1"> Aurora DB instances inherit this value from the DB cluster, so you
+    #   can't change this value.
     #
     #    </note>
     #
@@ -28375,10 +28371,8 @@ module Aws::RDS
     # @option params [String] :database_insights_mode
     #   Specifies the mode of Database Insights to enable for the DB instance.
     #
-    #   This setting only applies to Amazon Aurora DB instances.
-    #
-    #   <note markdown="1"> Currently, this value is inherited from the DB cluster and can't be
-    #   changed.
+    #   <note markdown="1"> Aurora DB instances inherit this value from the DB cluster, so you
+    #   can't change this value.
     #
     #    </note>
     #
@@ -31892,7 +31886,7 @@ module Aws::RDS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-rds'
-      context[:gem_version] = '1.270.0'
+      context[:gem_version] = '1.271.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

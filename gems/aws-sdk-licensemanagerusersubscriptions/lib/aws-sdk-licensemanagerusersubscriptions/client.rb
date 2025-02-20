@@ -680,7 +680,8 @@ module Aws::LicenseManagerUserSubscriptions
     #   The name of the user-based subscription product.
     #
     #   Valid values: `VISUAL_STUDIO_ENTERPRISE` \|
-    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS`
+    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS` \|
+    #   `REMOTE_DESKTOP_SERVICES`
     #
     # @return [Types::DeregisterIdentityProviderResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1032,7 +1033,8 @@ module Aws::LicenseManagerUserSubscriptions
     #   The name of the user-based subscription product.
     #
     #   Valid values: `VISUAL_STUDIO_ENTERPRISE` \|
-    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS`
+    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS` \|
+    #   `REMOTE_DESKTOP_SERVICES`
     #
     # @return [Types::ListProductSubscriptionsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1238,7 +1240,8 @@ module Aws::LicenseManagerUserSubscriptions
     #   The name of the user-based subscription product.
     #
     #   Valid values: `VISUAL_STUDIO_ENTERPRISE` \|
-    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS`
+    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS` \|
+    #   `REMOTE_DESKTOP_SERVICES`
     #
     # @option params [Types::Settings] :settings
     #   The registered identity provider’s product related configuration
@@ -1335,7 +1338,8 @@ module Aws::LicenseManagerUserSubscriptions
     #   The name of the user-based subscription product.
     #
     #   Valid values: `VISUAL_STUDIO_ENTERPRISE` \|
-    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS`
+    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS` \|
+    #   `REMOTE_DESKTOP_SERVICES`
     #
     # @option params [Hash<String,String>] :tags
     #   The tags that apply to the product subscription.
@@ -1418,7 +1422,8 @@ module Aws::LicenseManagerUserSubscriptions
     #   The name of the user-based subscription product.
     #
     #   Valid values: `VISUAL_STUDIO_ENTERPRISE` \|
-    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS`
+    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS` \|
+    #   `REMOTE_DESKTOP_SERVICES`
     #
     # @option params [String] :product_user_arn
     #   The Amazon Resource Name (ARN) of the product user.
@@ -1553,7 +1558,8 @@ module Aws::LicenseManagerUserSubscriptions
     #   The name of the user-based subscription product.
     #
     #   Valid values: `VISUAL_STUDIO_ENTERPRISE` \|
-    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS`
+    #   `VISUAL_STUDIO_PROFESSIONAL` \| `OFFICE_PROFESSIONAL_PLUS` \|
+    #   `REMOTE_DESKTOP_SERVICES`
     #
     # @option params [required, Types::UpdateSettings] :update_settings
     #   Updates the registered identity provider’s product related
@@ -1645,7 +1651,7 @@ module Aws::LicenseManagerUserSubscriptions
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-licensemanagerusersubscriptions'
-      context[:gem_version] = '1.30.0'
+      context[:gem_version] = '1.31.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

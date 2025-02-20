@@ -1081,6 +1081,14 @@ module Aws::WorkSpacesWeb
     #   pair.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] toolbar_configuration
+    #   The configuration of the toolbar. This allows administrators to
+    #   select the toolbar type and visual mode, set maximum display
+    #   resolution for sessions, and choose which items are visible to end
+    #   users during their sessions. If administrators do not modify these
+    #   settings, end users retain control over their toolbar preferences.
+    #   @return [Types::ToolbarConfiguration]
+    #
     # @!attribute [rw] upload_allowed
     #   Specifies whether the user can upload files from the local device to
     #   the streaming session.
@@ -1101,6 +1109,7 @@ module Aws::WorkSpacesWeb
       :paste_allowed,
       :print_allowed,
       :tags,
+      :toolbar_configuration,
       :upload_allowed)
       SENSITIVE = [:cookie_synchronization_configuration, :tags]
       include Aws::Structure
@@ -3172,6 +3181,39 @@ module Aws::WorkSpacesWeb
       include Aws::Structure
     end
 
+    # The configuration of the toolbar. This allows administrators to select
+    # the toolbar type and visual mode, set maximum display resolution for
+    # sessions, and choose which items are visible to end users during their
+    # sessions. If administrators do not modify these settings, end users
+    # retain control over their toolbar preferences.
+    #
+    # @!attribute [rw] hidden_toolbar_items
+    #   The list of toolbar items to be hidden.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] max_display_resolution
+    #   The maximum display resolution that is allowed for the session.
+    #   @return [String]
+    #
+    # @!attribute [rw] toolbar_type
+    #   The type of toolbar displayed during the session.
+    #   @return [String]
+    #
+    # @!attribute [rw] visual_mode
+    #   The visual mode of the toolbar.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/ToolbarConfiguration AWS API Documentation
+    #
+    class ToolbarConfiguration < Struct.new(
+      :hidden_toolbar_items,
+      :max_display_resolution,
+      :toolbar_type,
+      :visual_mode)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A trust store that can be associated with a web portal. A trust store
     # contains certificate authority (CA) certificates. Once associated with
     # a web portal, the browser in a streaming session will recognize
@@ -3769,6 +3811,14 @@ module Aws::WorkSpacesWeb
     #   Specifies whether the user can print to the local device.
     #   @return [String]
     #
+    # @!attribute [rw] toolbar_configuration
+    #   The configuration of the toolbar. This allows administrators to
+    #   select the toolbar type and visual mode, set maximum display
+    #   resolution for sessions, and choose which items are visible to end
+    #   users during their sessions. If administrators do not modify these
+    #   settings, end users retain control over their toolbar preferences.
+    #   @return [Types::ToolbarConfiguration]
+    #
     # @!attribute [rw] upload_allowed
     #   Specifies whether the user can upload files from the local device to
     #   the streaming session.
@@ -3790,6 +3840,7 @@ module Aws::WorkSpacesWeb
       :idle_disconnect_timeout_in_minutes,
       :paste_allowed,
       :print_allowed,
+      :toolbar_configuration,
       :upload_allowed,
       :user_settings_arn)
       SENSITIVE = [:cookie_synchronization_configuration]
@@ -3912,6 +3963,14 @@ module Aws::WorkSpacesWeb
     #   Specifies whether the user can print to the local device.
     #   @return [String]
     #
+    # @!attribute [rw] toolbar_configuration
+    #   The configuration of the toolbar. This allows administrators to
+    #   select the toolbar type and visual mode, set maximum display
+    #   resolution for sessions, and choose which items are visible to end
+    #   users during their sessions. If administrators do not modify these
+    #   settings, end users retain control over their toolbar preferences.
+    #   @return [Types::ToolbarConfiguration]
+    #
     # @!attribute [rw] upload_allowed
     #   Specifies whether the user can upload files from the local device to
     #   the streaming session.
@@ -3935,6 +3994,7 @@ module Aws::WorkSpacesWeb
       :idle_disconnect_timeout_in_minutes,
       :paste_allowed,
       :print_allowed,
+      :toolbar_configuration,
       :upload_allowed,
       :user_settings_arn)
       SENSITIVE = [:cookie_synchronization_configuration]
@@ -3984,6 +4044,14 @@ module Aws::WorkSpacesWeb
     #   Specifies whether the user can print to the local device.
     #   @return [String]
     #
+    # @!attribute [rw] toolbar_configuration
+    #   The configuration of the toolbar. This allows administrators to
+    #   select the toolbar type and visual mode, set maximum display
+    #   resolution for sessions, and choose which items are visible to end
+    #   users during their sessions. If administrators do not modify these
+    #   settings, end users retain control over their toolbar preferences.
+    #   @return [Types::ToolbarConfiguration]
+    #
     # @!attribute [rw] upload_allowed
     #   Specifies whether the user can upload files from the local device to
     #   the streaming session.
@@ -4004,6 +4072,7 @@ module Aws::WorkSpacesWeb
       :idle_disconnect_timeout_in_minutes,
       :paste_allowed,
       :print_allowed,
+      :toolbar_configuration,
       :upload_allowed,
       :user_settings_arn)
       SENSITIVE = [:cookie_synchronization_configuration]

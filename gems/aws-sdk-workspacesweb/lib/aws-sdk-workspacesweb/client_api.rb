@@ -145,6 +145,7 @@ module Aws::WorkSpacesWeb
     GetUserSettingsRequest = Shapes::StructureShape.new(name: 'GetUserSettingsRequest')
     GetUserSettingsResponse = Shapes::StructureShape.new(name: 'GetUserSettingsResponse')
     GlobalInlineRedactionUrls = Shapes::ListShape.new(name: 'GlobalInlineRedactionUrls')
+    HiddenToolbarItemList = Shapes::ListShape.new(name: 'HiddenToolbarItemList')
     IdentityProvider = Shapes::StructureShape.new(name: 'IdentityProvider')
     IdentityProviderDetails = Shapes::MapShape.new(name: 'IdentityProviderDetails')
     IdentityProviderList = Shapes::ListShape.new(name: 'IdentityProviderList')
@@ -193,6 +194,7 @@ module Aws::WorkSpacesWeb
     ListUserSettingsRequest = Shapes::StructureShape.new(name: 'ListUserSettingsRequest')
     ListUserSettingsResponse = Shapes::StructureShape.new(name: 'ListUserSettingsResponse')
     MaxConcurrentSessions = Shapes::IntegerShape.new(name: 'MaxConcurrentSessions')
+    MaxDisplayResolution = Shapes::StringShape.new(name: 'MaxDisplayResolution')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
     NetworkSettings = Shapes::StructureShape.new(name: 'NetworkSettings')
     NetworkSettingsList = Shapes::ListShape.new(name: 'NetworkSettingsList')
@@ -242,6 +244,9 @@ module Aws::WorkSpacesWeb
     ThrottlingException = Shapes::StructureShape.new(name: 'ThrottlingException')
     Timestamp = Shapes::TimestampShape.new(name: 'Timestamp')
     TooManyTagsException = Shapes::StructureShape.new(name: 'TooManyTagsException')
+    ToolbarConfiguration = Shapes::StructureShape.new(name: 'ToolbarConfiguration')
+    ToolbarItem = Shapes::StringShape.new(name: 'ToolbarItem')
+    ToolbarType = Shapes::StringShape.new(name: 'ToolbarType')
     TrustStore = Shapes::StructureShape.new(name: 'TrustStore')
     TrustStoreSummary = Shapes::StructureShape.new(name: 'TrustStoreSummary')
     TrustStoreSummaryList = Shapes::ListShape.new(name: 'TrustStoreSummaryList')
@@ -276,6 +281,7 @@ module Aws::WorkSpacesWeb
     ValidationExceptionField = Shapes::StructureShape.new(name: 'ValidationExceptionField')
     ValidationExceptionFieldList = Shapes::ListShape.new(name: 'ValidationExceptionFieldList')
     ValidationExceptionReason = Shapes::StringShape.new(name: 'ValidationExceptionReason')
+    VisualMode = Shapes::StringShape.new(name: 'VisualMode')
     VpcId = Shapes::StringShape.new(name: 'VpcId')
     keyArn = Shapes::StringShape.new(name: 'keyArn')
 
@@ -486,6 +492,7 @@ module Aws::WorkSpacesWeb
     CreateUserSettingsRequest.add_member(:paste_allowed, Shapes::ShapeRef.new(shape: EnabledType, required: true, location_name: "pasteAllowed"))
     CreateUserSettingsRequest.add_member(:print_allowed, Shapes::ShapeRef.new(shape: EnabledType, required: true, location_name: "printAllowed"))
     CreateUserSettingsRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tags"))
+    CreateUserSettingsRequest.add_member(:toolbar_configuration, Shapes::ShapeRef.new(shape: ToolbarConfiguration, location_name: "toolbarConfiguration"))
     CreateUserSettingsRequest.add_member(:upload_allowed, Shapes::ShapeRef.new(shape: EnabledType, required: true, location_name: "uploadAllowed"))
     CreateUserSettingsRequest.struct_class = Types::CreateUserSettingsRequest
 
@@ -682,6 +689,8 @@ module Aws::WorkSpacesWeb
     GetUserSettingsResponse.struct_class = Types::GetUserSettingsResponse
 
     GlobalInlineRedactionUrls.member = Shapes::ShapeRef.new(shape: InlineRedactionUrl)
+
+    HiddenToolbarItemList.member = Shapes::ShapeRef.new(shape: ToolbarItem)
 
     IdentityProvider.add_member(:identity_provider_arn, Shapes::ShapeRef.new(shape: SubresourceARN, required: true, location_name: "identityProviderArn"))
     IdentityProvider.add_member(:identity_provider_details, Shapes::ShapeRef.new(shape: IdentityProviderDetails, location_name: "identityProviderDetails"))
@@ -969,6 +978,12 @@ module Aws::WorkSpacesWeb
     TooManyTagsException.add_member(:resource_name, Shapes::ShapeRef.new(shape: ARN, location_name: "resourceName"))
     TooManyTagsException.struct_class = Types::TooManyTagsException
 
+    ToolbarConfiguration.add_member(:hidden_toolbar_items, Shapes::ShapeRef.new(shape: HiddenToolbarItemList, location_name: "hiddenToolbarItems"))
+    ToolbarConfiguration.add_member(:max_display_resolution, Shapes::ShapeRef.new(shape: MaxDisplayResolution, location_name: "maxDisplayResolution"))
+    ToolbarConfiguration.add_member(:toolbar_type, Shapes::ShapeRef.new(shape: ToolbarType, location_name: "toolbarType"))
+    ToolbarConfiguration.add_member(:visual_mode, Shapes::ShapeRef.new(shape: VisualMode, location_name: "visualMode"))
+    ToolbarConfiguration.struct_class = Types::ToolbarConfiguration
+
     TrustStore.add_member(:associated_portal_arns, Shapes::ShapeRef.new(shape: ArnList, location_name: "associatedPortalArns"))
     TrustStore.add_member(:trust_store_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "trustStoreArn"))
     TrustStore.struct_class = Types::TrustStore
@@ -1068,6 +1083,7 @@ module Aws::WorkSpacesWeb
     UpdateUserSettingsRequest.add_member(:idle_disconnect_timeout_in_minutes, Shapes::ShapeRef.new(shape: IdleDisconnectTimeoutInMinutes, location_name: "idleDisconnectTimeoutInMinutes"))
     UpdateUserSettingsRequest.add_member(:paste_allowed, Shapes::ShapeRef.new(shape: EnabledType, location_name: "pasteAllowed"))
     UpdateUserSettingsRequest.add_member(:print_allowed, Shapes::ShapeRef.new(shape: EnabledType, location_name: "printAllowed"))
+    UpdateUserSettingsRequest.add_member(:toolbar_configuration, Shapes::ShapeRef.new(shape: ToolbarConfiguration, location_name: "toolbarConfiguration"))
     UpdateUserSettingsRequest.add_member(:upload_allowed, Shapes::ShapeRef.new(shape: EnabledType, location_name: "uploadAllowed"))
     UpdateUserSettingsRequest.add_member(:user_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "uri", location_name: "userSettingsArn"))
     UpdateUserSettingsRequest.struct_class = Types::UpdateUserSettingsRequest
@@ -1097,6 +1113,7 @@ module Aws::WorkSpacesWeb
     UserSettings.add_member(:idle_disconnect_timeout_in_minutes, Shapes::ShapeRef.new(shape: IdleDisconnectTimeoutInMinutes, location_name: "idleDisconnectTimeoutInMinutes"))
     UserSettings.add_member(:paste_allowed, Shapes::ShapeRef.new(shape: EnabledType, location_name: "pasteAllowed"))
     UserSettings.add_member(:print_allowed, Shapes::ShapeRef.new(shape: EnabledType, location_name: "printAllowed"))
+    UserSettings.add_member(:toolbar_configuration, Shapes::ShapeRef.new(shape: ToolbarConfiguration, location_name: "toolbarConfiguration"))
     UserSettings.add_member(:upload_allowed, Shapes::ShapeRef.new(shape: EnabledType, location_name: "uploadAllowed"))
     UserSettings.add_member(:user_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "userSettingsArn"))
     UserSettings.struct_class = Types::UserSettings
@@ -1111,6 +1128,7 @@ module Aws::WorkSpacesWeb
     UserSettingsSummary.add_member(:idle_disconnect_timeout_in_minutes, Shapes::ShapeRef.new(shape: IdleDisconnectTimeoutInMinutes, location_name: "idleDisconnectTimeoutInMinutes"))
     UserSettingsSummary.add_member(:paste_allowed, Shapes::ShapeRef.new(shape: EnabledType, location_name: "pasteAllowed"))
     UserSettingsSummary.add_member(:print_allowed, Shapes::ShapeRef.new(shape: EnabledType, location_name: "printAllowed"))
+    UserSettingsSummary.add_member(:toolbar_configuration, Shapes::ShapeRef.new(shape: ToolbarConfiguration, location_name: "toolbarConfiguration"))
     UserSettingsSummary.add_member(:upload_allowed, Shapes::ShapeRef.new(shape: EnabledType, location_name: "uploadAllowed"))
     UserSettingsSummary.add_member(:user_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "userSettingsArn"))
     UserSettingsSummary.struct_class = Types::UserSettingsSummary

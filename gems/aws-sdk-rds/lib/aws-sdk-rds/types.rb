@@ -2907,7 +2907,7 @@ module Aws::RDS
     #   `PerformanceInsightsEnabled` parameter to `true` and the
     #   `PerformanceInsightsRetentionPeriod` parameter to 465.
     #
-    #   Valid for Cluster Type: Aurora DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #   @return [String]
     #
     # @!attribute [rw] enable_performance_insights
@@ -4431,10 +4431,8 @@ module Aws::RDS
     # @!attribute [rw] database_insights_mode
     #   The mode of Database Insights to enable for the DB instance.
     #
-    #   This setting only applies to Amazon Aurora DB instances.
-    #
-    #   <note markdown="1"> Currently, this value is inherited from the DB cluster and can't be
-    #   changed.
+    #   <note markdown="1"> Aurora DB instances inherit this value from the DB cluster, so you
+    #   can't change this value.
     #
     #    </note>
     #   @return [String]
@@ -5238,7 +5236,7 @@ module Aws::RDS
     # @!attribute [rw] database_insights_mode
     #   The mode of Database Insights to enable for the read replica.
     #
-    #   <note markdown="1"> Currently, this setting is not supported.
+    #   <note markdown="1"> This setting isn't supported.
     #
     #    </note>
     #   @return [String]
@@ -17837,7 +17835,7 @@ module Aws::RDS
     #   If you change the value from `advanced` to `standard`, you must set
     #   the `PerformanceInsightsEnabled` parameter to `false`.
     #
-    #   Valid for Cluster Type: Aurora DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #   @return [String]
     #
     # @!attribute [rw] enable_performance_insights
@@ -19068,10 +19066,8 @@ module Aws::RDS
     #   Specifies the mode of Database Insights to enable for the DB
     #   instance.
     #
-    #   This setting only applies to Amazon Aurora DB instances.
-    #
-    #   <note markdown="1"> Currently, this value is inherited from the DB cluster and can't be
-    #   changed.
+    #   <note markdown="1"> Aurora DB instances inherit this value from the DB cluster, so you
+    #   can't change this value.
     #
     #    </note>
     #   @return [String]
@@ -25608,10 +25604,8 @@ module Aws::RDS
     #   Specifies the mode of Database Insights to enable for the DB
     #   instance.
     #
-    #   This setting only applies to Amazon Aurora DB instances.
-    #
-    #   <note markdown="1"> Currently, this value is inherited from the DB cluster and can't be
-    #   changed.
+    #   <note markdown="1"> Aurora DB instances inherit this value from the DB cluster, so you
+    #   can't change this value.
     #
     #    </note>
     #   @return [String]

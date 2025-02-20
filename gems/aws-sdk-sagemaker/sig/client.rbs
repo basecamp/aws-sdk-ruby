@@ -8526,7 +8526,8 @@ module Aws
                                 }?
                               },
                             ],
-                            ?node_recovery: ("Automatic" | "None")
+                            ?node_recovery: ("Automatic" | "None"),
+                            ?instance_groups_to_delete: Array[::String]
                           ) -> _UpdateClusterResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateClusterResponseSuccess
 

@@ -1614,7 +1614,7 @@ module Aws::RDS
     #   `PerformanceInsightsEnabled` parameter to `true` and the
     #   `PerformanceInsightsRetentionPeriod` parameter to 465.
     #
-    #   Valid for Cluster Type: Aurora DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to turn on Performance Insights for the DB cluster.
     #
@@ -2450,7 +2450,7 @@ module Aws::RDS
     #   If you change the value from `advanced` to `standard`, you must set
     #   the `PerformanceInsightsEnabled` parameter to `false`.
     #
-    #   Valid for Cluster Type: Aurora DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to turn on Performance Insights for the DB cluster.
     #
