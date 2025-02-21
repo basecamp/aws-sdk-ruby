@@ -2423,6 +2423,7 @@ module Aws::AppStream
         o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
         o.errors << Shapes::ShapeRef.new(shape: OperationNotPermittedException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRoleException)
+        o.errors << Shapes::ShapeRef.new(shape: IncompatibleImageException)
       end)
 
       api.add_operation(:update_entitlement, Seahorse::Model::Operation.new.tap do |o|

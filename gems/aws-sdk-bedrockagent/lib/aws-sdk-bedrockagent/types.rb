@@ -1231,20 +1231,11 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
-    # Settings for a foundation model or [inference profile][1] used to
-    # parse documents for a data source.
-    #
-    #
-    #
-    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html
+    # Settings for a foundation model used to parse documents for a data
+    # source.
     #
     # @!attribute [rw] model_arn
-    #   The ARN of the foundation model or [inference profile][1] to use for
-    #   parsing.
-    #
-    #
-    #
-    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html
+    #   The ARN of the foundation model to use for parsing.
     #   @return [String]
     #
     # @!attribute [rw] parsing_modality
@@ -10628,8 +10619,8 @@ module Aws::BedrockAgent
     # the knowledge base.
     #
     # @!attribute [rw] embedding_model_arn
-    #   The Amazon Resource Name (ARN) of the model or inference profile
-    #   used to create vector embeddings for the knowledge base.
+    #   The Amazon Resource Name (ARN) of the model used to create vector
+    #   embeddings for the knowledge base.
     #   @return [String]
     #
     # @!attribute [rw] embedding_model_configuration
@@ -10693,11 +10684,16 @@ module Aws::BedrockAgent
     #   @return [String]
     #
     # @!attribute [rw] user_agent
-    #   A string used for identifying the crawler or a bot when it accesses
-    #   a web server. By default, this is set to `bedrockbot_UUID` for your
-    #   crawler. You can optionally append a custom string to
-    #   `bedrockbot_UUID` to allowlist a specific user agent permitted to
-    #   access your source URLs.
+    #   Returns the user agent suffix for your web crawler.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_agent_header
+    #   A string used for identifying the crawler or bot when it accesses a
+    #   web server. The user agent header value consists of the
+    #   `bedrockbot`, UUID, and a user agent suffix for your crawler (if one
+    #   is provided). By default, it is set to `bedrockbot_UUID`. You can
+    #   optionally append a custom suffix to `bedrockbot_UUID` to allowlist
+    #   a specific user agent permitted to access your source URLs.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/WebCrawlerConfiguration AWS API Documentation
@@ -10707,8 +10703,9 @@ module Aws::BedrockAgent
       :exclusion_filters,
       :inclusion_filters,
       :scope,
-      :user_agent)
-      SENSITIVE = [:exclusion_filters, :inclusion_filters, :user_agent]
+      :user_agent,
+      :user_agent_header)
+      SENSITIVE = [:exclusion_filters, :inclusion_filters, :user_agent, :user_agent_header]
       include Aws::Structure
     end
 

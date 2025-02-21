@@ -1261,6 +1261,7 @@ module Aws::BedrockAgent
     #           inclusion_filters: ["FilterPattern"],
     #           scope: "HOST_ONLY", # accepts HOST_ONLY, SUBDOMAINS
     #           user_agent: "UserAgent",
+    #           user_agent_header: "UserAgentHeader",
     #         },
     #         source_configuration: { # required
     #           url_configuration: { # required
@@ -1385,6 +1386,7 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.inclusion_filters[0] #=> String
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.scope #=> String, one of "HOST_ONLY", "SUBDOMAINS"
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.user_agent #=> String
+    #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.user_agent_header #=> String
     #   resp.data_source.data_source_configuration.web_configuration.source_configuration.url_configuration.seed_urls #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.source_configuration.url_configuration.seed_urls[0].url #=> String
     #   resp.data_source.data_source_id #=> String
@@ -3577,6 +3579,7 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.inclusion_filters[0] #=> String
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.scope #=> String, one of "HOST_ONLY", "SUBDOMAINS"
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.user_agent #=> String
+    #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.user_agent_header #=> String
     #   resp.data_source.data_source_configuration.web_configuration.source_configuration.url_configuration.seed_urls #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.source_configuration.url_configuration.seed_urls[0].url #=> String
     #   resp.data_source.data_source_id #=> String
@@ -6129,6 +6132,7 @@ module Aws::BedrockAgent
     #           inclusion_filters: ["FilterPattern"],
     #           scope: "HOST_ONLY", # accepts HOST_ONLY, SUBDOMAINS
     #           user_agent: "UserAgent",
+    #           user_agent_header: "UserAgentHeader",
     #         },
     #         source_configuration: { # required
     #           url_configuration: { # required
@@ -6254,6 +6258,7 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.inclusion_filters[0] #=> String
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.scope #=> String, one of "HOST_ONLY", "SUBDOMAINS"
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.user_agent #=> String
+    #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.user_agent_header #=> String
     #   resp.data_source.data_source_configuration.web_configuration.source_configuration.url_configuration.seed_urls #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.source_configuration.url_configuration.seed_urls[0].url #=> String
     #   resp.data_source.data_source_id #=> String
@@ -7443,7 +7448,7 @@ module Aws::BedrockAgent
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagent'
-      context[:gem_version] = '1.46.0'
+      context[:gem_version] = '1.47.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

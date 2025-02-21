@@ -618,6 +618,7 @@ module Aws::BedrockAgent
     Url = Shapes::StringShape.new(name: 'Url')
     UrlConfiguration = Shapes::StructureShape.new(name: 'UrlConfiguration')
     UserAgent = Shapes::StringShape.new(name: 'UserAgent')
+    UserAgentHeader = Shapes::StringShape.new(name: 'UserAgentHeader')
     ValidateFlowDefinitionRequest = Shapes::StructureShape.new(name: 'ValidateFlowDefinitionRequest')
     ValidateFlowDefinitionResponse = Shapes::StructureShape.new(name: 'ValidateFlowDefinitionResponse')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
@@ -2705,6 +2706,7 @@ module Aws::BedrockAgent
     WebCrawlerConfiguration.add_member(:inclusion_filters, Shapes::ShapeRef.new(shape: FilterList, location_name: "inclusionFilters"))
     WebCrawlerConfiguration.add_member(:scope, Shapes::ShapeRef.new(shape: WebScopeType, location_name: "scope"))
     WebCrawlerConfiguration.add_member(:user_agent, Shapes::ShapeRef.new(shape: UserAgent, location_name: "userAgent"))
+    WebCrawlerConfiguration.add_member(:user_agent_header, Shapes::ShapeRef.new(shape: UserAgentHeader, location_name: "userAgentHeader"))
     WebCrawlerConfiguration.struct_class = Types::WebCrawlerConfiguration
 
     WebCrawlerLimits.add_member(:max_pages, Shapes::ShapeRef.new(shape: WebCrawlerLimitsMaxPagesInteger, location_name: "maxPages"))

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.108.0 (2025-02-21)
+------------------
+
+* Feature - Added support for Certificate-Based Authentication on AppStream 2.0 multi-session fleets.
+
 1.107.0 (2025-02-18)
 ------------------
 

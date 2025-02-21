@@ -2756,7 +2756,8 @@ module Aws::BedrockAgent
       attr_accessor inclusion_filters: ::Array[::String]
       attr_accessor scope: ("HOST_ONLY" | "SUBDOMAINS")
       attr_accessor user_agent: ::String
-      SENSITIVE: [:exclusion_filters, :inclusion_filters, :user_agent]
+      attr_accessor user_agent_header: ::String
+      SENSITIVE: [:exclusion_filters, :inclusion_filters, :user_agent, :user_agent_header]
     end
 
     class WebCrawlerLimits

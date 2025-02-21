@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.47.0 (2025-02-21)
+------------------
+
+* Feature - Introduce a new parameter which represents the user-agent header value used by the Bedrock Knowledge Base Web Connector.
+
 1.46.0 (2025-02-18)
 ------------------
 

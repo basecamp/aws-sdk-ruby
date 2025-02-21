@@ -319,7 +319,8 @@ module Aws
                                       exclusion_filters: Array[::String]?,
                                       inclusion_filters: Array[::String]?,
                                       scope: ("HOST_ONLY" | "SUBDOMAINS")?,
-                                      user_agent: ::String?
+                                      user_agent: ::String?,
+                                      user_agent_header: ::String?
                                     }?,
                                     source_configuration: {
                                       url_configuration: {
@@ -1886,7 +1887,8 @@ module Aws
                                       exclusion_filters: Array[::String]?,
                                       inclusion_filters: Array[::String]?,
                                       scope: ("HOST_ONLY" | "SUBDOMAINS")?,
-                                      user_agent: ::String?
+                                      user_agent: ::String?,
+                                      user_agent_header: ::String?
                                     }?,
                                     source_configuration: {
                                       url_configuration: {
