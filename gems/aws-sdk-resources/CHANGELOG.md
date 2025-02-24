@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+3.223.0 (2025-02-24)
+------------------
+
+* Feature - Removed a dependency on the deprecated `aws-sdk-elasticinference` gem.
+
 3.222.0 (2025-01-08)
 ------------------
 

@@ -80,8 +80,9 @@ module Aws::BedrockRuntime
       attr_accessor tool_use: Types::ToolUseBlock
       attr_accessor tool_result: Types::ToolResultBlock
       attr_accessor guard_content: Types::GuardrailConverseContentBlock
+      attr_accessor reasoning_content: Types::ReasoningContentBlock
       attr_accessor unknown: untyped
-      SENSITIVE: []
+      SENSITIVE: [:reasoning_content]
 
       class Text < ContentBlock
       end
@@ -97,6 +98,8 @@ module Aws::BedrockRuntime
       end
       class GuardContent < ContentBlock
       end
+      class ReasoningContent < ContentBlock
+      end
       class Unknown < ContentBlock
       end
     end
@@ -104,12 +107,15 @@ module Aws::BedrockRuntime
     class ContentBlockDelta
       attr_accessor text: ::String
       attr_accessor tool_use: Types::ToolUseBlockDelta
+      attr_accessor reasoning_content: Types::ReasoningContentBlockDelta
       attr_accessor unknown: untyped
-      SENSITIVE: []
+      SENSITIVE: [:reasoning_content]
 
       class Text < ContentBlockDelta
       end
       class ToolUse < ContentBlockDelta
+      end
+      class ReasoningContent < ContentBlockDelta
       end
       class Unknown < ContentBlockDelta
       end
@@ -650,6 +656,43 @@ module Aws::BedrockRuntime
       end
       class Unknown < PromptVariableValues
       end
+    end
+
+    class ReasoningContentBlock
+      attr_accessor reasoning_text: Types::ReasoningTextBlock
+      attr_accessor redacted_content: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: [:reasoning_text]
+
+      class ReasoningText < ReasoningContentBlock
+      end
+      class RedactedContent < ReasoningContentBlock
+      end
+      class Unknown < ReasoningContentBlock
+      end
+    end
+
+    class ReasoningContentBlockDelta
+      attr_accessor text: ::String
+      attr_accessor redacted_content: ::String
+      attr_accessor signature: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Text < ReasoningContentBlockDelta
+      end
+      class RedactedContent < ReasoningContentBlockDelta
+      end
+      class Signature < ReasoningContentBlockDelta
+      end
+      class Unknown < ReasoningContentBlockDelta
+      end
+    end
+
+    class ReasoningTextBlock
+      attr_accessor text: ::String
+      attr_accessor signature: ::String
+      SENSITIVE: []
     end
 
     class ResourceNotFoundException

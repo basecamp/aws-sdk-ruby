@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.39.0 (2025-02-24)
+------------------
+
+* Feature - This release adds Reasoning Content support to Converse and ConverseStream APIs
+
 1.38.0 (2025-02-18)
 ------------------
 

@@ -270,6 +270,12 @@ module Aws::BedrockRuntime
     #   the *Amazon Bedrock User Guide*.      </p>
     #   @return [Types::GuardrailConverseContentBlock]
     #
+    # @!attribute [rw] reasoning_content
+    #   Contains content regarding the reasoning that is carried out by the
+    #   model. Reasoning refers to a Chain of Thought (CoT) that the model
+    #   generates to enhance the accuracy of its final response.
+    #   @return [Types::ReasoningContentBlock]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ContentBlock AWS API Documentation
     #
     class ContentBlock < Struct.new(
@@ -280,8 +286,9 @@ module Aws::BedrockRuntime
       :tool_use,
       :tool_result,
       :guard_content,
+      :reasoning_content,
       :unknown)
-      SENSITIVE = []
+      SENSITIVE = [:reasoning_content]
       include Aws::Structure
       include Aws::Structure::Union
 
@@ -292,10 +299,11 @@ module Aws::BedrockRuntime
       class ToolUse < ContentBlock; end
       class ToolResult < ContentBlock; end
       class GuardContent < ContentBlock; end
+      class ReasoningContent < ContentBlock; end
       class Unknown < ContentBlock; end
     end
 
-    # A bock of content in a streaming response.
+    # A block of content in a streaming response.
     #
     # @note ContentBlockDelta is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of ContentBlockDelta corresponding to the set member.
     #
@@ -307,18 +315,26 @@ module Aws::BedrockRuntime
     #   Information about a tool that the model is requesting to use.
     #   @return [Types::ToolUseBlockDelta]
     #
+    # @!attribute [rw] reasoning_content
+    #   Contains content regarding the reasoning that is carried out by the
+    #   model. Reasoning refers to a Chain of Thought (CoT) that the model
+    #   generates to enhance the accuracy of its final response.
+    #   @return [Types::ReasoningContentBlockDelta]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ContentBlockDelta AWS API Documentation
     #
     class ContentBlockDelta < Struct.new(
       :text,
       :tool_use,
+      :reasoning_content,
       :unknown)
-      SENSITIVE = []
+      SENSITIVE = [:reasoning_content]
       include Aws::Structure
       include Aws::Structure::Union
 
       class Text < ContentBlockDelta; end
       class ToolUse < ContentBlockDelta; end
+      class ReasoningContent < ContentBlockDelta; end
       class Unknown < ContentBlockDelta; end
     end
 
@@ -2416,6 +2432,101 @@ module Aws::BedrockRuntime
 
       class Text < PromptVariableValues; end
       class Unknown < PromptVariableValues; end
+    end
+
+    # Contains content regarding the reasoning that is carried out by the
+    # model with respect to the content in the content block. Reasoning
+    # refers to a Chain of Thought (CoT) that the model generates to enhance
+    # the accuracy of its final response.
+    #
+    # @note ReasoningContentBlock is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note ReasoningContentBlock is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of ReasoningContentBlock corresponding to the set member.
+    #
+    # @!attribute [rw] reasoning_text
+    #   The reasoning that the model used to return the output.
+    #   @return [Types::ReasoningTextBlock]
+    #
+    # @!attribute [rw] redacted_content
+    #   The content in the reasoning that was encrypted by the model
+    #   provider for safety reasons. The encryption doesn't affect the
+    #   quality of responses.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ReasoningContentBlock AWS API Documentation
+    #
+    class ReasoningContentBlock < Struct.new(
+      :reasoning_text,
+      :redacted_content,
+      :unknown)
+      SENSITIVE = [:reasoning_text]
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class ReasoningText < ReasoningContentBlock; end
+      class RedactedContent < ReasoningContentBlock; end
+      class Unknown < ReasoningContentBlock; end
+    end
+
+    # Contains content regarding the reasoning that is carried out by the
+    # model with respect to the content in the content block. Reasoning
+    # refers to a Chain of Thought (CoT) that the model generates to enhance
+    # the accuracy of its final response.
+    #
+    # @note ReasoningContentBlockDelta is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of ReasoningContentBlockDelta corresponding to the set member.
+    #
+    # @!attribute [rw] text
+    #   The reasoning that the model used to return the output.
+    #   @return [String]
+    #
+    # @!attribute [rw] redacted_content
+    #   The content in the reasoning that was encrypted by the model
+    #   provider for safety reasons. The encryption doesn't affect the
+    #   quality of responses.
+    #   @return [String]
+    #
+    # @!attribute [rw] signature
+    #   A token that verifies that the reasoning text was generated by the
+    #   model. If you pass a reasoning block back to the API in a multi-turn
+    #   conversation, include the text and its signature unmodified.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ReasoningContentBlockDelta AWS API Documentation
+    #
+    class ReasoningContentBlockDelta < Struct.new(
+      :text,
+      :redacted_content,
+      :signature,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Text < ReasoningContentBlockDelta; end
+      class RedactedContent < ReasoningContentBlockDelta; end
+      class Signature < ReasoningContentBlockDelta; end
+      class Unknown < ReasoningContentBlockDelta; end
+    end
+
+    # Contains the reasoning that the model used to return the output.
+    #
+    # @!attribute [rw] text
+    #   The reasoning that the model used to return the output.
+    #   @return [String]
+    #
+    # @!attribute [rw] signature
+    #   A token that verifies that the reasoning text was generated by the
+    #   model. If you pass a reasoning block back to the API in a multi-turn
+    #   conversation, include the text and its signature unmodified.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ReasoningTextBlock AWS API Documentation
+    #
+    class ReasoningTextBlock < Struct.new(
+      :text,
+      :signature)
+      SENSITIVE = []
+      include Aws::Structure
     end
 
     # The specified resource ARN was not found. For troubleshooting this

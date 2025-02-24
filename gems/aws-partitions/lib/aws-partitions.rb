@@ -386,7 +386,6 @@ module Aws
             'EMRServerless' => 'emr-serverless',
             'ElastiCache' => 'elasticache',
             'ElasticBeanstalk' => 'elasticbeanstalk',
-            'ElasticInference' => 'api.elastic-inference',
             'ElasticLoadBalancing' => 'elasticloadbalancing',
             'ElasticLoadBalancingV2' => 'elasticloadbalancing',
             'ElasticTranscoder' => 'elastictranscoder',

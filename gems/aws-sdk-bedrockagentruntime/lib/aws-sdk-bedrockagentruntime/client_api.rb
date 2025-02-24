@@ -56,6 +56,7 @@ module Aws::BedrockAgentRuntime
     BedrockRerankingConfigurationNumberOfResultsInteger = Shapes::IntegerShape.new(name: 'BedrockRerankingConfigurationNumberOfResultsInteger')
     BedrockRerankingModelArn = Shapes::StringShape.new(name: 'BedrockRerankingModelArn')
     BedrockRerankingModelConfiguration = Shapes::StructureShape.new(name: 'BedrockRerankingModelConfiguration')
+    Blob = Shapes::BlobShape.new(name: 'Blob')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
     ByteContentBlob = Shapes::BlobShape.new(name: 'ByteContentBlob')
     ByteContentDoc = Shapes::StructureShape.new(name: 'ByteContentDoc')
@@ -320,6 +321,8 @@ module Aws::BedrockAgentRuntime
     Rationale = Shapes::StructureShape.new(name: 'Rationale')
     RationaleString = Shapes::StringShape.new(name: 'RationaleString')
     RawResponse = Shapes::StructureShape.new(name: 'RawResponse')
+    ReasoningContentBlock = Shapes::UnionShape.new(name: 'ReasoningContentBlock')
+    ReasoningTextBlock = Shapes::StructureShape.new(name: 'ReasoningTextBlock')
     RepromptResponse = Shapes::StructureShape.new(name: 'RepromptResponse')
     RequestBody = Shapes::StructureShape.new(name: 'RequestBody')
     RequireConfirmation = Shapes::StringShape.new(name: 'RequireConfirmation')
@@ -1244,6 +1247,7 @@ module Aws::BedrockAgentRuntime
 
     OrchestrationModelInvocationOutput.add_member(:metadata, Shapes::ShapeRef.new(shape: Metadata, location_name: "metadata"))
     OrchestrationModelInvocationOutput.add_member(:raw_response, Shapes::ShapeRef.new(shape: RawResponse, location_name: "rawResponse"))
+    OrchestrationModelInvocationOutput.add_member(:reasoning_content, Shapes::ShapeRef.new(shape: ReasoningContentBlock, location_name: "reasoningContent"))
     OrchestrationModelInvocationOutput.add_member(:trace_id, Shapes::ShapeRef.new(shape: TraceId, location_name: "traceId"))
     OrchestrationModelInvocationOutput.struct_class = Types::OrchestrationModelInvocationOutput
 
@@ -1295,6 +1299,7 @@ module Aws::BedrockAgentRuntime
     PostProcessingModelInvocationOutput.add_member(:metadata, Shapes::ShapeRef.new(shape: Metadata, location_name: "metadata"))
     PostProcessingModelInvocationOutput.add_member(:parsed_response, Shapes::ShapeRef.new(shape: PostProcessingParsedResponse, location_name: "parsedResponse"))
     PostProcessingModelInvocationOutput.add_member(:raw_response, Shapes::ShapeRef.new(shape: RawResponse, location_name: "rawResponse"))
+    PostProcessingModelInvocationOutput.add_member(:reasoning_content, Shapes::ShapeRef.new(shape: ReasoningContentBlock, location_name: "reasoningContent"))
     PostProcessingModelInvocationOutput.add_member(:trace_id, Shapes::ShapeRef.new(shape: TraceId, location_name: "traceId"))
     PostProcessingModelInvocationOutput.struct_class = Types::PostProcessingModelInvocationOutput
 
@@ -1312,6 +1317,7 @@ module Aws::BedrockAgentRuntime
     PreProcessingModelInvocationOutput.add_member(:metadata, Shapes::ShapeRef.new(shape: Metadata, location_name: "metadata"))
     PreProcessingModelInvocationOutput.add_member(:parsed_response, Shapes::ShapeRef.new(shape: PreProcessingParsedResponse, location_name: "parsedResponse"))
     PreProcessingModelInvocationOutput.add_member(:raw_response, Shapes::ShapeRef.new(shape: RawResponse, location_name: "rawResponse"))
+    PreProcessingModelInvocationOutput.add_member(:reasoning_content, Shapes::ShapeRef.new(shape: ReasoningContentBlock, location_name: "reasoningContent"))
     PreProcessingModelInvocationOutput.add_member(:trace_id, Shapes::ShapeRef.new(shape: TraceId, location_name: "traceId"))
     PreProcessingModelInvocationOutput.struct_class = Types::PreProcessingModelInvocationOutput
 
@@ -1366,6 +1372,18 @@ module Aws::BedrockAgentRuntime
 
     RawResponse.add_member(:content, Shapes::ShapeRef.new(shape: String, location_name: "content"))
     RawResponse.struct_class = Types::RawResponse
+
+    ReasoningContentBlock.add_member(:reasoning_text, Shapes::ShapeRef.new(shape: ReasoningTextBlock, location_name: "reasoningText"))
+    ReasoningContentBlock.add_member(:redacted_content, Shapes::ShapeRef.new(shape: Blob, location_name: "redactedContent"))
+    ReasoningContentBlock.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    ReasoningContentBlock.add_member_subclass(:reasoning_text, Types::ReasoningContentBlock::ReasoningText)
+    ReasoningContentBlock.add_member_subclass(:redacted_content, Types::ReasoningContentBlock::RedactedContent)
+    ReasoningContentBlock.add_member_subclass(:unknown, Types::ReasoningContentBlock::Unknown)
+    ReasoningContentBlock.struct_class = Types::ReasoningContentBlock
+
+    ReasoningTextBlock.add_member(:signature, Shapes::ShapeRef.new(shape: String, location_name: "signature"))
+    ReasoningTextBlock.add_member(:text, Shapes::ShapeRef.new(shape: String, required: true, location_name: "text"))
+    ReasoningTextBlock.struct_class = Types::ReasoningTextBlock
 
     RepromptResponse.add_member(:source, Shapes::ShapeRef.new(shape: Source, location_name: "source"))
     RepromptResponse.add_member(:text, Shapes::ShapeRef.new(shape: String, location_name: "text"))

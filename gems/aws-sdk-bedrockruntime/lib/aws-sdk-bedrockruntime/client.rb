@@ -867,6 +867,13 @@ module Aws::BedrockRuntime
     #                 },
     #               },
     #             },
+    #             reasoning_content: {
+    #               reasoning_text: {
+    #                 text: "String", # required
+    #                 signature: "String",
+    #               },
+    #               redacted_content: "data",
+    #             },
     #           },
     #         ],
     #       },
@@ -972,6 +979,9 @@ module Aws::BedrockRuntime
     #   resp.output.message.content[0].guard_content.text.qualifiers[0] #=> String, one of "grounding_source", "query", "guard_content"
     #   resp.output.message.content[0].guard_content.image.format #=> String, one of "png", "jpeg"
     #   resp.output.message.content[0].guard_content.image.source.bytes #=> String
+    #   resp.output.message.content[0].reasoning_content.reasoning_text.text #=> String
+    #   resp.output.message.content[0].reasoning_content.reasoning_text.signature #=> String
+    #   resp.output.message.content[0].reasoning_content.redacted_content #=> String
     #   resp.stop_reason #=> String, one of "end_turn", "tool_use", "max_tokens", "stop_sequence", "guardrail_intervened", "content_filtered"
     #   resp.usage.input_tokens #=> Integer
     #   resp.usage.output_tokens #=> Integer
@@ -1521,6 +1531,13 @@ module Aws::BedrockRuntime
     #                 },
     #               },
     #             },
+    #             reasoning_content: {
+    #               reasoning_text: {
+    #                 text: "String", # required
+    #                 signature: "String",
+    #               },
+    #               redacted_content: "data",
+    #             },
     #           },
     #         ],
     #       },
@@ -1610,6 +1627,9 @@ module Aws::BedrockRuntime
     #   For :content_block_delta event available at #on_content_block_delta_event callback and response eventstream enumerator:
     #   event.delta.text #=> String
     #   event.delta.tool_use.input #=> String
+    #   event.delta.reasoning_content.text #=> String
+    #   event.delta.reasoning_content.redacted_content #=> String
+    #   event.delta.reasoning_content.signature #=> String
     #   event.content_block_index #=> Integer
     #
     #   For :content_block_stop event available at #on_content_block_stop_event callback and response eventstream enumerator:
@@ -2449,7 +2469,7 @@ module Aws::BedrockRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockruntime'
-      context[:gem_version] = '1.38.0'
+      context[:gem_version] = '1.39.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

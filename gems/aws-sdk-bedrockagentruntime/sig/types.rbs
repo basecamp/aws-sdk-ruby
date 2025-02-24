@@ -1039,8 +1039,9 @@ module Aws::BedrockAgentRuntime
     class OrchestrationModelInvocationOutput
       attr_accessor metadata: Types::Metadata
       attr_accessor raw_response: Types::RawResponse
+      attr_accessor reasoning_content: Types::ReasoningContentBlock
       attr_accessor trace_id: ::String
-      SENSITIVE: [:metadata, :raw_response]
+      SENSITIVE: [:metadata, :raw_response, :reasoning_content]
     end
 
     class OrchestrationTrace
@@ -1103,8 +1104,9 @@ module Aws::BedrockAgentRuntime
       attr_accessor metadata: Types::Metadata
       attr_accessor parsed_response: Types::PostProcessingParsedResponse
       attr_accessor raw_response: Types::RawResponse
+      attr_accessor reasoning_content: Types::ReasoningContentBlock
       attr_accessor trace_id: ::String
-      SENSITIVE: [:metadata, :parsed_response, :raw_response]
+      SENSITIVE: [:metadata, :parsed_response, :raw_response, :reasoning_content]
     end
 
     class PostProcessingParsedResponse
@@ -1130,8 +1132,9 @@ module Aws::BedrockAgentRuntime
       attr_accessor metadata: Types::Metadata
       attr_accessor parsed_response: Types::PreProcessingParsedResponse
       attr_accessor raw_response: Types::RawResponse
+      attr_accessor reasoning_content: Types::ReasoningContentBlock
       attr_accessor trace_id: ::String
-      SENSITIVE: [:metadata, :parsed_response, :raw_response]
+      SENSITIVE: [:metadata, :parsed_response, :raw_response, :reasoning_content]
     end
 
     class PreProcessingParsedResponse
@@ -1200,6 +1203,26 @@ module Aws::BedrockAgentRuntime
 
     class RawResponse
       attr_accessor content: ::String
+      SENSITIVE: []
+    end
+
+    class ReasoningContentBlock
+      attr_accessor reasoning_text: Types::ReasoningTextBlock
+      attr_accessor redacted_content: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: [:reasoning_text]
+
+      class ReasoningText < ReasoningContentBlock
+      end
+      class RedactedContent < ReasoningContentBlock
+      end
+      class Unknown < ReasoningContentBlock
+      end
+    end
+
+    class ReasoningTextBlock
+      attr_accessor signature: ::String
+      attr_accessor text: ::String
       SENSITIVE: []
     end
 

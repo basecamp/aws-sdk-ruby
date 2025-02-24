@@ -29,6 +29,7 @@ module Aws::BedrockRuntime
     AsyncInvokeSummaries = Shapes::ListShape.new(name: 'AsyncInvokeSummaries')
     AsyncInvokeSummary = Shapes::StructureShape.new(name: 'AsyncInvokeSummary')
     AutoToolChoice = Shapes::StructureShape.new(name: 'AutoToolChoice')
+    Blob = Shapes::BlobShape.new(name: 'Blob')
     Body = Shapes::BlobShape.new(name: 'Body')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     ContentBlock = Shapes::UnionShape.new(name: 'ContentBlock')
@@ -187,6 +188,9 @@ module Aws::BedrockRuntime
     PromptRouterTrace = Shapes::StructureShape.new(name: 'PromptRouterTrace')
     PromptVariableMap = Shapes::MapShape.new(name: 'PromptVariableMap')
     PromptVariableValues = Shapes::UnionShape.new(name: 'PromptVariableValues')
+    ReasoningContentBlock = Shapes::UnionShape.new(name: 'ReasoningContentBlock')
+    ReasoningContentBlockDelta = Shapes::UnionShape.new(name: 'ReasoningContentBlockDelta')
+    ReasoningTextBlock = Shapes::StructureShape.new(name: 'ReasoningTextBlock')
     RequestMetadata = Shapes::MapShape.new(name: 'RequestMetadata')
     RequestMetadataKeyString = Shapes::StringShape.new(name: 'RequestMetadataKeyString')
     RequestMetadataValueString = Shapes::StringShape.new(name: 'RequestMetadataValueString')
@@ -294,6 +298,7 @@ module Aws::BedrockRuntime
     ContentBlock.add_member(:tool_use, Shapes::ShapeRef.new(shape: ToolUseBlock, location_name: "toolUse"))
     ContentBlock.add_member(:tool_result, Shapes::ShapeRef.new(shape: ToolResultBlock, location_name: "toolResult"))
     ContentBlock.add_member(:guard_content, Shapes::ShapeRef.new(shape: GuardrailConverseContentBlock, location_name: "guardContent"))
+    ContentBlock.add_member(:reasoning_content, Shapes::ShapeRef.new(shape: ReasoningContentBlock, location_name: "reasoningContent"))
     ContentBlock.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     ContentBlock.add_member_subclass(:text, Types::ContentBlock::Text)
     ContentBlock.add_member_subclass(:image, Types::ContentBlock::Image)
@@ -302,14 +307,17 @@ module Aws::BedrockRuntime
     ContentBlock.add_member_subclass(:tool_use, Types::ContentBlock::ToolUse)
     ContentBlock.add_member_subclass(:tool_result, Types::ContentBlock::ToolResult)
     ContentBlock.add_member_subclass(:guard_content, Types::ContentBlock::GuardContent)
+    ContentBlock.add_member_subclass(:reasoning_content, Types::ContentBlock::ReasoningContent)
     ContentBlock.add_member_subclass(:unknown, Types::ContentBlock::Unknown)
     ContentBlock.struct_class = Types::ContentBlock
 
     ContentBlockDelta.add_member(:text, Shapes::ShapeRef.new(shape: String, location_name: "text"))
     ContentBlockDelta.add_member(:tool_use, Shapes::ShapeRef.new(shape: ToolUseBlockDelta, location_name: "toolUse"))
+    ContentBlockDelta.add_member(:reasoning_content, Shapes::ShapeRef.new(shape: ReasoningContentBlockDelta, location_name: "reasoningContent"))
     ContentBlockDelta.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     ContentBlockDelta.add_member_subclass(:text, Types::ContentBlockDelta::Text)
     ContentBlockDelta.add_member_subclass(:tool_use, Types::ContentBlockDelta::ToolUse)
+    ContentBlockDelta.add_member_subclass(:reasoning_content, Types::ContentBlockDelta::ReasoningContent)
     ContentBlockDelta.add_member_subclass(:unknown, Types::ContentBlockDelta::Unknown)
     ContentBlockDelta.struct_class = Types::ContentBlockDelta
 
@@ -740,6 +748,28 @@ module Aws::BedrockRuntime
     PromptVariableValues.add_member_subclass(:text, Types::PromptVariableValues::Text)
     PromptVariableValues.add_member_subclass(:unknown, Types::PromptVariableValues::Unknown)
     PromptVariableValues.struct_class = Types::PromptVariableValues
+
+    ReasoningContentBlock.add_member(:reasoning_text, Shapes::ShapeRef.new(shape: ReasoningTextBlock, location_name: "reasoningText"))
+    ReasoningContentBlock.add_member(:redacted_content, Shapes::ShapeRef.new(shape: Blob, location_name: "redactedContent"))
+    ReasoningContentBlock.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    ReasoningContentBlock.add_member_subclass(:reasoning_text, Types::ReasoningContentBlock::ReasoningText)
+    ReasoningContentBlock.add_member_subclass(:redacted_content, Types::ReasoningContentBlock::RedactedContent)
+    ReasoningContentBlock.add_member_subclass(:unknown, Types::ReasoningContentBlock::Unknown)
+    ReasoningContentBlock.struct_class = Types::ReasoningContentBlock
+
+    ReasoningContentBlockDelta.add_member(:text, Shapes::ShapeRef.new(shape: String, location_name: "text"))
+    ReasoningContentBlockDelta.add_member(:redacted_content, Shapes::ShapeRef.new(shape: Blob, location_name: "redactedContent"))
+    ReasoningContentBlockDelta.add_member(:signature, Shapes::ShapeRef.new(shape: String, location_name: "signature"))
+    ReasoningContentBlockDelta.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    ReasoningContentBlockDelta.add_member_subclass(:text, Types::ReasoningContentBlockDelta::Text)
+    ReasoningContentBlockDelta.add_member_subclass(:redacted_content, Types::ReasoningContentBlockDelta::RedactedContent)
+    ReasoningContentBlockDelta.add_member_subclass(:signature, Types::ReasoningContentBlockDelta::Signature)
+    ReasoningContentBlockDelta.add_member_subclass(:unknown, Types::ReasoningContentBlockDelta::Unknown)
+    ReasoningContentBlockDelta.struct_class = Types::ReasoningContentBlockDelta
+
+    ReasoningTextBlock.add_member(:text, Shapes::ShapeRef.new(shape: String, required: true, location_name: "text"))
+    ReasoningTextBlock.add_member(:signature, Shapes::ShapeRef.new(shape: String, location_name: "signature"))
+    ReasoningTextBlock.struct_class = Types::ReasoningTextBlock
 
     RequestMetadata.key = Shapes::ShapeRef.new(shape: RequestMetadataKeyString)
     RequestMetadata.value = Shapes::ShapeRef.new(shape: RequestMetadataValueString)

@@ -1512,8 +1512,8 @@ module Aws::ElastiCache
     #
     # @option params [String] :network_type
     #   Must be either `ipv4` \| `ipv6` \| `dual_stack`. IPv6 is supported for
-    #   workloads using Valkey 7.2 and above, Redis OSS engine version 6.2 and
-    #   above or Memcached engine version 1.6.6 and above on all instances
+    #   workloads using Valkey 7.2 and above, Redis OSS engine version 6.2 to
+    #   7.1 and Memcached engine version 1.6.6 and above on all instances
     #   built on the [Nitro system][1].
     #
     #
@@ -1523,8 +1523,8 @@ module Aws::ElastiCache
     # @option params [String] :ip_discovery
     #   The network type you choose when modifying a cluster, either `ipv4` \|
     #   `ipv6`. IPv6 is supported for workloads using Valkey 7.2 and above,
-    #   Redis OSS engine version 6.2 and above or Memcached engine version
-    #   1.6.6 and above on all instances built on the [Nitro system][1].
+    #   Redis OSS engine version 6.2 to 7.1 and Memcached engine version 1.6.6
+    #   and above on all instances built on the [Nitro system][1].
     #
     #
     #
@@ -2397,7 +2397,7 @@ module Aws::ElastiCache
     #
     # @option params [String] :engine
     #   The name of the cache engine to be used for the clusters in this
-    #   replication group. The value must be set to `Redis`.
+    #   replication group. The value must be set to `valkey` or `redis`.
     #
     # @option params [String] :engine_version
     #   The version number of the cache engine to be used for the clusters in
@@ -2591,9 +2591,10 @@ module Aws::ElastiCache
     #   when you create the replication group.
     #
     #   **Required:** Only available when creating a replication group in an
-    #   Amazon VPC using Redis OSS version `3.2.6`, `4.x` or later.
+    #   Amazon VPC using Valkey 7.2 and later, Redis OSS version `3.2.6`, or
+    #   Redis OSS `4.x` and later.
     #
-    #   Default: `false`
+    #   Default: `true` when using Valkey, `false` when using Redis OSS
     #
     # @option params [String] :kms_key_id
     #   The ID of the KMS key used to encrypt the disk in the cluster.
@@ -2615,8 +2616,8 @@ module Aws::ElastiCache
     #
     # @option params [String] :network_type
     #   Must be either `ipv4` \| `ipv6` \| `dual_stack`. IPv6 is supported for
-    #   workloads using Valkey 7.2 and above, Redis OSS engine version 6.2 and
-    #   above or Memcached engine version 1.6.6 and above on all instances
+    #   workloads using Valkey 7.2 and above, Redis OSS engine version 6.2 to
+    #   7.1 and Memcached engine version 1.6.6 and above on all instances
     #   built on the [Nitro system][1].
     #
     #
@@ -2626,9 +2627,8 @@ module Aws::ElastiCache
     # @option params [String] :ip_discovery
     #   The network type you choose when creating a replication group, either
     #   `ipv4` \| `ipv6`. IPv6 is supported for workloads using Valkey 7.2 and
-    #   above, Redis OSS engine version 6.2 and above or Memcached engine
-    #   version 1.6.6 and above on all instances built on the [Nitro
-    #   system][1].
+    #   above, Redis OSS engine version 6.2 to 7.1 or Memcached engine version
+    #   1.6.6 and above on all instances built on the [Nitro system][1].
     #
     #
     #
@@ -3349,7 +3349,7 @@ module Aws::ElastiCache
       req.send_request(options)
     end
 
-    # For Valkey engine version 7.2 onwards and Redis OSS 6.0 and onwards:
+    # For Valkey engine version 7.2 onwards and Redis OSS 6.0 to 7.1:
     # Creates a user. For more information, see [Using Role Based Access
     # Control (RBAC)][1].
     #
@@ -3364,7 +3364,7 @@ module Aws::ElastiCache
     #   The username of the user.
     #
     # @option params [required, String] :engine
-    #   The current supported value is Redis.
+    #   The options are valkey or redis.
     #
     # @option params [Array<String>] :passwords
     #   Passwords used for this user. You can create up to two passwords for
@@ -3440,7 +3440,7 @@ module Aws::ElastiCache
       req.send_request(options)
     end
 
-    # For Valkey engine version 7.2 onwards and Redis OSS 6.0 onwards:
+    # For Valkey engine version 7.2 onwards and Redis OSS 6.0 to 7.1:
     # Creates a user group. For more information, see [Using Role Based
     # Access Control (RBAC)][1]
     #
@@ -3452,7 +3452,8 @@ module Aws::ElastiCache
     #   The ID of the user group.
     #
     # @option params [required, String] :engine
-    #   The current supported value is Redis user.
+    #   Sets the engine listed in a user group. The options are valkey or
+    #   redis.
     #
     # @option params [Array<String>] :user_ids
     #   The list of user IDs that belong to the user group.
@@ -9211,8 +9212,8 @@ module Aws::ElastiCache
     # @option params [String] :ip_discovery
     #   The network type you choose when modifying a cluster, either `ipv4` \|
     #   `ipv6`. IPv6 is supported for workloads using Valkey 7.2 and above,
-    #   Redis OSS engine version 6.2 and above or Memcached engine version
-    #   1.6.6 and above on all instances built on the [Nitro system][1].
+    #   Redis OSS engine version 6.2 to 7.1 or Memcached engine version 1.6.6
+    #   and above on all instances built on the [Nitro system][1].
     #
     #
     #
@@ -9870,8 +9871,8 @@ module Aws::ElastiCache
     # @option params [String] :ip_discovery
     #   The network type you choose when modifying a cluster, either `ipv4` \|
     #   `ipv6`. IPv6 is supported for workloads using Valkey 7.2 and above,
-    #   Redis OSS engine version 6.2 and above or Memcached engine version
-    #   1.6.6 and above on all instances built on the [Nitro system][1].
+    #   Redis OSS engine version 6.2 to 7.1 and Memcached engine version 1.6.6
+    #   and above on all instances built on the [Nitro system][1].
     #
     #
     #
@@ -10409,7 +10410,8 @@ module Aws::ElastiCache
     #   Specifies how to authenticate the user.
     #
     # @option params [String] :engine
-    #   The engine for a specific user.
+    #   Modifies the engine listed for a user. The options are valkey or
+    #   redis.
     #
     # @return [Types::User] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -10473,7 +10475,8 @@ module Aws::ElastiCache
     #   The list of user IDs to remove from the user group.
     #
     # @option params [String] :engine
-    #   The engine for a user group.
+    #   Modifies the engine listed in a user group. The options are valkey or
+    #   redis.
     #
     # @return [Types::UserGroup] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -11466,7 +11469,7 @@ module Aws::ElastiCache
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-elasticache'
-      context[:gem_version] = '1.122.0'
+      context[:gem_version] = '1.123.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

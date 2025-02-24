@@ -147,7 +147,6 @@ module Aws
   autoload :EMRServerless, 'aws-sdk-emrserverless'
   autoload :ElastiCache, 'aws-sdk-elasticache'
   autoload :ElasticBeanstalk, 'aws-sdk-elasticbeanstalk'
-  autoload :ElasticInference, 'aws-sdk-elasticinference'
   autoload :ElasticLoadBalancing, 'aws-sdk-elasticloadbalancing'
   autoload :ElasticLoadBalancingV2, 'aws-sdk-elasticloadbalancingv2'
   autoload :ElasticTranscoder, 'aws-sdk-elastictranscoder'

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.48.0 (2025-02-24)
+------------------
+
+* Feature - This release improves support for newer models in Amazon Bedrock Flows.
+
 1.47.0 (2025-02-21)
 ------------------
 

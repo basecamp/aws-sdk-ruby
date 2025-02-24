@@ -545,8 +545,8 @@ module Aws::ElastiCache
     # @!attribute [rw] network_type
     #   Must be either `ipv4` \| `ipv6` \| `dual_stack`. IPv6 is supported
     #   for workloads using Valkey 7.2 and above, Redis OSS engine version
-    #   6.2 and above or Memcached engine version 1.6.6 and above on all
-    #   instances built on the [Nitro system][1].
+    #   6.2 7.1 or Memcached engine version 1.6.6 and above on all instances
+    #   built on the [Nitro system][1].
     #
     #
     #
@@ -556,7 +556,7 @@ module Aws::ElastiCache
     # @!attribute [rw] ip_discovery
     #   The network type associated with the cluster, either `ipv4` \|
     #   `ipv6`. IPv6 is supported for workloads using Valkey 7.2 and above,
-    #   Redis OSS engine version 6.2 and above or Memcached engine version
+    #   Redis OSS engine version 6.2 to 7.1 or Memcached engine version
     #   1.6.6 and above on all instances built on the [Nitro system][1].
     #
     #
@@ -1287,8 +1287,8 @@ module Aws::ElastiCache
     # @!attribute [rw] supported_network_types
     #   Either `ipv4` \| `ipv6` \| `dual_stack`. IPv6 is supported for
     #   workloads using Valkey 7.2 and above, Redis OSS engine version 6.2
-    #   and above or Memcached engine version 1.6.6 and above on all
-    #   instances built on the [Nitro system][1].
+    #   to 7.1 or Memcached engine version 1.6.6 and above on all instances
+    #   built on the [Nitro system][1].
     #
     #
     #
@@ -2004,7 +2004,7 @@ module Aws::ElastiCache
     # @!attribute [rw] network_type
     #   Must be either `ipv4` \| `ipv6` \| `dual_stack`. IPv6 is supported
     #   for workloads using Valkey 7.2 and above, Redis OSS engine version
-    #   6.2 and above or Memcached engine version 1.6.6 and above on all
+    #   6.2 to 7.1 and Memcached engine version 1.6.6 and above on all
     #   instances built on the [Nitro system][1].
     #
     #
@@ -2015,7 +2015,7 @@ module Aws::ElastiCache
     # @!attribute [rw] ip_discovery
     #   The network type you choose when modifying a cluster, either `ipv4`
     #   \| `ipv6`. IPv6 is supported for workloads using Valkey 7.2 and
-    #   above, Redis OSS engine version 6.2 and above or Memcached engine
+    #   above, Redis OSS engine version 6.2 to 7.1 and Memcached engine
     #   version 1.6.6 and above on all instances built on the [Nitro
     #   system][1].
     #
@@ -2521,7 +2521,7 @@ module Aws::ElastiCache
     #
     # @!attribute [rw] engine
     #   The name of the cache engine to be used for the clusters in this
-    #   replication group. The value must be set to `Redis`.
+    #   replication group. The value must be set to `valkey` or `redis`.
     #   @return [String]
     #
     # @!attribute [rw] engine_version
@@ -2733,9 +2733,10 @@ module Aws::ElastiCache
     #   when you create the replication group.
     #
     #   **Required:** Only available when creating a replication group in an
-    #   Amazon VPC using Redis OSS version `3.2.6`, `4.x` or later.
+    #   Amazon VPC using Valkey 7.2 and later, Redis OSS version `3.2.6`, or
+    #   Redis OSS `4.x` and later.
     #
-    #   Default: `false`
+    #   Default: `true` when using Valkey, `false` when using Redis OSS
     #   @return [Boolean]
     #
     # @!attribute [rw] kms_key_id
@@ -2763,7 +2764,7 @@ module Aws::ElastiCache
     # @!attribute [rw] network_type
     #   Must be either `ipv4` \| `ipv6` \| `dual_stack`. IPv6 is supported
     #   for workloads using Valkey 7.2 and above, Redis OSS engine version
-    #   6.2 and above or Memcached engine version 1.6.6 and above on all
+    #   6.2 to 7.1 and Memcached engine version 1.6.6 and above on all
     #   instances built on the [Nitro system][1].
     #
     #
@@ -2774,7 +2775,7 @@ module Aws::ElastiCache
     # @!attribute [rw] ip_discovery
     #   The network type you choose when creating a replication group,
     #   either `ipv4` \| `ipv6`. IPv6 is supported for workloads using
-    #   Valkey 7.2 and above, Redis OSS engine version 6.2 and above or
+    #   Valkey 7.2 and above, Redis OSS engine version 6.2 to 7.1 or
     #   Memcached engine version 1.6.6 and above on all instances built on
     #   the [Nitro system][1].
     #
@@ -3088,7 +3089,8 @@ module Aws::ElastiCache
     #   @return [String]
     #
     # @!attribute [rw] engine
-    #   The current supported value is Redis user.
+    #   Sets the engine listed in a user group. The options are valkey or
+    #   redis.
     #   @return [String]
     #
     # @!attribute [rw] user_ids
@@ -3121,7 +3123,7 @@ module Aws::ElastiCache
     #   @return [String]
     #
     # @!attribute [rw] engine
-    #   The current supported value is Redis.
+    #   The options are valkey or redis.
     #   @return [String]
     #
     # @!attribute [rw] passwords
@@ -6105,7 +6107,7 @@ module Aws::ElastiCache
     # @!attribute [rw] ip_discovery
     #   The network type you choose when modifying a cluster, either `ipv4`
     #   \| `ipv6`. IPv6 is supported for workloads using Valkey 7.2 and
-    #   above, Redis OSS engine version 6.2 and above or Memcached engine
+    #   above, Redis OSS engine version 6.2 to 7.1 or Memcached engine
     #   version 1.6.6 and above on all instances built on the [Nitro
     #   system][1].
     #
@@ -6538,7 +6540,7 @@ module Aws::ElastiCache
     # @!attribute [rw] ip_discovery
     #   The network type you choose when modifying a cluster, either `ipv4`
     #   \| `ipv6`. IPv6 is supported for workloads using Valkey 7.2 and
-    #   above, Redis OSS engine version 6.2 and above or Memcached engine
+    #   above, Redis OSS engine version 6.2 to 7.1 and Memcached engine
     #   version 1.6.6 and above on all instances built on the [Nitro
     #   system][1].
     #
@@ -6809,7 +6811,8 @@ module Aws::ElastiCache
     #   @return [Array<String>]
     #
     # @!attribute [rw] engine
-    #   The engine for a user group.
+    #   Modifies the engine listed in a user group. The options are valkey
+    #   or redis.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/ModifyUserGroupMessage AWS API Documentation
@@ -6848,7 +6851,8 @@ module Aws::ElastiCache
     #   @return [Types::AuthenticationMode]
     #
     # @!attribute [rw] engine
-    #   The engine for a specific user.
+    #   Modifies the engine listed for a user. The options are valkey or
+    #   redis.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/ModifyUserMessage AWS API Documentation
@@ -7780,7 +7784,7 @@ module Aws::ElastiCache
     # @!attribute [rw] network_type
     #   Must be either `ipv4` \| `ipv6` \| `dual_stack`. IPv6 is supported
     #   for workloads using Valkey 7.2 and above, Redis OSS engine version
-    #   6.2 and above or Memcached engine version 1.6.6 and above on all
+    #   6.2 to 7.1 or Memcached engine version 1.6.6 and above on all
     #   instances built on the [Nitro system][1].
     #
     #
@@ -7791,7 +7795,7 @@ module Aws::ElastiCache
     # @!attribute [rw] ip_discovery
     #   The network type you choose when modifying a cluster, either `ipv4`
     #   \| `ipv6`. IPv6 is supported for workloads using Valkey 7.2 and
-    #   above, Redis OSS engine version 6.2 and above or Memcached engine
+    #   above, Redis OSS engine version 6.2 to 7.1 or Memcached engine
     #   version 1.6.6 and above on all instances built on the [Nitro
     #   system][1].
     #
@@ -9287,8 +9291,8 @@ module Aws::ElastiCache
     # @!attribute [rw] supported_network_types
     #   Either `ipv4` \| `ipv6` \| `dual_stack`. IPv6 is supported for
     #   workloads using Valkey 7.2 and above, Redis OSS engine version 6.2
-    #   and above or Memcached engine version 1.6.6 and above on all
-    #   instances built on the [Nitro system][1].
+    #   to 7.1 or Memcached engine version 1.6.6 and above on all instances
+    #   built on the [Nitro system][1].
     #
     #
     #
@@ -9671,7 +9675,7 @@ module Aws::ElastiCache
     #   @return [String]
     #
     # @!attribute [rw] engine
-    #   The current supported value is Redis.
+    #   The options are valkey or redis.
     #   @return [String]
     #
     # @!attribute [rw] minimum_engine_version
@@ -9726,7 +9730,7 @@ module Aws::ElastiCache
     #   @return [String]
     #
     # @!attribute [rw] engine
-    #   The current supported value is Redis user.
+    #   The options are valkey or redis.
     #   @return [String]
     #
     # @!attribute [rw] user_ids

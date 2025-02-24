@@ -541,7 +541,6 @@ RubyGems.org page under "LINKS" section.
 | Amazon EMR                                            | Aws::EMR                                 | aws-sdk-emr                                 | 2009-03-31  |
 | Amazon EMR Containers                                 | Aws::EMRContainers                       | aws-sdk-emrcontainers                       | 2020-10-01  |
 | Amazon ElastiCache                                    | Aws::ElastiCache                         | aws-sdk-elasticache                         | 2015-02-02  |
-| Amazon Elastic  Inference                             | Aws::ElasticInference                    | aws-sdk-elasticinference                    | 2017-07-25  |
 | Amazon Elastic Block Store                            | Aws::EBS                                 | aws-sdk-ebs                                 | 2019-11-02  |
 | Amazon Elastic Compute Cloud                          | Aws::EC2                                 | aws-sdk-ec2                                 | 2016-11-15  |
 | Amazon Elastic Container Registry                     | Aws::ECR                                 | aws-sdk-ecr                                 | 2015-09-21  |

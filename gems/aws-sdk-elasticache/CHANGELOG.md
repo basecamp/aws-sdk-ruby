@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.123.0 (2025-02-24)
+------------------
+
+* Feature - Documentation update, adding clarity and rephrasing.
+
 1.122.0 (2025-02-18)
 ------------------
 

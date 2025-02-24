@@ -203,6 +203,13 @@ module Aws
                                     bytes: ::String?
                                   }
                                 }?
+                              }?,
+                              reasoning_content: {
+                                reasoning_text: {
+                                  text: ::String,
+                                  signature: ::String?
+                                }?,
+                                redacted_content: ::String?
                               }?
                             },
                           ]
@@ -359,6 +366,13 @@ module Aws
                                            bytes: ::String?
                                          }
                                        }?
+                                     }?,
+                                     reasoning_content: {
+                                       reasoning_text: {
+                                         text: ::String,
+                                         signature: ::String?
+                                       }?,
+                                       redacted_content: ::String?
                                      }?
                                    },
                                  ]

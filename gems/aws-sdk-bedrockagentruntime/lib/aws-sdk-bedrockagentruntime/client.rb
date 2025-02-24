@@ -1372,6 +1372,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.model_invocation_output.metadata.usage.input_tokens #=> Integer
     #   event.trace.orchestration_trace.model_invocation_output.metadata.usage.output_tokens #=> Integer
     #   event.trace.orchestration_trace.model_invocation_output.raw_response.content #=> String
+    #   event.trace.orchestration_trace.model_invocation_output.reasoning_content.reasoning_text.signature #=> String
+    #   event.trace.orchestration_trace.model_invocation_output.reasoning_content.reasoning_text.text #=> String
+    #   event.trace.orchestration_trace.model_invocation_output.reasoning_content.redacted_content #=> String
     #   event.trace.orchestration_trace.model_invocation_output.trace_id #=> String
     #   event.trace.orchestration_trace.observation.action_group_invocation_output.text #=> String
     #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.agent_collaborator_alias_arn #=> String
@@ -1451,6 +1454,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.post_processing_trace.model_invocation_output.metadata.usage.output_tokens #=> Integer
     #   event.trace.post_processing_trace.model_invocation_output.parsed_response.text #=> String
     #   event.trace.post_processing_trace.model_invocation_output.raw_response.content #=> String
+    #   event.trace.post_processing_trace.model_invocation_output.reasoning_content.reasoning_text.signature #=> String
+    #   event.trace.post_processing_trace.model_invocation_output.reasoning_content.reasoning_text.text #=> String
+    #   event.trace.post_processing_trace.model_invocation_output.reasoning_content.redacted_content #=> String
     #   event.trace.post_processing_trace.model_invocation_output.trace_id #=> String
     #   event.trace.pre_processing_trace.model_invocation_input.foundation_model #=> String
     #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.maximum_length #=> Integer
@@ -1470,6 +1476,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.pre_processing_trace.model_invocation_output.parsed_response.is_valid #=> Boolean
     #   event.trace.pre_processing_trace.model_invocation_output.parsed_response.rationale #=> String
     #   event.trace.pre_processing_trace.model_invocation_output.raw_response.content #=> String
+    #   event.trace.pre_processing_trace.model_invocation_output.reasoning_content.reasoning_text.signature #=> String
+    #   event.trace.pre_processing_trace.model_invocation_output.reasoning_content.reasoning_text.text #=> String
+    #   event.trace.pre_processing_trace.model_invocation_output.reasoning_content.redacted_content #=> String
     #   event.trace.pre_processing_trace.model_invocation_output.trace_id #=> String
     #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.action_group_name #=> String
     #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.api_path #=> String
@@ -2757,6 +2766,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.model_invocation_output.metadata.usage.input_tokens #=> Integer
     #   event.trace.orchestration_trace.model_invocation_output.metadata.usage.output_tokens #=> Integer
     #   event.trace.orchestration_trace.model_invocation_output.raw_response.content #=> String
+    #   event.trace.orchestration_trace.model_invocation_output.reasoning_content.reasoning_text.signature #=> String
+    #   event.trace.orchestration_trace.model_invocation_output.reasoning_content.reasoning_text.text #=> String
+    #   event.trace.orchestration_trace.model_invocation_output.reasoning_content.redacted_content #=> String
     #   event.trace.orchestration_trace.model_invocation_output.trace_id #=> String
     #   event.trace.orchestration_trace.observation.action_group_invocation_output.text #=> String
     #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.agent_collaborator_alias_arn #=> String
@@ -2836,6 +2848,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.post_processing_trace.model_invocation_output.metadata.usage.output_tokens #=> Integer
     #   event.trace.post_processing_trace.model_invocation_output.parsed_response.text #=> String
     #   event.trace.post_processing_trace.model_invocation_output.raw_response.content #=> String
+    #   event.trace.post_processing_trace.model_invocation_output.reasoning_content.reasoning_text.signature #=> String
+    #   event.trace.post_processing_trace.model_invocation_output.reasoning_content.reasoning_text.text #=> String
+    #   event.trace.post_processing_trace.model_invocation_output.reasoning_content.redacted_content #=> String
     #   event.trace.post_processing_trace.model_invocation_output.trace_id #=> String
     #   event.trace.pre_processing_trace.model_invocation_input.foundation_model #=> String
     #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.maximum_length #=> Integer
@@ -2855,6 +2870,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.pre_processing_trace.model_invocation_output.parsed_response.is_valid #=> Boolean
     #   event.trace.pre_processing_trace.model_invocation_output.parsed_response.rationale #=> String
     #   event.trace.pre_processing_trace.model_invocation_output.raw_response.content #=> String
+    #   event.trace.pre_processing_trace.model_invocation_output.reasoning_content.reasoning_text.signature #=> String
+    #   event.trace.pre_processing_trace.model_invocation_output.reasoning_content.reasoning_text.text #=> String
+    #   event.trace.pre_processing_trace.model_invocation_output.reasoning_content.redacted_content #=> String
     #   event.trace.pre_processing_trace.model_invocation_output.trace_id #=> String
     #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.action_group_name #=> String
     #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.api_path #=> String
@@ -4387,7 +4405,7 @@ module Aws::BedrockAgentRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagentruntime'
-      context[:gem_version] = '1.45.0'
+      context[:gem_version] = '1.46.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

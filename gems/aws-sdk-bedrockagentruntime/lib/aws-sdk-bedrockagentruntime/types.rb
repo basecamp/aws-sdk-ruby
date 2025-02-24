@@ -3913,6 +3913,11 @@ module Aws::BedrockAgentRuntime
     #   output.
     #   @return [Types::RawResponse]
     #
+    # @!attribute [rw] reasoning_content
+    #   Contains content about the reasoning that the model made during the
+    #   orchestration step.
+    #   @return [Types::ReasoningContentBlock]
+    #
     # @!attribute [rw] trace_id
     #   The unique identifier of the trace.
     #   @return [String]
@@ -3922,8 +3927,9 @@ module Aws::BedrockAgentRuntime
     class OrchestrationModelInvocationOutput < Struct.new(
       :metadata,
       :raw_response,
+      :reasoning_content,
       :trace_id)
-      SENSITIVE = [:metadata, :raw_response]
+      SENSITIVE = [:metadata, :raw_response, :reasoning_content]
       include Aws::Structure
     end
 
@@ -4116,6 +4122,11 @@ module Aws::BedrockAgentRuntime
     #   Details of the raw response from the foundation model output.
     #   @return [Types::RawResponse]
     #
+    # @!attribute [rw] reasoning_content
+    #   Contains content about the reasoning that the model made during the
+    #   post-processing step.
+    #   @return [Types::ReasoningContentBlock]
+    #
     # @!attribute [rw] trace_id
     #   The unique identifier of the trace.
     #   @return [String]
@@ -4126,8 +4137,9 @@ module Aws::BedrockAgentRuntime
       :metadata,
       :parsed_response,
       :raw_response,
+      :reasoning_content,
       :trace_id)
-      SENSITIVE = [:metadata, :parsed_response, :raw_response]
+      SENSITIVE = [:metadata, :parsed_response, :raw_response, :reasoning_content]
       include Aws::Structure
     end
 
@@ -4202,6 +4214,11 @@ module Aws::BedrockAgentRuntime
     #   Details of the raw response from the foundation model output.
     #   @return [Types::RawResponse]
     #
+    # @!attribute [rw] reasoning_content
+    #   Contains content about the reasoning that the model made during the
+    #   pre-processing step.
+    #   @return [Types::ReasoningContentBlock]
+    #
     # @!attribute [rw] trace_id
     #   The unique identifier of the trace.
     #   @return [String]
@@ -4212,8 +4229,9 @@ module Aws::BedrockAgentRuntime
       :metadata,
       :parsed_response,
       :raw_response,
+      :reasoning_content,
       :trace_id)
-      SENSITIVE = [:metadata, :parsed_response, :raw_response]
+      SENSITIVE = [:metadata, :parsed_response, :raw_response, :reasoning_content]
       include Aws::Structure
     end
 
@@ -4325,7 +4343,7 @@ module Aws::BedrockAgentRuntime
     #   Specifies whether to override the default parser Lambda function
     #   when parsing the raw foundation model output in the part of the
     #   agent sequence defined by the `promptType`. If you set the field as
-    #   `OVERRIDEN`, the `overrideLambda` field in the
+    #   `OVERRIDDEN`, the `overrideLambda` field in the
     #   [PromptOverrideConfiguration][1] must be specified with the ARN of a
     #   Lambda function.
     #
@@ -4535,6 +4553,63 @@ module Aws::BedrockAgentRuntime
     #
     class RawResponse < Struct.new(
       :content)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains content regarding the reasoning that the foundation model
+    # made with respect to the content in the content block. Reasoning
+    # refers to a Chain of Thought (CoT) that the model generates to enhance
+    # the accuracy of its final response.
+    #
+    # @note ReasoningContentBlock is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of ReasoningContentBlock corresponding to the set member.
+    #
+    # @!attribute [rw] reasoning_text
+    #   Contains information about the reasoning that the model used to
+    #   return the content in the content block.
+    #   @return [Types::ReasoningTextBlock]
+    #
+    # @!attribute [rw] redacted_content
+    #   The content in the reasoning that was encrypted by the model
+    #   provider for trust and safety reasons.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ReasoningContentBlock AWS API Documentation
+    #
+    class ReasoningContentBlock < Struct.new(
+      :reasoning_text,
+      :redacted_content,
+      :unknown)
+      SENSITIVE = [:reasoning_text]
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class ReasoningText < ReasoningContentBlock; end
+      class RedactedContent < ReasoningContentBlock; end
+      class Unknown < ReasoningContentBlock; end
+    end
+
+    # Contains information about the reasoning that the model used to return
+    # the content in the content block.
+    #
+    # @!attribute [rw] signature
+    #   A hash of all the messages in the conversation to ensure that the
+    #   content in the reasoning text block isn't tampered with. You must
+    #   submit the signature in subsequent `Converse` requests, in addition
+    #   to the previous messages. If the previous messages are tampered
+    #   with, the response throws an error.
+    #   @return [String]
+    #
+    # @!attribute [rw] text
+    #   Text describing the reasoning that the model used to return the
+    #   content in the content block.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ReasoningTextBlock AWS API Documentation
+    #
+    class ReasoningTextBlock < Struct.new(
+      :signature,
+      :text)
       SENSITIVE = []
       include Aws::Structure
     end

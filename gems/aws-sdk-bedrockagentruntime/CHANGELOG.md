@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.46.0 (2025-02-24)
+------------------
+
+* Feature - Adding support for ReasoningContent fields in Pre-Processing, Post-Processing and Orchestration Trace outputs.
+
 1.45.0 (2025-02-18)
 ------------------
 
