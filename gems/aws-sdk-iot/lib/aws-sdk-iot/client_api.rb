@@ -221,6 +221,7 @@ module Aws::IoT
     Certificates = Shapes::ListShape.new(name: 'Certificates')
     ChannelName = Shapes::StringShape.new(name: 'ChannelName')
     CheckCompliant = Shapes::BooleanShape.new(name: 'CheckCompliant')
+    CheckCustomConfiguration = Shapes::MapShape.new(name: 'CheckCustomConfiguration')
     Cidr = Shapes::StringShape.new(name: 'Cidr')
     Cidrs = Shapes::ListShape.new(name: 'Cidrs')
     ClearDefaultAuthorizerRequest = Shapes::StructureShape.new(name: 'ClearDefaultAuthorizerRequest')
@@ -266,6 +267,8 @@ module Aws::IoT
     ComparisonOperator = Shapes::StringShape.new(name: 'ComparisonOperator')
     CompliantChecksCount = Shapes::IntegerShape.new(name: 'CompliantChecksCount')
     ConfidenceLevel = Shapes::StringShape.new(name: 'ConfidenceLevel')
+    ConfigName = Shapes::StringShape.new(name: 'ConfigName')
+    ConfigValue = Shapes::StringShape.new(name: 'ConfigValue')
     Configuration = Shapes::StructureShape.new(name: 'Configuration')
     ConfirmTopicRuleDestinationRequest = Shapes::StructureShape.new(name: 'ConfirmTopicRuleDestinationRequest')
     ConfirmTopicRuleDestinationResponse = Shapes::StructureShape.new(name: 'ConfirmTopicRuleDestinationResponse')
@@ -1649,6 +1652,7 @@ module Aws::IoT
     AttributesMap.value = Shapes::ShapeRef.new(shape: Value)
 
     AuditCheckConfiguration.add_member(:enabled, Shapes::ShapeRef.new(shape: Enabled, location_name: "enabled"))
+    AuditCheckConfiguration.add_member(:configuration, Shapes::ShapeRef.new(shape: CheckCustomConfiguration, location_name: "configuration"))
     AuditCheckConfiguration.struct_class = Types::AuditCheckConfiguration
 
     AuditCheckConfigurations.key = Shapes::ShapeRef.new(shape: AuditCheckName)
@@ -1955,6 +1959,9 @@ module Aws::IoT
     CertificateValidity.struct_class = Types::CertificateValidity
 
     Certificates.member = Shapes::ShapeRef.new(shape: Certificate)
+
+    CheckCustomConfiguration.key = Shapes::ShapeRef.new(shape: ConfigName)
+    CheckCustomConfiguration.value = Shapes::ShapeRef.new(shape: ConfigValue)
 
     Cidrs.member = Shapes::ShapeRef.new(shape: Cidr)
 

@@ -445,6 +445,7 @@ module Aws::CodeBuild
     BuildBatch.add_member(:build_batch_config, Shapes::ShapeRef.new(shape: ProjectBuildBatchConfig, location_name: "buildBatchConfig"))
     BuildBatch.add_member(:build_groups, Shapes::ShapeRef.new(shape: BuildGroups, location_name: "buildGroups"))
     BuildBatch.add_member(:debug_session_enabled, Shapes::ShapeRef.new(shape: WrapperBoolean, location_name: "debugSessionEnabled"))
+    BuildBatch.add_member(:report_arns, Shapes::ShapeRef.new(shape: BuildReportArns, location_name: "reportArns"))
     BuildBatch.struct_class = Types::BuildBatch
 
     BuildBatchFilter.add_member(:status, Shapes::ShapeRef.new(shape: StatusType, location_name: "status"))

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.85.0 (2025-02-25)
+------------------
+
+* Feature - Add an optional configuration to the ScheduleRun and CreateRemoteAccessSession API to set a device level http/s proxy.
+
 1.84.0 (2025-02-18)
 ------------------
 

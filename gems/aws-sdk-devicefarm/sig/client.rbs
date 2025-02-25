@@ -166,7 +166,11 @@ module Aws
                                           ?client_id: ::String,
                                           ?configuration: {
                                             billing_method: ("METERED" | "UNMETERED")?,
-                                            vpce_configuration_arns: Array[::String]?
+                                            vpce_configuration_arns: Array[::String]?,
+                                            device_proxy: {
+                                              host: ::String,
+                                              port: ::Integer
+                                            }?
                                           },
                                           ?interaction_mode: ("INTERACTIVE" | "NO_VIDEO" | "VIDEO_ONLY"),
                                           ?skip_app_resign: bool
@@ -373,6 +377,10 @@ module Aws
                                                longitude: ::Float
                                              }?,
                                              vpce_configuration_arns: Array[::String]?,
+                                             device_proxy: {
+                                               host: ::String,
+                                               port: ::Integer
+                                             }?,
                                              customer_artifact_paths: {
                                                ios_paths: Array[::String]?,
                                                android_paths: Array[::String]?,
@@ -897,6 +905,10 @@ module Aws
                               longitude: ::Float
                             }?,
                             vpce_configuration_arns: Array[::String]?,
+                            device_proxy: {
+                              host: ::String,
+                              port: ::Integer
+                            }?,
                             customer_artifact_paths: {
                               ios_paths: Array[::String]?,
                               android_paths: Array[::String]?,

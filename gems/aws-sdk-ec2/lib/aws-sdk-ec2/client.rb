@@ -4899,6 +4899,22 @@ module Aws::EC2
     #
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html
     #
+    # @option params [Integer] :snapshot_copy_completion_duration_minutes
+    #   Specify a completion duration, in 15 minute increments, to initiate a
+    #   time-based AMI copy. The specified completion duration applies to each
+    #   of the snapshots associated with the AMI. Each snapshot associated
+    #   with the AMI will be completed within the specified completion
+    #   duration, regardless of their size.
+    #
+    #   If you do not specify a value, the AMI copy operation is completed on
+    #   a best-effort basis.
+    #
+    #   For more information, see [ Time-based copies][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/time-based-copies.html
+    #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -4949,6 +4965,7 @@ module Aws::EC2
     #         ],
     #       },
     #     ],
+    #     snapshot_copy_completion_duration_minutes: 1,
     #     dry_run: false,
     #   })
     #
@@ -63212,7 +63229,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.506.0'
+      context[:gem_version] = '1.507.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

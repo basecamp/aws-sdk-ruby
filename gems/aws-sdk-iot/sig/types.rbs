@@ -205,6 +205,7 @@ module Aws::IoT
 
     class AuditCheckConfiguration
       attr_accessor enabled: bool
+      attr_accessor configuration: ::Hash[("CERT_AGE_THRESHOLD_IN_DAYS" | "CERT_EXPIRATION_THRESHOLD_IN_DAYS"), ::String]
       SENSITIVE: []
     end
 

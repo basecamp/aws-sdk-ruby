@@ -905,6 +905,10 @@ module Aws::DeviceFarm
     #     configuration: {
     #       billing_method: "METERED", # accepts METERED, UNMETERED
     #       vpce_configuration_arns: ["AmazonResourceName"],
+    #       device_proxy: {
+    #         host: "DeviceProxyHost", # required
+    #         port: 1, # required
+    #       },
     #     },
     #     interaction_mode: "INTERACTIVE", # accepts INTERACTIVE, NO_VIDEO, VIDEO_ONLY
     #     skip_app_resign: false,
@@ -976,6 +980,8 @@ module Aws::DeviceFarm
     #   resp.remote_access_session.vpc_config.subnet_ids #=> Array
     #   resp.remote_access_session.vpc_config.subnet_ids[0] #=> String
     #   resp.remote_access_session.vpc_config.vpc_id #=> String
+    #   resp.remote_access_session.device_proxy.host #=> String
+    #   resp.remote_access_session.device_proxy.port #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/CreateRemoteAccessSession AWS API Documentation
     #
@@ -1878,6 +1884,10 @@ module Aws::DeviceFarm
     #         longitude: 1.0, # required
     #       },
     #       vpce_configuration_arns: ["AmazonResourceName"],
+    #       device_proxy: {
+    #         host: "DeviceProxyHost", # required
+    #         port: 1, # required
+    #       },
     #       customer_artifact_paths: {
     #         ios_paths: ["String"],
     #         android_paths: ["String"],
@@ -2415,6 +2425,8 @@ module Aws::DeviceFarm
     #   resp.remote_access_session.vpc_config.subnet_ids #=> Array
     #   resp.remote_access_session.vpc_config.subnet_ids[0] #=> String
     #   resp.remote_access_session.vpc_config.vpc_id #=> String
+    #   resp.remote_access_session.device_proxy.host #=> String
+    #   resp.remote_access_session.device_proxy.port #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/GetRemoteAccessSession AWS API Documentation
     #
@@ -2515,6 +2527,8 @@ module Aws::DeviceFarm
     #   resp.run.network_profile.downlink_jitter_ms #=> Integer
     #   resp.run.network_profile.uplink_loss_percent #=> Integer
     #   resp.run.network_profile.downlink_loss_percent #=> Integer
+    #   resp.run.device_proxy.host #=> String
+    #   resp.run.device_proxy.port #=> Integer
     #   resp.run.parsing_result_url #=> String
     #   resp.run.result_code #=> String, one of "PARSING_FAILED", "VPC_ENDPOINT_SETUP_FAILED"
     #   resp.run.seed #=> Integer
@@ -3987,6 +4001,8 @@ module Aws::DeviceFarm
     #   resp.remote_access_sessions[0].vpc_config.subnet_ids #=> Array
     #   resp.remote_access_sessions[0].vpc_config.subnet_ids[0] #=> String
     #   resp.remote_access_sessions[0].vpc_config.vpc_id #=> String
+    #   resp.remote_access_sessions[0].device_proxy.host #=> String
+    #   resp.remote_access_sessions[0].device_proxy.port #=> Integer
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/ListRemoteAccessSessions AWS API Documentation
@@ -4102,6 +4118,8 @@ module Aws::DeviceFarm
     #   resp.runs[0].network_profile.downlink_jitter_ms #=> Integer
     #   resp.runs[0].network_profile.uplink_loss_percent #=> Integer
     #   resp.runs[0].network_profile.downlink_loss_percent #=> Integer
+    #   resp.runs[0].device_proxy.host #=> String
+    #   resp.runs[0].device_proxy.port #=> Integer
     #   resp.runs[0].parsing_result_url #=> String
     #   resp.runs[0].result_code #=> String, one of "PARSING_FAILED", "VPC_ENDPOINT_SETUP_FAILED"
     #   resp.runs[0].seed #=> Integer
@@ -5136,6 +5154,10 @@ module Aws::DeviceFarm
     #         longitude: 1.0, # required
     #       },
     #       vpce_configuration_arns: ["AmazonResourceName"],
+    #       device_proxy: {
+    #         host: "DeviceProxyHost", # required
+    #         port: 1, # required
+    #       },
     #       customer_artifact_paths: {
     #         ios_paths: ["String"],
     #         android_paths: ["String"],
@@ -5196,6 +5218,8 @@ module Aws::DeviceFarm
     #   resp.run.network_profile.downlink_jitter_ms #=> Integer
     #   resp.run.network_profile.uplink_loss_percent #=> Integer
     #   resp.run.network_profile.downlink_loss_percent #=> Integer
+    #   resp.run.device_proxy.host #=> String
+    #   resp.run.device_proxy.port #=> Integer
     #   resp.run.parsing_result_url #=> String
     #   resp.run.result_code #=> String, one of "PARSING_FAILED", "VPC_ENDPOINT_SETUP_FAILED"
     #   resp.run.seed #=> Integer
@@ -5414,6 +5438,8 @@ module Aws::DeviceFarm
     #   resp.remote_access_session.vpc_config.subnet_ids #=> Array
     #   resp.remote_access_session.vpc_config.subnet_ids[0] #=> String
     #   resp.remote_access_session.vpc_config.vpc_id #=> String
+    #   resp.remote_access_session.device_proxy.host #=> String
+    #   resp.remote_access_session.device_proxy.port #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/StopRemoteAccessSession AWS API Documentation
     #
@@ -5497,6 +5523,8 @@ module Aws::DeviceFarm
     #   resp.run.network_profile.downlink_jitter_ms #=> Integer
     #   resp.run.network_profile.uplink_loss_percent #=> Integer
     #   resp.run.network_profile.downlink_loss_percent #=> Integer
+    #   resp.run.device_proxy.host #=> String
+    #   resp.run.device_proxy.port #=> Integer
     #   resp.run.parsing_result_url #=> String
     #   resp.run.result_code #=> String, one of "PARSING_FAILED", "VPC_ENDPOINT_SETUP_FAILED"
     #   resp.run.seed #=> Integer
@@ -6177,7 +6205,7 @@ module Aws::DeviceFarm
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-devicefarm'
-      context[:gem_version] = '1.84.0'
+      context[:gem_version] = '1.85.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

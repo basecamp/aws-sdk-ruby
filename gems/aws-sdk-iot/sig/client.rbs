@@ -4561,7 +4561,8 @@ module Aws
                                                     enabled: bool?
                                                   }],
                                                 ?audit_check_configurations: Hash[::String, {
-                                                    enabled: bool?
+                                                    enabled: bool?,
+                                                    configuration: Hash[("CERT_AGE_THRESHOLD_IN_DAYS" | "CERT_EXPIRATION_THRESHOLD_IN_DAYS"), ::String]?
                                                   }]
                                               ) -> _UpdateAccountAuditConfigurationResponseSuccess
                                             | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateAccountAuditConfigurationResponseSuccess

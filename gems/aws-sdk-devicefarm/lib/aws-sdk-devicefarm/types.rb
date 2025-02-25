@@ -499,11 +499,17 @@ module Aws::DeviceFarm
     #   An array of ARNs included in the VPC endpoint configuration.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] device_proxy
+    #   The device proxy to be configured on the device for the remote
+    #   access session.
+    #   @return [Types::DeviceProxy]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/CreateRemoteAccessSessionConfiguration AWS API Documentation
     #
     class CreateRemoteAccessSessionConfiguration < Struct.new(
       :billing_method,
-      :vpce_configuration_arns)
+      :vpce_configuration_arns,
+      :device_proxy)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1493,6 +1499,26 @@ module Aws::DeviceFarm
       :device,
       :compatible,
       :incompatibility_messages)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents the http/s proxy configuration that will be applied to a
+    # device during a run.
+    #
+    # @!attribute [rw] host
+    #   Hostname or IPv4 address of the proxy.
+    #   @return [String]
+    #
+    # @!attribute [rw] port
+    #   The port number on which the http/s proxy is listening.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/DeviceProxy AWS API Documentation
+    #
+    class DeviceProxy < Struct.new(
+      :host,
+      :port)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4403,6 +4429,10 @@ module Aws::DeviceFarm
     #   The VPC security groups and subnets that are attached to a project.
     #   @return [Types::VpcConfig]
     #
+    # @!attribute [rw] device_proxy
+    #   The device proxy configured for the remote access session.
+    #   @return [Types::DeviceProxy]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/RemoteAccessSession AWS API Documentation
     #
     class RemoteAccessSession < Struct.new(
@@ -4427,7 +4457,8 @@ module Aws::DeviceFarm
       :device_udid,
       :interaction_mode,
       :skip_app_resign,
-      :vpc_config)
+      :vpc_config,
+      :device_proxy)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4754,6 +4785,10 @@ module Aws::DeviceFarm
     #   The network profile being used for a test run.
     #   @return [Types::NetworkProfile]
     #
+    # @!attribute [rw] device_proxy
+    #   The device proxy configured for the devices in the run.
+    #   @return [Types::DeviceProxy]
+    #
     # @!attribute [rw] parsing_result_url
     #   Read-only URL for an object in an S3 bucket where you can get the
     #   parsing results of the test package. If the test package doesn't
@@ -4855,6 +4890,7 @@ module Aws::DeviceFarm
       :billing_method,
       :device_minutes,
       :network_profile,
+      :device_proxy,
       :parsing_result_url,
       :result_code,
       :seed,
@@ -4967,6 +5003,10 @@ module Aws::DeviceFarm
     #   An array of ARNs for your VPC endpoint configurations.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] device_proxy
+    #   The device proxy to be configured on the device for the run.
+    #   @return [Types::DeviceProxy]
+    #
     # @!attribute [rw] customer_artifact_paths
     #   Input `CustomerArtifactPaths` object for the scheduled run
     #   configuration.
@@ -5001,6 +5041,7 @@ module Aws::DeviceFarm
       :locale,
       :location,
       :vpce_configuration_arns,
+      :device_proxy,
       :customer_artifact_paths,
       :radios,
       :auxiliary_apps,

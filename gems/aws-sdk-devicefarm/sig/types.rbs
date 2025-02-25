@@ -121,6 +121,7 @@ module Aws::DeviceFarm
     class CreateRemoteAccessSessionConfiguration
       attr_accessor billing_method: ("METERED" | "UNMETERED")
       attr_accessor vpce_configuration_arns: ::Array[::String]
+      attr_accessor device_proxy: Types::DeviceProxy
       SENSITIVE: []
     end
 
@@ -337,6 +338,12 @@ module Aws::DeviceFarm
       attr_accessor device: Types::Device
       attr_accessor compatible: bool
       attr_accessor incompatibility_messages: ::Array[Types::IncompatibilityMessage]
+      SENSITIVE: []
+    end
+
+    class DeviceProxy
+      attr_accessor host: ::String
+      attr_accessor port: ::Integer
       SENSITIVE: []
     end
 
@@ -1057,6 +1064,7 @@ module Aws::DeviceFarm
       attr_accessor interaction_mode: ("INTERACTIVE" | "NO_VIDEO" | "VIDEO_ONLY")
       attr_accessor skip_app_resign: bool
       attr_accessor vpc_config: Types::VpcConfig
+      attr_accessor device_proxy: Types::DeviceProxy
       SENSITIVE: []
     end
 
@@ -1101,6 +1109,7 @@ module Aws::DeviceFarm
       attr_accessor billing_method: ("METERED" | "UNMETERED")
       attr_accessor device_minutes: Types::DeviceMinutes
       attr_accessor network_profile: Types::NetworkProfile
+      attr_accessor device_proxy: Types::DeviceProxy
       attr_accessor parsing_result_url: ::String
       attr_accessor result_code: ("PARSING_FAILED" | "VPC_ENDPOINT_SETUP_FAILED")
       attr_accessor seed: ::Integer
@@ -1133,6 +1142,7 @@ module Aws::DeviceFarm
       attr_accessor locale: ::String
       attr_accessor location: Types::Location
       attr_accessor vpce_configuration_arns: ::Array[::String]
+      attr_accessor device_proxy: Types::DeviceProxy
       attr_accessor customer_artifact_paths: Types::CustomerArtifactPaths
       attr_accessor radios: Types::Radios
       attr_accessor auxiliary_apps: ::Array[::String]

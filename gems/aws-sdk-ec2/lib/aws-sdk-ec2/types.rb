@@ -7137,6 +7137,23 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html
     #   @return [Array<Types::TagSpecification>]
     #
+    # @!attribute [rw] snapshot_copy_completion_duration_minutes
+    #   Specify a completion duration, in 15 minute increments, to initiate
+    #   a time-based AMI copy. The specified completion duration applies to
+    #   each of the snapshots associated with the AMI. Each snapshot
+    #   associated with the AMI will be completed within the specified
+    #   completion duration, regardless of their size.
+    #
+    #   If you do not specify a value, the AMI copy operation is completed
+    #   on a best-effort basis.
+    #
+    #   For more information, see [ Time-based copies][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/time-based-copies.html
+    #   @return [Integer]
+    #
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -7157,6 +7174,7 @@ module Aws::EC2
       :destination_outpost_arn,
       :copy_image_tags,
       :tag_specifications,
+      :snapshot_copy_completion_duration_minutes,
       :dry_run)
       SENSITIVE = []
       include Aws::Structure
@@ -13051,7 +13069,8 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] subnet_ids
-    #   The IDs of the subnets.
+    #   The IDs of the subnets. You can specify only one subnet per
+    #   Availability Zone.
     #   @return [Array<String>]
     #
     # @!attribute [rw] port_ranges
@@ -13116,7 +13135,8 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] subnet_ids
-    #   The IDs of the subnets.
+    #   The IDs of the subnets. You can specify only one subnet per
+    #   Availability Zone.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessEndpointRdsOptions AWS API Documentation
@@ -65087,11 +65107,6 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] transit_gateway_id
-    #   <note markdown="1"> This parameter is in preview and may not be available for your
-    #   account.
-    #
-    #    </note>
-    #
     #   The ID of the transit gateway (if applicable).
     #   @return [String]
     #

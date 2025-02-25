@@ -862,6 +862,11 @@ module Aws::CodeBuild
     #   [1]: https://docs.aws.amazon.com/codebuild/latest/userguide/session-manager.html
     #   @return [Boolean]
     #
+    # @!attribute [rw] report_arns
+    #   An array that contains the ARNs of reports created by merging
+    #   reports from builds associated with this batch build.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/BuildBatch AWS API Documentation
     #
     class BuildBatch < Struct.new(
@@ -894,7 +899,8 @@ module Aws::CodeBuild
       :file_system_locations,
       :build_batch_config,
       :build_groups,
-      :debug_session_enabled)
+      :debug_session_enabled,
+      :report_arns)
       SENSITIVE = []
       include Aws::Structure
     end

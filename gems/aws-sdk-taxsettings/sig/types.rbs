@@ -32,8 +32,10 @@ module Aws::TaxSettings
 
     class AdditionalInfoRequest
       attr_accessor canada_additional_info: Types::CanadaAdditionalInfo
+      attr_accessor egypt_additional_info: Types::EgyptAdditionalInfo
       attr_accessor estonia_additional_info: Types::EstoniaAdditionalInfo
       attr_accessor georgia_additional_info: Types::GeorgiaAdditionalInfo
+      attr_accessor greece_additional_info: Types::GreeceAdditionalInfo
       attr_accessor israel_additional_info: Types::IsraelAdditionalInfo
       attr_accessor italy_additional_info: Types::ItalyAdditionalInfo
       attr_accessor kenya_additional_info: Types::KenyaAdditionalInfo
@@ -45,14 +47,17 @@ module Aws::TaxSettings
       attr_accessor spain_additional_info: Types::SpainAdditionalInfo
       attr_accessor turkey_additional_info: Types::TurkeyAdditionalInfo
       attr_accessor ukraine_additional_info: Types::UkraineAdditionalInfo
+      attr_accessor vietnam_additional_info: Types::VietnamAdditionalInfo
       SENSITIVE: []
     end
 
     class AdditionalInfoResponse
       attr_accessor brazil_additional_info: Types::BrazilAdditionalInfo
       attr_accessor canada_additional_info: Types::CanadaAdditionalInfo
+      attr_accessor egypt_additional_info: Types::EgyptAdditionalInfo
       attr_accessor estonia_additional_info: Types::EstoniaAdditionalInfo
       attr_accessor georgia_additional_info: Types::GeorgiaAdditionalInfo
+      attr_accessor greece_additional_info: Types::GreeceAdditionalInfo
       attr_accessor india_additional_info: Types::IndiaAdditionalInfo
       attr_accessor israel_additional_info: Types::IsraelAdditionalInfo
       attr_accessor italy_additional_info: Types::ItalyAdditionalInfo
@@ -65,6 +70,7 @@ module Aws::TaxSettings
       attr_accessor spain_additional_info: Types::SpainAdditionalInfo
       attr_accessor turkey_additional_info: Types::TurkeyAdditionalInfo
       attr_accessor ukraine_additional_info: Types::UkraineAdditionalInfo
+      attr_accessor vietnam_additional_info: Types::VietnamAdditionalInfo
       SENSITIVE: []
     end
 
@@ -185,6 +191,12 @@ module Aws::TaxSettings
       SENSITIVE: []
     end
 
+    class EgyptAdditionalInfo
+      attr_accessor unique_identification_number: ::String
+      attr_accessor unique_identification_number_expiration_date: ::String
+      SENSITIVE: []
+    end
+
     class EstoniaAdditionalInfo
       attr_accessor registry_commercial_code: ::String
       SENSITIVE: []
@@ -237,6 +249,11 @@ module Aws::TaxSettings
     class GetTaxRegistrationResponse
       attr_accessor tax_registration: Types::TaxRegistration
       SENSITIVE: [:tax_registration]
+    end
+
+    class GreeceAdditionalInfo
+      attr_accessor contracting_authority_code: ::String
+      SENSITIVE: []
     end
 
     class IndiaAdditionalInfo
@@ -534,6 +551,14 @@ module Aws::TaxSettings
     class VerificationDetails
       attr_accessor date_of_birth: ::String
       attr_accessor tax_registration_documents: ::Array[Types::TaxRegistrationDocument]
+      SENSITIVE: []
+    end
+
+    class VietnamAdditionalInfo
+      attr_accessor electronic_transaction_code_number: ::String
+      attr_accessor enterprise_identification_number: ::String
+      attr_accessor payment_voucher_number: ::String
+      attr_accessor payment_voucher_number_date: ::String
       SENSITIVE: []
     end
   end

@@ -512,7 +512,8 @@ module Aws::TaxSettings
       req.send_request(options)
     end
 
-    # Get the active tax exemptions for a given list of accounts.
+    # Get the active tax exemptions for a given list of accounts. The IAM
+    # action is `tax:GetExemptions`.
     #
     # @option params [required, Array<String>] :account_ids
     #   List of unique account identifiers.
@@ -738,11 +739,18 @@ module Aws::TaxSettings
     #           is_reseller_account: false,
     #           provincial_sales_tax_id: "CanadaProvincialSalesTaxIdString",
     #         },
+    #         egypt_additional_info: {
+    #           unique_identification_number: "UniqueIdentificationNumber",
+    #           unique_identification_number_expiration_date: "DateString",
+    #         },
     #         estonia_additional_info: {
     #           registry_commercial_code: "RegistryCommercialCode", # required
     #         },
     #         georgia_additional_info: {
     #           person_type: "Legal Person", # required, accepts Legal Person, Physical Person, Business
+    #         },
+    #         greece_additional_info: {
+    #           contracting_authority_code: "ContractingAuthorityCode",
     #         },
     #         israel_additional_info: {
     #           customer_type: "Business", # required, accepts Business, Individual
@@ -788,6 +796,12 @@ module Aws::TaxSettings
     #         },
     #         ukraine_additional_info: {
     #           ukraine_trn_type: "Business", # required, accepts Business, Individual
+    #         },
+    #         vietnam_additional_info: {
+    #           electronic_transaction_code_number: "ElectronicTransactionCodeNumber",
+    #           enterprise_identification_number: "EnterpriseIdentificationNumber",
+    #           payment_voucher_number: "PaymentVoucherNumber",
+    #           payment_voucher_number_date: "DateString",
     #         },
     #       },
     #       certified_email_id: "CertifiedEmailId",
@@ -897,7 +911,8 @@ module Aws::TaxSettings
       req.send_request(options)
     end
 
-    # Get supported tax exemption types.
+    # Get supported tax exemption types. The IAM action is
+    # `tax:GetExemptions`.
     #
     # @return [Types::GetTaxExemptionTypesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -963,8 +978,11 @@ module Aws::TaxSettings
     #   resp.tax_registration.additional_tax_information.canada_additional_info.canada_retail_sales_tax_number #=> String
     #   resp.tax_registration.additional_tax_information.canada_additional_info.is_reseller_account #=> Boolean
     #   resp.tax_registration.additional_tax_information.canada_additional_info.provincial_sales_tax_id #=> String
+    #   resp.tax_registration.additional_tax_information.egypt_additional_info.unique_identification_number #=> String
+    #   resp.tax_registration.additional_tax_information.egypt_additional_info.unique_identification_number_expiration_date #=> String
     #   resp.tax_registration.additional_tax_information.estonia_additional_info.registry_commercial_code #=> String
     #   resp.tax_registration.additional_tax_information.georgia_additional_info.person_type #=> String, one of "Legal Person", "Physical Person", "Business"
+    #   resp.tax_registration.additional_tax_information.greece_additional_info.contracting_authority_code #=> String
     #   resp.tax_registration.additional_tax_information.india_additional_info.pan #=> String
     #   resp.tax_registration.additional_tax_information.israel_additional_info.customer_type #=> String, one of "Business", "Individual"
     #   resp.tax_registration.additional_tax_information.israel_additional_info.dealer_type #=> String, one of "Authorized", "Non-authorized"
@@ -990,6 +1008,10 @@ module Aws::TaxSettings
     #   resp.tax_registration.additional_tax_information.turkey_additional_info.secondary_tax_id #=> String
     #   resp.tax_registration.additional_tax_information.turkey_additional_info.tax_office #=> String
     #   resp.tax_registration.additional_tax_information.ukraine_additional_info.ukraine_trn_type #=> String, one of "Business", "Individual"
+    #   resp.tax_registration.additional_tax_information.vietnam_additional_info.electronic_transaction_code_number #=> String
+    #   resp.tax_registration.additional_tax_information.vietnam_additional_info.enterprise_identification_number #=> String
+    #   resp.tax_registration.additional_tax_information.vietnam_additional_info.payment_voucher_number #=> String
+    #   resp.tax_registration.additional_tax_information.vietnam_additional_info.payment_voucher_number_date #=> String
     #   resp.tax_registration.certified_email_id #=> String
     #   resp.tax_registration.legal_address.address_line_1 #=> String
     #   resp.tax_registration.legal_address.address_line_2 #=> String
@@ -1109,7 +1131,7 @@ module Aws::TaxSettings
     end
 
     # Retrieves the tax exemption of accounts listed in a consolidated
-    # billing family.
+    # billing family. The IAM action is `tax:GetExemptions`.
     #
     # @option params [Integer] :max_results
     #   The number of results you want in one response.
@@ -1210,8 +1232,11 @@ module Aws::TaxSettings
     #   resp.account_details[0].tax_registration.additional_tax_information.canada_additional_info.canada_retail_sales_tax_number #=> String
     #   resp.account_details[0].tax_registration.additional_tax_information.canada_additional_info.is_reseller_account #=> Boolean
     #   resp.account_details[0].tax_registration.additional_tax_information.canada_additional_info.provincial_sales_tax_id #=> String
+    #   resp.account_details[0].tax_registration.additional_tax_information.egypt_additional_info.unique_identification_number #=> String
+    #   resp.account_details[0].tax_registration.additional_tax_information.egypt_additional_info.unique_identification_number_expiration_date #=> String
     #   resp.account_details[0].tax_registration.additional_tax_information.estonia_additional_info.registry_commercial_code #=> String
     #   resp.account_details[0].tax_registration.additional_tax_information.georgia_additional_info.person_type #=> String, one of "Legal Person", "Physical Person", "Business"
+    #   resp.account_details[0].tax_registration.additional_tax_information.greece_additional_info.contracting_authority_code #=> String
     #   resp.account_details[0].tax_registration.additional_tax_information.india_additional_info.pan #=> String
     #   resp.account_details[0].tax_registration.additional_tax_information.israel_additional_info.customer_type #=> String, one of "Business", "Individual"
     #   resp.account_details[0].tax_registration.additional_tax_information.israel_additional_info.dealer_type #=> String, one of "Authorized", "Non-authorized"
@@ -1237,6 +1262,10 @@ module Aws::TaxSettings
     #   resp.account_details[0].tax_registration.additional_tax_information.turkey_additional_info.secondary_tax_id #=> String
     #   resp.account_details[0].tax_registration.additional_tax_information.turkey_additional_info.tax_office #=> String
     #   resp.account_details[0].tax_registration.additional_tax_information.ukraine_additional_info.ukraine_trn_type #=> String, one of "Business", "Individual"
+    #   resp.account_details[0].tax_registration.additional_tax_information.vietnam_additional_info.electronic_transaction_code_number #=> String
+    #   resp.account_details[0].tax_registration.additional_tax_information.vietnam_additional_info.enterprise_identification_number #=> String
+    #   resp.account_details[0].tax_registration.additional_tax_information.vietnam_additional_info.payment_voucher_number #=> String
+    #   resp.account_details[0].tax_registration.additional_tax_information.vietnam_additional_info.payment_voucher_number_date #=> String
     #   resp.account_details[0].tax_registration.certified_email_id #=> String
     #   resp.account_details[0].tax_registration.jurisdiction.country_code #=> String
     #   resp.account_details[0].tax_registration.jurisdiction.state_or_region #=> String
@@ -1305,7 +1334,8 @@ module Aws::TaxSettings
     end
 
     # Adds the tax exemption for a single account or all accounts listed in
-    # a consolidated billing family.
+    # a consolidated billing family. The IAM action is
+    # `tax:UpdateExemptions`.
     #
     # @option params [required, Array<String>] :account_ids
     #   The list of unique account identifiers.
@@ -1551,11 +1581,18 @@ module Aws::TaxSettings
     #           is_reseller_account: false,
     #           provincial_sales_tax_id: "CanadaProvincialSalesTaxIdString",
     #         },
+    #         egypt_additional_info: {
+    #           unique_identification_number: "UniqueIdentificationNumber",
+    #           unique_identification_number_expiration_date: "DateString",
+    #         },
     #         estonia_additional_info: {
     #           registry_commercial_code: "RegistryCommercialCode", # required
     #         },
     #         georgia_additional_info: {
     #           person_type: "Legal Person", # required, accepts Legal Person, Physical Person, Business
+    #         },
+    #         greece_additional_info: {
+    #           contracting_authority_code: "ContractingAuthorityCode",
     #         },
     #         israel_additional_info: {
     #           customer_type: "Business", # required, accepts Business, Individual
@@ -1601,6 +1638,12 @@ module Aws::TaxSettings
     #         },
     #         ukraine_additional_info: {
     #           ukraine_trn_type: "Business", # required, accepts Business, Individual
+    #         },
+    #         vietnam_additional_info: {
+    #           electronic_transaction_code_number: "ElectronicTransactionCodeNumber",
+    #           enterprise_identification_number: "EnterpriseIdentificationNumber",
+    #           payment_voucher_number: "PaymentVoucherNumber",
+    #           payment_voucher_number_date: "DateString",
     #         },
     #       },
     #       certified_email_id: "CertifiedEmailId",
@@ -1667,7 +1710,7 @@ module Aws::TaxSettings
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-taxsettings'
-      context[:gem_version] = '1.18.0'
+      context[:gem_version] = '1.19.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -740,8 +740,14 @@ module Aws::IoT
     #   True if this audit check is enabled for this account.
     #   @return [Boolean]
     #
+    # @!attribute [rw] configuration
+    #   A structure containing the configName and corresponding configValue
+    #   for configuring audit checks.
+    #   @return [Hash<String,String>]
+    #
     class AuditCheckConfiguration < Struct.new(
-      :enabled)
+      :enabled,
+      :configuration)
       SENSITIVE = []
       include Aws::Structure
     end

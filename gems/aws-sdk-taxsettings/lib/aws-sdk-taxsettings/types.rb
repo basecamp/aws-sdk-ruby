@@ -10,7 +10,7 @@
 module Aws::TaxSettings
   module Types
 
-    # The access is denied for the Amazon Web Services Support API.
+    # The access is denied for the Amazon Web ServicesSupport API.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -106,6 +106,10 @@ module Aws::TaxSettings
     #   Additional tax information associated with your TRN in Canada.
     #   @return [Types::CanadaAdditionalInfo]
     #
+    # @!attribute [rw] egypt_additional_info
+    #   Additional tax information to specify for a TRN in Egypt.
+    #   @return [Types::EgyptAdditionalInfo]
+    #
     # @!attribute [rw] estonia_additional_info
     #   Additional tax information to specify for a TRN in Estonia.
     #   @return [Types::EstoniaAdditionalInfo]
@@ -113,6 +117,10 @@ module Aws::TaxSettings
     # @!attribute [rw] georgia_additional_info
     #   Additional tax information to specify for a TRN in Georgia.
     #   @return [Types::GeorgiaAdditionalInfo]
+    #
+    # @!attribute [rw] greece_additional_info
+    #   Additional tax information to specify for a TRN in Greece.
+    #   @return [Types::GreeceAdditionalInfo]
     #
     # @!attribute [rw] israel_additional_info
     #   Additional tax information to specify for a TRN in Israel.
@@ -158,12 +166,18 @@ module Aws::TaxSettings
     #   Additional tax information associated with your TRN in Ukraine.
     #   @return [Types::UkraineAdditionalInfo]
     #
+    # @!attribute [rw] vietnam_additional_info
+    #   Additional tax information to specify for a TRN in Vietnam.
+    #   @return [Types::VietnamAdditionalInfo]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/AdditionalInfoRequest AWS API Documentation
     #
     class AdditionalInfoRequest < Struct.new(
       :canada_additional_info,
+      :egypt_additional_info,
       :estonia_additional_info,
       :georgia_additional_info,
+      :greece_additional_info,
       :israel_additional_info,
       :italy_additional_info,
       :kenya_additional_info,
@@ -174,7 +188,8 @@ module Aws::TaxSettings
       :south_korea_additional_info,
       :spain_additional_info,
       :turkey_additional_info,
-      :ukraine_additional_info)
+      :ukraine_additional_info,
+      :vietnam_additional_info)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -194,6 +209,10 @@ module Aws::TaxSettings
     #   Additional tax information associated with your TRN in Canada.
     #   @return [Types::CanadaAdditionalInfo]
     #
+    # @!attribute [rw] egypt_additional_info
+    #   Additional tax information to specify for a TRN in Egypt.
+    #   @return [Types::EgyptAdditionalInfo]
+    #
     # @!attribute [rw] estonia_additional_info
     #   Additional tax information associated with your TRN in Estonia.
     #   @return [Types::EstoniaAdditionalInfo]
@@ -201,6 +220,10 @@ module Aws::TaxSettings
     # @!attribute [rw] georgia_additional_info
     #   Additional tax information associated with your TRN in Georgia.
     #   @return [Types::GeorgiaAdditionalInfo]
+    #
+    # @!attribute [rw] greece_additional_info
+    #   Additional tax information to specify for a TRN in Greece.
+    #   @return [Types::GreeceAdditionalInfo]
     #
     # @!attribute [rw] india_additional_info
     #   Additional tax information in India.
@@ -250,13 +273,19 @@ module Aws::TaxSettings
     #   Additional tax information associated with your TRN in Ukraine.
     #   @return [Types::UkraineAdditionalInfo]
     #
+    # @!attribute [rw] vietnam_additional_info
+    #   Additional tax information to specify for a TRN in Vietnam.
+    #   @return [Types::VietnamAdditionalInfo]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/AdditionalInfoResponse AWS API Documentation
     #
     class AdditionalInfoResponse < Struct.new(
       :brazil_additional_info,
       :canada_additional_info,
+      :egypt_additional_info,
       :estonia_additional_info,
       :georgia_additional_info,
+      :greece_additional_info,
       :india_additional_info,
       :israel_additional_info,
       :italy_additional_info,
@@ -268,7 +297,8 @@ module Aws::TaxSettings
       :south_korea_additional_info,
       :spain_additional_info,
       :turkey_additional_info,
-      :ukraine_additional_info)
+      :ukraine_additional_info,
+      :vietnam_additional_info)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -337,8 +367,8 @@ module Aws::TaxSettings
       include Aws::Structure
     end
 
-    # Failed to upload the tax exemption document to Amazon Web Services
-    # Support case.
+    # Failed to upload the tax exemption document to Amazon Web
+    # ServicesSupport case.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -596,7 +626,7 @@ module Aws::TaxSettings
       include Aws::Structure
     end
 
-    # You've exceeded the Amazon Web Services Support case creation limit
+    # You've exceeded the Amazon Web ServicesSupport case creation limit
     # for your account.
     #
     # @!attribute [rw] message
@@ -682,6 +712,27 @@ module Aws::TaxSettings
     class DestinationS3Location < Struct.new(
       :bucket,
       :prefix)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Additional tax information to specify for a TRN in Egypt.
+    #
+    # @!attribute [rw] unique_identification_number
+    #   The unique identification number provided by the Egypt Tax
+    #   Authority.
+    #   @return [String]
+    #
+    # @!attribute [rw] unique_identification_number_expiration_date
+    #   The expiration date of the unique identification number provided by
+    #   the Egypt Tax Authority.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/EgyptAdditionalInfo AWS API Documentation
+    #
+    class EgyptAdditionalInfo < Struct.new(
+      :unique_identification_number,
+      :unique_identification_number_expiration_date)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -827,6 +878,20 @@ module Aws::TaxSettings
     class GetTaxRegistrationResponse < Struct.new(
       :tax_registration)
       SENSITIVE = [:tax_registration]
+      include Aws::Structure
+    end
+
+    # Additional tax information to specify for a TRN in Greece.
+    #
+    # @!attribute [rw] contracting_authority_code
+    #   The code of contracting authority for e-invoicing.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/GreeceAdditionalInfo AWS API Documentation
+    #
+    class GreeceAdditionalInfo < Struct.new(
+      :contracting_authority_code)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -1928,6 +1993,35 @@ module Aws::TaxSettings
     class VerificationDetails < Struct.new(
       :date_of_birth,
       :tax_registration_documents)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Additional tax information to specify for a TRN in Vietnam.
+    #
+    # @!attribute [rw] electronic_transaction_code_number
+    #   The electronic transaction code number on the tax return document.
+    #   @return [String]
+    #
+    # @!attribute [rw] enterprise_identification_number
+    #   The enterprise identification number for tax registration.
+    #   @return [String]
+    #
+    # @!attribute [rw] payment_voucher_number
+    #   The payment voucher number on the tax return payment document.
+    #   @return [String]
+    #
+    # @!attribute [rw] payment_voucher_number_date
+    #   The date on the tax return payment document.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/VietnamAdditionalInfo AWS API Documentation
+    #
+    class VietnamAdditionalInfo < Struct.new(
+      :electronic_transaction_code_number,
+      :enterprise_identification_number,
+      :payment_voucher_number,
+      :payment_voucher_number_date)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -114,11 +114,18 @@ module Aws
                                               is_reseller_account: bool?,
                                               provincial_sales_tax_id: ::String?
                                             }?,
+                                            egypt_additional_info: {
+                                              unique_identification_number: ::String?,
+                                              unique_identification_number_expiration_date: ::String?
+                                            }?,
                                             estonia_additional_info: {
                                               registry_commercial_code: ::String
                                             }?,
                                             georgia_additional_info: {
                                               person_type: ("Legal Person" | "Physical Person" | "Business")
+                                            }?,
+                                            greece_additional_info: {
+                                              contracting_authority_code: ::String?
                                             }?,
                                             israel_additional_info: {
                                               customer_type: ("Business" | "Individual"),
@@ -164,6 +171,12 @@ module Aws
                                             }?,
                                             ukraine_additional_info: {
                                               ukraine_trn_type: ("Business" | "Individual")
+                                            }?,
+                                            vietnam_additional_info: {
+                                              electronic_transaction_code_number: ::String?,
+                                              enterprise_identification_number: ::String?,
+                                              payment_voucher_number: ::String?,
+                                              payment_voucher_number_date: ::String?
                                             }?
                                           }?,
                                           certified_email_id: ::String?,
@@ -368,11 +381,18 @@ module Aws
                                         is_reseller_account: bool?,
                                         provincial_sales_tax_id: ::String?
                                       }?,
+                                      egypt_additional_info: {
+                                        unique_identification_number: ::String?,
+                                        unique_identification_number_expiration_date: ::String?
+                                      }?,
                                       estonia_additional_info: {
                                         registry_commercial_code: ::String
                                       }?,
                                       georgia_additional_info: {
                                         person_type: ("Legal Person" | "Physical Person" | "Business")
+                                      }?,
+                                      greece_additional_info: {
+                                        contracting_authority_code: ::String?
                                       }?,
                                       israel_additional_info: {
                                         customer_type: ("Business" | "Individual"),
@@ -418,6 +438,12 @@ module Aws
                                       }?,
                                       ukraine_additional_info: {
                                         ukraine_trn_type: ("Business" | "Individual")
+                                      }?,
+                                      vietnam_additional_info: {
+                                        electronic_transaction_code_number: ::String?,
+                                        enterprise_identification_number: ::String?,
+                                        payment_voucher_number: ::String?,
+                                        payment_voucher_number_date: ::String?
                                       }?
                                     }?,
                                     certified_email_id: ::String?,

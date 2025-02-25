@@ -672,6 +672,8 @@ module Aws::CodeBuild
     #   resp.build_batches[0].build_groups[0].prior_build_summary_list[0].secondary_artifacts[0].location #=> String
     #   resp.build_batches[0].build_groups[0].prior_build_summary_list[0].secondary_artifacts[0].identifier #=> String
     #   resp.build_batches[0].debug_session_enabled #=> Boolean
+    #   resp.build_batches[0].report_arns #=> Array
+    #   resp.build_batches[0].report_arns[0] #=> String
     #   resp.build_batches_not_found #=> Array
     #   resp.build_batches_not_found[0] #=> String
     #
@@ -3815,6 +3817,8 @@ module Aws::CodeBuild
     #   resp.build_batch.build_groups[0].prior_build_summary_list[0].secondary_artifacts[0].location #=> String
     #   resp.build_batch.build_groups[0].prior_build_summary_list[0].secondary_artifacts[0].identifier #=> String
     #   resp.build_batch.debug_session_enabled #=> Boolean
+    #   resp.build_batch.report_arns #=> Array
+    #   resp.build_batch.report_arns[0] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/RetryBuildBatch AWS API Documentation
     #
@@ -4841,6 +4845,8 @@ module Aws::CodeBuild
     #   resp.build_batch.build_groups[0].prior_build_summary_list[0].secondary_artifacts[0].location #=> String
     #   resp.build_batch.build_groups[0].prior_build_summary_list[0].secondary_artifacts[0].identifier #=> String
     #   resp.build_batch.debug_session_enabled #=> Boolean
+    #   resp.build_batch.report_arns #=> Array
+    #   resp.build_batch.report_arns[0] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StartBuildBatch AWS API Documentation
     #
@@ -5165,6 +5171,8 @@ module Aws::CodeBuild
     #   resp.build_batch.build_groups[0].prior_build_summary_list[0].secondary_artifacts[0].location #=> String
     #   resp.build_batch.build_groups[0].prior_build_summary_list[0].secondary_artifacts[0].identifier #=> String
     #   resp.build_batch.debug_session_enabled #=> Boolean
+    #   resp.build_batch.report_arns #=> Array
+    #   resp.build_batch.report_arns[0] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StopBuildBatch AWS API Documentation
     #
@@ -6216,7 +6224,7 @@ module Aws::CodeBuild
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-codebuild'
-      context[:gem_version] = '1.146.0'
+      context[:gem_version] = '1.147.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

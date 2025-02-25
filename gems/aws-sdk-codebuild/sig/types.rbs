@@ -182,6 +182,7 @@ module Aws::CodeBuild
       attr_accessor build_batch_config: Types::ProjectBuildBatchConfig
       attr_accessor build_groups: ::Array[Types::BuildGroup]
       attr_accessor debug_session_enabled: bool
+      attr_accessor report_arns: ::Array[::String]
       SENSITIVE: []
     end
 

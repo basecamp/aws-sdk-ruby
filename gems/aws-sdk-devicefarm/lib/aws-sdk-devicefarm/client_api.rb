@@ -92,6 +92,9 @@ module Aws::DeviceFarm
     DevicePoolCompatibilityResults = Shapes::ListShape.new(name: 'DevicePoolCompatibilityResults')
     DevicePoolType = Shapes::StringShape.new(name: 'DevicePoolType')
     DevicePools = Shapes::ListShape.new(name: 'DevicePools')
+    DeviceProxy = Shapes::StructureShape.new(name: 'DeviceProxy')
+    DeviceProxyHost = Shapes::StringShape.new(name: 'DeviceProxyHost')
+    DeviceProxyPort = Shapes::IntegerShape.new(name: 'DeviceProxyPort')
     DeviceSelectionConfiguration = Shapes::StructureShape.new(name: 'DeviceSelectionConfiguration')
     DeviceSelectionResult = Shapes::StructureShape.new(name: 'DeviceSelectionResult')
     Devices = Shapes::ListShape.new(name: 'Devices')
@@ -441,6 +444,7 @@ module Aws::DeviceFarm
 
     CreateRemoteAccessSessionConfiguration.add_member(:billing_method, Shapes::ShapeRef.new(shape: BillingMethod, location_name: "billingMethod"))
     CreateRemoteAccessSessionConfiguration.add_member(:vpce_configuration_arns, Shapes::ShapeRef.new(shape: AmazonResourceNames, location_name: "vpceConfigurationArns"))
+    CreateRemoteAccessSessionConfiguration.add_member(:device_proxy, Shapes::ShapeRef.new(shape: DeviceProxy, location_name: "deviceProxy"))
     CreateRemoteAccessSessionConfiguration.struct_class = Types::CreateRemoteAccessSessionConfiguration
 
     CreateRemoteAccessSessionRequest.add_member(:project_arn, Shapes::ShapeRef.new(shape: AmazonResourceName, required: true, location_name: "projectArn"))
@@ -609,6 +613,10 @@ module Aws::DeviceFarm
     DevicePoolCompatibilityResults.member = Shapes::ShapeRef.new(shape: DevicePoolCompatibilityResult)
 
     DevicePools.member = Shapes::ShapeRef.new(shape: DevicePool)
+
+    DeviceProxy.add_member(:host, Shapes::ShapeRef.new(shape: DeviceProxyHost, required: true, location_name: "host"))
+    DeviceProxy.add_member(:port, Shapes::ShapeRef.new(shape: DeviceProxyPort, required: true, location_name: "port"))
+    DeviceProxy.struct_class = Types::DeviceProxy
 
     DeviceSelectionConfiguration.add_member(:filters, Shapes::ShapeRef.new(shape: DeviceFilters, required: true, location_name: "filters"))
     DeviceSelectionConfiguration.add_member(:max_devices, Shapes::ShapeRef.new(shape: Integer, required: true, location_name: "maxDevices"))
@@ -1140,6 +1148,7 @@ module Aws::DeviceFarm
     RemoteAccessSession.add_member(:interaction_mode, Shapes::ShapeRef.new(shape: InteractionMode, location_name: "interactionMode"))
     RemoteAccessSession.add_member(:skip_app_resign, Shapes::ShapeRef.new(shape: SkipAppResign, location_name: "skipAppResign"))
     RemoteAccessSession.add_member(:vpc_config, Shapes::ShapeRef.new(shape: VpcConfig, location_name: "vpcConfig"))
+    RemoteAccessSession.add_member(:device_proxy, Shapes::ShapeRef.new(shape: DeviceProxy, location_name: "deviceProxy"))
     RemoteAccessSession.struct_class = Types::RemoteAccessSession
 
     RemoteAccessSessions.member = Shapes::ShapeRef.new(shape: RemoteAccessSession)
@@ -1178,6 +1187,7 @@ module Aws::DeviceFarm
     Run.add_member(:billing_method, Shapes::ShapeRef.new(shape: BillingMethod, location_name: "billingMethod"))
     Run.add_member(:device_minutes, Shapes::ShapeRef.new(shape: DeviceMinutes, location_name: "deviceMinutes"))
     Run.add_member(:network_profile, Shapes::ShapeRef.new(shape: NetworkProfile, location_name: "networkProfile"))
+    Run.add_member(:device_proxy, Shapes::ShapeRef.new(shape: DeviceProxy, location_name: "deviceProxy"))
     Run.add_member(:parsing_result_url, Shapes::ShapeRef.new(shape: String, location_name: "parsingResultUrl"))
     Run.add_member(:result_code, Shapes::ShapeRef.new(shape: ExecutionResultCode, location_name: "resultCode"))
     Run.add_member(:seed, Shapes::ShapeRef.new(shape: Integer, location_name: "seed"))
@@ -1210,6 +1220,7 @@ module Aws::DeviceFarm
     ScheduleRunConfiguration.add_member(:locale, Shapes::ShapeRef.new(shape: String, location_name: "locale"))
     ScheduleRunConfiguration.add_member(:location, Shapes::ShapeRef.new(shape: Location, location_name: "location"))
     ScheduleRunConfiguration.add_member(:vpce_configuration_arns, Shapes::ShapeRef.new(shape: AmazonResourceNames, location_name: "vpceConfigurationArns"))
+    ScheduleRunConfiguration.add_member(:device_proxy, Shapes::ShapeRef.new(shape: DeviceProxy, location_name: "deviceProxy"))
     ScheduleRunConfiguration.add_member(:customer_artifact_paths, Shapes::ShapeRef.new(shape: CustomerArtifactPaths, location_name: "customerArtifactPaths"))
     ScheduleRunConfiguration.add_member(:radios, Shapes::ShapeRef.new(shape: Radios, location_name: "radios"))
     ScheduleRunConfiguration.add_member(:auxiliary_apps, Shapes::ShapeRef.new(shape: AmazonResourceNames, location_name: "auxiliaryApps"))

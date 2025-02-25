@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.147.0 (2025-02-25)
+------------------
+
+* Feature - Adding "reportArns" field in output of BatchGetBuildBatches API. "reportArns" is an array that contains the ARNs of reports created by merging reports from builds associated with the batch build.
+
 1.146.0 (2025-02-20)
 ------------------
 

@@ -5620,6 +5620,8 @@ module Aws::IoT
     #   resp.audit_notification_target_configurations["AuditNotificationType"].enabled #=> Boolean
     #   resp.audit_check_configurations #=> Hash
     #   resp.audit_check_configurations["AuditCheckName"].enabled #=> Boolean
+    #   resp.audit_check_configurations["AuditCheckName"].configuration #=> Hash
+    #   resp.audit_check_configurations["AuditCheckName"].configuration["ConfigName"] #=> String
     #
     # @overload describe_account_audit_configuration(params = {})
     # @param [Hash] params ({})
@@ -14449,6 +14451,9 @@ module Aws::IoT
     #     audit_check_configurations: {
     #       "AuditCheckName" => {
     #         enabled: false,
+    #         configuration: {
+    #           "CERT_AGE_THRESHOLD_IN_DAYS" => "ConfigValue",
+    #         },
     #       },
     #     },
     #   })
@@ -16407,7 +16412,7 @@ module Aws::IoT
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-iot'
-      context[:gem_version] = '1.145.0'
+      context[:gem_version] = '1.146.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

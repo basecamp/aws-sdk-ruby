@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.507.0 (2025-02-25)
+------------------
+
+* Feature - Adds support for time-based EBS-backed AMI copy operations. Time-based copy ensures that EBS-backed AMIs are copied within and across Regions in a specified timeframe.
+
 1.506.0 (2025-02-18)
 ------------------
 

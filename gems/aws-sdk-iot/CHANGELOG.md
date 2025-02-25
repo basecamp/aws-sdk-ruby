@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.146.0 (2025-02-25)
+------------------
+
+* Feature - AWS IoT - AWS IoT Device Defender adds support for a new Device Defender Audit Check that monitors device certificate age and custom threshold configurations for both the new device certificate age check and existing device certificate expiry check.
+
 1.145.0 (2025-02-18)
 ------------------
 
