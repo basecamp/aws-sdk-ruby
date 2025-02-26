@@ -22,8 +22,10 @@ module Aws::ApplicationSignals
     AttributeMap = Shapes::MapShape.new(name: 'AttributeMap')
     AttributeMaps = Shapes::ListShape.new(name: 'AttributeMaps')
     Attributes = Shapes::MapShape.new(name: 'Attributes')
+    AwsAccountId = Shapes::StringShape.new(name: 'AwsAccountId')
     BatchGetServiceLevelObjectiveBudgetReportInput = Shapes::StructureShape.new(name: 'BatchGetServiceLevelObjectiveBudgetReportInput')
     BatchGetServiceLevelObjectiveBudgetReportOutput = Shapes::StructureShape.new(name: 'BatchGetServiceLevelObjectiveBudgetReportOutput')
+    Boolean = Shapes::BooleanShape.new(name: 'Boolean')
     BudgetRequestsRemaining = Shapes::IntegerShape.new(name: 'BudgetRequestsRemaining')
     BudgetSecondsRemaining = Shapes::IntegerShape.new(name: 'BudgetSecondsRemaining')
     BurnRateConfiguration = Shapes::StructureShape.new(name: 'BurnRateConfiguration')
@@ -270,6 +272,8 @@ module Aws::ApplicationSignals
     ListServiceLevelObjectivesInput.add_member(:operation_name, Shapes::ShapeRef.new(shape: OperationName, location: "querystring", location_name: "OperationName"))
     ListServiceLevelObjectivesInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListServiceLevelObjectivesMaxResults, location: "querystring", location_name: "MaxResults"))
     ListServiceLevelObjectivesInput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "NextToken"))
+    ListServiceLevelObjectivesInput.add_member(:include_linked_accounts, Shapes::ShapeRef.new(shape: Boolean, location: "querystring", location_name: "IncludeLinkedAccounts"))
+    ListServiceLevelObjectivesInput.add_member(:slo_owner_aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, location: "querystring", location_name: "SloOwnerAwsAccountId"))
     ListServiceLevelObjectivesInput.struct_class = Types::ListServiceLevelObjectivesInput
 
     ListServiceLevelObjectivesOutput.add_member(:slo_summaries, Shapes::ShapeRef.new(shape: ServiceLevelObjectiveSummaries, location_name: "SloSummaries"))
@@ -293,6 +297,8 @@ module Aws::ApplicationSignals
     ListServicesInput.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location: "querystring", location_name: "EndTime"))
     ListServicesInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListServicesMaxResults, location: "querystring", location_name: "MaxResults"))
     ListServicesInput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "NextToken"))
+    ListServicesInput.add_member(:include_linked_accounts, Shapes::ShapeRef.new(shape: Boolean, location: "querystring", location_name: "IncludeLinkedAccounts"))
+    ListServicesInput.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, location: "querystring", location_name: "AwsAccountId"))
     ListServicesInput.struct_class = Types::ListServicesInput
 
     ListServicesOutput.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "StartTime"))
@@ -329,6 +335,7 @@ module Aws::ApplicationSignals
     MetricReference.add_member(:metric_type, Shapes::ShapeRef.new(shape: MetricType, required: true, location_name: "MetricType"))
     MetricReference.add_member(:dimensions, Shapes::ShapeRef.new(shape: Dimensions, location_name: "Dimensions"))
     MetricReference.add_member(:metric_name, Shapes::ShapeRef.new(shape: MetricName, required: true, location_name: "MetricName"))
+    MetricReference.add_member(:account_id, Shapes::ShapeRef.new(shape: AwsAccountId, location_name: "AccountId"))
     MetricReference.struct_class = Types::MetricReference
 
     MetricReferences.member = Shapes::ShapeRef.new(shape: MetricReference)

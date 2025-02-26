@@ -76,7 +76,7 @@ module Aws::ApplicationSignals
     # For example, if you specify 60 as the number of minutes in the
     # look-back window, the burn rate is calculated as the following:
     #
-    # *burn rate = error rate over the look-back window / (1 - attainment
+    # *burn rate = error rate over the look-back window / (100% - attainment
     # goal percentage)*
     #
     # For more information about burn rates, see [Calculate burn rates][1].
@@ -718,13 +718,29 @@ module Aws::ApplicationSignals
     #   get the next set of service level objectives.
     #   @return [String]
     #
+    # @!attribute [rw] include_linked_accounts
+    #   If you are using this operation in a monitoring account, specify
+    #   `true` to include SLO from source accounts in the returned data.
+    #   </p> <p>When you are monitoring an account, you can use Amazon Web
+    #   Services account ID in <code>KeyAttribute</code> filter for service
+    #   source account and <code>SloOwnerawsaccountID</code> for SLO source
+    #   account with <code>IncludeLinkedAccounts</code> to filter the
+    #   returned data to only a single source account. </p>
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] slo_owner_aws_account_id
+    #   SLO's Amazon Web Services account ID.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/ListServiceLevelObjectivesInput AWS API Documentation
     #
     class ListServiceLevelObjectivesInput < Struct.new(
       :key_attributes,
       :operation_name,
       :max_results,
-      :next_token)
+      :next_token,
+      :include_linked_accounts,
+      :slo_owner_aws_account_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -878,13 +894,25 @@ module Aws::ApplicationSignals
     #   get the next set of services.
     #   @return [String]
     #
+    # @!attribute [rw] include_linked_accounts
+    #   If you are using this operation in a monitoring account, specify
+    #   `true` to include services from source accounts in the returned
+    #   data.      </p>
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] aws_account_id
+    #   Amazon Web Services Account ID.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/ListServicesInput AWS API Documentation
     #
     class ListServicesInput < Struct.new(
       :start_time,
       :end_time,
       :max_results,
-      :next_token)
+      :next_token,
+      :include_linked_accounts,
+      :aws_account_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1164,13 +1192,18 @@ module Aws::ApplicationSignals
     #   The name of the metric.
     #   @return [String]
     #
+    # @!attribute [rw] account_id
+    #   Amazon Web Services account ID.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/MetricReference AWS API Documentation
     #
     class MetricReference < Struct.new(
       :namespace,
       :metric_type,
       :dimensions,
-      :metric_name)
+      :metric_name,
+      :account_id)
       SENSITIVE = []
       include Aws::Structure
     end

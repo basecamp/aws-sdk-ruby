@@ -180,7 +180,7 @@ module Aws::IoTFleetWise
       attr_accessor data_destination_configs: ::Array[Types::DataDestinationConfig]
       attr_accessor data_partitions: ::Array[Types::DataPartition]
       attr_accessor signals_to_fetch: ::Array[Types::SignalFetchInformation]
-      SENSITIVE: [:signals_to_collect, :data_extra_dimensions]
+      SENSITIVE: [:signals_to_collect, :data_extra_dimensions, :signals_to_fetch]
     end
 
     class CreateCampaignResponse
@@ -530,7 +530,7 @@ module Aws::IoTFleetWise
       attr_accessor data_destination_configs: ::Array[Types::DataDestinationConfig]
       attr_accessor data_partitions: ::Array[Types::DataPartition]
       attr_accessor signals_to_fetch: ::Array[Types::SignalFetchInformation]
-      SENSITIVE: [:signals_to_collect, :data_extra_dimensions]
+      SENSITIVE: [:signals_to_collect, :data_extra_dimensions, :signals_to_fetch]
     end
 
     class GetDecoderManifestRequest
@@ -766,6 +766,7 @@ module Aws::IoTFleetWise
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
       attr_accessor status: ::String
+      attr_accessor list_response_scope: ("METADATA_ONLY")
       SENSITIVE: []
     end
 
@@ -805,6 +806,7 @@ module Aws::IoTFleetWise
       attr_accessor model_manifest_arn: ::String
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
+      attr_accessor list_response_scope: ("METADATA_ONLY")
       SENSITIVE: []
     end
 
@@ -830,6 +832,7 @@ module Aws::IoTFleetWise
     class ListFleetsRequest
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
+      attr_accessor list_response_scope: ("METADATA_ONLY")
       SENSITIVE: []
     end
 
@@ -856,6 +859,7 @@ module Aws::IoTFleetWise
       attr_accessor signal_catalog_arn: ::String
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
+      attr_accessor list_response_scope: ("METADATA_ONLY")
       SENSITIVE: []
     end
 
@@ -894,6 +898,7 @@ module Aws::IoTFleetWise
     class ListStateTemplatesRequest
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
+      attr_accessor list_response_scope: ("METADATA_ONLY")
       SENSITIVE: []
     end
 
@@ -932,6 +937,7 @@ module Aws::IoTFleetWise
       attr_accessor attribute_values: ::Array[::String]
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
+      attr_accessor list_response_scope: ("METADATA_ONLY")
       SENSITIVE: []
     end
 

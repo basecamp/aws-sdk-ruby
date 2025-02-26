@@ -971,6 +971,14 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class BlockDeviceMappingResponse
+      attr_accessor device_name: ::String
+      attr_accessor virtual_name: ::String
+      attr_accessor ebs: Types::EbsBlockDeviceResponse
+      attr_accessor no_device: ::String
+      SENSITIVE: []
+    end
+
     class BlockPublicAccessStates
       attr_accessor internet_gateway_block_mode: ("off" | "block-bidirectional" | "block-ingress")
       SENSITIVE: []
@@ -4159,6 +4167,9 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class DeregisterImageResult < Aws::EmptyStructure
+    end
+
     class DeregisterInstanceEventNotificationAttributesRequest
       attr_accessor dry_run: bool
       attr_accessor instance_tag_attribute: Types::DeregisterInstanceTagAttributeRequest
@@ -7201,6 +7212,18 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class EbsBlockDeviceResponse
+      attr_accessor encrypted: bool
+      attr_accessor delete_on_termination: bool
+      attr_accessor iops: ::Integer
+      attr_accessor throughput: ::Integer
+      attr_accessor kms_key_id: ::String
+      attr_accessor snapshot_id: ::String
+      attr_accessor volume_size: ::Integer
+      attr_accessor volume_type: ("standard" | "io1" | "io2" | "gp2" | "sc1" | "st1" | "gp3")
+      SENSITIVE: []
+    end
+
     class EbsInfo
       attr_accessor ebs_optimized_support: ("unsupported" | "supported" | "default")
       attr_accessor encryption_support: ("unsupported" | "supported")
@@ -7888,6 +7911,14 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class FleetBlockDeviceMappingRequest
+      attr_accessor device_name: ::String
+      attr_accessor virtual_name: ::String
+      attr_accessor ebs: Types::FleetEbsBlockDeviceRequest
+      attr_accessor no_device: ::String
+      SENSITIVE: []
+    end
+
     class FleetCapacityReservation
       attr_accessor capacity_reservation_id: ::String
       attr_accessor availability_zone_id: ::String
@@ -7928,6 +7959,18 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class FleetEbsBlockDeviceRequest
+      attr_accessor encrypted: bool
+      attr_accessor delete_on_termination: bool
+      attr_accessor iops: ::Integer
+      attr_accessor throughput: ::Integer
+      attr_accessor kms_key_id: ::String
+      attr_accessor snapshot_id: ::String
+      attr_accessor volume_size: ::Integer
+      attr_accessor volume_type: ("standard" | "io1" | "io2" | "gp2" | "sc1" | "st1" | "gp3")
+      SENSITIVE: []
+    end
+
     class FleetLaunchTemplateConfig
       attr_accessor launch_template_specification: Types::FleetLaunchTemplateSpecification
       attr_accessor overrides: ::Array[Types::FleetLaunchTemplateOverrides]
@@ -7950,6 +7993,7 @@ module Aws::EC2
       attr_accessor placement: Types::PlacementResponse
       attr_accessor instance_requirements: Types::InstanceRequirements
       attr_accessor image_id: ::String
+      attr_accessor block_device_mappings: ::Array[Types::BlockDeviceMappingResponse]
       SENSITIVE: []
     end
 
@@ -7961,6 +8005,7 @@ module Aws::EC2
       attr_accessor weighted_capacity: ::Float
       attr_accessor priority: ::Float
       attr_accessor placement: Types::Placement
+      attr_accessor block_device_mappings: ::Array[Types::FleetBlockDeviceMappingRequest]
       attr_accessor instance_requirements: Types::InstanceRequirementsRequest
       attr_accessor image_id: ::String
       SENSITIVE: []

@@ -566,7 +566,7 @@ module Aws::OAM
     #         filter: "MetricsFilter", # required
     #       },
     #     },
-    #     resource_types: ["AWS::CloudWatch::Metric"], # required, accepts AWS::CloudWatch::Metric, AWS::Logs::LogGroup, AWS::XRay::Trace, AWS::ApplicationInsights::Application, AWS::InternetMonitor::Monitor
+    #     resource_types: ["AWS::CloudWatch::Metric"], # required, accepts AWS::CloudWatch::Metric, AWS::Logs::LogGroup, AWS::XRay::Trace, AWS::ApplicationInsights::Application, AWS::InternetMonitor::Monitor, AWS::ApplicationSignals::Service, AWS::ApplicationSignals::ServiceLevelObjective
     #     sink_identifier: "ResourceIdentifier", # required
     #     tags: {
     #       "TagKey" => "TagValue",
@@ -1253,7 +1253,7 @@ module Aws::OAM
     #         filter: "MetricsFilter", # required
     #       },
     #     },
-    #     resource_types: ["AWS::CloudWatch::Metric"], # required, accepts AWS::CloudWatch::Metric, AWS::Logs::LogGroup, AWS::XRay::Trace, AWS::ApplicationInsights::Application, AWS::InternetMonitor::Monitor
+    #     resource_types: ["AWS::CloudWatch::Metric"], # required, accepts AWS::CloudWatch::Metric, AWS::Logs::LogGroup, AWS::XRay::Trace, AWS::ApplicationInsights::Application, AWS::InternetMonitor::Monitor, AWS::ApplicationSignals::Service, AWS::ApplicationSignals::ServiceLevelObjective
     #   })
     #
     # @example Response structure
@@ -1297,7 +1297,7 @@ module Aws::OAM
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-oam'
-      context[:gem_version] = '1.30.0'
+      context[:gem_version] = '1.31.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

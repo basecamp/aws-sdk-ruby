@@ -143,6 +143,26 @@ module Aws::Batch
       SENSITIVE: []
     end
 
+    class ConsumableResourceProperties
+      attr_accessor consumable_resource_list: ::Array[Types::ConsumableResourceRequirement]
+      SENSITIVE: []
+    end
+
+    class ConsumableResourceRequirement
+      attr_accessor consumable_resource: ::String
+      attr_accessor quantity: ::Integer
+      SENSITIVE: []
+    end
+
+    class ConsumableResourceSummary
+      attr_accessor consumable_resource_arn: ::String
+      attr_accessor consumable_resource_name: ::String
+      attr_accessor total_quantity: ::Integer
+      attr_accessor in_use_quantity: ::Integer
+      attr_accessor resource_type: ::String
+      SENSITIVE: []
+    end
+
     class ContainerDetail
       attr_accessor image: ::String
       attr_accessor vcpus: ::Integer
@@ -238,6 +258,20 @@ module Aws::Batch
       SENSITIVE: []
     end
 
+    class CreateConsumableResourceRequest
+      attr_accessor consumable_resource_name: ::String
+      attr_accessor total_quantity: ::Integer
+      attr_accessor resource_type: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class CreateConsumableResourceResponse
+      attr_accessor consumable_resource_name: ::String
+      attr_accessor consumable_resource_arn: ::String
+      SENSITIVE: []
+    end
+
     class CreateJobQueueRequest
       attr_accessor job_queue_name: ::String
       attr_accessor state: ("ENABLED" | "DISABLED")
@@ -276,6 +310,14 @@ module Aws::Batch
     class DeleteComputeEnvironmentResponse < Aws::EmptyStructure
     end
 
+    class DeleteConsumableResourceRequest
+      attr_accessor consumable_resource: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteConsumableResourceResponse < Aws::EmptyStructure
+    end
+
     class DeleteJobQueueRequest
       attr_accessor job_queue: ::String
       SENSITIVE: []
@@ -310,6 +352,23 @@ module Aws::Batch
     class DescribeComputeEnvironmentsResponse
       attr_accessor compute_environments: ::Array[Types::ComputeEnvironmentDetail]
       attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeConsumableResourceRequest
+      attr_accessor consumable_resource: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeConsumableResourceResponse
+      attr_accessor consumable_resource_name: ::String
+      attr_accessor consumable_resource_arn: ::String
+      attr_accessor total_quantity: ::Integer
+      attr_accessor in_use_quantity: ::Integer
+      attr_accessor available_quantity: ::Integer
+      attr_accessor resource_type: ::String
+      attr_accessor created_at: ::Integer
+      attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: []
     end
 
@@ -694,6 +753,7 @@ module Aws::Batch
       attr_accessor ecs_properties: Types::EcsProperties
       attr_accessor eks_properties: Types::EksProperties
       attr_accessor container_orchestration_type: ("ECS" | "EKS")
+      attr_accessor consumable_resource_properties: Types::ConsumableResourceProperties
       SENSITIVE: []
     end
 
@@ -733,6 +793,7 @@ module Aws::Batch
       attr_accessor ecs_properties: Types::EcsPropertiesDetail
       attr_accessor is_cancelled: bool
       attr_accessor is_terminated: bool
+      attr_accessor consumable_resource_properties: Types::ConsumableResourceProperties
       SENSITIVE: []
     end
 
@@ -814,6 +875,48 @@ module Aws::Batch
       attr_accessor tmpfs: ::Array[Types::Tmpfs]
       attr_accessor max_swap: ::Integer
       attr_accessor swappiness: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListConsumableResourcesRequest
+      attr_accessor filters: ::Array[Types::KeyValuesPair]
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListConsumableResourcesResponse
+      attr_accessor consumable_resources: ::Array[Types::ConsumableResourceSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListJobsByConsumableResourceRequest
+      attr_accessor consumable_resource: ::String
+      attr_accessor filters: ::Array[Types::KeyValuesPair]
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListJobsByConsumableResourceResponse
+      attr_accessor jobs: ::Array[Types::ListJobsByConsumableResourceSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListJobsByConsumableResourceSummary
+      attr_accessor job_arn: ::String
+      attr_accessor job_queue_arn: ::String
+      attr_accessor job_name: ::String
+      attr_accessor job_definition_arn: ::String
+      attr_accessor share_identifier: ::String
+      attr_accessor job_status: ::String
+      attr_accessor quantity: ::Integer
+      attr_accessor status_reason: ::String
+      attr_accessor started_at: ::Integer
+      attr_accessor created_at: ::Integer
+      attr_accessor consumable_resource_properties: Types::ConsumableResourceProperties
       SENSITIVE: []
     end
 
@@ -914,6 +1017,7 @@ module Aws::Batch
       attr_accessor ecs_properties_override: Types::EcsPropertiesOverride
       attr_accessor instance_types: ::Array[::String]
       attr_accessor eks_properties_override: Types::EksPropertiesOverride
+      attr_accessor consumable_resource_properties_override: Types::ConsumableResourceProperties
       SENSITIVE: []
     end
 
@@ -923,6 +1027,7 @@ module Aws::Batch
       attr_accessor instance_types: ::Array[::String]
       attr_accessor ecs_properties: Types::EcsProperties
       attr_accessor eks_properties: Types::EksProperties
+      attr_accessor consumable_resource_properties: Types::ConsumableResourceProperties
       SENSITIVE: []
     end
 
@@ -940,6 +1045,7 @@ module Aws::Batch
       attr_accessor platform_capabilities: ::Array[("EC2" | "FARGATE")]
       attr_accessor eks_properties: Types::EksProperties
       attr_accessor ecs_properties: Types::EcsProperties
+      attr_accessor consumable_resource_properties: Types::ConsumableResourceProperties
       SENSITIVE: []
     end
 
@@ -1020,6 +1126,7 @@ module Aws::Batch
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor eks_properties_override: Types::EksPropertiesOverride
       attr_accessor ecs_properties_override: Types::EcsPropertiesOverride
+      attr_accessor consumable_resource_properties_override: Types::ConsumableResourceProperties
       SENSITIVE: []
     end
 
@@ -1148,6 +1255,21 @@ module Aws::Batch
     class UpdateComputeEnvironmentResponse
       attr_accessor compute_environment_name: ::String
       attr_accessor compute_environment_arn: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateConsumableResourceRequest
+      attr_accessor consumable_resource: ::String
+      attr_accessor operation: ::String
+      attr_accessor quantity: ::Integer
+      attr_accessor client_token: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateConsumableResourceResponse
+      attr_accessor consumable_resource_name: ::String
+      attr_accessor consumable_resource_arn: ::String
+      attr_accessor total_quantity: ::Integer
       SENSITIVE: []
     end
 

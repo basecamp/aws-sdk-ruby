@@ -714,7 +714,7 @@ module Aws::IoTFleetWise
       :data_destination_configs,
       :data_partitions,
       :signals_to_fetch)
-      SENSITIVE = [:signals_to_collect, :data_extra_dimensions]
+      SENSITIVE = [:signals_to_collect, :data_extra_dimensions, :signals_to_fetch]
       include Aws::Structure
     end
 
@@ -1651,7 +1651,7 @@ module Aws::IoTFleetWise
     end
 
     # @!attribute [rw] identifier
-    #   A unique, service-generated identifier.
+    #   The unique ID of the state template.
     #   @return [String]
     #
     class DeleteStateTemplateRequest < Struct.new(
@@ -1932,7 +1932,7 @@ module Aws::IoTFleetWise
       :data_destination_configs,
       :data_partitions,
       :signals_to_fetch)
-      SENSITIVE = [:signals_to_collect, :data_extra_dimensions]
+      SENSITIVE = [:signals_to_collect, :data_extra_dimensions, :signals_to_fetch]
       include Aws::Structure
     end
 
@@ -2258,7 +2258,7 @@ module Aws::IoTFleetWise
     end
 
     # @!attribute [rw] identifier
-    #   A unique, service-generated identifier.
+    #   The unique ID of the state template.
     #   @return [String]
     #
     class GetStateTemplateRequest < Struct.new(
@@ -2712,10 +2712,17 @@ module Aws::IoTFleetWise
     #   `CREATING`, `WAITING_FOR_APPROVAL`, `RUNNING`, or `SUSPENDED`.
     #   @return [String]
     #
+    # @!attribute [rw] list_response_scope
+    #   When you set the `listResponseScope` parameter to `METADATA_ONLY`,
+    #   the list response includes: campaign name, Amazon Resource Name
+    #   (ARN), creation time, and last modification time.
+    #   @return [String]
+    #
     class ListCampaignsRequest < Struct.new(
       :next_token,
       :max_results,
-      :status)
+      :status,
+      :list_response_scope)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2839,10 +2846,17 @@ module Aws::IoTFleetWise
     #   The maximum number of items to return, between 1 and 100, inclusive.
     #   @return [Integer]
     #
+    # @!attribute [rw] list_response_scope
+    #   When you set the `listResponseScope` parameter to `METADATA_ONLY`,
+    #   the list response includes: decoder manifest name, Amazon Resource
+    #   Name (ARN), creation time, and last modification time.
+    #   @return [String]
+    #
     class ListDecoderManifestsRequest < Struct.new(
       :model_manifest_arn,
       :next_token,
-      :max_results)
+      :max_results,
+      :list_response_scope)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2919,9 +2933,16 @@ module Aws::IoTFleetWise
     #   The maximum number of items to return, between 1 and 100, inclusive.
     #   @return [Integer]
     #
+    # @!attribute [rw] list_response_scope
+    #   When you set the `listResponseScope` parameter to `METADATA_ONLY`,
+    #   the list response includes: fleet ID, Amazon Resource Name (ARN),
+    #   creation time, and last modification time.
+    #   @return [String]
+    #
     class ListFleetsRequest < Struct.new(
       :next_token,
-      :max_results)
+      :max_results,
+      :list_response_scope)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3003,10 +3024,17 @@ module Aws::IoTFleetWise
     #   The maximum number of items to return, between 1 and 100, inclusive.
     #   @return [Integer]
     #
+    # @!attribute [rw] list_response_scope
+    #   When you set the `listResponseScope` parameter to `METADATA_ONLY`,
+    #   the list response includes: model manifest name, Amazon Resource
+    #   Name (ARN), creation time, and last modification time.
+    #   @return [String]
+    #
     class ListModelManifestsRequest < Struct.new(
       :signal_catalog_arn,
       :next_token,
-      :max_results)
+      :max_results,
+      :list_response_scope)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3120,9 +3148,16 @@ module Aws::IoTFleetWise
     #   The maximum number of items to return, between 1 and 100, inclusive.
     #   @return [Integer]
     #
+    # @!attribute [rw] list_response_scope
+    #   When you set the `listResponseScope` parameter to `METADATA_ONLY`,
+    #   the list response includes: state template ID, Amazon Resource Name
+    #   (ARN), creation time, and last modification time.
+    #   @return [String]
+    #
     class ListStateTemplatesRequest < Struct.new(
       :next_token,
-      :max_results)
+      :max_results,
+      :list_response_scope)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3256,12 +3291,19 @@ module Aws::IoTFleetWise
     #   The maximum number of items to return, between 1 and 100, inclusive.
     #   @return [Integer]
     #
+    # @!attribute [rw] list_response_scope
+    #   When you set the `listResponseScope` parameter to `METADATA_ONLY`,
+    #   the list response includes: vehicle name, Amazon Resource Name
+    #   (ARN), creation time, and last modification time.
+    #   @return [String]
+    #
     class ListVehiclesRequest < Struct.new(
       :model_manifest_arn,
       :attribute_names,
       :attribute_values,
       :next_token,
-      :max_results)
+      :max_results,
+      :list_response_scope)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4226,7 +4268,7 @@ module Aws::IoTFleetWise
     # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
     #
     # @!attribute [rw] identifier
-    #   A unique, service-generated identifier.
+    #   The unique ID of the state template.
     #   @return [String]
     #
     # @!attribute [rw] state_template_update_strategy
@@ -4973,7 +5015,7 @@ module Aws::IoTFleetWise
     end
 
     # @!attribute [rw] identifier
-    #   A unique, service-generated identifier.
+    #   The unique ID of the state template.
     #   @return [String]
     #
     # @!attribute [rw] description

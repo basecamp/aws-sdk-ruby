@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.508.0 (2025-02-26)
+------------------
+
+* Feature - Amazon EC2 Fleet customers can now override the Block Device Mapping specified in the Launch Template when creating a new Fleet request, saving the effort of creating and associating new Launch Templates to customize the Block Device Mapping.
+
 1.507.0 (2025-02-25)
 ------------------
 

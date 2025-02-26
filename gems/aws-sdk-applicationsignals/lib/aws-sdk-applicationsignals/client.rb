@@ -636,6 +636,12 @@ module Aws::ApplicationSignals
     # availability. You can also set SLOs against any CloudWatch metric or
     # math expression that produces a time series.
     #
+    # <note markdown="1"> You can't create an SLO for a service operation that was discovered
+    # by Application Signals until after that operation has reported
+    # standard metrics to Application Signals.
+    #
+    #  </note>
+    #
     # When you create an SLO, you specify whether it is a *period-based SLO*
     # or a *request-based SLO*. Each type of SLO has a different way of
     # evaluating your application's performance against its attainment
@@ -1098,6 +1104,7 @@ module Aws::ApplicationSignals
     #   resp.service.metric_references[0].dimensions[0].name #=> String
     #   resp.service.metric_references[0].dimensions[0].value #=> String
     #   resp.service.metric_references[0].metric_name #=> String
+    #   resp.service.metric_references[0].account_id #=> String
     #   resp.service.log_group_references #=> Array
     #   resp.service.log_group_references[0] #=> Hash
     #   resp.service.log_group_references[0]["KeyAttributeName"] #=> String
@@ -1325,6 +1332,7 @@ module Aws::ApplicationSignals
     #   resp.service_dependencies[0].metric_references[0].dimensions[0].name #=> String
     #   resp.service_dependencies[0].metric_references[0].dimensions[0].value #=> String
     #   resp.service_dependencies[0].metric_references[0].metric_name #=> String
+    #   resp.service_dependencies[0].metric_references[0].account_id #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/ListServiceDependencies AWS API Documentation
@@ -1424,6 +1432,7 @@ module Aws::ApplicationSignals
     #   resp.service_dependents[0].metric_references[0].dimensions[0].name #=> String
     #   resp.service_dependents[0].metric_references[0].dimensions[0].value #=> String
     #   resp.service_dependents[0].metric_references[0].metric_name #=> String
+    #   resp.service_dependents[0].metric_references[0].account_id #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/ListServiceDependents AWS API Documentation
@@ -1471,6 +1480,18 @@ module Aws::ApplicationSignals
     #   Include this value, if it was returned by the previous operation, to
     #   get the next set of service level objectives.
     #
+    # @option params [Boolean] :include_linked_accounts
+    #   If you are using this operation in a monitoring account, specify
+    #   `true` to include SLO from source accounts in the returned data.
+    #   </p> <p>When you are monitoring an account, you can use Amazon Web
+    #   Services account ID in <code>KeyAttribute</code> filter for service
+    #   source account and <code>SloOwnerawsaccountID</code> for SLO source
+    #   account with <code>IncludeLinkedAccounts</code> to filter the returned
+    #   data to only a single source account. </p>
+    #
+    # @option params [String] :slo_owner_aws_account_id
+    #   SLO's Amazon Web Services account ID.
+    #
     # @return [Types::ListServiceLevelObjectivesOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ListServiceLevelObjectivesOutput#slo_summaries #slo_summaries} => Array&lt;Types::ServiceLevelObjectiveSummary&gt;
@@ -1487,6 +1508,8 @@ module Aws::ApplicationSignals
     #     operation_name: "OperationName",
     #     max_results: 1,
     #     next_token: "NextToken",
+    #     include_linked_accounts: false,
+    #     slo_owner_aws_account_id: "AwsAccountId",
     #   })
     #
     # @example Response structure
@@ -1593,6 +1616,7 @@ module Aws::ApplicationSignals
     #   resp.service_operations[0].metric_references[0].dimensions[0].name #=> String
     #   resp.service_operations[0].metric_references[0].dimensions[0].value #=> String
     #   resp.service_operations[0].metric_references[0].metric_name #=> String
+    #   resp.service_operations[0].metric_references[0].account_id #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/ListServiceOperations AWS API Documentation
@@ -1631,6 +1655,14 @@ module Aws::ApplicationSignals
     #   Include this value, if it was returned by the previous operation, to
     #   get the next set of services.
     #
+    # @option params [Boolean] :include_linked_accounts
+    #   If you are using this operation in a monitoring account, specify
+    #   `true` to include services from source accounts in the returned data.
+    #   </p>
+    #
+    # @option params [String] :aws_account_id
+    #   Amazon Web Services Account ID.
+    #
     # @return [Types::ListServicesOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ListServicesOutput#start_time #start_time} => Time
@@ -1647,6 +1679,8 @@ module Aws::ApplicationSignals
     #     end_time: Time.now, # required
     #     max_results: 1,
     #     next_token: "NextToken",
+    #     include_linked_accounts: false,
+    #     aws_account_id: "AwsAccountId",
     #   })
     #
     # @example Response structure
@@ -1666,6 +1700,7 @@ module Aws::ApplicationSignals
     #   resp.service_summaries[0].metric_references[0].dimensions[0].name #=> String
     #   resp.service_summaries[0].metric_references[0].dimensions[0].value #=> String
     #   resp.service_summaries[0].metric_references[0].metric_name #=> String
+    #   resp.service_summaries[0].metric_references[0].account_id #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/ListServices AWS API Documentation
@@ -2160,7 +2195,7 @@ module Aws::ApplicationSignals
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-applicationsignals'
-      context[:gem_version] = '1.16.0'
+      context[:gem_version] = '1.17.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

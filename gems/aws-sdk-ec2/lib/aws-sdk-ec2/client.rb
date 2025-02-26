@@ -6998,6 +6998,23 @@ module Aws::EC2
     #               group_id: "PlacementGroupId",
     #               availability_zone: "String",
     #             },
+    #             block_device_mappings: [
+    #               {
+    #                 device_name: "String",
+    #                 virtual_name: "String",
+    #                 ebs: {
+    #                   encrypted: false,
+    #                   delete_on_termination: false,
+    #                   iops: 1,
+    #                   throughput: 1,
+    #                   kms_key_id: "KmsKeyId",
+    #                   snapshot_id: "SnapshotId",
+    #                   volume_size: 1,
+    #                   volume_type: "standard", # accepts standard, io1, io2, gp2, sc1, st1, gp3
+    #                 },
+    #                 no_device: "String",
+    #               },
+    #             ],
     #             instance_requirements: {
     #               v_cpu_count: { # required
     #                 min: 1, # required
@@ -7149,6 +7166,18 @@ module Aws::EC2
     #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references #=> Array
     #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.errors[0].launch_template_and_overrides.overrides.image_id #=> String
+    #   resp.errors[0].launch_template_and_overrides.overrides.block_device_mappings #=> Array
+    #   resp.errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].device_name #=> String
+    #   resp.errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].virtual_name #=> String
+    #   resp.errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.encrypted #=> Boolean
+    #   resp.errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.delete_on_termination #=> Boolean
+    #   resp.errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.iops #=> Integer
+    #   resp.errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.throughput #=> Integer
+    #   resp.errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.kms_key_id #=> String
+    #   resp.errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.snapshot_id #=> String
+    #   resp.errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.volume_size #=> Integer
+    #   resp.errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.volume_type #=> String, one of "standard", "io1", "io2", "gp2", "sc1", "st1", "gp3"
+    #   resp.errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].no_device #=> String
     #   resp.errors[0].lifecycle #=> String, one of "spot", "on-demand"
     #   resp.errors[0].error_code #=> String
     #   resp.errors[0].error_message #=> String
@@ -7207,6 +7236,18 @@ module Aws::EC2
     #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references #=> Array
     #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.instances[0].launch_template_and_overrides.overrides.image_id #=> String
+    #   resp.instances[0].launch_template_and_overrides.overrides.block_device_mappings #=> Array
+    #   resp.instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].device_name #=> String
+    #   resp.instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].virtual_name #=> String
+    #   resp.instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.encrypted #=> Boolean
+    #   resp.instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.delete_on_termination #=> Boolean
+    #   resp.instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.iops #=> Integer
+    #   resp.instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.throughput #=> Integer
+    #   resp.instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.kms_key_id #=> String
+    #   resp.instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.snapshot_id #=> String
+    #   resp.instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.volume_size #=> Integer
+    #   resp.instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.volume_type #=> String, one of "standard", "io1", "io2", "gp2", "sc1", "st1", "gp3"
+    #   resp.instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].no_device #=> String
     #   resp.instances[0].lifecycle #=> String, one of "spot", "on-demand"
     #   resp.instances[0].instance_ids #=> Array
     #   resp.instances[0].instance_ids[0] #=> String
@@ -8813,8 +8854,8 @@ module Aws::EC2
     # A launch template contains the parameters to launch an instance. When
     # you launch an instance using RunInstances, you can specify a launch
     # template instead of providing the launch parameters in the request.
-    # For more information, see [Launch an instance from a launch
-    # template][1] in the *Amazon EC2 User Guide*.
+    # For more information, see [Store instance launch parameters in Amazon
+    # EC2 launch templates][1] in the *Amazon EC2 User Guide*.
     #
     # To clone an existing launch template as the basis for a new launch
     # template, use the Amazon EC2 console. The API, SDKs, and CLI do not
@@ -8825,7 +8866,7 @@ module Aws::EC2
     #
     #
     # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html
-    # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#create-launch-template-from-existing-launch-template
+    # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-launch-template.html#create-launch-template-from-existing-launch-template
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -9228,7 +9269,7 @@ module Aws::EC2
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#manage-launch-template-versions
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-launch-template-versions.html
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -9288,7 +9329,7 @@ module Aws::EC2
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#use-an-ssm-parameter-instead-of-an-ami-id
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-launch-template.html#use-an-ssm-parameter-instead-of-an-ami-id
     #
     # @return [Types::CreateLaunchTemplateVersionResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -16782,20 +16823,23 @@ module Aws::EC2
       req.send_request(options)
     end
 
-    # Deletes the specified EC2 Fleets.
+    # Deletes the specified EC2 Fleet request.
     #
-    # After you delete an EC2 Fleet, it launches no new instances.
+    # After you delete an EC2 Fleet request, it launches no new instances.
     #
-    # You must also specify whether a deleted EC2 Fleet should terminate its
-    # instances. If you choose to terminate the instances, the EC2 Fleet
-    # enters the `deleted_terminating` state. Otherwise, the EC2 Fleet
-    # enters the `deleted_running` state, and the instances continue to run
-    # until they are interrupted or you terminate them manually.
+    # You must also specify whether a deleted EC2 Fleet request should
+    # terminate its instances. If you choose to terminate the instances, the
+    # EC2 Fleet request enters the `deleted_terminating` state. Otherwise,
+    # it enters the `deleted_running` state, and the instances continue to
+    # run until they are interrupted or you terminate them manually.
     #
-    # For `instant` fleets, EC2 Fleet must terminate the instances when the
-    # fleet is deleted. Up to 1000 instances can be terminated in a single
-    # request to delete `instant` fleets. A deleted `instant` fleet with
-    # running instances is not supported.
+    # A deleted `instant` fleet with running instances is not supported.
+    # When you delete an `instant` fleet, Amazon EC2 automatically
+    # terminates all its instances. For fleets with more than 1000
+    # instances, the deletion request might fail. If your fleet has more
+    # than 1000 instances, first terminate most of the instances manually,
+    # leaving 1000 or fewer. Then delete the fleet, and the remaining
+    # instances will be terminated automatically.
     #
     # **Restrictions**
     #
@@ -16811,12 +16855,12 @@ module Aws::EC2
     # * If you exceed the specified number of fleets to delete, no fleets
     #   are deleted.
     #
-    # For more information, see [Delete an EC2 Fleet][1] in the *Amazon EC2
-    # User Guide*.
+    # For more information, see [Delete an EC2 Fleet request and the
+    # instances in the fleet][1] in the *Amazon EC2 User Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-ec2-fleet.html#delete-fleet
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/delete-fleet.html
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -17566,7 +17610,7 @@ module Aws::EC2
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-launch-template-versions.html#delete-launch-template-version
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/delete-launch-template.html#delete-launch-template-version
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -23932,6 +23976,18 @@ module Aws::EC2
     #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.baseline_performance_factors.cpu.references #=> Array
     #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.fleets[0].launch_template_configs[0].overrides[0].image_id #=> String
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].block_device_mappings #=> Array
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].block_device_mappings[0].device_name #=> String
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].block_device_mappings[0].virtual_name #=> String
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].block_device_mappings[0].ebs.encrypted #=> Boolean
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].block_device_mappings[0].ebs.delete_on_termination #=> Boolean
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].block_device_mappings[0].ebs.iops #=> Integer
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].block_device_mappings[0].ebs.throughput #=> Integer
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].block_device_mappings[0].ebs.kms_key_id #=> String
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].block_device_mappings[0].ebs.snapshot_id #=> String
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].block_device_mappings[0].ebs.volume_size #=> Integer
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].block_device_mappings[0].ebs.volume_type #=> String, one of "standard", "io1", "io2", "gp2", "sc1", "st1", "gp3"
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].block_device_mappings[0].no_device #=> String
     #   resp.fleets[0].target_capacity_specification.total_target_capacity #=> Integer
     #   resp.fleets[0].target_capacity_specification.on_demand_target_capacity #=> Integer
     #   resp.fleets[0].target_capacity_specification.spot_target_capacity #=> Integer
@@ -24015,6 +24071,18 @@ module Aws::EC2
     #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references #=> Array
     #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.image_id #=> String
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.block_device_mappings #=> Array
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].device_name #=> String
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].virtual_name #=> String
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.encrypted #=> Boolean
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.delete_on_termination #=> Boolean
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.iops #=> Integer
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.throughput #=> Integer
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.kms_key_id #=> String
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.snapshot_id #=> String
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.volume_size #=> Integer
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.volume_type #=> String, one of "standard", "io1", "io2", "gp2", "sc1", "st1", "gp3"
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.block_device_mappings[0].no_device #=> String
     #   resp.fleets[0].errors[0].lifecycle #=> String, one of "spot", "on-demand"
     #   resp.fleets[0].errors[0].error_code #=> String
     #   resp.fleets[0].errors[0].error_message #=> String
@@ -24073,6 +24141,18 @@ module Aws::EC2
     #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references #=> Array
     #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.image_id #=> String
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.block_device_mappings #=> Array
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].device_name #=> String
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].virtual_name #=> String
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.encrypted #=> Boolean
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.delete_on_termination #=> Boolean
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.iops #=> Integer
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.throughput #=> Integer
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.kms_key_id #=> String
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.snapshot_id #=> String
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.volume_size #=> Integer
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].ebs.volume_type #=> String, one of "standard", "io1", "io2", "gp2", "sc1", "st1", "gp3"
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.block_device_mappings[0].no_device #=> String
     #   resp.fleets[0].instances[0].lifecycle #=> String, one of "spot", "on-demand"
     #   resp.fleets[0].instances[0].instance_ids #=> Array
     #   resp.fleets[0].instances[0].instance_ids[0] #=> String
@@ -28777,7 +28857,7 @@ module Aws::EC2
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#use-an-ssm-parameter-instead-of-an-ami-id
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-launch-template.html#use-an-ssm-parameter-instead-of-an-ami-id
     #
     # @return [Types::DescribeLaunchTemplateVersionsResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -31729,8 +31809,8 @@ module Aws::EC2
     #
     # If you have a large number of network interfaces, the operation fails
     # unless you use pagination or one of the following filters: `group-id`,
-    # `mac-address`, `private-dns-name`, `private-ip-address`,
-    # `private-dns-name`, `subnet-id`, or `vpc-id`.
+    # `mac-address`, `private-dns-name`, `private-ip-address`, `subnet-id`,
+    # or `vpc-id`.
     #
     # We strongly recommend using only paginated requests. Unpaginated
     # requests are susceptible to throttling and timeouts.
@@ -49397,6 +49477,23 @@ module Aws::EC2
     #               group_id: "PlacementGroupId",
     #               availability_zone: "String",
     #             },
+    #             block_device_mappings: [
+    #               {
+    #                 device_name: "String",
+    #                 virtual_name: "String",
+    #                 ebs: {
+    #                   encrypted: false,
+    #                   delete_on_termination: false,
+    #                   iops: 1,
+    #                   throughput: 1,
+    #                   kms_key_id: "KmsKeyId",
+    #                   snapshot_id: "SnapshotId",
+    #                   volume_size: 1,
+    #                   volume_type: "standard", # accepts standard, io1, io2, gp2, sc1, st1, gp3
+    #                 },
+    #                 no_device: "String",
+    #               },
+    #             ],
     #             instance_requirements: {
     #               v_cpu_count: { # required
     #                 min: 1, # required
@@ -51487,7 +51584,7 @@ module Aws::EC2
     # @option params [String] :client_token
     #   Unique, case-sensitive identifier you provide to ensure the
     #   idempotency of the request. For more information, see [Ensuring
-    #   idempotency][1].
+    #   idempotency in Amazon EC2 API requests][1].
     #
     #   Constraint: Maximum 128 ASCII characters.
     #
@@ -63229,7 +63326,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.507.0'
+      context[:gem_version] = '1.508.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.17.0 (2025-02-26)
+------------------
+
+* Feature - This release adds API support for reading Service Level Objectives and Services from monitoring accounts, from SLO and Service-scoped operations, including ListServices and ListServiceLevelObjectives.
+
 1.16.0 (2025-02-18)
 ------------------
 

@@ -3922,6 +3922,38 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # Describes a block device mapping, which defines the EBS volumes and
+    # instance store volumes to attach to an instance at launch.
+    #
+    # @!attribute [rw] device_name
+    #   The device name (for example, `/dev/sdh` or `xvdh`).
+    #   @return [String]
+    #
+    # @!attribute [rw] virtual_name
+    #   The virtual device name.
+    #   @return [String]
+    #
+    # @!attribute [rw] ebs
+    #   Parameters used to automatically set up EBS volumes when the
+    #   instance is launched.
+    #   @return [Types::EbsBlockDeviceResponse]
+    #
+    # @!attribute [rw] no_device
+    #   Suppresses the specified device included in the block device
+    #   mapping.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/BlockDeviceMappingResponse AWS API Documentation
+    #
+    class BlockDeviceMappingResponse < Struct.new(
+      :device_name,
+      :virtual_name,
+      :ebs,
+      :no_device)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The state of VPC Block Public Access (BPA).
     #
     # @!attribute [rw] internet_gateway_block_mode
@@ -10061,7 +10093,7 @@ module Aws::EC2
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#use-an-ssm-parameter-instead-of-an-ami-id
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-launch-template.html#use-an-ssm-parameter-instead-of-an-ami-id
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateLaunchTemplateVersionRequest AWS API Documentation
@@ -17633,6 +17665,10 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeregisterImageResult AWS API Documentation
+    #
+    class DeregisterImageResult < Aws::EmptyStructure; end
+
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -23508,7 +23544,7 @@ module Aws::EC2
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#use-an-ssm-parameter-instead-of-an-ami-id
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-launch-template.html#use-an-ssm-parameter-instead-of-an-ami-id
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeLaunchTemplateVersionsRequest AWS API Documentation
@@ -32647,6 +32683,65 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # Describes a block device for an EBS volume.
+    #
+    # @!attribute [rw] encrypted
+    #   Indicates whether the volume is encrypted.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] delete_on_termination
+    #   Indicates whether the volume is deleted on instance termination.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] iops
+    #   The number of I/O operations per second (IOPS). For `gp3`, `io1`,
+    #   and `io2` volumes, this represents the number of IOPS that are
+    #   provisioned for the volume. For `gp2` volumes, this represents the
+    #   baseline performance of the volume and the rate at which the volume
+    #   accumulates I/O credits for bursting.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] throughput
+    #   The throughput that the volume supports, in MiB/s.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] kms_key_id
+    #   Identifier (key ID, key alias, key ARN, or alias ARN) of the
+    #   customer managed KMS key to use for EBS encryption.
+    #   @return [String]
+    #
+    # @!attribute [rw] snapshot_id
+    #   The ID of the snapshot.
+    #   @return [String]
+    #
+    # @!attribute [rw] volume_size
+    #   The size of the volume, in GiBs.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] volume_type
+    #   The volume type. For more information, see [Amazon EBS volume
+    #   types][1] in the *Amazon EBS User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EbsBlockDeviceResponse AWS API Documentation
+    #
+    class EbsBlockDeviceResponse < Struct.new(
+      :encrypted,
+      :delete_on_termination,
+      :iops,
+      :throughput,
+      :kms_key_id,
+      :snapshot_id,
+      :volume_size,
+      :volume_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes the Amazon EBS features supported by the instance type.
     #
     # @!attribute [rw] ebs_optimized_support
@@ -35458,6 +35553,69 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # Describes a block device mapping, which defines the EBS volumes and
+    # instance store volumes to attach to an instance at launch.
+    #
+    # To override a block device mapping specified in the launch template:
+    #
+    # * Specify the exact same `DeviceName` here as specified in the launch
+    #   template.
+    #
+    # * Only specify the parameters you want to change.
+    #
+    # * Any parameters you don't specify here will keep their original
+    #   launch template values.
+    #
+    # To add a new block device mapping:
+    #
+    # * Specify a `DeviceName` that doesn't exist in the launch template.
+    #
+    # * Specify all desired parameters here.
+    #
+    # @!attribute [rw] device_name
+    #   The device name (for example, `/dev/sdh` or `xvdh`).
+    #   @return [String]
+    #
+    # @!attribute [rw] virtual_name
+    #   The virtual device name (`ephemeralN`). Instance store volumes are
+    #   numbered starting from 0. An instance type with 2 available instance
+    #   store volumes can specify mappings for `ephemeral0` and
+    #   `ephemeral1`. The number of available instance store volumes depends
+    #   on the instance type. After you connect to the instance, you must
+    #   mount the volume.
+    #
+    #   NVMe instance store volumes are automatically enumerated and
+    #   assigned a device name. Including them in your block device mapping
+    #   has no effect.
+    #
+    #   Constraints: For M3 instances, you must specify instance store
+    #   volumes in the block device mapping for the instance. When you
+    #   launch an M3 instance, we ignore any instance store volumes
+    #   specified in the block device mapping for the AMI.
+    #   @return [String]
+    #
+    # @!attribute [rw] ebs
+    #   Parameters used to automatically set up EBS volumes when the
+    #   instance is launched.
+    #   @return [Types::FleetEbsBlockDeviceRequest]
+    #
+    # @!attribute [rw] no_device
+    #   To omit the device from the block device mapping, specify an empty
+    #   string. When this property is specified, the device is removed from
+    #   the block device mapping regardless of the assigned value.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/FleetBlockDeviceMappingRequest AWS API Documentation
+    #
+    class FleetBlockDeviceMappingRequest < Struct.new(
+      :device_name,
+      :virtual_name,
+      :ebs,
+      :no_device)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Information about a Capacity Reservation in a Capacity Reservation
     # Fleet.
     #
@@ -35706,6 +35864,163 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # Describes a block device for an EBS volume.
+    #
+    # @!attribute [rw] encrypted
+    #   Indicates whether the encryption state of an EBS volume is changed
+    #   while being restored from a backing snapshot. The effect of setting
+    #   the encryption state to `true` depends on the volume origin (new or
+    #   from a snapshot), starting encryption state, ownership, and whether
+    #   encryption by default is enabled. For more information, see [Amazon
+    #   EBS encryption][1] in the *Amazon EBS User Guide*.
+    #
+    #   In no case can you remove encryption from an encrypted volume.
+    #
+    #   Encrypted volumes can only be attached to instances that support
+    #   Amazon EBS encryption. For more information, see [Supported instance
+    #   types][2].
+    #
+    #   This parameter is not returned by .
+    #
+    #   For and , whether you can include this parameter, and the allowed
+    #   values differ depending on the type of block device mapping you are
+    #   creating.
+    #
+    #   * If you are creating a block device mapping for a **new (empty)
+    #     volume**, you can include this parameter, and specify either
+    #     `true` for an encrypted volume, or `false` for an unencrypted
+    #     volume. If you omit this parameter, it defaults to `false`
+    #     (unencrypted).
+    #
+    #   * If you are creating a block device mapping from an **existing
+    #     encrypted or unencrypted snapshot**, you must omit this parameter.
+    #     If you include this parameter, the request will fail, regardless
+    #     of the value that you specify.
+    #
+    #   * If you are creating a block device mapping from an **existing
+    #     unencrypted volume**, you can include this parameter, but you must
+    #     specify `false`. If you specify `true`, the request will fail. In
+    #     this case, we recommend that you omit the parameter.
+    #
+    #   * If you are creating a block device mapping from an **existing
+    #     encrypted volume**, you can include this parameter, and specify
+    #     either `true` or `false`. However, if you specify `false`, the
+    #     parameter is ignored and the block device mapping is always
+    #     encrypted. In this case, we recommend that you omit the parameter.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html
+    #   [2]: https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption-requirements.html#ebs-encryption_supported_instances
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] delete_on_termination
+    #   Indicates whether the EBS volume is deleted on instance termination.
+    #   For more information, see [Preserve data when an instance is
+    #   terminated][1] in the *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/preserving-volumes-on-termination.html
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] iops
+    #   The number of I/O operations per second (IOPS). For `gp3`, `io1`,
+    #   and `io2` volumes, this represents the number of IOPS that are
+    #   provisioned for the volume. For `gp2` volumes, this represents the
+    #   baseline performance of the volume and the rate at which the volume
+    #   accumulates I/O credits for bursting.
+    #
+    #   The following are the supported values for each volume type:
+    #
+    #   * `gp3`: 3,000 - 16,000 IOPS
+    #
+    #   * `io1`: 100 - 64,000 IOPS
+    #
+    #   * `io2`: 100 - 256,000 IOPS
+    #
+    #   For `io2` volumes, you can achieve up to 256,000 IOPS on [instances
+    #   built on the Nitro System][1]. On other instances, you can achieve
+    #   performance up to 32,000 IOPS.
+    #
+    #   This parameter is required for `io1` and `io2` volumes. The default
+    #   for `gp3` volumes is 3,000 IOPS.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances
+    #   @return [Integer]
+    #
+    # @!attribute [rw] throughput
+    #   The throughput that the volume supports, in MiB/s.
+    #
+    #   This parameter is valid only for `gp3` volumes.
+    #
+    #   Valid Range: Minimum value of 125. Maximum value of 1000.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] kms_key_id
+    #   Identifier (key ID, key alias, key ARN, or alias ARN) of the
+    #   customer managed KMS key to use for EBS encryption.
+    #
+    #   This parameter is only supported on `BlockDeviceMapping` objects
+    #   called by [RunInstances][1], [RequestSpotFleet][2], and
+    #   [RequestSpotInstances][3].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html
+    #   [2]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet.html
+    #   [3]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html
+    #   @return [String]
+    #
+    # @!attribute [rw] snapshot_id
+    #   The ID of the snapshot.
+    #   @return [String]
+    #
+    # @!attribute [rw] volume_size
+    #   The size of the volume, in GiBs. You must specify either a snapshot
+    #   ID or a volume size. If you specify a snapshot, the default is the
+    #   snapshot size. You can specify a volume size that is equal to or
+    #   larger than the snapshot size.
+    #
+    #   The following are the supported sizes for each volume type:
+    #
+    #   * `gp2` and `gp3`: 1 - 16,384 GiB
+    #
+    #   * `io1`: 4 - 16,384 GiB
+    #
+    #   * `io2`: 4 - 65,536 GiB
+    #
+    #   * `st1` and `sc1`: 125 - 16,384 GiB
+    #
+    #   * `standard`: 1 - 1024 GiB
+    #   @return [Integer]
+    #
+    # @!attribute [rw] volume_type
+    #   The volume type. For more information, see [Amazon EBS volume
+    #   types][1] in the *Amazon EBS User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/FleetEbsBlockDeviceRequest AWS API Documentation
+    #
+    class FleetEbsBlockDeviceRequest < Struct.new(
+      :encrypted,
+      :delete_on_termination,
+      :iops,
+      :throughput,
+      :kms_key_id,
+      :snapshot_id,
+      :volume_size,
+      :volume_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes a launch template and overrides.
     #
     # @!attribute [rw] launch_template_specification
@@ -35771,6 +36086,10 @@ module Aws::EC2
     #
     #   If you specify a maximum price, your instances will be interrupted
     #   more frequently than if you do not specify this parameter.
+    #
+    #    If you specify a maximum price, it must be more than USD $0.001.
+    #   Specifying a value below USD $0.001 will result in an
+    #   `InvalidParameterValue` error message.
     #   @return [String]
     #
     # @!attribute [rw] subnet_id
@@ -35879,6 +36198,17 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-launch-template.html#use-an-ssm-parameter-instead-of-an-ami-id
     #   @return [String]
     #
+    # @!attribute [rw] block_device_mappings
+    #   The block device mapping, which defines the EBS volumes and instance
+    #   store volumes to attach to the instance at launch. For more
+    #   information, see [Block device mappings for volumes on Amazon EC2
+    #   instances][1] in the *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html
+    #   @return [Array<Types::BlockDeviceMappingResponse>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/FleetLaunchTemplateOverrides AWS API Documentation
     #
     class FleetLaunchTemplateOverrides < Struct.new(
@@ -35890,7 +36220,8 @@ module Aws::EC2
       :priority,
       :placement,
       :instance_requirements,
-      :image_id)
+      :image_id,
+      :block_device_mappings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -35916,6 +36247,10 @@ module Aws::EC2
     #
     #   If you specify a maximum price, your instances will be interrupted
     #   more frequently than if you do not specify this parameter.
+    #
+    #    If you specify a maximum price, it must be more than USD $0.001.
+    #   Specifying a value below USD $0.001 will result in an
+    #   `InvalidParameterValue` error message.
     #   @return [String]
     #
     # @!attribute [rw] subnet_id
@@ -35971,6 +36306,33 @@ module Aws::EC2
     # @!attribute [rw] placement
     #   The location where the instance launched, if applicable.
     #   @return [Types::Placement]
+    #
+    # @!attribute [rw] block_device_mappings
+    #   The block device mapping, which defines the EBS volumes and instance
+    #   store volumes to attach to the instance at launch. For more
+    #   information, see [Block device mappings for volumes on Amazon EC2
+    #   instances][1] in the *Amazon EC2 User Guide*.
+    #
+    #   To override a block device mapping specified in the launch template:
+    #
+    #   * Specify the exact same `DeviceName` here as specified in the
+    #     launch template.
+    #
+    #   * Only specify the parameters you want to change.
+    #
+    #   * Any parameters you don't specify here will keep their original
+    #     launch template values.
+    #
+    #   To add a new block device mapping:
+    #
+    #   * Specify a `DeviceName` that doesn't exist in the launch template.
+    #
+    #   * Specify all desired parameters here.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html
+    #   @return [Array<Types::FleetBlockDeviceMappingRequest>]
     #
     # @!attribute [rw] instance_requirements
     #   The attributes for the instance types. When you specify instance
@@ -36037,6 +36399,7 @@ module Aws::EC2
       :weighted_capacity,
       :priority,
       :placement,
+      :block_device_mappings,
       :instance_requirements,
       :image_id)
       SENSITIVE = []
@@ -44001,6 +44364,9 @@ module Aws::EC2
     #   * For instance types with Inference accelerators, specify
     #     `inference`.
     #
+    #   * For instance types with Inference accelerators, specify
+    #     `inference`.
+    #
     #   Default: Any accelerator type
     #   @return [Array<String>]
     #
@@ -47684,7 +48050,7 @@ module Aws::EC2
     #
     # @!attribute [rw] amd_sev_snp
     #   Indicates whether the instance is enabled for AMD SEV-SNP. For more
-    #   information, see [AMD SEV-SNP][1].
+    #   information, see [AMD SEV-SNP for Amazon EC2 instances][1].
     #
     #
     #
@@ -47717,7 +48083,7 @@ module Aws::EC2
     # @!attribute [rw] amd_sev_snp
     #   Indicates whether to enable the instance for AMD SEV-SNP. AMD
     #   SEV-SNP is supported with M6a, R6a, and C6a instance types only. For
-    #   more information, see [AMD SEV-SNP][1].
+    #   more information, see [AMD SEV-SNP for Amazon EC2 instances][1].
     #
     #
     #
@@ -47822,7 +48188,7 @@ module Aws::EC2
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances
+    #   [1]: https://docs.aws.amazon.com/ec2/latest/instancetypes/ec2-nitro-instances.html
     #   @return [Integer]
     #
     # @!attribute [rw] kms_key_id
@@ -48005,9 +48371,8 @@ module Aws::EC2
     end
 
     # Indicates whether the instance is enabled for Amazon Web Services
-    # Nitro Enclaves. For more information, see [What is Amazon Web Services
-    # Nitro Enclaves?][1] in the *Amazon Web Services Nitro Enclaves User
-    # Guide*.
+    # Nitro Enclaves. For more information, see [What is Nitro Enclaves?][1]
+    # in the *Amazon Web Services Nitro Enclaves User Guide*.
     #
     #
     #
@@ -48175,8 +48540,9 @@ module Aws::EC2
       include Aws::Structure
     end
 
-    # The metadata options for the instance. For more information, see
-    # [Instance metadata and user data][1] in the *Amazon EC2 User Guide*.
+    # The metadata options for the instance. For more information, see [Use
+    # instance metadata to manage your EC2 instance][1] in the *Amazon EC2
+    # User Guide*.
     #
     #
     #
@@ -48238,14 +48604,14 @@ module Aws::EC2
     # @!attribute [rw] instance_metadata_tags
     #   Set to `enabled` to allow access to instance tags from the instance
     #   metadata. Set to `disabled` to turn off access to instance tags from
-    #   the instance metadata. For more information, see [Work with instance
-    #   tags using the instance metadata][1].
+    #   the instance metadata. For more information, see [View tags for your
+    #   EC2 instances using instance metadata][1].
     #
     #   Default: `disabled`
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#work-with-tags-in-IMDS
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/work-with-tags-in-IMDS.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/LaunchTemplateInstanceMetadataOptions AWS API Documentation
@@ -48261,8 +48627,9 @@ module Aws::EC2
       include Aws::Structure
     end
 
-    # The metadata options for the instance. For more information, see
-    # [Instance metadata and user data][1] in the *Amazon EC2 User Guide*.
+    # The metadata options for the instance. For more information, see [Use
+    # instance metadata to manage your EC2 instance][1] in the *Amazon EC2
+    # User Guide*.
     #
     #
     #
@@ -48317,14 +48684,14 @@ module Aws::EC2
     # @!attribute [rw] instance_metadata_tags
     #   Set to `enabled` to allow access to instance tags from the instance
     #   metadata. Set to `disabled` to turn off access to instance tags from
-    #   the instance metadata. For more information, see [Work with instance
-    #   tags using the instance metadata][1].
+    #   the instance metadata. For more information, see [View tags for your
+    #   EC2 instances using instance metadata][1].
     #
     #   Default: `disabled`
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#work-with-tags-in-IMDS
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/work-with-tags-in-IMDS.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/LaunchTemplateInstanceMetadataOptionsRequest AWS API Documentation
@@ -48348,7 +48715,7 @@ module Aws::EC2
     #   Use this option when you launch an instance in a Wavelength Zone and
     #   want to associate a Carrier IP address with the network interface.
     #   For more information about Carrier IP addresses, see [Carrier IP
-    #   addresses][1] in the *Wavelength Developer Guide*.
+    #   address][1] in the *Wavelength Developer Guide*.
     #
     #
     #
@@ -48552,7 +48919,8 @@ module Aws::EC2
     # @!attribute [rw] interface_type
     #   The type of network interface. To create an Elastic Fabric Adapter
     #   (EFA), specify `efa` or `efa`. For more information, see [Elastic
-    #   Fabric Adapter][1] in the *Amazon EC2 User Guide*.
+    #   Fabric Adapter for AI/ML and HPC workloads on Amazon EC2][1] in the
+    #   *Amazon EC2 User Guide*.
     #
     #   If you are not creating an EFA, specify `interface` or omit this
     #   parameter.
@@ -49070,14 +49438,13 @@ module Aws::EC2
     # The options for Spot Instances.
     #
     # @!attribute [rw] max_price
-    #   The maximum hourly price you're willing to pay for the Spot
-    #   Instances. We do not recommend using this parameter because it can
-    #   lead to increased interruptions. If you do not specify this
-    #   parameter, you will pay the current Spot price.
-    #
-    #   If you specify a maximum price, your Spot Instances will be
-    #   interrupted more frequently than if you do not specify this
-    #   parameter.
+    #   The maximum hourly price you're willing to pay for a Spot Instance.
+    #   We do not recommend using this parameter because it can lead to
+    #   increased interruptions. If you do not specify this parameter, you
+    #   will pay the current Spot price. If you do specify this parameter,
+    #   it must be more than USD $0.001. Specifying a value below USD $0.001
+    #   will result in an `InvalidParameterValue` error message when the
+    #   launch template is used to launch an instance.
     #   @return [String]
     #
     # @!attribute [rw] spot_instance_type
@@ -49116,10 +49483,13 @@ module Aws::EC2
     # The options for Spot Instances.
     #
     # @!attribute [rw] max_price
-    #   The maximum hourly price you're willing to pay for the Spot
-    #   Instances. We do not recommend using this parameter because it can
-    #   lead to increased interruptions. If you do not specify this
-    #   parameter, you will pay the current Spot price.
+    #   The maximum hourly price you're willing to pay for a Spot Instance.
+    #   We do not recommend using this parameter because it can lead to
+    #   increased interruptions. If you do not specify this parameter, you
+    #   will pay the current Spot price. If you do specify this parameter,
+    #   it must be more than USD $0.001. Specifying a value below USD $0.001
+    #   will result in an `InvalidParameterValue` error message when the
+    #   launch template is used to launch an instance.
     #
     #   If you specify a maximum price, your Spot Instances will be
     #   interrupted more frequently than if you do not specify this
@@ -52451,7 +52821,7 @@ module Aws::EC2
     # @!attribute [rw] client_token
     #   Unique, case-sensitive identifier you provide to ensure the
     #   idempotency of the request. For more information, see [Ensuring
-    #   idempotency][1].
+    #   idempotency in Amazon EC2 API requests][1].
     #
     #   Constraint: Maximum 128 ASCII characters.
     #
@@ -60865,11 +61235,11 @@ module Aws::EC2
     #
     #   We recommend that you use PV-GRUB instead of kernels and RAM disks.
     #   For more information, see [User provided kernels][1] in the *Amazon
-    #   EC2 User Guide*.
+    #   Linux 2 User Guide*.
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UserProvidedkernels.html
+    #   [1]: https://docs.aws.amazon.com/linux/al2/ug/UserProvidedKernels.html
     #   @return [String]
     #
     # @!attribute [rw] ebs_optimized
@@ -61008,8 +61378,8 @@ module Aws::EC2
     # @!attribute [rw] user_data
     #   The user data to make available to the instance. You must provide
     #   base64-encoded text. User data is limited to 16 KB. For more
-    #   information, see [Run commands on your Amazon EC2 instance at
-    #   launch][1] in the *Amazon EC2 User Guide*.
+    #   information, see [Run commands when you launch an EC2 instance with
+    #   user data input][1] in the *Amazon EC2 User Guide*.
     #
     #   If you are creating the launch template for use with Batch, the user
     #   data must be provided in the [MIME multi-part archive format][2].
@@ -61020,7 +61390,7 @@ module Aws::EC2
     #
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
     #   [2]: https://cloudinit.readthedocs.io/en/latest/topics/format.html#mime-multi-part-archive
-    #   [3]: https://docs.aws.amazon.com/batch/latest/userguide/launch-templates.html
+    #   [3]: https://docs.aws.amazon.com/batch/latest/userguide/launch-templates.html#lt-user-data
     #   @return [String]
     #
     # @!attribute [rw] tag_specifications
@@ -61091,8 +61461,8 @@ module Aws::EC2
     #   @return [Types::CreditSpecificationRequest]
     #
     # @!attribute [rw] cpu_options
-    #   The CPU options for the instance. For more information, see
-    #   [Optimize CPU options][1] in the *Amazon EC2 User Guide*.
+    #   The CPU options for the instance. For more information, see [CPU
+    #   options for Amazon EC2 instances][1] in the *Amazon EC2 User Guide*.
     #
     #
     #
@@ -61125,18 +61495,19 @@ module Aws::EC2
     #
     # @!attribute [rw] metadata_options
     #   The metadata options for the instance. For more information, see
-    #   [Instance metadata and user data][1] in the *Amazon EC2 User Guide*.
+    #   [Configure the Instance Metadata Service options][1] in the *Amazon
+    #   EC2 User Guide*.
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html
     #   @return [Types::LaunchTemplateInstanceMetadataOptionsRequest]
     #
     # @!attribute [rw] enclave_options
     #   Indicates whether the instance is enabled for Amazon Web Services
-    #   Nitro Enclaves. For more information, see [What is Amazon Web
-    #   Services Nitro Enclaves?][1] in the *Amazon Web Services Nitro
-    #   Enclaves User Guide*.
+    #   Nitro Enclaves. For more information, see [What is Nitro
+    #   Enclaves?][1] in the *Amazon Web Services Nitro Enclaves User
+    #   Guide*.
     #
     #   You can't enable Amazon Web Services Nitro Enclaves and hibernation
     #   on the same instance.
@@ -61207,8 +61578,8 @@ module Aws::EC2
     #
     # @!attribute [rw] disable_api_stop
     #   Indicates whether to enable the instance for stop protection. For
-    #   more information, see [Enable stop protection for your instance][1]
-    #   in the *Amazon EC2 User Guide*.
+    #   more information, see [Enable stop protection for your EC2
+    #   instances][1] in the *Amazon EC2 User Guide*.
     #
     #
     #
@@ -62458,7 +62829,7 @@ module Aws::EC2
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#use-an-ssm-parameter-instead-of-an-ami-id
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-launch-template.html#use-an-ssm-parameter-instead-of-an-ami-id
     #   @return [String]
     #
     # @!attribute [rw] instance_type
@@ -62554,8 +62925,8 @@ module Aws::EC2
     #   @return [Types::CreditSpecification]
     #
     # @!attribute [rw] cpu_options
-    #   The CPU options for the instance. For more information, see
-    #   [Optimize CPU options][1] in the *Amazon EC2 User Guide*.
+    #   The CPU options for the instance. For more information, see [CPU
+    #   options for Amazon EC2 instances][1] in the *Amazon EC2 User Guide*.
     #
     #
     #
@@ -62582,11 +62953,12 @@ module Aws::EC2
     #
     # @!attribute [rw] metadata_options
     #   The metadata options for the instance. For more information, see
-    #   [Instance metadata and user data][1] in the *Amazon EC2 User Guide*.
+    #   [Configure the Instance Metadata Service options][1] in the *Amazon
+    #   EC2 User Guide*.
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html
     #   @return [Types::LaunchTemplateInstanceMetadataOptions]
     #
     # @!attribute [rw] enclave_options
@@ -62613,8 +62985,8 @@ module Aws::EC2
     #
     # @!attribute [rw] disable_api_stop
     #   Indicates whether the instance is enabled for stop protection. For
-    #   more information, see [Enable stop protection for your instance][1]
-    #   in the *Amazon EC2 User Guide*.
+    #   more information, see [Enable stop protection for your EC2
+    #   instances][1] in the *Amazon EC2 User Guide*.
     #
     #
     #

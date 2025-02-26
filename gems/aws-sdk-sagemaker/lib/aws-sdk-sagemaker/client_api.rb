@@ -1149,12 +1149,16 @@ module Aws::SageMaker
     ImportHubContentResponse = Shapes::StructureShape.new(name: 'ImportHubContentResponse')
     InUseInstanceCount = Shapes::IntegerShape.new(name: 'InUseInstanceCount')
     InferenceComponentArn = Shapes::StringShape.new(name: 'InferenceComponentArn')
+    InferenceComponentCapacitySize = Shapes::StructureShape.new(name: 'InferenceComponentCapacitySize')
+    InferenceComponentCapacitySizeType = Shapes::StringShape.new(name: 'InferenceComponentCapacitySizeType')
     InferenceComponentComputeResourceRequirements = Shapes::StructureShape.new(name: 'InferenceComponentComputeResourceRequirements')
     InferenceComponentContainerSpecification = Shapes::StructureShape.new(name: 'InferenceComponentContainerSpecification')
     InferenceComponentContainerSpecificationSummary = Shapes::StructureShape.new(name: 'InferenceComponentContainerSpecificationSummary')
     InferenceComponentCopyCount = Shapes::IntegerShape.new(name: 'InferenceComponentCopyCount')
+    InferenceComponentDeploymentConfig = Shapes::StructureShape.new(name: 'InferenceComponentDeploymentConfig')
     InferenceComponentName = Shapes::StringShape.new(name: 'InferenceComponentName')
     InferenceComponentNameContains = Shapes::StringShape.new(name: 'InferenceComponentNameContains')
+    InferenceComponentRollingUpdatePolicy = Shapes::StructureShape.new(name: 'InferenceComponentRollingUpdatePolicy')
     InferenceComponentRuntimeConfig = Shapes::StructureShape.new(name: 'InferenceComponentRuntimeConfig')
     InferenceComponentRuntimeConfigSummary = Shapes::StructureShape.new(name: 'InferenceComponentRuntimeConfigSummary')
     InferenceComponentSortKey = Shapes::StringShape.new(name: 'InferenceComponentSortKey')
@@ -5204,6 +5208,7 @@ module Aws::SageMaker
     DescribeInferenceComponentOutput.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "CreationTime"))
     DescribeInferenceComponentOutput.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "LastModifiedTime"))
     DescribeInferenceComponentOutput.add_member(:inference_component_status, Shapes::ShapeRef.new(shape: InferenceComponentStatus, location_name: "InferenceComponentStatus"))
+    DescribeInferenceComponentOutput.add_member(:last_deployment_config, Shapes::ShapeRef.new(shape: InferenceComponentDeploymentConfig, location_name: "LastDeploymentConfig"))
     DescribeInferenceComponentOutput.struct_class = Types::DescribeInferenceComponentOutput
 
     DescribeInferenceExperimentRequest.add_member(:name, Shapes::ShapeRef.new(shape: InferenceExperimentName, required: true, location_name: "Name"))
@@ -6724,6 +6729,10 @@ module Aws::SageMaker
     ImportHubContentResponse.add_member(:hub_content_arn, Shapes::ShapeRef.new(shape: HubContentArn, required: true, location_name: "HubContentArn"))
     ImportHubContentResponse.struct_class = Types::ImportHubContentResponse
 
+    InferenceComponentCapacitySize.add_member(:type, Shapes::ShapeRef.new(shape: InferenceComponentCapacitySizeType, required: true, location_name: "Type"))
+    InferenceComponentCapacitySize.add_member(:value, Shapes::ShapeRef.new(shape: CapacitySizeValue, required: true, location_name: "Value"))
+    InferenceComponentCapacitySize.struct_class = Types::InferenceComponentCapacitySize
+
     InferenceComponentComputeResourceRequirements.add_member(:number_of_cpu_cores_required, Shapes::ShapeRef.new(shape: NumberOfCpuCores, location_name: "NumberOfCpuCoresRequired"))
     InferenceComponentComputeResourceRequirements.add_member(:number_of_accelerator_devices_required, Shapes::ShapeRef.new(shape: NumberOfAcceleratorDevices, location_name: "NumberOfAcceleratorDevicesRequired"))
     InferenceComponentComputeResourceRequirements.add_member(:min_memory_required_in_mb, Shapes::ShapeRef.new(shape: MemoryInMb, required: true, location_name: "MinMemoryRequiredInMb"))
@@ -6739,6 +6748,16 @@ module Aws::SageMaker
     InferenceComponentContainerSpecificationSummary.add_member(:artifact_url, Shapes::ShapeRef.new(shape: Url, location_name: "ArtifactUrl"))
     InferenceComponentContainerSpecificationSummary.add_member(:environment, Shapes::ShapeRef.new(shape: EnvironmentMap, location_name: "Environment"))
     InferenceComponentContainerSpecificationSummary.struct_class = Types::InferenceComponentContainerSpecificationSummary
+
+    InferenceComponentDeploymentConfig.add_member(:rolling_update_policy, Shapes::ShapeRef.new(shape: InferenceComponentRollingUpdatePolicy, required: true, location_name: "RollingUpdatePolicy"))
+    InferenceComponentDeploymentConfig.add_member(:auto_rollback_configuration, Shapes::ShapeRef.new(shape: AutoRollbackConfig, location_name: "AutoRollbackConfiguration"))
+    InferenceComponentDeploymentConfig.struct_class = Types::InferenceComponentDeploymentConfig
+
+    InferenceComponentRollingUpdatePolicy.add_member(:maximum_batch_size, Shapes::ShapeRef.new(shape: InferenceComponentCapacitySize, required: true, location_name: "MaximumBatchSize"))
+    InferenceComponentRollingUpdatePolicy.add_member(:wait_interval_in_seconds, Shapes::ShapeRef.new(shape: WaitIntervalInSeconds, required: true, location_name: "WaitIntervalInSeconds"))
+    InferenceComponentRollingUpdatePolicy.add_member(:maximum_execution_timeout_in_seconds, Shapes::ShapeRef.new(shape: MaximumExecutionTimeoutInSeconds, location_name: "MaximumExecutionTimeoutInSeconds"))
+    InferenceComponentRollingUpdatePolicy.add_member(:rollback_maximum_batch_size, Shapes::ShapeRef.new(shape: InferenceComponentCapacitySize, location_name: "RollbackMaximumBatchSize"))
+    InferenceComponentRollingUpdatePolicy.struct_class = Types::InferenceComponentRollingUpdatePolicy
 
     InferenceComponentRuntimeConfig.add_member(:copy_count, Shapes::ShapeRef.new(shape: InferenceComponentCopyCount, required: true, location_name: "CopyCount"))
     InferenceComponentRuntimeConfig.struct_class = Types::InferenceComponentRuntimeConfig
@@ -10719,6 +10738,7 @@ module Aws::SageMaker
     UpdateInferenceComponentInput.add_member(:inference_component_name, Shapes::ShapeRef.new(shape: InferenceComponentName, required: true, location_name: "InferenceComponentName"))
     UpdateInferenceComponentInput.add_member(:specification, Shapes::ShapeRef.new(shape: InferenceComponentSpecification, location_name: "Specification"))
     UpdateInferenceComponentInput.add_member(:runtime_config, Shapes::ShapeRef.new(shape: InferenceComponentRuntimeConfig, location_name: "RuntimeConfig"))
+    UpdateInferenceComponentInput.add_member(:deployment_config, Shapes::ShapeRef.new(shape: InferenceComponentDeploymentConfig, location_name: "DeploymentConfig"))
     UpdateInferenceComponentInput.struct_class = Types::UpdateInferenceComponentInput
 
     UpdateInferenceComponentOutput.add_member(:inference_component_arn, Shapes::ShapeRef.new(shape: InferenceComponentArn, required: true, location_name: "InferenceComponentArn"))

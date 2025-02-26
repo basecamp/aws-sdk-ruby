@@ -3394,6 +3394,7 @@ module Aws::SageMaker
       attr_accessor creation_time: ::Time
       attr_accessor last_modified_time: ::Time
       attr_accessor inference_component_status: ("InService" | "Creating" | "Updating" | "Failed" | "Deleting")
+      attr_accessor last_deployment_config: Types::InferenceComponentDeploymentConfig
       SENSITIVE: []
     end
 
@@ -5174,6 +5175,12 @@ module Aws::SageMaker
       SENSITIVE: []
     end
 
+    class InferenceComponentCapacitySize
+      attr_accessor type: ("COPY_COUNT" | "CAPACITY_PERCENT")
+      attr_accessor value: ::Integer
+      SENSITIVE: []
+    end
+
     class InferenceComponentComputeResourceRequirements
       attr_accessor number_of_cpu_cores_required: ::Float
       attr_accessor number_of_accelerator_devices_required: ::Float
@@ -5193,6 +5200,20 @@ module Aws::SageMaker
       attr_accessor deployed_image: Types::DeployedImage
       attr_accessor artifact_url: ::String
       attr_accessor environment: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class InferenceComponentDeploymentConfig
+      attr_accessor rolling_update_policy: Types::InferenceComponentRollingUpdatePolicy
+      attr_accessor auto_rollback_configuration: Types::AutoRollbackConfig
+      SENSITIVE: []
+    end
+
+    class InferenceComponentRollingUpdatePolicy
+      attr_accessor maximum_batch_size: Types::InferenceComponentCapacitySize
+      attr_accessor wait_interval_in_seconds: ::Integer
+      attr_accessor maximum_execution_timeout_in_seconds: ::Integer
+      attr_accessor rollback_maximum_batch_size: Types::InferenceComponentCapacitySize
       SENSITIVE: []
     end
 
@@ -10086,6 +10107,7 @@ module Aws::SageMaker
       attr_accessor inference_component_name: ::String
       attr_accessor specification: Types::InferenceComponentSpecification
       attr_accessor runtime_config: Types::InferenceComponentRuntimeConfig
+      attr_accessor deployment_config: Types::InferenceComponentDeploymentConfig
       SENSITIVE: []
     end
 

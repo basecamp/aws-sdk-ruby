@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.100.0 (2025-02-26)
+------------------
+
+* Feature - Removes the Amazon Chime SDK APIs from the "chime" namespace.  Amazon Chime SDK APIs continue to be available in the AWS SDK via the dedicated Amazon Chime SDK namespaces: chime-sdk-identity, chime-sdk-mediapipelines, chime-sdk-meetings, chime-sdk-messaging, and chime-sdk-voice.
+
 1.99.0 (2025-02-18)
 ------------------
 

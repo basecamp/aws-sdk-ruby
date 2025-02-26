@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.31.0 (2025-02-26)
+------------------
+
+* Feature - This release adds support for sharing AWS::ApplicationSignals::Service and AWS::ApplicationSignals::ServiceLevelObjective resources.
+
 1.30.0 (2025-02-18)
 ------------------
 

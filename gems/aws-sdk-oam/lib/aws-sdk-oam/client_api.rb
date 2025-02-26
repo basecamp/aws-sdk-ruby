@@ -299,6 +299,7 @@ module Aws::OAM
 
       api.metadata = {
         "apiVersion" => "2022-06-10",
+        "auth" => ["aws.auth#sigv4"],
         "endpointPrefix" => "oam",
         "jsonVersion" => "1.1",
         "protocol" => "rest-json",

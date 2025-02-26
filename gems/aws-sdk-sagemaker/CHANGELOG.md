@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.291.0 (2025-02-26)
+------------------
+
+* Feature - AWS SageMaker InferenceComponents now support rolling update deployments for Inference Components.
+
 1.290.0 (2025-02-20)
 ------------------
 

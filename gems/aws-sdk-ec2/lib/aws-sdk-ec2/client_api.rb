@@ -238,6 +238,8 @@ module Aws::EC2
     BlockDeviceMapping = Shapes::StructureShape.new(name: 'BlockDeviceMapping')
     BlockDeviceMappingList = Shapes::ListShape.new(name: 'BlockDeviceMappingList')
     BlockDeviceMappingRequestList = Shapes::ListShape.new(name: 'BlockDeviceMappingRequestList')
+    BlockDeviceMappingResponse = Shapes::StructureShape.new(name: 'BlockDeviceMappingResponse')
+    BlockDeviceMappingResponseList = Shapes::ListShape.new(name: 'BlockDeviceMappingResponseList')
     BlockPublicAccessMode = Shapes::StringShape.new(name: 'BlockPublicAccessMode')
     BlockPublicAccessStates = Shapes::StructureShape.new(name: 'BlockPublicAccessStates')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
@@ -810,6 +812,7 @@ module Aws::EC2
     DeprovisionPublicIpv4PoolCidrResult = Shapes::StructureShape.new(name: 'DeprovisionPublicIpv4PoolCidrResult')
     DeprovisionedAddressSet = Shapes::ListShape.new(name: 'DeprovisionedAddressSet')
     DeregisterImageRequest = Shapes::StructureShape.new(name: 'DeregisterImageRequest')
+    DeregisterImageResult = Shapes::StructureShape.new(name: 'DeregisterImageResult')
     DeregisterInstanceEventNotificationAttributesRequest = Shapes::StructureShape.new(name: 'DeregisterInstanceEventNotificationAttributesRequest')
     DeregisterInstanceEventNotificationAttributesResult = Shapes::StructureShape.new(name: 'DeregisterInstanceEventNotificationAttributesResult')
     DeregisterInstanceTagAttributeRequest = Shapes::StructureShape.new(name: 'DeregisterInstanceTagAttributeRequest')
@@ -1331,6 +1334,7 @@ module Aws::EC2
     DrainSeconds = Shapes::IntegerShape.new(name: 'DrainSeconds')
     DynamicRoutingValue = Shapes::StringShape.new(name: 'DynamicRoutingValue')
     EbsBlockDevice = Shapes::StructureShape.new(name: 'EbsBlockDevice')
+    EbsBlockDeviceResponse = Shapes::StructureShape.new(name: 'EbsBlockDeviceResponse')
     EbsEncryptionSupport = Shapes::StringShape.new(name: 'EbsEncryptionSupport')
     EbsInfo = Shapes::StructureShape.new(name: 'EbsInfo')
     EbsInstanceBlockDevice = Shapes::StructureShape.new(name: 'EbsInstanceBlockDevice')
@@ -1485,11 +1489,14 @@ module Aws::EC2
     FirewallStatefulRule = Shapes::StructureShape.new(name: 'FirewallStatefulRule')
     FirewallStatelessRule = Shapes::StructureShape.new(name: 'FirewallStatelessRule')
     FleetActivityStatus = Shapes::StringShape.new(name: 'FleetActivityStatus')
+    FleetBlockDeviceMappingRequest = Shapes::StructureShape.new(name: 'FleetBlockDeviceMappingRequest')
+    FleetBlockDeviceMappingRequestList = Shapes::ListShape.new(name: 'FleetBlockDeviceMappingRequestList')
     FleetCapacityReservation = Shapes::StructureShape.new(name: 'FleetCapacityReservation')
     FleetCapacityReservationSet = Shapes::ListShape.new(name: 'FleetCapacityReservationSet')
     FleetCapacityReservationTenancy = Shapes::StringShape.new(name: 'FleetCapacityReservationTenancy')
     FleetCapacityReservationUsageStrategy = Shapes::StringShape.new(name: 'FleetCapacityReservationUsageStrategy')
     FleetData = Shapes::StructureShape.new(name: 'FleetData')
+    FleetEbsBlockDeviceRequest = Shapes::StructureShape.new(name: 'FleetEbsBlockDeviceRequest')
     FleetEventType = Shapes::StringShape.new(name: 'FleetEventType')
     FleetExcessCapacityTerminationPolicy = Shapes::StringShape.new(name: 'FleetExcessCapacityTerminationPolicy')
     FleetId = Shapes::StringShape.new(name: 'FleetId')
@@ -4200,6 +4207,14 @@ module Aws::EC2
 
     BlockDeviceMappingRequestList.member = Shapes::ShapeRef.new(shape: BlockDeviceMapping, location_name: "BlockDeviceMapping")
 
+    BlockDeviceMappingResponse.add_member(:device_name, Shapes::ShapeRef.new(shape: String, location_name: "deviceName"))
+    BlockDeviceMappingResponse.add_member(:virtual_name, Shapes::ShapeRef.new(shape: String, location_name: "virtualName"))
+    BlockDeviceMappingResponse.add_member(:ebs, Shapes::ShapeRef.new(shape: EbsBlockDeviceResponse, location_name: "ebs"))
+    BlockDeviceMappingResponse.add_member(:no_device, Shapes::ShapeRef.new(shape: String, location_name: "noDevice"))
+    BlockDeviceMappingResponse.struct_class = Types::BlockDeviceMappingResponse
+
+    BlockDeviceMappingResponseList.member = Shapes::ShapeRef.new(shape: BlockDeviceMappingResponse, location_name: "item")
+
     BlockPublicAccessStates.add_member(:internet_gateway_block_mode, Shapes::ShapeRef.new(shape: BlockPublicAccessMode, location_name: "internetGatewayBlockMode"))
     BlockPublicAccessStates.struct_class = Types::BlockPublicAccessStates
 
@@ -6632,6 +6647,8 @@ module Aws::EC2
     DeregisterImageRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     DeregisterImageRequest.struct_class = Types::DeregisterImageRequest
 
+    DeregisterImageResult.struct_class = Types::DeregisterImageResult
+
     DeregisterInstanceEventNotificationAttributesRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     DeregisterInstanceEventNotificationAttributesRequest.add_member(:instance_tag_attribute, Shapes::ShapeRef.new(shape: DeregisterInstanceTagAttributeRequest, required: true, location_name: "InstanceTagAttribute"))
     DeregisterInstanceEventNotificationAttributesRequest.struct_class = Types::DeregisterInstanceEventNotificationAttributesRequest
@@ -8860,6 +8877,16 @@ module Aws::EC2
     EbsBlockDevice.add_member(:encrypted, Shapes::ShapeRef.new(shape: Boolean, location_name: "encrypted"))
     EbsBlockDevice.struct_class = Types::EbsBlockDevice
 
+    EbsBlockDeviceResponse.add_member(:encrypted, Shapes::ShapeRef.new(shape: Boolean, location_name: "encrypted"))
+    EbsBlockDeviceResponse.add_member(:delete_on_termination, Shapes::ShapeRef.new(shape: Boolean, location_name: "deleteOnTermination"))
+    EbsBlockDeviceResponse.add_member(:iops, Shapes::ShapeRef.new(shape: Integer, location_name: "iops"))
+    EbsBlockDeviceResponse.add_member(:throughput, Shapes::ShapeRef.new(shape: Integer, location_name: "throughput"))
+    EbsBlockDeviceResponse.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "kmsKeyId"))
+    EbsBlockDeviceResponse.add_member(:snapshot_id, Shapes::ShapeRef.new(shape: SnapshotId, location_name: "snapshotId"))
+    EbsBlockDeviceResponse.add_member(:volume_size, Shapes::ShapeRef.new(shape: Integer, location_name: "volumeSize"))
+    EbsBlockDeviceResponse.add_member(:volume_type, Shapes::ShapeRef.new(shape: VolumeType, location_name: "volumeType"))
+    EbsBlockDeviceResponse.struct_class = Types::EbsBlockDeviceResponse
+
     EbsInfo.add_member(:ebs_optimized_support, Shapes::ShapeRef.new(shape: EbsOptimizedSupport, location_name: "ebsOptimizedSupport"))
     EbsInfo.add_member(:encryption_support, Shapes::ShapeRef.new(shape: EbsEncryptionSupport, location_name: "encryptionSupport"))
     EbsInfo.add_member(:ebs_optimized_info, Shapes::ShapeRef.new(shape: EbsOptimizedInfo, location_name: "ebsOptimizedInfo"))
@@ -9419,6 +9446,14 @@ module Aws::EC2
     FirewallStatelessRule.add_member(:priority, Shapes::ShapeRef.new(shape: Priority, location_name: "priority"))
     FirewallStatelessRule.struct_class = Types::FirewallStatelessRule
 
+    FleetBlockDeviceMappingRequest.add_member(:device_name, Shapes::ShapeRef.new(shape: String, location_name: "DeviceName"))
+    FleetBlockDeviceMappingRequest.add_member(:virtual_name, Shapes::ShapeRef.new(shape: String, location_name: "VirtualName"))
+    FleetBlockDeviceMappingRequest.add_member(:ebs, Shapes::ShapeRef.new(shape: FleetEbsBlockDeviceRequest, location_name: "Ebs"))
+    FleetBlockDeviceMappingRequest.add_member(:no_device, Shapes::ShapeRef.new(shape: String, location_name: "NoDevice"))
+    FleetBlockDeviceMappingRequest.struct_class = Types::FleetBlockDeviceMappingRequest
+
+    FleetBlockDeviceMappingRequestList.member = Shapes::ShapeRef.new(shape: FleetBlockDeviceMappingRequest, location_name: "BlockDeviceMapping")
+
     FleetCapacityReservation.add_member(:capacity_reservation_id, Shapes::ShapeRef.new(shape: CapacityReservationId, location_name: "capacityReservationId"))
     FleetCapacityReservation.add_member(:availability_zone_id, Shapes::ShapeRef.new(shape: String, location_name: "availabilityZoneId"))
     FleetCapacityReservation.add_member(:instance_type, Shapes::ShapeRef.new(shape: InstanceType, location_name: "instanceType"))
@@ -9457,6 +9492,16 @@ module Aws::EC2
     FleetData.add_member(:context, Shapes::ShapeRef.new(shape: String, location_name: "context"))
     FleetData.struct_class = Types::FleetData
 
+    FleetEbsBlockDeviceRequest.add_member(:encrypted, Shapes::ShapeRef.new(shape: Boolean, location_name: "Encrypted"))
+    FleetEbsBlockDeviceRequest.add_member(:delete_on_termination, Shapes::ShapeRef.new(shape: Boolean, location_name: "DeleteOnTermination"))
+    FleetEbsBlockDeviceRequest.add_member(:iops, Shapes::ShapeRef.new(shape: Integer, location_name: "Iops"))
+    FleetEbsBlockDeviceRequest.add_member(:throughput, Shapes::ShapeRef.new(shape: Integer, location_name: "Throughput"))
+    FleetEbsBlockDeviceRequest.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "KmsKeyId"))
+    FleetEbsBlockDeviceRequest.add_member(:snapshot_id, Shapes::ShapeRef.new(shape: SnapshotId, location_name: "SnapshotId"))
+    FleetEbsBlockDeviceRequest.add_member(:volume_size, Shapes::ShapeRef.new(shape: Integer, location_name: "VolumeSize"))
+    FleetEbsBlockDeviceRequest.add_member(:volume_type, Shapes::ShapeRef.new(shape: VolumeType, location_name: "VolumeType"))
+    FleetEbsBlockDeviceRequest.struct_class = Types::FleetEbsBlockDeviceRequest
+
     FleetIdSet.member = Shapes::ShapeRef.new(shape: FleetId)
 
     FleetLaunchTemplateConfig.add_member(:launch_template_specification, Shapes::ShapeRef.new(shape: FleetLaunchTemplateSpecification, location_name: "launchTemplateSpecification"))
@@ -9480,6 +9525,7 @@ module Aws::EC2
     FleetLaunchTemplateOverrides.add_member(:placement, Shapes::ShapeRef.new(shape: PlacementResponse, location_name: "placement"))
     FleetLaunchTemplateOverrides.add_member(:instance_requirements, Shapes::ShapeRef.new(shape: InstanceRequirements, location_name: "instanceRequirements"))
     FleetLaunchTemplateOverrides.add_member(:image_id, Shapes::ShapeRef.new(shape: ImageId, location_name: "imageId"))
+    FleetLaunchTemplateOverrides.add_member(:block_device_mappings, Shapes::ShapeRef.new(shape: BlockDeviceMappingResponseList, location_name: "blockDeviceMappingSet"))
     FleetLaunchTemplateOverrides.struct_class = Types::FleetLaunchTemplateOverrides
 
     FleetLaunchTemplateOverridesList.member = Shapes::ShapeRef.new(shape: FleetLaunchTemplateOverrides, location_name: "item")
@@ -9493,6 +9539,7 @@ module Aws::EC2
     FleetLaunchTemplateOverridesRequest.add_member(:weighted_capacity, Shapes::ShapeRef.new(shape: Double, location_name: "WeightedCapacity"))
     FleetLaunchTemplateOverridesRequest.add_member(:priority, Shapes::ShapeRef.new(shape: Double, location_name: "Priority"))
     FleetLaunchTemplateOverridesRequest.add_member(:placement, Shapes::ShapeRef.new(shape: Placement, location_name: "Placement"))
+    FleetLaunchTemplateOverridesRequest.add_member(:block_device_mappings, Shapes::ShapeRef.new(shape: FleetBlockDeviceMappingRequestList, location_name: "BlockDeviceMapping"))
     FleetLaunchTemplateOverridesRequest.add_member(:instance_requirements, Shapes::ShapeRef.new(shape: InstanceRequirementsRequest, location_name: "InstanceRequirements"))
     FleetLaunchTemplateOverridesRequest.add_member(:image_id, Shapes::ShapeRef.new(shape: ImageId, location_name: "ImageId"))
     FleetLaunchTemplateOverridesRequest.struct_class = Types::FleetLaunchTemplateOverridesRequest
@@ -18616,7 +18663,7 @@ module Aws::EC2
         o.http_method = "POST"
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: DeregisterImageRequest)
-        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.output = Shapes::ShapeRef.new(shape: DeregisterImageResult)
       end)
 
       api.add_operation(:deregister_instance_event_notification_attributes, Seahorse::Model::Operation.new.tap do |o|

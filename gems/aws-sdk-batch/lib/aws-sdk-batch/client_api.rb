@@ -35,24 +35,34 @@ module Aws::Batch
     CancelJobRequest = Shapes::StructureShape.new(name: 'CancelJobRequest')
     CancelJobResponse = Shapes::StructureShape.new(name: 'CancelJobResponse')
     ClientException = Shapes::StructureShape.new(name: 'ClientException')
+    ClientRequestToken = Shapes::StringShape.new(name: 'ClientRequestToken')
     ComputeEnvironmentDetail = Shapes::StructureShape.new(name: 'ComputeEnvironmentDetail')
     ComputeEnvironmentDetailList = Shapes::ListShape.new(name: 'ComputeEnvironmentDetailList')
     ComputeEnvironmentOrder = Shapes::StructureShape.new(name: 'ComputeEnvironmentOrder')
     ComputeEnvironmentOrders = Shapes::ListShape.new(name: 'ComputeEnvironmentOrders')
     ComputeResource = Shapes::StructureShape.new(name: 'ComputeResource')
     ComputeResourceUpdate = Shapes::StructureShape.new(name: 'ComputeResourceUpdate')
+    ConsumableResourceList = Shapes::ListShape.new(name: 'ConsumableResourceList')
+    ConsumableResourceProperties = Shapes::StructureShape.new(name: 'ConsumableResourceProperties')
+    ConsumableResourceRequirement = Shapes::StructureShape.new(name: 'ConsumableResourceRequirement')
+    ConsumableResourceSummary = Shapes::StructureShape.new(name: 'ConsumableResourceSummary')
+    ConsumableResourceSummaryList = Shapes::ListShape.new(name: 'ConsumableResourceSummaryList')
     ContainerDetail = Shapes::StructureShape.new(name: 'ContainerDetail')
     ContainerOverrides = Shapes::StructureShape.new(name: 'ContainerOverrides')
     ContainerProperties = Shapes::StructureShape.new(name: 'ContainerProperties')
     ContainerSummary = Shapes::StructureShape.new(name: 'ContainerSummary')
     CreateComputeEnvironmentRequest = Shapes::StructureShape.new(name: 'CreateComputeEnvironmentRequest')
     CreateComputeEnvironmentResponse = Shapes::StructureShape.new(name: 'CreateComputeEnvironmentResponse')
+    CreateConsumableResourceRequest = Shapes::StructureShape.new(name: 'CreateConsumableResourceRequest')
+    CreateConsumableResourceResponse = Shapes::StructureShape.new(name: 'CreateConsumableResourceResponse')
     CreateJobQueueRequest = Shapes::StructureShape.new(name: 'CreateJobQueueRequest')
     CreateJobQueueResponse = Shapes::StructureShape.new(name: 'CreateJobQueueResponse')
     CreateSchedulingPolicyRequest = Shapes::StructureShape.new(name: 'CreateSchedulingPolicyRequest')
     CreateSchedulingPolicyResponse = Shapes::StructureShape.new(name: 'CreateSchedulingPolicyResponse')
     DeleteComputeEnvironmentRequest = Shapes::StructureShape.new(name: 'DeleteComputeEnvironmentRequest')
     DeleteComputeEnvironmentResponse = Shapes::StructureShape.new(name: 'DeleteComputeEnvironmentResponse')
+    DeleteConsumableResourceRequest = Shapes::StructureShape.new(name: 'DeleteConsumableResourceRequest')
+    DeleteConsumableResourceResponse = Shapes::StructureShape.new(name: 'DeleteConsumableResourceResponse')
     DeleteJobQueueRequest = Shapes::StructureShape.new(name: 'DeleteJobQueueRequest')
     DeleteJobQueueResponse = Shapes::StructureShape.new(name: 'DeleteJobQueueResponse')
     DeleteSchedulingPolicyRequest = Shapes::StructureShape.new(name: 'DeleteSchedulingPolicyRequest')
@@ -61,6 +71,8 @@ module Aws::Batch
     DeregisterJobDefinitionResponse = Shapes::StructureShape.new(name: 'DeregisterJobDefinitionResponse')
     DescribeComputeEnvironmentsRequest = Shapes::StructureShape.new(name: 'DescribeComputeEnvironmentsRequest')
     DescribeComputeEnvironmentsResponse = Shapes::StructureShape.new(name: 'DescribeComputeEnvironmentsResponse')
+    DescribeConsumableResourceRequest = Shapes::StructureShape.new(name: 'DescribeConsumableResourceRequest')
+    DescribeConsumableResourceResponse = Shapes::StructureShape.new(name: 'DescribeConsumableResourceResponse')
     DescribeJobDefinitionsRequest = Shapes::StructureShape.new(name: 'DescribeJobDefinitionsRequest')
     DescribeJobDefinitionsResponse = Shapes::StructureShape.new(name: 'DescribeJobDefinitionsResponse')
     DescribeJobQueuesRequest = Shapes::StructureShape.new(name: 'DescribeJobQueuesRequest')
@@ -165,8 +177,16 @@ module Aws::Batch
     LinuxParameters = Shapes::StructureShape.new(name: 'LinuxParameters')
     ListAttemptEcsTaskDetails = Shapes::ListShape.new(name: 'ListAttemptEcsTaskDetails')
     ListAttemptTaskContainerDetails = Shapes::ListShape.new(name: 'ListAttemptTaskContainerDetails')
+    ListConsumableResourcesFilterList = Shapes::ListShape.new(name: 'ListConsumableResourcesFilterList')
+    ListConsumableResourcesRequest = Shapes::StructureShape.new(name: 'ListConsumableResourcesRequest')
+    ListConsumableResourcesResponse = Shapes::StructureShape.new(name: 'ListConsumableResourcesResponse')
     ListEcsTaskDetails = Shapes::ListShape.new(name: 'ListEcsTaskDetails')
     ListEcsTaskProperties = Shapes::ListShape.new(name: 'ListEcsTaskProperties')
+    ListJobsByConsumableResourceFilterList = Shapes::ListShape.new(name: 'ListJobsByConsumableResourceFilterList')
+    ListJobsByConsumableResourceRequest = Shapes::StructureShape.new(name: 'ListJobsByConsumableResourceRequest')
+    ListJobsByConsumableResourceResponse = Shapes::StructureShape.new(name: 'ListJobsByConsumableResourceResponse')
+    ListJobsByConsumableResourceSummary = Shapes::StructureShape.new(name: 'ListJobsByConsumableResourceSummary')
+    ListJobsByConsumableResourceSummaryList = Shapes::ListShape.new(name: 'ListJobsByConsumableResourceSummaryList')
     ListJobsFilterList = Shapes::ListShape.new(name: 'ListJobsFilterList')
     ListJobsRequest = Shapes::StructureShape.new(name: 'ListJobsRequest')
     ListJobsResponse = Shapes::StructureShape.new(name: 'ListJobsResponse')
@@ -245,6 +265,8 @@ module Aws::Batch
     UntagResourceResponse = Shapes::StructureShape.new(name: 'UntagResourceResponse')
     UpdateComputeEnvironmentRequest = Shapes::StructureShape.new(name: 'UpdateComputeEnvironmentRequest')
     UpdateComputeEnvironmentResponse = Shapes::StructureShape.new(name: 'UpdateComputeEnvironmentResponse')
+    UpdateConsumableResourceRequest = Shapes::StructureShape.new(name: 'UpdateConsumableResourceRequest')
+    UpdateConsumableResourceResponse = Shapes::StructureShape.new(name: 'UpdateConsumableResourceResponse')
     UpdateJobQueueRequest = Shapes::StructureShape.new(name: 'UpdateJobQueueRequest')
     UpdateJobQueueResponse = Shapes::StructureShape.new(name: 'UpdateJobQueueResponse')
     UpdatePolicy = Shapes::StructureShape.new(name: 'UpdatePolicy')
@@ -370,6 +392,24 @@ module Aws::Batch
     ComputeResourceUpdate.add_member(:image_id, Shapes::ShapeRef.new(shape: String, location_name: "imageId"))
     ComputeResourceUpdate.struct_class = Types::ComputeResourceUpdate
 
+    ConsumableResourceList.member = Shapes::ShapeRef.new(shape: ConsumableResourceRequirement)
+
+    ConsumableResourceProperties.add_member(:consumable_resource_list, Shapes::ShapeRef.new(shape: ConsumableResourceList, location_name: "consumableResourceList"))
+    ConsumableResourceProperties.struct_class = Types::ConsumableResourceProperties
+
+    ConsumableResourceRequirement.add_member(:consumable_resource, Shapes::ShapeRef.new(shape: String, location_name: "consumableResource"))
+    ConsumableResourceRequirement.add_member(:quantity, Shapes::ShapeRef.new(shape: Long, location_name: "quantity"))
+    ConsumableResourceRequirement.struct_class = Types::ConsumableResourceRequirement
+
+    ConsumableResourceSummary.add_member(:consumable_resource_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "consumableResourceArn"))
+    ConsumableResourceSummary.add_member(:consumable_resource_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "consumableResourceName"))
+    ConsumableResourceSummary.add_member(:total_quantity, Shapes::ShapeRef.new(shape: Long, location_name: "totalQuantity"))
+    ConsumableResourceSummary.add_member(:in_use_quantity, Shapes::ShapeRef.new(shape: Long, location_name: "inUseQuantity"))
+    ConsumableResourceSummary.add_member(:resource_type, Shapes::ShapeRef.new(shape: String, location_name: "resourceType"))
+    ConsumableResourceSummary.struct_class = Types::ConsumableResourceSummary
+
+    ConsumableResourceSummaryList.member = Shapes::ShapeRef.new(shape: ConsumableResourceSummary)
+
     ContainerDetail.add_member(:image, Shapes::ShapeRef.new(shape: String, location_name: "image"))
     ContainerDetail.add_member(:vcpus, Shapes::ShapeRef.new(shape: Integer, location_name: "vcpus"))
     ContainerDetail.add_member(:memory, Shapes::ShapeRef.new(shape: Integer, location_name: "memory"))
@@ -453,6 +493,16 @@ module Aws::Batch
     CreateComputeEnvironmentResponse.add_member(:compute_environment_arn, Shapes::ShapeRef.new(shape: String, location_name: "computeEnvironmentArn"))
     CreateComputeEnvironmentResponse.struct_class = Types::CreateComputeEnvironmentResponse
 
+    CreateConsumableResourceRequest.add_member(:consumable_resource_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "consumableResourceName"))
+    CreateConsumableResourceRequest.add_member(:total_quantity, Shapes::ShapeRef.new(shape: Long, location_name: "totalQuantity"))
+    CreateConsumableResourceRequest.add_member(:resource_type, Shapes::ShapeRef.new(shape: String, location_name: "resourceType"))
+    CreateConsumableResourceRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagrisTagsMap, location_name: "tags"))
+    CreateConsumableResourceRequest.struct_class = Types::CreateConsumableResourceRequest
+
+    CreateConsumableResourceResponse.add_member(:consumable_resource_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "consumableResourceName"))
+    CreateConsumableResourceResponse.add_member(:consumable_resource_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "consumableResourceArn"))
+    CreateConsumableResourceResponse.struct_class = Types::CreateConsumableResourceResponse
+
     CreateJobQueueRequest.add_member(:job_queue_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "jobQueueName"))
     CreateJobQueueRequest.add_member(:state, Shapes::ShapeRef.new(shape: JQState, location_name: "state"))
     CreateJobQueueRequest.add_member(:scheduling_policy_arn, Shapes::ShapeRef.new(shape: String, location_name: "schedulingPolicyArn"))
@@ -480,6 +530,11 @@ module Aws::Batch
 
     DeleteComputeEnvironmentResponse.struct_class = Types::DeleteComputeEnvironmentResponse
 
+    DeleteConsumableResourceRequest.add_member(:consumable_resource, Shapes::ShapeRef.new(shape: String, required: true, location_name: "consumableResource"))
+    DeleteConsumableResourceRequest.struct_class = Types::DeleteConsumableResourceRequest
+
+    DeleteConsumableResourceResponse.struct_class = Types::DeleteConsumableResourceResponse
+
     DeleteJobQueueRequest.add_member(:job_queue, Shapes::ShapeRef.new(shape: String, required: true, location_name: "jobQueue"))
     DeleteJobQueueRequest.struct_class = Types::DeleteJobQueueRequest
 
@@ -503,6 +558,19 @@ module Aws::Batch
     DescribeComputeEnvironmentsResponse.add_member(:compute_environments, Shapes::ShapeRef.new(shape: ComputeEnvironmentDetailList, location_name: "computeEnvironments"))
     DescribeComputeEnvironmentsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
     DescribeComputeEnvironmentsResponse.struct_class = Types::DescribeComputeEnvironmentsResponse
+
+    DescribeConsumableResourceRequest.add_member(:consumable_resource, Shapes::ShapeRef.new(shape: String, required: true, location_name: "consumableResource"))
+    DescribeConsumableResourceRequest.struct_class = Types::DescribeConsumableResourceRequest
+
+    DescribeConsumableResourceResponse.add_member(:consumable_resource_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "consumableResourceName"))
+    DescribeConsumableResourceResponse.add_member(:consumable_resource_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "consumableResourceArn"))
+    DescribeConsumableResourceResponse.add_member(:total_quantity, Shapes::ShapeRef.new(shape: Long, location_name: "totalQuantity"))
+    DescribeConsumableResourceResponse.add_member(:in_use_quantity, Shapes::ShapeRef.new(shape: Long, location_name: "inUseQuantity"))
+    DescribeConsumableResourceResponse.add_member(:available_quantity, Shapes::ShapeRef.new(shape: Long, location_name: "availableQuantity"))
+    DescribeConsumableResourceResponse.add_member(:resource_type, Shapes::ShapeRef.new(shape: String, location_name: "resourceType"))
+    DescribeConsumableResourceResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: Long, location_name: "createdAt"))
+    DescribeConsumableResourceResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagrisTagsMap, location_name: "tags"))
+    DescribeConsumableResourceResponse.struct_class = Types::DescribeConsumableResourceResponse
 
     DescribeJobDefinitionsRequest.add_member(:job_definitions, Shapes::ShapeRef.new(shape: StringList, location_name: "jobDefinitions"))
     DescribeJobDefinitionsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: Integer, location_name: "maxResults"))
@@ -828,6 +896,7 @@ module Aws::Batch
     JobDefinition.add_member(:ecs_properties, Shapes::ShapeRef.new(shape: EcsProperties, location_name: "ecsProperties"))
     JobDefinition.add_member(:eks_properties, Shapes::ShapeRef.new(shape: EksProperties, location_name: "eksProperties"))
     JobDefinition.add_member(:container_orchestration_type, Shapes::ShapeRef.new(shape: OrchestrationType, location_name: "containerOrchestrationType"))
+    JobDefinition.add_member(:consumable_resource_properties, Shapes::ShapeRef.new(shape: ConsumableResourceProperties, location_name: "consumableResourceProperties"))
     JobDefinition.struct_class = Types::JobDefinition
 
     JobDefinitionList.member = Shapes::ShapeRef.new(shape: JobDefinition)
@@ -867,6 +936,7 @@ module Aws::Batch
     JobDetail.add_member(:ecs_properties, Shapes::ShapeRef.new(shape: EcsPropertiesDetail, location_name: "ecsProperties"))
     JobDetail.add_member(:is_cancelled, Shapes::ShapeRef.new(shape: Boolean, location_name: "isCancelled"))
     JobDetail.add_member(:is_terminated, Shapes::ShapeRef.new(shape: Boolean, location_name: "isTerminated"))
+    JobDetail.add_member(:consumable_resource_properties, Shapes::ShapeRef.new(shape: ConsumableResourceProperties, location_name: "consumableResourceProperties"))
     JobDetail.struct_class = Types::JobDetail
 
     JobDetailList.member = Shapes::ShapeRef.new(shape: JobDetail)
@@ -946,9 +1016,47 @@ module Aws::Batch
 
     ListAttemptTaskContainerDetails.member = Shapes::ShapeRef.new(shape: AttemptTaskContainerDetails)
 
+    ListConsumableResourcesFilterList.member = Shapes::ShapeRef.new(shape: KeyValuesPair)
+
+    ListConsumableResourcesRequest.add_member(:filters, Shapes::ShapeRef.new(shape: ListConsumableResourcesFilterList, location_name: "filters"))
+    ListConsumableResourcesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: Integer, location_name: "maxResults"))
+    ListConsumableResourcesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    ListConsumableResourcesRequest.struct_class = Types::ListConsumableResourcesRequest
+
+    ListConsumableResourcesResponse.add_member(:consumable_resources, Shapes::ShapeRef.new(shape: ConsumableResourceSummaryList, required: true, location_name: "consumableResources"))
+    ListConsumableResourcesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    ListConsumableResourcesResponse.struct_class = Types::ListConsumableResourcesResponse
+
     ListEcsTaskDetails.member = Shapes::ShapeRef.new(shape: EcsTaskDetails)
 
     ListEcsTaskProperties.member = Shapes::ShapeRef.new(shape: EcsTaskProperties)
+
+    ListJobsByConsumableResourceFilterList.member = Shapes::ShapeRef.new(shape: KeyValuesPair)
+
+    ListJobsByConsumableResourceRequest.add_member(:consumable_resource, Shapes::ShapeRef.new(shape: String, required: true, location_name: "consumableResource"))
+    ListJobsByConsumableResourceRequest.add_member(:filters, Shapes::ShapeRef.new(shape: ListJobsByConsumableResourceFilterList, location_name: "filters"))
+    ListJobsByConsumableResourceRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: Integer, location_name: "maxResults"))
+    ListJobsByConsumableResourceRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    ListJobsByConsumableResourceRequest.struct_class = Types::ListJobsByConsumableResourceRequest
+
+    ListJobsByConsumableResourceResponse.add_member(:jobs, Shapes::ShapeRef.new(shape: ListJobsByConsumableResourceSummaryList, required: true, location_name: "jobs"))
+    ListJobsByConsumableResourceResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    ListJobsByConsumableResourceResponse.struct_class = Types::ListJobsByConsumableResourceResponse
+
+    ListJobsByConsumableResourceSummary.add_member(:job_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "jobArn"))
+    ListJobsByConsumableResourceSummary.add_member(:job_queue_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "jobQueueArn"))
+    ListJobsByConsumableResourceSummary.add_member(:job_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "jobName"))
+    ListJobsByConsumableResourceSummary.add_member(:job_definition_arn, Shapes::ShapeRef.new(shape: String, location_name: "jobDefinitionArn"))
+    ListJobsByConsumableResourceSummary.add_member(:share_identifier, Shapes::ShapeRef.new(shape: String, location_name: "shareIdentifier"))
+    ListJobsByConsumableResourceSummary.add_member(:job_status, Shapes::ShapeRef.new(shape: String, required: true, location_name: "jobStatus"))
+    ListJobsByConsumableResourceSummary.add_member(:quantity, Shapes::ShapeRef.new(shape: Long, required: true, location_name: "quantity"))
+    ListJobsByConsumableResourceSummary.add_member(:status_reason, Shapes::ShapeRef.new(shape: String, location_name: "statusReason"))
+    ListJobsByConsumableResourceSummary.add_member(:started_at, Shapes::ShapeRef.new(shape: Long, location_name: "startedAt"))
+    ListJobsByConsumableResourceSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Long, required: true, location_name: "createdAt"))
+    ListJobsByConsumableResourceSummary.add_member(:consumable_resource_properties, Shapes::ShapeRef.new(shape: ConsumableResourceProperties, required: true, location_name: "consumableResourceProperties"))
+    ListJobsByConsumableResourceSummary.struct_class = Types::ListJobsByConsumableResourceSummary
+
+    ListJobsByConsumableResourceSummaryList.member = Shapes::ShapeRef.new(shape: ListJobsByConsumableResourceSummary)
 
     ListJobsFilterList.member = Shapes::ShapeRef.new(shape: KeyValuesPair)
 
@@ -1035,6 +1143,7 @@ module Aws::Batch
     NodePropertyOverride.add_member(:ecs_properties_override, Shapes::ShapeRef.new(shape: EcsPropertiesOverride, location_name: "ecsPropertiesOverride"))
     NodePropertyOverride.add_member(:instance_types, Shapes::ShapeRef.new(shape: StringList, location_name: "instanceTypes"))
     NodePropertyOverride.add_member(:eks_properties_override, Shapes::ShapeRef.new(shape: EksPropertiesOverride, location_name: "eksPropertiesOverride"))
+    NodePropertyOverride.add_member(:consumable_resource_properties_override, Shapes::ShapeRef.new(shape: ConsumableResourceProperties, location_name: "consumableResourcePropertiesOverride"))
     NodePropertyOverride.struct_class = Types::NodePropertyOverride
 
     NodePropertyOverrides.member = Shapes::ShapeRef.new(shape: NodePropertyOverride)
@@ -1046,6 +1155,7 @@ module Aws::Batch
     NodeRangeProperty.add_member(:instance_types, Shapes::ShapeRef.new(shape: StringList, location_name: "instanceTypes"))
     NodeRangeProperty.add_member(:ecs_properties, Shapes::ShapeRef.new(shape: EcsProperties, location_name: "ecsProperties"))
     NodeRangeProperty.add_member(:eks_properties, Shapes::ShapeRef.new(shape: EksProperties, location_name: "eksProperties"))
+    NodeRangeProperty.add_member(:consumable_resource_properties, Shapes::ShapeRef.new(shape: ConsumableResourceProperties, location_name: "consumableResourceProperties"))
     NodeRangeProperty.struct_class = Types::NodeRangeProperty
 
     ParametersMap.key = Shapes::ShapeRef.new(shape: String)
@@ -1066,6 +1176,7 @@ module Aws::Batch
     RegisterJobDefinitionRequest.add_member(:platform_capabilities, Shapes::ShapeRef.new(shape: PlatformCapabilityList, location_name: "platformCapabilities"))
     RegisterJobDefinitionRequest.add_member(:eks_properties, Shapes::ShapeRef.new(shape: EksProperties, location_name: "eksProperties"))
     RegisterJobDefinitionRequest.add_member(:ecs_properties, Shapes::ShapeRef.new(shape: EcsProperties, location_name: "ecsProperties"))
+    RegisterJobDefinitionRequest.add_member(:consumable_resource_properties, Shapes::ShapeRef.new(shape: ConsumableResourceProperties, location_name: "consumableResourceProperties"))
     RegisterJobDefinitionRequest.struct_class = Types::RegisterJobDefinitionRequest
 
     RegisterJobDefinitionResponse.add_member(:job_definition_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "jobDefinitionName"))
@@ -1136,6 +1247,7 @@ module Aws::Batch
     SubmitJobRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagrisTagsMap, location_name: "tags"))
     SubmitJobRequest.add_member(:eks_properties_override, Shapes::ShapeRef.new(shape: EksPropertiesOverride, location_name: "eksPropertiesOverride"))
     SubmitJobRequest.add_member(:ecs_properties_override, Shapes::ShapeRef.new(shape: EcsPropertiesOverride, location_name: "ecsPropertiesOverride"))
+    SubmitJobRequest.add_member(:consumable_resource_properties_override, Shapes::ShapeRef.new(shape: ConsumableResourceProperties, location_name: "consumableResourcePropertiesOverride"))
     SubmitJobRequest.struct_class = Types::SubmitJobRequest
 
     SubmitJobResponse.add_member(:job_arn, Shapes::ShapeRef.new(shape: String, location_name: "jobArn"))
@@ -1251,6 +1363,17 @@ module Aws::Batch
     UpdateComputeEnvironmentResponse.add_member(:compute_environment_arn, Shapes::ShapeRef.new(shape: String, location_name: "computeEnvironmentArn"))
     UpdateComputeEnvironmentResponse.struct_class = Types::UpdateComputeEnvironmentResponse
 
+    UpdateConsumableResourceRequest.add_member(:consumable_resource, Shapes::ShapeRef.new(shape: String, required: true, location_name: "consumableResource"))
+    UpdateConsumableResourceRequest.add_member(:operation, Shapes::ShapeRef.new(shape: String, location_name: "operation"))
+    UpdateConsumableResourceRequest.add_member(:quantity, Shapes::ShapeRef.new(shape: Long, location_name: "quantity"))
+    UpdateConsumableResourceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientRequestToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    UpdateConsumableResourceRequest.struct_class = Types::UpdateConsumableResourceRequest
+
+    UpdateConsumableResourceResponse.add_member(:consumable_resource_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "consumableResourceName"))
+    UpdateConsumableResourceResponse.add_member(:consumable_resource_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "consumableResourceArn"))
+    UpdateConsumableResourceResponse.add_member(:total_quantity, Shapes::ShapeRef.new(shape: Long, location_name: "totalQuantity"))
+    UpdateConsumableResourceResponse.struct_class = Types::UpdateConsumableResourceResponse
+
     UpdateJobQueueRequest.add_member(:job_queue, Shapes::ShapeRef.new(shape: String, required: true, location_name: "jobQueue"))
     UpdateJobQueueRequest.add_member(:state, Shapes::ShapeRef.new(shape: JQState, location_name: "state"))
     UpdateJobQueueRequest.add_member(:scheduling_policy_arn, Shapes::ShapeRef.new(shape: String, location_name: "schedulingPolicyArn"))
@@ -1320,6 +1443,16 @@ module Aws::Batch
         o.errors << Shapes::ShapeRef.new(shape: ServerException)
       end)
 
+      api.add_operation(:create_consumable_resource, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateConsumableResource"
+        o.http_method = "POST"
+        o.http_request_uri = "/v1/createconsumableresource"
+        o.input = Shapes::ShapeRef.new(shape: CreateConsumableResourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateConsumableResourceResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ClientException)
+        o.errors << Shapes::ShapeRef.new(shape: ServerException)
+      end)
+
       api.add_operation(:create_job_queue, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateJobQueue"
         o.http_method = "POST"
@@ -1346,6 +1479,16 @@ module Aws::Batch
         o.http_request_uri = "/v1/deletecomputeenvironment"
         o.input = Shapes::ShapeRef.new(shape: DeleteComputeEnvironmentRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteComputeEnvironmentResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ClientException)
+        o.errors << Shapes::ShapeRef.new(shape: ServerException)
+      end)
+
+      api.add_operation(:delete_consumable_resource, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteConsumableResource"
+        o.http_method = "POST"
+        o.http_request_uri = "/v1/deleteconsumableresource"
+        o.input = Shapes::ShapeRef.new(shape: DeleteConsumableResourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteConsumableResourceResponse)
         o.errors << Shapes::ShapeRef.new(shape: ClientException)
         o.errors << Shapes::ShapeRef.new(shape: ServerException)
       end)
@@ -1394,6 +1537,16 @@ module Aws::Batch
             "next_token" => "next_token"
           }
         )
+      end)
+
+      api.add_operation(:describe_consumable_resource, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeConsumableResource"
+        o.http_method = "POST"
+        o.http_request_uri = "/v1/describeconsumableresource"
+        o.input = Shapes::ShapeRef.new(shape: DescribeConsumableResourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeConsumableResourceResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ClientException)
+        o.errors << Shapes::ShapeRef.new(shape: ServerException)
       end)
 
       api.add_operation(:describe_job_definitions, Seahorse::Model::Operation.new.tap do |o|
@@ -1458,12 +1611,44 @@ module Aws::Batch
         o.errors << Shapes::ShapeRef.new(shape: ServerException)
       end)
 
+      api.add_operation(:list_consumable_resources, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListConsumableResources"
+        o.http_method = "POST"
+        o.http_request_uri = "/v1/listconsumableresources"
+        o.input = Shapes::ShapeRef.new(shape: ListConsumableResourcesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListConsumableResourcesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ClientException)
+        o.errors << Shapes::ShapeRef.new(shape: ServerException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_jobs, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListJobs"
         o.http_method = "POST"
         o.http_request_uri = "/v1/listjobs"
         o.input = Shapes::ShapeRef.new(shape: ListJobsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListJobsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ClientException)
+        o.errors << Shapes::ShapeRef.new(shape: ServerException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_jobs_by_consumable_resource, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListJobsByConsumableResource"
+        o.http_method = "POST"
+        o.http_request_uri = "/v1/listjobsbyconsumableresource"
+        o.input = Shapes::ShapeRef.new(shape: ListJobsByConsumableResourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListJobsByConsumableResourceResponse)
         o.errors << Shapes::ShapeRef.new(shape: ClientException)
         o.errors << Shapes::ShapeRef.new(shape: ServerException)
         o[:pager] = Aws::Pager.new(
@@ -1556,6 +1741,16 @@ module Aws::Batch
         o.http_request_uri = "/v1/updatecomputeenvironment"
         o.input = Shapes::ShapeRef.new(shape: UpdateComputeEnvironmentRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateComputeEnvironmentResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ClientException)
+        o.errors << Shapes::ShapeRef.new(shape: ServerException)
+      end)
+
+      api.add_operation(:update_consumable_resource, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateConsumableResource"
+        o.http_method = "POST"
+        o.http_request_uri = "/v1/updateconsumableresource"
+        o.input = Shapes::ShapeRef.new(shape: UpdateConsumableResourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateConsumableResourceResponse)
         o.errors << Shapes::ShapeRef.new(shape: ClientException)
         o.errors << Shapes::ShapeRef.new(shape: ServerException)
       end)

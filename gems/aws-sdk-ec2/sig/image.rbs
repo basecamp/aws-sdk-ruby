@@ -170,8 +170,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Image.html#deregister-instance_method
       def deregister: (
                         ?dry_run: bool
-                      ) -> ::Aws::EmptyStructure
-                    | (?Hash[Symbol, untyped]) -> ::Aws::EmptyStructure
+                      ) -> Types::DeregisterImageResult
+                    | (?Hash[Symbol, untyped]) -> Types::DeregisterImageResult
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Image.html#describe_attribute-instance_method
       def describe_attribute: (

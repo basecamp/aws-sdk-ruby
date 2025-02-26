@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.111.0 (2025-02-26)
+------------------
+
+* Feature - AWS Batch: Resource Aware Scheduling feature support
+
 1.110.0 (2025-02-18)
 ------------------
 

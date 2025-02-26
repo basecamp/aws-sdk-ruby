@@ -5686,6 +5686,7 @@ module Aws
         def creation_time: () -> ::Time
         def last_modified_time: () -> ::Time
         def inference_component_status: () -> ("InService" | "Creating" | "Updating" | "Failed" | "Deleting")
+        def last_deployment_config: () -> Types::InferenceComponentDeploymentConfig
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SageMaker/Client.html#describe_inference_component-instance_method
       def describe_inference_component: (
@@ -9192,6 +9193,27 @@ module Aws
                                         },
                                         ?runtime_config: {
                                           copy_count: ::Integer
+                                        },
+                                        ?deployment_config: {
+                                          rolling_update_policy: {
+                                            maximum_batch_size: {
+                                              type: ("COPY_COUNT" | "CAPACITY_PERCENT"),
+                                              value: ::Integer
+                                            },
+                                            wait_interval_in_seconds: ::Integer,
+                                            maximum_execution_timeout_in_seconds: ::Integer?,
+                                            rollback_maximum_batch_size: {
+                                              type: ("COPY_COUNT" | "CAPACITY_PERCENT"),
+                                              value: ::Integer
+                                            }?
+                                          },
+                                          auto_rollback_configuration: {
+                                            alarms: Array[
+                                              {
+                                                alarm_name: ::String?
+                                              },
+                                            ]?
+                                          }?
                                         }
                                       ) -> _UpdateInferenceComponentResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateInferenceComponentResponseSuccess

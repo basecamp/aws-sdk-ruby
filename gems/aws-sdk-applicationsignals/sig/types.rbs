@@ -158,6 +158,8 @@ module Aws::ApplicationSignals
       attr_accessor operation_name: ::String
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
+      attr_accessor include_linked_accounts: bool
+      attr_accessor slo_owner_aws_account_id: ::String
       SENSITIVE: []
     end
 
@@ -189,6 +191,8 @@ module Aws::ApplicationSignals
       attr_accessor end_time: ::Time
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
+      attr_accessor include_linked_accounts: bool
+      attr_accessor aws_account_id: ::String
       SENSITIVE: []
     end
 
@@ -233,6 +237,7 @@ module Aws::ApplicationSignals
       attr_accessor metric_type: ::String
       attr_accessor dimensions: ::Array[Types::Dimension]
       attr_accessor metric_name: ::String
+      attr_accessor account_id: ::String
       SENSITIVE: []
     end
 

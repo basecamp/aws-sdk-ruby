@@ -864,7 +864,8 @@ module Aws
       def list_campaigns: (
                             ?next_token: ::String,
                             ?max_results: ::Integer,
-                            ?status: ::String
+                            ?status: ::String,
+                            ?list_response_scope: ("METADATA_ONLY")
                           ) -> _ListCampaignsResponseSuccess
                         | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListCampaignsResponseSuccess
 
@@ -903,7 +904,8 @@ module Aws
       def list_decoder_manifests: (
                                     ?model_manifest_arn: ::String,
                                     ?next_token: ::String,
-                                    ?max_results: ::Integer
+                                    ?max_results: ::Integer,
+                                    ?list_response_scope: ("METADATA_ONLY")
                                   ) -> _ListDecoderManifestsResponseSuccess
                                 | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDecoderManifestsResponseSuccess
 
@@ -915,7 +917,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoTFleetWise/Client.html#list_fleets-instance_method
       def list_fleets: (
                          ?next_token: ::String,
-                         ?max_results: ::Integer
+                         ?max_results: ::Integer,
+                         ?list_response_scope: ("METADATA_ONLY")
                        ) -> _ListFleetsResponseSuccess
                      | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListFleetsResponseSuccess
 
@@ -954,7 +957,8 @@ module Aws
       def list_model_manifests: (
                                   ?signal_catalog_arn: ::String,
                                   ?next_token: ::String,
-                                  ?max_results: ::Integer
+                                  ?max_results: ::Integer,
+                                  ?list_response_scope: ("METADATA_ONLY")
                                 ) -> _ListModelManifestsResponseSuccess
                               | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListModelManifestsResponseSuccess
 
@@ -992,7 +996,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoTFleetWise/Client.html#list_state_templates-instance_method
       def list_state_templates: (
                                   ?next_token: ::String,
-                                  ?max_results: ::Integer
+                                  ?max_results: ::Integer,
+                                  ?list_response_scope: ("METADATA_ONLY")
                                 ) -> _ListStateTemplatesResponseSuccess
                               | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListStateTemplatesResponseSuccess
 
@@ -1017,7 +1022,8 @@ module Aws
                            ?attribute_names: Array[::String],
                            ?attribute_values: Array[::String],
                            ?next_token: ::String,
-                           ?max_results: ::Integer
+                           ?max_results: ::Integer,
+                           ?list_response_scope: ("METADATA_ONLY")
                          ) -> _ListVehiclesResponseSuccess
                        | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListVehiclesResponseSuccess
 

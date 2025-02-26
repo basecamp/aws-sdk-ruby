@@ -145,6 +145,20 @@ module Aws
                                       ) -> _CreateComputeEnvironmentResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateComputeEnvironmentResponseSuccess
 
+      interface _CreateConsumableResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateConsumableResourceResponse]
+        def consumable_resource_name: () -> ::String
+        def consumable_resource_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Batch/Client.html#create_consumable_resource-instance_method
+      def create_consumable_resource: (
+                                        consumable_resource_name: ::String,
+                                        ?total_quantity: ::Integer,
+                                        ?resource_type: ::String,
+                                        ?tags: Hash[::String, ::String]
+                                      ) -> _CreateConsumableResourceResponseSuccess
+                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateConsumableResourceResponseSuccess
+
       interface _CreateJobQueueResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateJobQueueResponse]
         def job_queue_name: () -> ::String
@@ -205,6 +219,15 @@ module Aws
                                       ) -> _DeleteComputeEnvironmentResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteComputeEnvironmentResponseSuccess
 
+      interface _DeleteConsumableResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteConsumableResourceResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Batch/Client.html#delete_consumable_resource-instance_method
+      def delete_consumable_resource: (
+                                        consumable_resource: ::String
+                                      ) -> _DeleteConsumableResourceResponseSuccess
+                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteConsumableResourceResponseSuccess
+
       interface _DeleteJobQueueResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteJobQueueResponse]
       end
@@ -244,6 +267,23 @@ module Aws
                                            ?next_token: ::String
                                          ) -> _DescribeComputeEnvironmentsResponseSuccess
                                        | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeComputeEnvironmentsResponseSuccess
+
+      interface _DescribeConsumableResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeConsumableResourceResponse]
+        def consumable_resource_name: () -> ::String
+        def consumable_resource_arn: () -> ::String
+        def total_quantity: () -> ::Integer
+        def in_use_quantity: () -> ::Integer
+        def available_quantity: () -> ::Integer
+        def resource_type: () -> ::String
+        def created_at: () -> ::Integer
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Batch/Client.html#describe_consumable_resource-instance_method
+      def describe_consumable_resource: (
+                                          consumable_resource: ::String
+                                        ) -> _DescribeConsumableResourceResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeConsumableResourceResponseSuccess
 
       interface _DescribeJobDefinitionsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeJobDefinitionsResponse]
@@ -303,6 +343,24 @@ module Aws
                                   ) -> _GetJobQueueSnapshotResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetJobQueueSnapshotResponseSuccess
 
+      interface _ListConsumableResourcesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListConsumableResourcesResponse]
+        def consumable_resources: () -> ::Array[Types::ConsumableResourceSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Batch/Client.html#list_consumable_resources-instance_method
+      def list_consumable_resources: (
+                                       ?filters: Array[
+                                         {
+                                           name: ::String?,
+                                           values: Array[::String]?
+                                         },
+                                       ],
+                                       ?max_results: ::Integer,
+                                       ?next_token: ::String
+                                     ) -> _ListConsumableResourcesResponseSuccess
+                                   | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListConsumableResourcesResponseSuccess
+
       interface _ListJobsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListJobsResponse]
         def job_summary_list: () -> ::Array[Types::JobSummary]
@@ -324,6 +382,25 @@ module Aws
                        ]
                      ) -> _ListJobsResponseSuccess
                    | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListJobsResponseSuccess
+
+      interface _ListJobsByConsumableResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListJobsByConsumableResourceResponse]
+        def jobs: () -> ::Array[Types::ListJobsByConsumableResourceSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Batch/Client.html#list_jobs_by_consumable_resource-instance_method
+      def list_jobs_by_consumable_resource: (
+                                              consumable_resource: ::String,
+                                              ?filters: Array[
+                                                {
+                                                  name: ::String?,
+                                                  values: Array[::String]?
+                                                },
+                                              ],
+                                              ?max_results: ::Integer,
+                                              ?next_token: ::String
+                                            ) -> _ListJobsByConsumableResourceResponseSuccess
+                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListJobsByConsumableResourceResponseSuccess
 
       interface _ListSchedulingPoliciesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListSchedulingPoliciesResponse]
@@ -810,6 +887,14 @@ module Aws
                                                }?,
                                                share_process_namespace: bool?
                                              }?
+                                           }?,
+                                           consumable_resource_properties: {
+                                             consumable_resource_list: Array[
+                                               {
+                                                 consumable_resource: ::String?,
+                                                 quantity: ::Integer?
+                                               },
+                                             ]?
                                            }?
                                          },
                                        ]
@@ -1059,6 +1144,14 @@ module Aws
                                            ]?
                                          },
                                        ]
+                                     },
+                                     ?consumable_resource_properties: {
+                                       consumable_resource_list: Array[
+                                         {
+                                           consumable_resource: ::String?,
+                                           quantity: ::Integer?
+                                         },
+                                       ]?
                                      }
                                    ) -> _RegisterJobDefinitionResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RegisterJobDefinitionResponseSuccess
@@ -1196,6 +1289,14 @@ module Aws
                                     namespace: ::String?
                                   }?
                                 }?
+                              }?,
+                              consumable_resource_properties_override: {
+                                consumable_resource_list: Array[
+                                  {
+                                    consumable_resource: ::String?,
+                                    quantity: ::Integer?
+                                  },
+                                ]?
                               }?
                             },
                           ]?
@@ -1282,6 +1383,14 @@ module Aws
                                   ]?
                                 },
                               ]?
+                            },
+                          ]?
+                        },
+                        ?consumable_resource_properties_override: {
+                          consumable_resource_list: Array[
+                            {
+                              consumable_resource: ::String?,
+                              quantity: ::Integer?
                             },
                           ]?
                         }
@@ -1373,6 +1482,21 @@ module Aws
                                         ?context: ::String
                                       ) -> _UpdateComputeEnvironmentResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateComputeEnvironmentResponseSuccess
+
+      interface _UpdateConsumableResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateConsumableResourceResponse]
+        def consumable_resource_name: () -> ::String
+        def consumable_resource_arn: () -> ::String
+        def total_quantity: () -> ::Integer
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Batch/Client.html#update_consumable_resource-instance_method
+      def update_consumable_resource: (
+                                        consumable_resource: ::String,
+                                        ?operation: ::String,
+                                        ?quantity: ::Integer,
+                                        ?client_token: ::String
+                                      ) -> _UpdateConsumableResourceResponseSuccess
+                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateConsumableResourceResponseSuccess
 
       interface _UpdateJobQueueResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateJobQueueResponse]

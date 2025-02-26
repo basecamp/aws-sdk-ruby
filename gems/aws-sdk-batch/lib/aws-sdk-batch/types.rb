@@ -1327,6 +1327,78 @@ module Aws::Batch
       include Aws::Structure
     end
 
+    # Contains a list of consumable resources required by a job.
+    #
+    # @!attribute [rw] consumable_resource_list
+    #   The list of consumable resources required by a job.
+    #   @return [Array<Types::ConsumableResourceRequirement>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ConsumableResourceProperties AWS API Documentation
+    #
+    class ConsumableResourceProperties < Struct.new(
+      :consumable_resource_list)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Information about a consumable resource required to run a job.
+    #
+    # @!attribute [rw] consumable_resource
+    #   The name or ARN of the consumable resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] quantity
+    #   The quantity of the consumable resource that is needed.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ConsumableResourceRequirement AWS API Documentation
+    #
+    class ConsumableResourceRequirement < Struct.new(
+      :consumable_resource,
+      :quantity)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Current information about a consumable resource.
+    #
+    # @!attribute [rw] consumable_resource_arn
+    #   The Amazon Resource Name (ARN) of the consumable resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] consumable_resource_name
+    #   The name of the consumable resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] total_quantity
+    #   The total amount of the consumable resource that is available.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] in_use_quantity
+    #   The amount of the consumable resource that is currently in use.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] resource_type
+    #   Indicates whether the resource is available to be re-used after a
+    #   job completes. Can be one of:
+    #
+    #   * `REPLENISHABLE`
+    #
+    #   * `NON_REPLENISHABLE`
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ConsumableResourceSummary AWS API Documentation
+    #
+    class ConsumableResourceSummary < Struct.new(
+      :consumable_resource_arn,
+      :consumable_resource_name,
+      :total_quantity,
+      :in_use_quantity,
+      :resource_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # An object that represents the details of a container that's part of a
     # job.
     #
@@ -2141,9 +2213,9 @@ module Aws::Batch
     #
     # @!attribute [rw] unmanagedv_cpus
     #   The maximum number of vCPUs for an unmanaged compute environment.
-    #   This parameter is only used for fair-share scheduling to reserve
+    #   This parameter is only used for fair share scheduling to reserve
     #   vCPU capacity for new share identifiers. If this parameter isn't
-    #   provided for a fair-share job queue, no vCPU capacity is reserved.
+    #   provided for a fair share job queue, no vCPU capacity is reserved.
     #
     #   <note markdown="1"> This parameter is only supported when the `type` parameter is set to
     #   `UNMANAGED`.
@@ -2258,6 +2330,63 @@ module Aws::Batch
       include Aws::Structure
     end
 
+    # @!attribute [rw] consumable_resource_name
+    #   The name of the consumable resource. Must be unique.
+    #   @return [String]
+    #
+    # @!attribute [rw] total_quantity
+    #   The total amount of the consumable resource that is available. Must
+    #   be non-negative.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] resource_type
+    #   Indicates whether the resource is available to be re-used after a
+    #   job completes. Can be one of:
+    #
+    #   * `REPLENISHABLE` (default)
+    #
+    #   * `NON_REPLENISHABLE`
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The tags that you apply to the consumable resource to help you
+    #   categorize and organize your resources. Each tag consists of a key
+    #   and an optional value. For more information, see [Tagging your Batch
+    #   resources][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/batch/latest/userguide/using-tags.html
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/CreateConsumableResourceRequest AWS API Documentation
+    #
+    class CreateConsumableResourceRequest < Struct.new(
+      :consumable_resource_name,
+      :total_quantity,
+      :resource_type,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] consumable_resource_name
+    #   The name of the consumable resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] consumable_resource_arn
+    #   The Amazon Resource Name (ARN) of the consumable resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/CreateConsumableResourceResponse AWS API Documentation
+    #
+    class CreateConsumableResourceResponse < Struct.new(
+      :consumable_resource_name,
+      :consumable_resource_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains the parameters for `CreateJobQueue`.
     #
     # @!attribute [rw] job_queue_name
@@ -2274,11 +2403,10 @@ module Aws::Batch
     #   @return [String]
     #
     # @!attribute [rw] scheduling_policy_arn
-    #   The Amazon Resource Name (ARN) of the fair-share scheduling policy.
-    #   Job queues that don't have a fair-share scheduling policy are
-    #   scheduled in a first-in, first-out (FIFO) model. After a job queue
-    #   has a fair-share scheduling policy, it can be replaced but can't be
-    #   removed.
+    #   The Amazon Resource Name (ARN) of the fair share scheduling policy.
+    #   Job queues that don't have a scheduling policy are scheduled in a
+    #   first-in, first-out (FIFO) model. After a job queue has a scheduling
+    #   policy, it can be replaced but can't be removed.
     #
     #   The format is
     #   `aws:Partition:batch:Region:Account:scheduling-policy/Name `.
@@ -2286,11 +2414,11 @@ module Aws::Batch
     #   An example is
     #   `aws:aws:batch:us-west-2:123456789012:scheduling-policy/MySchedulingPolicy`.
     #
-    #   A job queue without a fair-share scheduling policy is scheduled as a
-    #   FIFO job queue and can't have a fair-share scheduling policy added.
-    #   Jobs queues with a fair-share scheduling policy can have a maximum
-    #   of 500 active share identifiers. When the limit has been reached,
-    #   submissions of any jobs that add a new share identifier fail.
+    #   A job queue without a scheduling policy is scheduled as a FIFO job
+    #   queue and can't have a scheduling policy added. Jobs queues with a
+    #   scheduling policy can have a maximum of 500 active fair share
+    #   identifiers. When the limit has been reached, submissions of any
+    #   jobs that add a new fair share identifier fail.
     #   @return [String]
     #
     # @!attribute [rw] priority
@@ -2376,13 +2504,13 @@ module Aws::Batch
     # Contains the parameters for `CreateSchedulingPolicy`.
     #
     # @!attribute [rw] name
-    #   The name of the fair-share scheduling policy. It can be up to 128
-    #   letters long. It can contain uppercase and lowercase letters,
-    #   numbers, hyphens (-), and underscores (\_).
+    #   The name of the scheduling policy. It can be up to 128 letters long.
+    #   It can contain uppercase and lowercase letters, numbers, hyphens
+    #   (-), and underscores (\_).
     #   @return [String]
     #
     # @!attribute [rw] fairshare_policy
-    #   The fair-share scheduling policy details.
+    #   The fair share policy of the scheduling policy.
     #   @return [Types::FairsharePolicy]
     #
     # @!attribute [rw] tags
@@ -2449,6 +2577,22 @@ module Aws::Batch
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/DeleteComputeEnvironmentResponse AWS API Documentation
     #
     class DeleteComputeEnvironmentResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] consumable_resource
+    #   The name or ARN of the consumable resource that will be deleted.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/DeleteConsumableResourceRequest AWS API Documentation
+    #
+    class DeleteConsumableResourceRequest < Struct.new(
+      :consumable_resource)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/DeleteConsumableResourceResponse AWS API Documentation
+    #
+    class DeleteConsumableResourceResponse < Aws::EmptyStructure; end
 
     # Contains the parameters for `DeleteJobQueue`.
     #
@@ -2566,6 +2710,80 @@ module Aws::Batch
     class DescribeComputeEnvironmentsResponse < Struct.new(
       :compute_environments,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] consumable_resource
+    #   The name or ARN of the consumable resource whose description will be
+    #   returned.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/DescribeConsumableResourceRequest AWS API Documentation
+    #
+    class DescribeConsumableResourceRequest < Struct.new(
+      :consumable_resource)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] consumable_resource_name
+    #   The name of the consumable resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] consumable_resource_arn
+    #   The Amazon Resource Name (ARN) of the consumable resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] total_quantity
+    #   The total amount of the consumable resource that is available.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] in_use_quantity
+    #   The amount of the consumable resource that is currently in use.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] available_quantity
+    #   The amount of the consumable resource that is currently available to
+    #   use.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] resource_type
+    #   Indicates whether the resource is available to be re-used after a
+    #   job completes. Can be one of:
+    #
+    #   * `REPLENISHABLE`
+    #
+    #   * `NON_REPLENISHABLE`
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The Unix timestamp (in milliseconds) for when the consumable
+    #   resource was created.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] tags
+    #   The tags that you apply to the consumable resource to help you
+    #   categorize and organize your resources. Each tag consists of a key
+    #   and an optional value. For more information, see [Tagging your Batch
+    #   resources][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/batch/latest/userguide/using-tags.html
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/DescribeConsumableResourceResponse AWS API Documentation
+    #
+    class DescribeConsumableResourceResponse < Struct.new(
+      :consumable_resource_name,
+      :consumable_resource_arn,
+      :total_quantity,
+      :in_use_quantity,
+      :available_quantity,
+      :resource_type,
+      :created_at,
+      :tags)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4450,7 +4668,7 @@ module Aws::Batch
     #
     # @!attribute [rw] init_containers
     #   The overrides for the `initContainers` defined in the Amazon EKS
-    #   pod. These containers run before application containers, always run
+    #   pod. These containers run before application containers, always runs
     #   to completion, and must complete successfully before the next
     #   container starts. These containers are registered with the Amazon
     #   EKS Connector agent and persists the registration information in the
@@ -4683,13 +4901,13 @@ module Aws::Batch
       include Aws::Structure
     end
 
-    # The fair-share scheduling policy details.
+    # The fair share policy for a scheduling policy.
     #
     # @!attribute [rw] share_decay_seconds
-    #   The amount of time (in seconds) to use to calculate a fair-share
-    #   percentage for each share identifier in use. A value of zero (0)
-    #   indicates the default minimum time window (600 seconds). The maximum
-    #   supported value is 604800 (1 week).
+    #   The amount of time (in seconds) to use to calculate a fair share
+    #   percentage for each fair share identifier in use. A value of zero
+    #   (0) indicates the default minimum time window (600 seconds). The
+    #   maximum supported value is 604800 (1 week).
     #
     #   The decay allows for more recently run jobs to have more weight than
     #   jobs that ran earlier. Consider adjusting this number if you have
@@ -4699,29 +4917,29 @@ module Aws::Batch
     #   @return [Integer]
     #
     # @!attribute [rw] compute_reservation
-    #   A value used to reserve some of the available maximum vCPU for share
-    #   identifiers that aren't already used.
+    #   A value used to reserve some of the available maximum vCPU for fair
+    #   share identifiers that aren't already used.
     #
     #   The reserved ratio is `(computeReservation/100)^ActiveFairShares `
-    #   where ` ActiveFairShares ` is the number of active share
+    #   where ` ActiveFairShares ` is the number of active fair share
     #   identifiers.
     #
     #   For example, a `computeReservation` value of 50 indicates that Batch
-    #   reserves 50% of the maximum available vCPU if there's only one
-    #   share identifier. It reserves 25% if there are two share
-    #   identifiers. It reserves 12.5% if there are three share identifiers.
-    #   A `computeReservation` value of 25 indicates that Batch should
-    #   reserve 25% of the maximum available vCPU if there's only one share
-    #   identifier, 6.25% if there are two fair share identifiers, and 1.56%
-    #   if there are three share identifiers.
+    #   reserves 50% of the maximum available vCPU if there's only one fair
+    #   share identifier. It reserves 25% if there are two fair share
+    #   identifiers. It reserves 12.5% if there are three fair share
+    #   identifiers. A `computeReservation` value of 25 indicates that Batch
+    #   should reserve 25% of the maximum available vCPU if there's only
+    #   one fair share identifier, 6.25% if there are two fair share
+    #   identifiers, and 1.56% if there are three fair share identifiers.
     #
     #   The minimum value is 0 and the maximum value is 99.
     #   @return [Integer]
     #
     # @!attribute [rw] share_distribution
     #   An array of `SharedIdentifier` objects that contain the weights for
-    #   the share identifiers for the fair-share policy. Share identifiers
-    #   that aren't included have a default weight of `1.0`.
+    #   the fair share identifiers for the fair share policy. Fair share
+    #   identifiers that aren't included have a default weight of `1.0`.
     #   @return [Array<Types::ShareAttributes>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/FairsharePolicy AWS API Documentation
@@ -4766,7 +4984,7 @@ module Aws::Batch
     # @!attribute [rw] jobs
     #   The Amazon Resource Names (ARNs) of the first 100 `RUNNABLE` jobs in
     #   a named job queue. For first-in-first-out (FIFO) job queues, jobs
-    #   are ordered based on their submission time. For fair-share
+    #   are ordered based on their submission time. For fair share
     #   scheduling (FSS) job queues, jobs are ordered based on their job
     #   priority and share usage.
     #   @return [Array<Types::FrontOfQueueJobSummary>]
@@ -4821,7 +5039,7 @@ module Aws::Batch
     # @!attribute [rw] front_of_queue
     #   The list of the first 100 `RUNNABLE` jobs in each job queue. For
     #   first-in-first-out (FIFO) job queues, jobs are ordered based on
-    #   their submission time. For fair-share scheduling (FSS) job queues,
+    #   their submission time. For fair share scheduling (FSS) job queues,
     #   jobs are ordered based on their job priority and share usage.
     #   @return [Types::FrontOfQueueDetail]
     #
@@ -4913,7 +5131,7 @@ module Aws::Batch
     #
     # @!attribute [rw] scheduling_priority
     #   The scheduling priority of the job definition. This only affects
-    #   jobs in job queues with a fair-share policy. Jobs with a higher
+    #   jobs in job queues with a fair share policy. Jobs with a higher
     #   scheduling priority are scheduled before jobs with a lower
     #   scheduling priority.
     #   @return [Integer]
@@ -5000,6 +5218,10 @@ module Aws::Batch
     #   are `ECS` (default) or `EKS`.
     #   @return [String]
     #
+    # @!attribute [rw] consumable_resource_properties
+    #   Contains a list of consumable resources required by the job.
+    #   @return [Types::ConsumableResourceProperties]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/JobDefinition AWS API Documentation
     #
     class JobDefinition < Struct.new(
@@ -5019,7 +5241,8 @@ module Aws::Batch
       :platform_capabilities,
       :ecs_properties,
       :eks_properties,
-      :container_orchestration_type)
+      :container_orchestration_type,
+      :consumable_resource_properties)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5082,7 +5305,7 @@ module Aws::Batch
     #
     # @!attribute [rw] scheduling_priority
     #   The scheduling policy of the job definition. This only affects jobs
-    #   in job queues with a fair-share policy. Jobs with a higher
+    #   in job queues with a fair share policy. Jobs with a higher
     #   scheduling priority are scheduled before jobs with a lower
     #   scheduling priority.
     #   @return [Integer]
@@ -5225,6 +5448,10 @@ module Aws::Batch
     #   Indicates whether the job is terminated.
     #   @return [Boolean]
     #
+    # @!attribute [rw] consumable_resource_properties
+    #   Contains a list of consumable resources required by the job.
+    #   @return [Types::ConsumableResourceProperties]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/JobDetail AWS API Documentation
     #
     class JobDetail < Struct.new(
@@ -5256,7 +5483,8 @@ module Aws::Batch
       :eks_attempts,
       :ecs_properties,
       :is_cancelled,
-      :is_terminated)
+      :is_terminated,
+      :consumable_resource_properties)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5535,7 +5763,8 @@ module Aws::Batch
     end
 
     # A filter name and value pair that's used to return a more specific
-    # list of results from a `ListJobs` API operation.
+    # list of results from a `ListJobs` or `ListJobsByConsumableResource`
+    # API operation.
     #
     # @!attribute [rw] name
     #   The name of the filter. Filter names are case sensitive.
@@ -5823,7 +6052,7 @@ module Aws::Batch
     #   If a `maxSwap` value of `0` is specified, the container doesn't use
     #   swap. Accepted values are `0` or any positive integer. If the
     #   `maxSwap` parameter is omitted, the container doesn't use the swap
-    #   configuration for the container instance on which it runs. A
+    #   configuration for the container instance that it's running on. A
     #   `maxSwap` value must be set for the `swappiness` parameter to be
     #   used.
     #
@@ -5894,6 +6123,240 @@ module Aws::Batch
       :tmpfs,
       :max_swap,
       :swappiness)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] filters
+    #   The filters to apply to the consumable resource list query. If used,
+    #   only those consumable resources that match the filter are listed.
+    #   Filter names and values can be:
+    #
+    #   * name: `CONSUMABLE_RESOURCE_NAME `
+    #
+    #     values: case-insensitive matches for the consumable resource name.
+    #     If a filter value ends with an asterisk (*), it matches any
+    #     consumable resource name that begins with the string before the
+    #     '*'.
+    #   @return [Array<Types::KeyValuesPair>]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results returned by `ListConsumableResources`
+    #   in paginated output. When this parameter is used,
+    #   `ListConsumableResources` only returns `maxResults` results in a
+    #   single page and a `nextToken` response element. The remaining
+    #   results of the initial request can be seen by sending another
+    #   `ListConsumableResources` request with the returned `nextToken`
+    #   value. This value can be between 1 and 100. If this parameter isn't
+    #   used, then `ListConsumableResources` returns up to 100 results and a
+    #   `nextToken` value if applicable.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   The `nextToken` value returned from a previous paginated
+    #   `ListConsumableResources` request where `maxResults` was used and
+    #   the results exceeded the value of that parameter. Pagination
+    #   continues from the end of the previous results that returned the
+    #   `nextToken` value. This value is `null` when there are no more
+    #   results to return.
+    #
+    #   <note markdown="1"> Treat this token as an opaque identifier that's only used to
+    #   retrieve the next items in a list and not for other programmatic
+    #   purposes.
+    #
+    #    </note>
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ListConsumableResourcesRequest AWS API Documentation
+    #
+    class ListConsumableResourcesRequest < Struct.new(
+      :filters,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] consumable_resources
+    #   A list of consumable resources that match the request.
+    #   @return [Array<Types::ConsumableResourceSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   The `nextToken` value to include in a future
+    #   `ListConsumableResources` request. When the results of a
+    #   `ListConsumableResources` request exceed `maxResults`, this value
+    #   can be used to retrieve the next page of results. This value is
+    #   `null` when there are no more results to return.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ListConsumableResourcesResponse AWS API Documentation
+    #
+    class ListConsumableResourcesResponse < Struct.new(
+      :consumable_resources,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] consumable_resource
+    #   The name or ARN of the consumable resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] filters
+    #   The filters to apply to the job list query. If used, only those jobs
+    #   requiring the specified consumable resource (`consumableResource`)
+    #   and that match the value of the filters are listed. The filter names
+    #   and values can be:
+    #
+    #   * name: `JOB_STATUS`
+    #
+    #     values: `SUBMITTED | PENDING | RUNNABLE | STARTING | RUNNING |
+    #     SUCCEEDED | FAILED`
+    #
+    #   * name: `JOB_NAME `
+    #
+    #     The values are case-insensitive matches for the job name. If a
+    #     filter value ends with an asterisk (*), it matches any job name
+    #     that begins with the string before the '*'.
+    #   @return [Array<Types::KeyValuesPair>]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results returned by
+    #   `ListJobsByConsumableResource` in paginated output. When this
+    #   parameter is used, `ListJobsByConsumableResource` only returns
+    #   `maxResults` results in a single page and a `nextToken` response
+    #   element. The remaining results of the initial request can be seen by
+    #   sending another `ListJobsByConsumableResource` request with the
+    #   returned `nextToken` value. This value can be between 1 and 100. If
+    #   this parameter isn't used, then `ListJobsByConsumableResource`
+    #   returns up to 100 results and a `nextToken` value if applicable.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   The `nextToken` value returned from a previous paginated
+    #   `ListJobsByConsumableResource` request where `maxResults` was used
+    #   and the results exceeded the value of that parameter. Pagination
+    #   continues from the end of the previous results that returned the
+    #   `nextToken` value. This value is `null` when there are no more
+    #   results to return.
+    #
+    #   <note markdown="1"> Treat this token as an opaque identifier that's only used to
+    #   retrieve the next items in a list and not for other programmatic
+    #   purposes.
+    #
+    #    </note>
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ListJobsByConsumableResourceRequest AWS API Documentation
+    #
+    class ListJobsByConsumableResourceRequest < Struct.new(
+      :consumable_resource,
+      :filters,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] jobs
+    #   The list of jobs that require the specified consumable resources.
+    #   @return [Array<Types::ListJobsByConsumableResourceSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   The `nextToken` value to include in a future
+    #   `ListJobsByConsumableResource` request. When the results of a
+    #   `ListJobsByConsumableResource` request exceed `maxResults`, this
+    #   value can be used to retrieve the next page of results. This value
+    #   is `null` when there are no more results to return.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ListJobsByConsumableResourceResponse AWS API Documentation
+    #
+    class ListJobsByConsumableResourceResponse < Struct.new(
+      :jobs,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Current information about a consumable resource required by a job.
+    #
+    # @!attribute [rw] job_arn
+    #   The Amazon Resource Name (ARN) of the job.
+    #   @return [String]
+    #
+    # @!attribute [rw] job_queue_arn
+    #   The Amazon Resource Name (ARN) of the job queue.
+    #   @return [String]
+    #
+    # @!attribute [rw] job_name
+    #   The name of the job.
+    #   @return [String]
+    #
+    # @!attribute [rw] job_definition_arn
+    #   The Amazon Resource Name (ARN) of the job definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] share_identifier
+    #   The fair-share scheduling policy identifier for the job.
+    #   @return [String]
+    #
+    # @!attribute [rw] job_status
+    #   The status of the job. Can be one of:
+    #
+    #   * `SUBMITTED`
+    #
+    #   * `PENDING`
+    #
+    #   * `RUNNABLE`
+    #
+    #   * `STARTING`
+    #
+    #   * `RUNNING`
+    #
+    #   * `SUCCEEDED`
+    #
+    #   * `FAILED`
+    #   @return [String]
+    #
+    # @!attribute [rw] quantity
+    #   The total amount of the consumable resource that is available.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] status_reason
+    #   A short, human-readable string to provide more details for the
+    #   current status of the job.
+    #   @return [String]
+    #
+    # @!attribute [rw] started_at
+    #   The Unix timestamp for when the job was started. More specifically,
+    #   it's when the job transitioned from the `STARTING` state to the
+    #   `RUNNING` state.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] created_at
+    #   The Unix timestamp (in milliseconds) for when the consumable
+    #   resource was created.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] consumable_resource_properties
+    #   Contains a list of consumable resources required by the job.
+    #   @return [Types::ConsumableResourceProperties]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ListJobsByConsumableResourceSummary AWS API Documentation
+    #
+    class ListJobsByConsumableResourceSummary < Struct.new(
+      :job_arn,
+      :job_queue_arn,
+      :job_name,
+      :job_definition_arn,
+      :share_identifier,
+      :job_status,
+      :quantity,
+      :status_reason,
+      :started_at,
+      :created_at,
+      :consumable_resource_properties)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6493,6 +6956,11 @@ module Aws::Batch
     #   the existing Amazon EKS resources of a job.
     #   @return [Types::EksPropertiesOverride]
     #
+    # @!attribute [rw] consumable_resource_properties_override
+    #   An object that contains overrides for the consumable resources of a
+    #   job.
+    #   @return [Types::ConsumableResourceProperties]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/NodePropertyOverride AWS API Documentation
     #
     class NodePropertyOverride < Struct.new(
@@ -6500,7 +6968,8 @@ module Aws::Batch
       :container_overrides,
       :ecs_properties_override,
       :instance_types,
-      :eks_properties_override)
+      :eks_properties_override,
+      :consumable_resource_properties_override)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6545,6 +7014,10 @@ module Aws::Batch
     #   for a multi-node parallel job.
     #   @return [Types::EksProperties]
     #
+    # @!attribute [rw] consumable_resource_properties
+    #   Contains a list of consumable resources required by a job.
+    #   @return [Types::ConsumableResourceProperties]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/NodeRangeProperty AWS API Documentation
     #
     class NodeRangeProperty < Struct.new(
@@ -6552,7 +7025,8 @@ module Aws::Batch
       :container,
       :instance_types,
       :ecs_properties,
-      :eks_properties)
+      :eks_properties,
+      :consumable_resource_properties)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6595,7 +7069,7 @@ module Aws::Batch
     #
     # @!attribute [rw] scheduling_priority
     #   The scheduling priority for jobs that are submitted with this job
-    #   definition. This only affects jobs in job queues with a fair-share
+    #   definition. This only affects jobs in job queues with a fair share
     #   policy. Jobs with a higher scheduling priority are scheduled before
     #   jobs with a lower scheduling priority.
     #
@@ -6707,6 +7181,10 @@ module Aws::Batch
     #   definitions.
     #   @return [Types::EcsProperties]
     #
+    # @!attribute [rw] consumable_resource_properties
+    #   Contains a list of consumable resources required by the job.
+    #   @return [Types::ConsumableResourceProperties]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/RegisterJobDefinitionRequest AWS API Documentation
     #
     class RegisterJobDefinitionRequest < Struct.new(
@@ -6722,7 +7200,8 @@ module Aws::Batch
       :tags,
       :platform_capabilities,
       :eks_properties,
-      :ecs_properties)
+      :ecs_properties,
+      :consumable_resource_properties)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7034,7 +7513,7 @@ module Aws::Batch
     # An object that represents a scheduling policy.
     #
     # @!attribute [rw] name
-    #   The name of the fair-share scheduling policy.
+    #   The name of the scheduling policy.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -7045,14 +7524,14 @@ module Aws::Batch
     #   @return [String]
     #
     # @!attribute [rw] fairshare_policy
-    #   The fair-share scheduling policy details.
+    #   The fair share policy for the scheduling policy.
     #   @return [Types::FairsharePolicy]
     #
     # @!attribute [rw] tags
-    #   The tags that you apply to the fair-share scheduling policy to
-    #   categorize and organize your resources. Each tag consists of a key
-    #   and an optional value. For more information, see [Tagging Amazon Web
-    #   Services resources][1] in *Amazon Web Services General Reference*.
+    #   The tags that you apply to the scheduling policy to categorize and
+    #   organize your resources. Each tag consists of a key and an optional
+    #   value. For more information, see [Tagging Amazon Web Services
+    #   resources][1] in *Amazon Web Services General Reference*.
     #
     #
     #
@@ -7142,19 +7621,20 @@ module Aws::Batch
       include Aws::Structure
     end
 
-    # Specifies the weights for the share identifiers for the fair-share
-    # policy. Share identifiers that aren't included have a default weight
-    # of `1.0`.
+    # Specifies the weights for the fair share identifiers for the fair
+    # share policy. Fair share identifiers that aren't included have a
+    # default weight of `1.0`.
     #
     # @!attribute [rw] share_identifier
-    #   A share identifier or share identifier prefix. If the string ends
-    #   with an asterisk (*), this entry specifies the weight factor to use
-    #   for share identifiers that start with that prefix. The list of share
-    #   identifiers in a fair-share policy can't overlap. For example, you
-    #   can't have one that specifies a `shareIdentifier` of `UserA*` and
-    #   another that specifies a `shareIdentifier` of `UserA-1`.
+    #   A fair share identifier or fair share identifier prefix. If the
+    #   string ends with an asterisk (*), this entry specifies the weight
+    #   factor to use for fair share identifiers that start with that
+    #   prefix. The list of fair share identifiers in a fair share policy
+    #   can't overlap. For example, you can't have one that specifies a
+    #   `shareIdentifier` of `UserA*` and another that specifies a
+    #   `shareIdentifier` of `UserA-1`.
     #
-    #   There can be no more than 500 share identifiers active in a job
+    #   There can be no more than 500 fair share identifiers active in a job
     #   queue.
     #
     #   The string is limited to 255 alphanumeric characters, and can be
@@ -7162,10 +7642,10 @@ module Aws::Batch
     #   @return [String]
     #
     # @!attribute [rw] weight_factor
-    #   The weight factor for the share identifier. The default value is
-    #   1.0. A lower value has a higher priority for compute resources. For
-    #   example, jobs that use a share identifier with a weight factor of
-    #   0.125 (1/8) get 8 times the compute resources of jobs that use a
+    #   The weight factor for the fair share identifier. The default value
+    #   is 1.0. A lower value has a higher priority for compute resources.
+    #   For example, jobs that use a share identifier with a weight factor
+    #   of 0.125 (1/8) get 8 times the compute resources of jobs that use a
     #   share identifier with a weight factor of 1.
     #
     #   The smallest supported value is 0.0001, and the largest supported
@@ -7196,9 +7676,8 @@ module Aws::Batch
     #
     # @!attribute [rw] share_identifier
     #   The share identifier for the job. Don't specify this parameter if
-    #   the job queue doesn't have a fair-share scheduling policy. If the
-    #   job queue has a fair-share scheduling policy, then this parameter
-    #   must be specified.
+    #   the job queue doesn't have a scheduling policy. If the job queue
+    #   has a scheduling policy, then this parameter must be specified.
     #
     #   This string is limited to 255 alphanumeric characters, and can be
     #   followed by an asterisk (*).
@@ -7206,7 +7685,7 @@ module Aws::Batch
     #
     # @!attribute [rw] scheduling_priority_override
     #   The scheduling priority for the job. This only affects jobs in job
-    #   queues with a fair-share policy. Jobs with a higher scheduling
+    #   queues with a fair share policy. Jobs with a higher scheduling
     #   priority are scheduled before jobs with a lower scheduling priority.
     #   This overrides any scheduling priority in the job definition and
     #   works only within a single share identifier.
@@ -7333,6 +7812,11 @@ module Aws::Batch
     #   ECS resources.
     #   @return [Types::EcsPropertiesOverride]
     #
+    # @!attribute [rw] consumable_resource_properties_override
+    #   An object that contains overrides for the consumable resources of a
+    #   job.
+    #   @return [Types::ConsumableResourceProperties]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/SubmitJobRequest AWS API Documentation
     #
     class SubmitJobRequest < Struct.new(
@@ -7351,7 +7835,8 @@ module Aws::Batch
       :timeout,
       :tags,
       :eks_properties_override,
-      :ecs_properties_override)
+      :ecs_properties_override,
+      :consumable_resource_properties_override)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -8317,9 +8802,9 @@ module Aws::Batch
     # @!attribute [rw] unmanagedv_cpus
     #   The maximum number of vCPUs expected to be used for an unmanaged
     #   compute environment. Don't specify this parameter for a managed
-    #   compute environment. This parameter is only used for fair-share
+    #   compute environment. This parameter is only used for fair share
     #   scheduling to reserve vCPU capacity for new share identifiers. If
-    #   this parameter isn't provided for a fair-share job queue, no vCPU
+    #   this parameter isn't provided for a fair share job queue, no vCPU
     #   capacity is reserved.
     #   @return [Integer]
     #
@@ -8414,6 +8899,81 @@ module Aws::Batch
       include Aws::Structure
     end
 
+    # @!attribute [rw] consumable_resource
+    #   The name or ARN of the consumable resource to be updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] operation
+    #   Indicates how the quantity of the consumable resource will be
+    #   updated. Must be one of:
+    #
+    #   * `SET`
+    #
+    #     Sets the quantity of the resource to the value specified by the
+    #     `quantity` parameter.
+    #
+    #   * `ADD`
+    #
+    #     Increases the quantity of the resource by the value specified by
+    #     the `quantity` parameter.
+    #
+    #   * `REMOVE`
+    #
+    #     Reduces the quantity of the resource by the value specified by the
+    #     `quantity` parameter.
+    #   @return [String]
+    #
+    # @!attribute [rw] quantity
+    #   The change in the total quantity of the consumable resource. The
+    #   `operation` parameter determines whether the value specified here
+    #   will be the new total quantity, or the amount by which the total
+    #   quantity will be increased or reduced. Must be a non-negative value.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] client_token
+    #   If this parameter is specified and two update requests with
+    #   identical payloads and `clientToken`s are received, these requests
+    #   are considered the same request and the second request is rejected.
+    #   A `clientToken` is valid for 8 hours or until one hour after the
+    #   consumable resource is deleted, whichever is less.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/UpdateConsumableResourceRequest AWS API Documentation
+    #
+    class UpdateConsumableResourceRequest < Struct.new(
+      :consumable_resource,
+      :operation,
+      :quantity,
+      :client_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] consumable_resource_name
+    #   The name of the consumable resource to be updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] consumable_resource_arn
+    #   The Amazon Resource Name (ARN) of the consumable resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] total_quantity
+    #   The total amount of the consumable resource that is available.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/UpdateConsumableResourceResponse AWS API Documentation
+    #
+    class UpdateConsumableResourceResponse < Struct.new(
+      :consumable_resource_name,
+      :consumable_resource_arn,
+      :total_quantity)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains the parameters for `UpdateJobQueue`.
     #
     # @!attribute [rw] job_queue
@@ -8428,8 +8988,8 @@ module Aws::Batch
     #   @return [String]
     #
     # @!attribute [rw] scheduling_policy_arn
-    #   Amazon Resource Name (ARN) of the fair-share scheduling policy. Once
-    #   a job queue is created, the fair-share scheduling policy can be
+    #   Amazon Resource Name (ARN) of the fair share scheduling policy. Once
+    #   a job queue is created, the fair share scheduling policy can be
     #   replaced but not removed. The format is
     #   `aws:Partition:batch:Region:Account:scheduling-policy/Name `. For
     #   example,
@@ -8538,7 +9098,7 @@ module Aws::Batch
     #   @return [String]
     #
     # @!attribute [rw] fairshare_policy
-    #   The fair-share policy scheduling details.
+    #   The fair share policy.
     #   @return [Types::FairsharePolicy]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/UpdateSchedulingPolicyRequest AWS API Documentation

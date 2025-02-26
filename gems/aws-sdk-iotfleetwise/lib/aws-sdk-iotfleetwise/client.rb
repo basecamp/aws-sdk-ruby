@@ -1630,7 +1630,7 @@ module Aws::IoTFleetWise
     # Deletes a state template.
     #
     # @option params [required, String] :identifier
-    #   A unique, service-generated identifier.
+    #   The unique ID of the state template.
     #
     # @return [Types::DeleteStateTemplateResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2079,7 +2079,7 @@ module Aws::IoTFleetWise
     # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
     #
     # @option params [required, String] :identifier
-    #   A unique, service-generated identifier.
+    #   The unique ID of the state template.
     #
     # @return [Types::GetStateTemplateResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2337,6 +2337,11 @@ module Aws::IoTFleetWise
     #   created campaign in your account. The status can be one of:
     #   `CREATING`, `WAITING_FOR_APPROVAL`, `RUNNING`, or `SUSPENDED`.
     #
+    # @option params [String] :list_response_scope
+    #   When you set the `listResponseScope` parameter to `METADATA_ONLY`, the
+    #   list response includes: campaign name, Amazon Resource Name (ARN),
+    #   creation time, and last modification time.
+    #
     # @return [Types::ListCampaignsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ListCampaignsResponse#campaign_summaries #campaign_summaries} => Array&lt;Types::CampaignSummary&gt;
@@ -2350,6 +2355,7 @@ module Aws::IoTFleetWise
     #     next_token: "nextToken",
     #     max_results: 1,
     #     status: "statusStr",
+    #     list_response_scope: "METADATA_ONLY", # accepts METADATA_ONLY
     #   })
     #
     # @example Response structure
@@ -2542,6 +2548,11 @@ module Aws::IoTFleetWise
     # @option params [Integer] :max_results
     #   The maximum number of items to return, between 1 and 100, inclusive.
     #
+    # @option params [String] :list_response_scope
+    #   When you set the `listResponseScope` parameter to `METADATA_ONLY`, the
+    #   list response includes: decoder manifest name, Amazon Resource Name
+    #   (ARN), creation time, and last modification time.
+    #
     # @return [Types::ListDecoderManifestsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ListDecoderManifestsResponse#summaries #summaries} => Array&lt;Types::DecoderManifestSummary&gt;
@@ -2555,6 +2566,7 @@ module Aws::IoTFleetWise
     #     model_manifest_arn: "arn",
     #     next_token: "nextToken",
     #     max_results: 1,
+    #     list_response_scope: "METADATA_ONLY", # accepts METADATA_ONLY
     #   })
     #
     # @example Response structure
@@ -2597,6 +2609,11 @@ module Aws::IoTFleetWise
     # @option params [Integer] :max_results
     #   The maximum number of items to return, between 1 and 100, inclusive.
     #
+    # @option params [String] :list_response_scope
+    #   When you set the `listResponseScope` parameter to `METADATA_ONLY`, the
+    #   list response includes: fleet ID, Amazon Resource Name (ARN), creation
+    #   time, and last modification time.
+    #
     # @return [Types::ListFleetsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ListFleetsResponse#fleet_summaries #fleet_summaries} => Array&lt;Types::FleetSummary&gt;
@@ -2609,6 +2626,7 @@ module Aws::IoTFleetWise
     #   resp = client.list_fleets({
     #     next_token: "nextToken",
     #     max_results: 1,
+    #     list_response_scope: "METADATA_ONLY", # accepts METADATA_ONLY
     #   })
     #
     # @example Response structure
@@ -2803,6 +2821,11 @@ module Aws::IoTFleetWise
     # @option params [Integer] :max_results
     #   The maximum number of items to return, between 1 and 100, inclusive.
     #
+    # @option params [String] :list_response_scope
+    #   When you set the `listResponseScope` parameter to `METADATA_ONLY`, the
+    #   list response includes: model manifest name, Amazon Resource Name
+    #   (ARN), creation time, and last modification time.
+    #
     # @return [Types::ListModelManifestsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ListModelManifestsResponse#summaries #summaries} => Array&lt;Types::ModelManifestSummary&gt;
@@ -2816,6 +2839,7 @@ module Aws::IoTFleetWise
     #     signal_catalog_arn: "arn",
     #     next_token: "nextToken",
     #     max_results: 1,
+    #     list_response_scope: "METADATA_ONLY", # accepts METADATA_ONLY
     #   })
     #
     # @example Response structure
@@ -3012,6 +3036,11 @@ module Aws::IoTFleetWise
     # @option params [Integer] :max_results
     #   The maximum number of items to return, between 1 and 100, inclusive.
     #
+    # @option params [String] :list_response_scope
+    #   When you set the `listResponseScope` parameter to `METADATA_ONLY`, the
+    #   list response includes: state template ID, Amazon Resource Name (ARN),
+    #   creation time, and last modification time.
+    #
     # @return [Types::ListStateTemplatesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ListStateTemplatesResponse#summaries #summaries} => Array&lt;Types::StateTemplateSummary&gt;
@@ -3024,6 +3053,7 @@ module Aws::IoTFleetWise
     #   resp = client.list_state_templates({
     #     next_token: "nextToken",
     #     max_results: 1,
+    #     list_response_scope: "METADATA_ONLY", # accepts METADATA_ONLY
     #   })
     #
     # @example Response structure
@@ -3125,6 +3155,11 @@ module Aws::IoTFleetWise
     # @option params [Integer] :max_results
     #   The maximum number of items to return, between 1 and 100, inclusive.
     #
+    # @option params [String] :list_response_scope
+    #   When you set the `listResponseScope` parameter to `METADATA_ONLY`, the
+    #   list response includes: vehicle name, Amazon Resource Name (ARN),
+    #   creation time, and last modification time.
+    #
     # @return [Types::ListVehiclesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ListVehiclesResponse#vehicle_summaries #vehicle_summaries} => Array&lt;Types::VehicleSummary&gt;
@@ -3140,6 +3175,7 @@ module Aws::IoTFleetWise
     #     attribute_values: ["attributeValue"],
     #     next_token: "nextToken",
     #     max_results: 1,
+    #     list_response_scope: "METADATA_ONLY", # accepts METADATA_ONLY
     #   })
     #
     # @example Response structure
@@ -3993,7 +4029,7 @@ module Aws::IoTFleetWise
     # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
     #
     # @option params [required, String] :identifier
-    #   A unique, service-generated identifier.
+    #   The unique ID of the state template.
     #
     # @option params [String] :description
     #   A brief description of the state template.
@@ -4157,7 +4193,7 @@ module Aws::IoTFleetWise
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-iotfleetwise'
-      context[:gem_version] = '1.41.0'
+      context[:gem_version] = '1.42.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

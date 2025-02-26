@@ -689,10 +689,18 @@ module Aws::SageMaker
     # @option params [required, Array<String>] :node_ids
     #   A list of node IDs to be deleted from the specified cluster.
     #
-    #   <note markdown="1"> For SageMaker HyperPod clusters using the Slurm workload manager, you
-    #   cannot remove instances that are configured as Slurm controller nodes.
+    #   <note markdown="1"> * For SageMaker HyperPod clusters using the Slurm workload manager,
+    #     you cannot remove instances that are configured as Slurm controller
+    #     nodes.
+    #
+    #   * If you need to delete more than 99 instances, contact [Support][1]
+    #     for assistance.
     #
     #    </note>
+    #
+    #
+    #
+    #   [1]: http://aws.amazon.com/contact-us/
     #
     # @return [Types::BatchDeleteClusterNodesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -14977,6 +14985,7 @@ module Aws::SageMaker
     #   * {Types::DescribeInferenceComponentOutput#creation_time #creation_time} => Time
     #   * {Types::DescribeInferenceComponentOutput#last_modified_time #last_modified_time} => Time
     #   * {Types::DescribeInferenceComponentOutput#inference_component_status #inference_component_status} => String
+    #   * {Types::DescribeInferenceComponentOutput#last_deployment_config #last_deployment_config} => Types::InferenceComponentDeploymentConfig
     #
     # @example Request syntax with placeholder values
     #
@@ -15011,6 +15020,14 @@ module Aws::SageMaker
     #   resp.creation_time #=> Time
     #   resp.last_modified_time #=> Time
     #   resp.inference_component_status #=> String, one of "InService", "Creating", "Updating", "Failed", "Deleting"
+    #   resp.last_deployment_config.rolling_update_policy.maximum_batch_size.type #=> String, one of "COPY_COUNT", "CAPACITY_PERCENT"
+    #   resp.last_deployment_config.rolling_update_policy.maximum_batch_size.value #=> Integer
+    #   resp.last_deployment_config.rolling_update_policy.wait_interval_in_seconds #=> Integer
+    #   resp.last_deployment_config.rolling_update_policy.maximum_execution_timeout_in_seconds #=> Integer
+    #   resp.last_deployment_config.rolling_update_policy.rollback_maximum_batch_size.type #=> String, one of "COPY_COUNT", "CAPACITY_PERCENT"
+    #   resp.last_deployment_config.rolling_update_policy.rollback_maximum_batch_size.value #=> Integer
+    #   resp.last_deployment_config.auto_rollback_configuration.alarms #=> Array
+    #   resp.last_deployment_config.auto_rollback_configuration.alarms[0].alarm_name #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DescribeInferenceComponent AWS API Documentation
     #
@@ -27537,6 +27554,11 @@ module Aws::SageMaker
     #   Runtime settings for a model that is deployed with an inference
     #   component.
     #
+    # @option params [Types::InferenceComponentDeploymentConfig] :deployment_config
+    #   The deployment configuration for the inference component. The
+    #   configuration contains the desired deployment strategy and rollback
+    #   settings.
+    #
     # @return [Types::UpdateInferenceComponentOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateInferenceComponentOutput#inference_component_arn #inference_component_arn} => String
@@ -27568,6 +27590,27 @@ module Aws::SageMaker
     #     },
     #     runtime_config: {
     #       copy_count: 1, # required
+    #     },
+    #     deployment_config: {
+    #       rolling_update_policy: { # required
+    #         maximum_batch_size: { # required
+    #           type: "COPY_COUNT", # required, accepts COPY_COUNT, CAPACITY_PERCENT
+    #           value: 1, # required
+    #         },
+    #         wait_interval_in_seconds: 1, # required
+    #         maximum_execution_timeout_in_seconds: 1,
+    #         rollback_maximum_batch_size: {
+    #           type: "COPY_COUNT", # required, accepts COPY_COUNT, CAPACITY_PERCENT
+    #           value: 1, # required
+    #         },
+    #       },
+    #       auto_rollback_configuration: {
+    #         alarms: [
+    #           {
+    #             alarm_name: "AlarmName",
+    #           },
+    #         ],
+    #       },
     #     },
     #   })
     #
@@ -29502,7 +29545,7 @@ module Aws::SageMaker
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sagemaker'
-      context[:gem_version] = '1.290.0'
+      context[:gem_version] = '1.291.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

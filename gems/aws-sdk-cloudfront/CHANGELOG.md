@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.113.0 (2025-02-26)
+------------------
+
+* Feature - Documentation update for VPC origin config.
+
 1.112.0 (2025-02-18)
 ------------------
 

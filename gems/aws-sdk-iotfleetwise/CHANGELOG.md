@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.42.0 (2025-02-26)
+------------------
+
+* Feature - This release adds an optional listResponseScope request parameter in certain list API requests to limit the response to metadata only.
+
 1.41.0 (2025-02-18)
 ------------------
 

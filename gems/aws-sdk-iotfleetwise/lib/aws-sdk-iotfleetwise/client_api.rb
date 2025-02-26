@@ -155,6 +155,7 @@ module Aws::IoTFleetWise
     ListModelManifestNodesResponse = Shapes::StructureShape.new(name: 'ListModelManifestNodesResponse')
     ListModelManifestsRequest = Shapes::StructureShape.new(name: 'ListModelManifestsRequest')
     ListModelManifestsResponse = Shapes::StructureShape.new(name: 'ListModelManifestsResponse')
+    ListResponseScope = Shapes::StringShape.new(name: 'ListResponseScope')
     ListSignalCatalogNodesRequest = Shapes::StructureShape.new(name: 'ListSignalCatalogNodesRequest')
     ListSignalCatalogNodesResponse = Shapes::StructureShape.new(name: 'ListSignalCatalogNodesResponse')
     ListSignalCatalogsRequest = Shapes::StructureShape.new(name: 'ListSignalCatalogsRequest')
@@ -930,6 +931,7 @@ module Aws::IoTFleetWise
     ListCampaignsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: nextToken, location_name: "nextToken"))
     ListCampaignsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: maxResults, location_name: "maxResults"))
     ListCampaignsRequest.add_member(:status, Shapes::ShapeRef.new(shape: statusStr, location_name: "status"))
+    ListCampaignsRequest.add_member(:list_response_scope, Shapes::ShapeRef.new(shape: ListResponseScope, location_name: "listResponseScope"))
     ListCampaignsRequest.struct_class = Types::ListCampaignsRequest
 
     ListCampaignsResponse.add_member(:campaign_summaries, Shapes::ShapeRef.new(shape: campaignSummaries, location_name: "campaignSummaries"))
@@ -957,6 +959,7 @@ module Aws::IoTFleetWise
     ListDecoderManifestsRequest.add_member(:model_manifest_arn, Shapes::ShapeRef.new(shape: arn, location_name: "modelManifestArn"))
     ListDecoderManifestsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: nextToken, location_name: "nextToken"))
     ListDecoderManifestsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: maxResults, location_name: "maxResults"))
+    ListDecoderManifestsRequest.add_member(:list_response_scope, Shapes::ShapeRef.new(shape: ListResponseScope, location_name: "listResponseScope"))
     ListDecoderManifestsRequest.struct_class = Types::ListDecoderManifestsRequest
 
     ListDecoderManifestsResponse.add_member(:summaries, Shapes::ShapeRef.new(shape: decoderManifestSummaries, location_name: "summaries"))
@@ -974,6 +977,7 @@ module Aws::IoTFleetWise
 
     ListFleetsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: nextToken, location_name: "nextToken"))
     ListFleetsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: maxResults, location_name: "maxResults"))
+    ListFleetsRequest.add_member(:list_response_scope, Shapes::ShapeRef.new(shape: ListResponseScope, location_name: "listResponseScope"))
     ListFleetsRequest.struct_class = Types::ListFleetsRequest
 
     ListFleetsResponse.add_member(:fleet_summaries, Shapes::ShapeRef.new(shape: fleetSummaries, location_name: "fleetSummaries"))
@@ -992,6 +996,7 @@ module Aws::IoTFleetWise
     ListModelManifestsRequest.add_member(:signal_catalog_arn, Shapes::ShapeRef.new(shape: arn, location_name: "signalCatalogArn"))
     ListModelManifestsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: nextToken, location_name: "nextToken"))
     ListModelManifestsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: maxResults, location_name: "maxResults"))
+    ListModelManifestsRequest.add_member(:list_response_scope, Shapes::ShapeRef.new(shape: ListResponseScope, location_name: "listResponseScope"))
     ListModelManifestsRequest.struct_class = Types::ListModelManifestsRequest
 
     ListModelManifestsResponse.add_member(:summaries, Shapes::ShapeRef.new(shape: modelManifestSummaries, location_name: "summaries"))
@@ -1018,6 +1023,7 @@ module Aws::IoTFleetWise
 
     ListStateTemplatesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: nextToken, location_name: "nextToken"))
     ListStateTemplatesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: maxResults, location_name: "maxResults"))
+    ListStateTemplatesRequest.add_member(:list_response_scope, Shapes::ShapeRef.new(shape: ListResponseScope, location_name: "listResponseScope"))
     ListStateTemplatesRequest.struct_class = Types::ListStateTemplatesRequest
 
     ListStateTemplatesResponse.add_member(:summaries, Shapes::ShapeRef.new(shape: StateTemplateSummaries, location_name: "summaries"))
@@ -1044,6 +1050,7 @@ module Aws::IoTFleetWise
     ListVehiclesRequest.add_member(:attribute_values, Shapes::ShapeRef.new(shape: attributeValuesList, location_name: "attributeValues"))
     ListVehiclesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: nextToken, location_name: "nextToken"))
     ListVehiclesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: listVehiclesMaxResults, location_name: "maxResults"))
+    ListVehiclesRequest.add_member(:list_response_scope, Shapes::ShapeRef.new(shape: ListResponseScope, location_name: "listResponseScope"))
     ListVehiclesRequest.struct_class = Types::ListVehiclesRequest
 
     ListVehiclesResponse.add_member(:vehicle_summaries, Shapes::ShapeRef.new(shape: vehicleSummaries, location_name: "vehicleSummaries"))

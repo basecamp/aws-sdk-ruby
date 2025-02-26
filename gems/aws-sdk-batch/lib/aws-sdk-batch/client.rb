@@ -686,9 +686,9 @@ module Aws::Batch
     #
     # @option params [Integer] :unmanagedv_cpus
     #   The maximum number of vCPUs for an unmanaged compute environment. This
-    #   parameter is only used for fair-share scheduling to reserve vCPU
+    #   parameter is only used for fair share scheduling to reserve vCPU
     #   capacity for new share identifiers. If this parameter isn't provided
-    #   for a fair-share job queue, no vCPU capacity is reserved.
+    #   for a fair share job queue, no vCPU capacity is reserved.
     #
     #   <note markdown="1"> This parameter is only supported when the `type` parameter is set to
     #   `UNMANAGED`.
@@ -924,6 +924,84 @@ module Aws::Batch
       req.send_request(options)
     end
 
+    # Creates an Batch consumable resource.
+    #
+    # @option params [required, String] :consumable_resource_name
+    #   The name of the consumable resource. Must be unique.
+    #
+    # @option params [Integer] :total_quantity
+    #   The total amount of the consumable resource that is available. Must be
+    #   non-negative.
+    #
+    # @option params [String] :resource_type
+    #   Indicates whether the resource is available to be re-used after a job
+    #   completes. Can be one of:
+    #
+    #   * `REPLENISHABLE` (default)
+    #
+    #   * `NON_REPLENISHABLE`
+    #
+    # @option params [Hash<String,String>] :tags
+    #   The tags that you apply to the consumable resource to help you
+    #   categorize and organize your resources. Each tag consists of a key and
+    #   an optional value. For more information, see [Tagging your Batch
+    #   resources][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/batch/latest/userguide/using-tags.html
+    #
+    # @return [Types::CreateConsumableResourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateConsumableResourceResponse#consumable_resource_name #consumable_resource_name} => String
+    #   * {Types::CreateConsumableResourceResponse#consumable_resource_arn #consumable_resource_arn} => String
+    #
+    #
+    # @example Example: To create a consumable resource
+    #
+    #   # Creates a Batch consumable resource.
+    #
+    #   resp = client.create_consumable_resource({
+    #     consumable_resource_name: "myConsumableResource", 
+    #     resource_type: "REPLENISHABLE", 
+    #     tags: {
+    #       "Department" => "Engineering", 
+    #       "User" => "JaneDoe", 
+    #     }, 
+    #     total_quantity: 123, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     consumable_resource_arn: "arn:aws:batch:us-east-1:012345678910:consumable-resource/myConsumableResource", 
+    #     consumable_resource_name: "myConsumableResource", 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_consumable_resource({
+    #     consumable_resource_name: "String", # required
+    #     total_quantity: 1,
+    #     resource_type: "String",
+    #     tags: {
+    #       "TagKey" => "TagValue",
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.consumable_resource_name #=> String
+    #   resp.consumable_resource_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/CreateConsumableResource AWS API Documentation
+    #
+    # @overload create_consumable_resource(params = {})
+    # @param [Hash] params ({})
+    def create_consumable_resource(params = {}, options = {})
+      req = build_request(:create_consumable_resource, params)
+      req.send_request(options)
+    end
+
     # Creates an Batch job queue. When you create a job queue, you associate
     # one or more compute environments to the queue and assign an order of
     # preference for the compute environments.
@@ -946,11 +1024,10 @@ module Aws::Batch
     #   finish.
     #
     # @option params [String] :scheduling_policy_arn
-    #   The Amazon Resource Name (ARN) of the fair-share scheduling policy.
-    #   Job queues that don't have a fair-share scheduling policy are
-    #   scheduled in a first-in, first-out (FIFO) model. After a job queue has
-    #   a fair-share scheduling policy, it can be replaced but can't be
-    #   removed.
+    #   The Amazon Resource Name (ARN) of the fair share scheduling policy.
+    #   Job queues that don't have a scheduling policy are scheduled in a
+    #   first-in, first-out (FIFO) model. After a job queue has a scheduling
+    #   policy, it can be replaced but can't be removed.
     #
     #   The format is
     #   `aws:Partition:batch:Region:Account:scheduling-policy/Name `.
@@ -958,11 +1035,11 @@ module Aws::Batch
     #   An example is
     #   `aws:aws:batch:us-west-2:123456789012:scheduling-policy/MySchedulingPolicy`.
     #
-    #   A job queue without a fair-share scheduling policy is scheduled as a
-    #   FIFO job queue and can't have a fair-share scheduling policy added.
-    #   Jobs queues with a fair-share scheduling policy can have a maximum of
-    #   500 active share identifiers. When the limit has been reached,
-    #   submissions of any jobs that add a new share identifier fail.
+    #   A job queue without a scheduling policy is scheduled as a FIFO job
+    #   queue and can't have a scheduling policy added. Jobs queues with a
+    #   scheduling policy can have a maximum of 500 active fair share
+    #   identifiers. When the limit has been reached, submissions of any jobs
+    #   that add a new fair share identifier fail.
     #
     # @option params [required, Integer] :priority
     #   The priority of the job queue. Job queues with a higher priority (or a
@@ -1105,12 +1182,12 @@ module Aws::Batch
     # Creates an Batch scheduling policy.
     #
     # @option params [required, String] :name
-    #   The name of the fair-share scheduling policy. It can be up to 128
-    #   letters long. It can contain uppercase and lowercase letters, numbers,
-    #   hyphens (-), and underscores (\_).
+    #   The name of the scheduling policy. It can be up to 128 letters long.
+    #   It can contain uppercase and lowercase letters, numbers, hyphens (-),
+    #   and underscores (\_).
     #
     # @option params [Types::FairsharePolicy] :fairshare_policy
-    #   The fair-share scheduling policy details.
+    #   The fair share policy of the scheduling policy.
     #
     # @option params [Hash<String,String>] :tags
     #   The tags that you apply to the scheduling policy to help you
@@ -1206,6 +1283,41 @@ module Aws::Batch
     # @param [Hash] params ({})
     def delete_compute_environment(params = {}, options = {})
       req = build_request(:delete_compute_environment, params)
+      req.send_request(options)
+    end
+
+    # Deletes the specified consumable resource.
+    #
+    # @option params [required, String] :consumable_resource
+    #   The name or ARN of the consumable resource that will be deleted.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    #
+    # @example Example: To delete a consumable resource
+    #
+    #   # Deletes the specified consumable resource.
+    #
+    #   resp = client.delete_consumable_resource({
+    #     consumable_resource: "myConsumableResource", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_consumable_resource({
+    #     consumable_resource: "String", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/DeleteConsumableResource AWS API Documentation
+    #
+    # @overload delete_consumable_resource(params = {})
+    # @param [Hash] params ({})
+    def delete_consumable_resource(params = {}, options = {})
+      req = build_request(:delete_consumable_resource, params)
       req.send_request(options)
     end
 
@@ -1471,6 +1583,74 @@ module Aws::Batch
     # @param [Hash] params ({})
     def describe_compute_environments(params = {}, options = {})
       req = build_request(:describe_compute_environments, params)
+      req.send_request(options)
+    end
+
+    # Returns a description of the specified consumable resource.
+    #
+    # @option params [required, String] :consumable_resource
+    #   The name or ARN of the consumable resource whose description will be
+    #   returned.
+    #
+    # @return [Types::DescribeConsumableResourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeConsumableResourceResponse#consumable_resource_name #consumable_resource_name} => String
+    #   * {Types::DescribeConsumableResourceResponse#consumable_resource_arn #consumable_resource_arn} => String
+    #   * {Types::DescribeConsumableResourceResponse#total_quantity #total_quantity} => Integer
+    #   * {Types::DescribeConsumableResourceResponse#in_use_quantity #in_use_quantity} => Integer
+    #   * {Types::DescribeConsumableResourceResponse#available_quantity #available_quantity} => Integer
+    #   * {Types::DescribeConsumableResourceResponse#resource_type #resource_type} => String
+    #   * {Types::DescribeConsumableResourceResponse#created_at #created_at} => Integer
+    #   * {Types::DescribeConsumableResourceResponse#tags #tags} => Hash&lt;String,String&gt;
+    #
+    #
+    # @example Example: To get a description of a consumable resource
+    #
+    #   # Returns a description of the specified consumable resource.
+    #
+    #   resp = client.describe_consumable_resource({
+    #     consumable_resource: "myConsumableResource", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     available_quantity: 123, 
+    #     consumable_resource_arn: "arn:aws:batch:us-east-1:012345678910:consumable-resource/myConsumableResource", 
+    #     consumable_resource_name: "myConsumableResource", 
+    #     created_at: 123, 
+    #     in_use_quantity: 123, 
+    #     resource_type: "REPLENISHABLE", 
+    #     tags: {
+    #       "Department" => "Engineering", 
+    #       "User" => "JaneDoe", 
+    #     }, 
+    #     total_quantity: 123, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_consumable_resource({
+    #     consumable_resource: "String", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.consumable_resource_name #=> String
+    #   resp.consumable_resource_arn #=> String
+    #   resp.total_quantity #=> Integer
+    #   resp.in_use_quantity #=> Integer
+    #   resp.available_quantity #=> Integer
+    #   resp.resource_type #=> String
+    #   resp.created_at #=> Integer
+    #   resp.tags #=> Hash
+    #   resp.tags["TagKey"] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/DescribeConsumableResource AWS API Documentation
+    #
+    # @overload describe_consumable_resource(params = {})
+    # @param [Hash] params ({})
+    def describe_consumable_resource(params = {}, options = {})
+      req = build_request(:describe_consumable_resource, params)
       req.send_request(options)
     end
 
@@ -1868,6 +2048,9 @@ module Aws::Batch
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.annotations["String"] #=> String
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.namespace #=> String
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.share_process_namespace #=> Boolean
+    #   resp.job_definitions[0].node_properties.node_range_properties[0].consumable_resource_properties.consumable_resource_list #=> Array
+    #   resp.job_definitions[0].node_properties.node_range_properties[0].consumable_resource_properties.consumable_resource_list[0].consumable_resource #=> String
+    #   resp.job_definitions[0].node_properties.node_range_properties[0].consumable_resource_properties.consumable_resource_list[0].quantity #=> Integer
     #   resp.job_definitions[0].tags #=> Hash
     #   resp.job_definitions[0].tags["TagKey"] #=> String
     #   resp.job_definitions[0].propagate_tags #=> Boolean
@@ -2015,6 +2198,9 @@ module Aws::Batch
     #   resp.job_definitions[0].eks_properties.pod_properties.metadata.namespace #=> String
     #   resp.job_definitions[0].eks_properties.pod_properties.share_process_namespace #=> Boolean
     #   resp.job_definitions[0].container_orchestration_type #=> String, one of "ECS", "EKS"
+    #   resp.job_definitions[0].consumable_resource_properties.consumable_resource_list #=> Array
+    #   resp.job_definitions[0].consumable_resource_properties.consumable_resource_list[0].consumable_resource #=> String
+    #   resp.job_definitions[0].consumable_resource_properties.consumable_resource_list[0].quantity #=> Integer
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/DescribeJobDefinitions AWS API Documentation
@@ -2531,6 +2717,9 @@ module Aws::Batch
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.annotations["String"] #=> String
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.namespace #=> String
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.share_process_namespace #=> Boolean
+    #   resp.jobs[0].node_properties.node_range_properties[0].consumable_resource_properties.consumable_resource_list #=> Array
+    #   resp.jobs[0].node_properties.node_range_properties[0].consumable_resource_properties.consumable_resource_list[0].consumable_resource #=> String
+    #   resp.jobs[0].node_properties.node_range_properties[0].consumable_resource_properties.consumable_resource_list[0].quantity #=> Integer
     #   resp.jobs[0].array_properties.status_summary #=> Hash
     #   resp.jobs[0].array_properties.status_summary["String"] #=> Integer
     #   resp.jobs[0].array_properties.size #=> Integer
@@ -2717,6 +2906,9 @@ module Aws::Batch
     #   resp.jobs[0].ecs_properties.task_properties[0].volumes[0].efs_volume_configuration.authorization_config.iam #=> String, one of "ENABLED", "DISABLED"
     #   resp.jobs[0].is_cancelled #=> Boolean
     #   resp.jobs[0].is_terminated #=> Boolean
+    #   resp.jobs[0].consumable_resource_properties.consumable_resource_list #=> Array
+    #   resp.jobs[0].consumable_resource_properties.consumable_resource_list[0].consumable_resource #=> String
+    #   resp.jobs[0].consumable_resource_properties.consumable_resource_list[0].quantity #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/DescribeJobs AWS API Documentation
     #
@@ -2794,6 +2986,112 @@ module Aws::Batch
     # @param [Hash] params ({})
     def get_job_queue_snapshot(params = {}, options = {})
       req = build_request(:get_job_queue_snapshot, params)
+      req.send_request(options)
+    end
+
+    # Returns a list of Batch consumable resources.
+    #
+    # @option params [Array<Types::KeyValuesPair>] :filters
+    #   The filters to apply to the consumable resource list query. If used,
+    #   only those consumable resources that match the filter are listed.
+    #   Filter names and values can be:
+    #
+    #   * name: `CONSUMABLE_RESOURCE_NAME `
+    #
+    #     values: case-insensitive matches for the consumable resource name.
+    #     If a filter value ends with an asterisk (*), it matches any
+    #     consumable resource name that begins with the string before the
+    #     '*'.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results returned by `ListConsumableResources` in
+    #   paginated output. When this parameter is used,
+    #   `ListConsumableResources` only returns `maxResults` results in a
+    #   single page and a `nextToken` response element. The remaining results
+    #   of the initial request can be seen by sending another
+    #   `ListConsumableResources` request with the returned `nextToken` value.
+    #   This value can be between 1 and 100. If this parameter isn't used,
+    #   then `ListConsumableResources` returns up to 100 results and a
+    #   `nextToken` value if applicable.
+    #
+    # @option params [String] :next_token
+    #   The `nextToken` value returned from a previous paginated
+    #   `ListConsumableResources` request where `maxResults` was used and the
+    #   results exceeded the value of that parameter. Pagination continues
+    #   from the end of the previous results that returned the `nextToken`
+    #   value. This value is `null` when there are no more results to return.
+    #
+    #   <note markdown="1"> Treat this token as an opaque identifier that's only used to retrieve
+    #   the next items in a list and not for other programmatic purposes.
+    #
+    #    </note>
+    #
+    # @return [Types::ListConsumableResourcesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListConsumableResourcesResponse#consumable_resources #consumable_resources} => Array&lt;Types::ConsumableResourceSummary&gt;
+    #   * {Types::ListConsumableResourcesResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    #
+    # @example Example: To get a list of a consumable resources
+    #
+    #   # Returns a list of the consumable resources for your account.
+    #
+    #   resp = client.list_consumable_resources({
+    #     filters: [
+    #       {
+    #         name: "CONSUMABLE_RESOURCE_NAME", 
+    #         values: [
+    #           "my*", 
+    #         ], 
+    #       }, 
+    #     ], 
+    #     max_results: 123, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     consumable_resources: [
+    #       {
+    #         consumable_resource_arn: "arn:aws:batch:us-east-1:012345678910:consumable-resource/myConsumableResource", 
+    #         consumable_resource_name: "myConsumableResource", 
+    #         in_use_quantity: 12, 
+    #         resource_type: "REPLENISHABLE", 
+    #         total_quantity: 123, 
+    #       }, 
+    #     ], 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_consumable_resources({
+    #     filters: [
+    #       {
+    #         name: "String",
+    #         values: ["String"],
+    #       },
+    #     ],
+    #     max_results: 1,
+    #     next_token: "String",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.consumable_resources #=> Array
+    #   resp.consumable_resources[0].consumable_resource_arn #=> String
+    #   resp.consumable_resources[0].consumable_resource_name #=> String
+    #   resp.consumable_resources[0].total_quantity #=> Integer
+    #   resp.consumable_resources[0].in_use_quantity #=> Integer
+    #   resp.consumable_resources[0].resource_type #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ListConsumableResources AWS API Documentation
+    #
+    # @overload list_consumable_resources(params = {})
+    # @param [Hash] params ({})
+    def list_consumable_resources(params = {}, options = {})
+      req = build_request(:list_consumable_resources, params)
       req.send_request(options)
     end
 
@@ -3002,6 +3300,141 @@ module Aws::Batch
       req.send_request(options)
     end
 
+    # Returns a list of Batch jobs that require a specific consumable
+    # resource.
+    #
+    # @option params [required, String] :consumable_resource
+    #   The name or ARN of the consumable resource.
+    #
+    # @option params [Array<Types::KeyValuesPair>] :filters
+    #   The filters to apply to the job list query. If used, only those jobs
+    #   requiring the specified consumable resource (`consumableResource`) and
+    #   that match the value of the filters are listed. The filter names and
+    #   values can be:
+    #
+    #   * name: `JOB_STATUS`
+    #
+    #     values: `SUBMITTED | PENDING | RUNNABLE | STARTING | RUNNING |
+    #     SUCCEEDED | FAILED`
+    #
+    #   * name: `JOB_NAME `
+    #
+    #     The values are case-insensitive matches for the job name. If a
+    #     filter value ends with an asterisk (*), it matches any job name
+    #     that begins with the string before the '*'.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results returned by
+    #   `ListJobsByConsumableResource` in paginated output. When this
+    #   parameter is used, `ListJobsByConsumableResource` only returns
+    #   `maxResults` results in a single page and a `nextToken` response
+    #   element. The remaining results of the initial request can be seen by
+    #   sending another `ListJobsByConsumableResource` request with the
+    #   returned `nextToken` value. This value can be between 1 and 100. If
+    #   this parameter isn't used, then `ListJobsByConsumableResource`
+    #   returns up to 100 results and a `nextToken` value if applicable.
+    #
+    # @option params [String] :next_token
+    #   The `nextToken` value returned from a previous paginated
+    #   `ListJobsByConsumableResource` request where `maxResults` was used and
+    #   the results exceeded the value of that parameter. Pagination continues
+    #   from the end of the previous results that returned the `nextToken`
+    #   value. This value is `null` when there are no more results to return.
+    #
+    #   <note markdown="1"> Treat this token as an opaque identifier that's only used to retrieve
+    #   the next items in a list and not for other programmatic purposes.
+    #
+    #    </note>
+    #
+    # @return [Types::ListJobsByConsumableResourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListJobsByConsumableResourceResponse#jobs #jobs} => Array&lt;Types::ListJobsByConsumableResourceSummary&gt;
+    #   * {Types::ListJobsByConsumableResourceResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    #
+    # @example Example: To get a list of Batch jobs by consumable resource
+    #
+    #   # Returns a list of Batch jobs that require a specific consumable resource.
+    #
+    #   resp = client.list_jobs_by_consumable_resource({
+    #     consumable_resource: "myConsumableResource", 
+    #     filters: [
+    #       {
+    #         name: "CONSUMABLE_RESOURCE_NAME", 
+    #         values: [
+    #           "my*", 
+    #         ], 
+    #       }, 
+    #     ], 
+    #     max_results: 123, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     jobs: [
+    #       {
+    #         consumable_resource_properties: {
+    #           consumable_resource_list: [
+    #             {
+    #               consumable_resource: "myConsumableResource", 
+    #               quantity: 123, 
+    #             }, 
+    #           ], 
+    #         }, 
+    #         created_at: 1480460782010, 
+    #         job_arn: "arn:aws:batch:us-east-1:012345678910:job/myJob", 
+    #         job_definition_arn: "arn:aws:batch:us-east-1:012345678910:job-definition/myJobDef", 
+    #         job_name: "myJob", 
+    #         job_queue_arn: "arn:aws:batch:us-east-1:012345678910:job-queue/myJobQueue", 
+    #         job_status: "PENDING", 
+    #         quantity: 123, 
+    #       }, 
+    #     ], 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_jobs_by_consumable_resource({
+    #     consumable_resource: "String", # required
+    #     filters: [
+    #       {
+    #         name: "String",
+    #         values: ["String"],
+    #       },
+    #     ],
+    #     max_results: 1,
+    #     next_token: "String",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.jobs #=> Array
+    #   resp.jobs[0].job_arn #=> String
+    #   resp.jobs[0].job_queue_arn #=> String
+    #   resp.jobs[0].job_name #=> String
+    #   resp.jobs[0].job_definition_arn #=> String
+    #   resp.jobs[0].share_identifier #=> String
+    #   resp.jobs[0].job_status #=> String
+    #   resp.jobs[0].quantity #=> Integer
+    #   resp.jobs[0].status_reason #=> String
+    #   resp.jobs[0].started_at #=> Integer
+    #   resp.jobs[0].created_at #=> Integer
+    #   resp.jobs[0].consumable_resource_properties.consumable_resource_list #=> Array
+    #   resp.jobs[0].consumable_resource_properties.consumable_resource_list[0].consumable_resource #=> String
+    #   resp.jobs[0].consumable_resource_properties.consumable_resource_list[0].quantity #=> Integer
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ListJobsByConsumableResource AWS API Documentation
+    #
+    # @overload list_jobs_by_consumable_resource(params = {})
+    # @param [Hash] params ({})
+    def list_jobs_by_consumable_resource(params = {}, options = {})
+      req = build_request(:list_jobs_by_consumable_resource, params)
+      req.send_request(options)
+    end
+
     # Returns a list of Batch scheduling policies.
     #
     # @option params [Integer] :max_results
@@ -3144,7 +3577,7 @@ module Aws::Batch
     #
     # @option params [Integer] :scheduling_priority
     #   The scheduling priority for jobs that are submitted with this job
-    #   definition. This only affects jobs in job queues with a fair-share
+    #   definition. This only affects jobs in job queues with a fair share
     #   policy. Jobs with a higher scheduling priority are scheduled before
     #   jobs with a lower scheduling priority.
     #
@@ -3243,6 +3676,9 @@ module Aws::Batch
     # @option params [Types::EcsProperties] :ecs_properties
     #   An object with properties that are specific to Amazon ECS-based jobs.
     #   This must not be specified for Amazon EKS-based job definitions.
+    #
+    # @option params [Types::ConsumableResourceProperties] :consumable_resource_properties
+    #   Contains a list of consumable resources required by the job.
     #
     # @return [Types::RegisterJobDefinitionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3800,6 +4236,14 @@ module Aws::Batch
     #               share_process_namespace: false,
     #             },
     #           },
+    #           consumable_resource_properties: {
+    #             consumable_resource_list: [
+    #               {
+    #                 consumable_resource: "String",
+    #                 quantity: 1,
+    #               },
+    #             ],
+    #           },
     #         },
     #       ],
     #     },
@@ -4065,6 +4509,14 @@ module Aws::Batch
     #         },
     #       ],
     #     },
+    #     consumable_resource_properties: {
+    #       consumable_resource_list: [
+    #         {
+    #           consumable_resource: "String",
+    #           quantity: 1,
+    #         },
+    #       ],
+    #     },
     #   })
     #
     # @example Response structure
@@ -4091,8 +4543,8 @@ module Aws::Batch
     # parameters in a `resourceRequirements` object that's included in the
     # `containerOverrides` parameter.
     #
-    # <note markdown="1"> Job queues with a scheduling policy are limited to 500 active share
-    # identifiers at a time.
+    # <note markdown="1"> Job queues with a scheduling policy are limited to 500 active fair
+    # share identifiers at a time.
     #
     #  </note>
     #
@@ -4111,16 +4563,15 @@ module Aws::Batch
     #
     # @option params [String] :share_identifier
     #   The share identifier for the job. Don't specify this parameter if the
-    #   job queue doesn't have a fair-share scheduling policy. If the job
-    #   queue has a fair-share scheduling policy, then this parameter must be
-    #   specified.
+    #   job queue doesn't have a scheduling policy. If the job queue has a
+    #   scheduling policy, then this parameter must be specified.
     #
     #   This string is limited to 255 alphanumeric characters, and can be
     #   followed by an asterisk (*).
     #
     # @option params [Integer] :scheduling_priority_override
     #   The scheduling priority for the job. This only affects jobs in job
-    #   queues with a fair-share policy. Jobs with a higher scheduling
+    #   queues with a fair share policy. Jobs with a higher scheduling
     #   priority are scheduled before jobs with a lower scheduling priority.
     #   This overrides any scheduling priority in the job definition and works
     #   only within a single share identifier.
@@ -4231,6 +4682,10 @@ module Aws::Batch
     #   An object, with properties that override defaults for the job
     #   definition, can only be specified for jobs that are run on Amazon ECS
     #   resources.
+    #
+    # @option params [Types::ConsumableResourceProperties] :consumable_resource_properties_override
+    #   An object that contains overrides for the consumable resources of a
+    #   job.
     #
     # @return [Types::SubmitJobResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -4398,6 +4853,14 @@ module Aws::Batch
     #               },
     #             },
     #           },
+    #           consumable_resource_properties_override: {
+    #             consumable_resource_list: [
+    #               {
+    #                 consumable_resource: "String",
+    #                 quantity: 1,
+    #               },
+    #             ],
+    #           },
     #         },
     #       ],
     #     },
@@ -4497,6 +4960,14 @@ module Aws::Batch
     #               ],
     #             },
     #           ],
+    #         },
+    #       ],
+    #     },
+    #     consumable_resource_properties_override: {
+    #       consumable_resource_list: [
+    #         {
+    #           consumable_resource: "String",
+    #           quantity: 1,
     #         },
     #       ],
     #     },
@@ -4712,9 +5183,9 @@ module Aws::Batch
     # @option params [Integer] :unmanagedv_cpus
     #   The maximum number of vCPUs expected to be used for an unmanaged
     #   compute environment. Don't specify this parameter for a managed
-    #   compute environment. This parameter is only used for fair-share
+    #   compute environment. This parameter is only used for fair share
     #   scheduling to reserve vCPU capacity for new share identifiers. If this
-    #   parameter isn't provided for a fair-share job queue, no vCPU capacity
+    #   parameter isn't provided for a fair share job queue, no vCPU capacity
     #   is reserved.
     #
     # @option params [Types::ComputeResourceUpdate] :compute_resources
@@ -4859,6 +5330,94 @@ module Aws::Batch
       req.send_request(options)
     end
 
+    # Updates a consumable resource.
+    #
+    # @option params [required, String] :consumable_resource
+    #   The name or ARN of the consumable resource to be updated.
+    #
+    # @option params [String] :operation
+    #   Indicates how the quantity of the consumable resource will be updated.
+    #   Must be one of:
+    #
+    #   * `SET`
+    #
+    #     Sets the quantity of the resource to the value specified by the
+    #     `quantity` parameter.
+    #
+    #   * `ADD`
+    #
+    #     Increases the quantity of the resource by the value specified by the
+    #     `quantity` parameter.
+    #
+    #   * `REMOVE`
+    #
+    #     Reduces the quantity of the resource by the value specified by the
+    #     `quantity` parameter.
+    #
+    # @option params [Integer] :quantity
+    #   The change in the total quantity of the consumable resource. The
+    #   `operation` parameter determines whether the value specified here will
+    #   be the new total quantity, or the amount by which the total quantity
+    #   will be increased or reduced. Must be a non-negative value.
+    #
+    # @option params [String] :client_token
+    #   If this parameter is specified and two update requests with identical
+    #   payloads and `clientToken`s are received, these requests are
+    #   considered the same request and the second request is rejected. A
+    #   `clientToken` is valid for 8 hours or until one hour after the
+    #   consumable resource is deleted, whichever is less.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @return [Types::UpdateConsumableResourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateConsumableResourceResponse#consumable_resource_name #consumable_resource_name} => String
+    #   * {Types::UpdateConsumableResourceResponse#consumable_resource_arn #consumable_resource_arn} => String
+    #   * {Types::UpdateConsumableResourceResponse#total_quantity #total_quantity} => Integer
+    #
+    #
+    # @example Example: To update a consumable resource
+    #
+    #   # Updates a consumable resource.
+    #
+    #   resp = client.update_consumable_resource({
+    #     consumable_resource: "myConsumableResource", 
+    #     operation: "ADD", 
+    #     quantity: 12, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     consumable_resource_arn: "arn:aws:batch:us-east-1:012345678910:consumable-resource/myConsumableResource", 
+    #     consumable_resource_name: "myConsumableResource", 
+    #     total_quantity: 135, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_consumable_resource({
+    #     consumable_resource: "String", # required
+    #     operation: "String",
+    #     quantity: 1,
+    #     client_token: "ClientRequestToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.consumable_resource_name #=> String
+    #   resp.consumable_resource_arn #=> String
+    #   resp.total_quantity #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/UpdateConsumableResource AWS API Documentation
+    #
+    # @overload update_consumable_resource(params = {})
+    # @param [Hash] params ({})
+    def update_consumable_resource(params = {}, options = {})
+      req = build_request(:update_consumable_resource, params)
+      req.send_request(options)
+    end
+
     # Updates a job queue.
     #
     # @option params [required, String] :job_queue
@@ -4871,8 +5430,8 @@ module Aws::Batch
     #   the queue can finish.
     #
     # @option params [String] :scheduling_policy_arn
-    #   Amazon Resource Name (ARN) of the fair-share scheduling policy. Once a
-    #   job queue is created, the fair-share scheduling policy can be replaced
+    #   Amazon Resource Name (ARN) of the fair share scheduling policy. Once a
+    #   job queue is created, the fair share scheduling policy can be replaced
     #   but not removed. The format is
     #   `aws:Partition:batch:Region:Account:scheduling-policy/Name `. For
     #   example,
@@ -4975,7 +5534,7 @@ module Aws::Batch
     #   The Amazon Resource Name (ARN) of the scheduling policy to update.
     #
     # @option params [Types::FairsharePolicy] :fairshare_policy
-    #   The fair-share policy scheduling details.
+    #   The fair share policy.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -5022,7 +5581,7 @@ module Aws::Batch
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-batch'
-      context[:gem_version] = '1.110.0'
+      context[:gem_version] = '1.111.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

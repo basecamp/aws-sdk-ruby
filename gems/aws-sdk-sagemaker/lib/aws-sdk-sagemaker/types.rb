@@ -2989,11 +2989,18 @@ module Aws::SageMaker
     # @!attribute [rw] node_ids
     #   A list of node IDs to be deleted from the specified cluster.
     #
-    #   <note markdown="1"> For SageMaker HyperPod clusters using the Slurm workload manager,
-    #   you cannot remove instances that are configured as Slurm controller
-    #   nodes.
+    #   <note markdown="1"> * For SageMaker HyperPod clusters using the Slurm workload manager,
+    #     you cannot remove instances that are configured as Slurm
+    #     controller nodes.
+    #
+    #   * If you need to delete more than 99 instances, contact [Support][1]
+    #     for assistance.
     #
     #    </note>
+    #
+    #
+    #
+    #   [1]: http://aws.amazon.com/contact-us/
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/BatchDeleteClusterNodesRequest AWS API Documentation
@@ -16028,6 +16035,11 @@ module Aws::SageMaker
     #   The status of the inference component.
     #   @return [String]
     #
+    # @!attribute [rw] last_deployment_config
+    #   The deployment and rollback settings that you assigned to the
+    #   inference component.
+    #   @return [Types::InferenceComponentDeploymentConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DescribeInferenceComponentOutput AWS API Documentation
     #
     class DescribeInferenceComponentOutput < Struct.new(
@@ -16041,7 +16053,8 @@ module Aws::SageMaker
       :runtime_config,
       :creation_time,
       :last_modified_time,
-      :inference_component_status)
+      :inference_component_status,
+      :last_deployment_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -21280,10 +21293,12 @@ module Aws::SageMaker
     end
 
     # The properties of an experiment as returned by the [Search][1] API.
+    # For information about experiments, see the [CreateExperiment][2] API.
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html
+    # [2]: https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateExperiment.html
     #
     # @!attribute [rw] experiment_name
     #   The name of the experiment.
@@ -25376,6 +25391,47 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # Specifies the type and size of the endpoint capacity to activate for a
+    # rolling deployment or a rollback strategy. You can specify your
+    # batches as either of the following:
+    #
+    # * A count of inference component copies
+    #
+    # * The overall percentage or your fleet
+    #
+    # For a rollback strategy, if you don't specify the fields in this
+    # object, or if you set the `Value` parameter to 100%, then SageMaker AI
+    # uses a blue/green rollback strategy and rolls all traffic back to the
+    # blue fleet.
+    #
+    # @!attribute [rw] type
+    #   Specifies the endpoint capacity type.
+    #
+    #   COPY\_COUNT
+    #
+    #   : The endpoint activates based on the number of inference component
+    #     copies.
+    #
+    #   CAPACITY\_PERCENT
+    #
+    #   : The endpoint activates based on the specified percentage of
+    #     capacity.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   Defines the capacity size, either as a number of inference component
+    #   copies or a capacity percentage.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/InferenceComponentCapacitySize AWS API Documentation
+    #
+    class InferenceComponentCapacitySize < Struct.new(
+      :type,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Defines the compute resources to allocate to run a model, plus any
     # adapter models, that you assign to an inference component. These
     # resources include CPU cores, accelerators, and memory.
@@ -25477,6 +25533,69 @@ module Aws::SageMaker
       :deployed_image,
       :artifact_url,
       :environment)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The deployment configuration for an endpoint that hosts inference
+    # components. The configuration includes the desired deployment strategy
+    # and rollback settings.
+    #
+    # @!attribute [rw] rolling_update_policy
+    #   Specifies a rolling deployment strategy for updating a SageMaker AI
+    #   endpoint.
+    #   @return [Types::InferenceComponentRollingUpdatePolicy]
+    #
+    # @!attribute [rw] auto_rollback_configuration
+    #   Automatic rollback configuration for handling endpoint deployment
+    #   failures and recovery.
+    #   @return [Types::AutoRollbackConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/InferenceComponentDeploymentConfig AWS API Documentation
+    #
+    class InferenceComponentDeploymentConfig < Struct.new(
+      :rolling_update_policy,
+      :auto_rollback_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies a rolling deployment strategy for updating a SageMaker AI
+    # inference component.
+    #
+    # @!attribute [rw] maximum_batch_size
+    #   The batch size for each rolling step in the deployment process. For
+    #   each step, SageMaker AI provisions capacity on the new endpoint
+    #   fleet, routes traffic to that fleet, and terminates capacity on the
+    #   old endpoint fleet. The value must be between 5% to 50% of the copy
+    #   count of the inference component.
+    #   @return [Types::InferenceComponentCapacitySize]
+    #
+    # @!attribute [rw] wait_interval_in_seconds
+    #   The length of the baking period, during which SageMaker AI monitors
+    #   alarms for each batch on the new fleet.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] maximum_execution_timeout_in_seconds
+    #   The time limit for the total deployment. Exceeding this limit causes
+    #   a timeout.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] rollback_maximum_batch_size
+    #   The batch size for a rollback to the old endpoint fleet. If this
+    #   field is absent, the value is set to the default, which is 100% of
+    #   the total capacity. When the default is used, SageMaker AI
+    #   provisions the entire capacity of the old fleet at once during
+    #   rollback.
+    #   @return [Types::InferenceComponentCapacitySize]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/InferenceComponentRollingUpdatePolicy AWS API Documentation
+    #
+    class InferenceComponentRollingUpdatePolicy < Struct.new(
+      :maximum_batch_size,
+      :wait_interval_in_seconds,
+      :maximum_execution_timeout_in_seconds,
+      :rollback_maximum_batch_size)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -34551,10 +34670,29 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # A versioned model that can be deployed for SageMaker inference.
+    # A container for your trained model that can be deployed for SageMaker
+    # inference. This can include inference code, artifacts, and metadata.
+    # The model package type can be one of the following.
+    #
+    # * Versioned model: A part of a model package group in Model Registry.
+    #
+    # * Unversioned model: Not part of a model package group and used in
+    #   Amazon Web Services Marketplace.
+    #
+    # For more information, see [ `CreateModelPackage` ][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateModelPackage.html
     #
     # @!attribute [rw] model_package_name
-    #   The name of the model.
+    #   The name of the model package. The name can be as follows:
+    #
+    #   * For a versioned model, the name is automatically generated by
+    #     SageMaker Model Registry and follows the format
+    #     '`ModelPackageGroupName/ModelPackageVersion`'.
+    #
+    #   * For an unversioned model, you must provide the name.
     #   @return [String]
     #
     # @!attribute [rw] model_package_group_name
@@ -34879,7 +35017,7 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # A group of versioned models in the model registry.
+    # A group of versioned models in the Model Registry.
     #
     # @!attribute [rw] model_package_group_name
     #   The name of the model group.
@@ -42316,11 +42454,25 @@ module Aws::SageMaker
     #   @return [Types::Endpoint]
     #
     # @!attribute [rw] model_package
-    #   A versioned model that can be deployed for SageMaker inference.
+    #   A container for your trained model that can be deployed for
+    #   SageMaker inference. This can include inference code, artifacts, and
+    #   metadata. The model package type can be one of the following.
+    #
+    #   * Versioned model: A part of a model package group in Model
+    #     Registry.
+    #
+    #   * Unversioned model: Not part of a model package group and used in
+    #     Amazon Web Services Marketplace.
+    #
+    #   For more information, see [ `CreateModelPackage` ][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateModelPackage.html
     #   @return [Types::ModelPackage]
     #
     # @!attribute [rw] model_package_group
-    #   A group of versioned models in the model registry.
+    #   A group of versioned models in the Model Registry.
     #   @return [Types::ModelPackageGroup]
     #
     # @!attribute [rw] pipeline
@@ -48193,12 +48345,19 @@ module Aws::SageMaker
     #   component.
     #   @return [Types::InferenceComponentRuntimeConfig]
     #
+    # @!attribute [rw] deployment_config
+    #   The deployment configuration for the inference component. The
+    #   configuration contains the desired deployment strategy and rollback
+    #   settings.
+    #   @return [Types::InferenceComponentDeploymentConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/UpdateInferenceComponentInput AWS API Documentation
     #
     class UpdateInferenceComponentInput < Struct.new(
       :inference_component_name,
       :specification,
-      :runtime_config)
+      :runtime_config,
+      :deployment_config)
       SENSITIVE = []
       include Aws::Structure
     end

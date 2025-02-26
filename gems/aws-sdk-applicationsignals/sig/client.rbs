@@ -327,7 +327,9 @@ module Aws
                                            ?key_attributes: Hash[::String, ::String],
                                            ?operation_name: ::String,
                                            ?max_results: ::Integer,
-                                           ?next_token: ::String
+                                           ?next_token: ::String,
+                                           ?include_linked_accounts: bool,
+                                           ?slo_owner_aws_account_id: ::String
                                          ) -> _ListServiceLevelObjectivesResponseSuccess
                                        | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListServiceLevelObjectivesResponseSuccess
 
@@ -360,7 +362,9 @@ module Aws
                            start_time: ::Time,
                            end_time: ::Time,
                            ?max_results: ::Integer,
-                           ?next_token: ::String
+                           ?next_token: ::String,
+                           ?include_linked_accounts: bool,
+                           ?aws_account_id: ::String
                          ) -> _ListServicesResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListServicesResponseSuccess
 

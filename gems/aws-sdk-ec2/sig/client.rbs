@@ -1477,6 +1477,23 @@ module Aws
                                     group_id: ::String?,
                                     availability_zone: ::String?
                                   }?,
+                                  block_device_mappings: Array[
+                                    {
+                                      device_name: ::String?,
+                                      virtual_name: ::String?,
+                                      ebs: {
+                                        encrypted: bool?,
+                                        delete_on_termination: bool?,
+                                        iops: ::Integer?,
+                                        throughput: ::Integer?,
+                                        kms_key_id: ::String?,
+                                        snapshot_id: ::String?,
+                                        volume_size: ::Integer?,
+                                        volume_type: ("standard" | "io1" | "io2" | "gp2" | "sc1" | "st1" | "gp3")?
+                                      }?,
+                                      no_device: ::String?
+                                    },
+                                  ]?,
                                   instance_requirements: {
                                     v_cpu_count: {
                                       min: ::Integer,
@@ -5064,12 +5081,15 @@ module Aws
                                               ) -> _DeprovisionPublicIpv4PoolCidrResponseSuccess
                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeprovisionPublicIpv4PoolCidrResponseSuccess
 
+      interface _DeregisterImageResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeregisterImageResult]
+      end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#deregister_image-instance_method
       def deregister_image: (
                               image_id: ::String,
                               ?dry_run: bool
-                            ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
-                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                            ) -> _DeregisterImageResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeregisterImageResponseSuccess
 
       interface _DeregisterInstanceEventNotificationAttributesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeregisterInstanceEventNotificationAttributesResult]
@@ -10373,6 +10393,23 @@ module Aws
                                     group_id: ::String?,
                                     availability_zone: ::String?
                                   }?,
+                                  block_device_mappings: Array[
+                                    {
+                                      device_name: ::String?,
+                                      virtual_name: ::String?,
+                                      ebs: {
+                                        encrypted: bool?,
+                                        delete_on_termination: bool?,
+                                        iops: ::Integer?,
+                                        throughput: ::Integer?,
+                                        kms_key_id: ::String?,
+                                        snapshot_id: ::String?,
+                                        volume_size: ::Integer?,
+                                        volume_type: ("standard" | "io1" | "io2" | "gp2" | "sc1" | "st1" | "gp3")?
+                                      }?,
+                                      no_device: ::String?
+                                    },
+                                  ]?,
                                   instance_requirements: {
                                     v_cpu_count: {
                                       min: ::Integer,
