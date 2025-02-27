@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.31.0 (2025-02-27)
+------------------
+
+* Feature - This release supports deleting attachments from conversations.
+
 1.30.0 (2025-02-18)
 ------------------
 

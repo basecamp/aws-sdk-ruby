@@ -665,6 +665,17 @@ module Aws::QBusiness
     class DeleteApplicationResponse < Aws::EmptyStructure
     end
 
+    class DeleteAttachmentRequest
+      attr_accessor application_id: ::String
+      attr_accessor conversation_id: ::String
+      attr_accessor attachment_id: ::String
+      attr_accessor user_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteAttachmentResponse < Aws::EmptyStructure
+    end
+
     class DeleteChatControlsConfigurationRequest
       attr_accessor application_id: ::String
       SENSITIVE: []

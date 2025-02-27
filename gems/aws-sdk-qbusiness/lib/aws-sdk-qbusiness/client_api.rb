@@ -164,6 +164,8 @@ module Aws::QBusiness
     DateAttributeBoostingConfiguration = Shapes::StructureShape.new(name: 'DateAttributeBoostingConfiguration')
     DeleteApplicationRequest = Shapes::StructureShape.new(name: 'DeleteApplicationRequest')
     DeleteApplicationResponse = Shapes::StructureShape.new(name: 'DeleteApplicationResponse')
+    DeleteAttachmentRequest = Shapes::StructureShape.new(name: 'DeleteAttachmentRequest')
+    DeleteAttachmentResponse = Shapes::StructureShape.new(name: 'DeleteAttachmentResponse')
     DeleteChatControlsConfigurationRequest = Shapes::StructureShape.new(name: 'DeleteChatControlsConfigurationRequest')
     DeleteChatControlsConfigurationResponse = Shapes::StructureShape.new(name: 'DeleteChatControlsConfigurationResponse')
     DeleteConversationRequest = Shapes::StructureShape.new(name: 'DeleteConversationRequest')
@@ -1076,6 +1078,14 @@ module Aws::QBusiness
     DeleteApplicationRequest.struct_class = Types::DeleteApplicationRequest
 
     DeleteApplicationResponse.struct_class = Types::DeleteApplicationResponse
+
+    DeleteAttachmentRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    DeleteAttachmentRequest.add_member(:conversation_id, Shapes::ShapeRef.new(shape: ConversationId, required: true, location: "uri", location_name: "conversationId"))
+    DeleteAttachmentRequest.add_member(:attachment_id, Shapes::ShapeRef.new(shape: AttachmentId, required: true, location: "uri", location_name: "attachmentId"))
+    DeleteAttachmentRequest.add_member(:user_id, Shapes::ShapeRef.new(shape: UserId, location: "querystring", location_name: "userId"))
+    DeleteAttachmentRequest.struct_class = Types::DeleteAttachmentRequest
+
+    DeleteAttachmentResponse.struct_class = Types::DeleteAttachmentResponse
 
     DeleteChatControlsConfigurationRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     DeleteChatControlsConfigurationRequest.struct_class = Types::DeleteChatControlsConfigurationRequest
@@ -2459,6 +2469,20 @@ module Aws::QBusiness
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
+      api.add_operation(:delete_attachment, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteAttachment"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/applications/{applicationId}/conversations/{conversationId}/attachments/{attachmentId}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteAttachmentRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteAttachmentResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)

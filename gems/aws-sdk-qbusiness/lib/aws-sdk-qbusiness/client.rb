@@ -2127,6 +2127,42 @@ module Aws::QBusiness
       req.send_request(options)
     end
 
+    # Deletes an attachment associated with a specific Amazon Q Business
+    # conversation.
+    #
+    # @option params [required, String] :application_id
+    #   The unique identifier for the Amazon Q Business application
+    #   environment.
+    #
+    # @option params [required, String] :conversation_id
+    #   The unique identifier of the conversation.
+    #
+    # @option params [required, String] :attachment_id
+    #   The unique identifier for the attachment.
+    #
+    # @option params [String] :user_id
+    #   The unique identifier of the user involved in the conversation.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_attachment({
+    #     application_id: "ApplicationId", # required
+    #     conversation_id: "ConversationId", # required
+    #     attachment_id: "AttachmentId", # required
+    #     user_id: "UserId",
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DeleteAttachment AWS API Documentation
+    #
+    # @overload delete_attachment(params = {})
+    # @param [Hash] params ({})
+    def delete_attachment(params = {}, options = {})
+      req = build_request(:delete_attachment, params)
+      req.send_request(options)
+    end
+
     # Deletes chat controls configured for an existing Amazon Q Business
     # application.
     #
@@ -5610,7 +5646,7 @@ module Aws::QBusiness
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qbusiness'
-      context[:gem_version] = '1.30.0'
+      context[:gem_version] = '1.31.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

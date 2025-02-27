@@ -2733,6 +2733,38 @@ module Aws::QBusiness
     class DeleteApplicationResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] application_id
+    #   The unique identifier for the Amazon Q Business application
+    #   environment.
+    #   @return [String]
+    #
+    # @!attribute [rw] conversation_id
+    #   The unique identifier of the conversation.
+    #   @return [String]
+    #
+    # @!attribute [rw] attachment_id
+    #   The unique identifier for the attachment.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_id
+    #   The unique identifier of the user involved in the conversation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DeleteAttachmentRequest AWS API Documentation
+    #
+    class DeleteAttachmentRequest < Struct.new(
+      :application_id,
+      :conversation_id,
+      :attachment_id,
+      :user_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DeleteAttachmentResponse AWS API Documentation
+    #
+    class DeleteAttachmentResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] application_id
     #   The identifier of the application the chat controls have been
     #   configured for.
     #   @return [String]
