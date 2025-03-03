@@ -1270,6 +1270,7 @@ module Aws::SageMaker
 
     class CreateDomainResponse
       attr_accessor domain_arn: ::String
+      attr_accessor domain_id: ::String
       attr_accessor url: ::String
       SENSITIVE: []
     end

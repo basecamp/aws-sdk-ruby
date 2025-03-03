@@ -729,6 +729,12 @@ module Aws::QBusiness
     #           image_extraction_configuration: {
     #             image_extraction_status: "ENABLED", # required, accepts ENABLED, DISABLED
     #           },
+    #           audio_extraction_configuration: {
+    #             audio_extraction_status: "ENABLED", # required, accepts ENABLED, DISABLED
+    #           },
+    #           video_extraction_configuration: {
+    #             video_extraction_status: "ENABLED", # required, accepts ENABLED, DISABLED
+    #           },
     #         },
     #       },
     #     ],
@@ -1037,6 +1043,18 @@ module Aws::QBusiness
     #   resp.source_attributions[0].text_message_segments[0].snippet_excerpt.text #=> String
     #   resp.source_attributions[0].text_message_segments[0].media_id #=> String
     #   resp.source_attributions[0].text_message_segments[0].media_mime_type #=> String
+    #   resp.source_attributions[0].text_message_segments[0].source_details.image_source_details.media_id #=> String
+    #   resp.source_attributions[0].text_message_segments[0].source_details.image_source_details.media_mime_type #=> String
+    #   resp.source_attributions[0].text_message_segments[0].source_details.audio_source_details.media_id #=> String
+    #   resp.source_attributions[0].text_message_segments[0].source_details.audio_source_details.media_mime_type #=> String
+    #   resp.source_attributions[0].text_message_segments[0].source_details.audio_source_details.start_time_milliseconds #=> Integer
+    #   resp.source_attributions[0].text_message_segments[0].source_details.audio_source_details.end_time_milliseconds #=> Integer
+    #   resp.source_attributions[0].text_message_segments[0].source_details.audio_source_details.audio_extraction_type #=> String, one of "TRANSCRIPT", "SUMMARY"
+    #   resp.source_attributions[0].text_message_segments[0].source_details.video_source_details.media_id #=> String
+    #   resp.source_attributions[0].text_message_segments[0].source_details.video_source_details.media_mime_type #=> String
+    #   resp.source_attributions[0].text_message_segments[0].source_details.video_source_details.start_time_milliseconds #=> Integer
+    #   resp.source_attributions[0].text_message_segments[0].source_details.video_source_details.end_time_milliseconds #=> Integer
+    #   resp.source_attributions[0].text_message_segments[0].source_details.video_source_details.video_extraction_type #=> String, one of "TRANSCRIPT", "SUMMARY"
     #   resp.failed_attachments #=> Array
     #   resp.failed_attachments[0].name #=> String
     #   resp.failed_attachments[0].status #=> String, one of "FAILED", "SUCCESS"
@@ -1557,6 +1575,12 @@ module Aws::QBusiness
     #     media_extraction_configuration: {
     #       image_extraction_configuration: {
     #         image_extraction_status: "ENABLED", # required, accepts ENABLED, DISABLED
+    #       },
+    #       audio_extraction_configuration: {
+    #         audio_extraction_status: "ENABLED", # required, accepts ENABLED, DISABLED
+    #       },
+    #       video_extraction_configuration: {
+    #         video_extraction_status: "ENABLED", # required, accepts ENABLED, DISABLED
     #       },
     #     },
     #   })
@@ -2837,6 +2861,8 @@ module Aws::QBusiness
     #   resp.document_enrichment_configuration.post_extraction_hook_configuration.s3_bucket_name #=> String
     #   resp.document_enrichment_configuration.post_extraction_hook_configuration.role_arn #=> String
     #   resp.media_extraction_configuration.image_extraction_configuration.image_extraction_status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.media_extraction_configuration.audio_extraction_configuration.audio_extraction_status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.media_extraction_configuration.video_extraction_configuration.video_extraction_status #=> String, one of "ENABLED", "DISABLED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetDataSource AWS API Documentation
     #
@@ -3876,6 +3902,18 @@ module Aws::QBusiness
     #   resp.messages[0].source_attribution[0].text_message_segments[0].snippet_excerpt.text #=> String
     #   resp.messages[0].source_attribution[0].text_message_segments[0].media_id #=> String
     #   resp.messages[0].source_attribution[0].text_message_segments[0].media_mime_type #=> String
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].source_details.image_source_details.media_id #=> String
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].source_details.image_source_details.media_mime_type #=> String
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].source_details.audio_source_details.media_id #=> String
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].source_details.audio_source_details.media_mime_type #=> String
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].source_details.audio_source_details.start_time_milliseconds #=> Integer
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].source_details.audio_source_details.end_time_milliseconds #=> Integer
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].source_details.audio_source_details.audio_extraction_type #=> String, one of "TRANSCRIPT", "SUMMARY"
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].source_details.video_source_details.media_id #=> String
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].source_details.video_source_details.media_mime_type #=> String
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].source_details.video_source_details.start_time_milliseconds #=> Integer
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].source_details.video_source_details.end_time_milliseconds #=> Integer
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].source_details.video_source_details.video_extraction_type #=> String, one of "TRANSCRIPT", "SUMMARY"
     #   resp.messages[0].action_review.plugin_id #=> String
     #   resp.messages[0].action_review.plugin_type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM", "QUICKSIGHT", "SERVICENOW_NOW_PLATFORM", "JIRA_CLOUD", "SALESFORCE_CRM", "ZENDESK_SUITE", "ATLASSIAN_CONFLUENCE", "GOOGLE_CALENDAR", "MICROSOFT_TEAMS", "MICROSOFT_EXCHANGE", "PAGERDUTY_ADVANCE", "SMARTSHEET", "ASANA"
     #   resp.messages[0].action_review.payload #=> Hash
@@ -5185,6 +5223,12 @@ module Aws::QBusiness
     #       image_extraction_configuration: {
     #         image_extraction_status: "ENABLED", # required, accepts ENABLED, DISABLED
     #       },
+    #       audio_extraction_configuration: {
+    #         audio_extraction_status: "ENABLED", # required, accepts ENABLED, DISABLED
+    #       },
+    #       video_extraction_configuration: {
+    #         video_extraction_status: "ENABLED", # required, accepts ENABLED, DISABLED
+    #       },
     #     },
     #   })
     #
@@ -5646,7 +5690,7 @@ module Aws::QBusiness
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qbusiness'
-      context[:gem_version] = '1.31.0'
+      context[:gem_version] = '1.32.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

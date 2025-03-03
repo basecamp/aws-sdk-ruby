@@ -2888,6 +2888,7 @@ module Aws::SageMaker
     # @return [Types::CreateDomainResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateDomainResponse#domain_arn #domain_arn} => String
+    #   * {Types::CreateDomainResponse#domain_id #domain_id} => String
     #   * {Types::CreateDomainResponse#url #url} => String
     #
     # @example Request syntax with placeholder values
@@ -3231,6 +3232,7 @@ module Aws::SageMaker
     # @example Response structure
     #
     #   resp.domain_arn #=> String
+    #   resp.domain_id #=> String
     #   resp.url #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CreateDomain AWS API Documentation
@@ -29745,7 +29747,7 @@ module Aws::SageMaker
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sagemaker'
-      context[:gem_version] = '1.292.0'
+      context[:gem_version] = '1.293.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

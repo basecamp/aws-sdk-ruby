@@ -6823,6 +6823,10 @@ module Aws::SageMaker
     #   The Amazon Resource Name (ARN) of the created domain.
     #   @return [String]
     #
+    # @!attribute [rw] domain_id
+    #   The ID of the created domain.
+    #   @return [String]
+    #
     # @!attribute [rw] url
     #   The URL to the created domain.
     #   @return [String]
@@ -6831,6 +6835,7 @@ module Aws::SageMaker
     #
     class CreateDomainResponse < Struct.new(
       :domain_arn,
+      :domain_id,
       :url)
       SENSITIVE = []
       include Aws::Structure
@@ -26734,6 +26739,14 @@ module Aws::SageMaker
     # @!attribute [rw] custom_images
     #   A list of custom SageMaker AI images that are configured to run as a
     #   KernelGateway app.
+    #
+    #   The maximum number of custom images are as follows.
+    #
+    #   * On a domain level: 200
+    #
+    #   * On a space level: 5
+    #
+    #   * On a user profile level: 5
     #   @return [Array<Types::CustomImage>]
     #
     # @!attribute [rw] lifecycle_config_arns

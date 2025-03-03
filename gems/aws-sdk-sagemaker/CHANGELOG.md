@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.293.0 (2025-03-03)
+------------------
+
+* Feature - Add DomainId to CreateDomainResponse
+
 1.292.0 (2025-02-27)
 ------------------
 

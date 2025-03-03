@@ -1049,6 +1049,7 @@ module Aws
       interface _CreateDomainResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateDomainResponse]
         def domain_arn: () -> ::String
+        def domain_id: () -> ::String
         def url: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SageMaker/Client.html#create_domain-instance_method
