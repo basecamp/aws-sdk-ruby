@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+3.224.0 (2025-03-04)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-iotmanagedintegrations` gem.
+
 3.223.0 (2025-02-24)
 ------------------
 

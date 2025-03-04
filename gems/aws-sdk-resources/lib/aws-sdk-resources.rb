@@ -197,6 +197,7 @@ module Aws
   autoload :IoTFleetHub, 'aws-sdk-iotfleethub'
   autoload :IoTFleetWise, 'aws-sdk-iotfleetwise'
   autoload :IoTJobsDataPlane, 'aws-sdk-iotjobsdataplane'
+  autoload :IoTManagedIntegrations, 'aws-sdk-iotmanagedintegrations'
   autoload :IoTSecureTunneling, 'aws-sdk-iotsecuretunneling'
   autoload :IoTSiteWise, 'aws-sdk-iotsitewise'
   autoload :IoTThingsGraph, 'aws-sdk-iotthingsgraph'

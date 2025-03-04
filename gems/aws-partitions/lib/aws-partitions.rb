@@ -435,6 +435,7 @@ module Aws
             'IoTFleetHub' => 'api.fleethub.iot',
             'IoTFleetWise' => 'iotfleetwise',
             'IoTJobsDataPlane' => 'data.jobs.iot',
+            'IoTManagedIntegrations' => 'api.iotmanagedintegrations',
             'IoTSecureTunneling' => 'api.tunneling.iot',
             'IoTSiteWise' => 'iotsitewise',
             'IoTThingsGraph' => 'iotthingsgraph',

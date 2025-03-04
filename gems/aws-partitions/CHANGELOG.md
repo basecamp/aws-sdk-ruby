@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.1060.0 (2025-03-04)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::IoTManagedIntegrations`.
+
 1.1059.0 (2025-03-03)
 ------------------
 
