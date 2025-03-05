@@ -403,6 +403,7 @@ module Aws
             'FraudDetector' => 'frauddetector',
             'FreeTier' => 'freetier',
             'GameLift' => 'gamelift',
+            'GameLiftStreams' => 'gameliftstreams',
             'GeoMaps' => 'geo-maps',
             'GeoPlaces' => 'geo-places',
             'GeoRoutes' => 'geo-routes',

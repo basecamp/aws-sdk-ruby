@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+3.225.0 (2025-03-05)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-gameliftstreams` gem.
+
 3.224.0 (2025-03-04)
 ------------------
 

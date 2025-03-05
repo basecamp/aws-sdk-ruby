@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.1061.0 (2025-03-05)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::GameLiftStreams`.
+
 1.1060.0 (2025-03-04)
 ------------------
 

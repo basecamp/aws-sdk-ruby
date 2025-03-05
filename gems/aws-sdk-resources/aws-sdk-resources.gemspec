@@ -174,6 +174,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency('aws-sdk-frauddetector', '~> 1')
   spec.add_dependency('aws-sdk-freetier', '~> 1')
   spec.add_dependency('aws-sdk-gamelift', '~> 1')
+  spec.add_dependency('aws-sdk-gameliftstreams', '~> 1')
   spec.add_dependency('aws-sdk-geomaps', '~> 1')
   spec.add_dependency('aws-sdk-geoplaces', '~> 1')
   spec.add_dependency('aws-sdk-georoutes', '~> 1')

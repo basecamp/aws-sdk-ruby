@@ -164,6 +164,7 @@ module Aws
   autoload :FraudDetector, 'aws-sdk-frauddetector'
   autoload :FreeTier, 'aws-sdk-freetier'
   autoload :GameLift, 'aws-sdk-gamelift'
+  autoload :GameLiftStreams, 'aws-sdk-gameliftstreams'
   autoload :GeoMaps, 'aws-sdk-geomaps'
   autoload :GeoPlaces, 'aws-sdk-geoplaces'
   autoload :GeoRoutes, 'aws-sdk-georoutes'

@@ -557,6 +557,7 @@ RubyGems.org page under "LINKS" section.
 | Amazon Forecast Service                               | Aws::ForecastService                     | aws-sdk-forecastservice                     | 2018-06-26  |
 | Amazon Fraud Detector                                 | Aws::FraudDetector                       | aws-sdk-frauddetector                       | 2019-11-15  |
 | Amazon GameLift                                       | Aws::GameLift                            | aws-sdk-gamelift                            | 2015-10-01  |
+| Amazon GameLift Streams                               | Aws::GameLiftStreams                     | aws-sdk-gameliftstreams                     | 2018-05-10  |
 | Amazon Glacier                                        | Aws::Glacier                             | aws-sdk-glacier                             | 2012-06-01  |
 | Amazon GuardDuty                                      | Aws::GuardDuty                           | aws-sdk-guardduty                           | 2017-11-28  |
 | Amazon HealthLake                                     | Aws::HealthLake                          | aws-sdk-healthlake                          | 2017-07-01  |
