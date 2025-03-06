@@ -15,26 +15,10 @@ module Aws
 
     # @api private
     def setup_stubbing
-      @stubs = {}
-      @stub_mutex = Mutex.new
       if Hash === @config.stub_responses
         @config.stub_responses.each do |operation_name, stubs|
           apply_stubs(operation_name, Array === stubs ? stubs : [stubs])
         end
-      end
-
-      # When a client is stubbed allow the user to access the requests made
-      requests = @api_requests = []
-      requests_mutex = @requests_mutex = Mutex.new
-      self.handle do |context|
-        requests_mutex.synchronize do
-          requests << {
-            operation_name: context.operation_name,
-            params: context.params,
-            context: context
-          }
-        end
-        @handler.call(context)
       end
     end
 
@@ -175,7 +159,7 @@ module Aws
     #   on a client that has not enabled response stubbing via
     #   `:stub_responses => true`.
     def stub_responses(operation_name, *stubs)
-      if config.stub_responses
+      if @config.stub_responses
         apply_stubs(operation_name, stubs.flatten)
       else
         msg = 'stubbing is not enabled; enable stubbing in the constructor '\
@@ -194,12 +178,12 @@ module Aws
     # @raise [NotImplementedError] Raises `NotImplementedError` when the client
     #   is not stubbed.
     def api_requests(options = {})
-      if config.stub_responses
-        @requests_mutex.synchronize do
+      if @config.stub_responses
+        @config.api_requests_mutex.synchronize do
           if options[:exclude_presign]
-            @api_requests.reject {|req| req[:context][:presigned_url] }
+            @config.api_requests.reject {|req| req[:context][:presigned_url] }
           else
-            @api_requests
+            @config.api_requests
           end
         end
       else
@@ -228,54 +212,44 @@ module Aws
     # @return [Structure] Returns a stubbed response data structure. The
     #   actual class returned will depend on the given `operation_name`.
     def stub_data(operation_name, data = {})
-      Stubbing::StubData.new(config.api.operation(operation_name)).stub(data)
+      Stubbing::StubData.new(@config.api.operation(operation_name)).stub(data)
     end
 
     # @api private
     def next_stub(context)
       operation_name = context.operation_name.to_sym
-      stub = @stub_mutex.synchronize do
-        stubs = @stubs[operation_name] || []
+      stub = @config.stubs_mutex.synchronize do
+        stubs = @config.stubs[operation_name] || []
         case stubs.length
-        when 0 then default_stub(operation_name)
+        when 0 then stub_data(operation_name)
         when 1 then stubs.first
         else stubs.shift
         end
       end
-      Proc === stub ? convert_stub(operation_name, stub.call(context)) : stub
+      stub = convert_stub(operation_name, stub, context)
+      stub[:mutex] = Mutex.new
+      stub
     end
 
     private
 
-    def default_stub(operation_name)
-      stub = stub_data(operation_name)
-      http_response_stub(operation_name, stub)
+    def apply_stubs(operation_name, stubs)
+      @config.stubs_mutex.synchronize do
+        @config.stubs[operation_name.to_sym] = stubs
+      end
     end
 
     # This method converts the given stub data and converts it to a
     # HTTP response (when possible). This enables the response stubbing
     # plugin to provide a HTTP response that triggers all normal events
     # during response handling.
-    def apply_stubs(operation_name, stubs)
-      @stub_mutex.synchronize do
-        @stubs[operation_name.to_sym] = stubs.map do |stub|
-          convert_stub(operation_name, stub)
-        end
-      end
-    end
-
-    def convert_stub(operation_name, stub)
-      stub = case stub
-      when Proc then stub
+    def convert_stub(operation_name, stub, context)
+      case stub
+      when Proc then convert_stub(operation_name, stub.call(context), context)
       when Exception, Class then { error: stub }
       when String then service_error_stub(stub)
-      when Hash then http_response_stub(operation_name, stub)
-      else { data: stub }
+      else http_response_stub(operation_name, stub)
       end
-      if Hash === stub
-        stub[:mutex] = Mutex.new
-      end
-      stub
     end
 
     def service_error_stub(error_code)
@@ -299,14 +273,14 @@ module Aws
     end
 
     def data_to_http_resp(operation_name, data)
-      api = config.api
+      api = @config.api
       operation = api.operation(operation_name)
       ParamValidator.new(operation.output, input: false).validate!(data)
       protocol_helper.stub_data(api, operation, data)
     end
 
     def protocol_helper
-      case config.api.metadata['protocol']
+      case @config.api.metadata['protocol']
       when 'json'               then Stubbing::Protocols::Json
       when 'rest-json'          then Stubbing::Protocols::RestJson
       when 'rest-xml'           then Stubbing::Protocols::RestXml

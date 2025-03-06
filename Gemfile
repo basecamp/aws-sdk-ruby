@@ -42,6 +42,7 @@ group :build do
 end
 
 group :development do
+  gem 'byebug', platforms: :ruby
   gem 'rubocop', '1.28.0'
 end
 
