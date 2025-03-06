@@ -190,6 +190,7 @@ module Aws::WAFV2
     ImmunityTimeProperty = Shapes::StructureShape.new(name: 'ImmunityTimeProperty')
     InspectionLevel = Shapes::StringShape.new(name: 'InspectionLevel')
     JA3Fingerprint = Shapes::StructureShape.new(name: 'JA3Fingerprint')
+    JA4Fingerprint = Shapes::StructureShape.new(name: 'JA4Fingerprint')
     JsonBody = Shapes::StructureShape.new(name: 'JsonBody')
     JsonMatchPattern = Shapes::StructureShape.new(name: 'JsonMatchPattern')
     JsonMatchScope = Shapes::StringShape.new(name: 'JsonMatchScope')
@@ -296,6 +297,8 @@ module Aws::WAFV2
     RateLimitHTTPMethod = Shapes::StructureShape.new(name: 'RateLimitHTTPMethod')
     RateLimitHeader = Shapes::StructureShape.new(name: 'RateLimitHeader')
     RateLimitIP = Shapes::StructureShape.new(name: 'RateLimitIP')
+    RateLimitJA3Fingerprint = Shapes::StructureShape.new(name: 'RateLimitJA3Fingerprint')
+    RateLimitJA4Fingerprint = Shapes::StructureShape.new(name: 'RateLimitJA4Fingerprint')
     RateLimitLabelNamespace = Shapes::StructureShape.new(name: 'RateLimitLabelNamespace')
     RateLimitQueryArgument = Shapes::StructureShape.new(name: 'RateLimitQueryArgument')
     RateLimitQueryString = Shapes::StructureShape.new(name: 'RateLimitQueryString')
@@ -755,6 +758,7 @@ module Aws::WAFV2
     FieldToMatch.add_member(:cookies, Shapes::ShapeRef.new(shape: Cookies, location_name: "Cookies"))
     FieldToMatch.add_member(:header_order, Shapes::ShapeRef.new(shape: HeaderOrder, location_name: "HeaderOrder"))
     FieldToMatch.add_member(:ja3_fingerprint, Shapes::ShapeRef.new(shape: JA3Fingerprint, location_name: "JA3Fingerprint"))
+    FieldToMatch.add_member(:ja4_fingerprint, Shapes::ShapeRef.new(shape: JA4Fingerprint, location_name: "JA4Fingerprint"))
     FieldToMatch.struct_class = Types::FieldToMatch
 
     FieldToProtect.add_member(:field_type, Shapes::ShapeRef.new(shape: FieldToProtectType, required: true, location_name: "FieldType"))
@@ -965,6 +969,9 @@ module Aws::WAFV2
 
     JA3Fingerprint.add_member(:fallback_behavior, Shapes::ShapeRef.new(shape: FallbackBehavior, required: true, location_name: "FallbackBehavior"))
     JA3Fingerprint.struct_class = Types::JA3Fingerprint
+
+    JA4Fingerprint.add_member(:fallback_behavior, Shapes::ShapeRef.new(shape: FallbackBehavior, required: true, location_name: "FallbackBehavior"))
+    JA4Fingerprint.struct_class = Types::JA4Fingerprint
 
     JsonBody.add_member(:match_pattern, Shapes::ShapeRef.new(shape: JsonMatchPattern, required: true, location_name: "MatchPattern"))
     JsonBody.add_member(:match_scope, Shapes::ShapeRef.new(shape: JsonMatchScope, required: true, location_name: "MatchScope"))
@@ -1270,6 +1277,8 @@ module Aws::WAFV2
     RateBasedStatementCustomKey.add_member(:ip, Shapes::ShapeRef.new(shape: RateLimitIP, location_name: "IP"))
     RateBasedStatementCustomKey.add_member(:label_namespace, Shapes::ShapeRef.new(shape: RateLimitLabelNamespace, location_name: "LabelNamespace"))
     RateBasedStatementCustomKey.add_member(:uri_path, Shapes::ShapeRef.new(shape: RateLimitUriPath, location_name: "UriPath"))
+    RateBasedStatementCustomKey.add_member(:ja3_fingerprint, Shapes::ShapeRef.new(shape: RateLimitJA3Fingerprint, location_name: "JA3Fingerprint"))
+    RateBasedStatementCustomKey.add_member(:ja4_fingerprint, Shapes::ShapeRef.new(shape: RateLimitJA4Fingerprint, location_name: "JA4Fingerprint"))
     RateBasedStatementCustomKey.struct_class = Types::RateBasedStatementCustomKey
 
     RateBasedStatementCustomKeys.member = Shapes::ShapeRef.new(shape: RateBasedStatementCustomKey)
@@ -1291,6 +1300,12 @@ module Aws::WAFV2
     RateLimitHeader.struct_class = Types::RateLimitHeader
 
     RateLimitIP.struct_class = Types::RateLimitIP
+
+    RateLimitJA3Fingerprint.add_member(:fallback_behavior, Shapes::ShapeRef.new(shape: FallbackBehavior, required: true, location_name: "FallbackBehavior"))
+    RateLimitJA3Fingerprint.struct_class = Types::RateLimitJA3Fingerprint
+
+    RateLimitJA4Fingerprint.add_member(:fallback_behavior, Shapes::ShapeRef.new(shape: FallbackBehavior, required: true, location_name: "FallbackBehavior"))
+    RateLimitJA4Fingerprint.struct_class = Types::RateLimitJA4Fingerprint
 
     RateLimitLabelNamespace.add_member(:namespace, Shapes::ShapeRef.new(shape: LabelNamespace, required: true, location_name: "Namespace"))
     RateLimitLabelNamespace.struct_class = Types::RateLimitLabelNamespace

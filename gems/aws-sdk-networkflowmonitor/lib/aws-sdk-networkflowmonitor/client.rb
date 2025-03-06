@@ -537,7 +537,7 @@ module Aws::NetworkFlowMonitor
     #       },
     #     ],
     #     scope_arn: "Arn", # required
-    #     client_token: "String",
+    #     client_token: "UuidString",
     #     tags: {
     #       "TagKey" => "TagValue",
     #     },
@@ -613,7 +613,7 @@ module Aws::NetworkFlowMonitor
     #         region: "AwsRegion", # required
     #       },
     #     ],
-    #     client_token: "String",
+    #     client_token: "UuidString",
     #     tags: {
     #       "TagKey" => "TagValue",
     #     },
@@ -828,8 +828,13 @@ module Aws::NetworkFlowMonitor
 
     # Return the data for a query with the Network Flow Monitor query
     # interface. You specify the query that you want to return results for
-    # by providing a query ID and a monitor name. This query returns the top
-    # contributors for a specific monitor.
+    # by providing a query ID and a monitor name.
+    #
+    # This query returns the top contributors for a scope for workload
+    # insights. Workload insights provide a high level view of network flow
+    # performance data collected by agents. To return the data for the top
+    # contributors, see
+    # `GetQueryResultsWorkloadInsightsTopContributorsData`.
     #
     # Create a query ID for this call by calling the corresponding API call
     # to start the query, `StartQueryWorkloadInsightsTopContributors`. Use
@@ -897,10 +902,13 @@ module Aws::NetworkFlowMonitor
 
     # Return the data for a query with the Network Flow Monitor query
     # interface. Specify the query that you want to return results for by
-    # providing a query ID and a scope ID. This query returns data for the
-    # top contributors for workload insights. Workload insights provide a
-    # high level view of network flow performance data collected by agents
-    # for a scope.
+    # providing a query ID and a scope ID.
+    #
+    # This query returns the data for top contributors for workload insights
+    # for a specific scope. Workload insights provide a high level view of
+    # network flow performance data collected by agents for a scope. To
+    # return just the top contributors, see
+    # `GetQueryResultsWorkloadInsightsTopContributors`.
     #
     # Create a query ID for this call by calling the corresponding API call
     # to start the query, `StartQueryWorkloadInsightsTopContributorsData`.
@@ -972,9 +980,10 @@ module Aws::NetworkFlowMonitor
     # returns the query status for the top contributors for a monitor.
     #
     # When you start a query, use this call to check the status of the query
-    # to make sure that it has has `SUCCEEDED` before you review the
-    # results. Use the same query ID that you used for the corresponding API
-    # call to start the query, `StartQueryMonitorTopContributors`.
+    # to make sure that it has has `SUCCEEDED` before you
+    # reviewStartQueryWorkloadInsightsTopContributorsData the results. Use
+    # the same query ID that you used for the corresponding API call to
+    # start the query, `StartQueryMonitorTopContributors`.
     #
     # When you run a query, use this call to check the status of the query
     # to make sure that the query has `SUCCEEDED` before you review the
@@ -1318,8 +1327,10 @@ module Aws::NetworkFlowMonitor
     #
     #   * `INTER_VPC`: Top contributor network flows between VPCs
     #
-    #   * `AWS_SERVICES`: Top contributor network flows to or from Amazon Web
-    #     Services services
+    #   * `AMAZON_S3`: Top contributor network flows to or from Amazon S3
+    #
+    #   * `AMAZON_DYNAMODB`: Top contributor network flows to or from Amazon
+    #     Dynamo DB
     #
     #   * `UNCLASSIFIED`: Top contributor network flows that do not have a
     #     bucket classification
@@ -1432,22 +1443,14 @@ module Aws::NetworkFlowMonitor
       req.send_request(options)
     end
 
-    # Return the data for a query with the Network Flow Monitor query
-    # interface. Specify the query that you want to return results for by
-    # providing a query ID and a scope ID. This query returns data for the
-    # top contributors for workload insights. Workload insights provide a
-    # high level view of network flow performance data collected by agents
-    # for a scope.
-    #
-    # A query ID is returned from an API call to start a query of a specific
-    # type; for example
+    # Start a query to return the with the Network Flow Monitor query
+    # interface. Specify the query that you want to start by providing a
+    # query ID and a monitor name. This query returns the data for top
+    # contributors for workload insights.
     #
     # Top contributors in Network Flow Monitor are network flows with the
     # highest values for a specific metric type, related to a scope (for
     # workload insights) or a monitor.
-    #
-    # The top contributor network flows overall for a specific metric type,
-    # for example, the number of retransmissions.
     #
     # @option params [required, String] :scope_id
     #   The identifier for the scope that includes the resources you want to
@@ -1746,7 +1749,7 @@ module Aws::NetworkFlowMonitor
     #         identifier: "String", # required
     #       },
     #     ],
-    #     client_token: "String",
+    #     client_token: "UuidString",
     #   })
     #
     # @example Response structure
@@ -1860,7 +1863,7 @@ module Aws::NetworkFlowMonitor
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-networkflowmonitor'
-      context[:gem_version] = '1.3.0'
+      context[:gem_version] = '1.4.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

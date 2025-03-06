@@ -1061,6 +1061,15 @@ module Aws::WorkSpaces
     class ModifyClientPropertiesResult < Aws::EmptyStructure
     end
 
+    class ModifyEndpointEncryptionModeRequest
+      attr_accessor directory_id: ::String
+      attr_accessor endpoint_encryption_mode: ("STANDARD_TLS" | "FIPS_VALIDATED")
+      SENSITIVE: []
+    end
+
+    class ModifyEndpointEncryptionModeResponse < Aws::EmptyStructure
+    end
+
     class ModifySamlPropertiesRequest
       attr_accessor resource_id: ::String
       attr_accessor saml_properties: Types::SamlProperties
@@ -1637,6 +1646,7 @@ module Aws::WorkSpaces
       attr_accessor selfservice_permissions: Types::SelfservicePermissions
       attr_accessor saml_properties: Types::SamlProperties
       attr_accessor certificate_based_auth_properties: Types::CertificateBasedAuthProperties
+      attr_accessor endpoint_encryption_mode: ("STANDARD_TLS" | "FIPS_VALIDATED")
       attr_accessor microsoft_entra_config: Types::MicrosoftEntraConfig
       attr_accessor workspace_directory_name: ::String
       attr_accessor workspace_directory_description: ::String

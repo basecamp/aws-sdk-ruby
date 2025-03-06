@@ -12,24 +12,80 @@ module Aws
       end
 
       class AccessDeniedException < ::Aws::Errors::ServiceError
+        def access_control_allow_origin: () -> ::String
+        def access_control_expose_headers: () -> ::String
+        def cache_control: () -> ::String
+        def content_security_policy: () -> ::String
+        def strict_transport_security: () -> ::String
+        def x_content_type_options: () -> ::String
+        def x_frame_options: () -> ::String
+        def x_amzn_error_type: () -> ::String
         def exception_message: () -> ::String
       end
       class ConflictException < ::Aws::Errors::ServiceError
+        def access_control_allow_origin: () -> ::String
+        def access_control_expose_headers: () -> ::String
+        def cache_control: () -> ::String
+        def content_security_policy: () -> ::String
+        def strict_transport_security: () -> ::String
+        def x_content_type_options: () -> ::String
+        def x_frame_options: () -> ::String
+        def x_amzn_error_type: () -> ::String
         def exception_message: () -> ::String
       end
       class InternalServerException < ::Aws::Errors::ServiceError
+        def access_control_allow_origin: () -> ::String
+        def access_control_expose_headers: () -> ::String
+        def cache_control: () -> ::String
+        def content_security_policy: () -> ::String
+        def strict_transport_security: () -> ::String
+        def x_content_type_options: () -> ::String
+        def x_frame_options: () -> ::String
+        def x_amzn_error_type: () -> ::String
         def exception_message: () -> ::String
       end
       class PendingVerification < ::Aws::Errors::ServiceError
+        def access_control_allow_origin: () -> ::String
+        def access_control_expose_headers: () -> ::String
+        def cache_control: () -> ::String
+        def content_security_policy: () -> ::String
+        def strict_transport_security: () -> ::String
+        def x_content_type_options: () -> ::String
+        def x_frame_options: () -> ::String
+        def x_amzn_error_type: () -> ::String
         def exception_message: () -> ::String
       end
       class ResourceNotFoundException < ::Aws::Errors::ServiceError
+        def access_control_allow_origin: () -> ::String
+        def access_control_expose_headers: () -> ::String
+        def cache_control: () -> ::String
+        def content_security_policy: () -> ::String
+        def strict_transport_security: () -> ::String
+        def x_content_type_options: () -> ::String
+        def x_frame_options: () -> ::String
+        def x_amzn_error_type: () -> ::String
         def exception_message: () -> ::String
       end
       class ServiceQuotaExceededException < ::Aws::Errors::ServiceError
+        def access_control_allow_origin: () -> ::String
+        def access_control_expose_headers: () -> ::String
+        def cache_control: () -> ::String
+        def content_security_policy: () -> ::String
+        def strict_transport_security: () -> ::String
+        def x_content_type_options: () -> ::String
+        def x_frame_options: () -> ::String
+        def x_amzn_error_type: () -> ::String
         def exception_message: () -> ::String
       end
       class ValidationException < ::Aws::Errors::ServiceError
+        def access_control_allow_origin: () -> ::String
+        def access_control_expose_headers: () -> ::String
+        def cache_control: () -> ::String
+        def content_security_policy: () -> ::String
+        def strict_transport_security: () -> ::String
+        def x_content_type_options: () -> ::String
+        def x_frame_options: () -> ::String
+        def x_amzn_error_type: () -> ::String
         def exception_message: () -> ::String
       end
     end

@@ -442,6 +442,7 @@ module Aws::WAFV2
       attr_accessor cookies: Types::Cookies
       attr_accessor header_order: Types::HeaderOrder
       attr_accessor ja3_fingerprint: Types::JA3Fingerprint
+      attr_accessor ja4_fingerprint: Types::JA4Fingerprint
       SENSITIVE: []
     end
 
@@ -722,6 +723,11 @@ module Aws::WAFV2
     end
 
     class JA3Fingerprint
+      attr_accessor fallback_behavior: ("MATCH" | "NO_MATCH")
+      SENSITIVE: []
+    end
+
+    class JA4Fingerprint
       attr_accessor fallback_behavior: ("MATCH" | "NO_MATCH")
       SENSITIVE: []
     end
@@ -1114,6 +1120,8 @@ module Aws::WAFV2
       attr_accessor ip: Types::RateLimitIP
       attr_accessor label_namespace: Types::RateLimitLabelNamespace
       attr_accessor uri_path: Types::RateLimitUriPath
+      attr_accessor ja3_fingerprint: Types::RateLimitJA3Fingerprint
+      attr_accessor ja4_fingerprint: Types::RateLimitJA4Fingerprint
       SENSITIVE: []
     end
 
@@ -1142,6 +1150,16 @@ module Aws::WAFV2
     end
 
     class RateLimitIP < Aws::EmptyStructure
+    end
+
+    class RateLimitJA3Fingerprint
+      attr_accessor fallback_behavior: ("MATCH" | "NO_MATCH")
+      SENSITIVE: []
+    end
+
+    class RateLimitJA4Fingerprint
+      attr_accessor fallback_behavior: ("MATCH" | "NO_MATCH")
+      SENSITIVE: []
     end
 
     class RateLimitLabelNamespace

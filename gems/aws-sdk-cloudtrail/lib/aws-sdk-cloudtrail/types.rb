@@ -812,8 +812,9 @@ module Aws::CloudTrail
     #   @return [String]
     #
     # @!attribute [rw] sns_topic_name
-    #   Specifies the name of the Amazon SNS topic defined for notification
-    #   of log file delivery. The maximum length is 256 characters.
+    #   Specifies the name or ARN of the Amazon SNS topic defined for
+    #   notification of log file delivery. The maximum length is 256
+    #   characters.
     #   @return [String]
     #
     # @!attribute [rw] include_global_service_events
@@ -5733,8 +5734,9 @@ module Aws::CloudTrail
     #   @return [String]
     #
     # @!attribute [rw] sns_topic_name
-    #   Specifies the name of the Amazon SNS topic defined for notification
-    #   of log file delivery. The maximum length is 256 characters.
+    #   Specifies the name or ARN of the Amazon SNS topic defined for
+    #   notification of log file delivery. The maximum length is 256
+    #   characters.
     #   @return [String]
     #
     # @!attribute [rw] include_global_service_events

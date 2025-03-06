@@ -1466,13 +1466,29 @@ module Aws::RedshiftDataAPIService
     # List of SQL statements. By default, only finished statements are
     # shown. A token is returned to page through the statement list.
     #
+    # When you use identity-enhanced role sessions to list statements, you
+    # must provide either the `cluster-identifier` or `workgroup-name`
+    # parameter. This ensures that the IdC user can only access the Amazon
+    # Redshift IdC applications they are assigned. For more information, see
+    # [ Trusted identity propagation overview][1].
+    #
     # For more information about the Amazon Redshift Data API and CLI usage
-    # examples, see [Using the Amazon Redshift Data API][1] in the *Amazon
+    # examples, see [Using the Amazon Redshift Data API][2] in the *Amazon
     # Redshift Management Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html
+    # [1]: https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-overview.html
+    # [2]: https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html
+    #
+    # @option params [String] :cluster_identifier
+    #   The cluster identifier. Only statements that ran on this cluster are
+    #   returned. When providing `ClusterIdentifier`, then `WorkgroupName`
+    #   can't be specified.
+    #
+    # @option params [String] :database
+    #   The name of the database when listing statements run against a
+    #   `ClusterIdentifier` or `WorkgroupName`.
     #
     # @option params [Integer] :max_results
     #   The maximum number of SQL statements to return in the response. If
@@ -1521,6 +1537,11 @@ module Aws::RedshiftDataAPIService
     #
     #   * SUBMITTED - The query was submitted, but not yet processed.
     #
+    # @option params [String] :workgroup_name
+    #   The serverless workgroup name or Amazon Resource Name (ARN). Only
+    #   statements that ran on this workgroup are returned. When providing
+    #   `WorkgroupName`, then `ClusterIdentifier` can't be specified.
+    #
     # @return [Types::ListStatementsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ListStatementsResponse#next_token #next_token} => String
@@ -1531,11 +1552,14 @@ module Aws::RedshiftDataAPIService
     # @example Request syntax with placeholder values
     #
     #   resp = client.list_statements({
+    #     cluster_identifier: "ClusterIdentifierString",
+    #     database: "String",
     #     max_results: 1,
     #     next_token: "String",
     #     role_level: false,
     #     statement_name: "StatementNameString",
     #     status: "SUBMITTED", # accepts SUBMITTED, PICKED, STARTED, FINISHED, ABORTED, FAILED, ALL
+    #     workgroup_name: "WorkgroupNameString",
     #   })
     #
     # @example Response structure
@@ -1727,7 +1751,7 @@ module Aws::RedshiftDataAPIService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-redshiftdataapiservice'
-      context[:gem_version] = '1.53.0'
+      context[:gem_version] = '1.54.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

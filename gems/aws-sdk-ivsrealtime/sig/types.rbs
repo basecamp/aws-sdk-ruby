@@ -9,6 +9,14 @@ module Aws::IVSRealTime
   module Types
 
     class AccessDeniedException
+      attr_accessor access_control_allow_origin: ::String
+      attr_accessor access_control_expose_headers: ::String
+      attr_accessor cache_control: ::String
+      attr_accessor content_security_policy: ::String
+      attr_accessor strict_transport_security: ::String
+      attr_accessor x_content_type_options: ::String
+      attr_accessor x_frame_options: ::String
+      attr_accessor x_amzn_error_type: ::String
       attr_accessor exception_message: ::String
       SENSITIVE: []
     end
@@ -17,6 +25,7 @@ module Aws::IVSRealTime
       attr_accessor storage_configuration_arn: ::String
       attr_accessor media_types: ::Array[("AUDIO_VIDEO" | "AUDIO_ONLY" | "NONE")]
       attr_accessor thumbnail_configuration: Types::ParticipantThumbnailConfiguration
+      attr_accessor recording_reconnect_window_seconds: ::Integer
       SENSITIVE: []
     end
 
@@ -56,6 +65,14 @@ module Aws::IVSRealTime
     end
 
     class ConflictException
+      attr_accessor access_control_allow_origin: ::String
+      attr_accessor access_control_expose_headers: ::String
+      attr_accessor cache_control: ::String
+      attr_accessor content_security_policy: ::String
+      attr_accessor strict_transport_security: ::String
+      attr_accessor x_content_type_options: ::String
+      attr_accessor x_frame_options: ::String
+      attr_accessor x_amzn_error_type: ::String
       attr_accessor exception_message: ::String
       SENSITIVE: []
     end
@@ -363,6 +380,14 @@ module Aws::IVSRealTime
     end
 
     class InternalServerException
+      attr_accessor access_control_allow_origin: ::String
+      attr_accessor access_control_expose_headers: ::String
+      attr_accessor cache_control: ::String
+      attr_accessor content_security_policy: ::String
+      attr_accessor strict_transport_security: ::String
+      attr_accessor x_content_type_options: ::String
+      attr_accessor x_frame_options: ::String
+      attr_accessor x_amzn_error_type: ::String
       attr_accessor exception_message: ::String
       SENSITIVE: []
     end
@@ -562,6 +587,14 @@ module Aws::IVSRealTime
     end
 
     class PendingVerification
+      attr_accessor access_control_allow_origin: ::String
+      attr_accessor access_control_expose_headers: ::String
+      attr_accessor cache_control: ::String
+      attr_accessor content_security_policy: ::String
+      attr_accessor strict_transport_security: ::String
+      attr_accessor x_content_type_options: ::String
+      attr_accessor x_frame_options: ::String
+      attr_accessor x_amzn_error_type: ::String
       attr_accessor exception_message: ::String
       SENSITIVE: []
     end
@@ -602,6 +635,14 @@ module Aws::IVSRealTime
     end
 
     class ResourceNotFoundException
+      attr_accessor access_control_allow_origin: ::String
+      attr_accessor access_control_expose_headers: ::String
+      attr_accessor cache_control: ::String
+      attr_accessor content_security_policy: ::String
+      attr_accessor strict_transport_security: ::String
+      attr_accessor x_content_type_options: ::String
+      attr_accessor x_frame_options: ::String
+      attr_accessor x_amzn_error_type: ::String
       attr_accessor exception_message: ::String
       SENSITIVE: []
     end
@@ -625,6 +666,14 @@ module Aws::IVSRealTime
     end
 
     class ServiceQuotaExceededException
+      attr_accessor access_control_allow_origin: ::String
+      attr_accessor access_control_expose_headers: ::String
+      attr_accessor cache_control: ::String
+      attr_accessor content_security_policy: ::String
+      attr_accessor strict_transport_security: ::String
+      attr_accessor x_content_type_options: ::String
+      attr_accessor x_frame_options: ::String
+      attr_accessor x_amzn_error_type: ::String
       attr_accessor exception_message: ::String
       SENSITIVE: []
     end
@@ -749,6 +798,14 @@ module Aws::IVSRealTime
     end
 
     class ValidationException
+      attr_accessor access_control_allow_origin: ::String
+      attr_accessor access_control_expose_headers: ::String
+      attr_accessor cache_control: ::String
+      attr_accessor content_security_policy: ::String
+      attr_accessor strict_transport_security: ::String
+      attr_accessor x_content_type_options: ::String
+      attr_accessor x_frame_options: ::String
+      attr_accessor x_amzn_error_type: ::String
       attr_accessor exception_message: ::String
       SENSITIVE: []
     end

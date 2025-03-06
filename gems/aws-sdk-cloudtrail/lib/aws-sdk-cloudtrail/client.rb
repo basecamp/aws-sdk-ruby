@@ -1048,8 +1048,9 @@ module Aws::CloudTrail
     #   [1]: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/get-and-view-cloudtrail-log-files.html#cloudtrail-find-log-files
     #
     # @option params [String] :sns_topic_name
-    #   Specifies the name of the Amazon SNS topic defined for notification of
-    #   log file delivery. The maximum length is 256 characters.
+    #   Specifies the name or ARN of the Amazon SNS topic defined for
+    #   notification of log file delivery. The maximum length is 256
+    #   characters.
     #
     # @option params [Boolean] :include_global_service_events
     #   Specifies whether the trail is publishing events from global services
@@ -4421,8 +4422,9 @@ module Aws::CloudTrail
     #   [1]: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/get-and-view-cloudtrail-log-files.html#cloudtrail-find-log-files
     #
     # @option params [String] :sns_topic_name
-    #   Specifies the name of the Amazon SNS topic defined for notification of
-    #   log file delivery. The maximum length is 256 characters.
+    #   Specifies the name or ARN of the Amazon SNS topic defined for
+    #   notification of log file delivery. The maximum length is 256
+    #   characters.
     #
     # @option params [Boolean] :include_global_service_events
     #   Specifies whether the trail is publishing events from global services
@@ -4584,7 +4586,7 @@ module Aws::CloudTrail
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloudtrail'
-      context[:gem_version] = '1.101.0'
+      context[:gem_version] = '1.102.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

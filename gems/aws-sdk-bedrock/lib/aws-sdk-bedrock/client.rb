@@ -1782,6 +1782,82 @@ module Aws::Bedrock
       req.send_request(options)
     end
 
+    # Creates a prompt router that manages the routing of requests between
+    # multiple foundation models based on the routing criteria.
+    #
+    # @option params [String] :client_request_token
+    #   A unique, case-sensitive identifier that you provide to ensure
+    #   idempotency of your requests. If not specified, the Amazon Web
+    #   Services SDK automatically generates one for you.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [required, String] :prompt_router_name
+    #   The name of the prompt router. The name must be unique within your
+    #   Amazon Web Services account in the current region.
+    #
+    # @option params [required, Array<Types::PromptRouterTargetModel>] :models
+    #   A list of foundation models that the prompt router can route requests
+    #   to. At least one model must be specified.
+    #
+    # @option params [String] :description
+    #   An optional description of the prompt router to help identify its
+    #   purpose.
+    #
+    # @option params [required, Types::RoutingCriteria] :routing_criteria
+    #   The criteria, which is the response quality difference, used to
+    #   determine how incoming requests are routed to different models.
+    #
+    # @option params [required, Types::PromptRouterTargetModel] :fallback_model
+    #   The default model to use when the routing criteria is not met.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   An array of key-value pairs to apply to this resource as tags. You can
+    #   use tags to categorize and manage your Amazon Web Services resources.
+    #
+    # @return [Types::CreatePromptRouterResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreatePromptRouterResponse#prompt_router_arn #prompt_router_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_prompt_router({
+    #     client_request_token: "IdempotencyToken",
+    #     prompt_router_name: "PromptRouterName", # required
+    #     models: [ # required
+    #       {
+    #         model_arn: "PromptRouterTargetModelArn", # required
+    #       },
+    #     ],
+    #     description: "PromptRouterDescription",
+    #     routing_criteria: { # required
+    #       response_quality_difference: 1.0, # required
+    #     },
+    #     fallback_model: { # required
+    #       model_arn: "PromptRouterTargetModelArn", # required
+    #     },
+    #     tags: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue", # required
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.prompt_router_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/CreatePromptRouter AWS API Documentation
+    #
+    # @overload create_prompt_router(params = {})
+    # @param [Hash] params ({})
+    def create_prompt_router(params = {}, options = {})
+      req = build_request(:create_prompt_router, params)
+      req.send_request(options)
+    end
+
     # Creates dedicated throughput for a base or custom model with the model
     # units and for the duration that you specify. For pricing details, see
     # [Amazon Bedrock Pricing][1]. For more information, see [Provisioned
@@ -2045,6 +2121,28 @@ module Aws::Bedrock
     # @param [Hash] params ({})
     def delete_model_invocation_logging_configuration(params = {}, options = {})
       req = build_request(:delete_model_invocation_logging_configuration, params)
+      req.send_request(options)
+    end
+
+    # Deletes a specified prompt router. This action cannot be undone.
+    #
+    # @option params [required, String] :prompt_router_arn
+    #   The Amazon Resource Name (ARN) of the prompt router to delete.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_prompt_router({
+    #     prompt_router_arn: "PromptRouterArn", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/DeletePromptRouter AWS API Documentation
+    #
+    # @overload delete_prompt_router(params = {})
+    # @param [Hash] params ({})
+    def delete_prompt_router(params = {}, options = {})
+      req = build_request(:delete_prompt_router, params)
       req.send_request(options)
     end
 
@@ -3953,6 +4051,10 @@ module Aws::Bedrock
     #   Specify the pagination token from a previous request to retrieve the
     #   next page of results.
     #
+    # @option params [String] :type
+    #   The type of the prompt routers, such as whether it's default or
+    #   custom.
+    #
     # @return [Types::ListPromptRoutersResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ListPromptRoutersResponse#prompt_router_summaries #prompt_router_summaries} => Array&lt;Types::PromptRouterSummary&gt;
@@ -3965,6 +4067,7 @@ module Aws::Bedrock
     #   resp = client.list_prompt_routers({
     #     max_results: 1,
     #     next_token: "PaginationToken",
+    #     type: "custom", # accepts custom, default
     #   })
     #
     # @example Response structure
@@ -4660,7 +4763,7 @@ module Aws::Bedrock
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrock'
-      context[:gem_version] = '1.36.0'
+      context[:gem_version] = '1.37.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -155,6 +155,9 @@ module Aws
                                       }?,
                                       ja3_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
                                     text_transformations: Array[
@@ -218,6 +221,9 @@ module Aws
                                         oversize_handling: ("CONTINUE" | "MATCH" | "NO_MATCH")
                                       }?,
                                       ja3_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
@@ -283,6 +289,9 @@ module Aws
                                       }?,
                                       ja3_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
                                     text_transformations: Array[
@@ -345,6 +354,9 @@ module Aws
                                         oversize_handling: ("CONTINUE" | "MATCH" | "NO_MATCH")
                                       }?,
                                       ja3_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
@@ -494,6 +506,9 @@ module Aws
                                       }?,
                                       ja3_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
                                     text_transformations: Array[
@@ -565,6 +580,12 @@ module Aws
                                               type: ("NONE" | "COMPRESS_WHITE_SPACE" | "HTML_ENTITY_DECODE" | "LOWERCASE" | "CMD_LINE" | "URL_DECODE" | "BASE64_DECODE" | "HEX_DECODE" | "MD5" | "REPLACE_COMMENTS" | "ESCAPE_SEQ_DECODE" | "SQL_HEX_DECODE" | "CSS_DECODE" | "JS_DECODE" | "NORMALIZE_PATH" | "NORMALIZE_PATH_WIN" | "REMOVE_NULLS" | "REPLACE_NULLS" | "BASE64_DECODE_EXT" | "URL_DECODE_UNI" | "UTF8_TO_UNICODE")
                                             },
                                           ]
+                                        }?,
+                                        ja3_fingerprint: {
+                                          fallback_behavior: ("MATCH" | "NO_MATCH")
+                                        }?,
+                                        ja4_fingerprint: {
+                                          fallback_behavior: ("MATCH" | "NO_MATCH")
                                         }?
                                       },
                                     ]?
@@ -807,6 +828,9 @@ module Aws
                                       }?,
                                       ja3_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
                                     text_transformations: Array[
@@ -1034,6 +1058,9 @@ module Aws
                                          }?,
                                          ja3_fingerprint: {
                                            fallback_behavior: ("MATCH" | "NO_MATCH")
+                                         }?,
+                                         ja4_fingerprint: {
+                                           fallback_behavior: ("MATCH" | "NO_MATCH")
                                          }?
                                        },
                                        text_transformations: Array[
@@ -1097,6 +1124,9 @@ module Aws
                                            oversize_handling: ("CONTINUE" | "MATCH" | "NO_MATCH")
                                          }?,
                                          ja3_fingerprint: {
+                                           fallback_behavior: ("MATCH" | "NO_MATCH")
+                                         }?,
+                                         ja4_fingerprint: {
                                            fallback_behavior: ("MATCH" | "NO_MATCH")
                                          }?
                                        },
@@ -1162,6 +1192,9 @@ module Aws
                                          }?,
                                          ja3_fingerprint: {
                                            fallback_behavior: ("MATCH" | "NO_MATCH")
+                                         }?,
+                                         ja4_fingerprint: {
+                                           fallback_behavior: ("MATCH" | "NO_MATCH")
                                          }?
                                        },
                                        text_transformations: Array[
@@ -1224,6 +1257,9 @@ module Aws
                                            oversize_handling: ("CONTINUE" | "MATCH" | "NO_MATCH")
                                          }?,
                                          ja3_fingerprint: {
+                                           fallback_behavior: ("MATCH" | "NO_MATCH")
+                                         }?,
+                                         ja4_fingerprint: {
                                            fallback_behavior: ("MATCH" | "NO_MATCH")
                                          }?
                                        },
@@ -1373,6 +1409,9 @@ module Aws
                                          }?,
                                          ja3_fingerprint: {
                                            fallback_behavior: ("MATCH" | "NO_MATCH")
+                                         }?,
+                                         ja4_fingerprint: {
+                                           fallback_behavior: ("MATCH" | "NO_MATCH")
                                          }?
                                        },
                                        text_transformations: Array[
@@ -1444,6 +1483,12 @@ module Aws
                                                  type: ("NONE" | "COMPRESS_WHITE_SPACE" | "HTML_ENTITY_DECODE" | "LOWERCASE" | "CMD_LINE" | "URL_DECODE" | "BASE64_DECODE" | "HEX_DECODE" | "MD5" | "REPLACE_COMMENTS" | "ESCAPE_SEQ_DECODE" | "SQL_HEX_DECODE" | "CSS_DECODE" | "JS_DECODE" | "NORMALIZE_PATH" | "NORMALIZE_PATH_WIN" | "REMOVE_NULLS" | "REPLACE_NULLS" | "BASE64_DECODE_EXT" | "URL_DECODE_UNI" | "UTF8_TO_UNICODE")
                                                },
                                              ]
+                                           }?,
+                                           ja3_fingerprint: {
+                                             fallback_behavior: ("MATCH" | "NO_MATCH")
+                                           }?,
+                                           ja4_fingerprint: {
+                                             fallback_behavior: ("MATCH" | "NO_MATCH")
                                            }?
                                          },
                                        ]?
@@ -1686,6 +1731,9 @@ module Aws
                                          }?,
                                          ja3_fingerprint: {
                                            fallback_behavior: ("MATCH" | "NO_MATCH")
+                                         }?,
+                                         ja4_fingerprint: {
+                                           fallback_behavior: ("MATCH" | "NO_MATCH")
                                          }?
                                        },
                                        text_transformations: Array[
@@ -1897,6 +1945,9 @@ module Aws
                                       }?,
                                       ja3_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
                                     text_transformations: Array[
@@ -1960,6 +2011,9 @@ module Aws
                                         oversize_handling: ("CONTINUE" | "MATCH" | "NO_MATCH")
                                       }?,
                                       ja3_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
@@ -2025,6 +2079,9 @@ module Aws
                                       }?,
                                       ja3_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
                                     text_transformations: Array[
@@ -2087,6 +2144,9 @@ module Aws
                                         oversize_handling: ("CONTINUE" | "MATCH" | "NO_MATCH")
                                       }?,
                                       ja3_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
@@ -2236,6 +2296,9 @@ module Aws
                                       }?,
                                       ja3_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
                                     text_transformations: Array[
@@ -2307,6 +2370,12 @@ module Aws
                                               type: ("NONE" | "COMPRESS_WHITE_SPACE" | "HTML_ENTITY_DECODE" | "LOWERCASE" | "CMD_LINE" | "URL_DECODE" | "BASE64_DECODE" | "HEX_DECODE" | "MD5" | "REPLACE_COMMENTS" | "ESCAPE_SEQ_DECODE" | "SQL_HEX_DECODE" | "CSS_DECODE" | "JS_DECODE" | "NORMALIZE_PATH" | "NORMALIZE_PATH_WIN" | "REMOVE_NULLS" | "REPLACE_NULLS" | "BASE64_DECODE_EXT" | "URL_DECODE_UNI" | "UTF8_TO_UNICODE")
                                             },
                                           ]
+                                        }?,
+                                        ja3_fingerprint: {
+                                          fallback_behavior: ("MATCH" | "NO_MATCH")
+                                        }?,
+                                        ja4_fingerprint: {
+                                          fallback_behavior: ("MATCH" | "NO_MATCH")
                                         }?
                                       },
                                     ]?
@@ -2548,6 +2617,9 @@ module Aws
                                         oversize_handling: ("CONTINUE" | "MATCH" | "NO_MATCH")
                                       }?,
                                       ja3_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
@@ -3223,6 +3295,9 @@ module Aws
                                              }?,
                                              ja3_fingerprint: {
                                                fallback_behavior: ("MATCH" | "NO_MATCH")
+                                             }?,
+                                             ja4_fingerprint: {
+                                               fallback_behavior: ("MATCH" | "NO_MATCH")
                                              }?
                                            },
                                          ]?,
@@ -3426,6 +3501,9 @@ module Aws
                                          }?,
                                          ja3_fingerprint: {
                                            fallback_behavior: ("MATCH" | "NO_MATCH")
+                                         }?,
+                                         ja4_fingerprint: {
+                                           fallback_behavior: ("MATCH" | "NO_MATCH")
                                          }?
                                        },
                                        text_transformations: Array[
@@ -3489,6 +3567,9 @@ module Aws
                                            oversize_handling: ("CONTINUE" | "MATCH" | "NO_MATCH")
                                          }?,
                                          ja3_fingerprint: {
+                                           fallback_behavior: ("MATCH" | "NO_MATCH")
+                                         }?,
+                                         ja4_fingerprint: {
                                            fallback_behavior: ("MATCH" | "NO_MATCH")
                                          }?
                                        },
@@ -3554,6 +3635,9 @@ module Aws
                                          }?,
                                          ja3_fingerprint: {
                                            fallback_behavior: ("MATCH" | "NO_MATCH")
+                                         }?,
+                                         ja4_fingerprint: {
+                                           fallback_behavior: ("MATCH" | "NO_MATCH")
                                          }?
                                        },
                                        text_transformations: Array[
@@ -3616,6 +3700,9 @@ module Aws
                                            oversize_handling: ("CONTINUE" | "MATCH" | "NO_MATCH")
                                          }?,
                                          ja3_fingerprint: {
+                                           fallback_behavior: ("MATCH" | "NO_MATCH")
+                                         }?,
+                                         ja4_fingerprint: {
                                            fallback_behavior: ("MATCH" | "NO_MATCH")
                                          }?
                                        },
@@ -3765,6 +3852,9 @@ module Aws
                                          }?,
                                          ja3_fingerprint: {
                                            fallback_behavior: ("MATCH" | "NO_MATCH")
+                                         }?,
+                                         ja4_fingerprint: {
+                                           fallback_behavior: ("MATCH" | "NO_MATCH")
                                          }?
                                        },
                                        text_transformations: Array[
@@ -3836,6 +3926,12 @@ module Aws
                                                  type: ("NONE" | "COMPRESS_WHITE_SPACE" | "HTML_ENTITY_DECODE" | "LOWERCASE" | "CMD_LINE" | "URL_DECODE" | "BASE64_DECODE" | "HEX_DECODE" | "MD5" | "REPLACE_COMMENTS" | "ESCAPE_SEQ_DECODE" | "SQL_HEX_DECODE" | "CSS_DECODE" | "JS_DECODE" | "NORMALIZE_PATH" | "NORMALIZE_PATH_WIN" | "REMOVE_NULLS" | "REPLACE_NULLS" | "BASE64_DECODE_EXT" | "URL_DECODE_UNI" | "UTF8_TO_UNICODE")
                                                },
                                              ]
+                                           }?,
+                                           ja3_fingerprint: {
+                                             fallback_behavior: ("MATCH" | "NO_MATCH")
+                                           }?,
+                                           ja4_fingerprint: {
+                                             fallback_behavior: ("MATCH" | "NO_MATCH")
                                            }?
                                          },
                                        ]?
@@ -4078,6 +4174,9 @@ module Aws
                                          }?,
                                          ja3_fingerprint: {
                                            fallback_behavior: ("MATCH" | "NO_MATCH")
+                                         }?,
+                                         ja4_fingerprint: {
+                                           fallback_behavior: ("MATCH" | "NO_MATCH")
                                          }?
                                        },
                                        text_transformations: Array[
@@ -4285,6 +4384,9 @@ module Aws
                                       }?,
                                       ja3_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
                                     text_transformations: Array[
@@ -4348,6 +4450,9 @@ module Aws
                                         oversize_handling: ("CONTINUE" | "MATCH" | "NO_MATCH")
                                       }?,
                                       ja3_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
@@ -4413,6 +4518,9 @@ module Aws
                                       }?,
                                       ja3_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
                                     text_transformations: Array[
@@ -4475,6 +4583,9 @@ module Aws
                                         oversize_handling: ("CONTINUE" | "MATCH" | "NO_MATCH")
                                       }?,
                                       ja3_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
@@ -4624,6 +4735,9 @@ module Aws
                                       }?,
                                       ja3_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },
                                     text_transformations: Array[
@@ -4695,6 +4809,12 @@ module Aws
                                               type: ("NONE" | "COMPRESS_WHITE_SPACE" | "HTML_ENTITY_DECODE" | "LOWERCASE" | "CMD_LINE" | "URL_DECODE" | "BASE64_DECODE" | "HEX_DECODE" | "MD5" | "REPLACE_COMMENTS" | "ESCAPE_SEQ_DECODE" | "SQL_HEX_DECODE" | "CSS_DECODE" | "JS_DECODE" | "NORMALIZE_PATH" | "NORMALIZE_PATH_WIN" | "REMOVE_NULLS" | "REPLACE_NULLS" | "BASE64_DECODE_EXT" | "URL_DECODE_UNI" | "UTF8_TO_UNICODE")
                                             },
                                           ]
+                                        }?,
+                                        ja3_fingerprint: {
+                                          fallback_behavior: ("MATCH" | "NO_MATCH")
+                                        }?,
+                                        ja4_fingerprint: {
+                                          fallback_behavior: ("MATCH" | "NO_MATCH")
                                         }?
                                       },
                                     ]?
@@ -4936,6 +5056,9 @@ module Aws
                                         oversize_handling: ("CONTINUE" | "MATCH" | "NO_MATCH")
                                       }?,
                                       ja3_fingerprint: {
+                                        fallback_behavior: ("MATCH" | "NO_MATCH")
+                                      }?,
+                                      ja4_fingerprint: {
                                         fallback_behavior: ("MATCH" | "NO_MATCH")
                                       }?
                                     },

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.102.0 (2025-03-06)
+------------------
+
+* Feature - Doc-only update for CloudTrail.
+
 1.101.0 (2025-02-18)
 ------------------
 

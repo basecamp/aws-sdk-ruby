@@ -673,6 +673,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -735,6 +738,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -801,6 +807,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -862,6 +871,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -1012,6 +1024,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -1084,6 +1099,12 @@ module Aws::WAFV2
     #                       type: "NONE", # required, accepts NONE, COMPRESS_WHITE_SPACE, HTML_ENTITY_DECODE, LOWERCASE, CMD_LINE, URL_DECODE, BASE64_DECODE, HEX_DECODE, MD5, REPLACE_COMMENTS, ESCAPE_SEQ_DECODE, SQL_HEX_DECODE, CSS_DECODE, JS_DECODE, NORMALIZE_PATH, NORMALIZE_PATH_WIN, REMOVE_NULLS, REPLACE_NULLS, BASE64_DECODE_EXT, URL_DECODE_UNI, UTF8_TO_UNICODE
     #                     },
     #                   ],
+    #                 },
+    #                 ja3_fingerprint: {
+    #                   fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #                 },
+    #                 ja4_fingerprint: {
+    #                   fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #                 },
     #               },
     #             ],
@@ -1333,6 +1354,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -1840,6 +1864,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -1902,6 +1929,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -1968,6 +1998,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -2029,6 +2062,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -2179,6 +2215,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -2251,6 +2290,12 @@ module Aws::WAFV2
     #                       type: "NONE", # required, accepts NONE, COMPRESS_WHITE_SPACE, HTML_ENTITY_DECODE, LOWERCASE, CMD_LINE, URL_DECODE, BASE64_DECODE, HEX_DECODE, MD5, REPLACE_COMMENTS, ESCAPE_SEQ_DECODE, SQL_HEX_DECODE, CSS_DECODE, JS_DECODE, NORMALIZE_PATH, NORMALIZE_PATH_WIN, REMOVE_NULLS, REPLACE_NULLS, BASE64_DECODE_EXT, URL_DECODE_UNI, UTF8_TO_UNICODE
     #                     },
     #                   ],
+    #                 },
+    #                 ja3_fingerprint: {
+    #                   fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #                 },
+    #                 ja4_fingerprint: {
+    #                   fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #                 },
     #               },
     #             ],
@@ -2500,6 +2545,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -2686,16 +2734,15 @@ module Aws::WAFV2
     #   collection.
     #
     # @option params [Types::DataProtectionConfig] :data_protection_config
-    #   Specifies data protection to apply to the web request data that WAF
-    #   stores for the web ACL. This is a web ACL level data protection
-    #   option.
+    #   Specifies data protection to apply to the web request data for the web
+    #   ACL. This is a web ACL level data protection option.
     #
     #   The data protection that you configure for the web ACL alters the data
     #   that's available for any other data collection activity, including
-    #   WAF logging, web ACL request sampling, Amazon Web Services Managed
-    #   Rules, and Amazon Security Lake data collection and management. Your
-    #   other option for data protection is in the logging configuration,
-    #   which only affects logging.
+    #   your WAF logging destinations, web ACL request sampling, and Amazon
+    #   Security Lake data collection and management. Your other option for
+    #   data protection is in the logging configuration, which only affects
+    #   logging.
     #
     # @option params [Array<Types::Tag>] :tags
     #   An array of key:value pairs to associate with the resource.
@@ -2863,6 +2910,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -2925,6 +2975,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -2991,6 +3044,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -3052,6 +3108,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -3202,6 +3261,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -3274,6 +3336,12 @@ module Aws::WAFV2
     #                       type: "NONE", # required, accepts NONE, COMPRESS_WHITE_SPACE, HTML_ENTITY_DECODE, LOWERCASE, CMD_LINE, URL_DECODE, BASE64_DECODE, HEX_DECODE, MD5, REPLACE_COMMENTS, ESCAPE_SEQ_DECODE, SQL_HEX_DECODE, CSS_DECODE, JS_DECODE, NORMALIZE_PATH, NORMALIZE_PATH_WIN, REMOVE_NULLS, REPLACE_NULLS, BASE64_DECODE_EXT, URL_DECODE_UNI, UTF8_TO_UNICODE
     #                     },
     #                   ],
+    #                 },
+    #                 ja3_fingerprint: {
+    #                   fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #                 },
+    #                 ja4_fingerprint: {
+    #                   fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #                 },
     #               },
     #             ],
@@ -3523,6 +3591,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -4563,6 +4634,7 @@ module Aws::WAFV2
     #   resp.logging_configuration.redacted_fields[0].cookies.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.logging_configuration.redacted_fields[0].header_order.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.logging_configuration.redacted_fields[0].ja3_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
+    #   resp.logging_configuration.redacted_fields[0].ja4_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
     #   resp.logging_configuration.managed_by_firewall_manager #=> Boolean
     #   resp.logging_configuration.logging_filter.filters #=> Array
     #   resp.logging_configuration.logging_filter.filters[0].behavior #=> String, one of "KEEP", "DROP"
@@ -4953,6 +5025,7 @@ module Aws::WAFV2
     #   resp.rule_group.rules[0].statement.byte_match_statement.field_to_match.cookies.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.byte_match_statement.field_to_match.header_order.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.byte_match_statement.field_to_match.ja3_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
+    #   resp.rule_group.rules[0].statement.byte_match_statement.field_to_match.ja4_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.byte_match_statement.text_transformations #=> Array
     #   resp.rule_group.rules[0].statement.byte_match_statement.text_transformations[0].priority #=> Integer
     #   resp.rule_group.rules[0].statement.byte_match_statement.text_transformations[0].type #=> String, one of "NONE", "COMPRESS_WHITE_SPACE", "HTML_ENTITY_DECODE", "LOWERCASE", "CMD_LINE", "URL_DECODE", "BASE64_DECODE", "HEX_DECODE", "MD5", "REPLACE_COMMENTS", "ESCAPE_SEQ_DECODE", "SQL_HEX_DECODE", "CSS_DECODE", "JS_DECODE", "NORMALIZE_PATH", "NORMALIZE_PATH_WIN", "REMOVE_NULLS", "REPLACE_NULLS", "BASE64_DECODE_EXT", "URL_DECODE_UNI", "UTF8_TO_UNICODE"
@@ -4979,6 +5052,7 @@ module Aws::WAFV2
     #   resp.rule_group.rules[0].statement.sqli_match_statement.field_to_match.cookies.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.sqli_match_statement.field_to_match.header_order.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.sqli_match_statement.field_to_match.ja3_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
+    #   resp.rule_group.rules[0].statement.sqli_match_statement.field_to_match.ja4_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.sqli_match_statement.text_transformations #=> Array
     #   resp.rule_group.rules[0].statement.sqli_match_statement.text_transformations[0].priority #=> Integer
     #   resp.rule_group.rules[0].statement.sqli_match_statement.text_transformations[0].type #=> String, one of "NONE", "COMPRESS_WHITE_SPACE", "HTML_ENTITY_DECODE", "LOWERCASE", "CMD_LINE", "URL_DECODE", "BASE64_DECODE", "HEX_DECODE", "MD5", "REPLACE_COMMENTS", "ESCAPE_SEQ_DECODE", "SQL_HEX_DECODE", "CSS_DECODE", "JS_DECODE", "NORMALIZE_PATH", "NORMALIZE_PATH_WIN", "REMOVE_NULLS", "REPLACE_NULLS", "BASE64_DECODE_EXT", "URL_DECODE_UNI", "UTF8_TO_UNICODE"
@@ -5005,6 +5079,7 @@ module Aws::WAFV2
     #   resp.rule_group.rules[0].statement.xss_match_statement.field_to_match.cookies.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.xss_match_statement.field_to_match.header_order.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.xss_match_statement.field_to_match.ja3_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
+    #   resp.rule_group.rules[0].statement.xss_match_statement.field_to_match.ja4_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.xss_match_statement.text_transformations #=> Array
     #   resp.rule_group.rules[0].statement.xss_match_statement.text_transformations[0].priority #=> Integer
     #   resp.rule_group.rules[0].statement.xss_match_statement.text_transformations[0].type #=> String, one of "NONE", "COMPRESS_WHITE_SPACE", "HTML_ENTITY_DECODE", "LOWERCASE", "CMD_LINE", "URL_DECODE", "BASE64_DECODE", "HEX_DECODE", "MD5", "REPLACE_COMMENTS", "ESCAPE_SEQ_DECODE", "SQL_HEX_DECODE", "CSS_DECODE", "JS_DECODE", "NORMALIZE_PATH", "NORMALIZE_PATH_WIN", "REMOVE_NULLS", "REPLACE_NULLS", "BASE64_DECODE_EXT", "URL_DECODE_UNI", "UTF8_TO_UNICODE"
@@ -5030,6 +5105,7 @@ module Aws::WAFV2
     #   resp.rule_group.rules[0].statement.size_constraint_statement.field_to_match.cookies.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.size_constraint_statement.field_to_match.header_order.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.size_constraint_statement.field_to_match.ja3_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
+    #   resp.rule_group.rules[0].statement.size_constraint_statement.field_to_match.ja4_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.size_constraint_statement.comparison_operator #=> String, one of "EQ", "NE", "LE", "LT", "GE", "GT"
     #   resp.rule_group.rules[0].statement.size_constraint_statement.size #=> Integer
     #   resp.rule_group.rules[0].statement.size_constraint_statement.text_transformations #=> Array
@@ -5088,6 +5164,7 @@ module Aws::WAFV2
     #   resp.rule_group.rules[0].statement.regex_pattern_set_reference_statement.field_to_match.cookies.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.regex_pattern_set_reference_statement.field_to_match.header_order.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.regex_pattern_set_reference_statement.field_to_match.ja3_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
+    #   resp.rule_group.rules[0].statement.regex_pattern_set_reference_statement.field_to_match.ja4_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.regex_pattern_set_reference_statement.text_transformations #=> Array
     #   resp.rule_group.rules[0].statement.regex_pattern_set_reference_statement.text_transformations[0].priority #=> Integer
     #   resp.rule_group.rules[0].statement.regex_pattern_set_reference_statement.text_transformations[0].type #=> String, one of "NONE", "COMPRESS_WHITE_SPACE", "HTML_ENTITY_DECODE", "LOWERCASE", "CMD_LINE", "URL_DECODE", "BASE64_DECODE", "HEX_DECODE", "MD5", "REPLACE_COMMENTS", "ESCAPE_SEQ_DECODE", "SQL_HEX_DECODE", "CSS_DECODE", "JS_DECODE", "NORMALIZE_PATH", "NORMALIZE_PATH_WIN", "REMOVE_NULLS", "REPLACE_NULLS", "BASE64_DECODE_EXT", "URL_DECODE_UNI", "UTF8_TO_UNICODE"
@@ -5117,6 +5194,8 @@ module Aws::WAFV2
     #   resp.rule_group.rules[0].statement.rate_based_statement.custom_keys[0].uri_path.text_transformations #=> Array
     #   resp.rule_group.rules[0].statement.rate_based_statement.custom_keys[0].uri_path.text_transformations[0].priority #=> Integer
     #   resp.rule_group.rules[0].statement.rate_based_statement.custom_keys[0].uri_path.text_transformations[0].type #=> String, one of "NONE", "COMPRESS_WHITE_SPACE", "HTML_ENTITY_DECODE", "LOWERCASE", "CMD_LINE", "URL_DECODE", "BASE64_DECODE", "HEX_DECODE", "MD5", "REPLACE_COMMENTS", "ESCAPE_SEQ_DECODE", "SQL_HEX_DECODE", "CSS_DECODE", "JS_DECODE", "NORMALIZE_PATH", "NORMALIZE_PATH_WIN", "REMOVE_NULLS", "REPLACE_NULLS", "BASE64_DECODE_EXT", "URL_DECODE_UNI", "UTF8_TO_UNICODE"
+    #   resp.rule_group.rules[0].statement.rate_based_statement.custom_keys[0].ja3_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
+    #   resp.rule_group.rules[0].statement.rate_based_statement.custom_keys[0].ja4_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.and_statement.statements #=> Array
     #   resp.rule_group.rules[0].statement.and_statement.statements[0] #=> Types::Statement
     #   resp.rule_group.rules[0].statement.or_statement.statements #=> Array
@@ -5231,6 +5310,7 @@ module Aws::WAFV2
     #   resp.rule_group.rules[0].statement.regex_match_statement.field_to_match.cookies.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.regex_match_statement.field_to_match.header_order.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.regex_match_statement.field_to_match.ja3_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
+    #   resp.rule_group.rules[0].statement.regex_match_statement.field_to_match.ja4_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
     #   resp.rule_group.rules[0].statement.regex_match_statement.text_transformations #=> Array
     #   resp.rule_group.rules[0].statement.regex_match_statement.text_transformations[0].priority #=> Integer
     #   resp.rule_group.rules[0].statement.regex_match_statement.text_transformations[0].type #=> String, one of "NONE", "COMPRESS_WHITE_SPACE", "HTML_ENTITY_DECODE", "LOWERCASE", "CMD_LINE", "URL_DECODE", "BASE64_DECODE", "HEX_DECODE", "MD5", "REPLACE_COMMENTS", "ESCAPE_SEQ_DECODE", "SQL_HEX_DECODE", "CSS_DECODE", "JS_DECODE", "NORMALIZE_PATH", "NORMALIZE_PATH_WIN", "REMOVE_NULLS", "REPLACE_NULLS", "BASE64_DECODE_EXT", "URL_DECODE_UNI", "UTF8_TO_UNICODE"
@@ -5858,6 +5938,7 @@ module Aws::WAFV2
     #   resp.logging_configurations[0].redacted_fields[0].cookies.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.logging_configurations[0].redacted_fields[0].header_order.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.logging_configurations[0].redacted_fields[0].ja3_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
+    #   resp.logging_configurations[0].redacted_fields[0].ja4_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
     #   resp.logging_configurations[0].managed_by_firewall_manager #=> Boolean
     #   resp.logging_configurations[0].logging_filter.filters #=> Array
     #   resp.logging_configurations[0].logging_filter.filters[0].behavior #=> String, one of "KEEP", "DROP"
@@ -6435,6 +6516,9 @@ module Aws::WAFV2
     #           ja3_fingerprint: {
     #             fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #           },
+    #           ja4_fingerprint: {
+    #             fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #           },
     #         },
     #       ],
     #       managed_by_firewall_manager: false,
@@ -6490,6 +6574,7 @@ module Aws::WAFV2
     #   resp.logging_configuration.redacted_fields[0].cookies.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.logging_configuration.redacted_fields[0].header_order.oversize_handling #=> String, one of "CONTINUE", "MATCH", "NO_MATCH"
     #   resp.logging_configuration.redacted_fields[0].ja3_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
+    #   resp.logging_configuration.redacted_fields[0].ja4_fingerprint.fallback_behavior #=> String, one of "MATCH", "NO_MATCH"
     #   resp.logging_configuration.managed_by_firewall_manager #=> Boolean
     #   resp.logging_configuration.logging_filter.filters #=> Array
     #   resp.logging_configuration.logging_filter.filters[0].behavior #=> String, one of "KEEP", "DROP"
@@ -7280,6 +7365,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -7342,6 +7430,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -7408,6 +7499,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -7469,6 +7563,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -7619,6 +7716,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -7691,6 +7791,12 @@ module Aws::WAFV2
     #                       type: "NONE", # required, accepts NONE, COMPRESS_WHITE_SPACE, HTML_ENTITY_DECODE, LOWERCASE, CMD_LINE, URL_DECODE, BASE64_DECODE, HEX_DECODE, MD5, REPLACE_COMMENTS, ESCAPE_SEQ_DECODE, SQL_HEX_DECODE, CSS_DECODE, JS_DECODE, NORMALIZE_PATH, NORMALIZE_PATH_WIN, REMOVE_NULLS, REPLACE_NULLS, BASE64_DECODE_EXT, URL_DECODE_UNI, UTF8_TO_UNICODE
     #                     },
     #                   ],
+    #                 },
+    #                 ja3_fingerprint: {
+    #                   fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #                 },
+    #                 ja4_fingerprint: {
+    #                   fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #                 },
     #               },
     #             ],
@@ -7940,6 +8046,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -8163,16 +8272,15 @@ module Aws::WAFV2
     #   collection.
     #
     # @option params [Types::DataProtectionConfig] :data_protection_config
-    #   Specifies data protection to apply to the web request data that WAF
-    #   stores for the web ACL. This is a web ACL level data protection
-    #   option.
+    #   Specifies data protection to apply to the web request data for the web
+    #   ACL. This is a web ACL level data protection option.
     #
     #   The data protection that you configure for the web ACL alters the data
     #   that's available for any other data collection activity, including
-    #   WAF logging, web ACL request sampling, Amazon Web Services Managed
-    #   Rules, and Amazon Security Lake data collection and management. Your
-    #   other option for data protection is in the logging configuration,
-    #   which only affects logging.
+    #   your WAF logging destinations, web ACL request sampling, and Amazon
+    #   Security Lake data collection and management. Your other option for
+    #   data protection is in the logging configuration, which only affects
+    #   logging.
     #
     # @option params [required, String] :lock_token
     #   A token used for optimistic locking. WAF returns a token to your `get`
@@ -8348,6 +8456,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -8410,6 +8521,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -8476,6 +8590,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -8537,6 +8654,9 @@ module Aws::WAFV2
     #                 oversize_handling: "CONTINUE", # required, accepts CONTINUE, MATCH, NO_MATCH
     #               },
     #               ja3_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
+    #               ja4_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
     #             },
@@ -8687,6 +8807,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -8759,6 +8882,12 @@ module Aws::WAFV2
     #                       type: "NONE", # required, accepts NONE, COMPRESS_WHITE_SPACE, HTML_ENTITY_DECODE, LOWERCASE, CMD_LINE, URL_DECODE, BASE64_DECODE, HEX_DECODE, MD5, REPLACE_COMMENTS, ESCAPE_SEQ_DECODE, SQL_HEX_DECODE, CSS_DECODE, JS_DECODE, NORMALIZE_PATH, NORMALIZE_PATH_WIN, REMOVE_NULLS, REPLACE_NULLS, BASE64_DECODE_EXT, URL_DECODE_UNI, UTF8_TO_UNICODE
     #                     },
     #                   ],
+    #                 },
+    #                 ja3_fingerprint: {
+    #                   fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #                 },
+    #                 ja4_fingerprint: {
+    #                   fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #                 },
     #               },
     #             ],
@@ -9010,6 +9139,9 @@ module Aws::WAFV2
     #               ja3_fingerprint: {
     #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
     #               },
+    #               ja4_fingerprint: {
+    #                 fallback_behavior: "MATCH", # required, accepts MATCH, NO_MATCH
+    #               },
     #             },
     #             text_transformations: [ # required
     #               {
@@ -9185,7 +9317,7 @@ module Aws::WAFV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-wafv2'
-      context[:gem_version] = '1.103.0'
+      context[:gem_version] = '1.104.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

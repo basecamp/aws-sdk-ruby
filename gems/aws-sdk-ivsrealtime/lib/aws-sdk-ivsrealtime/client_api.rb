@@ -146,6 +146,7 @@ module Aws::IVSRealTime
     ParticipantRecordingFilterByRecordingState = Shapes::StringShape.new(name: 'ParticipantRecordingFilterByRecordingState')
     ParticipantRecordingMediaType = Shapes::StringShape.new(name: 'ParticipantRecordingMediaType')
     ParticipantRecordingMediaTypeList = Shapes::ListShape.new(name: 'ParticipantRecordingMediaTypeList')
+    ParticipantRecordingReconnectWindowSeconds = Shapes::IntegerShape.new(name: 'ParticipantRecordingReconnectWindowSeconds')
     ParticipantRecordingS3BucketName = Shapes::StringShape.new(name: 'ParticipantRecordingS3BucketName')
     ParticipantRecordingS3Prefix = Shapes::StringShape.new(name: 'ParticipantRecordingS3Prefix')
     ParticipantRecordingState = Shapes::StringShape.new(name: 'ParticipantRecordingState')
@@ -235,12 +236,21 @@ module Aws::IVSRealTime
     Width = Shapes::IntegerShape.new(name: 'Width')
     errorMessage = Shapes::StringShape.new(name: 'errorMessage')
 
+    AccessDeniedException.add_member(:access_control_allow_origin, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Allow-Origin"))
+    AccessDeniedException.add_member(:access_control_expose_headers, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Expose-Headers"))
+    AccessDeniedException.add_member(:cache_control, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Cache-Control"))
+    AccessDeniedException.add_member(:content_security_policy, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Content-Security-Policy"))
+    AccessDeniedException.add_member(:strict_transport_security, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Strict-Transport-Security"))
+    AccessDeniedException.add_member(:x_content_type_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Content-Type-Options"))
+    AccessDeniedException.add_member(:x_frame_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Frame-Options"))
+    AccessDeniedException.add_member(:x_amzn_error_type, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "x-amzn-ErrorType"))
     AccessDeniedException.add_member(:exception_message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "exceptionMessage"))
     AccessDeniedException.struct_class = Types::AccessDeniedException
 
     AutoParticipantRecordingConfiguration.add_member(:storage_configuration_arn, Shapes::ShapeRef.new(shape: AutoParticipantRecordingStorageConfigurationArn, required: true, location_name: "storageConfigurationArn"))
     AutoParticipantRecordingConfiguration.add_member(:media_types, Shapes::ShapeRef.new(shape: ParticipantRecordingMediaTypeList, location_name: "mediaTypes"))
     AutoParticipantRecordingConfiguration.add_member(:thumbnail_configuration, Shapes::ShapeRef.new(shape: ParticipantThumbnailConfiguration, location_name: "thumbnailConfiguration"))
+    AutoParticipantRecordingConfiguration.add_member(:recording_reconnect_window_seconds, Shapes::ShapeRef.new(shape: ParticipantRecordingReconnectWindowSeconds, location_name: "recordingReconnectWindowSeconds"))
     AutoParticipantRecordingConfiguration.struct_class = Types::AutoParticipantRecordingConfiguration
 
     ChannelDestinationConfiguration.add_member(:channel_arn, Shapes::ShapeRef.new(shape: ChannelArn, required: true, location_name: "channelArn"))
@@ -274,6 +284,14 @@ module Aws::IVSRealTime
 
     CompositionThumbnailConfigurationList.member = Shapes::ShapeRef.new(shape: CompositionThumbnailConfiguration)
 
+    ConflictException.add_member(:access_control_allow_origin, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Allow-Origin"))
+    ConflictException.add_member(:access_control_expose_headers, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Expose-Headers"))
+    ConflictException.add_member(:cache_control, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Cache-Control"))
+    ConflictException.add_member(:content_security_policy, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Content-Security-Policy"))
+    ConflictException.add_member(:strict_transport_security, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Strict-Transport-Security"))
+    ConflictException.add_member(:x_content_type_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Content-Type-Options"))
+    ConflictException.add_member(:x_frame_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Frame-Options"))
+    ConflictException.add_member(:x_amzn_error_type, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "x-amzn-ErrorType"))
     ConflictException.add_member(:exception_message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "exceptionMessage"))
     ConflictException.struct_class = Types::ConflictException
 
@@ -499,6 +517,14 @@ module Aws::IVSRealTime
     IngestConfigurationSummary.add_member(:user_id, Shapes::ShapeRef.new(shape: UserId, location_name: "userId"))
     IngestConfigurationSummary.struct_class = Types::IngestConfigurationSummary
 
+    InternalServerException.add_member(:access_control_allow_origin, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Allow-Origin"))
+    InternalServerException.add_member(:access_control_expose_headers, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Expose-Headers"))
+    InternalServerException.add_member(:cache_control, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Cache-Control"))
+    InternalServerException.add_member(:content_security_policy, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Content-Security-Policy"))
+    InternalServerException.add_member(:strict_transport_security, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Strict-Transport-Security"))
+    InternalServerException.add_member(:x_content_type_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Content-Type-Options"))
+    InternalServerException.add_member(:x_frame_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Frame-Options"))
+    InternalServerException.add_member(:x_amzn_error_type, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "x-amzn-ErrorType"))
     InternalServerException.add_member(:exception_message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "exceptionMessage"))
     InternalServerException.struct_class = Types::InternalServerException
 
@@ -660,6 +686,14 @@ module Aws::IVSRealTime
 
     ParticipantTokenList.member = Shapes::ShapeRef.new(shape: ParticipantToken)
 
+    PendingVerification.add_member(:access_control_allow_origin, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Allow-Origin"))
+    PendingVerification.add_member(:access_control_expose_headers, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Expose-Headers"))
+    PendingVerification.add_member(:cache_control, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Cache-Control"))
+    PendingVerification.add_member(:content_security_policy, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Content-Security-Policy"))
+    PendingVerification.add_member(:strict_transport_security, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Strict-Transport-Security"))
+    PendingVerification.add_member(:x_content_type_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Content-Type-Options"))
+    PendingVerification.add_member(:x_frame_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Frame-Options"))
+    PendingVerification.add_member(:x_amzn_error_type, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "x-amzn-ErrorType"))
     PendingVerification.add_member(:exception_message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "exceptionMessage"))
     PendingVerification.struct_class = Types::PendingVerification
 
@@ -692,6 +726,14 @@ module Aws::IVSRealTime
     RecordingConfiguration.add_member(:format, Shapes::ShapeRef.new(shape: RecordingConfigurationFormat, location_name: "format"))
     RecordingConfiguration.struct_class = Types::RecordingConfiguration
 
+    ResourceNotFoundException.add_member(:access_control_allow_origin, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Allow-Origin"))
+    ResourceNotFoundException.add_member(:access_control_expose_headers, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Expose-Headers"))
+    ResourceNotFoundException.add_member(:cache_control, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Cache-Control"))
+    ResourceNotFoundException.add_member(:content_security_policy, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Content-Security-Policy"))
+    ResourceNotFoundException.add_member(:strict_transport_security, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Strict-Transport-Security"))
+    ResourceNotFoundException.add_member(:x_content_type_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Content-Type-Options"))
+    ResourceNotFoundException.add_member(:x_frame_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Frame-Options"))
+    ResourceNotFoundException.add_member(:x_amzn_error_type, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "x-amzn-ErrorType"))
     ResourceNotFoundException.add_member(:exception_message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "exceptionMessage"))
     ResourceNotFoundException.struct_class = Types::ResourceNotFoundException
 
@@ -707,6 +749,14 @@ module Aws::IVSRealTime
     S3StorageConfiguration.add_member(:bucket_name, Shapes::ShapeRef.new(shape: S3BucketName, required: true, location_name: "bucketName"))
     S3StorageConfiguration.struct_class = Types::S3StorageConfiguration
 
+    ServiceQuotaExceededException.add_member(:access_control_allow_origin, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Allow-Origin"))
+    ServiceQuotaExceededException.add_member(:access_control_expose_headers, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Expose-Headers"))
+    ServiceQuotaExceededException.add_member(:cache_control, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Cache-Control"))
+    ServiceQuotaExceededException.add_member(:content_security_policy, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Content-Security-Policy"))
+    ServiceQuotaExceededException.add_member(:strict_transport_security, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Strict-Transport-Security"))
+    ServiceQuotaExceededException.add_member(:x_content_type_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Content-Type-Options"))
+    ServiceQuotaExceededException.add_member(:x_frame_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Frame-Options"))
+    ServiceQuotaExceededException.add_member(:x_amzn_error_type, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "x-amzn-ErrorType"))
     ServiceQuotaExceededException.add_member(:exception_message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "exceptionMessage"))
     ServiceQuotaExceededException.struct_class = Types::ServiceQuotaExceededException
 
@@ -807,6 +857,14 @@ module Aws::IVSRealTime
     UpdateStageResponse.add_member(:stage, Shapes::ShapeRef.new(shape: Stage, location_name: "stage"))
     UpdateStageResponse.struct_class = Types::UpdateStageResponse
 
+    ValidationException.add_member(:access_control_allow_origin, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Allow-Origin"))
+    ValidationException.add_member(:access_control_expose_headers, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Access-Control-Expose-Headers"))
+    ValidationException.add_member(:cache_control, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Cache-Control"))
+    ValidationException.add_member(:content_security_policy, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Content-Security-Policy"))
+    ValidationException.add_member(:strict_transport_security, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "Strict-Transport-Security"))
+    ValidationException.add_member(:x_content_type_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Content-Type-Options"))
+    ValidationException.add_member(:x_frame_options, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "X-Frame-Options"))
+    ValidationException.add_member(:x_amzn_error_type, Shapes::ShapeRef.new(shape: String, location: "header", location_name: "x-amzn-ErrorType"))
     ValidationException.add_member(:exception_message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "exceptionMessage"))
     ValidationException.struct_class = Types::ValidationException
 

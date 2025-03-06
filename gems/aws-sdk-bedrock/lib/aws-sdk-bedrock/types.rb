@@ -938,6 +938,72 @@ module Aws::Bedrock
     end
 
     # @!attribute [rw] client_request_token
+    #   A unique, case-sensitive identifier that you provide to ensure
+    #   idempotency of your requests. If not specified, the Amazon Web
+    #   Services SDK automatically generates one for you.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] prompt_router_name
+    #   The name of the prompt router. The name must be unique within your
+    #   Amazon Web Services account in the current region.
+    #   @return [String]
+    #
+    # @!attribute [rw] models
+    #   A list of foundation models that the prompt router can route
+    #   requests to. At least one model must be specified.
+    #   @return [Array<Types::PromptRouterTargetModel>]
+    #
+    # @!attribute [rw] description
+    #   An optional description of the prompt router to help identify its
+    #   purpose.
+    #   @return [String]
+    #
+    # @!attribute [rw] routing_criteria
+    #   The criteria, which is the response quality difference, used to
+    #   determine how incoming requests are routed to different models.
+    #   @return [Types::RoutingCriteria]
+    #
+    # @!attribute [rw] fallback_model
+    #   The default model to use when the routing criteria is not met.
+    #   @return [Types::PromptRouterTargetModel]
+    #
+    # @!attribute [rw] tags
+    #   An array of key-value pairs to apply to this resource as tags. You
+    #   can use tags to categorize and manage your Amazon Web Services
+    #   resources.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/CreatePromptRouterRequest AWS API Documentation
+    #
+    class CreatePromptRouterRequest < Struct.new(
+      :client_request_token,
+      :prompt_router_name,
+      :models,
+      :description,
+      :routing_criteria,
+      :fallback_model,
+      :tags)
+      SENSITIVE = [:description]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] prompt_router_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies the prompt
+    #   router.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/CreatePromptRouterResponse AWS API Documentation
+    #
+    class CreatePromptRouterResponse < Struct.new(
+      :prompt_router_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] client_request_token
     #   A unique, case-sensitive identifier to ensure that the API request
     #   completes no more than one time. If this token matches a previous
     #   request, Amazon Bedrock ignores the request, but does not return an
@@ -1204,6 +1270,22 @@ module Aws::Bedrock
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/DeleteModelInvocationLoggingConfigurationResponse AWS API Documentation
     #
     class DeleteModelInvocationLoggingConfigurationResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] prompt_router_arn
+    #   The Amazon Resource Name (ARN) of the prompt router to delete.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/DeletePromptRouterRequest AWS API Documentation
+    #
+    class DeletePromptRouterRequest < Struct.new(
+      :prompt_router_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/DeletePromptRouterResponse AWS API Documentation
+    #
+    class DeletePromptRouterResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] provisioned_model_id
     #   The Amazon Resource Name (ARN) or name of the Provisioned
@@ -5212,11 +5294,17 @@ module Aws::Bedrock
     #   next page of results.
     #   @return [String]
     #
+    # @!attribute [rw] type
+    #   The type of the prompt routers, such as whether it's default or
+    #   custom.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ListPromptRoutersRequest AWS API Documentation
     #
     class ListPromptRoutersRequest < Struct.new(
       :max_results,
-      :next_token)
+      :next_token,
+      :type)
       SENSITIVE = []
       include Aws::Structure
     end

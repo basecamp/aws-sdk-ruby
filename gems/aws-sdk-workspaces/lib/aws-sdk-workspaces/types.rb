@@ -2485,7 +2485,8 @@ module Aws::WorkSpaces
     #   @return [String]
     #
     # @!attribute [rw] limit
-    #   The maximum number of items to return.
+    #   The maximum size of each page of results. The default value is 20
+    #   and the maximum value is 50.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
@@ -3646,6 +3647,28 @@ module Aws::WorkSpaces
     # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/ModifyClientPropertiesResult AWS API Documentation
     #
     class ModifyClientPropertiesResult < Aws::EmptyStructure; end
+
+    # @!attribute [rw] directory_id
+    #   The identifier of the directory.
+    #   @return [String]
+    #
+    # @!attribute [rw] endpoint_encryption_mode
+    #   The encryption mode used for endpoint connections when streaming to
+    #   WorkSpaces Personal or WorkSpace Pools.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/ModifyEndpointEncryptionModeRequest AWS API Documentation
+    #
+    class ModifyEndpointEncryptionModeRequest < Struct.new(
+      :directory_id,
+      :endpoint_encryption_mode)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/ModifyEndpointEncryptionModeResponse AWS API Documentation
+    #
+    class ModifyEndpointEncryptionModeResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] resource_id
     #   The directory identifier for which you want to configure SAML
@@ -5693,6 +5716,11 @@ module Aws::WorkSpaces
     #   for WorkSpaces login.
     #   @return [Types::CertificateBasedAuthProperties]
     #
+    # @!attribute [rw] endpoint_encryption_mode
+    #   Endpoint encryption mode that allows you to configure the specified
+    #   directory between Standard TLS and FIPS 140-2 validated mode.
+    #   @return [String]
+    #
     # @!attribute [rw] microsoft_entra_config
     #   Specifies details about Microsoft Entra configurations.
     #   @return [Types::MicrosoftEntraConfig]
@@ -5751,6 +5779,7 @@ module Aws::WorkSpaces
       :selfservice_permissions,
       :saml_properties,
       :certificate_based_auth_properties,
+      :endpoint_encryption_mode,
       :microsoft_entra_config,
       :workspace_directory_name,
       :workspace_directory_description,

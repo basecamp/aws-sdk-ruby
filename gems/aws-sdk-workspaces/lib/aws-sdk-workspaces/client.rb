@@ -670,7 +670,7 @@ module Aws::WorkSpaces
     # same Region.
     #
     # In Amazon Web Services GovCloud (US), to copy images to and from other
-    # Regions, contact Amazon Web Services Support.
+    # Regions, contact Amazon Web ServicesSupport.
     #
     # Before copying a shared image, be sure to verify that it has been
     # shared from the correct Amazon Web Services account. To determine if
@@ -2600,6 +2600,7 @@ module Aws::WorkSpaces
     #   resp.directories[0].saml_properties.relay_state_parameter_name #=> String
     #   resp.directories[0].certificate_based_auth_properties.status #=> String, one of "DISABLED", "ENABLED"
     #   resp.directories[0].certificate_based_auth_properties.certificate_authority_arn #=> String
+    #   resp.directories[0].endpoint_encryption_mode #=> String, one of "STANDARD_TLS", "FIPS_VALIDATED"
     #   resp.directories[0].microsoft_entra_config.tenant_id #=> String
     #   resp.directories[0].microsoft_entra_config.application_config_secret_arn #=> String
     #   resp.directories[0].workspace_directory_name #=> String
@@ -2925,7 +2926,8 @@ module Aws::WorkSpaces
     #   The identifier of the user.
     #
     # @option params [Integer] :limit
-    #   The maximum number of items to return.
+    #   The maximum size of each page of results. The default value is 20 and
+    #   the maximum value is 50.
     #
     # @option params [String] :next_token
     #   If you received a `NextToken` from a previous call that was paginated,
@@ -3685,6 +3687,35 @@ module Aws::WorkSpaces
       req.send_request(options)
     end
 
+    # Modifies the endpoint encryption mode that allows you to configure the
+    # specified directory between Standard TLS and FIPS 140-2 validated
+    # mode.
+    #
+    # @option params [required, String] :directory_id
+    #   The identifier of the directory.
+    #
+    # @option params [required, String] :endpoint_encryption_mode
+    #   The encryption mode used for endpoint connections when streaming to
+    #   WorkSpaces Personal or WorkSpace Pools.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.modify_endpoint_encryption_mode({
+    #     directory_id: "DirectoryId", # required
+    #     endpoint_encryption_mode: "STANDARD_TLS", # required, accepts STANDARD_TLS, FIPS_VALIDATED
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/ModifyEndpointEncryptionMode AWS API Documentation
+    #
+    # @overload modify_endpoint_encryption_mode(params = {})
+    # @param [Hash] params ({})
+    def modify_endpoint_encryption_mode(params = {}, options = {})
+      req = build_request(:modify_endpoint_encryption_mode, params)
+      req.send_request(options)
+    end
+
     # Modifies multiple properties related to SAML 2.0 authentication,
     # including the enablement status, user access URL, and relay state
     # parameter name that are used for configuring federation with an SAML
@@ -4419,7 +4450,7 @@ module Aws::WorkSpaces
     #
     # Terminating a WorkSpace is a permanent action and cannot be undone.
     # The user's data is destroyed. If you need to archive any user data,
-    # contact Amazon Web Services Support before terminating the WorkSpace.
+    # contact Amazon Web ServicesSupport before terminating the WorkSpace.
     #
     # You can terminate a WorkSpace that is in any state except `SUSPENDED`.
     #
@@ -4700,7 +4731,7 @@ module Aws::WorkSpaces
     # same Region.
     #
     # In Amazon Web Services GovCloud (US), to copy images to and from other
-    # Regions, contact Amazon Web Services Support.
+    # Regions, contact Amazon Web ServicesSupport.
     #
     # For more information about sharing images, see [ Share or Unshare a
     # Custom WorkSpaces Image][1].
@@ -4711,8 +4742,8 @@ module Aws::WorkSpaces
     # * Sharing Bring Your Own License (BYOL) images across Amazon Web
     #   Services accounts isn't supported at this time in Amazon Web
     #   Services GovCloud (US). To share BYOL images across accounts in
-    #   Amazon Web Services GovCloud (US), contact Amazon Web Services
-    #   Support.
+    #   Amazon Web Services GovCloud (US), contact Amazon Web
+    #   ServicesSupport.
     #
     #  </note>
     #
@@ -4852,7 +4883,7 @@ module Aws::WorkSpaces
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-workspaces'
-      context[:gem_version] = '1.132.0'
+      context[:gem_version] = '1.133.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

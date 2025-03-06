@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.39.0 (2025-03-06)
+------------------
+
+* Feature - IVS Real-Time now offers customers the ability to merge fragmented recordings in the event of a participant disconnect.
+
 1.38.0 (2025-02-18)
 ------------------
 

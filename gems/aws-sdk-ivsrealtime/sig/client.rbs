@@ -148,7 +148,8 @@ module Aws
                               target_interval_seconds: ::Integer?,
                               storage: Array[("SEQUENTIAL" | "LATEST")]?,
                               recording_mode: ("INTERVAL" | "DISABLED")?
-                            }?
+                            }?,
+                            recording_reconnect_window_seconds: ::Integer?
                           }
                         ) -> _CreateStageResponseSuccess
                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateStageResponseSuccess
@@ -561,7 +562,8 @@ module Aws
                               target_interval_seconds: ::Integer?,
                               storage: Array[("SEQUENTIAL" | "LATEST")]?,
                               recording_mode: ("INTERVAL" | "DISABLED")?
-                            }?
+                            }?,
+                            recording_reconnect_window_seconds: ::Integer?
                           }
                         ) -> _UpdateStageResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateStageResponseSuccess

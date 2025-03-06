@@ -701,6 +701,35 @@ module Aws
                                        ) -> _CreateModelInvocationJobResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateModelInvocationJobResponseSuccess
 
+      interface _CreatePromptRouterResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreatePromptRouterResponse]
+        def prompt_router_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Bedrock/Client.html#create_prompt_router-instance_method
+      def create_prompt_router: (
+                                  ?client_request_token: ::String,
+                                  prompt_router_name: ::String,
+                                  models: Array[
+                                    {
+                                      model_arn: ::String
+                                    },
+                                  ],
+                                  ?description: ::String,
+                                  routing_criteria: {
+                                    response_quality_difference: ::Float
+                                  },
+                                  fallback_model: {
+                                    model_arn: ::String
+                                  },
+                                  ?tags: Array[
+                                    {
+                                      key: ::String,
+                                      value: ::String
+                                    },
+                                  ]
+                                ) -> _CreatePromptRouterResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreatePromptRouterResponseSuccess
+
       interface _CreateProvisionedModelThroughputResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateProvisionedModelThroughputResponse]
         def provisioned_model_arn: () -> ::String
@@ -774,6 +803,15 @@ module Aws
       def delete_model_invocation_logging_configuration: (
                                                          ) -> _DeleteModelInvocationLoggingConfigurationResponseSuccess
                                                        | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteModelInvocationLoggingConfigurationResponseSuccess
+
+      interface _DeletePromptRouterResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeletePromptRouterResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Bedrock/Client.html#delete_prompt_router-instance_method
+      def delete_prompt_router: (
+                                  prompt_router_arn: ::String
+                                ) -> _DeletePromptRouterResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeletePromptRouterResponseSuccess
 
       interface _DeleteProvisionedModelThroughputResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteProvisionedModelThroughputResponse]
@@ -1261,7 +1299,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Bedrock/Client.html#list_prompt_routers-instance_method
       def list_prompt_routers: (
                                  ?max_results: ::Integer,
-                                 ?next_token: ::String
+                                 ?next_token: ::String,
+                                 ?type: ("custom" | "default")
                                ) -> _ListPromptRoutersResponseSuccess
                              | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListPromptRoutersResponseSuccess
 

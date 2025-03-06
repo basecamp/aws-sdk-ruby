@@ -61,6 +61,8 @@ module Aws::Bedrock
     CreateModelImportJobResponse = Shapes::StructureShape.new(name: 'CreateModelImportJobResponse')
     CreateModelInvocationJobRequest = Shapes::StructureShape.new(name: 'CreateModelInvocationJobRequest')
     CreateModelInvocationJobResponse = Shapes::StructureShape.new(name: 'CreateModelInvocationJobResponse')
+    CreatePromptRouterRequest = Shapes::StructureShape.new(name: 'CreatePromptRouterRequest')
+    CreatePromptRouterResponse = Shapes::StructureShape.new(name: 'CreatePromptRouterResponse')
     CreateProvisionedModelThroughputRequest = Shapes::StructureShape.new(name: 'CreateProvisionedModelThroughputRequest')
     CreateProvisionedModelThroughputResponse = Shapes::StructureShape.new(name: 'CreateProvisionedModelThroughputResponse')
     CustomModelArn = Shapes::StringShape.new(name: 'CustomModelArn')
@@ -81,6 +83,8 @@ module Aws::Bedrock
     DeleteMarketplaceModelEndpointResponse = Shapes::StructureShape.new(name: 'DeleteMarketplaceModelEndpointResponse')
     DeleteModelInvocationLoggingConfigurationRequest = Shapes::StructureShape.new(name: 'DeleteModelInvocationLoggingConfigurationRequest')
     DeleteModelInvocationLoggingConfigurationResponse = Shapes::StructureShape.new(name: 'DeleteModelInvocationLoggingConfigurationResponse')
+    DeletePromptRouterRequest = Shapes::StructureShape.new(name: 'DeletePromptRouterRequest')
+    DeletePromptRouterResponse = Shapes::StructureShape.new(name: 'DeletePromptRouterResponse')
     DeleteProvisionedModelThroughputRequest = Shapes::StructureShape.new(name: 'DeleteProvisionedModelThroughputRequest')
     DeleteProvisionedModelThroughputResponse = Shapes::StructureShape.new(name: 'DeleteProvisionedModelThroughputResponse')
     DeregisterMarketplaceModelEndpointRequest = Shapes::StructureShape.new(name: 'DeregisterMarketplaceModelEndpointRequest')
@@ -652,6 +656,18 @@ module Aws::Bedrock
     CreateModelInvocationJobResponse.add_member(:job_arn, Shapes::ShapeRef.new(shape: ModelInvocationJobArn, required: true, location_name: "jobArn"))
     CreateModelInvocationJobResponse.struct_class = Types::CreateModelInvocationJobResponse
 
+    CreatePromptRouterRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    CreatePromptRouterRequest.add_member(:prompt_router_name, Shapes::ShapeRef.new(shape: PromptRouterName, required: true, location_name: "promptRouterName"))
+    CreatePromptRouterRequest.add_member(:models, Shapes::ShapeRef.new(shape: PromptRouterTargetModels, required: true, location_name: "models"))
+    CreatePromptRouterRequest.add_member(:description, Shapes::ShapeRef.new(shape: PromptRouterDescription, location_name: "description"))
+    CreatePromptRouterRequest.add_member(:routing_criteria, Shapes::ShapeRef.new(shape: RoutingCriteria, required: true, location_name: "routingCriteria"))
+    CreatePromptRouterRequest.add_member(:fallback_model, Shapes::ShapeRef.new(shape: PromptRouterTargetModel, required: true, location_name: "fallbackModel"))
+    CreatePromptRouterRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tags"))
+    CreatePromptRouterRequest.struct_class = Types::CreatePromptRouterRequest
+
+    CreatePromptRouterResponse.add_member(:prompt_router_arn, Shapes::ShapeRef.new(shape: PromptRouterArn, location_name: "promptRouterArn"))
+    CreatePromptRouterResponse.struct_class = Types::CreatePromptRouterResponse
+
     CreateProvisionedModelThroughputRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
     CreateProvisionedModelThroughputRequest.add_member(:model_units, Shapes::ShapeRef.new(shape: PositiveInteger, required: true, location_name: "modelUnits"))
     CreateProvisionedModelThroughputRequest.add_member(:provisioned_model_name, Shapes::ShapeRef.new(shape: ProvisionedModelName, required: true, location_name: "provisionedModelName"))
@@ -709,6 +725,11 @@ module Aws::Bedrock
     DeleteModelInvocationLoggingConfigurationRequest.struct_class = Types::DeleteModelInvocationLoggingConfigurationRequest
 
     DeleteModelInvocationLoggingConfigurationResponse.struct_class = Types::DeleteModelInvocationLoggingConfigurationResponse
+
+    DeletePromptRouterRequest.add_member(:prompt_router_arn, Shapes::ShapeRef.new(shape: PromptRouterArn, required: true, location: "uri", location_name: "promptRouterArn"))
+    DeletePromptRouterRequest.struct_class = Types::DeletePromptRouterRequest
+
+    DeletePromptRouterResponse.struct_class = Types::DeletePromptRouterResponse
 
     DeleteProvisionedModelThroughputRequest.add_member(:provisioned_model_id, Shapes::ShapeRef.new(shape: ProvisionedModelId, required: true, location: "uri", location_name: "provisionedModelId"))
     DeleteProvisionedModelThroughputRequest.struct_class = Types::DeleteProvisionedModelThroughputRequest
@@ -1472,6 +1493,7 @@ module Aws::Bedrock
 
     ListPromptRoutersRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
     ListPromptRoutersRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location: "querystring", location_name: "nextToken"))
+    ListPromptRoutersRequest.add_member(:type, Shapes::ShapeRef.new(shape: PromptRouterType, location: "querystring", location_name: "type"))
     ListPromptRoutersRequest.struct_class = Types::ListPromptRoutersRequest
 
     ListPromptRoutersResponse.add_member(:prompt_router_summaries, Shapes::ShapeRef.new(shape: PromptRouterSummaries, location_name: "promptRouterSummaries"))
@@ -1646,7 +1668,7 @@ module Aws::Bedrock
     PromptRouterSummary.add_member(:type, Shapes::ShapeRef.new(shape: PromptRouterType, required: true, location_name: "type"))
     PromptRouterSummary.struct_class = Types::PromptRouterSummary
 
-    PromptRouterTargetModel.add_member(:model_arn, Shapes::ShapeRef.new(shape: PromptRouterTargetModelArn, location_name: "modelArn"))
+    PromptRouterTargetModel.add_member(:model_arn, Shapes::ShapeRef.new(shape: PromptRouterTargetModelArn, required: true, location_name: "modelArn"))
     PromptRouterTargetModel.struct_class = Types::PromptRouterTargetModel
 
     PromptRouterTargetModels.member = Shapes::ShapeRef.new(shape: PromptRouterTargetModel)
@@ -2074,6 +2096,22 @@ module Aws::Bedrock
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
 
+      api.add_operation(:create_prompt_router, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreatePromptRouter"
+        o.http_method = "POST"
+        o.http_request_uri = "/prompt-routers"
+        o.input = Shapes::ShapeRef.new(shape: CreatePromptRouterRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreatePromptRouterResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyTagsException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
       api.add_operation(:create_provisioned_model_throughput, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateProvisionedModelThroughput"
         o.http_method = "POST"
@@ -2165,6 +2203,19 @@ module Aws::Bedrock
         o.input = Shapes::ShapeRef.new(shape: DeleteModelInvocationLoggingConfigurationRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteModelInvocationLoggingConfigurationResponse)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
+      api.add_operation(:delete_prompt_router, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeletePromptRouter"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/prompt-routers/{promptRouterArn}"
+        o.input = Shapes::ShapeRef.new(shape: DeletePromptRouterRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeletePromptRouterResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)

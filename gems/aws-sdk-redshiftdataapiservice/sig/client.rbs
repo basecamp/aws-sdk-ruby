@@ -274,11 +274,14 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RedshiftDataAPIService/Client.html#list_statements-instance_method
       def list_statements: (
+                             ?cluster_identifier: ::String,
+                             ?database: ::String,
                              ?max_results: ::Integer,
                              ?next_token: ::String,
                              ?role_level: bool,
                              ?statement_name: ::String,
-                             ?status: ("SUBMITTED" | "PICKED" | "STARTED" | "FINISHED" | "ABORTED" | "FAILED" | "ALL")
+                             ?status: ("SUBMITTED" | "PICKED" | "STARTED" | "FINISHED" | "ABORTED" | "FAILED" | "ALL"),
+                             ?workgroup_name: ::String
                            ) -> _ListStatementsResponseSuccess
                          | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListStatementsResponseSuccess
 

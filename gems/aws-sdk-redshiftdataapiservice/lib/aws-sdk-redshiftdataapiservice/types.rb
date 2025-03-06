@@ -1128,6 +1128,17 @@ module Aws::RedshiftDataAPIService
       include Aws::Structure
     end
 
+    # @!attribute [rw] cluster_identifier
+    #   The cluster identifier. Only statements that ran on this cluster are
+    #   returned. When providing `ClusterIdentifier`, then `WorkgroupName`
+    #   can't be specified.
+    #   @return [String]
+    #
+    # @!attribute [rw] database
+    #   The name of the database when listing statements run against a
+    #   `ClusterIdentifier` or `WorkgroupName`.
+    #   @return [String]
+    #
     # @!attribute [rw] max_results
     #   The maximum number of SQL statements to return in the response. If
     #   more SQL statements exist than fit in one response, then `NextToken`
@@ -1180,14 +1191,23 @@ module Aws::RedshiftDataAPIService
     #   * SUBMITTED - The query was submitted, but not yet processed.
     #   @return [String]
     #
+    # @!attribute [rw] workgroup_name
+    #   The serverless workgroup name or Amazon Resource Name (ARN). Only
+    #   statements that ran on this workgroup are returned. When providing
+    #   `WorkgroupName`, then `ClusterIdentifier` can't be specified.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-data-2019-12-20/ListStatementsRequest AWS API Documentation
     #
     class ListStatementsRequest < Struct.new(
+      :cluster_identifier,
+      :database,
       :max_results,
       :next_token,
       :role_level,
       :statement_name,
-      :status)
+      :status,
+      :workgroup_name)
       SENSITIVE = []
       include Aws::Structure
     end

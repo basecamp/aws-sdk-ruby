@@ -742,6 +742,7 @@ module Aws::IVSRealTime
     #         storage: ["SEQUENTIAL"], # accepts SEQUENTIAL, LATEST
     #         recording_mode: "INTERVAL", # accepts INTERVAL, DISABLED
     #       },
+    #       recording_reconnect_window_seconds: 1,
     #     },
     #   })
     #
@@ -759,6 +760,7 @@ module Aws::IVSRealTime
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage #=> Array
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage[0] #=> String, one of "SEQUENTIAL", "LATEST"
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.recording_mode #=> String, one of "INTERVAL", "DISABLED"
+    #   resp.stage.auto_participant_recording_configuration.recording_reconnect_window_seconds #=> Integer
     #   resp.stage.endpoints.events #=> String
     #   resp.stage.endpoints.whip #=> String
     #   resp.stage.endpoints.rtmp #=> String
@@ -1262,6 +1264,7 @@ module Aws::IVSRealTime
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage #=> Array
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage[0] #=> String, one of "SEQUENTIAL", "LATEST"
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.recording_mode #=> String, one of "INTERVAL", "DISABLED"
+    #   resp.stage.auto_participant_recording_configuration.recording_reconnect_window_seconds #=> Integer
     #   resp.stage.endpoints.events #=> String
     #   resp.stage.endpoints.whip #=> String
     #   resp.stage.endpoints.rtmp #=> String
@@ -2110,12 +2113,11 @@ module Aws::IVSRealTime
     #   The ARN of the resource to be untagged. The ARN must be URL-encoded.
     #
     # @option params [required, Array<String>] :tag_keys
-    #   Array of tags to be removed. Array of maps, each of the form
-    #   `string:string (key:value)`. See [Best practices and strategies][1] in
-    #   *Tagging AWS Resources and Tag Editor* for details, including
-    #   restrictions that apply to tags and "Tag naming limits and
-    #   requirements"; Amazon IVS has no constraints on tags beyond what is
-    #   documented there.
+    #   Array of tag keys (strings) for the tags to be removed. See [Best
+    #   practices and strategies][1] in *Tagging AWS Resources and Tag Editor*
+    #   for details, including restrictions that apply to tags and "Tag
+    #   naming limits and requirements"; Amazon IVS has no constraints on
+    #   tags beyond what is documented there.
     #
     #
     #
@@ -2215,6 +2217,7 @@ module Aws::IVSRealTime
     #         storage: ["SEQUENTIAL"], # accepts SEQUENTIAL, LATEST
     #         recording_mode: "INTERVAL", # accepts INTERVAL, DISABLED
     #       },
+    #       recording_reconnect_window_seconds: 1,
     #     },
     #   })
     #
@@ -2232,6 +2235,7 @@ module Aws::IVSRealTime
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage #=> Array
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage[0] #=> String, one of "SEQUENTIAL", "LATEST"
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.recording_mode #=> String, one of "INTERVAL", "DISABLED"
+    #   resp.stage.auto_participant_recording_configuration.recording_reconnect_window_seconds #=> Integer
     #   resp.stage.endpoints.events #=> String
     #   resp.stage.endpoints.whip #=> String
     #   resp.stage.endpoints.rtmp #=> String
@@ -2264,7 +2268,7 @@ module Aws::IVSRealTime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ivsrealtime'
-      context[:gem_version] = '1.38.0'
+      context[:gem_version] = '1.39.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

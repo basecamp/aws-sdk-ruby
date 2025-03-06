@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.54.0 (2025-03-06)
+------------------
+
+* Feature - This release adds support for ListStatements API to filter statements by ClusterIdentifier, WorkgroupName, and Database.
+
 1.53.0 (2025-02-18)
 ------------------
 

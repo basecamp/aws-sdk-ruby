@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.104.0 (2025-03-06)
+------------------
+
+* Feature - You can now perform an exact match or rate limit aggregation against the web request's JA4 fingerprint.
+
 1.103.0 (2025-02-18)
 ------------------
 

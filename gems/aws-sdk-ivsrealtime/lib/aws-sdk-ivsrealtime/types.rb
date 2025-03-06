@@ -10,6 +10,30 @@
 module Aws::IVSRealTime
   module Types
 
+    # @!attribute [rw] access_control_allow_origin
+    #   @return [String]
+    #
+    # @!attribute [rw] access_control_expose_headers
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_control
+    #   @return [String]
+    #
+    # @!attribute [rw] content_security_policy
+    #   @return [String]
+    #
+    # @!attribute [rw] strict_transport_security
+    #   @return [String]
+    #
+    # @!attribute [rw] x_content_type_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_frame_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_amzn_error_type
+    #   @return [String]
+    #
     # @!attribute [rw] exception_message
     #   User does not have sufficient access to perform this action.
     #   @return [String]
@@ -17,6 +41,14 @@ module Aws::IVSRealTime
     # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/AccessDeniedException AWS API Documentation
     #
     class AccessDeniedException < Struct.new(
+      :access_control_allow_origin,
+      :access_control_expose_headers,
+      :cache_control,
+      :content_security_policy,
+      :strict_transport_security,
+      :x_content_type_options,
+      :x_frame_options,
+      :x_amzn_error_type,
       :exception_message)
       SENSITIVE = []
       include Aws::Structure
@@ -30,7 +62,9 @@ module Aws::IVSRealTime
     #   participant recording. Default: `""` (empty string, no storage
     #   configuration is specified). Individual participant recording cannot
     #   be started unless a storage configuration is specified, when a Stage
-    #   is created or updated.
+    #   is created or updated. To disable individual participant recording,
+    #   set this to `""`; other fields in this object will get reset to
+    #   their defaults when sending `""`.
     #   @return [String]
     #
     # @!attribute [rw] media_types
@@ -43,12 +77,21 @@ module Aws::IVSRealTime
     #   interval at which thumbnails are generated for the live session.
     #   @return [Types::ParticipantThumbnailConfiguration]
     #
+    # @!attribute [rw] recording_reconnect_window_seconds
+    #   If a stage publisher disconnects and then reconnects within the
+    #   specified interval, the multiple recordings will be considered a
+    #   single recording and merged together.
+    #
+    #   The default value is 0, which disables merging.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/AutoParticipantRecordingConfiguration AWS API Documentation
     #
     class AutoParticipantRecordingConfiguration < Struct.new(
       :storage_configuration_arn,
       :media_types,
-      :thumbnail_configuration)
+      :thumbnail_configuration,
+      :recording_reconnect_window_seconds)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -218,6 +261,30 @@ module Aws::IVSRealTime
       include Aws::Structure
     end
 
+    # @!attribute [rw] access_control_allow_origin
+    #   @return [String]
+    #
+    # @!attribute [rw] access_control_expose_headers
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_control
+    #   @return [String]
+    #
+    # @!attribute [rw] content_security_policy
+    #   @return [String]
+    #
+    # @!attribute [rw] strict_transport_security
+    #   @return [String]
+    #
+    # @!attribute [rw] x_content_type_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_frame_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_amzn_error_type
+    #   @return [String]
+    #
     # @!attribute [rw] exception_message
     #   Updating or deleting a resource can cause an inconsistent state.
     #   @return [String]
@@ -225,6 +292,14 @@ module Aws::IVSRealTime
     # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/ConflictException AWS API Documentation
     #
     class ConflictException < Struct.new(
+      :access_control_allow_origin,
+      :access_control_expose_headers,
+      :cache_control,
+      :content_security_policy,
+      :strict_transport_security,
+      :x_content_type_options,
+      :x_frame_options,
+      :x_amzn_error_type,
       :exception_message)
       SENSITIVE = []
       include Aws::Structure
@@ -1326,6 +1401,30 @@ module Aws::IVSRealTime
       include Aws::Structure
     end
 
+    # @!attribute [rw] access_control_allow_origin
+    #   @return [String]
+    #
+    # @!attribute [rw] access_control_expose_headers
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_control
+    #   @return [String]
+    #
+    # @!attribute [rw] content_security_policy
+    #   @return [String]
+    #
+    # @!attribute [rw] strict_transport_security
+    #   @return [String]
+    #
+    # @!attribute [rw] x_content_type_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_frame_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_amzn_error_type
+    #   @return [String]
+    #
     # @!attribute [rw] exception_message
     #   Unexpected error during processing of request.
     #   @return [String]
@@ -1333,6 +1432,14 @@ module Aws::IVSRealTime
     # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/InternalServerException AWS API Documentation
     #
     class InternalServerException < Struct.new(
+      :access_control_allow_origin,
+      :access_control_expose_headers,
+      :cache_control,
+      :content_security_policy,
+      :strict_transport_security,
+      :x_content_type_options,
+      :x_frame_options,
+      :x_amzn_error_type,
       :exception_message)
       SENSITIVE = []
       include Aws::Structure
@@ -1867,7 +1974,12 @@ module Aws::IVSRealTime
     # @!attribute [rw] recording_s3_prefix
     #   S3 prefix of the S3 bucket where the participant is being recorded,
     #   if individual participant recording is enabled, or `""` (empty
-    #   string), if recording is not enabled.
+    #   string), if recording is not enabled. If individual participant
+    #   recording merge is enabled, and if a stage publisher disconnects
+    #   from a stage and then reconnects, IVS tries to record to the same S3
+    #   prefix as the previous session. See [ Merge Fragmented Individual
+    #   Participant
+    #   Recordings](/ivs/latest/RealTimeUserGuide/rt-individual-participant-recording.html#ind-part-rec-merge-frag).
     #   @return [String]
     #
     # @!attribute [rw] recording_state
@@ -2076,6 +2188,30 @@ module Aws::IVSRealTime
       include Aws::Structure
     end
 
+    # @!attribute [rw] access_control_allow_origin
+    #   @return [String]
+    #
+    # @!attribute [rw] access_control_expose_headers
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_control
+    #   @return [String]
+    #
+    # @!attribute [rw] content_security_policy
+    #   @return [String]
+    #
+    # @!attribute [rw] strict_transport_security
+    #   @return [String]
+    #
+    # @!attribute [rw] x_content_type_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_frame_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_amzn_error_type
+    #   @return [String]
+    #
     # @!attribute [rw] exception_message
     #   Your account is pending verification.
     #   @return [String]
@@ -2083,6 +2219,14 @@ module Aws::IVSRealTime
     # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/PendingVerification AWS API Documentation
     #
     class PendingVerification < Struct.new(
+      :access_control_allow_origin,
+      :access_control_expose_headers,
+      :cache_control,
+      :content_security_policy,
+      :strict_transport_security,
+      :x_content_type_options,
+      :x_frame_options,
+      :x_amzn_error_type,
       :exception_message)
       SENSITIVE = []
       include Aws::Structure
@@ -2261,6 +2405,30 @@ module Aws::IVSRealTime
       include Aws::Structure
     end
 
+    # @!attribute [rw] access_control_allow_origin
+    #   @return [String]
+    #
+    # @!attribute [rw] access_control_expose_headers
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_control
+    #   @return [String]
+    #
+    # @!attribute [rw] content_security_policy
+    #   @return [String]
+    #
+    # @!attribute [rw] strict_transport_security
+    #   @return [String]
+    #
+    # @!attribute [rw] x_content_type_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_frame_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_amzn_error_type
+    #   @return [String]
+    #
     # @!attribute [rw] exception_message
     #   Request references a resource which does not exist.
     #   @return [String]
@@ -2268,6 +2436,14 @@ module Aws::IVSRealTime
     # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/ResourceNotFoundException AWS API Documentation
     #
     class ResourceNotFoundException < Struct.new(
+      :access_control_allow_origin,
+      :access_control_expose_headers,
+      :cache_control,
+      :content_security_policy,
+      :strict_transport_security,
+      :x_content_type_options,
+      :x_frame_options,
+      :x_amzn_error_type,
       :exception_message)
       SENSITIVE = []
       include Aws::Structure
@@ -2340,6 +2516,30 @@ module Aws::IVSRealTime
       include Aws::Structure
     end
 
+    # @!attribute [rw] access_control_allow_origin
+    #   @return [String]
+    #
+    # @!attribute [rw] access_control_expose_headers
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_control
+    #   @return [String]
+    #
+    # @!attribute [rw] content_security_policy
+    #   @return [String]
+    #
+    # @!attribute [rw] strict_transport_security
+    #   @return [String]
+    #
+    # @!attribute [rw] x_content_type_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_frame_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_amzn_error_type
+    #   @return [String]
+    #
     # @!attribute [rw] exception_message
     #   Request would cause a service quota to be exceeded.
     #   @return [String]
@@ -2347,6 +2547,14 @@ module Aws::IVSRealTime
     # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/ServiceQuotaExceededException AWS API Documentation
     #
     class ServiceQuotaExceededException < Struct.new(
+      :access_control_allow_origin,
+      :access_control_expose_headers,
+      :cache_control,
+      :content_security_policy,
+      :strict_transport_security,
+      :x_content_type_options,
+      :x_frame_options,
+      :x_amzn_error_type,
       :exception_message)
       SENSITIVE = []
       include Aws::Structure
@@ -2715,12 +2923,11 @@ module Aws::IVSRealTime
     #   @return [String]
     #
     # @!attribute [rw] tag_keys
-    #   Array of tags to be removed. Array of maps, each of the form
-    #   `string:string (key:value)`. See [Best practices and strategies][1]
-    #   in *Tagging AWS Resources and Tag Editor* for details, including
-    #   restrictions that apply to tags and "Tag naming limits and
-    #   requirements"; Amazon IVS has no constraints on tags beyond what is
-    #   documented there.
+    #   Array of tag keys (strings) for the tags to be removed. See [Best
+    #   practices and strategies][1] in *Tagging AWS Resources and Tag
+    #   Editor* for details, including restrictions that apply to tags and
+    #   "Tag naming limits and requirements"; Amazon IVS has no
+    #   constraints on tags beyond what is documented there.
     #
     #
     #
@@ -2806,6 +3013,30 @@ module Aws::IVSRealTime
       include Aws::Structure
     end
 
+    # @!attribute [rw] access_control_allow_origin
+    #   @return [String]
+    #
+    # @!attribute [rw] access_control_expose_headers
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_control
+    #   @return [String]
+    #
+    # @!attribute [rw] content_security_policy
+    #   @return [String]
+    #
+    # @!attribute [rw] strict_transport_security
+    #   @return [String]
+    #
+    # @!attribute [rw] x_content_type_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_frame_options
+    #   @return [String]
+    #
+    # @!attribute [rw] x_amzn_error_type
+    #   @return [String]
+    #
     # @!attribute [rw] exception_message
     #   The input fails to satisfy the constraints specified by an Amazon
     #   Web Services service.
@@ -2814,6 +3045,14 @@ module Aws::IVSRealTime
     # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/ValidationException AWS API Documentation
     #
     class ValidationException < Struct.new(
+      :access_control_allow_origin,
+      :access_control_expose_headers,
+      :cache_control,
+      :content_security_policy,
+      :strict_transport_security,
+      :x_content_type_options,
+      :x_frame_options,
+      :x_amzn_error_type,
       :exception_message)
       SENSITIVE = []
       include Aws::Structure

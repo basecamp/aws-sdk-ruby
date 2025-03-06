@@ -269,11 +269,14 @@ module Aws::RedshiftDataAPIService
     end
 
     class ListStatementsRequest
+      attr_accessor cluster_identifier: ::String
+      attr_accessor database: ::String
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
       attr_accessor role_level: bool
       attr_accessor statement_name: ::String
       attr_accessor status: ("SUBMITTED" | "PICKED" | "STARTED" | "FINISHED" | "ABORTED" | "FAILED" | "ALL")
+      attr_accessor workgroup_name: ::String
       SENSITIVE: []
     end
 

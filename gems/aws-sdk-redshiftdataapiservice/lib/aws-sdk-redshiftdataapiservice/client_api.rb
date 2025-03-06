@@ -304,11 +304,14 @@ module Aws::RedshiftDataAPIService
     ListSchemasResponse.add_member(:schemas, Shapes::ShapeRef.new(shape: SchemaList, location_name: "Schemas"))
     ListSchemasResponse.struct_class = Types::ListSchemasResponse
 
+    ListStatementsRequest.add_member(:cluster_identifier, Shapes::ShapeRef.new(shape: ClusterIdentifierString, location_name: "ClusterIdentifier"))
+    ListStatementsRequest.add_member(:database, Shapes::ShapeRef.new(shape: String, location_name: "Database"))
     ListStatementsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListStatementsLimit, location_name: "MaxResults"))
     ListStatementsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
     ListStatementsRequest.add_member(:role_level, Shapes::ShapeRef.new(shape: Boolean, location_name: "RoleLevel"))
     ListStatementsRequest.add_member(:statement_name, Shapes::ShapeRef.new(shape: StatementNameString, location_name: "StatementName"))
     ListStatementsRequest.add_member(:status, Shapes::ShapeRef.new(shape: StatusString, location_name: "Status"))
+    ListStatementsRequest.add_member(:workgroup_name, Shapes::ShapeRef.new(shape: WorkgroupNameString, location_name: "WorkgroupName"))
     ListStatementsRequest.struct_class = Types::ListStatementsRequest
 
     ListStatementsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))

@@ -239,6 +239,7 @@ module Aws::WorkSpaces
     DnsIpAddresses = Shapes::ListShape.new(name: 'DnsIpAddresses')
     DomainName = Shapes::StringShape.new(name: 'DomainName')
     Ec2ImageId = Shapes::StringShape.new(name: 'Ec2ImageId')
+    EndpointEncryptionMode = Shapes::StringShape.new(name: 'EndpointEncryptionMode')
     ErrorDetails = Shapes::StructureShape.new(name: 'ErrorDetails')
     ErrorDetailsList = Shapes::ListShape.new(name: 'ErrorDetailsList')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
@@ -319,6 +320,8 @@ module Aws::WorkSpaces
     ModifyCertificateBasedAuthPropertiesResult = Shapes::StructureShape.new(name: 'ModifyCertificateBasedAuthPropertiesResult')
     ModifyClientPropertiesRequest = Shapes::StructureShape.new(name: 'ModifyClientPropertiesRequest')
     ModifyClientPropertiesResult = Shapes::StructureShape.new(name: 'ModifyClientPropertiesResult')
+    ModifyEndpointEncryptionModeRequest = Shapes::StructureShape.new(name: 'ModifyEndpointEncryptionModeRequest')
+    ModifyEndpointEncryptionModeResponse = Shapes::StructureShape.new(name: 'ModifyEndpointEncryptionModeResponse')
     ModifySamlPropertiesRequest = Shapes::StructureShape.new(name: 'ModifySamlPropertiesRequest')
     ModifySamlPropertiesResult = Shapes::StructureShape.new(name: 'ModifySamlPropertiesResult')
     ModifySelfservicePermissionsRequest = Shapes::StructureShape.new(name: 'ModifySelfservicePermissionsRequest')
@@ -1347,6 +1350,12 @@ module Aws::WorkSpaces
 
     ModifyClientPropertiesResult.struct_class = Types::ModifyClientPropertiesResult
 
+    ModifyEndpointEncryptionModeRequest.add_member(:directory_id, Shapes::ShapeRef.new(shape: DirectoryId, required: true, location_name: "DirectoryId"))
+    ModifyEndpointEncryptionModeRequest.add_member(:endpoint_encryption_mode, Shapes::ShapeRef.new(shape: EndpointEncryptionMode, required: true, location_name: "EndpointEncryptionMode"))
+    ModifyEndpointEncryptionModeRequest.struct_class = Types::ModifyEndpointEncryptionModeRequest
+
+    ModifyEndpointEncryptionModeResponse.struct_class = Types::ModifyEndpointEncryptionModeResponse
+
     ModifySamlPropertiesRequest.add_member(:resource_id, Shapes::ShapeRef.new(shape: DirectoryId, required: true, location_name: "ResourceId"))
     ModifySamlPropertiesRequest.add_member(:saml_properties, Shapes::ShapeRef.new(shape: SamlProperties, location_name: "SamlProperties"))
     ModifySamlPropertiesRequest.add_member(:properties_to_delete, Shapes::ShapeRef.new(shape: DeletableSamlPropertiesList, location_name: "PropertiesToDelete"))
@@ -1797,6 +1806,7 @@ module Aws::WorkSpaces
     WorkspaceDirectory.add_member(:selfservice_permissions, Shapes::ShapeRef.new(shape: SelfservicePermissions, location_name: "SelfservicePermissions"))
     WorkspaceDirectory.add_member(:saml_properties, Shapes::ShapeRef.new(shape: SamlProperties, location_name: "SamlProperties"))
     WorkspaceDirectory.add_member(:certificate_based_auth_properties, Shapes::ShapeRef.new(shape: CertificateBasedAuthProperties, location_name: "CertificateBasedAuthProperties"))
+    WorkspaceDirectory.add_member(:endpoint_encryption_mode, Shapes::ShapeRef.new(shape: EndpointEncryptionMode, location_name: "EndpointEncryptionMode"))
     WorkspaceDirectory.add_member(:microsoft_entra_config, Shapes::ShapeRef.new(shape: MicrosoftEntraConfig, location_name: "MicrosoftEntraConfig"))
     WorkspaceDirectory.add_member(:workspace_directory_name, Shapes::ShapeRef.new(shape: WorkspaceDirectoryName, location_name: "WorkspaceDirectoryName"))
     WorkspaceDirectory.add_member(:workspace_directory_description, Shapes::ShapeRef.new(shape: WorkspaceDirectoryDescription, location_name: "WorkspaceDirectoryDescription"))
@@ -2709,6 +2719,17 @@ module Aws::WorkSpaces
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValuesException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: OperationNotSupportedException)
+      end)
+
+      api.add_operation(:modify_endpoint_encryption_mode, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ModifyEndpointEncryptionMode"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ModifyEndpointEncryptionModeRequest)
+        o.output = Shapes::ShapeRef.new(shape: ModifyEndpointEncryptionModeResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: OperationNotSupportedException)
       end)
 

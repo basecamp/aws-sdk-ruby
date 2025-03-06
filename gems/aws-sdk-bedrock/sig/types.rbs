@@ -227,6 +227,22 @@ module Aws::Bedrock
       SENSITIVE: []
     end
 
+    class CreatePromptRouterRequest
+      attr_accessor client_request_token: ::String
+      attr_accessor prompt_router_name: ::String
+      attr_accessor models: ::Array[Types::PromptRouterTargetModel]
+      attr_accessor description: ::String
+      attr_accessor routing_criteria: Types::RoutingCriteria
+      attr_accessor fallback_model: Types::PromptRouterTargetModel
+      attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: [:description]
+    end
+
+    class CreatePromptRouterResponse
+      attr_accessor prompt_router_arn: ::String
+      SENSITIVE: []
+    end
+
     class CreateProvisionedModelThroughputRequest
       attr_accessor client_request_token: ::String
       attr_accessor model_units: ::Integer
@@ -309,6 +325,14 @@ module Aws::Bedrock
     end
 
     class DeleteModelInvocationLoggingConfigurationResponse < Aws::EmptyStructure
+    end
+
+    class DeletePromptRouterRequest
+      attr_accessor prompt_router_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeletePromptRouterResponse < Aws::EmptyStructure
     end
 
     class DeleteProvisionedModelThroughputRequest
@@ -1261,6 +1285,7 @@ module Aws::Bedrock
     class ListPromptRoutersRequest
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
+      attr_accessor type: ("custom" | "default")
       SENSITIVE: []
     end
 

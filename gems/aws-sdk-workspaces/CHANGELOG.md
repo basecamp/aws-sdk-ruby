@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.133.0 (2025-03-06)
+------------------
+
+* Feature - Added a new ModifyEndpointEncryptionMode API for managing endpoint encryption settings.
+
 1.132.0 (2025-03-05)
 ------------------
 

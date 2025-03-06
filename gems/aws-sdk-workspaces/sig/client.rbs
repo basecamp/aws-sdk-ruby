@@ -1000,6 +1000,16 @@ module Aws
                                     ) -> _ModifyClientPropertiesResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyClientPropertiesResponseSuccess
 
+      interface _ModifyEndpointEncryptionModeResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ModifyEndpointEncryptionModeResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/WorkSpaces/Client.html#modify_endpoint_encryption_mode-instance_method
+      def modify_endpoint_encryption_mode: (
+                                             directory_id: ::String,
+                                             endpoint_encryption_mode: ("STANDARD_TLS" | "FIPS_VALIDATED")
+                                           ) -> _ModifyEndpointEncryptionModeResponseSuccess
+                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyEndpointEncryptionModeResponseSuccess
+
       interface _ModifySamlPropertiesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ModifySamlPropertiesResult]
       end

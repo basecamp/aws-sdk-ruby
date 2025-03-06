@@ -1413,16 +1413,15 @@ module Aws::WAFV2
     #   @return [Types::VisibilityConfig]
     #
     # @!attribute [rw] data_protection_config
-    #   Specifies data protection to apply to the web request data that WAF
-    #   stores for the web ACL. This is a web ACL level data protection
-    #   option.
+    #   Specifies data protection to apply to the web request data for the
+    #   web ACL. This is a web ACL level data protection option.
     #
     #   The data protection that you configure for the web ACL alters the
     #   data that's available for any other data collection activity,
-    #   including WAF logging, web ACL request sampling, Amazon Web Services
-    #   Managed Rules, and Amazon Security Lake data collection and
-    #   management. Your other option for data protection is in the logging
-    #   configuration, which only affects logging.
+    #   including your WAF logging destinations, web ACL request sampling,
+    #   and Amazon Security Lake data collection and management. Your other
+    #   option for data protection is in the logging configuration, which
+    #   only affects logging.
     #   @return [Types::DataProtectionConfig]
     #
     # @!attribute [rw] tags
@@ -1707,11 +1706,11 @@ module Aws::WAFV2
     #   @return [String]
     #
     # @!attribute [rw] exclude_rule_match_details
-    #   Specifies whether to also protect any rule match details from the
-    #   web ACL logs when applying data protection this field type and keys.
-    #   WAF logs these details for non-terminating matching rules and for
-    #   the terminating matching rule. For additional information, see [Log
-    #   fields for web ACL traffic][1] in the *WAF Developer Guide*.
+    #   Specifies whether to also exclude any rule match details from the
+    #   data protection you have enabled for a given field. WAF logs these
+    #   details for non-terminating matching rules and for the terminating
+    #   matching rule. For additional information, see [Log fields for web
+    #   ACL traffic][1] in the *WAF Developer Guide*.
     #
     #   Default: `FALSE`
     #
@@ -1721,9 +1720,10 @@ module Aws::WAFV2
     #   @return [Boolean]
     #
     # @!attribute [rw] exclude_rate_based_details
-    #   Specifies whether to also protect any rate-based rule details from
-    #   the web ACL logs when applying data protection for this field type
-    #   and keys. For additional information, see the log field
+    #   Specifies whether to also exclude any rate-based rule details from
+    #   the data protection you have enabled for a given field. If you
+    #   specify this exception, RateBasedDetails will show the value of the
+    #   field. For additional information, see the log field
     #   `rateBasedRuleList` at [Log fields for web ACL traffic][1] in the
     #   *WAF Developer Guide*.
     #
@@ -1745,16 +1745,15 @@ module Aws::WAFV2
       include Aws::Structure
     end
 
-    # Specifies data protection to apply to the web request data that WAF
-    # stores for the web ACL. This is a web ACL level data protection
-    # option.
+    # Specifies data protection to apply to the web request data for the web
+    # ACL. This is a web ACL level data protection option.
     #
     # The data protection that you configure for the web ACL alters the data
     # that's available for any other data collection activity, including
-    # WAF logging, web ACL request sampling, Amazon Web Services Managed
-    # Rules, and Amazon Security Lake data collection and management. Your
-    # other option for data protection is in the logging configuration,
-    # which only affects logging.
+    # your WAF logging destinations, web ACL request sampling, and Amazon
+    # Security Lake data collection and management. Your other option for
+    # data protection is in the logging configuration, which only affects
+    # logging.
     #
     # This is part of the data protection configuration for a web ACL.
     #
@@ -2619,6 +2618,36 @@ module Aws::WAFV2
     #   [1]: https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html
     #   @return [Types::JA3Fingerprint]
     #
+    # @!attribute [rw] ja4_fingerprint
+    #   Available for use with Amazon CloudFront distributions and
+    #   Application Load Balancers. Match against the request's JA4
+    #   fingerprint. The JA4 fingerprint is a 36-character hash derived from
+    #   the TLS Client Hello of an incoming request. This fingerprint serves
+    #   as a unique identifier for the client's TLS configuration. WAF
+    #   calculates and logs this fingerprint for each request that has
+    #   enough TLS Client Hello information for the calculation. Almost all
+    #   web requests include this information.
+    #
+    #   <note markdown="1"> You can use this choice only with a string match
+    #   `ByteMatchStatement` with the `PositionalConstraint` set to
+    #   `EXACTLY`.
+    #
+    #    </note>
+    #
+    #   You can obtain the JA4 fingerprint for client requests from the web
+    #   ACL logs. If WAF is able to calculate the fingerprint, it includes
+    #   it in the logs. For information about the logging fields, see [Log
+    #   fields][1] in the *WAF Developer Guide*.
+    #
+    #   Provide the JA4 fingerprint string from the logs in your string
+    #   match statement specification, to match with any future requests
+    #   that have the same TLS configuration.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html
+    #   @return [Types::JA4Fingerprint]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/FieldToMatch AWS API Documentation
     #
     class FieldToMatch < Struct.new(
@@ -2633,7 +2662,8 @@ module Aws::WAFV2
       :headers,
       :cookies,
       :header_order,
-      :ja3_fingerprint)
+      :ja3_fingerprint,
+      :ja4_fingerprint)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4118,6 +4148,54 @@ module Aws::WAFV2
     # @see http://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/JA3Fingerprint AWS API Documentation
     #
     class JA3Fingerprint < Struct.new(
+      :fallback_behavior)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Available for use with Amazon CloudFront distributions and Application
+    # Load Balancers. Match against the request's JA4 fingerprint. The JA4
+    # fingerprint is a 36-character hash derived from the TLS Client Hello
+    # of an incoming request. This fingerprint serves as a unique identifier
+    # for the client's TLS configuration. WAF calculates and logs this
+    # fingerprint for each request that has enough TLS Client Hello
+    # information for the calculation. Almost all web requests include this
+    # information.
+    #
+    # <note markdown="1"> You can use this choice only with a string match `ByteMatchStatement`
+    # with the `PositionalConstraint` set to `EXACTLY`.
+    #
+    #  </note>
+    #
+    # You can obtain the JA4 fingerprint for client requests from the web
+    # ACL logs. If WAF is able to calculate the fingerprint, it includes it
+    # in the logs. For information about the logging fields, see [Log
+    # fields][1] in the *WAF Developer Guide*.
+    #
+    # Provide the JA4 fingerprint string from the logs in your string match
+    # statement specification, to match with any future requests that have
+    # the same TLS configuration.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html
+    #
+    # @!attribute [rw] fallback_behavior
+    #   The match status to assign to the web request if the request
+    #   doesn't have a JA4 fingerprint.
+    #
+    #   You can specify the following fallback behaviors:
+    #
+    #   * `MATCH` - Treat the web request as matching the rule statement.
+    #     WAF applies the rule action to the request.
+    #
+    #   * `NO_MATCH` - Treat the web request as not matching the rule
+    #     statement.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/JA4Fingerprint AWS API Documentation
+    #
+    class JA4Fingerprint < Struct.new(
       :fallback_behavior)
       SENSITIVE = []
       include Aws::Structure
@@ -6588,6 +6666,18 @@ module Aws::WAFV2
     #   aggregation instance.
     #   @return [Types::RateLimitUriPath]
     #
+    # @!attribute [rw] ja3_fingerprint
+    #   Use the request's JA3 fingerprint as an aggregate key. If you use a
+    #   single JA3 fingerprint as your custom key, then each value fully
+    #   defines an aggregation instance.
+    #   @return [Types::RateLimitJA3Fingerprint]
+    #
+    # @!attribute [rw] ja4_fingerprint
+    #   Use the request's JA4 fingerprint as an aggregate key. If you use a
+    #   single JA4 fingerprint as your custom key, then each value fully
+    #   defines an aggregation instance.
+    #   @return [Types::RateLimitJA4Fingerprint]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/RateBasedStatementCustomKey AWS API Documentation
     #
     class RateBasedStatementCustomKey < Struct.new(
@@ -6599,7 +6689,9 @@ module Aws::WAFV2
       :forwarded_ip,
       :ip,
       :label_namespace,
-      :uri_path)
+      :uri_path,
+      :ja3_fingerprint,
+      :ja4_fingerprint)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6756,6 +6848,60 @@ module Aws::WAFV2
     # @see http://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/RateLimitIP AWS API Documentation
     #
     class RateLimitIP < Aws::EmptyStructure; end
+
+    # Use the request's JA3 fingerprint derived from the TLS Client Hello
+    # of an incoming request as an aggregate key. If you use a single JA3
+    # fingerprint as your custom key, then each value fully defines an
+    # aggregation instance.
+    #
+    # @!attribute [rw] fallback_behavior
+    #   The match status to assign to the web request if there is
+    #   insufficient TSL Client Hello information to compute the JA3
+    #   fingerprint.
+    #
+    #   You can specify the following fallback behaviors:
+    #
+    #   * `MATCH` - Treat the web request as matching the rule statement.
+    #     WAF applies the rule action to the request.
+    #
+    #   * `NO_MATCH` - Treat the web request as not matching the rule
+    #     statement.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/RateLimitJA3Fingerprint AWS API Documentation
+    #
+    class RateLimitJA3Fingerprint < Struct.new(
+      :fallback_behavior)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Use the request's JA4 fingerprint derived from the TLS Client Hello
+    # of an incoming request as an aggregate key. If you use a single JA4
+    # fingerprint as your custom key, then each value fully defines an
+    # aggregation instance.
+    #
+    # @!attribute [rw] fallback_behavior
+    #   The match status to assign to the web request if there is
+    #   insufficient TSL Client Hello information to compute the JA4
+    #   fingerprint.
+    #
+    #   You can specify the following fallback behaviors:
+    #
+    #   * `MATCH` - Treat the web request as matching the rule statement.
+    #     WAF applies the rule action to the request.
+    #
+    #   * `NO_MATCH` - Treat the web request as not matching the rule
+    #     statement.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/RateLimitJA4Fingerprint AWS API Documentation
+    #
+    class RateLimitJA4Fingerprint < Struct.new(
+      :fallback_behavior)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # Specifies a label namespace to use as an aggregate key for a
     # rate-based rule. Each distinct fully qualified label name that has the
@@ -9201,16 +9347,15 @@ module Aws::WAFV2
     #   @return [Types::VisibilityConfig]
     #
     # @!attribute [rw] data_protection_config
-    #   Specifies data protection to apply to the web request data that WAF
-    #   stores for the web ACL. This is a web ACL level data protection
-    #   option.
+    #   Specifies data protection to apply to the web request data for the
+    #   web ACL. This is a web ACL level data protection option.
     #
     #   The data protection that you configure for the web ACL alters the
     #   data that's available for any other data collection activity,
-    #   including WAF logging, web ACL request sampling, Amazon Web Services
-    #   Managed Rules, and Amazon Security Lake data collection and
-    #   management. Your other option for data protection is in the logging
-    #   configuration, which only affects logging.
+    #   including your WAF logging destinations, web ACL request sampling,
+    #   and Amazon Security Lake data collection and management. Your other
+    #   option for data protection is in the logging configuration, which
+    #   only affects logging.
     #   @return [Types::DataProtectionConfig]
     #
     # @!attribute [rw] lock_token
@@ -9883,16 +10028,15 @@ module Aws::WAFV2
     #   @return [Types::VisibilityConfig]
     #
     # @!attribute [rw] data_protection_config
-    #   Specifies data protection to apply to the web request data that WAF
-    #   stores for the web ACL. This is a web ACL level data protection
-    #   option.
+    #   Specifies data protection to apply to the web request data for the
+    #   web ACL. This is a web ACL level data protection option.
     #
     #   The data protection that you configure for the web ACL alters the
     #   data that's available for any other data collection activity,
-    #   including WAF logging, web ACL request sampling, Amazon Web Services
-    #   Managed Rules, and Amazon Security Lake data collection and
-    #   management. Your other option for data protection is in the logging
-    #   configuration, which only affects logging.
+    #   including your WAF logging destinations, web ACL request sampling,
+    #   and Amazon Security Lake data collection and management. Your other
+    #   option for data protection is in the logging configuration, which
+    #   only affects logging.
     #   @return [Types::DataProtectionConfig]
     #
     # @!attribute [rw] capacity
