@@ -12223,9 +12223,10 @@ module Aws::EC2
     #   .\_-:/()#,@\[\]+=&amp;;\{}!$*
     #
     # @option params [required, String] :group_name
-    #   The name of the security group.
+    #   The name of the security group. Names are case-insensitive and must be
+    #   unique within the VPC.
     #
-    #   Constraints: Up to 255 characters in length. Cannot start with `sg-`.
+    #   Constraints: Up to 255 characters in length. Can't start with `sg-`.
     #
     #   Valid characters: a-z, A-Z, 0-9, spaces, and
     #   .\_-:/()#,@\[\]+=&amp;;\{}!$*
@@ -21016,6 +21017,7 @@ module Aws::EC2
     #   resp.addresses[0].customer_owned_ip #=> String
     #   resp.addresses[0].customer_owned_ipv_4_pool #=> String
     #   resp.addresses[0].carrier_ip #=> String
+    #   resp.addresses[0].service_managed #=> String, one of "alb", "nlb"
     #   resp.addresses[0].instance_id #=> String
     #   resp.addresses[0].public_ip #=> String
     #
@@ -63380,7 +63382,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.509.0'
+      context[:gem_version] = '1.510.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

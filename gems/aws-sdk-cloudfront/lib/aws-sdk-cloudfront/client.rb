@@ -2522,8 +2522,9 @@ module Aws::CloudFront
       req.send_request(options)
     end
 
-    # Enables additional CloudWatch metrics for the specified CloudFront
-    # distribution. The additional metrics incur an additional cost.
+    # Enables or disables additional Amazon CloudWatch metrics for the
+    # specified CloudFront distribution. The additional metrics incur an
+    # additional cost.
     #
     # For more information, see [Viewing additional CloudFront distribution
     # metrics][1] in the *Amazon CloudFront Developer Guide*.
@@ -10520,7 +10521,7 @@ module Aws::CloudFront
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloudfront'
-      context[:gem_version] = '1.113.0'
+      context[:gem_version] = '1.114.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

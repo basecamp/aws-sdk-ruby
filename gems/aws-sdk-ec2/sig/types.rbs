@@ -215,6 +215,7 @@ module Aws::EC2
       attr_accessor customer_owned_ip: ::String
       attr_accessor customer_owned_ipv_4_pool: ::String
       attr_accessor carrier_ip: ::String
+      attr_accessor service_managed: ("alb" | "nlb")
       attr_accessor instance_id: ::String
       attr_accessor public_ip: ::String
       SENSITIVE: []

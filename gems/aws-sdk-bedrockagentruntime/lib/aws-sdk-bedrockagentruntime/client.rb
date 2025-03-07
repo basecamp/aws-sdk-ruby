@@ -1586,6 +1586,7 @@ module Aws::BedrockAgentRuntime
     #   event.caller_chain #=> Array
     #   event.caller_chain[0].agent_alias_arn #=> String
     #   event.collaborator_name #=> String
+    #   event.event_time #=> Time
     #   event.session_id #=> String
     #   event.trace.custom_orchestration_trace.event.text #=> String
     #   event.trace.custom_orchestration_trace.trace_id #=> String
@@ -2348,8 +2349,24 @@ module Aws::BedrockAgentRuntime
     #   A list of action groups with each action group defining the action the
     #   inline agent needs to carry out.
     #
+    # @option params [String] :agent_collaboration
+    #   Defines how the inline collaborator agent handles information across
+    #   multiple collaborator agents to coordinate a final response. The
+    #   inline collaborator agent can also be the supervisor.
+    #
     # @option params [Types::InlineBedrockModelConfigurations] :bedrock_model_configurations
     #   Model settings for the request.
+    #
+    # @option params [Array<Types::CollaboratorConfiguration>] :collaborator_configurations
+    #   Settings for an inline agent collaborator called with
+    #   [InvokeInlineAgent][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeInlineAgent.html
+    #
+    # @option params [Array<Types::Collaborator>] :collaborators
+    #   List of collaborator inline agents.
     #
     # @option params [String] :customer_encryption_key_arn
     #   The Amazon Resource Name (ARN) of the Amazon Web Services KMS key to
@@ -2671,11 +2688,215 @@ module Aws::BedrockAgentRuntime
     #         parent_action_group_signature: "AMAZON.UserInput", # accepts AMAZON.UserInput, AMAZON.CodeInterpreter
     #       },
     #     ],
+    #     agent_collaboration: "SUPERVISOR", # accepts SUPERVISOR, SUPERVISOR_ROUTER, DISABLED
     #     bedrock_model_configurations: {
     #       performance_config: {
     #         latency: "standard", # accepts standard, optimized
     #       },
     #     },
+    #     collaborator_configurations: [
+    #       {
+    #         agent_alias_arn: "AgentAliasArn",
+    #         collaborator_instruction: "CollaborationInstruction", # required
+    #         collaborator_name: "Name", # required
+    #         relay_conversation_history: "TO_COLLABORATOR", # accepts TO_COLLABORATOR, DISABLED
+    #       },
+    #     ],
+    #     collaborators: [
+    #       {
+    #         action_groups: [
+    #           {
+    #             action_group_executor: {
+    #               custom_control: "RETURN_CONTROL", # accepts RETURN_CONTROL
+    #               lambda: "LambdaResourceArn",
+    #             },
+    #             action_group_name: "ResourceName", # required
+    #             api_schema: {
+    #               payload: "Payload",
+    #               s3: {
+    #                 s3_bucket_name: "S3BucketName",
+    #                 s3_object_key: "S3ObjectKey",
+    #               },
+    #             },
+    #             description: "ResourceDescription",
+    #             function_schema: {
+    #               functions: [
+    #                 {
+    #                   description: "FunctionDescription",
+    #                   name: "ResourceName", # required
+    #                   parameters: {
+    #                     "ParameterName" => {
+    #                       description: "ParameterDescription",
+    #                       required: false,
+    #                       type: "string", # required, accepts string, number, integer, boolean, array
+    #                     },
+    #                   },
+    #                   require_confirmation: "ENABLED", # accepts ENABLED, DISABLED
+    #                 },
+    #               ],
+    #             },
+    #             parent_action_group_signature: "AMAZON.UserInput", # accepts AMAZON.UserInput, AMAZON.CodeInterpreter
+    #           },
+    #         ],
+    #         agent_collaboration: "SUPERVISOR", # accepts SUPERVISOR, SUPERVISOR_ROUTER, DISABLED
+    #         agent_name: "Name",
+    #         collaborator_configurations: [
+    #           {
+    #             agent_alias_arn: "AgentAliasArn",
+    #             collaborator_instruction: "CollaborationInstruction", # required
+    #             collaborator_name: "Name", # required
+    #             relay_conversation_history: "TO_COLLABORATOR", # accepts TO_COLLABORATOR, DISABLED
+    #           },
+    #         ],
+    #         customer_encryption_key_arn: "KmsKeyArn",
+    #         foundation_model: "ModelIdentifier", # required
+    #         guardrail_configuration: {
+    #           guardrail_identifier: "GuardrailIdentifierWithArn", # required
+    #           guardrail_version: "GuardrailVersion", # required
+    #         },
+    #         idle_session_ttl_in_seconds: 1,
+    #         instruction: "Instruction", # required
+    #         knowledge_bases: [
+    #           {
+    #             description: "ResourceDescription", # required
+    #             knowledge_base_id: "KnowledgeBaseId", # required
+    #             retrieval_configuration: {
+    #               vector_search_configuration: { # required
+    #                 filter: {
+    #                   and_all: [
+    #                     {
+    #                       # recursive RetrievalFilter
+    #                     },
+    #                   ],
+    #                   equals: {
+    #                     key: "FilterKey", # required
+    #                     value: { # required
+    #                     },
+    #                   },
+    #                   greater_than: {
+    #                     key: "FilterKey", # required
+    #                     value: { # required
+    #                     },
+    #                   },
+    #                   greater_than_or_equals: {
+    #                     key: "FilterKey", # required
+    #                     value: { # required
+    #                     },
+    #                   },
+    #                   in: {
+    #                     key: "FilterKey", # required
+    #                     value: { # required
+    #                     },
+    #                   },
+    #                   less_than: {
+    #                     key: "FilterKey", # required
+    #                     value: { # required
+    #                     },
+    #                   },
+    #                   less_than_or_equals: {
+    #                     key: "FilterKey", # required
+    #                     value: { # required
+    #                     },
+    #                   },
+    #                   list_contains: {
+    #                     key: "FilterKey", # required
+    #                     value: { # required
+    #                     },
+    #                   },
+    #                   not_equals: {
+    #                     key: "FilterKey", # required
+    #                     value: { # required
+    #                     },
+    #                   },
+    #                   not_in: {
+    #                     key: "FilterKey", # required
+    #                     value: { # required
+    #                     },
+    #                   },
+    #                   or_all: [
+    #                     {
+    #                       # recursive RetrievalFilter
+    #                     },
+    #                   ],
+    #                   starts_with: {
+    #                     key: "FilterKey", # required
+    #                     value: { # required
+    #                     },
+    #                   },
+    #                   string_contains: {
+    #                     key: "FilterKey", # required
+    #                     value: { # required
+    #                     },
+    #                   },
+    #                 },
+    #                 implicit_filter_configuration: {
+    #                   metadata_attributes: [ # required
+    #                     {
+    #                       description: "MetadataAttributeSchemaDescriptionString", # required
+    #                       key: "MetadataAttributeSchemaKeyString", # required
+    #                       type: "STRING", # required, accepts STRING, NUMBER, BOOLEAN, STRING_LIST
+    #                     },
+    #                   ],
+    #                   model_arn: "BedrockModelArn", # required
+    #                 },
+    #                 number_of_results: 1,
+    #                 override_search_type: "HYBRID", # accepts HYBRID, SEMANTIC
+    #                 reranking_configuration: {
+    #                   bedrock_reranking_configuration: {
+    #                     metadata_configuration: {
+    #                       selection_mode: "SELECTIVE", # required, accepts SELECTIVE, ALL
+    #                       selective_mode_configuration: {
+    #                         fields_to_exclude: [
+    #                           {
+    #                             field_name: "FieldForRerankingFieldNameString", # required
+    #                           },
+    #                         ],
+    #                         fields_to_include: [
+    #                           {
+    #                             field_name: "FieldForRerankingFieldNameString", # required
+    #                           },
+    #                         ],
+    #                       },
+    #                     },
+    #                     model_configuration: { # required
+    #                       additional_model_request_fields: {
+    #                         "AdditionalModelRequestFieldsKey" => {
+    #                         },
+    #                       },
+    #                       model_arn: "BedrockRerankingModelArn", # required
+    #                     },
+    #                     number_of_reranked_results: 1,
+    #                   },
+    #                   type: "BEDROCK_RERANKING_MODEL", # required, accepts BEDROCK_RERANKING_MODEL
+    #                 },
+    #               },
+    #             },
+    #           },
+    #         ],
+    #         prompt_override_configuration: {
+    #           override_lambda: "LambdaResourceArn",
+    #           prompt_configurations: [ # required
+    #             {
+    #               additional_model_request_fields: {
+    #               },
+    #               base_prompt_template: "BasePromptTemplate",
+    #               foundation_model: "ModelIdentifier",
+    #               inference_configuration: {
+    #                 maximum_length: 1,
+    #                 stop_sequences: ["String"],
+    #                 temperature: 1.0,
+    #                 top_k: 1,
+    #                 top_p: 1.0,
+    #               },
+    #               parser_mode: "DEFAULT", # accepts DEFAULT, OVERRIDDEN
+    #               prompt_creation_mode: "DEFAULT", # accepts DEFAULT, OVERRIDDEN
+    #               prompt_state: "ENABLED", # accepts ENABLED, DISABLED
+    #               prompt_type: "PRE_PROCESSING", # accepts PRE_PROCESSING, ORCHESTRATION, KNOWLEDGE_BASE_RESPONSE_GENERATION, POST_PROCESSING, ROUTING_CLASSIFIER
+    #             },
+    #           ],
+    #         },
+    #       },
+    #     ],
     #     customer_encryption_key_arn: "KmsKeyArn",
     #     enable_trace: false,
     #     end_session: false,
@@ -2686,6 +2907,18 @@ module Aws::BedrockAgentRuntime
     #     },
     #     idle_session_ttl_in_seconds: 1,
     #     inline_session_state: {
+    #       conversation_history: {
+    #         messages: [
+    #           {
+    #             content: [ # required
+    #               {
+    #                 text: "String",
+    #               },
+    #             ],
+    #             role: "user", # required, accepts user, assistant
+    #           },
+    #         ],
+    #       },
     #       files: [
     #         {
     #           name: "String", # required
@@ -2866,6 +3099,7 @@ module Aws::BedrockAgentRuntime
     #           additional_model_request_fields: {
     #           },
     #           base_prompt_template: "BasePromptTemplate",
+    #           foundation_model: "ModelIdentifier",
     #           inference_configuration: {
     #             maximum_length: 1,
     #             stop_sequences: ["String"],
@@ -5135,7 +5369,7 @@ module Aws::BedrockAgentRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagentruntime'
-      context[:gem_version] = '1.47.0'
+      context[:gem_version] = '1.48.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

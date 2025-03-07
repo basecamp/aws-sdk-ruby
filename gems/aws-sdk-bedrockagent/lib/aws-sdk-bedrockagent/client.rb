@@ -1301,6 +1301,15 @@ module Aws::BedrockAgent
     #           max_tokens: 1, # required
     #         },
     #       },
+    #       context_enrichment_configuration: {
+    #         bedrock_foundation_model_configuration: {
+    #           enrichment_strategy_configuration: { # required
+    #             method: "CHUNK_ENTITY_EXTRACTION", # required, accepts CHUNK_ENTITY_EXTRACTION
+    #           },
+    #           model_arn: "BedrockModelArn", # required
+    #         },
+    #         type: "BEDROCK_FOUNDATION_MODEL", # required, accepts BEDROCK_FOUNDATION_MODEL
+    #       },
     #       custom_transformation_configuration: {
     #         intermediate_storage: { # required
     #           s3_location: { # required
@@ -1407,6 +1416,9 @@ module Aws::BedrockAgent
     #   resp.data_source.vector_ingestion_configuration.chunking_configuration.semantic_chunking_configuration.breakpoint_percentile_threshold #=> Integer
     #   resp.data_source.vector_ingestion_configuration.chunking_configuration.semantic_chunking_configuration.buffer_size #=> Integer
     #   resp.data_source.vector_ingestion_configuration.chunking_configuration.semantic_chunking_configuration.max_tokens #=> Integer
+    #   resp.data_source.vector_ingestion_configuration.context_enrichment_configuration.bedrock_foundation_model_configuration.enrichment_strategy_configuration.method #=> String, one of "CHUNK_ENTITY_EXTRACTION"
+    #   resp.data_source.vector_ingestion_configuration.context_enrichment_configuration.bedrock_foundation_model_configuration.model_arn #=> String
+    #   resp.data_source.vector_ingestion_configuration.context_enrichment_configuration.type #=> String, one of "BEDROCK_FOUNDATION_MODEL"
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.intermediate_storage.s3_location.uri #=> String
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations #=> Array
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations[0].step_to_apply #=> String, one of "POST_CHUNKING"
@@ -2179,6 +2191,13 @@ module Aws::BedrockAgent
     #         },
     #         vector_index_name: "MongoDbAtlasIndexName", # required
     #       },
+    #       neptune_analytics_configuration: {
+    #         field_mapping: { # required
+    #           metadata_field: "FieldName", # required
+    #           text_field: "FieldName", # required
+    #         },
+    #         graph_arn: "GraphArn", # required
+    #       },
     #       opensearch_serverless_configuration: {
     #         collection_arn: "OpenSearchServerlessCollectionArn", # required
     #         field_mapping: { # required
@@ -2219,7 +2238,7 @@ module Aws::BedrockAgent
     #         },
     #         vector_index_name: "RedisEnterpriseCloudIndexName", # required
     #       },
-    #       type: "OPENSEARCH_SERVERLESS", # required, accepts OPENSEARCH_SERVERLESS, PINECONE, REDIS_ENTERPRISE_CLOUD, RDS, MONGO_DB_ATLAS
+    #       type: "OPENSEARCH_SERVERLESS", # required, accepts OPENSEARCH_SERVERLESS, PINECONE, REDIS_ENTERPRISE_CLOUD, RDS, MONGO_DB_ATLAS, NEPTUNE_ANALYTICS
     #     },
     #     tags: {
     #       "TagKey" => "TagValue",
@@ -2280,6 +2299,9 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.text_field #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.vector_field #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.vector_index_name #=> String
+    #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.field_mapping.metadata_field #=> String
+    #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.field_mapping.text_field #=> String
+    #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.graph_arn #=> String
     #   resp.knowledge_base.storage_configuration.opensearch_serverless_configuration.collection_arn #=> String
     #   resp.knowledge_base.storage_configuration.opensearch_serverless_configuration.field_mapping.metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.opensearch_serverless_configuration.field_mapping.text_field #=> String
@@ -2304,7 +2326,7 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.storage_configuration.redis_enterprise_cloud_configuration.field_mapping.text_field #=> String
     #   resp.knowledge_base.storage_configuration.redis_enterprise_cloud_configuration.field_mapping.vector_field #=> String
     #   resp.knowledge_base.storage_configuration.redis_enterprise_cloud_configuration.vector_index_name #=> String
-    #   resp.knowledge_base.storage_configuration.type #=> String, one of "OPENSEARCH_SERVERLESS", "PINECONE", "REDIS_ENTERPRISE_CLOUD", "RDS", "MONGO_DB_ATLAS"
+    #   resp.knowledge_base.storage_configuration.type #=> String, one of "OPENSEARCH_SERVERLESS", "PINECONE", "REDIS_ENTERPRISE_CLOUD", "RDS", "MONGO_DB_ATLAS", "NEPTUNE_ANALYTICS"
     #   resp.knowledge_base.updated_at #=> Time
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/CreateKnowledgeBase AWS API Documentation
@@ -3600,6 +3622,9 @@ module Aws::BedrockAgent
     #   resp.data_source.vector_ingestion_configuration.chunking_configuration.semantic_chunking_configuration.breakpoint_percentile_threshold #=> Integer
     #   resp.data_source.vector_ingestion_configuration.chunking_configuration.semantic_chunking_configuration.buffer_size #=> Integer
     #   resp.data_source.vector_ingestion_configuration.chunking_configuration.semantic_chunking_configuration.max_tokens #=> Integer
+    #   resp.data_source.vector_ingestion_configuration.context_enrichment_configuration.bedrock_foundation_model_configuration.enrichment_strategy_configuration.method #=> String, one of "CHUNK_ENTITY_EXTRACTION"
+    #   resp.data_source.vector_ingestion_configuration.context_enrichment_configuration.bedrock_foundation_model_configuration.model_arn #=> String
+    #   resp.data_source.vector_ingestion_configuration.context_enrichment_configuration.type #=> String, one of "BEDROCK_FOUNDATION_MODEL"
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.intermediate_storage.s3_location.uri #=> String
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations #=> Array
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations[0].step_to_apply #=> String, one of "POST_CHUNKING"
@@ -4069,6 +4094,9 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.text_field #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.vector_field #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.vector_index_name #=> String
+    #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.field_mapping.metadata_field #=> String
+    #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.field_mapping.text_field #=> String
+    #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.graph_arn #=> String
     #   resp.knowledge_base.storage_configuration.opensearch_serverless_configuration.collection_arn #=> String
     #   resp.knowledge_base.storage_configuration.opensearch_serverless_configuration.field_mapping.metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.opensearch_serverless_configuration.field_mapping.text_field #=> String
@@ -4093,7 +4121,7 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.storage_configuration.redis_enterprise_cloud_configuration.field_mapping.text_field #=> String
     #   resp.knowledge_base.storage_configuration.redis_enterprise_cloud_configuration.field_mapping.vector_field #=> String
     #   resp.knowledge_base.storage_configuration.redis_enterprise_cloud_configuration.vector_index_name #=> String
-    #   resp.knowledge_base.storage_configuration.type #=> String, one of "OPENSEARCH_SERVERLESS", "PINECONE", "REDIS_ENTERPRISE_CLOUD", "RDS", "MONGO_DB_ATLAS"
+    #   resp.knowledge_base.storage_configuration.type #=> String, one of "OPENSEARCH_SERVERLESS", "PINECONE", "REDIS_ENTERPRISE_CLOUD", "RDS", "MONGO_DB_ATLAS", "NEPTUNE_ANALYTICS"
     #   resp.knowledge_base.updated_at #=> Time
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/GetKnowledgeBase AWS API Documentation
@@ -6173,6 +6201,15 @@ module Aws::BedrockAgent
     #           max_tokens: 1, # required
     #         },
     #       },
+    #       context_enrichment_configuration: {
+    #         bedrock_foundation_model_configuration: {
+    #           enrichment_strategy_configuration: { # required
+    #             method: "CHUNK_ENTITY_EXTRACTION", # required, accepts CHUNK_ENTITY_EXTRACTION
+    #           },
+    #           model_arn: "BedrockModelArn", # required
+    #         },
+    #         type: "BEDROCK_FOUNDATION_MODEL", # required, accepts BEDROCK_FOUNDATION_MODEL
+    #       },
     #       custom_transformation_configuration: {
     #         intermediate_storage: { # required
     #           s3_location: { # required
@@ -6279,6 +6316,9 @@ module Aws::BedrockAgent
     #   resp.data_source.vector_ingestion_configuration.chunking_configuration.semantic_chunking_configuration.breakpoint_percentile_threshold #=> Integer
     #   resp.data_source.vector_ingestion_configuration.chunking_configuration.semantic_chunking_configuration.buffer_size #=> Integer
     #   resp.data_source.vector_ingestion_configuration.chunking_configuration.semantic_chunking_configuration.max_tokens #=> Integer
+    #   resp.data_source.vector_ingestion_configuration.context_enrichment_configuration.bedrock_foundation_model_configuration.enrichment_strategy_configuration.method #=> String, one of "CHUNK_ENTITY_EXTRACTION"
+    #   resp.data_source.vector_ingestion_configuration.context_enrichment_configuration.bedrock_foundation_model_configuration.model_arn #=> String
+    #   resp.data_source.vector_ingestion_configuration.context_enrichment_configuration.type #=> String, one of "BEDROCK_FOUNDATION_MODEL"
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.intermediate_storage.s3_location.uri #=> String
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations #=> Array
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations[0].step_to_apply #=> String, one of "POST_CHUNKING"
@@ -6841,6 +6881,13 @@ module Aws::BedrockAgent
     #         },
     #         vector_index_name: "MongoDbAtlasIndexName", # required
     #       },
+    #       neptune_analytics_configuration: {
+    #         field_mapping: { # required
+    #           metadata_field: "FieldName", # required
+    #           text_field: "FieldName", # required
+    #         },
+    #         graph_arn: "GraphArn", # required
+    #       },
     #       opensearch_serverless_configuration: {
     #         collection_arn: "OpenSearchServerlessCollectionArn", # required
     #         field_mapping: { # required
@@ -6881,7 +6928,7 @@ module Aws::BedrockAgent
     #         },
     #         vector_index_name: "RedisEnterpriseCloudIndexName", # required
     #       },
-    #       type: "OPENSEARCH_SERVERLESS", # required, accepts OPENSEARCH_SERVERLESS, PINECONE, REDIS_ENTERPRISE_CLOUD, RDS, MONGO_DB_ATLAS
+    #       type: "OPENSEARCH_SERVERLESS", # required, accepts OPENSEARCH_SERVERLESS, PINECONE, REDIS_ENTERPRISE_CLOUD, RDS, MONGO_DB_ATLAS, NEPTUNE_ANALYTICS
     #     },
     #   })
     #
@@ -6939,6 +6986,9 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.text_field #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.vector_field #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.vector_index_name #=> String
+    #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.field_mapping.metadata_field #=> String
+    #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.field_mapping.text_field #=> String
+    #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.graph_arn #=> String
     #   resp.knowledge_base.storage_configuration.opensearch_serverless_configuration.collection_arn #=> String
     #   resp.knowledge_base.storage_configuration.opensearch_serverless_configuration.field_mapping.metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.opensearch_serverless_configuration.field_mapping.text_field #=> String
@@ -6963,7 +7013,7 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.storage_configuration.redis_enterprise_cloud_configuration.field_mapping.text_field #=> String
     #   resp.knowledge_base.storage_configuration.redis_enterprise_cloud_configuration.field_mapping.vector_field #=> String
     #   resp.knowledge_base.storage_configuration.redis_enterprise_cloud_configuration.vector_index_name #=> String
-    #   resp.knowledge_base.storage_configuration.type #=> String, one of "OPENSEARCH_SERVERLESS", "PINECONE", "REDIS_ENTERPRISE_CLOUD", "RDS", "MONGO_DB_ATLAS"
+    #   resp.knowledge_base.storage_configuration.type #=> String, one of "OPENSEARCH_SERVERLESS", "PINECONE", "REDIS_ENTERPRISE_CLOUD", "RDS", "MONGO_DB_ATLAS", "NEPTUNE_ANALYTICS"
     #   resp.knowledge_base.updated_at #=> Time
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/UpdateKnowledgeBase AWS API Documentation
@@ -7448,7 +7498,7 @@ module Aws::BedrockAgent
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagent'
-      context[:gem_version] = '1.49.0'
+      context[:gem_version] = '1.50.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

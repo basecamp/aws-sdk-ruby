@@ -849,6 +849,117 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # List of inline collaborators.
+    #
+    # @!attribute [rw] action_groups
+    #   List of action groups with each action group defining tasks the
+    #   inline collaborator agent needs to carry out.
+    #   @return [Array<Types::AgentActionGroup>]
+    #
+    # @!attribute [rw] agent_collaboration
+    #   Defines how the inline supervisor agent handles information across
+    #   multiple collaborator agents to coordinate a final response.
+    #   @return [String]
+    #
+    # @!attribute [rw] agent_name
+    #   Name of the inline collaborator agent which must be the same name as
+    #   specified for `collaboratorName`.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_configurations
+    #   Settings of the collaborator agent.
+    #   @return [Array<Types::CollaboratorConfiguration>]
+    #
+    # @!attribute [rw] customer_encryption_key_arn
+    #   The Amazon Resource Name (ARN) of the AWS KMS key that encrypts the
+    #   inline collaborator.
+    #   @return [String]
+    #
+    # @!attribute [rw] foundation_model
+    #   The foundation model used by the inline collaborator agent.
+    #   @return [String]
+    #
+    # @!attribute [rw] guardrail_configuration
+    #   Details of the guardwrail associated with the inline collaborator.
+    #   @return [Types::GuardrailConfigurationWithArn]
+    #
+    # @!attribute [rw] idle_session_ttl_in_seconds
+    #   The number of seconds for which the Amazon Bedrock keeps information
+    #   about the user's conversation with the inline collaborator agent.
+    #
+    #   A user interaction remains active for the amount of time specified.
+    #   If no conversation occurs during this time, the session expires and
+    #   Amazon Bedrock deletes any data provided before the timeout.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] instruction
+    #   Instruction that tell the inline collaborator agent what it should
+    #   do and how it should interact with users.
+    #   @return [String]
+    #
+    # @!attribute [rw] knowledge_bases
+    #   Knowledge base associated with the inline collaborator agent.
+    #   @return [Array<Types::KnowledgeBase>]
+    #
+    # @!attribute [rw] prompt_override_configuration
+    #   Contains configurations to override prompt templates in different
+    #   parts of an inline collaborator sequence. For more information, see
+    #   [Advanced prompts][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html
+    #   @return [Types::PromptOverrideConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/Collaborator AWS API Documentation
+    #
+    class Collaborator < Struct.new(
+      :action_groups,
+      :agent_collaboration,
+      :agent_name,
+      :collaborator_configurations,
+      :customer_encryption_key_arn,
+      :foundation_model,
+      :guardrail_configuration,
+      :idle_session_ttl_in_seconds,
+      :instruction,
+      :knowledge_bases,
+      :prompt_override_configuration)
+      SENSITIVE = [:agent_name, :instruction, :prompt_override_configuration]
+      include Aws::Structure
+    end
+
+    # Settings of an inline collaborator agent.
+    #
+    # @!attribute [rw] agent_alias_arn
+    #   The Amazon Resource Name (ARN) of the inline collaborator agent.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_instruction
+    #   Instructions that tell the inline collaborator agent what it should
+    #   do and how it should interact with users.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_name
+    #   Name of the inline collaborator agent which must be the same name as
+    #   specified for `agentName`.
+    #   @return [String]
+    #
+    # @!attribute [rw] relay_conversation_history
+    #   A relay conversation history for the inline collaborator agent.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/CollaboratorConfiguration AWS API Documentation
+    #
+    class CollaboratorConfiguration < Struct.new(
+      :agent_alias_arn,
+      :collaborator_instruction,
+      :collaborator_name,
+      :relay_conversation_history)
+      SENSITIVE = [:collaborator_instruction, :collaborator_name]
+      include Aws::Structure
+    end
+
     # There was a conflict performing an operation. Resolve the conflict and
     # retry your request.
     #
@@ -2918,6 +3029,10 @@ module Aws::BedrockAgentRuntime
     # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-lambda.html
     # [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html
     #
+    # @!attribute [rw] conversation_history
+    #   Contains the conversation history that persist across sessions.
+    #   @return [Types::ConversationHistory]
+    #
     # @!attribute [rw] files
     #   Contains information about the files used by code interpreter.
     #   @return [Array<Types::InputFile>]
@@ -2962,6 +3077,7 @@ module Aws::BedrockAgentRuntime
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InlineSessionState AWS API Documentation
     #
     class InlineSessionState < Struct.new(
+      :conversation_history,
       :files,
       :invocation_id,
       :prompt_session_attributes,
@@ -3479,9 +3595,28 @@ module Aws::BedrockAgentRuntime
     #   the inline agent needs to carry out.
     #   @return [Array<Types::AgentActionGroup>]
     #
+    # @!attribute [rw] agent_collaboration
+    #   Defines how the inline collaborator agent handles information across
+    #   multiple collaborator agents to coordinate a final response. The
+    #   inline collaborator agent can also be the supervisor.
+    #   @return [String]
+    #
     # @!attribute [rw] bedrock_model_configurations
     #   Model settings for the request.
     #   @return [Types::InlineBedrockModelConfigurations]
+    #
+    # @!attribute [rw] collaborator_configurations
+    #   Settings for an inline agent collaborator called with
+    #   [InvokeInlineAgent][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeInlineAgent.html
+    #   @return [Array<Types::CollaboratorConfiguration>]
+    #
+    # @!attribute [rw] collaborators
+    #   List of collaborator inline agents.
+    #   @return [Array<Types::Collaborator>]
     #
     # @!attribute [rw] customer_encryption_key_arn
     #   The Amazon Resource Name (ARN) of the Amazon Web Services KMS key to
@@ -3587,7 +3722,10 @@ module Aws::BedrockAgentRuntime
     #
     class InvokeInlineAgentRequest < Struct.new(
       :action_groups,
+      :agent_collaboration,
       :bedrock_model_configurations,
+      :collaborator_configurations,
+      :collaborators,
       :customer_encryption_key_arn,
       :enable_trace,
       :end_session,
@@ -4984,6 +5122,10 @@ module Aws::BedrockAgentRuntime
     #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts-configure.html
     #   @return [String]
     #
+    # @!attribute [rw] foundation_model
+    #   The foundation model to use.
+    #   @return [String]
+    #
     # @!attribute [rw] inference_configuration
     #   Contains inference parameters to use when the agent invokes a
     #   foundation model in the part of the agent sequence defined by the
@@ -5040,6 +5182,7 @@ module Aws::BedrockAgentRuntime
     class PromptConfiguration < Struct.new(
       :additional_model_request_fields,
       :base_prompt_template,
+      :foundation_model,
       :inference_configuration,
       :parser_mode,
       :prompt_creation_mode,
@@ -7038,6 +7181,10 @@ module Aws::BedrockAgentRuntime
     #   The part's collaborator name.
     #   @return [String]
     #
+    # @!attribute [rw] event_time
+    #   The time of the trace.
+    #   @return [Time]
+    #
     # @!attribute [rw] session_id
     #   The unique identifier of the session with the agent.
     #   @return [String]
@@ -7062,6 +7209,7 @@ module Aws::BedrockAgentRuntime
       :agent_version,
       :caller_chain,
       :collaborator_name,
+      :event_time,
       :session_id,
       :trace,
       :event_type)

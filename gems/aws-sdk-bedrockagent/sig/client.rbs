@@ -360,6 +360,15 @@ module Aws
                                       max_tokens: ::Integer
                                     }?
                                   }?,
+                                  context_enrichment_configuration: {
+                                    bedrock_foundation_model_configuration: {
+                                      enrichment_strategy_configuration: {
+                                        method: ("CHUNK_ENTITY_EXTRACTION")
+                                      },
+                                      model_arn: ::String
+                                    }?,
+                                    type: ("BEDROCK_FOUNDATION_MODEL")
+                                  }?,
                                   custom_transformation_configuration: {
                                     intermediate_storage: {
                                       s3_location: {
@@ -754,6 +763,13 @@ module Aws
                                        },
                                        vector_index_name: ::String
                                      }?,
+                                     neptune_analytics_configuration: {
+                                       field_mapping: {
+                                         metadata_field: ::String,
+                                         text_field: ::String
+                                       },
+                                       graph_arn: ::String
+                                     }?,
                                      opensearch_serverless_configuration: {
                                        collection_arn: ::String,
                                        field_mapping: {
@@ -794,7 +810,7 @@ module Aws
                                        },
                                        vector_index_name: ::String
                                      }?,
-                                     type: ("OPENSEARCH_SERVERLESS" | "PINECONE" | "REDIS_ENTERPRISE_CLOUD" | "RDS" | "MONGO_DB_ATLAS")
+                                     type: ("OPENSEARCH_SERVERLESS" | "PINECONE" | "REDIS_ENTERPRISE_CLOUD" | "RDS" | "MONGO_DB_ATLAS" | "NEPTUNE_ANALYTICS")
                                    },
                                    ?tags: Hash[::String, ::String]
                                  ) -> _CreateKnowledgeBaseResponseSuccess
@@ -1929,6 +1945,15 @@ module Aws
                                       max_tokens: ::Integer
                                     }?
                                   }?,
+                                  context_enrichment_configuration: {
+                                    bedrock_foundation_model_configuration: {
+                                      enrichment_strategy_configuration: {
+                                        method: ("CHUNK_ENTITY_EXTRACTION")
+                                      },
+                                      model_arn: ::String
+                                    }?,
+                                    type: ("BEDROCK_FOUNDATION_MODEL")
+                                  }?,
                                   custom_transformation_configuration: {
                                     intermediate_storage: {
                                       s3_location: {
@@ -2300,6 +2325,13 @@ module Aws
                                        },
                                        vector_index_name: ::String
                                      }?,
+                                     neptune_analytics_configuration: {
+                                       field_mapping: {
+                                         metadata_field: ::String,
+                                         text_field: ::String
+                                       },
+                                       graph_arn: ::String
+                                     }?,
                                      opensearch_serverless_configuration: {
                                        collection_arn: ::String,
                                        field_mapping: {
@@ -2340,7 +2372,7 @@ module Aws
                                        },
                                        vector_index_name: ::String
                                      }?,
-                                     type: ("OPENSEARCH_SERVERLESS" | "PINECONE" | "REDIS_ENTERPRISE_CLOUD" | "RDS" | "MONGO_DB_ATLAS")
+                                     type: ("OPENSEARCH_SERVERLESS" | "PINECONE" | "REDIS_ENTERPRISE_CLOUD" | "RDS" | "MONGO_DB_ATLAS" | "NEPTUNE_ANALYTICS")
                                    }
                                  ) -> _UpdateKnowledgeBaseResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateKnowledgeBaseResponseSuccess

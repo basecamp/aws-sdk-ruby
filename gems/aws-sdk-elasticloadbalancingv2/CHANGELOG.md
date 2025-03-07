@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.130.0 (2025-03-07)
+------------------
+
+* Feature - This release adds support for assigning IP addresses to Application Load Balancers from VPC IP Address Manager pools.
+
 1.129.0 (2025-03-04)
 ------------------
 

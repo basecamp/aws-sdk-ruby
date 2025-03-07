@@ -2901,6 +2901,7 @@ module Aws::EC2
     ServiceConnectivityType = Shapes::StringShape.new(name: 'ServiceConnectivityType')
     ServiceDetail = Shapes::StructureShape.new(name: 'ServiceDetail')
     ServiceDetailSet = Shapes::ListShape.new(name: 'ServiceDetailSet')
+    ServiceManaged = Shapes::StringShape.new(name: 'ServiceManaged')
     ServiceNetworkArn = Shapes::StringShape.new(name: 'ServiceNetworkArn')
     ServiceState = Shapes::StringShape.new(name: 'ServiceState')
     ServiceType = Shapes::StringShape.new(name: 'ServiceType')
@@ -3601,6 +3602,7 @@ module Aws::EC2
     Address.add_member(:customer_owned_ip, Shapes::ShapeRef.new(shape: String, location_name: "customerOwnedIp"))
     Address.add_member(:customer_owned_ipv_4_pool, Shapes::ShapeRef.new(shape: String, location_name: "customerOwnedIpv4Pool"))
     Address.add_member(:carrier_ip, Shapes::ShapeRef.new(shape: String, location_name: "carrierIp"))
+    Address.add_member(:service_managed, Shapes::ShapeRef.new(shape: ServiceManaged, location_name: "serviceManaged"))
     Address.add_member(:instance_id, Shapes::ShapeRef.new(shape: String, location_name: "instanceId"))
     Address.add_member(:public_ip, Shapes::ShapeRef.new(shape: String, location_name: "publicIp"))
     Address.struct_class = Types::Address

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.30.0 (2025-03-07)
+------------------
+
+* Feature - Several small updates to resolve customer requests.
+
 1.29.0 (2025-02-18)
 ------------------
 

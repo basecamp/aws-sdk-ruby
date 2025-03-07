@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.48.0 (2025-03-07)
+------------------
+
+* Feature - Support Multi Agent Collaboration within Inline Agents
+
 1.47.0 (2025-02-27)
 ------------------
 

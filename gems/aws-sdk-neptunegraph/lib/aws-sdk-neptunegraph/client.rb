@@ -587,7 +587,7 @@ module Aws::NeptuneGraph
     #
     #   The name must contain from 1 to 63 letters, numbers, or hyphens, and
     #   its first character must be a letter. It cannot end with a hyphen or
-    #   contain two consecutive hyphens.
+    #   contain two consecutive hyphens. Only lowercase letters are allowed.
     #
     # @option params [Hash<String,String>] :tags
     #   Adds metadata tags to the new graph. These tags can also be used with
@@ -620,7 +620,7 @@ module Aws::NeptuneGraph
     #
     # @option params [required, Integer] :provisioned_memory
     #   The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to
-    #   use for the graph. Min = 128
+    #   use for the graph. Min = 16
     #
     # @return [Types::CreateGraphOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -694,7 +694,7 @@ module Aws::NeptuneGraph
     #
     #   The name must contain from 1 to 63 letters, numbers, or hyphens, and
     #   its first character must be a letter. It cannot end with a hyphen or
-    #   contain two consecutive hyphens.
+    #   contain two consecutive hyphens. Only lowercase letters are allowed.
     #
     # @option params [Hash<String,String>] :tags
     #   Adds metadata tags to the new graph. These tags can also be used with
@@ -757,7 +757,7 @@ module Aws::NeptuneGraph
     #
     #   The name must contain from 1 to 63 letters, numbers, or hyphens, and
     #   its first character must be a letter. It cannot end with a hyphen or
-    #   contain two consecutive hyphens.
+    #   contain two consecutive hyphens. Only lowercase letters are allowed.
     #
     # @option params [Hash<String,String>] :tags
     #   Adds metadata tags to the new graph. These tags can also be used with
@@ -808,7 +808,7 @@ module Aws::NeptuneGraph
     #
     # @option params [Integer] :min_provisioned_memory
     #   The minimum provisioned memory-optimized Neptune Capacity Units
-    #   (m-NCUs) to use for the graph. Default: 128
+    #   (m-NCUs) to use for the graph. Default: 16
     #
     # @option params [Boolean] :fail_on_error
     #   If set to `true`, the task halts when an import error is encountered.
@@ -1993,13 +1993,13 @@ module Aws::NeptuneGraph
     #
     #   The name must contain from 1 to 63 letters, numbers, or hyphens, and
     #   its first character must be a letter. It cannot end with a hyphen or
-    #   contain two consecutive hyphens.
+    #   contain two consecutive hyphens. Only lowercase letters are allowed.
     #
     # @option params [Integer] :provisioned_memory
     #   The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to
     #   use for the graph.
     #
-    #   Min = 128
+    #   Min = 16
     #
     # @option params [Boolean] :deletion_protection
     #   A value that indicates whether the graph has deletion protection
@@ -2369,7 +2369,7 @@ module Aws::NeptuneGraph
     #   The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to
     #   use for the graph.
     #
-    #   Min = 128
+    #   Min = 16
     #
     # @option params [Boolean] :deletion_protection
     #   A value that indicates whether the graph has deletion protection
@@ -2448,7 +2448,7 @@ module Aws::NeptuneGraph
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-neptunegraph'
-      context[:gem_version] = '1.29.0'
+      context[:gem_version] = '1.30.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -289,6 +289,12 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class BedrockFoundationModelContextEnrichmentConfiguration
+      attr_accessor enrichment_strategy_configuration: Types::EnrichmentStrategyConfiguration
+      attr_accessor model_arn: ::String
+      SENSITIVE: []
+    end
+
     class ByteContentDoc
       attr_accessor data: ::String
       attr_accessor mime_type: ::String
@@ -360,6 +366,12 @@ module Aws::BedrockAgent
       end
       class Unknown < ContentBlock
       end
+    end
+
+    class ContextEnrichmentConfiguration
+      attr_accessor bedrock_foundation_model_configuration: Types::BedrockFoundationModelContextEnrichmentConfiguration
+      attr_accessor type: ("BEDROCK_FOUNDATION_MODEL")
+      SENSITIVE: []
     end
 
     class CrawlFilterConfiguration
@@ -842,6 +854,11 @@ module Aws::BedrockAgent
 
     class EmbeddingModelConfiguration
       attr_accessor bedrock_embedding_model_configuration: Types::BedrockEmbeddingModelConfiguration
+      SENSITIVE: []
+    end
+
+    class EnrichmentStrategyConfiguration
+      attr_accessor method: ("CHUNK_ENTITY_EXTRACTION")
       SENSITIVE: []
     end
 
@@ -1805,6 +1822,18 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class NeptuneAnalyticsConfiguration
+      attr_accessor field_mapping: Types::NeptuneAnalyticsFieldMapping
+      attr_accessor graph_arn: ::String
+      SENSITIVE: [:graph_arn]
+    end
+
+    class NeptuneAnalyticsFieldMapping
+      attr_accessor metadata_field: ::String
+      attr_accessor text_field: ::String
+      SENSITIVE: []
+    end
+
     class OpenSearchServerlessConfiguration
       attr_accessor collection_arn: ::String
       attr_accessor field_mapping: Types::OpenSearchServerlessFieldMapping
@@ -2305,11 +2334,12 @@ module Aws::BedrockAgent
 
     class StorageConfiguration
       attr_accessor mongo_db_atlas_configuration: Types::MongoDbAtlasConfiguration
+      attr_accessor neptune_analytics_configuration: Types::NeptuneAnalyticsConfiguration
       attr_accessor opensearch_serverless_configuration: Types::OpenSearchServerlessConfiguration
       attr_accessor pinecone_configuration: Types::PineconeConfiguration
       attr_accessor rds_configuration: Types::RdsConfiguration
       attr_accessor redis_enterprise_cloud_configuration: Types::RedisEnterpriseCloudConfiguration
-      attr_accessor type: ("OPENSEARCH_SERVERLESS" | "PINECONE" | "REDIS_ENTERPRISE_CLOUD" | "RDS" | "MONGO_DB_ATLAS")
+      attr_accessor type: ("OPENSEARCH_SERVERLESS" | "PINECONE" | "REDIS_ENTERPRISE_CLOUD" | "RDS" | "MONGO_DB_ATLAS" | "NEPTUNE_ANALYTICS")
       SENSITIVE: []
     end
 
@@ -2738,6 +2768,7 @@ module Aws::BedrockAgent
 
     class VectorIngestionConfiguration
       attr_accessor chunking_configuration: Types::ChunkingConfiguration
+      attr_accessor context_enrichment_configuration: Types::ContextEnrichmentConfiguration
       attr_accessor custom_transformation_configuration: Types::CustomTransformationConfiguration
       attr_accessor parsing_configuration: Types::ParsingConfiguration
       SENSITIVE: []

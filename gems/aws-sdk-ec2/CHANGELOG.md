@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.510.0 (2025-03-07)
+------------------
+
+* Feature - Add serviceManaged field to DescribeAddresses API response.
+
 1.509.0 (2025-03-03)
 ------------------
 

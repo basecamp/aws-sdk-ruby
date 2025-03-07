@@ -31,6 +31,7 @@ module Aws::BedrockAgentRuntime
     AgentActionGroups = Shapes::ListShape.new(name: 'AgentActionGroups')
     AgentAliasArn = Shapes::StringShape.new(name: 'AgentAliasArn')
     AgentAliasId = Shapes::StringShape.new(name: 'AgentAliasId')
+    AgentCollaboration = Shapes::StringShape.new(name: 'AgentCollaboration')
     AgentCollaboratorInputPayload = Shapes::StructureShape.new(name: 'AgentCollaboratorInputPayload')
     AgentCollaboratorInvocationInput = Shapes::StructureShape.new(name: 'AgentCollaboratorInvocationInput')
     AgentCollaboratorInvocationOutput = Shapes::StructureShape.new(name: 'AgentCollaboratorInvocationOutput')
@@ -71,6 +72,11 @@ module Aws::BedrockAgentRuntime
     Citations = Shapes::ListShape.new(name: 'Citations')
     CodeInterpreterInvocationInput = Shapes::StructureShape.new(name: 'CodeInterpreterInvocationInput')
     CodeInterpreterInvocationOutput = Shapes::StructureShape.new(name: 'CodeInterpreterInvocationOutput')
+    CollaborationInstruction = Shapes::StringShape.new(name: 'CollaborationInstruction')
+    Collaborator = Shapes::StructureShape.new(name: 'Collaborator')
+    CollaboratorConfiguration = Shapes::StructureShape.new(name: 'CollaboratorConfiguration')
+    CollaboratorConfigurations = Shapes::ListShape.new(name: 'CollaboratorConfigurations')
+    Collaborators = Shapes::ListShape.new(name: 'Collaborators')
     ConfirmationState = Shapes::StringShape.new(name: 'ConfirmationState')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     ContentBlock = Shapes::UnionShape.new(name: 'ContentBlock')
@@ -360,6 +366,7 @@ module Aws::BedrockAgentRuntime
     RawResponse = Shapes::StructureShape.new(name: 'RawResponse')
     ReasoningContentBlock = Shapes::UnionShape.new(name: 'ReasoningContentBlock')
     ReasoningTextBlock = Shapes::StructureShape.new(name: 'ReasoningTextBlock')
+    RelayConversationHistory = Shapes::StringShape.new(name: 'RelayConversationHistory')
     RepromptResponse = Shapes::StructureShape.new(name: 'RepromptResponse')
     RequestBody = Shapes::StructureShape.new(name: 'RequestBody')
     RequireConfirmation = Shapes::StringShape.new(name: 'RequireConfirmation')
@@ -459,6 +466,7 @@ module Aws::BedrockAgentRuntime
     StreamingConfigurationsApplyGuardrailIntervalInteger = Shapes::IntegerShape.new(name: 'StreamingConfigurationsApplyGuardrailIntervalInteger')
     String = Shapes::StringShape.new(name: 'String')
     SummaryText = Shapes::StringShape.new(name: 'SummaryText')
+    SyntheticTimestamp_date_time = Shapes::TimestampShape.new(name: 'SyntheticTimestamp_date_time', timestampFormat: "iso8601")
     TagKey = Shapes::StringShape.new(name: 'TagKey')
     TagKeyList = Shapes::ListShape.new(name: 'TagKeyList')
     TagResourceRequest = Shapes::StructureShape.new(name: 'TagResourceRequest')
@@ -664,6 +672,29 @@ module Aws::BedrockAgentRuntime
     CodeInterpreterInvocationOutput.add_member(:execution_timeout, Shapes::ShapeRef.new(shape: Boolean, location_name: "executionTimeout"))
     CodeInterpreterInvocationOutput.add_member(:files, Shapes::ShapeRef.new(shape: Files, location_name: "files"))
     CodeInterpreterInvocationOutput.struct_class = Types::CodeInterpreterInvocationOutput
+
+    Collaborator.add_member(:action_groups, Shapes::ShapeRef.new(shape: AgentActionGroups, location_name: "actionGroups"))
+    Collaborator.add_member(:agent_collaboration, Shapes::ShapeRef.new(shape: AgentCollaboration, location_name: "agentCollaboration"))
+    Collaborator.add_member(:agent_name, Shapes::ShapeRef.new(shape: Name, location_name: "agentName"))
+    Collaborator.add_member(:collaborator_configurations, Shapes::ShapeRef.new(shape: CollaboratorConfigurations, location_name: "collaboratorConfigurations"))
+    Collaborator.add_member(:customer_encryption_key_arn, Shapes::ShapeRef.new(shape: KmsKeyArn, location_name: "customerEncryptionKeyArn"))
+    Collaborator.add_member(:foundation_model, Shapes::ShapeRef.new(shape: ModelIdentifier, required: true, location_name: "foundationModel"))
+    Collaborator.add_member(:guardrail_configuration, Shapes::ShapeRef.new(shape: GuardrailConfigurationWithArn, location_name: "guardrailConfiguration"))
+    Collaborator.add_member(:idle_session_ttl_in_seconds, Shapes::ShapeRef.new(shape: SessionTTL, location_name: "idleSessionTTLInSeconds"))
+    Collaborator.add_member(:instruction, Shapes::ShapeRef.new(shape: Instruction, required: true, location_name: "instruction"))
+    Collaborator.add_member(:knowledge_bases, Shapes::ShapeRef.new(shape: KnowledgeBases, location_name: "knowledgeBases"))
+    Collaborator.add_member(:prompt_override_configuration, Shapes::ShapeRef.new(shape: PromptOverrideConfiguration, location_name: "promptOverrideConfiguration"))
+    Collaborator.struct_class = Types::Collaborator
+
+    CollaboratorConfiguration.add_member(:agent_alias_arn, Shapes::ShapeRef.new(shape: AgentAliasArn, location_name: "agentAliasArn"))
+    CollaboratorConfiguration.add_member(:collaborator_instruction, Shapes::ShapeRef.new(shape: CollaborationInstruction, required: true, location_name: "collaboratorInstruction"))
+    CollaboratorConfiguration.add_member(:collaborator_name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "collaboratorName"))
+    CollaboratorConfiguration.add_member(:relay_conversation_history, Shapes::ShapeRef.new(shape: RelayConversationHistory, location_name: "relayConversationHistory"))
+    CollaboratorConfiguration.struct_class = Types::CollaboratorConfiguration
+
+    CollaboratorConfigurations.member = Shapes::ShapeRef.new(shape: CollaboratorConfiguration)
+
+    Collaborators.member = Shapes::ShapeRef.new(shape: Collaborator)
 
     ConflictException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ConflictException.struct_class = Types::ConflictException
@@ -1126,6 +1157,7 @@ module Aws::BedrockAgentRuntime
     InlineBedrockModelConfigurations.add_member(:performance_config, Shapes::ShapeRef.new(shape: PerformanceConfiguration, location_name: "performanceConfig"))
     InlineBedrockModelConfigurations.struct_class = Types::InlineBedrockModelConfigurations
 
+    InlineSessionState.add_member(:conversation_history, Shapes::ShapeRef.new(shape: ConversationHistory, location_name: "conversationHistory"))
     InlineSessionState.add_member(:files, Shapes::ShapeRef.new(shape: InputFiles, location_name: "files"))
     InlineSessionState.add_member(:invocation_id, Shapes::ShapeRef.new(shape: String, location_name: "invocationId"))
     InlineSessionState.add_member(:prompt_session_attributes, Shapes::ShapeRef.new(shape: PromptSessionAttributesMap, location_name: "promptSessionAttributes"))
@@ -1240,7 +1272,10 @@ module Aws::BedrockAgentRuntime
     InvokeFlowResponse[:payload_member] = InvokeFlowResponse.member(:response_stream)
 
     InvokeInlineAgentRequest.add_member(:action_groups, Shapes::ShapeRef.new(shape: AgentActionGroups, location_name: "actionGroups"))
+    InvokeInlineAgentRequest.add_member(:agent_collaboration, Shapes::ShapeRef.new(shape: AgentCollaboration, location_name: "agentCollaboration"))
     InvokeInlineAgentRequest.add_member(:bedrock_model_configurations, Shapes::ShapeRef.new(shape: InlineBedrockModelConfigurations, location_name: "bedrockModelConfigurations"))
+    InvokeInlineAgentRequest.add_member(:collaborator_configurations, Shapes::ShapeRef.new(shape: CollaboratorConfigurations, location_name: "collaboratorConfigurations"))
+    InvokeInlineAgentRequest.add_member(:collaborators, Shapes::ShapeRef.new(shape: Collaborators, location_name: "collaborators"))
     InvokeInlineAgentRequest.add_member(:customer_encryption_key_arn, Shapes::ShapeRef.new(shape: KmsKeyArn, location_name: "customerEncryptionKeyArn"))
     InvokeInlineAgentRequest.add_member(:enable_trace, Shapes::ShapeRef.new(shape: Boolean, location_name: "enableTrace"))
     InvokeInlineAgentRequest.add_member(:end_session, Shapes::ShapeRef.new(shape: Boolean, location_name: "endSession"))
@@ -1530,6 +1565,7 @@ module Aws::BedrockAgentRuntime
 
     PromptConfiguration.add_member(:additional_model_request_fields, Shapes::ShapeRef.new(shape: Document, location_name: "additionalModelRequestFields"))
     PromptConfiguration.add_member(:base_prompt_template, Shapes::ShapeRef.new(shape: BasePromptTemplate, location_name: "basePromptTemplate"))
+    PromptConfiguration.add_member(:foundation_model, Shapes::ShapeRef.new(shape: ModelIdentifier, location_name: "foundationModel"))
     PromptConfiguration.add_member(:inference_configuration, Shapes::ShapeRef.new(shape: InferenceConfiguration, location_name: "inferenceConfiguration"))
     PromptConfiguration.add_member(:parser_mode, Shapes::ShapeRef.new(shape: CreationMode, location_name: "parserMode"))
     PromptConfiguration.add_member(:prompt_creation_mode, Shapes::ShapeRef.new(shape: CreationMode, location_name: "promptCreationMode"))
@@ -1959,6 +1995,7 @@ module Aws::BedrockAgentRuntime
     TracePart.add_member(:agent_version, Shapes::ShapeRef.new(shape: AgentVersion, location_name: "agentVersion"))
     TracePart.add_member(:caller_chain, Shapes::ShapeRef.new(shape: CallerChain, location_name: "callerChain"))
     TracePart.add_member(:collaborator_name, Shapes::ShapeRef.new(shape: Name, location_name: "collaboratorName"))
+    TracePart.add_member(:event_time, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "eventTime"))
     TracePart.add_member(:session_id, Shapes::ShapeRef.new(shape: SessionId, location_name: "sessionId"))
     TracePart.add_member(:trace, Shapes::ShapeRef.new(shape: Trace, location_name: "trace"))
     TracePart.struct_class = Types::TracePart

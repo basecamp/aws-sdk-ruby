@@ -105,6 +105,16 @@ module Aws::EC2
       data[:carrier_ip]
     end
 
+    # The service that manages the elastic IP address.
+    #
+    # <note markdown="1"> The only option supported today is `alb`.
+    #
+    #  </note>
+    # @return [String]
+    def service_managed
+      data[:service_managed]
+    end
+
     # The ID of the instance that the address is associated with (if any).
     # @return [String]
     def instance_id

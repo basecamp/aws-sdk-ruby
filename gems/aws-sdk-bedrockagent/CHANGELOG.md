@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.50.0 (2025-03-07)
+------------------
+
+* Feature - Introduces support for Neptune Analytics as a vector data store and adds Context Enrichment Configurations, enabling use cases such as GraphRAG.
+
 1.49.0 (2025-02-28)
 ------------------
 

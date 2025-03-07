@@ -63,6 +63,7 @@ module Aws::BedrockAgent
     BedrockEmbeddingModelArn = Shapes::StringShape.new(name: 'BedrockEmbeddingModelArn')
     BedrockEmbeddingModelConfiguration = Shapes::StructureShape.new(name: 'BedrockEmbeddingModelConfiguration')
     BedrockFoundationModelConfiguration = Shapes::StructureShape.new(name: 'BedrockFoundationModelConfiguration')
+    BedrockFoundationModelContextEnrichmentConfiguration = Shapes::StructureShape.new(name: 'BedrockFoundationModelContextEnrichmentConfiguration')
     BedrockModelArn = Shapes::StringShape.new(name: 'BedrockModelArn')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
     BucketOwnerAccountId = Shapes::StringShape.new(name: 'BucketOwnerAccountId')
@@ -88,6 +89,8 @@ module Aws::BedrockAgent
     ContentBlock = Shapes::UnionShape.new(name: 'ContentBlock')
     ContentBlocks = Shapes::ListShape.new(name: 'ContentBlocks')
     ContentDataSourceType = Shapes::StringShape.new(name: 'ContentDataSourceType')
+    ContextEnrichmentConfiguration = Shapes::StructureShape.new(name: 'ContextEnrichmentConfiguration')
+    ContextEnrichmentType = Shapes::StringShape.new(name: 'ContextEnrichmentType')
     ConversationRole = Shapes::StringShape.new(name: 'ConversationRole')
     CrawlFilterConfiguration = Shapes::StructureShape.new(name: 'CrawlFilterConfiguration')
     CrawlFilterConfigurationType = Shapes::StringShape.new(name: 'CrawlFilterConfigurationType')
@@ -174,6 +177,8 @@ module Aws::BedrockAgent
     EmbeddingDataType = Shapes::StringShape.new(name: 'EmbeddingDataType')
     EmbeddingModelConfiguration = Shapes::StructureShape.new(name: 'EmbeddingModelConfiguration')
     EnabledMemoryTypes = Shapes::ListShape.new(name: 'EnabledMemoryTypes')
+    EnrichmentStrategyConfiguration = Shapes::StructureShape.new(name: 'EnrichmentStrategyConfiguration')
+    EnrichmentStrategyMethod = Shapes::StringShape.new(name: 'EnrichmentStrategyMethod')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
     FailureReason = Shapes::StringShape.new(name: 'FailureReason')
     FailureReasons = Shapes::ListShape.new(name: 'FailureReasons')
@@ -264,6 +269,7 @@ module Aws::BedrockAgent
     GetKnowledgeBaseResponse = Shapes::StructureShape.new(name: 'GetKnowledgeBaseResponse')
     GetPromptRequest = Shapes::StructureShape.new(name: 'GetPromptRequest')
     GetPromptResponse = Shapes::StructureShape.new(name: 'GetPromptResponse')
+    GraphArn = Shapes::StringShape.new(name: 'GraphArn')
     GuardrailConfiguration = Shapes::StructureShape.new(name: 'GuardrailConfiguration')
     GuardrailIdentifier = Shapes::StringShape.new(name: 'GuardrailIdentifier')
     GuardrailVersion = Shapes::StringShape.new(name: 'GuardrailVersion')
@@ -390,6 +396,8 @@ module Aws::BedrockAgent
     MultipleNodeInputConnectionsFlowValidationDetails = Shapes::StructureShape.new(name: 'MultipleNodeInputConnectionsFlowValidationDetails')
     Name = Shapes::StringShape.new(name: 'Name')
     NaturalLanguageString = Shapes::StringShape.new(name: 'NaturalLanguageString')
+    NeptuneAnalyticsConfiguration = Shapes::StructureShape.new(name: 'NeptuneAnalyticsConfiguration')
+    NeptuneAnalyticsFieldMapping = Shapes::StructureShape.new(name: 'NeptuneAnalyticsFieldMapping')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
     NonBlankString = Shapes::StringShape.new(name: 'NonBlankString')
     NonEmptyString = Shapes::StringShape.new(name: 'NonEmptyString')
@@ -873,6 +881,10 @@ module Aws::BedrockAgent
     BedrockFoundationModelConfiguration.add_member(:parsing_prompt, Shapes::ShapeRef.new(shape: ParsingPrompt, location_name: "parsingPrompt"))
     BedrockFoundationModelConfiguration.struct_class = Types::BedrockFoundationModelConfiguration
 
+    BedrockFoundationModelContextEnrichmentConfiguration.add_member(:enrichment_strategy_configuration, Shapes::ShapeRef.new(shape: EnrichmentStrategyConfiguration, required: true, location_name: "enrichmentStrategyConfiguration"))
+    BedrockFoundationModelContextEnrichmentConfiguration.add_member(:model_arn, Shapes::ShapeRef.new(shape: BedrockModelArn, required: true, location_name: "modelArn"))
+    BedrockFoundationModelContextEnrichmentConfiguration.struct_class = Types::BedrockFoundationModelContextEnrichmentConfiguration
+
     ByteContentDoc.add_member(:data, Shapes::ShapeRef.new(shape: ByteContentBlob, required: true, location_name: "data"))
     ByteContentDoc.add_member(:mime_type, Shapes::ShapeRef.new(shape: ByteContentDocMimeTypeString, required: true, location_name: "mimeType"))
     ByteContentDoc.struct_class = Types::ByteContentDoc
@@ -922,6 +934,10 @@ module Aws::BedrockAgent
     ContentBlock.struct_class = Types::ContentBlock
 
     ContentBlocks.member = Shapes::ShapeRef.new(shape: ContentBlock)
+
+    ContextEnrichmentConfiguration.add_member(:bedrock_foundation_model_configuration, Shapes::ShapeRef.new(shape: BedrockFoundationModelContextEnrichmentConfiguration, location_name: "bedrockFoundationModelConfiguration"))
+    ContextEnrichmentConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: ContextEnrichmentType, required: true, location_name: "type"))
+    ContextEnrichmentConfiguration.struct_class = Types::ContextEnrichmentConfiguration
 
     CrawlFilterConfiguration.add_member(:pattern_object_filter, Shapes::ShapeRef.new(shape: PatternObjectFilterConfiguration, location_name: "patternObjectFilter"))
     CrawlFilterConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: CrawlFilterConfigurationType, required: true, location_name: "type"))
@@ -1292,6 +1308,9 @@ module Aws::BedrockAgent
     EmbeddingModelConfiguration.struct_class = Types::EmbeddingModelConfiguration
 
     EnabledMemoryTypes.member = Shapes::ShapeRef.new(shape: MemoryType)
+
+    EnrichmentStrategyConfiguration.add_member(:method, Shapes::ShapeRef.new(shape: EnrichmentStrategyMethod, required: true, location_name: "method"))
+    EnrichmentStrategyConfiguration.struct_class = Types::EnrichmentStrategyConfiguration
 
     FailureReasons.member = Shapes::ShapeRef.new(shape: FailureReason)
 
@@ -2009,6 +2028,14 @@ module Aws::BedrockAgent
     MultipleNodeInputConnectionsFlowValidationDetails.add_member(:node, Shapes::ShapeRef.new(shape: FlowNodeName, required: true, location_name: "node"))
     MultipleNodeInputConnectionsFlowValidationDetails.struct_class = Types::MultipleNodeInputConnectionsFlowValidationDetails
 
+    NeptuneAnalyticsConfiguration.add_member(:field_mapping, Shapes::ShapeRef.new(shape: NeptuneAnalyticsFieldMapping, required: true, location_name: "fieldMapping"))
+    NeptuneAnalyticsConfiguration.add_member(:graph_arn, Shapes::ShapeRef.new(shape: GraphArn, required: true, location_name: "graphArn"))
+    NeptuneAnalyticsConfiguration.struct_class = Types::NeptuneAnalyticsConfiguration
+
+    NeptuneAnalyticsFieldMapping.add_member(:metadata_field, Shapes::ShapeRef.new(shape: FieldName, required: true, location_name: "metadataField"))
+    NeptuneAnalyticsFieldMapping.add_member(:text_field, Shapes::ShapeRef.new(shape: FieldName, required: true, location_name: "textField"))
+    NeptuneAnalyticsFieldMapping.struct_class = Types::NeptuneAnalyticsFieldMapping
+
     OpenSearchServerlessConfiguration.add_member(:collection_arn, Shapes::ShapeRef.new(shape: OpenSearchServerlessCollectionArn, required: true, location_name: "collectionArn"))
     OpenSearchServerlessConfiguration.add_member(:field_mapping, Shapes::ShapeRef.new(shape: OpenSearchServerlessFieldMapping, required: true, location_name: "fieldMapping"))
     OpenSearchServerlessConfiguration.add_member(:vector_index_name, Shapes::ShapeRef.new(shape: OpenSearchServerlessIndexName, required: true, location_name: "vectorIndexName"))
@@ -2376,6 +2403,7 @@ module Aws::BedrockAgent
     StopSequences.member = Shapes::ShapeRef.new(shape: String)
 
     StorageConfiguration.add_member(:mongo_db_atlas_configuration, Shapes::ShapeRef.new(shape: MongoDbAtlasConfiguration, location_name: "mongoDbAtlasConfiguration"))
+    StorageConfiguration.add_member(:neptune_analytics_configuration, Shapes::ShapeRef.new(shape: NeptuneAnalyticsConfiguration, location_name: "neptuneAnalyticsConfiguration"))
     StorageConfiguration.add_member(:opensearch_serverless_configuration, Shapes::ShapeRef.new(shape: OpenSearchServerlessConfiguration, location_name: "opensearchServerlessConfiguration"))
     StorageConfiguration.add_member(:pinecone_configuration, Shapes::ShapeRef.new(shape: PineconeConfiguration, location_name: "pineconeConfiguration"))
     StorageConfiguration.add_member(:rds_configuration, Shapes::ShapeRef.new(shape: RdsConfiguration, location_name: "rdsConfiguration"))
@@ -2692,6 +2720,7 @@ module Aws::BedrockAgent
     ValidationExceptionFieldList.member = Shapes::ShapeRef.new(shape: ValidationExceptionField)
 
     VectorIngestionConfiguration.add_member(:chunking_configuration, Shapes::ShapeRef.new(shape: ChunkingConfiguration, location_name: "chunkingConfiguration"))
+    VectorIngestionConfiguration.add_member(:context_enrichment_configuration, Shapes::ShapeRef.new(shape: ContextEnrichmentConfiguration, location_name: "contextEnrichmentConfiguration"))
     VectorIngestionConfiguration.add_member(:custom_transformation_configuration, Shapes::ShapeRef.new(shape: CustomTransformationConfiguration, location_name: "customTransformationConfiguration"))
     VectorIngestionConfiguration.add_member(:parsing_configuration, Shapes::ShapeRef.new(shape: ParsingConfiguration, location_name: "parsingConfiguration"))
     VectorIngestionConfiguration.struct_class = Types::VectorIngestionConfiguration

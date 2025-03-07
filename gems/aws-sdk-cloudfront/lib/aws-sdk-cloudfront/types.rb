@@ -106,7 +106,7 @@ module Aws::CloudFront
     # @!attribute [rw] icp_recordal_status
     #   The Internet Content Provider (ICP) recordal status for a CNAME. The
     #   ICPRecordalStatus is set to APPROVED for all CNAMEs (aliases) in
-    #   regions outside of China.
+    #   Amazon Web Services Regions outside of China.
     #
     #   The status values returned are the following:
     #
@@ -114,8 +114,8 @@ module Aws::CloudFront
     #     recordal number. Multiple CNAMEs can be associated with a
     #     distribution, and CNAMEs can correspond to different ICP
     #     recordals. To be marked as APPROVED, that is, valid to use with
-    #     China region, a CNAME must have one ICP recordal number associated
-    #     with it.
+    #     the China Regions, a CNAME must have one ICP recordal number
+    #     associated with it.
     #
     #   * **SUSPENDED** indicates that the associated CNAME does not have a
     #     valid ICP recordal number.
@@ -12901,7 +12901,7 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
-    # This operation is not supported in this region.
+    # This operation is not supported in this Amazon Web Services Region.
     #
     # @!attribute [rw] message
     #   @return [String]

@@ -191,6 +191,8 @@ module Aws::ElasticLoadBalancingV2
     InvalidTargetException = Shapes::StructureShape.new(name: 'InvalidTargetException', error: {"code"=>"InvalidTarget", "httpStatusCode"=>400, "senderFault"=>true})
     IpAddress = Shapes::StringShape.new(name: 'IpAddress')
     IpAddressType = Shapes::StringShape.new(name: 'IpAddressType')
+    IpamPoolId = Shapes::StringShape.new(name: 'IpamPoolId')
+    IpamPools = Shapes::StructureShape.new(name: 'IpamPools')
     IsDefault = Shapes::BooleanShape.new(name: 'IsDefault')
     LastModifiedTime = Shapes::TimestampShape.new(name: 'LastModifiedTime')
     Limit = Shapes::StructureShape.new(name: 'Limit')
@@ -232,6 +234,8 @@ module Aws::ElasticLoadBalancingV2
     Mode = Shapes::StringShape.new(name: 'Mode')
     ModifyCapacityReservationInput = Shapes::StructureShape.new(name: 'ModifyCapacityReservationInput')
     ModifyCapacityReservationOutput = Shapes::StructureShape.new(name: 'ModifyCapacityReservationOutput')
+    ModifyIpPoolsInput = Shapes::StructureShape.new(name: 'ModifyIpPoolsInput')
+    ModifyIpPoolsOutput = Shapes::StructureShape.new(name: 'ModifyIpPoolsOutput')
     ModifyListenerAttributesInput = Shapes::StructureShape.new(name: 'ModifyListenerAttributesInput')
     ModifyListenerAttributesOutput = Shapes::StructureShape.new(name: 'ModifyListenerAttributesOutput')
     ModifyListenerInput = Shapes::StructureShape.new(name: 'ModifyListenerInput')
@@ -274,6 +278,8 @@ module Aws::ElasticLoadBalancingV2
     RedirectActionStatusCodeEnum = Shapes::StringShape.new(name: 'RedirectActionStatusCodeEnum')
     RegisterTargetsInput = Shapes::StructureShape.new(name: 'RegisterTargetsInput')
     RegisterTargetsOutput = Shapes::StructureShape.new(name: 'RegisterTargetsOutput')
+    RemoveIpamPoolEnum = Shapes::StringShape.new(name: 'RemoveIpamPoolEnum')
+    RemoveIpamPools = Shapes::ListShape.new(name: 'RemoveIpamPools')
     RemoveListenerCertificatesInput = Shapes::StructureShape.new(name: 'RemoveListenerCertificatesInput')
     RemoveListenerCertificatesOutput = Shapes::StructureShape.new(name: 'RemoveListenerCertificatesOutput')
     RemoveTagsInput = Shapes::StructureShape.new(name: 'RemoveTagsInput')
@@ -544,6 +550,7 @@ module Aws::ElasticLoadBalancingV2
     CreateLoadBalancerInput.add_member(:ip_address_type, Shapes::ShapeRef.new(shape: IpAddressType, location_name: "IpAddressType"))
     CreateLoadBalancerInput.add_member(:customer_owned_ipv_4_pool, Shapes::ShapeRef.new(shape: CustomerOwnedIpv4Pool, location_name: "CustomerOwnedIpv4Pool"))
     CreateLoadBalancerInput.add_member(:enable_prefix_for_ipv_6_source_nat, Shapes::ShapeRef.new(shape: EnablePrefixForIpv6SourceNatEnum, location_name: "EnablePrefixForIpv6SourceNat"))
+    CreateLoadBalancerInput.add_member(:ipam_pools, Shapes::ShapeRef.new(shape: IpamPools, location_name: "IpamPools"))
     CreateLoadBalancerInput.struct_class = Types::CreateLoadBalancerInput
 
     CreateLoadBalancerOutput.add_member(:load_balancers, Shapes::ShapeRef.new(shape: LoadBalancers, location_name: "LoadBalancers"))
@@ -846,6 +853,9 @@ module Aws::ElasticLoadBalancingV2
 
     InvalidTargetException.struct_class = Types::InvalidTargetException
 
+    IpamPools.add_member(:ipv_4_ipam_pool_id, Shapes::ShapeRef.new(shape: IpamPoolId, location_name: "Ipv4IpamPoolId"))
+    IpamPools.struct_class = Types::IpamPools
+
     Limit.add_member(:name, Shapes::ShapeRef.new(shape: Name, location_name: "Name"))
     Limit.add_member(:max, Shapes::ShapeRef.new(shape: Max, location_name: "Max"))
     Limit.struct_class = Types::Limit
@@ -894,6 +904,7 @@ module Aws::ElasticLoadBalancingV2
     LoadBalancer.add_member(:customer_owned_ipv_4_pool, Shapes::ShapeRef.new(shape: CustomerOwnedIpv4Pool, location_name: "CustomerOwnedIpv4Pool"))
     LoadBalancer.add_member(:enforce_security_group_inbound_rules_on_private_link_traffic, Shapes::ShapeRef.new(shape: EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic, location_name: "EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic"))
     LoadBalancer.add_member(:enable_prefix_for_ipv_6_source_nat, Shapes::ShapeRef.new(shape: EnablePrefixForIpv6SourceNatEnum, location_name: "EnablePrefixForIpv6SourceNat"))
+    LoadBalancer.add_member(:ipam_pools, Shapes::ShapeRef.new(shape: IpamPools, location_name: "IpamPools"))
     LoadBalancer.struct_class = Types::LoadBalancer
 
     LoadBalancerAddress.add_member(:ip_address, Shapes::ShapeRef.new(shape: IpAddress, location_name: "IpAddress"))
@@ -939,6 +950,14 @@ module Aws::ElasticLoadBalancingV2
     ModifyCapacityReservationOutput.add_member(:minimum_load_balancer_capacity, Shapes::ShapeRef.new(shape: MinimumLoadBalancerCapacity, location_name: "MinimumLoadBalancerCapacity"))
     ModifyCapacityReservationOutput.add_member(:capacity_reservation_state, Shapes::ShapeRef.new(shape: ZonalCapacityReservationStates, location_name: "CapacityReservationState"))
     ModifyCapacityReservationOutput.struct_class = Types::ModifyCapacityReservationOutput
+
+    ModifyIpPoolsInput.add_member(:load_balancer_arn, Shapes::ShapeRef.new(shape: LoadBalancerArn, required: true, location_name: "LoadBalancerArn"))
+    ModifyIpPoolsInput.add_member(:ipam_pools, Shapes::ShapeRef.new(shape: IpamPools, location_name: "IpamPools"))
+    ModifyIpPoolsInput.add_member(:remove_ipam_pools, Shapes::ShapeRef.new(shape: RemoveIpamPools, location_name: "RemoveIpamPools"))
+    ModifyIpPoolsInput.struct_class = Types::ModifyIpPoolsInput
+
+    ModifyIpPoolsOutput.add_member(:ipam_pools, Shapes::ShapeRef.new(shape: IpamPools, location_name: "IpamPools"))
+    ModifyIpPoolsOutput.struct_class = Types::ModifyIpPoolsOutput
 
     ModifyListenerAttributesInput.add_member(:listener_arn, Shapes::ShapeRef.new(shape: ListenerArn, required: true, location_name: "ListenerArn"))
     ModifyListenerAttributesInput.add_member(:attributes, Shapes::ShapeRef.new(shape: ListenerAttributes, required: true, location_name: "Attributes"))
@@ -1044,6 +1063,8 @@ module Aws::ElasticLoadBalancingV2
     RegisterTargetsInput.struct_class = Types::RegisterTargetsInput
 
     RegisterTargetsOutput.struct_class = Types::RegisterTargetsOutput
+
+    RemoveIpamPools.member = Shapes::ShapeRef.new(shape: RemoveIpamPoolEnum)
 
     RemoveListenerCertificatesInput.add_member(:listener_arn, Shapes::ShapeRef.new(shape: ListenerArn, required: true, location_name: "ListenerArn"))
     RemoveListenerCertificatesInput.add_member(:certificates, Shapes::ShapeRef.new(shape: CertificateList, required: true, location_name: "Certificates"))
@@ -1797,6 +1818,15 @@ module Aws::ElasticLoadBalancingV2
         o.errors << Shapes::ShapeRef.new(shape: CapacityDecreaseRequestsLimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: PriorRequestNotCompleteException)
         o.errors << Shapes::ShapeRef.new(shape: OperationNotPermittedException)
+      end)
+
+      api.add_operation(:modify_ip_pools, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ModifyIpPools"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ModifyIpPoolsInput)
+        o.output = Shapes::ShapeRef.new(shape: ModifyIpPoolsOutput)
+        o.errors << Shapes::ShapeRef.new(shape: LoadBalancerNotFoundException)
       end)
 
       api.add_operation(:modify_listener, Seahorse::Model::Operation.new.tap do |o|

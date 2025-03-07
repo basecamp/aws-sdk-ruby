@@ -1077,6 +1077,10 @@ module Aws::ElasticLoadBalancingV2
     #   an IPv6 prefix from each subnet for source NAT. The IP address type
     #   must be `dualstack`. The default value is `off`.
     #
+    # @option params [Types::IpamPools] :ipam_pools
+    #   \[Application Load Balancers\] The IPAM pools to use with the load
+    #   balancer.
+    #
     # @return [Types::CreateLoadBalancerOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateLoadBalancerOutput#load_balancers #load_balancers} => Array&lt;Types::LoadBalancer&gt;
@@ -1199,6 +1203,9 @@ module Aws::ElasticLoadBalancingV2
     #     ip_address_type: "ipv4", # accepts ipv4, dualstack, dualstack-without-public-ipv4
     #     customer_owned_ipv_4_pool: "CustomerOwnedIpv4Pool",
     #     enable_prefix_for_ipv_6_source_nat: "on", # accepts on, off
+    #     ipam_pools: {
+    #       ipv_4_ipam_pool_id: "IpamPoolId",
+    #     },
     #   })
     #
     # @example Response structure
@@ -1231,6 +1238,7 @@ module Aws::ElasticLoadBalancingV2
     #   resp.load_balancers[0].customer_owned_ipv_4_pool #=> String
     #   resp.load_balancers[0].enforce_security_group_inbound_rules_on_private_link_traffic #=> String
     #   resp.load_balancers[0].enable_prefix_for_ipv_6_source_nat #=> String, one of "on", "off"
+    #   resp.load_balancers[0].ipam_pools.ipv_4_ipam_pool_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/CreateLoadBalancer AWS API Documentation
     #
@@ -2596,6 +2604,7 @@ module Aws::ElasticLoadBalancingV2
     #   resp.load_balancers[0].customer_owned_ipv_4_pool #=> String
     #   resp.load_balancers[0].enforce_security_group_inbound_rules_on_private_link_traffic #=> String
     #   resp.load_balancers[0].enable_prefix_for_ipv_6_source_nat #=> String, one of "on", "off"
+    #   resp.load_balancers[0].ipam_pools.ipv_4_ipam_pool_id #=> String
     #   resp.next_marker #=> String
     #
     #
@@ -3594,6 +3603,45 @@ module Aws::ElasticLoadBalancingV2
     # @param [Hash] params ({})
     def modify_capacity_reservation(params = {}, options = {})
       req = build_request(:modify_capacity_reservation, params)
+      req.send_request(options)
+    end
+
+    # \[Application Load Balancers\] Modify the IP pool associated to a load
+    # balancer.
+    #
+    # @option params [required, String] :load_balancer_arn
+    #   The Amazon Resource Name (ARN) of the load balancer.
+    #
+    # @option params [Types::IpamPools] :ipam_pools
+    #   The IPAM pools to be modified.
+    #
+    # @option params [Array<String>] :remove_ipam_pools
+    #   Remove the IP pools in use by the load balancer.
+    #
+    # @return [Types::ModifyIpPoolsOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ModifyIpPoolsOutput#ipam_pools #ipam_pools} => Types::IpamPools
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.modify_ip_pools({
+    #     load_balancer_arn: "LoadBalancerArn", # required
+    #     ipam_pools: {
+    #       ipv_4_ipam_pool_id: "IpamPoolId",
+    #     },
+    #     remove_ipam_pools: ["ipv4"], # accepts ipv4
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.ipam_pools.ipv_4_ipam_pool_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/ModifyIpPools AWS API Documentation
+    #
+    # @overload modify_ip_pools(params = {})
+    # @param [Hash] params ({})
+    def modify_ip_pools(params = {}, options = {})
+      req = build_request(:modify_ip_pools, params)
       req.send_request(options)
     end
 
@@ -5214,7 +5262,7 @@ module Aws::ElasticLoadBalancingV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-elasticloadbalancingv2'
-      context[:gem_version] = '1.129.0'
+      context[:gem_version] = '1.130.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

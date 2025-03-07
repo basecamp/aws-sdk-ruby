@@ -197,7 +197,7 @@ module Aws::NeptuneGraph
     #
     #   The name must contain from 1 to 63 letters, numbers, or hyphens, and
     #   its first character must be a letter. It cannot end with a hyphen or
-    #   contain two consecutive hyphens.
+    #   contain two consecutive hyphens. Only lowercase letters are allowed.
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -237,7 +237,7 @@ module Aws::NeptuneGraph
     #
     # @!attribute [rw] provisioned_memory
     #   The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to
-    #   use for the graph. Min = 128
+    #   use for the graph. Min = 16
     #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/CreateGraphInput AWS API Documentation
@@ -264,7 +264,7 @@ module Aws::NeptuneGraph
     #
     #   The name must contain from 1 to 63 letters, numbers, or hyphens, and
     #   its first character must be a letter. It cannot end with a hyphen or
-    #   contain two consecutive hyphens.
+    #   contain two consecutive hyphens. Only lowercase letters are allowed.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -287,7 +287,7 @@ module Aws::NeptuneGraph
     #   The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to
     #   use for the graph.
     #
-    #   Min = 128
+    #   Min = 16
     #   @return [Integer]
     #
     # @!attribute [rw] endpoint
@@ -364,7 +364,7 @@ module Aws::NeptuneGraph
     #
     #   The name must contain from 1 to 63 letters, numbers, or hyphens, and
     #   its first character must be a letter. It cannot end with a hyphen or
-    #   contain two consecutive hyphens.
+    #   contain two consecutive hyphens. Only lowercase letters are allowed.
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -431,7 +431,7 @@ module Aws::NeptuneGraph
     #
     #   The name must contain from 1 to 63 letters, numbers, or hyphens, and
     #   its first character must be a letter. It cannot end with a hyphen or
-    #   contain two consecutive hyphens.
+    #   contain two consecutive hyphens. Only lowercase letters are allowed.
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -491,7 +491,7 @@ module Aws::NeptuneGraph
     #
     # @!attribute [rw] min_provisioned_memory
     #   The minimum provisioned memory-optimized Neptune Capacity Units
-    #   (m-NCUs) to use for the graph. Default: 128
+    #   (m-NCUs) to use for the graph. Default: 16
     #   @return [Integer]
     #
     # @!attribute [rw] fail_on_error
@@ -805,7 +805,7 @@ module Aws::NeptuneGraph
     #
     #   The name must contain from 1 to 63 letters, numbers, or hyphens, and
     #   its first character must be a letter. It cannot end with a hyphen or
-    #   contain two consecutive hyphens.
+    #   contain two consecutive hyphens. Only lowercase letters are allowed.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -1330,7 +1330,7 @@ module Aws::NeptuneGraph
     #
     #   The name must contain from 1 to 63 letters, numbers, or hyphens, and
     #   its first character must be a letter. It cannot end with a hyphen or
-    #   contain two consecutive hyphens.
+    #   contain two consecutive hyphens. Only lowercase letters are allowed.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -1715,7 +1715,7 @@ module Aws::NeptuneGraph
     #
     #   The name must contain from 1 to 63 letters, numbers, or hyphens, and
     #   its first character must be a letter. It cannot end with a hyphen or
-    #   contain two consecutive hyphens.
+    #   contain two consecutive hyphens. Only lowercase letters are allowed.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -2518,14 +2518,14 @@ module Aws::NeptuneGraph
     #
     #   The name must contain from 1 to 63 letters, numbers, or hyphens, and
     #   its first character must be a letter. It cannot end with a hyphen or
-    #   contain two consecutive hyphens.
+    #   contain two consecutive hyphens. Only lowercase letters are allowed.
     #   @return [String]
     #
     # @!attribute [rw] provisioned_memory
     #   The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to
     #   use for the graph.
     #
-    #   Min = 128
+    #   Min = 16
     #   @return [Integer]
     #
     # @!attribute [rw] deletion_protection
@@ -3006,7 +3006,7 @@ module Aws::NeptuneGraph
     #   The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to
     #   use for the graph.
     #
-    #   Min = 128
+    #   Min = 16
     #   @return [Integer]
     #
     # @!attribute [rw] deletion_protection

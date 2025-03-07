@@ -234,6 +234,29 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class Collaborator
+      attr_accessor action_groups: ::Array[Types::AgentActionGroup]
+      attr_accessor agent_collaboration: ("SUPERVISOR" | "SUPERVISOR_ROUTER" | "DISABLED")
+      attr_accessor agent_name: ::String
+      attr_accessor collaborator_configurations: ::Array[Types::CollaboratorConfiguration]
+      attr_accessor customer_encryption_key_arn: ::String
+      attr_accessor foundation_model: ::String
+      attr_accessor guardrail_configuration: Types::GuardrailConfigurationWithArn
+      attr_accessor idle_session_ttl_in_seconds: ::Integer
+      attr_accessor instruction: ::String
+      attr_accessor knowledge_bases: ::Array[Types::KnowledgeBase]
+      attr_accessor prompt_override_configuration: Types::PromptOverrideConfiguration
+      SENSITIVE: [:agent_name, :instruction, :prompt_override_configuration]
+    end
+
+    class CollaboratorConfiguration
+      attr_accessor agent_alias_arn: ::String
+      attr_accessor collaborator_instruction: ::String
+      attr_accessor collaborator_name: ::String
+      attr_accessor relay_conversation_history: ("TO_COLLABORATOR" | "DISABLED")
+      SENSITIVE: [:collaborator_instruction, :collaborator_name]
+    end
+
     class ConflictException
       attr_accessor message: ::String
       attr_accessor event_type: untyped
@@ -835,6 +858,7 @@ module Aws::BedrockAgentRuntime
     end
 
     class InlineSessionState
+      attr_accessor conversation_history: Types::ConversationHistory
       attr_accessor files: ::Array[Types::InputFile]
       attr_accessor invocation_id: ::String
       attr_accessor prompt_session_attributes: ::Hash[::String, ::String]
@@ -982,7 +1006,10 @@ module Aws::BedrockAgentRuntime
 
     class InvokeInlineAgentRequest
       attr_accessor action_groups: ::Array[Types::AgentActionGroup]
+      attr_accessor agent_collaboration: ("SUPERVISOR" | "SUPERVISOR_ROUTER" | "DISABLED")
       attr_accessor bedrock_model_configurations: Types::InlineBedrockModelConfigurations
+      attr_accessor collaborator_configurations: ::Array[Types::CollaboratorConfiguration]
+      attr_accessor collaborators: ::Array[Types::Collaborator]
       attr_accessor customer_encryption_key_arn: ::String
       attr_accessor enable_trace: bool
       attr_accessor end_session: bool
@@ -1355,6 +1382,7 @@ module Aws::BedrockAgentRuntime
     class PromptConfiguration
       attr_accessor additional_model_request_fields: untyped
       attr_accessor base_prompt_template: ::String
+      attr_accessor foundation_model: ::String
       attr_accessor inference_configuration: Types::InferenceConfiguration
       attr_accessor parser_mode: ("DEFAULT" | "OVERRIDDEN")
       attr_accessor prompt_creation_mode: ("DEFAULT" | "OVERRIDDEN")
@@ -1892,6 +1920,7 @@ module Aws::BedrockAgentRuntime
       attr_accessor agent_version: ::String
       attr_accessor caller_chain: ::Array[Types::Caller]
       attr_accessor collaborator_name: ::String
+      attr_accessor event_time: ::Time
       attr_accessor session_id: ::String
       attr_accessor trace: Types::Trace
       attr_accessor event_type: untyped

@@ -1257,6 +1257,29 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # Context enrichment configuration is used to provide additional context
+    # to the RAG application using Amazon Bedrock foundation models.
+    #
+    # @!attribute [rw] enrichment_strategy_configuration
+    #   The enrichment stategy used to provide additional context. For
+    #   example, Neptune GraphRAG uses Amazon Bedrock foundation models to
+    #   perform chunk entity extraction.
+    #   @return [Types::EnrichmentStrategyConfiguration]
+    #
+    # @!attribute [rw] model_arn
+    #   The Amazon Resource Name (ARN) of the foundation model used for
+    #   context enrichment.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/BedrockFoundationModelContextEnrichmentConfiguration AWS API Documentation
+    #
+    class BedrockFoundationModelContextEnrichmentConfiguration < Struct.new(
+      :enrichment_strategy_configuration,
+      :model_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains information about content defined inline in bytes.
     #
     # @!attribute [rw] data
@@ -1590,6 +1613,28 @@ module Aws::BedrockAgent
       class CachePoint < ContentBlock; end
       class Text < ContentBlock; end
       class Unknown < ContentBlock; end
+    end
+
+    # Context enrichment configuration is used to provide additional context
+    # to the RAG application.
+    #
+    # @!attribute [rw] bedrock_foundation_model_configuration
+    #   The configuration of the Amazon Bedrock foundation model used for
+    #   context enrichment.
+    #   @return [Types::BedrockFoundationModelContextEnrichmentConfiguration]
+    #
+    # @!attribute [rw] type
+    #   The method used for context enrichment. It must be Amazon Bedrock
+    #   foundation models.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/ContextEnrichmentConfiguration AWS API Documentation
+    #
+    class ContextEnrichmentConfiguration < Struct.new(
+      :bedrock_foundation_model_configuration,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
     end
 
     # The configuration of filtering the data source content. For example,
@@ -3602,6 +3647,20 @@ module Aws::BedrockAgent
     #
     class EmbeddingModelConfiguration < Struct.new(
       :bedrock_embedding_model_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The strategy used for performing context enrichment.
+    #
+    # @!attribute [rw] method
+    #   The method used for the context enrichment strategy.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/EnrichmentStrategyConfiguration AWS API Documentation
+    #
+    class EnrichmentStrategyConfiguration < Struct.new(
+      :method)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7089,6 +7148,56 @@ module Aws::BedrockAgent
     end
 
     # Contains details about the storage configuration of the knowledge base
+    # in Amazon Neptune Analytics. For more information, see [Create a
+    # vector index in Amazon Neptune Analytics][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-neptune.html
+    #
+    # @!attribute [rw] field_mapping
+    #   Contains the names of the fields to which to map information about
+    #   the vector store.
+    #   @return [Types::NeptuneAnalyticsFieldMapping]
+    #
+    # @!attribute [rw] graph_arn
+    #   The Amazon Resource Name (ARN) of the Neptune Analytics vector
+    #   store.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/NeptuneAnalyticsConfiguration AWS API Documentation
+    #
+    class NeptuneAnalyticsConfiguration < Struct.new(
+      :field_mapping,
+      :graph_arn)
+      SENSITIVE = [:graph_arn]
+      include Aws::Structure
+    end
+
+    # Contains the names of the fields to which to map information about the
+    # vector store.
+    #
+    # @!attribute [rw] metadata_field
+    #   The name of the field in which Amazon Bedrock stores metadata about
+    #   the vector store.
+    #   @return [String]
+    #
+    # @!attribute [rw] text_field
+    #   The name of the field in which Amazon Bedrock stores the raw text
+    #   from your data. The text is split according to the chunking strategy
+    #   you choose.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/NeptuneAnalyticsFieldMapping AWS API Documentation
+    #
+    class NeptuneAnalyticsFieldMapping < Struct.new(
+      :metadata_field,
+      :text_field)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains details about the storage configuration of the knowledge base
     # in Amazon OpenSearch Service. For more information, see [Create a
     # vector index in Amazon OpenSearch Service][1].
     #
@@ -9050,6 +9159,16 @@ module Aws::BedrockAgent
     #   Atlas.
     #   @return [Types::MongoDbAtlasConfiguration]
     #
+    # @!attribute [rw] neptune_analytics_configuration
+    #   Contains details about the Neptune Analytics configuration of the
+    #   knowledge base in Amazon Neptune. For more information, see [Create
+    #   a vector index in Amazon Neptune Analytics.][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-neptune.html
+    #   @return [Types::NeptuneAnalyticsConfiguration]
+    #
     # @!attribute [rw] opensearch_serverless_configuration
     #   Contains the storage configuration of the knowledge base in Amazon
     #   OpenSearch Service.
@@ -9083,6 +9202,7 @@ module Aws::BedrockAgent
     #
     class StorageConfiguration < Struct.new(
       :mongo_db_atlas_configuration,
+      :neptune_analytics_configuration,
       :opensearch_serverless_configuration,
       :pinecone_configuration,
       :rds_configuration,
@@ -10595,6 +10715,11 @@ module Aws::BedrockAgent
     #   when the knowledge base that it belongs to is queried.
     #   @return [Types::ChunkingConfiguration]
     #
+    # @!attribute [rw] context_enrichment_configuration
+    #   The context enrichment configuration used for ingestion of the data
+    #   into the vector store.
+    #   @return [Types::ContextEnrichmentConfiguration]
+    #
     # @!attribute [rw] custom_transformation_configuration
     #   A custom document transformer for parsed data source documents.
     #   @return [Types::CustomTransformationConfiguration]
@@ -10609,6 +10734,7 @@ module Aws::BedrockAgent
     #
     class VectorIngestionConfiguration < Struct.new(
       :chunking_configuration,
+      :context_enrichment_configuration,
       :custom_transformation_configuration,
       :parsing_configuration)
       SENSITIVE = []

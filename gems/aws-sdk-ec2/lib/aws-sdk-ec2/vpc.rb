@@ -483,9 +483,10 @@ module Aws::EC2
     #   Valid characters: a-z, A-Z, 0-9, spaces, and
     #   .\_-:/()#,@\[\]+=&amp;;\{}!$*
     # @option options [required, String] :group_name
-    #   The name of the security group.
+    #   The name of the security group. Names are case-insensitive and must be
+    #   unique within the VPC.
     #
-    #   Constraints: Up to 255 characters in length. Cannot start with `sg-`.
+    #   Constraints: Up to 255 characters in length. Can't start with `sg-`.
     #
     #   Valid characters: a-z, A-Z, 0-9, spaces, and
     #   .\_-:/()#,@\[\]+=&amp;;\{}!$*

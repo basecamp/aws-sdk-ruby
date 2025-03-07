@@ -727,6 +727,11 @@ module Aws::ElasticLoadBalancingV2
     #   type must be `dualstack`. The default value is `off`.
     #   @return [String]
     #
+    # @!attribute [rw] ipam_pools
+    #   \[Application Load Balancers\] The IPAM pools to use with the load
+    #   balancer.
+    #   @return [Types::IpamPools]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/CreateLoadBalancerInput AWS API Documentation
     #
     class CreateLoadBalancerInput < Struct.new(
@@ -739,7 +744,8 @@ module Aws::ElasticLoadBalancingV2
       :type,
       :ip_address_type,
       :customer_owned_ipv_4_pool,
-      :enable_prefix_for_ipv_6_source_nat)
+      :enable_prefix_for_ipv_6_source_nat,
+      :ipam_pools)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2117,6 +2123,22 @@ module Aws::ElasticLoadBalancingV2
     #
     class InvalidTargetException < Aws::EmptyStructure; end
 
+    # An IPAM pool is a collection of IP address CIDRs. IPAM pools enable
+    # you to organize your IP addresses according to your routing and
+    # security needs.
+    #
+    # @!attribute [rw] ipv_4_ipam_pool_id
+    #   The ID of the IPv4 IPAM pool.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/IpamPools AWS API Documentation
+    #
+    class IpamPools < Struct.new(
+      :ipv_4_ipam_pool_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Information about an Elastic Load Balancing resource limit for your
     # Amazon Web Services account.
     #
@@ -2442,6 +2464,11 @@ module Aws::ElasticLoadBalancingV2
     #   type must be `dualstack`. The default value is `off`.
     #   @return [String]
     #
+    # @!attribute [rw] ipam_pools
+    #   \[Application Load Balancers\] The IPAM pool in use by the load
+    #   balancer, if configured.
+    #   @return [Types::IpamPools]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/LoadBalancer AWS API Documentation
     #
     class LoadBalancer < Struct.new(
@@ -2459,7 +2486,8 @@ module Aws::ElasticLoadBalancingV2
       :ip_address_type,
       :customer_owned_ipv_4_pool,
       :enforce_security_group_inbound_rules_on_private_link_traffic,
-      :enable_prefix_for_ipv_6_source_nat)
+      :enable_prefix_for_ipv_6_source_nat,
+      :ipam_pools)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2770,6 +2798,40 @@ module Aws::ElasticLoadBalancingV2
       :decrease_requests_remaining,
       :minimum_load_balancer_capacity,
       :capacity_reservation_state)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] load_balancer_arn
+    #   The Amazon Resource Name (ARN) of the load balancer.
+    #   @return [String]
+    #
+    # @!attribute [rw] ipam_pools
+    #   The IPAM pools to be modified.
+    #   @return [Types::IpamPools]
+    #
+    # @!attribute [rw] remove_ipam_pools
+    #   Remove the IP pools in use by the load balancer.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/ModifyIpPoolsInput AWS API Documentation
+    #
+    class ModifyIpPoolsInput < Struct.new(
+      :load_balancer_arn,
+      :ipam_pools,
+      :remove_ipam_pools)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ipam_pools
+    #   The IPAM pool ID.
+    #   @return [Types::IpamPools]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/ModifyIpPoolsOutput AWS API Documentation
+    #
+    class ModifyIpPoolsOutput < Struct.new(
+      :ipam_pools)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4305,7 +4367,8 @@ module Aws::ElasticLoadBalancingV2
     #   * `target_health_state.unhealthy.connection_termination.enabled` -
     #     Indicates whether the load balancer terminates connections to
     #     unhealthy targets. The value is `true` or `false`. The default is
-    #     `true`.
+    #     `true`. This attribute can't be enabled for UDP and TCP\_UDP
+    #     target groups.
     #
     #   * `target_health_state.unhealthy.draining_interval_seconds` - The
     #     amount of time for Elastic Load Balancing to wait before changing

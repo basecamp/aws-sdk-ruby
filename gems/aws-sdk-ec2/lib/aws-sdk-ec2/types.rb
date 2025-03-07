@@ -771,6 +771,14 @@ module Aws::EC2
     #   (for example an EC2 instance).
     #   @return [String]
     #
+    # @!attribute [rw] service_managed
+    #   The service that manages the elastic IP address.
+    #
+    #   <note markdown="1"> The only option supported today is `alb`.
+    #
+    #    </note>
+    #   @return [String]
+    #
     # @!attribute [rw] instance_id
     #   The ID of the instance that the address is associated with (if any).
     #   @return [String]
@@ -794,6 +802,7 @@ module Aws::EC2
       :customer_owned_ip,
       :customer_owned_ipv_4_pool,
       :carrier_ip,
+      :service_managed,
       :instance_id,
       :public_ip)
       SENSITIVE = []
@@ -11529,9 +11538,10 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] group_name
-    #   The name of the security group.
+    #   The name of the security group. Names are case-insensitive and must
+    #   be unique within the VPC.
     #
-    #   Constraints: Up to 255 characters in length. Cannot start with
+    #   Constraints: Up to 255 characters in length. Can't start with
     #   `sg-`.
     #
     #   Valid characters: a-z, A-Z, 0-9, spaces, and

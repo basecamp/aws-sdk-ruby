@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.114.0 (2025-03-07)
+------------------
+
+* Feature - Documentation updates for Amazon CloudFront.
+
 1.113.0 (2025-02-26)
 ------------------
 
