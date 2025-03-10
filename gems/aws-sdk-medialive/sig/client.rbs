@@ -571,7 +571,9 @@ module Aws
                                       copyright_holder: ::String?,
                                       fill_line_gap: ("DISABLED" | "ENABLED")?,
                                       font_family: ::String?,
-                                      style_control: ("EXCLUDE" | "INCLUDE")?
+                                      style_control: ("EXCLUDE" | "INCLUDE")?,
+                                      default_font_size: ::Integer?,
+                                      default_line_height: ::Integer?
                                     }?,
                                     embedded_destination_settings: {
                                     }?,
@@ -2631,7 +2633,9 @@ module Aws
                                       copyright_holder: ::String?,
                                       fill_line_gap: ("DISABLED" | "ENABLED")?,
                                       font_family: ::String?,
-                                      style_control: ("EXCLUDE" | "INCLUDE")?
+                                      style_control: ("EXCLUDE" | "INCLUDE")?,
+                                      default_font_size: ::Integer?,
+                                      default_line_height: ::Integer?
                                     }?,
                                     embedded_destination_settings: {
                                     }?,

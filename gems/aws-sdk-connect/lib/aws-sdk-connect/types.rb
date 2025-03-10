@@ -2461,8 +2461,10 @@ module Aws::Connect
     #   @return [Time]
     #
     # @!attribute [rw] disconnect_timestamp
-    #   The timestamp when the customer endpoint disconnected from Amazon
-    #   Connect.
+    #   The date and time that the customer endpoint disconnected from the
+    #   current contact, in UTC time. In transfer scenarios, the
+    #   DisconnectTimestamp of the previous contact indicates the date and
+    #   time when that contact ended.
     #   @return [Time]
     #
     # @!attribute [rw] last_update_timestamp
@@ -3722,7 +3724,8 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] related_contact_id
-    #   The identifier of the contact in this instance of Amazon Connect.
+    #   The unique identifier for an Amazon Connect contact. This identifier
+    #   is related to the contact starting.
     #   @return [String]
     #
     # @!attribute [rw] attributes
@@ -3799,6 +3802,18 @@ module Aws::Connect
     #    </note>
     #   @return [Hash<String,Types::SegmentAttributeValue>]
     #
+    # @!attribute [rw] previous_contact_id
+    #   The ID of the previous contact when creating a transfer contact.
+    #   This value can be provided only for external audio contacts. For
+    #   more information, see [Integrate Amazon Connect Contact Lens with
+    #   external voice systems][1] in the *Amazon Connect Administrator
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/contact-lens-integration.html
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateContactRequest AWS API Documentation
     #
     class CreateContactRequest < Struct.new(
@@ -3814,7 +3829,8 @@ module Aws::Connect
       :initiate_as,
       :name,
       :description,
-      :segment_attributes)
+      :segment_attributes,
+      :previous_contact_id)
       SENSITIVE = [:name, :description]
       include Aws::Structure
     end
@@ -15409,7 +15425,11 @@ module Aws::Connect
     end
 
     # @!attribute [rw] channel
-    #   The channel of the contact. `Voice` will not be returned.
+    #   The channel of the contact.
+    #
+    #   Only `CHAT` is supported. This API does not support `VOICE`. If you
+    #   attempt to use it for the VOICE channel, an
+    #   `InvalidRequestException` error occurs.
     #   @return [String]
     #
     # @!attribute [rw] status

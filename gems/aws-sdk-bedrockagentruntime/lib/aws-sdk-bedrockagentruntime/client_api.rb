@@ -23,6 +23,9 @@ module Aws::BedrockAgentRuntime
     ActionGroupName = Shapes::StringShape.new(name: 'ActionGroupName')
     ActionGroupOutputString = Shapes::StringShape.new(name: 'ActionGroupOutputString')
     ActionGroupSignature = Shapes::StringShape.new(name: 'ActionGroupSignature')
+    ActionGroupSignatureParams = Shapes::MapShape.new(name: 'ActionGroupSignatureParams')
+    ActionGroupSignatureParamsKeyString = Shapes::StringShape.new(name: 'ActionGroupSignatureParamsKeyString')
+    ActionGroupSignatureParamsValueString = Shapes::StringShape.new(name: 'ActionGroupSignatureParamsValueString')
     ActionInvocationType = Shapes::StringShape.new(name: 'ActionInvocationType')
     AdditionalModelRequestFields = Shapes::MapShape.new(name: 'AdditionalModelRequestFields')
     AdditionalModelRequestFieldsKey = Shapes::StringShape.new(name: 'AdditionalModelRequestFieldsKey')
@@ -215,6 +218,11 @@ module Aws::BedrockAgentRuntime
     Identifier = Shapes::StringShape.new(name: 'Identifier')
     ImageBlock = Shapes::StructureShape.new(name: 'ImageBlock')
     ImageFormat = Shapes::StringShape.new(name: 'ImageFormat')
+    ImageInput = Shapes::StructureShape.new(name: 'ImageInput')
+    ImageInputFormat = Shapes::StringShape.new(name: 'ImageInputFormat')
+    ImageInputSource = Shapes::UnionShape.new(name: 'ImageInputSource')
+    ImageInputSourceBytesBlob = Shapes::BlobShape.new(name: 'ImageInputSourceBytesBlob')
+    ImageInputs = Shapes::ListShape.new(name: 'ImageInputs')
     ImageSource = Shapes::UnionShape.new(name: 'ImageSource')
     ImageSourceBytesBlob = Shapes::BlobShape.new(name: 'ImageSourceBytesBlob')
     ImplicitFilterConfiguration = Shapes::StructureShape.new(name: 'ImplicitFilterConfiguration')
@@ -538,6 +546,9 @@ module Aws::BedrockAgentRuntime
     ActionGroupInvocationOutput.add_member(:text, Shapes::ShapeRef.new(shape: ActionGroupOutputString, location_name: "text"))
     ActionGroupInvocationOutput.struct_class = Types::ActionGroupInvocationOutput
 
+    ActionGroupSignatureParams.key = Shapes::ShapeRef.new(shape: ActionGroupSignatureParamsKeyString)
+    ActionGroupSignatureParams.value = Shapes::ShapeRef.new(shape: ActionGroupSignatureParamsValueString)
+
     AdditionalModelRequestFields.key = Shapes::ShapeRef.new(shape: AdditionalModelRequestFieldsKey)
     AdditionalModelRequestFields.value = Shapes::ShapeRef.new(shape: AdditionalModelRequestFieldsValue)
 
@@ -547,6 +558,7 @@ module Aws::BedrockAgentRuntime
     AgentActionGroup.add_member(:description, Shapes::ShapeRef.new(shape: ResourceDescription, location_name: "description"))
     AgentActionGroup.add_member(:function_schema, Shapes::ShapeRef.new(shape: FunctionSchema, location_name: "functionSchema"))
     AgentActionGroup.add_member(:parent_action_group_signature, Shapes::ShapeRef.new(shape: ActionGroupSignature, location_name: "parentActionGroupSignature"))
+    AgentActionGroup.add_member(:parent_action_group_signature_params, Shapes::ShapeRef.new(shape: ActionGroupSignatureParams, location_name: "parentActionGroupSignatureParams"))
     AgentActionGroup.struct_class = Types::AgentActionGroup
 
     AgentActionGroups.member = Shapes::ShapeRef.new(shape: AgentActionGroup)
@@ -708,6 +720,7 @@ module Aws::BedrockAgentRuntime
     ContentBlocks.member = Shapes::ShapeRef.new(shape: ContentBlock)
 
     ContentBody.add_member(:body, Shapes::ShapeRef.new(shape: String, location_name: "body"))
+    ContentBody.add_member(:images, Shapes::ShapeRef.new(shape: ImageInputs, location_name: "images"))
     ContentBody.struct_class = Types::ContentBody
 
     ContentMap.key = Shapes::ShapeRef.new(shape: String)
@@ -1101,6 +1114,18 @@ module Aws::BedrockAgentRuntime
     ImageBlock.add_member(:format, Shapes::ShapeRef.new(shape: ImageFormat, required: true, location_name: "format"))
     ImageBlock.add_member(:source, Shapes::ShapeRef.new(shape: ImageSource, required: true, location_name: "source"))
     ImageBlock.struct_class = Types::ImageBlock
+
+    ImageInput.add_member(:format, Shapes::ShapeRef.new(shape: ImageInputFormat, required: true, location_name: "format"))
+    ImageInput.add_member(:source, Shapes::ShapeRef.new(shape: ImageInputSource, required: true, location_name: "source"))
+    ImageInput.struct_class = Types::ImageInput
+
+    ImageInputSource.add_member(:bytes, Shapes::ShapeRef.new(shape: ImageInputSourceBytesBlob, location_name: "bytes"))
+    ImageInputSource.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    ImageInputSource.add_member_subclass(:bytes, Types::ImageInputSource::Bytes)
+    ImageInputSource.add_member_subclass(:unknown, Types::ImageInputSource::Unknown)
+    ImageInputSource.struct_class = Types::ImageInputSource
+
+    ImageInputs.member = Shapes::ShapeRef.new(shape: ImageInput)
 
     ImageSource.add_member(:bytes, Shapes::ShapeRef.new(shape: ImageSourceBytesBlob, location_name: "bytes"))
     ImageSource.add_member(:s3_location, Shapes::ShapeRef.new(shape: S3Location, location_name: "s3Location"))

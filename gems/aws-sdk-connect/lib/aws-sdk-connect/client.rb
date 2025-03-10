@@ -1797,7 +1797,8 @@ module Aws::Connect
     #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
     #
     # @option params [String] :related_contact_id
-    #   The identifier of the contact in this instance of Amazon Connect.
+    #   The unique identifier for an Amazon Connect contact. This identifier
+    #   is related to the contact starting.
     #
     # @option params [Hash<String,String>] :attributes
     #   A custom key-value pair using an attribute map. The attributes are
@@ -1860,6 +1861,16 @@ module Aws::Connect
     #
     #    </note>
     #
+    # @option params [String] :previous_contact_id
+    #   The ID of the previous contact when creating a transfer contact. This
+    #   value can be provided only for external audio contacts. For more
+    #   information, see [Integrate Amazon Connect Contact Lens with external
+    #   voice systems][1] in the *Amazon Connect Administrator Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/contact-lens-integration.html
+    #
     # @return [Types::CreateContactResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateContactResponse#contact_id #contact_id} => String
@@ -1903,6 +1914,7 @@ module Aws::Connect
     #         value_integer: 1,
     #       },
     #     },
+    #     previous_contact_id: "ContactId",
     #   })
     #
     # @example Response structure
@@ -12247,7 +12259,11 @@ module Aws::Connect
       req.send_request(options)
     end
 
-    # Provides a list of analysis segments for a real-time analysis session.
+    # Provides a list of analysis segments for a real-time chat analysis
+    # session. This API supports CHAT channels only.
+    #
+    # This API does not support VOICE. If you attempt to use it for VOICE,
+    # an `InvalidRequestException` occurs.
     #
     # @option params [required, String] :instance_id
     #   The identifier of the Amazon Connect instance. You can [find the
@@ -17761,16 +17777,16 @@ module Aws::Connect
       req.send_request(options)
     end
 
-    # Transfers contacts from one agent or queue to another agent or queue
-    # at any point after a contact is created. You can transfer a contact to
-    # another queue by providing the flow which orchestrates the contact to
-    # the destination queue. This gives you more control over contact
-    # handling and helps you adhere to the service level agreement (SLA)
-    # guaranteed to your customers.
+    # Transfers `TASK` or `EMAIL` contacts from one agent or queue to
+    # another agent or queue at any point after a contact is created. You
+    # can transfer a contact to another queue by providing the flow which
+    # orchestrates the contact to the destination queue. This gives you more
+    # control over contact handling and helps you adhere to the service
+    # level agreement (SLA) guaranteed to your customers.
     #
     # Note the following requirements:
     #
-    # * Transfer is supported for only `TASK` contacts.
+    # * Transfer is supported for only `TASK` and `EMAIL` contacts.
     #
     # * Do not use both `QueueId` and `UserId` in the same call.
     #
@@ -21000,7 +21016,7 @@ module Aws::Connect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-connect'
-      context[:gem_version] = '1.198.0'
+      context[:gem_version] = '1.199.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

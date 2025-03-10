@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.51.0 (2025-03-10)
+------------------
+
+* Feature - Add support for computer use tools
+
 1.50.0 (2025-03-07)
 ------------------
 

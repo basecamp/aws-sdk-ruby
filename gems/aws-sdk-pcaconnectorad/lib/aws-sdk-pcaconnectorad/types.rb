@@ -417,7 +417,8 @@ module Aws::PcaConnectorAd
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] vpc_information
-    #   Security group IDs that describe the inbound and outbound rules.
+    #   Information about your VPC and security groups used with the
+    #   connector.
     #   @return [Types::VpcInformation]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/pca-connector-ad-2018-05-10/CreateConnectorRequest AWS API Documentation
@@ -2823,6 +2824,10 @@ module Aws::PcaConnectorAd
     # Information about your VPC and security groups used with the
     # connector.
     #
+    # @!attribute [rw] ip_address_type
+    #   The VPC IP address type.
+    #   @return [String]
+    #
     # @!attribute [rw] security_group_ids
     #   The security groups used with the connector. You can use a maximum
     #   of 4 security groups with a connector.
@@ -2831,6 +2836,7 @@ module Aws::PcaConnectorAd
     # @see http://docs.aws.amazon.com/goto/WebAPI/pca-connector-ad-2018-05-10/VpcInformation AWS API Documentation
     #
     class VpcInformation < Struct.new(
+      :ip_address_type,
       :security_group_ids)
       SENSITIVE = []
       include Aws::Structure

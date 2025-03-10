@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.22.0 (2025-03-10)
+------------------
+
+* Feature - This release updates the default value of pprof-disabled from false to true.
+
 1.21.0 (2025-02-18)
 ------------------
 

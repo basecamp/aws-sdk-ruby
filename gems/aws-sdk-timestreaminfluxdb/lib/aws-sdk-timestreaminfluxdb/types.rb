@@ -62,8 +62,8 @@ module Aws::TimestreamInfluxDB
     #   consecutive hyphens. For example, my-user1. This username will allow
     #   you to access the InfluxDB UI to perform various administrative
     #   tasks and also use the InfluxDB CLI to create an operator token.
-    #   These attributes will be stored in a secret created in Amazon Web
-    #   Services Secrets Manager in your account.
+    #   These attributes will be stored in a secret created in Secrets
+    #   Manager in your account.
     #   @return [String]
     #
     # @!attribute [rw] password
@@ -71,7 +71,7 @@ module Aws::TimestreamInfluxDB
     #   password will allow you to access the InfluxDB UI to perform various
     #   administrative tasks and also use the InfluxDB CLI to create an
     #   operator token. These attributes will be stored in a secret created
-    #   in Amazon Web Services Secrets Manager in your account.
+    #   in Secrets Manager in your account.
     #   @return [String]
     #
     # @!attribute [rw] organization
@@ -232,7 +232,7 @@ module Aws::TimestreamInfluxDB
     #   password will allow you to access the InfluxDB UI to perform various
     #   administrative tasks and also use the InfluxDB CLI to create an
     #   operator token. These attributes will be stored in a Secret created
-    #   in Amazon Web Services SecretManager in your account.
+    #   in Secrets Manager in your account.
     #   @return [String]
     #
     # @!attribute [rw] organization
@@ -431,11 +431,10 @@ module Aws::TimestreamInfluxDB
     #   @return [Types::LogDeliveryConfiguration]
     #
     # @!attribute [rw] influx_auth_parameters_secret_arn
-    #   The Amazon Resource Name (ARN) of the Amazon Web Services Secrets
-    #   Manager secret containing the initial InfluxDB authorization
-    #   parameters. The secret value is a JSON formatted key-value pair
-    #   holding InfluxDB authorization values: organization, bucket,
-    #   username, and password.
+    #   The Amazon Resource Name (ARN) of the Secrets Manager secret
+    #   containing the initial InfluxDB authorization parameters. The secret
+    #   value is a JSON formatted key-value pair holding InfluxDB
+    #   authorization values: organization, bucket, username, and password.
     #   @return [String]
     #
     # @!attribute [rw] db_cluster_id
@@ -693,8 +692,8 @@ module Aws::TimestreamInfluxDB
     #
     # @!attribute [rw] name
     #   This customer-supplied name uniquely identifies the DB instance when
-    #   interacting with the Amazon Timestream for InfluxDB API and Amazon
-    #   Web Services CLI commands.
+    #   interacting with the Amazon Timestream for InfluxDB API and CLI
+    #   commands.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -903,11 +902,10 @@ module Aws::TimestreamInfluxDB
     #   @return [Types::LogDeliveryConfiguration]
     #
     # @!attribute [rw] influx_auth_parameters_secret_arn
-    #   The Amazon Resource Name (ARN) of the Amazon Web Services Secrets
-    #   Manager secret containing the initial InfluxDB authorization
-    #   parameters. The secret value is a JSON formatted key-value pair
-    #   holding InfluxDB authorization values: organization, bucket,
-    #   username, and password.
+    #   The Amazon Resource Name (ARN) of the Secrets Manager secret
+    #   containing the initial InfluxDB authorization parameters. The secret
+    #   value is a JSON formatted key-value pair holding InfluxDB
+    #   authorization values: organization, bucket, username, and password.
     #   @return [String]
     #
     # @!attribute [rw] db_cluster_id
@@ -1046,11 +1044,10 @@ module Aws::TimestreamInfluxDB
     #   @return [Types::LogDeliveryConfiguration]
     #
     # @!attribute [rw] influx_auth_parameters_secret_arn
-    #   The Amazon Resource Name (ARN) of the Amazon Web Services Secrets
-    #   Manager secret containing the initial InfluxDB authorization
-    #   parameters. The secret value is a JSON formatted key-value pair
-    #   holding InfluxDB authorization values: organization, bucket,
-    #   username, and password.
+    #   The Amazon Resource Name (ARN) of the Secrets Manager secret
+    #   containing the initial InfluxDB authorization parameters. The secret
+    #   value is a JSON formatted key-value pair holding InfluxDB
+    #   authorization values: organization, bucket, username, and password.
     #   @return [String]
     #
     # @!attribute [rw] vpc_subnet_ids
@@ -1186,11 +1183,10 @@ module Aws::TimestreamInfluxDB
     #   @return [Types::LogDeliveryConfiguration]
     #
     # @!attribute [rw] influx_auth_parameters_secret_arn
-    #   The Amazon Resource Name (ARN) of the Amazon Web Services Secrets
-    #   Manager secret containing the initial InfluxDB authorization
-    #   parameters. The secret value is a JSON formatted key-value pair
-    #   holding InfluxDB authorization values: organization, bucket,
-    #   username, and password.
+    #   The Amazon Resource Name (ARN) of the Secrets Manager secret
+    #   containing the initial InfluxDB authorization parameters. The secret
+    #   value is a JSON formatted key-value pair holding InfluxDB
+    #   authorization values: organization, bucket, username, and password.
     #   @return [String]
     #
     # @!attribute [rw] db_cluster_id
@@ -1385,7 +1381,7 @@ module Aws::TimestreamInfluxDB
     #   Disable the /debug/pprof HTTP endpoint. This endpoint provides
     #   runtime profiling data and can be helpful when debugging.
     #
-    #   Default: false
+    #   Default: true
     #   @return [Boolean]
     #
     # @!attribute [rw] query_initial_memory_bytes
@@ -2056,8 +2052,8 @@ module Aws::TimestreamInfluxDB
     #
     # @!attribute [rw] name
     #   This customer-supplied name uniquely identifies the DB instance when
-    #   interacting with the Amazon Timestream for InfluxDB API and Amazon
-    #   Web Services CLI commands.
+    #   interacting with the Amazon Timestream for InfluxDB API and CLI
+    #   commands.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -2133,11 +2129,10 @@ module Aws::TimestreamInfluxDB
     #   @return [Types::LogDeliveryConfiguration]
     #
     # @!attribute [rw] influx_auth_parameters_secret_arn
-    #   The Amazon Resource Name (ARN) of the Amazon Web Services Secrets
-    #   Manager secret containing the initial InfluxDB authorization
-    #   parameters. The secret value is a JSON formatted key-value pair
-    #   holding InfluxDB authorization values: organization, bucket,
-    #   username, and password.
+    #   The Amazon Resource Name (ARN) of the Secrets Manager secret
+    #   containing the initial InfluxDB authorization parameters. The secret
+    #   value is a JSON formatted key-value pair holding InfluxDB
+    #   authorization values: organization, bucket, username, and password.
     #   @return [String]
     #
     # @!attribute [rw] db_cluster_id

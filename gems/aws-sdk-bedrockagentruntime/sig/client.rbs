@@ -380,7 +380,15 @@ module Aws
                                   http_method: ::String?,
                                   http_status_code: ::Integer?,
                                   response_body: Hash[::String, {
-                                      body: ::String?
+                                      body: ::String?,
+                                      images: Array[
+                                        {
+                                          format: ("png" | "jpeg" | "gif" | "webp"),
+                                          source: {
+                                            bytes: ::String?
+                                          }
+                                        },
+                                      ]?
                                     }]?,
                                   response_state: ("FAILURE" | "REPROMPT")?
                                 }?,
@@ -390,7 +398,15 @@ module Aws
                                   confirmation_state: ("CONFIRM" | "DENY")?,
                                   function: ::String?,
                                   response_body: Hash[::String, {
-                                      body: ::String?
+                                      body: ::String?,
+                                      images: Array[
+                                        {
+                                          format: ("png" | "jpeg" | "gif" | "webp"),
+                                          source: {
+                                            bytes: ::String?
+                                          }
+                                        },
+                                      ]?
                                     }]?,
                                   response_state: ("FAILURE" | "REPROMPT")?
                                 }?
@@ -473,7 +489,8 @@ module Aws
                                          },
                                        ]?
                                      }?,
-                                     parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter")?
+                                     parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter" | "ANTHROPIC.Computer" | "ANTHROPIC.Bash" | "ANTHROPIC.TextEditor")?,
+                                     parent_action_group_signature_params: Hash[::String, ::String]?
                                    },
                                  ],
                                  ?agent_collaboration: ("SUPERVISOR" | "SUPERVISOR_ROUTER" | "DISABLED"),
@@ -521,7 +538,8 @@ module Aws
                                              },
                                            ]?
                                          }?,
-                                         parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter")?
+                                         parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter" | "ANTHROPIC.Computer" | "ANTHROPIC.Bash" | "ANTHROPIC.TextEditor")?,
+                                         parent_action_group_signature_params: Hash[::String, ::String]?
                                        },
                                      ]?,
                                      agent_collaboration: ("SUPERVISOR" | "SUPERVISOR_ROUTER" | "DISABLED")?,
@@ -727,7 +745,15 @@ module Aws
                                          http_method: ::String?,
                                          http_status_code: ::Integer?,
                                          response_body: Hash[::String, {
-                                             body: ::String?
+                                             body: ::String?,
+                                             images: Array[
+                                               {
+                                                 format: ("png" | "jpeg" | "gif" | "webp"),
+                                                 source: {
+                                                   bytes: ::String?
+                                                 }
+                                               },
+                                             ]?
                                            }]?,
                                          response_state: ("FAILURE" | "REPROMPT")?
                                        }?,
@@ -737,7 +763,15 @@ module Aws
                                          confirmation_state: ("CONFIRM" | "DENY")?,
                                          function: ::String?,
                                          response_body: Hash[::String, {
-                                             body: ::String?
+                                             body: ::String?,
+                                             images: Array[
+                                               {
+                                                 format: ("png" | "jpeg" | "gif" | "webp"),
+                                                 source: {
+                                                   bytes: ::String?
+                                                 }
+                                               },
+                                             ]?
                                            }]?,
                                          response_state: ("FAILURE" | "REPROMPT")?
                                        }?

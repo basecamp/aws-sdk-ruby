@@ -88,6 +88,7 @@ module Aws
                               directory_id: ::String,
                               ?tags: Hash[::String, ::String],
                               vpc_information: {
+                                ip_address_type: ("IPV4" | "DUALSTACK")?,
                                 security_group_ids: Array[::String]
                               }
                             ) -> _CreateConnectorResponseSuccess

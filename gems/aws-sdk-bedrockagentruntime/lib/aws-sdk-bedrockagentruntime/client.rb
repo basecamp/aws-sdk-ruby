@@ -577,7 +577,7 @@ module Aws::BedrockAgentRuntime
     #
     # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html
     # [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/session-encryption.html
-    # [3]: https://docs.aws.amazon.com/bedrock/latest/API_agent-runtime_InvokeAgent.html
+    # [3]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html
     # [4]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListSessions.html
     # [5]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetSession.html
     # [6]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_EndSession.html
@@ -1455,6 +1455,14 @@ module Aws::BedrockAgentRuntime
     #             response_body: {
     #               "String" => {
     #                 body: "String",
+    #                 images: [
+    #                   {
+    #                     format: "png", # required, accepts png, jpeg, gif, webp
+    #                     source: { # required
+    #                       bytes: "data",
+    #                     },
+    #                   },
+    #                 ],
     #               },
     #             },
     #             response_state: "FAILURE", # accepts FAILURE, REPROMPT
@@ -1467,6 +1475,14 @@ module Aws::BedrockAgentRuntime
     #             response_body: {
     #               "String" => {
     #                 body: "String",
+    #                 images: [
+    #                   {
+    #                     format: "png", # required, accepts png, jpeg, gif, webp
+    #                     source: { # required
+    #                       bytes: "data",
+    #                     },
+    #                   },
+    #                 ],
     #               },
     #             },
     #             response_state: "FAILURE", # accepts FAILURE, REPROMPT
@@ -1671,6 +1687,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.http_status_code #=> Integer
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body #=> Hash
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].body #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].images #=> Array
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].images[0].format #=> String, one of "png", "jpeg", "gif", "webp"
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].images[0].source.bytes #=> String
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_state #=> String, one of "FAILURE", "REPROMPT"
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.action_group #=> String
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.agent_id #=> String
@@ -1678,6 +1697,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.function #=> String
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body #=> Hash
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].body #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].images #=> Array
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].images[0].format #=> String, one of "png", "jpeg", "gif", "webp"
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].images[0].source.bytes #=> String
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_state #=> String, one of "FAILURE", "REPROMPT"
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.text #=> String
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.type #=> String, one of "TEXT", "RETURN_CONTROL"
@@ -1839,6 +1861,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.http_status_code #=> Integer
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body #=> Hash
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].body #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].images #=> Array
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].images[0].format #=> String, one of "png", "jpeg", "gif", "webp"
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].images[0].source.bytes #=> String
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_state #=> String, one of "FAILURE", "REPROMPT"
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.action_group #=> String
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.agent_id #=> String
@@ -1846,6 +1871,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.function #=> String
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body #=> Hash
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].body #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].images #=> Array
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].images[0].format #=> String, one of "png", "jpeg", "gif", "webp"
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].images[0].source.bytes #=> String
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_state #=> String, one of "FAILURE", "REPROMPT"
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.text #=> String
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.type #=> String, one of "TEXT", "RETURN_CONTROL"
@@ -2685,7 +2713,10 @@ module Aws::BedrockAgentRuntime
     #             },
     #           ],
     #         },
-    #         parent_action_group_signature: "AMAZON.UserInput", # accepts AMAZON.UserInput, AMAZON.CodeInterpreter
+    #         parent_action_group_signature: "AMAZON.UserInput", # accepts AMAZON.UserInput, AMAZON.CodeInterpreter, ANTHROPIC.Computer, ANTHROPIC.Bash, ANTHROPIC.TextEditor
+    #         parent_action_group_signature_params: {
+    #           "ActionGroupSignatureParamsKeyString" => "ActionGroupSignatureParamsValueString",
+    #         },
     #       },
     #     ],
     #     agent_collaboration: "SUPERVISOR", # accepts SUPERVISOR, SUPERVISOR_ROUTER, DISABLED
@@ -2735,7 +2766,10 @@ module Aws::BedrockAgentRuntime
     #                 },
     #               ],
     #             },
-    #             parent_action_group_signature: "AMAZON.UserInput", # accepts AMAZON.UserInput, AMAZON.CodeInterpreter
+    #             parent_action_group_signature: "AMAZON.UserInput", # accepts AMAZON.UserInput, AMAZON.CodeInterpreter, ANTHROPIC.Computer, ANTHROPIC.Bash, ANTHROPIC.TextEditor
+    #             parent_action_group_signature_params: {
+    #               "ActionGroupSignatureParamsKeyString" => "ActionGroupSignatureParamsValueString",
+    #             },
     #           },
     #         ],
     #         agent_collaboration: "SUPERVISOR", # accepts SUPERVISOR, SUPERVISOR_ROUTER, DISABLED
@@ -2951,6 +2985,14 @@ module Aws::BedrockAgentRuntime
     #             response_body: {
     #               "String" => {
     #                 body: "String",
+    #                 images: [
+    #                   {
+    #                     format: "png", # required, accepts png, jpeg, gif, webp
+    #                     source: { # required
+    #                       bytes: "data",
+    #                     },
+    #                   },
+    #                 ],
     #               },
     #             },
     #             response_state: "FAILURE", # accepts FAILURE, REPROMPT
@@ -2963,6 +3005,14 @@ module Aws::BedrockAgentRuntime
     #             response_body: {
     #               "String" => {
     #                 body: "String",
+    #                 images: [
+    #                   {
+    #                     format: "png", # required, accepts png, jpeg, gif, webp
+    #                     source: { # required
+    #                       bytes: "data",
+    #                     },
+    #                   },
+    #                 ],
     #               },
     #             },
     #             response_state: "FAILURE", # accepts FAILURE, REPROMPT
@@ -3298,6 +3348,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.http_status_code #=> Integer
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body #=> Hash
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].body #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].images #=> Array
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].images[0].format #=> String, one of "png", "jpeg", "gif", "webp"
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].images[0].source.bytes #=> String
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_state #=> String, one of "FAILURE", "REPROMPT"
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.action_group #=> String
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.agent_id #=> String
@@ -3305,6 +3358,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.function #=> String
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body #=> Hash
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].body #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].images #=> Array
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].images[0].format #=> String, one of "png", "jpeg", "gif", "webp"
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].images[0].source.bytes #=> String
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_state #=> String, one of "FAILURE", "REPROMPT"
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.text #=> String
     #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.type #=> String, one of "TEXT", "RETURN_CONTROL"
@@ -3466,6 +3522,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.http_status_code #=> Integer
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body #=> Hash
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].body #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].images #=> Array
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].images[0].format #=> String, one of "png", "jpeg", "gif", "webp"
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].images[0].source.bytes #=> String
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_state #=> String, one of "FAILURE", "REPROMPT"
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.action_group #=> String
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.agent_id #=> String
@@ -3473,6 +3532,9 @@ module Aws::BedrockAgentRuntime
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.function #=> String
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body #=> Hash
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].body #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].images #=> Array
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].images[0].format #=> String, one of "png", "jpeg", "gif", "webp"
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].images[0].source.bytes #=> String
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_state #=> String, one of "FAILURE", "REPROMPT"
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.text #=> String
     #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.type #=> String, one of "TEXT", "RETURN_CONTROL"
@@ -5369,7 +5431,7 @@ module Aws::BedrockAgentRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagentruntime'
-      context[:gem_version] = '1.48.0'
+      context[:gem_version] = '1.49.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

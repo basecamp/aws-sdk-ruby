@@ -6590,7 +6590,7 @@ module Aws::SecurityHub
     end
 
     class StandardsStatusReason
-      attr_accessor status_reason_code: ("NO_AVAILABLE_CONFIGURATION_RECORDER" | "INTERNAL_ERROR")
+      attr_accessor status_reason_code: ("NO_AVAILABLE_CONFIGURATION_RECORDER" | "MAXIMUM_NUMBER_OF_CONFIG_RULES_EXCEEDED" | "INTERNAL_ERROR")
       SENSITIVE: []
     end
 
@@ -6599,6 +6599,7 @@ module Aws::SecurityHub
       attr_accessor standards_arn: ::String
       attr_accessor standards_input: ::Hash[::String, ::String]
       attr_accessor standards_status: ("PENDING" | "READY" | "FAILED" | "DELETING" | "INCOMPLETE")
+      attr_accessor standards_controls_updatable: ("READY_FOR_UPDATES" | "NOT_READY_FOR_UPDATES")
       attr_accessor standards_status_reason: Types::StandardsStatusReason
       SENSITIVE: []
     end

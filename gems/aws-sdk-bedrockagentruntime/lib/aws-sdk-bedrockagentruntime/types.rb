@@ -205,27 +205,56 @@ module Aws::BedrockAgentRuntime
     #   @return [Types::FunctionSchema]
     #
     # @!attribute [rw] parent_action_group_signature
-    #   To allow your agent to request the user for additional information
-    #   when trying to complete a task, set this field to
-    #   `AMAZON.UserInput`. You must leave the `description`, `apiSchema`,
-    #   and `actionGroupExecutor` fields blank for this action group.
+    #   Specify a built-in or computer use action for this action group. If
+    #   you specify a value, you must leave the `description`, `apiSchema`,
+    #   and `actionGroupExecutor` fields empty for this action group.
     #
-    #   To allow your agent to generate, run, and troubleshoot code when
-    #   trying to complete a task, set this field to
-    #   `AMAZON.CodeInterpreter`. You must leave the `description`,
-    #   `apiSchema`, and `actionGroupExecutor` fields blank for this action
-    #   group.
+    #   * To allow your agent to request the user for additional information
+    #     when trying to complete a task, set this field to
+    #     `AMAZON.UserInput`.
     #
-    #   During orchestration, if your agent determines that it needs to
-    #   invoke an API in an action group, but doesn't have enough
-    #   information to complete the API request, it will invoke this action
-    #   group instead and return an [Observation][1] reprompting the user
-    #   for more information.
+    #   * To allow your agent to generate, run, and troubleshoot code when
+    #     trying to complete a task, set this field to
+    #     `AMAZON.CodeInterpreter`.
+    #
+    #   * To allow your agent to use an Anthropic computer use tool, specify
+    #     one of the following values.
+    #
+    #     Computer use is a new Anthropic Claude model capability (in beta)
+    #     available with Anthropic Claude 3.7 Sonnet and Claude 3.5 Sonnet
+    #     v2 only. When operating computer use functionality, we recommend
+    #     taking additional security precautions, such as executing computer
+    #     actions in virtual environments with restricted data access and
+    #     limited internet connectivity. For more information, see
+    #     [Configure an Amazon Bedrock Agent to complete tasks with computer
+    #     use tools][1].
+    #
+    #     * `ANTHROPIC.Computer` - Gives the agent permission to use the
+    #       mouse and keyboard and take screenshots.
+    #
+    #     * `ANTHROPIC.TextEditor` - Gives the agent permission to view,
+    #       create and edit files.
+    #
+    #     * `ANTHROPIC.Bash` - Gives the agent permission to run commands in
+    #       a bash shell.
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Observation.html
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html
     #   @return [String]
+    #
+    # @!attribute [rw] parent_action_group_signature_params
+    #   The configuration settings for a computer use action.
+    #
+    #   Computer use is a new Anthropic Claude model capability (in beta)
+    #   available with Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. For
+    #   more information, see [Configure an Amazon Bedrock Agent to complete
+    #   tasks with computer use tools][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html
+    #   @return [Hash<String,String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/AgentActionGroup AWS API Documentation
     #
@@ -235,7 +264,8 @@ module Aws::BedrockAgentRuntime
       :api_schema,
       :description,
       :function_schema,
-      :parent_action_group_signature)
+      :parent_action_group_signature,
+      :parent_action_group_signature_params)
       SENSITIVE = [:action_group_name, :description]
       include Aws::Structure
     end
@@ -1013,10 +1043,23 @@ module Aws::BedrockAgentRuntime
     #   The body of the API response.
     #   @return [String]
     #
+    # @!attribute [rw] images
+    #   Lists details, including format and source, for the image in the
+    #   response from the function call. You can specify only one image and
+    #   the function in the `returnControlInvocationResults` must be a
+    #   computer use action. For more information, see [Configure an Amazon
+    #   Bedrock Agent to complete tasks with computer use tools][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html
+    #   @return [Array<Types::ImageInput>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ContentBody AWS API Documentation
     #
     class ContentBody < Struct.new(
-      :body)
+      :body,
+      :images)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2086,10 +2129,18 @@ module Aws::BedrockAgentRuntime
     #   @return [String]
     #
     # @!attribute [rw] response_body
-    #   The response from the function call using the parameters. The key of
-    #   the object is the content type (currently, only `TEXT` is
-    #   supported). The response may be returned directly or from the Lambda
-    #   function.
+    #   The response from the function call using the parameters. The
+    #   response might be returned directly or from the Lambda function.
+    #   Specify `TEXT` or `IMAGES`. The key of the object is the content
+    #   type. You can only specify one type. If you specify `IMAGES`, you
+    #   can specify only one image. You can specify images only when the
+    #   function in the `returnControlInvocationResults` is a computer use
+    #   action. For more information, see [Configure an Amazon Bedrock Agent
+    #   to complete tasks with computer use tools][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html
     #   @return [Hash<String,Types::ContentBody>]
     #
     # @!attribute [rw] response_state
@@ -2776,6 +2827,57 @@ module Aws::BedrockAgentRuntime
       :source)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # Details about an image in the result from a function in the action
+    # group invocation. You can specify images only when the function is a
+    # computer use action. For more information, see [Configure an Amazon
+    # Bedrock Agent to complete tasks with computer use tools][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html
+    #
+    # @!attribute [rw] format
+    #   The type of image in the result.
+    #   @return [String]
+    #
+    # @!attribute [rw] source
+    #   The source of the image in the result.
+    #   @return [Types::ImageInputSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ImageInput AWS API Documentation
+    #
+    class ImageInput < Struct.new(
+      :format,
+      :source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Details about the source of an input image in the result from a
+    # function in the action group invocation.
+    #
+    # @note ImageInputSource is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note ImageInputSource is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of ImageInputSource corresponding to the set member.
+    #
+    # @!attribute [rw] bytes
+    #   The raw image bytes for the image. If you use an Amazon Web Services
+    #   SDK, you don't need to encode the image bytes in base64.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ImageInputSource AWS API Documentation
+    #
+    class ImageInputSource < Struct.new(
+      :bytes,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Bytes < ImageInputSource; end
+      class Unknown < ImageInputSource; end
     end
 
     # The source for an image.
@@ -5819,9 +5921,12 @@ module Aws::BedrockAgentRuntime
     #   @return [Types::FilterAttribute]
     #
     # @!attribute [rw] not_equals
-    #   Knowledge base data sources that contain a metadata attribute whose
-    #   name matches the `key` and whose value doesn't match the `value` in
-    #   this object are returned.
+    #   Knowledge base data sources are returned when:
+    #
+    #   * It contains a metadata attribute whose name matches the `key` and
+    #     whose value doesn't match the `value` in this object.
+    #
+    #   * The key is not present in the document.
     #
     #   The following example would return data sources that don't contain
     #   an `animal` attribute whose value is `cat`.
@@ -6210,8 +6315,10 @@ module Aws::BedrockAgentRuntime
     #   The type of resource that contains your data for retrieving
     #   information and generating responses.
     #
-    #   If you choose to use `EXTERNAL_SOURCES`, then currently only
+    #   <note markdown="1"> If you choose to use `EXTERNAL_SOURCES`, then currently only
     #   Anthropic Claude 3 Sonnet models for knowledge bases are supported.
+    #
+    #    </note>
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrieveAndGenerateConfiguration AWS API Documentation
@@ -6775,14 +6882,20 @@ module Aws::BedrockAgentRuntime
     #
     # @!attribute [rw] prompt_session_attributes
     #   Contains attributes that persist across a prompt and the values of
-    #   those attributes. These attributes replace the
-    #   $prompt\_session\_attributes$ placeholder variable in the
-    #   orchestration prompt template. For more information, see [Prompt
-    #   template placeholder variables][1].
+    #   those attributes.
+    #
+    #   * In orchestration prompt template, these attributes replace the
+    #     $prompt\_session\_attributes$ placeholder variable. For more
+    #     information, see [Prompt template placeholder variables][1].
+    #
+    #   * In [multi-agent collaboration][2], the `promptSessionAttributes`
+    #     will only be used by supervisor agent when
+    #     $prompt\_session\_attributes$ is present in prompt template.
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-placeholders.html
+    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-multi-agent-collaboration.html
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] return_control_invocation_results
@@ -6802,7 +6915,13 @@ module Aws::BedrockAgentRuntime
     #
     # @!attribute [rw] session_attributes
     #   Contains attributes that persist across a session and the values of
-    #   those attributes.
+    #   those attributes. If `sessionAttributes` are passed to a supervisor
+    #   agent in [multi-agent collaboration][1], it will be forwarded to all
+    #   agent collaborators.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-multi-agent-collaboration.html
     #   @return [Hash<String,String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/SessionState AWS API Documentation

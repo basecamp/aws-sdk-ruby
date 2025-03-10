@@ -873,6 +873,7 @@ module Aws::Connect
       attr_accessor name: ::String
       attr_accessor description: ::String
       attr_accessor segment_attributes: ::Hash[::String, Types::SegmentAttributeValue]
+      attr_accessor previous_contact_id: ::String
       SENSITIVE: [:name, :description]
     end
 

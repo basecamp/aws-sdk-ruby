@@ -491,7 +491,8 @@ module Aws::PcaConnectorAd
     #   Metadata assigned to a connector consisting of a key-value pair.
     #
     # @option params [required, Types::VpcInformation] :vpc_information
-    #   Security group IDs that describe the inbound and outbound rules.
+    #   Information about your VPC and security groups used with the
+    #   connector.
     #
     # @return [Types::CreateConnectorResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -507,6 +508,7 @@ module Aws::PcaConnectorAd
     #       "String" => "String",
     #     },
     #     vpc_information: { # required
+    #       ip_address_type: "IPV4", # accepts IPV4, DUALSTACK
     #       security_group_ids: ["SecurityGroupId"], # required
     #     },
     #   })
@@ -1145,8 +1147,9 @@ module Aws::PcaConnectorAd
     #   resp.connector.created_at #=> Time
     #   resp.connector.directory_id #=> String
     #   resp.connector.status #=> String, one of "CREATING", "ACTIVE", "DELETING", "FAILED"
-    #   resp.connector.status_reason #=> String, one of "DIRECTORY_ACCESS_DENIED", "INTERNAL_FAILURE", "PRIVATECA_ACCESS_DENIED", "PRIVATECA_RESOURCE_NOT_FOUND", "SECURITY_GROUP_NOT_IN_VPC", "VPC_ACCESS_DENIED", "VPC_ENDPOINT_LIMIT_EXCEEDED", "VPC_RESOURCE_NOT_FOUND"
+    #   resp.connector.status_reason #=> String, one of "CA_CERTIFICATE_REGISTRATION_FAILED", "DIRECTORY_ACCESS_DENIED", "INTERNAL_FAILURE", "INSUFFICIENT_FREE_ADDRESSES", "INVALID_SUBNET_IP_PROTOCOL", "PRIVATECA_ACCESS_DENIED", "PRIVATECA_RESOURCE_NOT_FOUND", "SECURITY_GROUP_NOT_IN_VPC", "VPC_ACCESS_DENIED", "VPC_ENDPOINT_LIMIT_EXCEEDED", "VPC_RESOURCE_NOT_FOUND"
     #   resp.connector.updated_at #=> Time
+    #   resp.connector.vpc_information.ip_address_type #=> String, one of "IPV4", "DUALSTACK"
     #   resp.connector.vpc_information.security_group_ids #=> Array
     #   resp.connector.vpc_information.security_group_ids[0] #=> String
     #
@@ -1234,7 +1237,7 @@ module Aws::PcaConnectorAd
     #   resp.service_principal_name.created_at #=> Time
     #   resp.service_principal_name.directory_registration_arn #=> String
     #   resp.service_principal_name.status #=> String, one of "CREATING", "ACTIVE", "DELETING", "FAILED"
-    #   resp.service_principal_name.status_reason #=> String, one of "DIRECTORY_ACCESS_DENIED", "DIRECTORY_NOT_REACHABLE", "DIRECTORY_RESOURCE_NOT_FOUND", "SPN_EXISTS_ON_DIFFERENT_AD_OBJECT", "INTERNAL_FAILURE"
+    #   resp.service_principal_name.status_reason #=> String, one of "DIRECTORY_ACCESS_DENIED", "DIRECTORY_NOT_REACHABLE", "DIRECTORY_RESOURCE_NOT_FOUND", "SPN_EXISTS_ON_DIFFERENT_AD_OBJECT", "SPN_LIMIT_EXCEEDED", "INTERNAL_FAILURE"
     #   resp.service_principal_name.updated_at #=> Time
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/pca-connector-ad-2018-05-10/GetServicePrincipalName AWS API Documentation
@@ -1513,8 +1516,9 @@ module Aws::PcaConnectorAd
     #   resp.connectors[0].created_at #=> Time
     #   resp.connectors[0].directory_id #=> String
     #   resp.connectors[0].status #=> String, one of "CREATING", "ACTIVE", "DELETING", "FAILED"
-    #   resp.connectors[0].status_reason #=> String, one of "DIRECTORY_ACCESS_DENIED", "INTERNAL_FAILURE", "PRIVATECA_ACCESS_DENIED", "PRIVATECA_RESOURCE_NOT_FOUND", "SECURITY_GROUP_NOT_IN_VPC", "VPC_ACCESS_DENIED", "VPC_ENDPOINT_LIMIT_EXCEEDED", "VPC_RESOURCE_NOT_FOUND"
+    #   resp.connectors[0].status_reason #=> String, one of "CA_CERTIFICATE_REGISTRATION_FAILED", "DIRECTORY_ACCESS_DENIED", "INTERNAL_FAILURE", "INSUFFICIENT_FREE_ADDRESSES", "INVALID_SUBNET_IP_PROTOCOL", "PRIVATECA_ACCESS_DENIED", "PRIVATECA_RESOURCE_NOT_FOUND", "SECURITY_GROUP_NOT_IN_VPC", "VPC_ACCESS_DENIED", "VPC_ENDPOINT_LIMIT_EXCEEDED", "VPC_RESOURCE_NOT_FOUND"
     #   resp.connectors[0].updated_at #=> Time
+    #   resp.connectors[0].vpc_information.ip_address_type #=> String, one of "IPV4", "DUALSTACK"
     #   resp.connectors[0].vpc_information.security_group_ids #=> Array
     #   resp.connectors[0].vpc_information.security_group_ids[0] #=> String
     #   resp.next_token #=> String
@@ -1630,7 +1634,7 @@ module Aws::PcaConnectorAd
     #   resp.service_principal_names[0].created_at #=> Time
     #   resp.service_principal_names[0].directory_registration_arn #=> String
     #   resp.service_principal_names[0].status #=> String, one of "CREATING", "ACTIVE", "DELETING", "FAILED"
-    #   resp.service_principal_names[0].status_reason #=> String, one of "DIRECTORY_ACCESS_DENIED", "DIRECTORY_NOT_REACHABLE", "DIRECTORY_RESOURCE_NOT_FOUND", "SPN_EXISTS_ON_DIFFERENT_AD_OBJECT", "INTERNAL_FAILURE"
+    #   resp.service_principal_names[0].status_reason #=> String, one of "DIRECTORY_ACCESS_DENIED", "DIRECTORY_NOT_REACHABLE", "DIRECTORY_RESOURCE_NOT_FOUND", "SPN_EXISTS_ON_DIFFERENT_AD_OBJECT", "SPN_LIMIT_EXCEEDED", "INTERNAL_FAILURE"
     #   resp.service_principal_names[0].updated_at #=> Time
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/pca-connector-ad-2018-05-10/ListServicePrincipalNames AWS API Documentation
@@ -2323,7 +2327,7 @@ module Aws::PcaConnectorAd
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-pcaconnectorad'
-      context[:gem_version] = '1.20.0'
+      context[:gem_version] = '1.21.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

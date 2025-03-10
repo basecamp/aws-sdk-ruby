@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.130.0 (2025-03-10)
+------------------
+
+* Feature - This release adds new StandardsControlsUpdatable field to the StandardsSubscription resource
+
 1.129.0 (2025-02-18)
 ------------------
 

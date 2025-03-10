@@ -491,15 +491,14 @@ module Aws::TimestreamInfluxDB
     #   hyphens. For example, my-user1. This username will allow you to access
     #   the InfluxDB UI to perform various administrative tasks and also use
     #   the InfluxDB CLI to create an operator token. These attributes will be
-    #   stored in a secret created in Amazon Web Services Secrets Manager in
-    #   your account.
+    #   stored in a secret created in Secrets Manager in your account.
     #
     # @option params [required, String] :password
     #   The password of the initial admin user created in InfluxDB. This
     #   password will allow you to access the InfluxDB UI to perform various
     #   administrative tasks and also use the InfluxDB CLI to create an
     #   operator token. These attributes will be stored in a secret created in
-    #   Amazon Web Services Secrets Manager in your account.
+    #   Secrets Manager in your account.
     #
     # @option params [String] :organization
     #   The name of the initial organization for the initial admin user in
@@ -649,7 +648,7 @@ module Aws::TimestreamInfluxDB
     #   password will allow you to access the InfluxDB UI to perform various
     #   administrative tasks and also use the InfluxDB CLI to create an
     #   operator token. These attributes will be stored in a Secret created in
-    #   Amazon Web Services SecretManager in your account.
+    #   Secrets Manager in your account.
     #
     # @option params [String] :organization
     #   The name of the initial organization for the initial admin user in
@@ -1758,7 +1757,7 @@ module Aws::TimestreamInfluxDB
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-timestreaminfluxdb'
-      context[:gem_version] = '1.21.0'
+      context[:gem_version] = '1.22.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

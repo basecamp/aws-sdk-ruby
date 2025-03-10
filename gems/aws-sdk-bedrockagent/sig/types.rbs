@@ -89,7 +89,8 @@ module Aws::BedrockAgent
       attr_accessor created_at: ::Time
       attr_accessor description: ::String
       attr_accessor function_schema: Types::FunctionSchema
-      attr_accessor parent_action_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter")
+      attr_accessor parent_action_group_signature_params: ::Hash[::String, ::String]
+      attr_accessor parent_action_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter" | "ANTHROPIC.Computer" | "ANTHROPIC.Bash" | "ANTHROPIC.TextEditor")
       attr_accessor updated_at: ::Time
       SENSITIVE: []
     end
@@ -390,7 +391,8 @@ module Aws::BedrockAgent
       attr_accessor client_token: ::String
       attr_accessor description: ::String
       attr_accessor function_schema: Types::FunctionSchema
-      attr_accessor parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter")
+      attr_accessor parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter" | "ANTHROPIC.Computer" | "ANTHROPIC.Bash" | "ANTHROPIC.TextEditor")
+      attr_accessor parent_action_group_signature_params: ::Hash[::String, ::String]
       SENSITIVE: []
     end
 
@@ -2561,7 +2563,8 @@ module Aws::BedrockAgent
       attr_accessor api_schema: Types::APISchema
       attr_accessor description: ::String
       attr_accessor function_schema: Types::FunctionSchema
-      attr_accessor parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter")
+      attr_accessor parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter" | "ANTHROPIC.Computer" | "ANTHROPIC.Bash" | "ANTHROPIC.TextEditor")
+      attr_accessor parent_action_group_signature_params: ::Hash[::String, ::String]
       SENSITIVE: []
     end
 

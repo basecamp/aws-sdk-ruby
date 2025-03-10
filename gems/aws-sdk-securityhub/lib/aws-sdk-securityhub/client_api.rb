@@ -1101,6 +1101,7 @@ module Aws::SecurityHub
     StandardsControlAssociationUpdate = Shapes::StructureShape.new(name: 'StandardsControlAssociationUpdate')
     StandardsControlAssociationUpdates = Shapes::ListShape.new(name: 'StandardsControlAssociationUpdates')
     StandardsControls = Shapes::ListShape.new(name: 'StandardsControls')
+    StandardsControlsUpdatable = Shapes::StringShape.new(name: 'StandardsControlsUpdatable')
     StandardsInputParameterMap = Shapes::MapShape.new(name: 'StandardsInputParameterMap')
     StandardsManagedBy = Shapes::StructureShape.new(name: 'StandardsManagedBy')
     StandardsStatus = Shapes::StringShape.new(name: 'StandardsStatus')
@@ -6704,6 +6705,7 @@ module Aws::SecurityHub
     StandardsSubscription.add_member(:standards_arn, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location_name: "StandardsArn"))
     StandardsSubscription.add_member(:standards_input, Shapes::ShapeRef.new(shape: StandardsInputParameterMap, required: true, location_name: "StandardsInput"))
     StandardsSubscription.add_member(:standards_status, Shapes::ShapeRef.new(shape: StandardsStatus, required: true, location_name: "StandardsStatus"))
+    StandardsSubscription.add_member(:standards_controls_updatable, Shapes::ShapeRef.new(shape: StandardsControlsUpdatable, location_name: "StandardsControlsUpdatable"))
     StandardsSubscription.add_member(:standards_status_reason, Shapes::ShapeRef.new(shape: StandardsStatusReason, location_name: "StandardsStatusReason"))
     StandardsSubscription.struct_class = Types::StandardsSubscription
 

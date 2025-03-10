@@ -433,7 +433,8 @@ module Aws
                                 value_string: ::String?,
                                 value_map: Hash[::String, untyped]?,
                                 value_integer: ::Integer?
-                              }]
+                              }],
+                            ?previous_contact_id: ::String
                           ) -> _CreateContactResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateContactResponseSuccess
 

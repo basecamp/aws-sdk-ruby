@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.21.0 (2025-03-10)
+------------------
+
+* Feature - PrivateCA Connector for Active Directory now supports dual stack endpoints. This release adds the IpAddressType option to the VpcInformation on a Connector which determines whether the endpoint supports IPv4 only or IPv4 and IPv6 traffic.
+
 1.20.0 (2025-02-18)
 ------------------
 

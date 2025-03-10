@@ -1053,6 +1053,7 @@ module Aws::MediaLive
     __integerMin1Max51 = Shapes::IntegerShape.new(name: '__integerMin1Max51')
     __integerMin1Max6 = Shapes::IntegerShape.new(name: '__integerMin1Max6')
     __integerMin1Max8 = Shapes::IntegerShape.new(name: '__integerMin1Max8')
+    __integerMin1Max800 = Shapes::IntegerShape.new(name: '__integerMin1Max800')
     __integerMin256Max3840 = Shapes::IntegerShape.new(name: '__integerMin256Max3840')
     __integerMin25Max10000 = Shapes::IntegerShape.new(name: '__integerMin25Max10000')
     __integerMin25Max2000 = Shapes::IntegerShape.new(name: '__integerMin25Max2000')
@@ -1065,6 +1066,7 @@ module Aws::MediaLive
     __integerMin50000Max8000000 = Shapes::IntegerShape.new(name: '__integerMin50000Max8000000')
     __integerMin64Max2160 = Shapes::IntegerShape.new(name: '__integerMin64Max2160')
     __integerMin800Max3000 = Shapes::IntegerShape.new(name: '__integerMin800Max3000')
+    __integerMin80Max800 = Shapes::IntegerShape.new(name: '__integerMin80Max800')
     __integerMin96Max600 = Shapes::IntegerShape.new(name: '__integerMin96Max600')
     __integerMinNegative1000Max1000 = Shapes::IntegerShape.new(name: '__integerMinNegative1000Max1000')
     __integerMinNegative5Max5 = Shapes::IntegerShape.new(name: '__integerMinNegative5Max5')
@@ -2731,6 +2733,8 @@ module Aws::MediaLive
     EbuTtDDestinationSettings.add_member(:fill_line_gap, Shapes::ShapeRef.new(shape: EbuTtDFillLineGapControl, location_name: "fillLineGap"))
     EbuTtDDestinationSettings.add_member(:font_family, Shapes::ShapeRef.new(shape: __string, location_name: "fontFamily"))
     EbuTtDDestinationSettings.add_member(:style_control, Shapes::ShapeRef.new(shape: EbuTtDDestinationStyleControl, location_name: "styleControl"))
+    EbuTtDDestinationSettings.add_member(:default_font_size, Shapes::ShapeRef.new(shape: __integerMin1Max800, location_name: "defaultFontSize"))
+    EbuTtDDestinationSettings.add_member(:default_line_height, Shapes::ShapeRef.new(shape: __integerMin80Max800, location_name: "defaultLineHeight"))
     EbuTtDDestinationSettings.struct_class = Types::EbuTtDDestinationSettings
 
     EmbeddedDestinationSettings.struct_class = Types::EmbeddedDestinationSettings

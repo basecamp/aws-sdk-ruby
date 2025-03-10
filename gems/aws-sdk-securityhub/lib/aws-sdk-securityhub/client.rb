@@ -692,7 +692,8 @@ module Aws::SecurityHub
     #   resp.standards_subscriptions[0].standards_input #=> Hash
     #   resp.standards_subscriptions[0].standards_input["NonEmptyString"] #=> String
     #   resp.standards_subscriptions[0].standards_status #=> String, one of "PENDING", "READY", "FAILED", "DELETING", "INCOMPLETE"
-    #   resp.standards_subscriptions[0].standards_status_reason.status_reason_code #=> String, one of "NO_AVAILABLE_CONFIGURATION_RECORDER", "INTERNAL_ERROR"
+    #   resp.standards_subscriptions[0].standards_controls_updatable #=> String, one of "READY_FOR_UPDATES", "NOT_READY_FOR_UPDATES"
+    #   resp.standards_subscriptions[0].standards_status_reason.status_reason_code #=> String, one of "NO_AVAILABLE_CONFIGURATION_RECORDER", "MAXIMUM_NUMBER_OF_CONFIG_RULES_EXCEEDED", "INTERNAL_ERROR"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/BatchDisableStandards AWS API Documentation
     #
@@ -768,7 +769,8 @@ module Aws::SecurityHub
     #   resp.standards_subscriptions[0].standards_input #=> Hash
     #   resp.standards_subscriptions[0].standards_input["NonEmptyString"] #=> String
     #   resp.standards_subscriptions[0].standards_status #=> String, one of "PENDING", "READY", "FAILED", "DELETING", "INCOMPLETE"
-    #   resp.standards_subscriptions[0].standards_status_reason.status_reason_code #=> String, one of "NO_AVAILABLE_CONFIGURATION_RECORDER", "INTERNAL_ERROR"
+    #   resp.standards_subscriptions[0].standards_controls_updatable #=> String, one of "READY_FOR_UPDATES", "NOT_READY_FOR_UPDATES"
+    #   resp.standards_subscriptions[0].standards_status_reason.status_reason_code #=> String, one of "NO_AVAILABLE_CONFIGURATION_RECORDER", "MAXIMUM_NUMBER_OF_CONFIG_RULES_EXCEEDED", "INTERNAL_ERROR"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/BatchEnableStandards AWS API Documentation
     #
@@ -1285,6 +1287,10 @@ module Aws::SecurityHub
 
     # For a batch of security controls and standards, identifies whether
     # each control is currently enabled or disabled in a standard.
+    #
+    # Calls to this operation return a `RESOURCE_NOT_FOUND_EXCEPTION` error
+    # when the standard subscription for the association has a
+    # `NOT_READY_FOR_UPDATES` value for `StandardsControlsUpdatable`.
     #
     # @option params [required, Array<Types::StandardsControlAssociationId>] :standards_control_association_ids
     #   An array with one or more objects that includes a security control
@@ -2121,6 +2127,10 @@ module Aws::SecurityHub
     # @option params [required, Array<Types::StandardsControlAssociationUpdate>] :standards_control_association_updates
     #   Updates the enablement status of a security control in a specified
     #   standard.
+    #
+    #   Calls to this operation return a `RESOURCE_NOT_FOUND_EXCEPTION` error
+    #   when the standard subscription for the control has
+    #   `StandardsControlsUpdatable` value `NOT_READY_FOR_UPDATES`.
     #
     # @return [Types::BatchUpdateStandardsControlAssociationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -4602,6 +4612,9 @@ module Aws::SecurityHub
     # currently enabled, the severity, and a link to remediation
     # information.
     #
+    # This operation returns an empty list for standard subscriptions where
+    # `StandardsControlsUpdatable` has value `NOT_READY_FOR_UPDATES`.
+    #
     # @option params [required, String] :standards_subscription_arn
     #   The ARN of a resource that represents your subscription to a supported
     #   standard. To get the subscription ARNs of the standards you have
@@ -5367,7 +5380,8 @@ module Aws::SecurityHub
     #   resp.standards_subscriptions[0].standards_input #=> Hash
     #   resp.standards_subscriptions[0].standards_input["NonEmptyString"] #=> String
     #   resp.standards_subscriptions[0].standards_status #=> String, one of "PENDING", "READY", "FAILED", "DELETING", "INCOMPLETE"
-    #   resp.standards_subscriptions[0].standards_status_reason.status_reason_code #=> String, one of "NO_AVAILABLE_CONFIGURATION_RECORDER", "INTERNAL_ERROR"
+    #   resp.standards_subscriptions[0].standards_controls_updatable #=> String, one of "READY_FOR_UPDATES", "NOT_READY_FOR_UPDATES"
+    #   resp.standards_subscriptions[0].standards_status_reason.status_reason_code #=> String, one of "NO_AVAILABLE_CONFIGURATION_RECORDER", "MAXIMUM_NUMBER_OF_CONFIG_RULES_EXCEEDED", "INTERNAL_ERROR"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/GetEnabledStandards AWS API Documentation
@@ -8069,6 +8083,10 @@ module Aws::SecurityHub
     # Specifies whether a control is currently enabled or disabled in each
     # enabled standard in the calling account.
     #
+    # This operation omits standards control associations for standard
+    # subscriptions where `StandardsControlsUpdatable` has value
+    # `NOT_READY_FOR_UPDATES`.
+    #
     # @option params [required, String] :security_control_id
     #   The identifier of the control (identified with `SecurityControlId`,
     #   `SecurityControlArn`, or a mix of both parameters) that you want to
@@ -10495,6 +10513,10 @@ module Aws::SecurityHub
     # Used to control whether an individual security standard control is
     # enabled or disabled.
     #
+    # Calls to this operation return a `RESOURCE_NOT_FOUND_EXCEPTION` error
+    # when the standard subscription for the control has
+    # `StandardsControlsUpdatable` value `NOT_READY_FOR_UPDATES`.
+    #
     # @option params [required, String] :standards_control_arn
     #   The ARN of the security standard control to enable or disable.
     #
@@ -10553,7 +10575,7 @@ module Aws::SecurityHub
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-securityhub'
-      context[:gem_version] = '1.129.0'
+      context[:gem_version] = '1.130.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.147.0 (2025-03-10)
+------------------
+
+* Feature - Adds defaultFontSize and defaultLineHeight as options in the EbuTtDDestinationSettings within the caption descriptions for an output stream.
+
 1.146.0 (2025-02-18)
 ------------------
 

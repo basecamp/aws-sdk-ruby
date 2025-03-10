@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.122.0 (2025-03-10)
+------------------
+
+* Feature - Releasing minor partition endpoint updates.
+
 1.121.0 (2025-02-18)
 ------------------
 

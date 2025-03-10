@@ -376,6 +376,19 @@ module Aws::BedrockAgent
     #   action group.
     #   @return [Types::FunctionSchema]
     #
+    # @!attribute [rw] parent_action_group_signature_params
+    #   The configuration settings for a computer use action.
+    #
+    #   Computer use is a new Anthropic Claude model capability (in beta)
+    #   available with Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. For
+    #   more information, see [Configure an Amazon Bedrock Agent to complete
+    #   tasks with computer use tools][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html
+    #   @return [Hash<String,String>]
+    #
     # @!attribute [rw] parent_action_signature
     #   If this field is set as `AMAZON.UserInput`, the agent can request
     #   the user for additional information when trying to complete a task.
@@ -411,6 +424,7 @@ module Aws::BedrockAgent
       :created_at,
       :description,
       :function_schema,
+      :parent_action_group_signature_params,
       :parent_action_signature,
       :updated_at)
       SENSITIVE = []
@@ -1725,27 +1739,56 @@ module Aws::BedrockAgent
     #   @return [Types::FunctionSchema]
     #
     # @!attribute [rw] parent_action_group_signature
-    #   To allow your agent to request the user for additional information
-    #   when trying to complete a task, set this field to
-    #   `AMAZON.UserInput`. You must leave the `description`, `apiSchema`,
-    #   and `actionGroupExecutor` fields blank for this action group.
+    #   Specify a built-in or computer use action for this action group. If
+    #   you specify a value, you must leave the `description`, `apiSchema`,
+    #   and `actionGroupExecutor` fields empty for this action group.
     #
-    #   To allow your agent to generate, run, and troubleshoot code when
-    #   trying to complete a task, set this field to
-    #   `AMAZON.CodeInterpreter`. You must leave the `description`,
-    #   `apiSchema`, and `actionGroupExecutor` fields blank for this action
-    #   group.
+    #   * To allow your agent to request the user for additional information
+    #     when trying to complete a task, set this field to
+    #     `AMAZON.UserInput`.
     #
-    #   During orchestration, if your agent determines that it needs to
-    #   invoke an API in an action group, but doesn't have enough
-    #   information to complete the API request, it will invoke this action
-    #   group instead and return an [Observation][1] reprompting the user
-    #   for more information.
+    #   * To allow your agent to generate, run, and troubleshoot code when
+    #     trying to complete a task, set this field to
+    #     `AMAZON.CodeInterpreter`.
+    #
+    #   * To allow your agent to use an Anthropic computer use tool, specify
+    #     one of the following values.
+    #
+    #     Computer use is a new Anthropic Claude model capability (in beta)
+    #     available with Anthropic Claude 3.7 Sonnet and Claude 3.5 Sonnet
+    #     v2 only. When operating computer use functionality, we recommend
+    #     taking additional security precautions, such as executing computer
+    #     actions in virtual environments with restricted data access and
+    #     limited internet connectivity. For more information, see
+    #     [Configure an Amazon Bedrock Agent to complete tasks with computer
+    #     use tools][1].
+    #
+    #     * `ANTHROPIC.Computer` - Gives the agent permission to use the
+    #       mouse and keyboard and take screenshots.
+    #
+    #     * `ANTHROPIC.TextEditor` - Gives the agent permission to view,
+    #       create and edit files.
+    #
+    #     * `ANTHROPIC.Bash` - Gives the agent permission to run commands in
+    #       a bash shell.
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Observation.html
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html
     #   @return [String]
+    #
+    # @!attribute [rw] parent_action_group_signature_params
+    #   The configuration settings for a computer use action.
+    #
+    #   Computer use is a new Anthropic Claude model capability (in beta)
+    #   available with Anthropic Claude 3.7 Sonnet and Claude 3.5 Sonnet v2
+    #   only. For more information, see [Configure an Amazon Bedrock Agent
+    #   to complete tasks with computer use tools][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html
+    #   @return [Hash<String,String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/CreateAgentActionGroupRequest AWS API Documentation
     #
@@ -1759,7 +1802,8 @@ module Aws::BedrockAgent
       :client_token,
       :description,
       :function_schema,
-      :parent_action_group_signature)
+      :parent_action_group_signature,
+      :parent_action_group_signature_params)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7651,7 +7695,7 @@ module Aws::BedrockAgent
     #   Specifies whether to override the default parser Lambda function
     #   when parsing the raw foundation model output in the part of the
     #   agent sequence defined by the `promptType`. If you set the field as
-    #   `OVERRIDEN`, the `overrideLambda` field in the
+    #   `OVERRIDDEN`, the `overrideLambda` field in the
     #   [PromptOverrideConfiguration][1] must be specified with the ARN of a
     #   Lambda function.
     #
@@ -9869,21 +9913,63 @@ module Aws::BedrockAgent
     #   @return [Types::FunctionSchema]
     #
     # @!attribute [rw] parent_action_group_signature
-    #   To allow your agent to request the user for additional information
-    #   when trying to complete a task, set this field to
-    #   `AMAZON.UserInput`. You must leave the `description`, `apiSchema`,
-    #   and `actionGroupExecutor` fields blank for this action group.
+    #   Update the built-in or computer use action for this action group. If
+    #   you specify a value, you must leave the `description`, `apiSchema`,
+    #   and `actionGroupExecutor` fields empty for this action group.
+    #
+    #   * To allow your agent to request the user for additional information
+    #     when trying to complete a task, set this field to
+    #     `AMAZON.UserInput`.
+    #
+    #   * To allow your agent to generate, run, and troubleshoot code when
+    #     trying to complete a task, set this field to
+    #     `AMAZON.CodeInterpreter`.
+    #
+    #   * To allow your agent to use an Anthropic computer use tool, specify
+    #     one of the following values.
+    #
+    #     Computer use is a new Anthropic Claude model capability (in beta)
+    #     available with Anthropic Claude 3.7 Sonnet and Claude 3.5 Sonnet
+    #     v2 only. When operating computer use functionality, we recommend
+    #     taking additional security precautions, such as executing computer
+    #     actions in virtual environments with restricted data access and
+    #     limited internet connectivity. For more information, see
+    #     [Configure an Amazon Bedrock Agent to complete tasks with computer
+    #     use tools][1].
+    #
+    #     * `ANTHROPIC.Computer` - Gives the agent permission to use the
+    #       mouse and keyboard and take screenshots.
+    #
+    #     * `ANTHROPIC.TextEditor` - Gives the agent permission to view,
+    #       create and edit files.
+    #
+    #     * `ANTHROPIC.Bash` - Gives the agent permission to run commands in
+    #       a bash shell.
     #
     #   During orchestration, if your agent determines that it needs to
     #   invoke an API in an action group, but doesn't have enough
     #   information to complete the API request, it will invoke this action
-    #   group instead and return an [Observation][1] reprompting the user
+    #   group instead and return an [Observation][2] reprompting the user
     #   for more information.
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Observation.html
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html
+    #   [2]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Observation.html
     #   @return [String]
+    #
+    # @!attribute [rw] parent_action_group_signature_params
+    #   The configuration settings for a computer use action.
+    #
+    #   Computer use is a new Anthropic Claude model capability (in beta)
+    #   available with Claude 3.7 and Claude 3.5 Sonnet v2 only. For more
+    #   information, see [Configure an Amazon Bedrock Agent to complete
+    #   tasks with computer use tools][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html
+    #   @return [Hash<String,String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/UpdateAgentActionGroupRequest AWS API Documentation
     #
@@ -9897,7 +9983,8 @@ module Aws::BedrockAgent
       :api_schema,
       :description,
       :function_schema,
-      :parent_action_group_signature)
+      :parent_action_group_signature,
+      :parent_action_group_signature_params)
       SENSITIVE = []
       include Aws::Structure
     end

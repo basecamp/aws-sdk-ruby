@@ -204,7 +204,8 @@ module Aws
                                            },
                                          ]?
                                        },
-                                       ?parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter")
+                                       ?parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter" | "ANTHROPIC.Computer" | "ANTHROPIC.Bash" | "ANTHROPIC.TextEditor"),
+                                       ?parent_action_group_signature_params: Hash[::String, ::String]
                                      ) -> _CreateAgentActionGroupResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAgentActionGroupResponseSuccess
 
@@ -1758,7 +1759,8 @@ module Aws
                                            },
                                          ]?
                                        },
-                                       ?parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter")
+                                       ?parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter" | "ANTHROPIC.Computer" | "ANTHROPIC.Bash" | "ANTHROPIC.TextEditor"),
+                                       ?parent_action_group_signature_params: Hash[::String, ::String]
                                      ) -> _UpdateAgentActionGroupResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateAgentActionGroupResponseSuccess
 

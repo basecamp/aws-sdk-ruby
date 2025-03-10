@@ -1241,6 +1241,8 @@ module Aws::MediaLive
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.fill_line_gap #=> String, one of "DISABLED", "ENABLED"
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.font_family #=> String
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.style_control #=> String, one of "EXCLUDE", "INCLUDE"
+    #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_font_size #=> Integer
+    #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_line_height #=> Integer
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ttml_destination_settings.style_control #=> String, one of "PASSTHROUGH", "USE_CONFIGURED"
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_control #=> String, one of "NO_STYLE_DATA", "PASSTHROUGH"
     #   resp.channel.encoder_settings.caption_descriptions[0].language_code #=> String
@@ -2567,6 +2569,8 @@ module Aws::MediaLive
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.fill_line_gap #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.font_family #=> String
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.style_control #=> String, one of "EXCLUDE", "INCLUDE"
+    #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_font_size #=> Integer
+    #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_line_height #=> Integer
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ttml_destination_settings.style_control #=> String, one of "PASSTHROUGH", "USE_CONFIGURED"
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_control #=> String, one of "NO_STYLE_DATA", "PASSTHROUGH"
     #   resp.encoder_settings.caption_descriptions[0].language_code #=> String
@@ -3710,6 +3714,8 @@ module Aws::MediaLive
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.fill_line_gap #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.font_family #=> String
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.style_control #=> String, one of "EXCLUDE", "INCLUDE"
+    #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_font_size #=> Integer
+    #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_line_height #=> Integer
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ttml_destination_settings.style_control #=> String, one of "PASSTHROUGH", "USE_CONFIGURED"
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_control #=> String, one of "NO_STYLE_DATA", "PASSTHROUGH"
     #   resp.encoder_settings.caption_descriptions[0].language_code #=> String
@@ -6042,6 +6048,8 @@ module Aws::MediaLive
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.fill_line_gap #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.font_family #=> String
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.style_control #=> String, one of "EXCLUDE", "INCLUDE"
+    #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_font_size #=> Integer
+    #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_line_height #=> Integer
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ttml_destination_settings.style_control #=> String, one of "PASSTHROUGH", "USE_CONFIGURED"
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_control #=> String, one of "NO_STYLE_DATA", "PASSTHROUGH"
     #   resp.encoder_settings.caption_descriptions[0].language_code #=> String
@@ -6992,6 +7000,8 @@ module Aws::MediaLive
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.fill_line_gap #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.font_family #=> String
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.style_control #=> String, one of "EXCLUDE", "INCLUDE"
+    #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_font_size #=> Integer
+    #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_line_height #=> Integer
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ttml_destination_settings.style_control #=> String, one of "PASSTHROUGH", "USE_CONFIGURED"
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_control #=> String, one of "NO_STYLE_DATA", "PASSTHROUGH"
     #   resp.encoder_settings.caption_descriptions[0].language_code #=> String
@@ -7972,6 +7982,8 @@ module Aws::MediaLive
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.fill_line_gap #=> String, one of "DISABLED", "ENABLED"
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.font_family #=> String
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.style_control #=> String, one of "EXCLUDE", "INCLUDE"
+    #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_font_size #=> Integer
+    #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_line_height #=> Integer
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ttml_destination_settings.style_control #=> String, one of "PASSTHROUGH", "USE_CONFIGURED"
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_control #=> String, one of "NO_STYLE_DATA", "PASSTHROUGH"
     #   resp.channel.encoder_settings.caption_descriptions[0].language_code #=> String
@@ -8837,6 +8849,8 @@ module Aws::MediaLive
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.fill_line_gap #=> String, one of "DISABLED", "ENABLED"
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.font_family #=> String
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.style_control #=> String, one of "EXCLUDE", "INCLUDE"
+    #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_font_size #=> Integer
+    #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_line_height #=> Integer
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.ttml_destination_settings.style_control #=> String, one of "PASSTHROUGH", "USE_CONFIGURED"
     #   resp.channel.encoder_settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_control #=> String, one of "NO_STYLE_DATA", "PASSTHROUGH"
     #   resp.channel.encoder_settings.caption_descriptions[0].language_code #=> String
@@ -10245,6 +10259,8 @@ module Aws::MediaLive
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.fill_line_gap #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.font_family #=> String
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.style_control #=> String, one of "EXCLUDE", "INCLUDE"
+    #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_font_size #=> Integer
+    #   resp.encoder_settings.caption_descriptions[0].destination_settings.ebu_tt_d_destination_settings.default_line_height #=> Integer
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.ttml_destination_settings.style_control #=> String, one of "PASSTHROUGH", "USE_CONFIGURED"
     #   resp.encoder_settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_control #=> String, one of "NO_STYLE_DATA", "PASSTHROUGH"
     #   resp.encoder_settings.caption_descriptions[0].language_code #=> String
@@ -13791,7 +13807,7 @@ module Aws::MediaLive
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-medialive'
-      context[:gem_version] = '1.146.0'
+      context[:gem_version] = '1.147.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

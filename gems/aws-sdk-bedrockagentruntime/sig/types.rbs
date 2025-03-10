@@ -65,7 +65,8 @@ module Aws::BedrockAgentRuntime
       attr_accessor api_schema: Types::APISchema
       attr_accessor description: ::String
       attr_accessor function_schema: Types::FunctionSchema
-      attr_accessor parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter")
+      attr_accessor parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter" | "ANTHROPIC.Computer" | "ANTHROPIC.Bash" | "ANTHROPIC.TextEditor")
+      attr_accessor parent_action_group_signature_params: ::Hash[::String, ::String]
       SENSITIVE: [:action_group_name, :description]
     end
 
@@ -276,6 +277,7 @@ module Aws::BedrockAgentRuntime
 
     class ContentBody
       attr_accessor body: ::String
+      attr_accessor images: ::Array[Types::ImageInput]
       SENSITIVE: []
     end
 
@@ -789,6 +791,23 @@ module Aws::BedrockAgentRuntime
       attr_accessor format: ("png" | "jpeg" | "gif" | "webp")
       attr_accessor source: Types::ImageSource
       SENSITIVE: []
+    end
+
+    class ImageInput
+      attr_accessor format: ("png" | "jpeg" | "gif" | "webp")
+      attr_accessor source: Types::ImageInputSource
+      SENSITIVE: []
+    end
+
+    class ImageInputSource
+      attr_accessor bytes: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Bytes < ImageInputSource
+      end
+      class Unknown < ImageInputSource
+      end
     end
 
     class ImageSource

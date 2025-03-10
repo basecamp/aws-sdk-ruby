@@ -85,6 +85,7 @@ module Aws::PcaConnectorAd
     HashAlgorithm = Shapes::StringShape.new(name: 'HashAlgorithm')
     Integer = Shapes::IntegerShape.new(name: 'Integer')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
+    IpAddressType = Shapes::StringShape.new(name: 'IpAddressType')
     KeySpec = Shapes::StringShape.new(name: 'KeySpec')
     KeyUsage = Shapes::StructureShape.new(name: 'KeyUsage')
     KeyUsageFlags = Shapes::StructureShape.new(name: 'KeyUsageFlags')
@@ -674,6 +675,7 @@ module Aws::PcaConnectorAd
     ValidityPeriod.add_member(:period_type, Shapes::ShapeRef.new(shape: ValidityPeriodType, required: true, location_name: "PeriodType"))
     ValidityPeriod.struct_class = Types::ValidityPeriod
 
+    VpcInformation.add_member(:ip_address_type, Shapes::ShapeRef.new(shape: IpAddressType, location_name: "IpAddressType"))
     VpcInformation.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: SecurityGroupIdList, required: true, location_name: "SecurityGroupIds"))
     VpcInformation.struct_class = Types::VpcInformation
 
@@ -685,9 +687,11 @@ module Aws::PcaConnectorAd
 
       api.metadata = {
         "apiVersion" => "2018-05-10",
+        "auth" => ["aws.auth#sigv4"],
         "endpointPrefix" => "pca-connector-ad",
         "jsonVersion" => "1.1",
         "protocol" => "rest-json",
+        "protocols" => ["rest-json"],
         "serviceFullName" => "PcaConnectorAd",
         "serviceId" => "Pca Connector Ad",
         "signatureVersion" => "v4",

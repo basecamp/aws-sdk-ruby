@@ -1201,6 +1201,8 @@ module Aws::MediaLive
       attr_accessor fill_line_gap: ("DISABLED" | "ENABLED")
       attr_accessor font_family: ::String
       attr_accessor style_control: ("EXCLUDE" | "INCLUDE")
+      attr_accessor default_font_size: ::Integer
+      attr_accessor default_line_height: ::Integer
       SENSITIVE: []
     end
 

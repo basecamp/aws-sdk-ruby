@@ -21956,6 +21956,10 @@ module Aws::SecurityHub
     # @!attribute [rw] standards_control_association_updates
     #   Updates the enablement status of a security control in a specified
     #   standard.
+    #
+    #   Calls to this operation return a `RESOURCE_NOT_FOUND_EXCEPTION`
+    #   error when the standard subscription for the control has
+    #   `StandardsControlsUpdatable` value `NOT_READY_FOR_UPDATES`.
     #   @return [Array<Types::StandardsControlAssociationUpdate>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/BatchUpdateStandardsControlAssociationsRequest AWS API Documentation
@@ -29573,6 +29577,20 @@ module Aws::SecurityHub
     #   * `FAILED` - Standard could not be disabled.
     #   @return [String]
     #
+    # @!attribute [rw] standards_controls_updatable
+    #   Indicates whether the controls associated with this standards
+    #   subscription can be viewed and updated.
+    #
+    #   The values are as follows:
+    #
+    #   * `READY_FOR_UPDATES` - Controls associated with this standards
+    #     subscription can be viewed and updated.
+    #
+    #   * `NOT_READY_FOR_UPDATES` - Controls associated with this standards
+    #     subscription cannot be retrieved or updated yet. Security Hub is
+    #     still processing a request to create the controls.
+    #   @return [String]
+    #
     # @!attribute [rw] standards_status_reason
     #   The reason for the current status.
     #   @return [Types::StandardsStatusReason]
@@ -29584,6 +29602,7 @@ module Aws::SecurityHub
       :standards_arn,
       :standards_input,
       :standards_status,
+      :standards_controls_updatable,
       :standards_status_reason)
       SENSITIVE = []
       include Aws::Structure

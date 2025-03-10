@@ -18,6 +18,9 @@ module Aws::BedrockAgent
     AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
     ActionGroupExecutor = Shapes::UnionShape.new(name: 'ActionGroupExecutor')
     ActionGroupSignature = Shapes::StringShape.new(name: 'ActionGroupSignature')
+    ActionGroupSignatureParams = Shapes::MapShape.new(name: 'ActionGroupSignatureParams')
+    ActionGroupSignatureParamsKeyString = Shapes::StringShape.new(name: 'ActionGroupSignatureParamsKeyString')
+    ActionGroupSignatureParamsValueString = Shapes::StringShape.new(name: 'ActionGroupSignatureParamsValueString')
     ActionGroupState = Shapes::StringShape.new(name: 'ActionGroupState')
     ActionGroupSummaries = Shapes::ListShape.new(name: 'ActionGroupSummaries')
     ActionGroupSummary = Shapes::StructureShape.new(name: 'ActionGroupSummary')
@@ -663,6 +666,9 @@ module Aws::BedrockAgent
     ActionGroupExecutor.add_member_subclass(:unknown, Types::ActionGroupExecutor::Unknown)
     ActionGroupExecutor.struct_class = Types::ActionGroupExecutor
 
+    ActionGroupSignatureParams.key = Shapes::ShapeRef.new(shape: ActionGroupSignatureParamsKeyString)
+    ActionGroupSignatureParams.value = Shapes::ShapeRef.new(shape: ActionGroupSignatureParamsValueString)
+
     ActionGroupSummaries.member = Shapes::ShapeRef.new(shape: ActionGroupSummary)
 
     ActionGroupSummary.add_member(:action_group_id, Shapes::ShapeRef.new(shape: Id, required: true, location_name: "actionGroupId"))
@@ -708,6 +714,7 @@ module Aws::BedrockAgent
     AgentActionGroup.add_member(:created_at, Shapes::ShapeRef.new(shape: DateTimestamp, required: true, location_name: "createdAt"))
     AgentActionGroup.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     AgentActionGroup.add_member(:function_schema, Shapes::ShapeRef.new(shape: FunctionSchema, location_name: "functionSchema"))
+    AgentActionGroup.add_member(:parent_action_group_signature_params, Shapes::ShapeRef.new(shape: ActionGroupSignatureParams, location_name: "parentActionGroupSignatureParams"))
     AgentActionGroup.add_member(:parent_action_signature, Shapes::ShapeRef.new(shape: ActionGroupSignature, location_name: "parentActionSignature"))
     AgentActionGroup.add_member(:updated_at, Shapes::ShapeRef.new(shape: DateTimestamp, required: true, location_name: "updatedAt"))
     AgentActionGroup.struct_class = Types::AgentActionGroup
@@ -953,6 +960,7 @@ module Aws::BedrockAgent
     CreateAgentActionGroupRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     CreateAgentActionGroupRequest.add_member(:function_schema, Shapes::ShapeRef.new(shape: FunctionSchema, location_name: "functionSchema"))
     CreateAgentActionGroupRequest.add_member(:parent_action_group_signature, Shapes::ShapeRef.new(shape: ActionGroupSignature, location_name: "parentActionGroupSignature"))
+    CreateAgentActionGroupRequest.add_member(:parent_action_group_signature_params, Shapes::ShapeRef.new(shape: ActionGroupSignatureParams, location_name: "parentActionGroupSignatureParams"))
     CreateAgentActionGroupRequest.struct_class = Types::CreateAgentActionGroupRequest
 
     CreateAgentActionGroupResponse.add_member(:agent_action_group, Shapes::ShapeRef.new(shape: AgentActionGroup, required: true, location_name: "agentActionGroup"))
@@ -2562,6 +2570,7 @@ module Aws::BedrockAgent
     UpdateAgentActionGroupRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     UpdateAgentActionGroupRequest.add_member(:function_schema, Shapes::ShapeRef.new(shape: FunctionSchema, location_name: "functionSchema"))
     UpdateAgentActionGroupRequest.add_member(:parent_action_group_signature, Shapes::ShapeRef.new(shape: ActionGroupSignature, location_name: "parentActionGroupSignature"))
+    UpdateAgentActionGroupRequest.add_member(:parent_action_group_signature_params, Shapes::ShapeRef.new(shape: ActionGroupSignatureParams, location_name: "parentActionGroupSignatureParams"))
     UpdateAgentActionGroupRequest.struct_class = Types::UpdateAgentActionGroupRequest
 
     UpdateAgentActionGroupResponse.add_member(:agent_action_group, Shapes::ShapeRef.new(shape: AgentActionGroup, required: true, location_name: "agentActionGroup"))

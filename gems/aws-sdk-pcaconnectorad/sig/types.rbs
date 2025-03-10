@@ -79,7 +79,7 @@ module Aws::PcaConnectorAd
       attr_accessor created_at: ::Time
       attr_accessor directory_id: ::String
       attr_accessor status: ("CREATING" | "ACTIVE" | "DELETING" | "FAILED")
-      attr_accessor status_reason: ("DIRECTORY_ACCESS_DENIED" | "INTERNAL_FAILURE" | "PRIVATECA_ACCESS_DENIED" | "PRIVATECA_RESOURCE_NOT_FOUND" | "SECURITY_GROUP_NOT_IN_VPC" | "VPC_ACCESS_DENIED" | "VPC_ENDPOINT_LIMIT_EXCEEDED" | "VPC_RESOURCE_NOT_FOUND")
+      attr_accessor status_reason: ("CA_CERTIFICATE_REGISTRATION_FAILED" | "DIRECTORY_ACCESS_DENIED" | "INTERNAL_FAILURE" | "INSUFFICIENT_FREE_ADDRESSES" | "INVALID_SUBNET_IP_PROTOCOL" | "PRIVATECA_ACCESS_DENIED" | "PRIVATECA_RESOURCE_NOT_FOUND" | "SECURITY_GROUP_NOT_IN_VPC" | "VPC_ACCESS_DENIED" | "VPC_ENDPOINT_LIMIT_EXCEEDED" | "VPC_RESOURCE_NOT_FOUND")
       attr_accessor updated_at: ::Time
       attr_accessor vpc_information: Types::VpcInformation
       SENSITIVE: []
@@ -92,7 +92,7 @@ module Aws::PcaConnectorAd
       attr_accessor created_at: ::Time
       attr_accessor directory_id: ::String
       attr_accessor status: ("CREATING" | "ACTIVE" | "DELETING" | "FAILED")
-      attr_accessor status_reason: ("DIRECTORY_ACCESS_DENIED" | "INTERNAL_FAILURE" | "PRIVATECA_ACCESS_DENIED" | "PRIVATECA_RESOURCE_NOT_FOUND" | "SECURITY_GROUP_NOT_IN_VPC" | "VPC_ACCESS_DENIED" | "VPC_ENDPOINT_LIMIT_EXCEEDED" | "VPC_RESOURCE_NOT_FOUND")
+      attr_accessor status_reason: ("CA_CERTIFICATE_REGISTRATION_FAILED" | "DIRECTORY_ACCESS_DENIED" | "INTERNAL_FAILURE" | "INSUFFICIENT_FREE_ADDRESSES" | "INVALID_SUBNET_IP_PROTOCOL" | "PRIVATECA_ACCESS_DENIED" | "PRIVATECA_RESOURCE_NOT_FOUND" | "SECURITY_GROUP_NOT_IN_VPC" | "VPC_ACCESS_DENIED" | "VPC_ENDPOINT_LIMIT_EXCEEDED" | "VPC_RESOURCE_NOT_FOUND")
       attr_accessor updated_at: ::Time
       attr_accessor vpc_information: Types::VpcInformation
       SENSITIVE: []
@@ -492,7 +492,7 @@ module Aws::PcaConnectorAd
       attr_accessor created_at: ::Time
       attr_accessor directory_registration_arn: ::String
       attr_accessor status: ("CREATING" | "ACTIVE" | "DELETING" | "FAILED")
-      attr_accessor status_reason: ("DIRECTORY_ACCESS_DENIED" | "DIRECTORY_NOT_REACHABLE" | "DIRECTORY_RESOURCE_NOT_FOUND" | "SPN_EXISTS_ON_DIFFERENT_AD_OBJECT" | "INTERNAL_FAILURE")
+      attr_accessor status_reason: ("DIRECTORY_ACCESS_DENIED" | "DIRECTORY_NOT_REACHABLE" | "DIRECTORY_RESOURCE_NOT_FOUND" | "SPN_EXISTS_ON_DIFFERENT_AD_OBJECT" | "SPN_LIMIT_EXCEEDED" | "INTERNAL_FAILURE")
       attr_accessor updated_at: ::Time
       SENSITIVE: []
     end
@@ -502,7 +502,7 @@ module Aws::PcaConnectorAd
       attr_accessor created_at: ::Time
       attr_accessor directory_registration_arn: ::String
       attr_accessor status: ("CREATING" | "ACTIVE" | "DELETING" | "FAILED")
-      attr_accessor status_reason: ("DIRECTORY_ACCESS_DENIED" | "DIRECTORY_NOT_REACHABLE" | "DIRECTORY_RESOURCE_NOT_FOUND" | "SPN_EXISTS_ON_DIFFERENT_AD_OBJECT" | "INTERNAL_FAILURE")
+      attr_accessor status_reason: ("DIRECTORY_ACCESS_DENIED" | "DIRECTORY_NOT_REACHABLE" | "DIRECTORY_RESOURCE_NOT_FOUND" | "SPN_EXISTS_ON_DIFFERENT_AD_OBJECT" | "SPN_LIMIT_EXCEEDED" | "INTERNAL_FAILURE")
       attr_accessor updated_at: ::Time
       SENSITIVE: []
     end
@@ -683,7 +683,7 @@ module Aws::PcaConnectorAd
 
     class ValidationException
       attr_accessor message: ::String
-      attr_accessor reason: ("FIELD_VALIDATION_FAILED" | "INVALID_PERMISSION" | "INVALID_STATE" | "MISMATCHED_CONNECTOR" | "MISMATCHED_VPC" | "NO_CLIENT_TOKEN" | "UNKNOWN_OPERATION" | "OTHER")
+      attr_accessor reason: ("FIELD_VALIDATION_FAILED" | "INVALID_CA_SUBJECT" | "INVALID_PERMISSION" | "INVALID_STATE" | "MISMATCHED_CONNECTOR" | "MISMATCHED_VPC" | "NO_CLIENT_TOKEN" | "UNKNOWN_OPERATION" | "OTHER")
       SENSITIVE: []
     end
 
@@ -694,6 +694,7 @@ module Aws::PcaConnectorAd
     end
 
     class VpcInformation
+      attr_accessor ip_address_type: ("IPV4" | "DUALSTACK")
       attr_accessor security_group_ids: ::Array[::String]
       SENSITIVE: []
     end
