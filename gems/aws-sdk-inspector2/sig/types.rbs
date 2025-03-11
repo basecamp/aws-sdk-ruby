@@ -1814,6 +1814,7 @@ module Aws::Inspector2
     end
 
     class Step
+      attr_accessor component_arn: ::String
       attr_accessor component_id: ::String
       attr_accessor component_type: ::String
       SENSITIVE: []

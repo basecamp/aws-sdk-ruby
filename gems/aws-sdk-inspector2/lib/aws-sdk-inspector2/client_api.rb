@@ -154,6 +154,7 @@ module Aws::Inspector2
     CodeSnippetResultList = Shapes::ListShape.new(name: 'CodeSnippetResultList')
     CodeVulnerabilityDetails = Shapes::StructureShape.new(name: 'CodeVulnerabilityDetails')
     Component = Shapes::StringShape.new(name: 'Component')
+    ComponentArn = Shapes::StringShape.new(name: 'ComponentArn')
     ComponentType = Shapes::StringShape.new(name: 'ComponentType')
     ComputePlatform = Shapes::StructureShape.new(name: 'ComputePlatform')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
@@ -2096,6 +2097,7 @@ module Aws::Inspector2
     StatusCounts.add_member(:skipped, Shapes::ShapeRef.new(shape: Integer, location_name: "skipped"))
     StatusCounts.struct_class = Types::StatusCounts
 
+    Step.add_member(:component_arn, Shapes::ShapeRef.new(shape: ComponentArn, location_name: "componentArn"))
     Step.add_member(:component_id, Shapes::ShapeRef.new(shape: Component, required: true, location_name: "componentId"))
     Step.add_member(:component_type, Shapes::ShapeRef.new(shape: ComponentType, required: true, location_name: "componentType"))
     Step.struct_class = Types::Step

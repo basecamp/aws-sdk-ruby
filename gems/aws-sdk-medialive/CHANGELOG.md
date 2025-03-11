@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.148.0 (2025-03-11)
+------------------
+
+* Feature - Add an enum option DISABLED for Output Locking Mode under Global Configuration.
+
 1.147.0 (2025-03-10)
 ------------------
 

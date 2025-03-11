@@ -341,6 +341,10 @@ module Aws::ECR
     # @!attribute [rw] ecr_repository_prefix
     #   The repository name prefix to use when caching images from the
     #   source registry.
+    #
+    #   There is always an assumed `/` applied to the end of the prefix. If
+    #   you specify `ecr-public` as the prefix, Amazon ECR treats that as
+    #   `ecr-public/`.
     #   @return [String]
     #
     # @!attribute [rw] upstream_registry_url
@@ -348,19 +352,24 @@ module Aws::ECR
     #   source for the pull through cache rule. The following is the syntax
     #   to use for each supported upstream registry.
     #
-    #   * Amazon ECR Public (`ecr-public`) - `public.ecr.aws`
+    #   * Amazon ECR (`ecr`) – `dkr.ecr.<region>.amazonaws.com`
     #
-    #   * Docker Hub (`docker-hub`) - `registry-1.docker.io`
+    #   * Amazon ECR Public (`ecr-public`) – `public.ecr.aws`
     #
-    #   * Quay (`quay`) - `quay.io`
+    #   * Docker Hub (`docker-hub`) – `registry-1.docker.io`
     #
-    #   * Kubernetes (`k8s`) - `registry.k8s.io`
-    #
-    #   * GitHub Container Registry (`github-container-registry`) -
+    #   * GitHub Container Registry (`github-container-registry`) –
     #     `ghcr.io`
     #
-    #   * Microsoft Azure Container Registry (`azure-container-registry`) -
+    #   * GitLab Container Registry (`gitlab-container-registry`) –
+    #     `registry.gitlab.com`
+    #
+    #   * Kubernetes (`k8s`) – `registry.k8s.io`
+    #
+    #   * Microsoft Azure Container Registry (`azure-container-registry`) –
     #     `<custom>.azurecr.io`
+    #
+    #   * Quay (`quay`) – `quay.io`
     #   @return [String]
     #
     # @!attribute [rw] registry_id
@@ -379,6 +388,18 @@ module Aws::ECR
     #   the upstream registry.
     #   @return [String]
     #
+    # @!attribute [rw] custom_role_arn
+    #   Amazon Resource Name (ARN) of the IAM role to be assumed by Amazon
+    #   ECR to authenticate to the ECR upstream registry. This role must be
+    #   in the same account as the registry that you are configuring.
+    #   @return [String]
+    #
+    # @!attribute [rw] upstream_repository_prefix
+    #   The repository name prefix of the upstream registry to match with
+    #   the upstream repository name. When this field isn't specified,
+    #   Amazon ECR will use the `ROOT`.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/CreatePullThroughCacheRuleRequest AWS API Documentation
     #
     class CreatePullThroughCacheRuleRequest < Struct.new(
@@ -386,7 +407,9 @@ module Aws::ECR
       :upstream_registry_url,
       :registry_id,
       :upstream_registry,
-      :credential_arn)
+      :credential_arn,
+      :custom_role_arn,
+      :upstream_repository_prefix)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -420,6 +443,15 @@ module Aws::ECR
     #   Manager secret associated with the pull through cache rule.
     #   @return [String]
     #
+    # @!attribute [rw] custom_role_arn
+    #   The ARN of the IAM role associated with the pull through cache rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] upstream_repository_prefix
+    #   The upstream repository prefix associated with the pull through
+    #   cache rule.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/CreatePullThroughCacheRuleResponse AWS API Documentation
     #
     class CreatePullThroughCacheRuleResponse < Struct.new(
@@ -428,7 +460,9 @@ module Aws::ECR
       :created_at,
       :registry_id,
       :upstream_registry,
-      :credential_arn)
+      :credential_arn,
+      :custom_role_arn,
+      :upstream_repository_prefix)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -777,6 +811,15 @@ module Aws::ECR
     #   Manager secret associated with the pull through cache rule.
     #   @return [String]
     #
+    # @!attribute [rw] custom_role_arn
+    #   The ARN of the IAM role associated with the pull through cache rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] upstream_repository_prefix
+    #   The upstream repository prefix associated with the pull through
+    #   cache rule.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/DeletePullThroughCacheRuleResponse AWS API Documentation
     #
     class DeletePullThroughCacheRuleResponse < Struct.new(
@@ -784,7 +827,9 @@ module Aws::ECR
       :upstream_registry_url,
       :created_at,
       :registry_id,
-      :credential_arn)
+      :credential_arn,
+      :custom_role_arn,
+      :upstream_repository_prefix)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2026,11 +2071,11 @@ module Aws::ECR
     #   If the image is a manifest list, this will be the max size of all
     #   manifests in the list.
     #
-    #   <note markdown="1"> Beginning with Docker version 1.9, the Docker client compresses
-    #   image layers before pushing them to a V2 Docker registry. The output
-    #   of the `docker images` command shows the uncompressed image size, so
-    #   it may return a larger image size than the image sizes returned by
-    #   DescribeImages.
+    #   <note markdown="1"> Starting with Docker version 1.9, the Docker client compresses image
+    #   layers before pushing them to a V2 Docker registry. The output of
+    #   the `docker images` command shows the uncompressed image size.
+    #   Therefore, Docker might return a larger image than the image sizes
+    #   returned by DescribeImages.
     #
     #    </note>
     #   @return [Integer]
@@ -2928,6 +2973,15 @@ module Aws::ECR
     #   through cache rule.
     #   @return [String]
     #
+    # @!attribute [rw] custom_role_arn
+    #   The ARN of the IAM role associated with the pull through cache rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] upstream_repository_prefix
+    #   The upstream repository prefix associated with the pull through
+    #   cache rule.
+    #   @return [String]
+    #
     # @!attribute [rw] upstream_registry
     #   The name of the upstream source registry associated with the pull
     #   through cache rule.
@@ -2946,6 +3000,8 @@ module Aws::ECR
       :created_at,
       :registry_id,
       :credential_arn,
+      :custom_role_arn,
+      :upstream_repository_prefix,
       :upstream_registry,
       :updated_at)
       SENSITIVE = []
@@ -3594,7 +3650,7 @@ module Aws::ECR
     #   @return [String]
     #
     # @!attribute [rw] repository_policy
-    #   he repository policy to apply to repositories created using the
+    #   The repository policy to apply to repositories created using the
     #   template. A repository policy is a permissions policy associated
     #   with a repository to control access permissions.
     #   @return [String]
@@ -4288,12 +4344,19 @@ module Aws::ECR
     #   the upstream registry.
     #   @return [String]
     #
+    # @!attribute [rw] custom_role_arn
+    #   Amazon Resource Name (ARN) of the IAM role to be assumed by Amazon
+    #   ECR to authenticate to the ECR upstream registry. This role must be
+    #   in the same account as the registry that you are configuring.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/UpdatePullThroughCacheRuleRequest AWS API Documentation
     #
     class UpdatePullThroughCacheRuleRequest < Struct.new(
       :registry_id,
       :ecr_repository_prefix,
-      :credential_arn)
+      :credential_arn,
+      :custom_role_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4317,13 +4380,24 @@ module Aws::ECR
     #   Manager secret associated with the pull through cache rule.
     #   @return [String]
     #
+    # @!attribute [rw] custom_role_arn
+    #   The ARN of the IAM role associated with the pull through cache rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] upstream_repository_prefix
+    #   The upstream repository prefix associated with the pull through
+    #   cache rule.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/UpdatePullThroughCacheRuleResponse AWS API Documentation
     #
     class UpdatePullThroughCacheRuleResponse < Struct.new(
       :ecr_repository_prefix,
       :registry_id,
       :updated_at,
-      :credential_arn)
+      :credential_arn,
+      :custom_role_arn,
+      :upstream_repository_prefix)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4548,6 +4622,15 @@ module Aws::ECR
     #   Manager secret associated with the pull through cache rule.
     #   @return [String]
     #
+    # @!attribute [rw] custom_role_arn
+    #   The ARN of the IAM role associated with the pull through cache rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] upstream_repository_prefix
+    #   The upstream repository prefix associated with the pull through
+    #   cache rule.
+    #   @return [String]
+    #
     # @!attribute [rw] is_valid
     #   Whether or not the pull through cache rule was validated. If `true`,
     #   Amazon ECR was able to reach the upstream registry and
@@ -4572,6 +4655,8 @@ module Aws::ECR
       :registry_id,
       :upstream_registry_url,
       :credential_arn,
+      :custom_role_arn,
+      :upstream_repository_prefix,
       :is_valid,
       :failure)
       SENSITIVE = []

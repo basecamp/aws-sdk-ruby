@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.98.0 (2025-03-11)
+------------------
+
+* Feature - This release adds Amazon ECR to Amazon ECR pull through cache rules support.
+
 1.97.0 (2025-02-18)
 ------------------
 

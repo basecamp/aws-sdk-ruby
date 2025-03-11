@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.49.0 (2025-03-11)
+------------------
+
+* Feature - Adding componentArn to network reachability details
+
 1.48.0 (2025-02-18)
 ------------------
 

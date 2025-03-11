@@ -6597,6 +6597,11 @@ module Aws::Inspector2
 
     # Details about the step associated with a finding.
     #
+    # @!attribute [rw] component_arn
+    #   The component ARN. The ARN can be null and is not displayed in the
+    #   Amazon Web Services console.
+    #   @return [String]
+    #
     # @!attribute [rw] component_id
     #   The component ID.
     #   @return [String]
@@ -6608,6 +6613,7 @@ module Aws::Inspector2
     # @see http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/Step AWS API Documentation
     #
     class Step < Struct.new(
+      :component_arn,
       :component_id,
       :component_type)
       SENSITIVE = []

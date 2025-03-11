@@ -4964,7 +4964,11 @@ module Aws::MediaLive
     #   PIPELINE\_LOCKING - MediaLive will attempt to synchronize the output
     #   of each pipeline to the other. EPOCH\_LOCKING - MediaLive will
     #   attempt to synchronize the output of each pipeline to the Unix
-    #   epoch.
+    #   epoch. DISABLED - MediaLive will not attempt to synchronize the
+    #   output of pipelines. We advise against disabling output locking
+    #   because it has negative side effects in most workflows. For more
+    #   information, see the section about output locking (pipeline locking)
+    #   in the Medialive user guide.
     #   @return [String]
     #
     # @!attribute [rw] output_timing_source

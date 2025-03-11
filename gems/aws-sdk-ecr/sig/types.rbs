@@ -104,8 +104,10 @@ module Aws::ECR
       attr_accessor ecr_repository_prefix: ::String
       attr_accessor upstream_registry_url: ::String
       attr_accessor registry_id: ::String
-      attr_accessor upstream_registry: ("ecr-public" | "quay" | "k8s" | "docker-hub" | "github-container-registry" | "azure-container-registry" | "gitlab-container-registry")
+      attr_accessor upstream_registry: ("ecr" | "ecr-public" | "quay" | "k8s" | "docker-hub" | "github-container-registry" | "azure-container-registry" | "gitlab-container-registry")
       attr_accessor credential_arn: ::String
+      attr_accessor custom_role_arn: ::String
+      attr_accessor upstream_repository_prefix: ::String
       SENSITIVE: []
     end
 
@@ -114,8 +116,10 @@ module Aws::ECR
       attr_accessor upstream_registry_url: ::String
       attr_accessor created_at: ::Time
       attr_accessor registry_id: ::String
-      attr_accessor upstream_registry: ("ecr-public" | "quay" | "k8s" | "docker-hub" | "github-container-registry" | "azure-container-registry" | "gitlab-container-registry")
+      attr_accessor upstream_registry: ("ecr" | "ecr-public" | "quay" | "k8s" | "docker-hub" | "github-container-registry" | "azure-container-registry" | "gitlab-container-registry")
       attr_accessor credential_arn: ::String
+      attr_accessor custom_role_arn: ::String
+      attr_accessor upstream_repository_prefix: ::String
       SENSITIVE: []
     end
 
@@ -202,6 +206,8 @@ module Aws::ECR
       attr_accessor created_at: ::Time
       attr_accessor registry_id: ::String
       attr_accessor credential_arn: ::String
+      attr_accessor custom_role_arn: ::String
+      attr_accessor upstream_repository_prefix: ::String
       SENSITIVE: []
     end
 
@@ -765,7 +771,9 @@ module Aws::ECR
       attr_accessor created_at: ::Time
       attr_accessor registry_id: ::String
       attr_accessor credential_arn: ::String
-      attr_accessor upstream_registry: ("ecr-public" | "quay" | "k8s" | "docker-hub" | "github-container-registry" | "azure-container-registry" | "gitlab-container-registry")
+      attr_accessor custom_role_arn: ::String
+      attr_accessor upstream_repository_prefix: ::String
+      attr_accessor upstream_registry: ("ecr" | "ecr-public" | "quay" | "k8s" | "docker-hub" | "github-container-registry" | "azure-container-registry" | "gitlab-container-registry")
       attr_accessor updated_at: ::Time
       SENSITIVE: []
     end
@@ -1157,6 +1165,7 @@ module Aws::ECR
       attr_accessor registry_id: ::String
       attr_accessor ecr_repository_prefix: ::String
       attr_accessor credential_arn: ::String
+      attr_accessor custom_role_arn: ::String
       SENSITIVE: []
     end
 
@@ -1165,6 +1174,8 @@ module Aws::ECR
       attr_accessor registry_id: ::String
       attr_accessor updated_at: ::Time
       attr_accessor credential_arn: ::String
+      attr_accessor custom_role_arn: ::String
+      attr_accessor upstream_repository_prefix: ::String
       SENSITIVE: []
     end
 
@@ -1221,6 +1232,8 @@ module Aws::ECR
       attr_accessor registry_id: ::String
       attr_accessor upstream_registry_url: ::String
       attr_accessor credential_arn: ::String
+      attr_accessor custom_role_arn: ::String
+      attr_accessor upstream_repository_prefix: ::String
       attr_accessor is_valid: bool
       attr_accessor failure: ::String
       SENSITIVE: []

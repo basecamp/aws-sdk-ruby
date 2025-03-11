@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.511.0 (2025-03-11)
+------------------
+
+* Feature - This release adds the GroupLongName field to the response of the DescribeAvailabilityZones API.
+
 1.510.0 (2025-03-07)
 ------------------
 

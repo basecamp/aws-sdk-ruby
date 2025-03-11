@@ -621,7 +621,7 @@ module Aws
                                   input_loss_image_type: ("COLOR" | "SLATE")?,
                                   repeat_frame_msec: ::Integer?
                                 }?,
-                                output_locking_mode: ("EPOCH_LOCKING" | "PIPELINE_LOCKING")?,
+                                output_locking_mode: ("EPOCH_LOCKING" | "PIPELINE_LOCKING" | "DISABLED")?,
                                 output_timing_source: ("INPUT_CLOCK" | "SYSTEM_CLOCK")?,
                                 support_low_framerate_inputs: ("DISABLED" | "ENABLED")?,
                                 output_locking_settings: {
@@ -2683,7 +2683,7 @@ module Aws
                                   input_loss_image_type: ("COLOR" | "SLATE")?,
                                   repeat_frame_msec: ::Integer?
                                 }?,
-                                output_locking_mode: ("EPOCH_LOCKING" | "PIPELINE_LOCKING")?,
+                                output_locking_mode: ("EPOCH_LOCKING" | "PIPELINE_LOCKING" | "DISABLED")?,
                                 output_timing_source: ("INPUT_CLOCK" | "SYSTEM_CLOCK")?,
                                 support_low_framerate_inputs: ("DISABLED" | "ENABLED")?,
                                 output_locking_settings: {

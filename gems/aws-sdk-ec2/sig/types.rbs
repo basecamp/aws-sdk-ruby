@@ -922,6 +922,7 @@ module Aws::EC2
       attr_accessor zone_type: ::String
       attr_accessor parent_zone_name: ::String
       attr_accessor parent_zone_id: ::String
+      attr_accessor group_long_name: ::String
       attr_accessor state: ("available" | "information" | "impaired" | "unavailable" | "constrained")
       SENSITIVE: []
     end

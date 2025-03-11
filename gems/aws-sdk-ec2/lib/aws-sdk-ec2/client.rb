@@ -7095,7 +7095,7 @@ module Aws::EC2
     #                 },
     #               },
     #             },
-    #             image_id: "ImageId",
+    #             image_id: "String",
     #           },
     #         ],
     #       },
@@ -21190,6 +21190,12 @@ module Aws::EC2
     # @option params [Array<Types::Filter>] :filters
     #   The filters.
     #
+    #   * `group-long-name` - The long name of the zone group for the
+    #     Availability Zone (for example, `US West (Oregon) 1`), the Local
+    #     Zone (for example, for Zone group `us-west-2-lax-1`, it is `US West
+    #     (Los Angeles)`, or the Wavelength Zone (for example, for Zone group
+    #     `us-east-1-wl1`, it is `US East (Verizon)`.
+    #
     #   * `group-name` - The name of the zone group for the Availability Zone
     #     (for example, `us-east-1-zg-1`), the Local Zone (for example,
     #     `us-west-2-lax-1`), or the Wavelength Zone (for example,
@@ -21301,6 +21307,7 @@ module Aws::EC2
     #   resp.availability_zones[0].zone_type #=> String
     #   resp.availability_zones[0].parent_zone_name #=> String
     #   resp.availability_zones[0].parent_zone_id #=> String
+    #   resp.availability_zones[0].group_long_name #=> String
     #   resp.availability_zones[0].state #=> String, one of "available", "information", "impaired", "unavailable", "constrained"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeAvailabilityZones AWS API Documentation
@@ -49612,7 +49619,7 @@ module Aws::EC2
     #                 },
     #               },
     #             },
-    #             image_id: "ImageId",
+    #             image_id: "String",
     #           },
     #         ],
     #       },
@@ -63382,7 +63389,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.510.0'
+      context[:gem_version] = '1.511.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

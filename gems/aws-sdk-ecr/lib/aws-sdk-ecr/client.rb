@@ -838,23 +838,32 @@ module Aws::ECR
     #   The repository name prefix to use when caching images from the source
     #   registry.
     #
+    #   There is always an assumed `/` applied to the end of the prefix. If
+    #   you specify `ecr-public` as the prefix, Amazon ECR treats that as
+    #   `ecr-public/`.
+    #
     # @option params [required, String] :upstream_registry_url
     #   The registry URL of the upstream public registry to use as the source
     #   for the pull through cache rule. The following is the syntax to use
     #   for each supported upstream registry.
     #
-    #   * Amazon ECR Public (`ecr-public`) - `public.ecr.aws`
+    #   * Amazon ECR (`ecr`) – `dkr.ecr.<region>.amazonaws.com`
     #
-    #   * Docker Hub (`docker-hub`) - `registry-1.docker.io`
+    #   * Amazon ECR Public (`ecr-public`) – `public.ecr.aws`
     #
-    #   * Quay (`quay`) - `quay.io`
+    #   * Docker Hub (`docker-hub`) – `registry-1.docker.io`
     #
-    #   * Kubernetes (`k8s`) - `registry.k8s.io`
+    #   * GitHub Container Registry (`github-container-registry`) – `ghcr.io`
     #
-    #   * GitHub Container Registry (`github-container-registry`) - `ghcr.io`
+    #   * GitLab Container Registry (`gitlab-container-registry`) –
+    #     `registry.gitlab.com`
     #
-    #   * Microsoft Azure Container Registry (`azure-container-registry`) -
+    #   * Kubernetes (`k8s`) – `registry.k8s.io`
+    #
+    #   * Microsoft Azure Container Registry (`azure-container-registry`) –
     #     `<custom>.azurecr.io`
+    #
+    #   * Quay (`quay`) – `quay.io`
     #
     # @option params [String] :registry_id
     #   The Amazon Web Services account ID associated with the registry to
@@ -869,6 +878,16 @@ module Aws::ECR
     #   Manager secret that identifies the credentials to authenticate to the
     #   upstream registry.
     #
+    # @option params [String] :custom_role_arn
+    #   Amazon Resource Name (ARN) of the IAM role to be assumed by Amazon ECR
+    #   to authenticate to the ECR upstream registry. This role must be in the
+    #   same account as the registry that you are configuring.
+    #
+    # @option params [String] :upstream_repository_prefix
+    #   The repository name prefix of the upstream registry to match with the
+    #   upstream repository name. When this field isn't specified, Amazon ECR
+    #   will use the `ROOT`.
+    #
     # @return [Types::CreatePullThroughCacheRuleResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreatePullThroughCacheRuleResponse#ecr_repository_prefix #ecr_repository_prefix} => String
@@ -877,6 +896,8 @@ module Aws::ECR
     #   * {Types::CreatePullThroughCacheRuleResponse#registry_id #registry_id} => String
     #   * {Types::CreatePullThroughCacheRuleResponse#upstream_registry #upstream_registry} => String
     #   * {Types::CreatePullThroughCacheRuleResponse#credential_arn #credential_arn} => String
+    #   * {Types::CreatePullThroughCacheRuleResponse#custom_role_arn #custom_role_arn} => String
+    #   * {Types::CreatePullThroughCacheRuleResponse#upstream_repository_prefix #upstream_repository_prefix} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -884,8 +905,10 @@ module Aws::ECR
     #     ecr_repository_prefix: "PullThroughCacheRuleRepositoryPrefix", # required
     #     upstream_registry_url: "Url", # required
     #     registry_id: "RegistryId",
-    #     upstream_registry: "ecr-public", # accepts ecr-public, quay, k8s, docker-hub, github-container-registry, azure-container-registry, gitlab-container-registry
+    #     upstream_registry: "ecr", # accepts ecr, ecr-public, quay, k8s, docker-hub, github-container-registry, azure-container-registry, gitlab-container-registry
     #     credential_arn: "CredentialArn",
+    #     custom_role_arn: "CustomRoleArn",
+    #     upstream_repository_prefix: "PullThroughCacheRuleRepositoryPrefix",
     #   })
     #
     # @example Response structure
@@ -894,8 +917,10 @@ module Aws::ECR
     #   resp.upstream_registry_url #=> String
     #   resp.created_at #=> Time
     #   resp.registry_id #=> String
-    #   resp.upstream_registry #=> String, one of "ecr-public", "quay", "k8s", "docker-hub", "github-container-registry", "azure-container-registry", "gitlab-container-registry"
+    #   resp.upstream_registry #=> String, one of "ecr", "ecr-public", "quay", "k8s", "docker-hub", "github-container-registry", "azure-container-registry", "gitlab-container-registry"
     #   resp.credential_arn #=> String
+    #   resp.custom_role_arn #=> String
+    #   resp.upstream_repository_prefix #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/CreatePullThroughCacheRule AWS API Documentation
     #
@@ -1252,6 +1277,8 @@ module Aws::ECR
     #   * {Types::DeletePullThroughCacheRuleResponse#created_at #created_at} => Time
     #   * {Types::DeletePullThroughCacheRuleResponse#registry_id #registry_id} => String
     #   * {Types::DeletePullThroughCacheRuleResponse#credential_arn #credential_arn} => String
+    #   * {Types::DeletePullThroughCacheRuleResponse#custom_role_arn #custom_role_arn} => String
+    #   * {Types::DeletePullThroughCacheRuleResponse#upstream_repository_prefix #upstream_repository_prefix} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -1267,6 +1294,8 @@ module Aws::ECR
     #   resp.created_at #=> Time
     #   resp.registry_id #=> String
     #   resp.credential_arn #=> String
+    #   resp.custom_role_arn #=> String
+    #   resp.upstream_repository_prefix #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/DeletePullThroughCacheRule AWS API Documentation
     #
@@ -1853,7 +1882,9 @@ module Aws::ECR
     #   resp.pull_through_cache_rules[0].created_at #=> Time
     #   resp.pull_through_cache_rules[0].registry_id #=> String
     #   resp.pull_through_cache_rules[0].credential_arn #=> String
-    #   resp.pull_through_cache_rules[0].upstream_registry #=> String, one of "ecr-public", "quay", "k8s", "docker-hub", "github-container-registry", "azure-container-registry", "gitlab-container-registry"
+    #   resp.pull_through_cache_rules[0].custom_role_arn #=> String
+    #   resp.pull_through_cache_rules[0].upstream_repository_prefix #=> String
+    #   resp.pull_through_cache_rules[0].upstream_registry #=> String, one of "ecr", "ecr-public", "quay", "k8s", "docker-hub", "github-container-registry", "azure-container-registry", "gitlab-container-registry"
     #   resp.pull_through_cache_rules[0].updated_at #=> Time
     #   resp.next_token #=> String
     #
@@ -3377,10 +3408,15 @@ module Aws::ECR
     #   The repository name prefix to use when caching images from the source
     #   registry.
     #
-    # @option params [required, String] :credential_arn
+    # @option params [String] :credential_arn
     #   The Amazon Resource Name (ARN) of the Amazon Web Services Secrets
     #   Manager secret that identifies the credentials to authenticate to the
     #   upstream registry.
+    #
+    # @option params [String] :custom_role_arn
+    #   Amazon Resource Name (ARN) of the IAM role to be assumed by Amazon ECR
+    #   to authenticate to the ECR upstream registry. This role must be in the
+    #   same account as the registry that you are configuring.
     #
     # @return [Types::UpdatePullThroughCacheRuleResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3388,13 +3424,16 @@ module Aws::ECR
     #   * {Types::UpdatePullThroughCacheRuleResponse#registry_id #registry_id} => String
     #   * {Types::UpdatePullThroughCacheRuleResponse#updated_at #updated_at} => Time
     #   * {Types::UpdatePullThroughCacheRuleResponse#credential_arn #credential_arn} => String
+    #   * {Types::UpdatePullThroughCacheRuleResponse#custom_role_arn #custom_role_arn} => String
+    #   * {Types::UpdatePullThroughCacheRuleResponse#upstream_repository_prefix #upstream_repository_prefix} => String
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.update_pull_through_cache_rule({
     #     registry_id: "RegistryId",
     #     ecr_repository_prefix: "PullThroughCacheRuleRepositoryPrefix", # required
-    #     credential_arn: "CredentialArn", # required
+    #     credential_arn: "CredentialArn",
+    #     custom_role_arn: "CustomRoleArn",
     #   })
     #
     # @example Response structure
@@ -3403,6 +3442,8 @@ module Aws::ECR
     #   resp.registry_id #=> String
     #   resp.updated_at #=> Time
     #   resp.credential_arn #=> String
+    #   resp.custom_role_arn #=> String
+    #   resp.upstream_repository_prefix #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/UpdatePullThroughCacheRule AWS API Documentation
     #
@@ -3658,6 +3699,8 @@ module Aws::ECR
     #   * {Types::ValidatePullThroughCacheRuleResponse#registry_id #registry_id} => String
     #   * {Types::ValidatePullThroughCacheRuleResponse#upstream_registry_url #upstream_registry_url} => String
     #   * {Types::ValidatePullThroughCacheRuleResponse#credential_arn #credential_arn} => String
+    #   * {Types::ValidatePullThroughCacheRuleResponse#custom_role_arn #custom_role_arn} => String
+    #   * {Types::ValidatePullThroughCacheRuleResponse#upstream_repository_prefix #upstream_repository_prefix} => String
     #   * {Types::ValidatePullThroughCacheRuleResponse#is_valid #is_valid} => Boolean
     #   * {Types::ValidatePullThroughCacheRuleResponse#failure #failure} => String
     #
@@ -3674,6 +3717,8 @@ module Aws::ECR
     #   resp.registry_id #=> String
     #   resp.upstream_registry_url #=> String
     #   resp.credential_arn #=> String
+    #   resp.custom_role_arn #=> String
+    #   resp.upstream_repository_prefix #=> String
     #   resp.is_valid #=> Boolean
     #   resp.failure #=> String
     #
@@ -3704,7 +3749,7 @@ module Aws::ECR
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ecr'
-      context[:gem_version] = '1.97.0'
+      context[:gem_version] = '1.98.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

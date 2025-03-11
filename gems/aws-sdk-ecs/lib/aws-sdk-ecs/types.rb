@@ -275,9 +275,6 @@ module Aws::ECS
     #
     #   * When the service `deploymentController` is `ECS`, the value must
     #     be `DISABLED`.
-    #
-    #   * When you use `create-service` or `update-service`, the default is
-    #     `ENABLED`.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/AwsVpcConfiguration AWS API Documentation
@@ -846,8 +843,8 @@ module Aws::ECS
     #   Map namespace that's used when you create a service and don't
     #   specify a Service Connect configuration. The namespace name can
     #   include up to 1024 characters. The name is case-sensitive. The name
-    #   can't include hyphens (-), tilde (~), greater than (&gt;), less
-    #   than (&lt;), or slash (/).
+    #   can't include greater than (&gt;), less than (&lt;), double
+    #   quotation marks ("), or slash (/).
     #
     #   If you enter an existing namespace name or ARN, then that namespace
     #   will be used. Any namespace type is supported. The namespace must be
@@ -5649,6 +5646,13 @@ module Aws::ECS
 
     # The specified parameter isn't valid. Review the available parameters
     # for the API request.
+    #
+    # For more information about service event errors, see [Amazon ECS
+    # service event messages][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-event-messages-list.html
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/InvalidParameterException AWS API Documentation
     #
@@ -12033,11 +12037,7 @@ module Aws::ECS
     #
     #   If you're using the EC2 launch type or the external launch type,
     #   this field is optional. Supported values are between `128` CPU units
-    #   (`0.125` vCPUs) and `196608` CPU units (`192` vCPUs).
-    #
-    #   If you're using the Fargate launch type, this field is required and
-    #   you must use one of the following values, which determines your
-    #   range of supported values for the `memory` parameter. The CPU units
+    #   (`0.125` vCPUs) and `196608` CPU units (`192` vCPUs). The CPU units
     #   cannot be less than 1 vCPU when you use Windows containers on
     #   Fargate.
     #

@@ -431,6 +431,8 @@ module Aws::ECR
     CreatePullThroughCacheRuleRequest.add_member(:registry_id, Shapes::ShapeRef.new(shape: RegistryId, location_name: "registryId"))
     CreatePullThroughCacheRuleRequest.add_member(:upstream_registry, Shapes::ShapeRef.new(shape: UpstreamRegistry, location_name: "upstreamRegistry"))
     CreatePullThroughCacheRuleRequest.add_member(:credential_arn, Shapes::ShapeRef.new(shape: CredentialArn, location_name: "credentialArn"))
+    CreatePullThroughCacheRuleRequest.add_member(:custom_role_arn, Shapes::ShapeRef.new(shape: CustomRoleArn, location_name: "customRoleArn"))
+    CreatePullThroughCacheRuleRequest.add_member(:upstream_repository_prefix, Shapes::ShapeRef.new(shape: PullThroughCacheRuleRepositoryPrefix, location_name: "upstreamRepositoryPrefix"))
     CreatePullThroughCacheRuleRequest.struct_class = Types::CreatePullThroughCacheRuleRequest
 
     CreatePullThroughCacheRuleResponse.add_member(:ecr_repository_prefix, Shapes::ShapeRef.new(shape: PullThroughCacheRuleRepositoryPrefix, location_name: "ecrRepositoryPrefix"))
@@ -439,6 +441,8 @@ module Aws::ECR
     CreatePullThroughCacheRuleResponse.add_member(:registry_id, Shapes::ShapeRef.new(shape: RegistryId, location_name: "registryId"))
     CreatePullThroughCacheRuleResponse.add_member(:upstream_registry, Shapes::ShapeRef.new(shape: UpstreamRegistry, location_name: "upstreamRegistry"))
     CreatePullThroughCacheRuleResponse.add_member(:credential_arn, Shapes::ShapeRef.new(shape: CredentialArn, location_name: "credentialArn"))
+    CreatePullThroughCacheRuleResponse.add_member(:custom_role_arn, Shapes::ShapeRef.new(shape: CustomRoleArn, location_name: "customRoleArn"))
+    CreatePullThroughCacheRuleResponse.add_member(:upstream_repository_prefix, Shapes::ShapeRef.new(shape: PullThroughCacheRuleRepositoryPrefix, location_name: "upstreamRepositoryPrefix"))
     CreatePullThroughCacheRuleResponse.struct_class = Types::CreatePullThroughCacheRuleResponse
 
     CreateRepositoryCreationTemplateRequest.add_member(:prefix, Shapes::ShapeRef.new(shape: Prefix, required: true, location_name: "prefix"))
@@ -507,6 +511,8 @@ module Aws::ECR
     DeletePullThroughCacheRuleResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: CreationTimestamp, location_name: "createdAt"))
     DeletePullThroughCacheRuleResponse.add_member(:registry_id, Shapes::ShapeRef.new(shape: RegistryId, location_name: "registryId"))
     DeletePullThroughCacheRuleResponse.add_member(:credential_arn, Shapes::ShapeRef.new(shape: CredentialArn, location_name: "credentialArn"))
+    DeletePullThroughCacheRuleResponse.add_member(:custom_role_arn, Shapes::ShapeRef.new(shape: CustomRoleArn, location_name: "customRoleArn"))
+    DeletePullThroughCacheRuleResponse.add_member(:upstream_repository_prefix, Shapes::ShapeRef.new(shape: PullThroughCacheRuleRepositoryPrefix, location_name: "upstreamRepositoryPrefix"))
     DeletePullThroughCacheRuleResponse.struct_class = Types::DeletePullThroughCacheRuleResponse
 
     DeleteRegistryPolicyRequest.struct_class = Types::DeleteRegistryPolicyRequest
@@ -939,6 +945,8 @@ module Aws::ECR
     PullThroughCacheRule.add_member(:created_at, Shapes::ShapeRef.new(shape: CreationTimestamp, location_name: "createdAt"))
     PullThroughCacheRule.add_member(:registry_id, Shapes::ShapeRef.new(shape: RegistryId, location_name: "registryId"))
     PullThroughCacheRule.add_member(:credential_arn, Shapes::ShapeRef.new(shape: CredentialArn, location_name: "credentialArn"))
+    PullThroughCacheRule.add_member(:custom_role_arn, Shapes::ShapeRef.new(shape: CustomRoleArn, location_name: "customRoleArn"))
+    PullThroughCacheRule.add_member(:upstream_repository_prefix, Shapes::ShapeRef.new(shape: PullThroughCacheRuleRepositoryPrefix, location_name: "upstreamRepositoryPrefix"))
     PullThroughCacheRule.add_member(:upstream_registry, Shapes::ShapeRef.new(shape: UpstreamRegistry, location_name: "upstreamRegistry"))
     PullThroughCacheRule.add_member(:updated_at, Shapes::ShapeRef.new(shape: UpdatedTimestamp, location_name: "updatedAt"))
     PullThroughCacheRule.struct_class = Types::PullThroughCacheRule
@@ -1245,13 +1253,16 @@ module Aws::ECR
 
     UpdatePullThroughCacheRuleRequest.add_member(:registry_id, Shapes::ShapeRef.new(shape: RegistryId, location_name: "registryId"))
     UpdatePullThroughCacheRuleRequest.add_member(:ecr_repository_prefix, Shapes::ShapeRef.new(shape: PullThroughCacheRuleRepositoryPrefix, required: true, location_name: "ecrRepositoryPrefix"))
-    UpdatePullThroughCacheRuleRequest.add_member(:credential_arn, Shapes::ShapeRef.new(shape: CredentialArn, required: true, location_name: "credentialArn"))
+    UpdatePullThroughCacheRuleRequest.add_member(:credential_arn, Shapes::ShapeRef.new(shape: CredentialArn, location_name: "credentialArn"))
+    UpdatePullThroughCacheRuleRequest.add_member(:custom_role_arn, Shapes::ShapeRef.new(shape: CustomRoleArn, location_name: "customRoleArn"))
     UpdatePullThroughCacheRuleRequest.struct_class = Types::UpdatePullThroughCacheRuleRequest
 
     UpdatePullThroughCacheRuleResponse.add_member(:ecr_repository_prefix, Shapes::ShapeRef.new(shape: PullThroughCacheRuleRepositoryPrefix, location_name: "ecrRepositoryPrefix"))
     UpdatePullThroughCacheRuleResponse.add_member(:registry_id, Shapes::ShapeRef.new(shape: RegistryId, location_name: "registryId"))
     UpdatePullThroughCacheRuleResponse.add_member(:updated_at, Shapes::ShapeRef.new(shape: UpdatedTimestamp, location_name: "updatedAt"))
     UpdatePullThroughCacheRuleResponse.add_member(:credential_arn, Shapes::ShapeRef.new(shape: CredentialArn, location_name: "credentialArn"))
+    UpdatePullThroughCacheRuleResponse.add_member(:custom_role_arn, Shapes::ShapeRef.new(shape: CustomRoleArn, location_name: "customRoleArn"))
+    UpdatePullThroughCacheRuleResponse.add_member(:upstream_repository_prefix, Shapes::ShapeRef.new(shape: PullThroughCacheRuleRepositoryPrefix, location_name: "upstreamRepositoryPrefix"))
     UpdatePullThroughCacheRuleResponse.struct_class = Types::UpdatePullThroughCacheRuleResponse
 
     UpdateRepositoryCreationTemplateRequest.add_member(:prefix, Shapes::ShapeRef.new(shape: Prefix, required: true, location_name: "prefix"))
@@ -1294,6 +1305,8 @@ module Aws::ECR
     ValidatePullThroughCacheRuleResponse.add_member(:registry_id, Shapes::ShapeRef.new(shape: RegistryId, location_name: "registryId"))
     ValidatePullThroughCacheRuleResponse.add_member(:upstream_registry_url, Shapes::ShapeRef.new(shape: Url, location_name: "upstreamRegistryUrl"))
     ValidatePullThroughCacheRuleResponse.add_member(:credential_arn, Shapes::ShapeRef.new(shape: CredentialArn, location_name: "credentialArn"))
+    ValidatePullThroughCacheRuleResponse.add_member(:custom_role_arn, Shapes::ShapeRef.new(shape: CustomRoleArn, location_name: "customRoleArn"))
+    ValidatePullThroughCacheRuleResponse.add_member(:upstream_repository_prefix, Shapes::ShapeRef.new(shape: PullThroughCacheRuleRepositoryPrefix, location_name: "upstreamRepositoryPrefix"))
     ValidatePullThroughCacheRuleResponse.add_member(:is_valid, Shapes::ShapeRef.new(shape: IsPTCRuleValid, location_name: "isValid"))
     ValidatePullThroughCacheRuleResponse.add_member(:failure, Shapes::ShapeRef.new(shape: PTCValidateFailure, location_name: "failure"))
     ValidatePullThroughCacheRuleResponse.struct_class = Types::ValidatePullThroughCacheRuleResponse

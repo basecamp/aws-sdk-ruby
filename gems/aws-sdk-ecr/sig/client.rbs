@@ -161,16 +161,20 @@ module Aws
         def upstream_registry_url: () -> ::String
         def created_at: () -> ::Time
         def registry_id: () -> ::String
-        def upstream_registry: () -> ("ecr-public" | "quay" | "k8s" | "docker-hub" | "github-container-registry" | "azure-container-registry" | "gitlab-container-registry")
+        def upstream_registry: () -> ("ecr" | "ecr-public" | "quay" | "k8s" | "docker-hub" | "github-container-registry" | "azure-container-registry" | "gitlab-container-registry")
         def credential_arn: () -> ::String
+        def custom_role_arn: () -> ::String
+        def upstream_repository_prefix: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ECR/Client.html#create_pull_through_cache_rule-instance_method
       def create_pull_through_cache_rule: (
                                             ecr_repository_prefix: ::String,
                                             upstream_registry_url: ::String,
                                             ?registry_id: ::String,
-                                            ?upstream_registry: ("ecr-public" | "quay" | "k8s" | "docker-hub" | "github-container-registry" | "azure-container-registry" | "gitlab-container-registry"),
-                                            ?credential_arn: ::String
+                                            ?upstream_registry: ("ecr" | "ecr-public" | "quay" | "k8s" | "docker-hub" | "github-container-registry" | "azure-container-registry" | "gitlab-container-registry"),
+                                            ?credential_arn: ::String,
+                                            ?custom_role_arn: ::String,
+                                            ?upstream_repository_prefix: ::String
                                           ) -> _CreatePullThroughCacheRuleResponseSuccess
                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreatePullThroughCacheRuleResponseSuccess
 
@@ -247,6 +251,8 @@ module Aws
         def created_at: () -> ::Time
         def registry_id: () -> ::String
         def credential_arn: () -> ::String
+        def custom_role_arn: () -> ::String
+        def upstream_repository_prefix: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ECR/Client.html#delete_pull_through_cache_rule-instance_method
       def delete_pull_through_cache_rule: (
@@ -772,12 +778,15 @@ module Aws
         def registry_id: () -> ::String
         def updated_at: () -> ::Time
         def credential_arn: () -> ::String
+        def custom_role_arn: () -> ::String
+        def upstream_repository_prefix: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ECR/Client.html#update_pull_through_cache_rule-instance_method
       def update_pull_through_cache_rule: (
                                             ?registry_id: ::String,
                                             ecr_repository_prefix: ::String,
-                                            credential_arn: ::String
+                                            ?credential_arn: ::String,
+                                            ?custom_role_arn: ::String
                                           ) -> _UpdatePullThroughCacheRuleResponseSuccess
                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdatePullThroughCacheRuleResponseSuccess
 
@@ -832,6 +841,8 @@ module Aws
         def registry_id: () -> ::String
         def upstream_registry_url: () -> ::String
         def credential_arn: () -> ::String
+        def custom_role_arn: () -> ::String
+        def upstream_repository_prefix: () -> ::String
         def is_valid: () -> bool
         def failure: () -> ::String
       end

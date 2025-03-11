@@ -1345,7 +1345,7 @@ module Aws::MediaLive
       attr_accessor initial_audio_gain: ::Integer
       attr_accessor input_end_action: ("NONE" | "SWITCH_AND_LOOP_INPUTS")
       attr_accessor input_loss_behavior: Types::InputLossBehavior
-      attr_accessor output_locking_mode: ("EPOCH_LOCKING" | "PIPELINE_LOCKING")
+      attr_accessor output_locking_mode: ("EPOCH_LOCKING" | "PIPELINE_LOCKING" | "DISABLED")
       attr_accessor output_timing_source: ("INPUT_CLOCK" | "SYSTEM_CLOCK")
       attr_accessor support_low_framerate_inputs: ("DISABLED" | "ENABLED")
       attr_accessor output_locking_settings: Types::OutputLockingSettings

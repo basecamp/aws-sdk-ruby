@@ -3707,6 +3707,11 @@ module Aws::EC2
     #   Zone control plane operations, such as API calls.
     #   @return [String]
     #
+    # @!attribute [rw] group_long_name
+    #   The long name of the Availability Zone group, Local Zone group, or
+    #   Wavelength Zone group.
+    #   @return [String]
+    #
     # @!attribute [rw] state
     #   The state of the Availability Zone, Local Zone, or Wavelength Zone.
     #   This value is always `available`.
@@ -3725,6 +3730,7 @@ module Aws::EC2
       :zone_type,
       :parent_zone_name,
       :parent_zone_id,
+      :group_long_name,
       :state)
       SENSITIVE = []
       include Aws::Structure
@@ -18092,6 +18098,12 @@ module Aws::EC2
     #
     # @!attribute [rw] filters
     #   The filters.
+    #
+    #   * `group-long-name` - The long name of the zone group for the
+    #     Availability Zone (for example, `US West (Oregon) 1`), the Local
+    #     Zone (for example, for Zone group `us-west-2-lax-1`, it is `US
+    #     West (Los Angeles)`, or the Wavelength Zone (for example, for Zone
+    #     group `us-east-1-wl1`, it is `US East (Verizon)`.
     #
     #   * `group-name` - The name of the zone group for the Availability
     #     Zone (for example, `us-east-1-zg-1`), the Local Zone (for example,
@@ -35974,14 +35986,14 @@ module Aws::EC2
     #   customer managed KMS key to use for EBS encryption.
     #
     #   This parameter is only supported on `BlockDeviceMapping` objects
-    #   called by [RunInstances][1], [RequestSpotFleet][2], and
-    #   [RequestSpotInstances][3].
+    #   called by [CreateFleet][1], [RequestSpotInstances][2], and
+    #   [RunInstances][3].
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html
-    #   [2]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet.html
-    #   [3]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFleet.html
+    #   [2]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html
+    #   [3]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html
     #   @return [String]
     #
     # @!attribute [rw] snapshot_id
@@ -36322,22 +36334,6 @@ module Aws::EC2
     #   store volumes to attach to the instance at launch. For more
     #   information, see [Block device mappings for volumes on Amazon EC2
     #   instances][1] in the *Amazon EC2 User Guide*.
-    #
-    #   To override a block device mapping specified in the launch template:
-    #
-    #   * Specify the exact same `DeviceName` here as specified in the
-    #     launch template.
-    #
-    #   * Only specify the parameters you want to change.
-    #
-    #   * Any parameters you don't specify here will keep their original
-    #     launch template values.
-    #
-    #   To add a new block device mapping:
-    #
-    #   * Specify a `DeviceName` that doesn't exist in the launch template.
-    #
-    #   * Specify all desired parameters here.
     #
     #
     #
@@ -42990,6 +42986,11 @@ module Aws::EC2
     # @!attribute [rw] tags
     #   The instance tags associated with the event window. Any instances
     #   associated with the tags will be associated with the event window.
+    #
+    #   Note that while you can't create tag keys beginning with `aws:`,
+    #   you can specify existing Amazon Web Services managed tag keys (with
+    #   the `aws:` prefix) when specifying them as targets to associate with
+    #   the event window.
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] dedicated_host_ids
@@ -44370,9 +44371,6 @@ module Aws::EC2
     #   * For instance types with FPGA accelerators, specify `fpga`.
     #
     #   * For instance types with GPU accelerators, specify `gpu`.
-    #
-    #   * For instance types with Inference accelerators, specify
-    #     `inference`.
     #
     #   * For instance types with Inference accelerators, specify
     #     `inference`.
@@ -57587,11 +57585,11 @@ module Aws::EC2
       include Aws::Structure
     end
 
-    # Describes whether the resource is managed by an service provider and,
+    # Describes whether the resource is managed by a service provider and,
     # if so, describes the service provider that manages it.
     #
     # @!attribute [rw] managed
-    #   If `true`, the resource is managed by an service provider.
+    #   If `true`, the resource is managed by a service provider.
     #   @return [Boolean]
     #
     # @!attribute [rw] principal
