@@ -152,6 +152,7 @@ module Aws::CloudWatchLogs
     DestinationField = Shapes::StringShape.new(name: 'DestinationField')
     DestinationName = Shapes::StringShape.new(name: 'DestinationName')
     Destinations = Shapes::ListShape.new(name: 'Destinations')
+    DetectorKmsKeyArn = Shapes::StringShape.new(name: 'DetectorKmsKeyArn')
     DetectorName = Shapes::StringShape.new(name: 'DetectorName')
     Dimensions = Shapes::MapShape.new(name: 'Dimensions')
     DimensionsKey = Shapes::StringShape.new(name: 'DimensionsKey')
@@ -664,7 +665,7 @@ module Aws::CloudWatchLogs
     CreateLogAnomalyDetectorRequest.add_member(:detector_name, Shapes::ShapeRef.new(shape: DetectorName, location_name: "detectorName"))
     CreateLogAnomalyDetectorRequest.add_member(:evaluation_frequency, Shapes::ShapeRef.new(shape: EvaluationFrequency, location_name: "evaluationFrequency"))
     CreateLogAnomalyDetectorRequest.add_member(:filter_pattern, Shapes::ShapeRef.new(shape: FilterPattern, location_name: "filterPattern"))
-    CreateLogAnomalyDetectorRequest.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "kmsKeyId"))
+    CreateLogAnomalyDetectorRequest.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: DetectorKmsKeyArn, location_name: "kmsKeyId"))
     CreateLogAnomalyDetectorRequest.add_member(:anomaly_visibility_time, Shapes::ShapeRef.new(shape: AnomalyVisibilityTime, location_name: "anomalyVisibilityTime"))
     CreateLogAnomalyDetectorRequest.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     CreateLogAnomalyDetectorRequest.struct_class = Types::CreateLogAnomalyDetectorRequest

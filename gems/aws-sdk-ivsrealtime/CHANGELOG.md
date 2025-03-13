@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.40.0 (2025-03-13)
+------------------
+
+* Feature - IVS Real-Time now offers customers the ability to adjust the participant & composition recording segment duration
+
 1.39.0 (2025-03-06)
 ------------------
 

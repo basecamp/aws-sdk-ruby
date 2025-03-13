@@ -3658,7 +3658,7 @@ module Aws::EC2
     #   `opt-in-not-required`.
     #
     #   For Local Zones and Wavelength Zones, this parameter is the opt-in
-    #   status. The possible values are `opted-in`, and `not-opted-in`.
+    #   status. The possible values are `opted-in` and `not-opted-in`.
     #   @return [String]
     #
     # @!attribute [rw] messages
@@ -3693,8 +3693,10 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] zone_type
-    #   The type of zone. The valid values are `availability-zone`,
-    #   `local-zone`, and `wavelength-zone`.
+    #   The type of zone.
+    #
+    #   Valid values: `availability-zone` \| `local-zone` \|
+    #   `wavelength-zone`
     #   @return [String]
     #
     # @!attribute [rw] parent_zone_name
@@ -3714,7 +3716,8 @@ module Aws::EC2
     #
     # @!attribute [rw] state
     #   The state of the Availability Zone, Local Zone, or Wavelength Zone.
-    #   This value is always `available`.
+    #   The possible values are `available`, `unavailable`, and
+    #   `constrained`.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AvailabilityZone AWS API Documentation
@@ -9971,10 +9974,16 @@ module Aws::EC2
     #
     # @!attribute [rw] client_token
     #   Unique, case-sensitive identifier you provide to ensure the
-    #   idempotency of the request. For more information, see [Ensuring
-    #   idempotency][1].
+    #   idempotency of the request. If a client token isn't specified, a
+    #   randomly generated token is used in the request to ensure
+    #   idempotency.
+    #
+    #   For more information, see [Ensuring idempotency][1].
     #
     #   Constraint: Maximum 128 ASCII characters.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
     #
     #
     #
@@ -10052,10 +10061,16 @@ module Aws::EC2
     #
     # @!attribute [rw] client_token
     #   Unique, case-sensitive identifier you provide to ensure the
-    #   idempotency of the request. For more information, see [Ensuring
-    #   idempotency][1].
+    #   idempotency of the request. If a client token isn't specified, a
+    #   randomly generated token is used in the request to ensure
+    #   idempotency.
+    #
+    #   For more information, see [Ensuring idempotency][1].
     #
     #   Constraint: Maximum 128 ASCII characters.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
     #
     #
     #
@@ -35986,14 +36001,14 @@ module Aws::EC2
     #   customer managed KMS key to use for EBS encryption.
     #
     #   This parameter is only supported on `BlockDeviceMapping` objects
-    #   called by [CreateFleet][1], [RequestSpotInstances][2], and
-    #   [RunInstances][3].
+    #   called by [RunInstances][1], [RequestSpotFleet][2], and
+    #   [RequestSpotInstances][3].
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFleet.html
-    #   [2]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html
-    #   [3]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html
+    #   [2]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet.html
+    #   [3]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html
     #   @return [String]
     #
     # @!attribute [rw] snapshot_id
@@ -36334,6 +36349,22 @@ module Aws::EC2
     #   store volumes to attach to the instance at launch. For more
     #   information, see [Block device mappings for volumes on Amazon EC2
     #   instances][1] in the *Amazon EC2 User Guide*.
+    #
+    #   To override a block device mapping specified in the launch template:
+    #
+    #   * Specify the exact same `DeviceName` here as specified in the
+    #     launch template.
+    #
+    #   * Only specify the parameters you want to change.
+    #
+    #   * Any parameters you don't specify here will keep their original
+    #     launch template values.
+    #
+    #   To add a new block device mapping:
+    #
+    #   * Specify a `DeviceName` that doesn't exist in the launch template.
+    #
+    #   * Specify all desired parameters here.
     #
     #
     #
@@ -42986,11 +43017,6 @@ module Aws::EC2
     # @!attribute [rw] tags
     #   The instance tags associated with the event window. Any instances
     #   associated with the tags will be associated with the event window.
-    #
-    #   Note that while you can't create tag keys beginning with `aws:`,
-    #   you can specify existing Amazon Web Services managed tag keys (with
-    #   the `aws:` prefix) when specifying them as targets to associate with
-    #   the event window.
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] dedicated_host_ids
@@ -44371,6 +44397,9 @@ module Aws::EC2
     #   * For instance types with FPGA accelerators, specify `fpga`.
     #
     #   * For instance types with GPU accelerators, specify `gpu`.
+    #
+    #   * For instance types with Inference accelerators, specify
+    #     `inference`.
     #
     #   * For instance types with Inference accelerators, specify
     #     `inference`.
@@ -52828,10 +52857,16 @@ module Aws::EC2
     #
     # @!attribute [rw] client_token
     #   Unique, case-sensitive identifier you provide to ensure the
-    #   idempotency of the request. For more information, see [Ensuring
-    #   idempotency in Amazon EC2 API requests][1].
+    #   idempotency of the request. If a client token isn't specified, a
+    #   randomly generated token is used in the request to ensure
+    #   idempotency.
+    #
+    #   For more information, see [Ensuring idempotency][1].
     #
     #   Constraint: Maximum 128 ASCII characters.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
     #
     #
     #
@@ -57585,11 +57620,11 @@ module Aws::EC2
       include Aws::Structure
     end
 
-    # Describes whether the resource is managed by a service provider and,
+    # Describes whether the resource is managed by an service provider and,
     # if so, describes the service provider that manages it.
     #
     # @!attribute [rw] managed
-    #   If `true`, the resource is managed by a service provider.
+    #   If `true`, the resource is managed by an service provider.
     #   @return [Boolean]
     #
     # @!attribute [rw] principal

@@ -85,13 +85,18 @@ module Aws::IVSRealTime
     #   The default value is 0, which disables merging.
     #   @return [Integer]
     #
+    # @!attribute [rw] hls_configuration
+    #   HLS configuration object for individual participant recording.
+    #   @return [Types::ParticipantRecordingHlsConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/AutoParticipantRecordingConfiguration AWS API Documentation
     #
     class AutoParticipantRecordingConfiguration < Struct.new(
       :storage_configuration_arn,
       :media_types,
       :thumbnail_configuration,
-      :recording_reconnect_window_seconds)
+      :recording_reconnect_window_seconds,
+      :hls_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -175,6 +180,24 @@ module Aws::IVSRealTime
       :tags,
       :start_time,
       :end_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An object representing a configuration of HLS recordings for
+    # server-side composition.
+    #
+    # @!attribute [rw] target_segment_duration_seconds
+    #   Defines the target duration for recorded segments generated when
+    #   using composite recording. Segments may have durations shorter than
+    #   the specified value when needed to ensure each segment begins with a
+    #   keyframe. Default: 2.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/CompositionRecordingHlsConfiguration AWS API Documentation
+    #
+    class CompositionRecordingHlsConfiguration < Struct.new(
+      :target_segment_duration_seconds)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1974,12 +1997,7 @@ module Aws::IVSRealTime
     # @!attribute [rw] recording_s3_prefix
     #   S3 prefix of the S3 bucket where the participant is being recorded,
     #   if individual participant recording is enabled, or `""` (empty
-    #   string), if recording is not enabled. If individual participant
-    #   recording merge is enabled, and if a stage publisher disconnects
-    #   from a stage and then reconnects, IVS tries to record to the same S3
-    #   prefix as the previous session. See [ Merge Fragmented Individual
-    #   Participant
-    #   Recordings](/ivs/latest/RealTimeUserGuide/rt-individual-participant-recording.html#ind-part-rec-merge-frag).
+    #   string), if recording is not enabled.
     #   @return [String]
     #
     # @!attribute [rw] recording_state
@@ -2010,6 +2028,24 @@ module Aws::IVSRealTime
       :recording_s3_prefix,
       :recording_state,
       :protocol)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An object representing a configuration of participant HLS recordings
+    # for individual participant recording.
+    #
+    # @!attribute [rw] target_segment_duration_seconds
+    #   Defines the target duration for recorded segments generated when
+    #   recording a stage participant. Segments may have durations longer
+    #   than the specified value when needed to ensure each segment begins
+    #   with a keyframe. Default: 6.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/ParticipantRecordingHlsConfiguration AWS API Documentation
+    #
+    class ParticipantRecordingHlsConfiguration < Struct.new(
+      :target_segment_duration_seconds)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2393,6 +2429,11 @@ module Aws::IVSRealTime
 
     # An object representing a configuration to record a stage stream.
     #
+    # @!attribute [rw] hls_configuration
+    #   An HLS configuration object to return information about how the
+    #   recording will be configured.
+    #   @return [Types::CompositionRecordingHlsConfiguration]
+    #
     # @!attribute [rw] format
     #   The recording format for storing a recording in Amazon S3.
     #   @return [String]
@@ -2400,6 +2441,7 @@ module Aws::IVSRealTime
     # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/RecordingConfiguration AWS API Documentation
     #
     class RecordingConfiguration < Struct.new(
+      :hls_configuration,
       :format)
       SENSITIVE = []
       include Aws::Structure

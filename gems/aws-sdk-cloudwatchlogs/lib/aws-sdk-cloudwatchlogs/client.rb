@@ -936,8 +936,9 @@ module Aws::CloudWatchLogs
     #   this key and for the anomaly detector to retrieve information about
     #   the anomalies that it finds.
     #
-    #   For more information about using a KMS key and to see the required IAM
-    #   policy, see [Use a KMS key with an anomaly detector][1].
+    #   Make sure the value provided is a valid KMS key ARN. For more
+    #   information about using a KMS key and to see the required IAM policy,
+    #   see [Use a KMS key with an anomaly detector][1].
     #
     #
     #
@@ -973,7 +974,7 @@ module Aws::CloudWatchLogs
     #     detector_name: "DetectorName",
     #     evaluation_frequency: "ONE_MIN", # accepts ONE_MIN, FIVE_MIN, TEN_MIN, FIFTEEN_MIN, THIRTY_MIN, ONE_HOUR
     #     filter_pattern: "FilterPattern",
-    #     kms_key_id: "KmsKeyId",
+    #     kms_key_id: "DetectorKmsKeyArn",
     #     anomaly_visibility_time: 1,
     #     tags: {
     #       "TagKey" => "TagValue",
@@ -2858,8 +2859,14 @@ module Aws::CloudWatchLogs
     end
 
     # Lists log events from the specified log group. You can list all the
-    # log events or filter the results using a filter pattern, a time range,
-    # and the name of the log stream.
+    # log events or filter the results using one or more of the following:
+    #
+    # * A filter pattern
+    #
+    # * A time range
+    #
+    # * The log stream name, or a log stream name prefix that matches
+    #   mutltiple log streams
     #
     # You must have the `logs:FilterLogEvents` permission to perform this
     # operation.
@@ -2868,13 +2875,28 @@ module Aws::CloudWatchLogs
     # `logGroupIdentifier` or `logGroupName`. You must include one of these
     # two parameters, but you can't include both.
     #
-    # By default, this operation returns as many log events as can fit in 1
-    # MB (up to 10,000 log events) or all the events found within the
-    # specified time range. If the results include a token, that means there
-    # are more log events available. You can get additional results by
-    # specifying the token in a subsequent call. This operation can return
-    # empty results while there are more log events available through the
-    # token.
+    # `FilterLogEvents` is a paginated operation. Each page returned can
+    # contain up to 1 MB of log events or up to 10,000 log events. A
+    # returned page might only be partially full, or even empty. For
+    # example, if the result of a query would return 15,000 log events, the
+    # first page isn't guaranteed to have 10,000 log events even if they
+    # all fit into 1 MB.
+    #
+    # Partially full or empty pages don't necessarily mean that pagination
+    # is finished. If the results include a `nextToken`, there might be more
+    # log events available. You can return these additional log events by
+    # providing the nextToken in a subsequent `FilterLogEvents` operation.
+    # If the results don't include a `nextToken`, then pagination is
+    # finished.
+    #
+    # <note markdown="1"> If you set `startFromHead` to `true` and you don’t include `endTime`
+    # in your request, you can end up in a situation where the pagination
+    # doesn't terminate. This can happen when the new log events are being
+    # added to the target log streams faster than they are being read. This
+    # situation is a good use case for the CloudWatch Logs [Live Tail][1]
+    # feature.
+    #
+    #  </note>
     #
     # The returned log events are sorted by event timestamp, the timestamp
     # when the event was ingested by CloudWatch Logs, and the ID of the
@@ -2883,11 +2905,21 @@ module Aws::CloudWatchLogs
     # If you are using CloudWatch cross-account observability, you can use
     # this operation in a monitoring account and view data from the linked
     # source accounts. For more information, see [CloudWatch cross-account
-    # observability][1].
+    # observability][2].
+    #
+    # <note markdown="1"> If you are using [log transformation][3], the `FilterLogEvents`
+    # operation returns only the original versions of log events, before
+    # they were transformed. To view the transformed versions, you must use
+    # a [CloudWatch Logs query.][4]
+    #
+    #  </note>
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs_LiveTail.html
+    # [2]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html
+    # [3]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html
+    # [4]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html
     #
     # @option params [String] :log_group_name
     #   The name of the log group to search.
@@ -3276,6 +3308,7 @@ module Aws::CloudWatchLogs
     end
 
     # Retrieves information about the log anomaly detector that you specify.
+    # The KMS key ARN detected is valid.
     #
     # @option params [required, String] :anomaly_detector_arn
     #   The ARN of the anomaly detector to retrieve information about. You can
@@ -3329,24 +3362,51 @@ module Aws::CloudWatchLogs
     # Lists log events from the specified log stream. You can list all of
     # the log events or filter using a time range.
     #
-    # By default, this operation returns as many log events as can fit in a
-    # response size of 1MB (up to 10,000 log events). You can get additional
-    # log events by specifying one of the tokens in a subsequent call. This
-    # operation can return empty results while there are more log events
-    # available through the token.
+    # `GetLogEvents` is a paginated operation. Each page returned can
+    # contain up to 1 MB of log events or up to 10,000 log events. A
+    # returned page might only be partially full, or even empty. For
+    # example, if the result of a query would return 15,000 log events, the
+    # first page isn't guaranteed to have 10,000 log events even if they
+    # all fit into 1 MB.
+    #
+    # Partially full or empty pages don't necessarily mean that pagination
+    # is finished. As long as the `nextBackwardToken` or `nextForwardToken`
+    # returned is NOT equal to the `nextToken` that you passed into the API
+    # call, there might be more log events available. The token that you use
+    # depends on the direction you want to move in along the log stream. The
+    # returned tokens are never null.
+    #
+    # <note markdown="1"> If you set `startFromHead` to `true` and you don’t include `endTime`
+    # in your request, you can end up in a situation where the pagination
+    # doesn't terminate. This can happen when the new log events are being
+    # added to the target log streams faster than they are being read. This
+    # situation is a good use case for the CloudWatch Logs [Live Tail][1]
+    # feature.
+    #
+    #  </note>
     #
     # If you are using CloudWatch cross-account observability, you can use
     # this operation in a monitoring account and view data from the linked
     # source accounts. For more information, see [CloudWatch cross-account
-    # observability][1].
+    # observability][2].
     #
     # You can specify the log group to search by using either
     # `logGroupIdentifier` or `logGroupName`. You must include one of these
     # two parameters, but you can't include both.
     #
+    # <note markdown="1"> If you are using [log transformation][3], the `GetLogEvents` operation
+    # returns only the original versions of log events, before they were
+    # transformed. To view the transformed versions, you must use a
+    # [CloudWatch Logs query.][4]
+    #
+    #  </note>
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs_LiveTail.html
+    # [2]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html
+    # [3]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html
+    # [4]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html
     #
     # @option params [String] :log_group_name
     #   The name of the log group.
@@ -7001,7 +7061,7 @@ module Aws::CloudWatchLogs
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloudwatchlogs'
-      context[:gem_version] = '1.109.0'
+      context[:gem_version] = '1.110.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

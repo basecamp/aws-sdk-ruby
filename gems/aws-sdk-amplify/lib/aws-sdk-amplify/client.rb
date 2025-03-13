@@ -508,7 +508,7 @@ module Aws::Amplify
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/amplify-SSR-compute-role.html
     #
     # @option params [String] :iam_service_role_arn
     #   The Amazon Resource Name (ARN) of the IAM service role for the Amplify
@@ -801,6 +801,22 @@ module Aws::Amplify
     # @option params [Boolean] :enable_auto_build
     #   Enables auto building for the branch.
     #
+    # @option params [Boolean] :enable_skew_protection
+    #   Specifies whether the skew protection feature is enabled for the
+    #   branch.
+    #
+    #   Deployment skew protection is available to Amplify applications to
+    #   eliminate version skew issues between client and servers in web
+    #   applications. When you apply skew protection to a branch, you can
+    #   ensure that your clients always interact with the correct version of
+    #   server-side assets, regardless of when a deployment occurs. For more
+    #   information about skew protection, see [Skew protection for Amplify
+    #   deployments][1] in the *Amplify User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/skew-protection.html
+    #
     # @option params [Hash<String,String>] :environment_variables
     #   The environment variables for the branch.
     #
@@ -865,7 +881,7 @@ module Aws::Amplify
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/amplify-SSR-compute-role.html
     #
     # @return [Types::CreateBranchResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -881,6 +897,7 @@ module Aws::Amplify
     #     framework: "Framework",
     #     enable_notification: false,
     #     enable_auto_build: false,
+    #     enable_skew_protection: false,
     #     environment_variables: {
     #       "EnvKey" => "EnvValue",
     #     },
@@ -917,6 +934,7 @@ module Aws::Amplify
     #   resp.branch.environment_variables #=> Hash
     #   resp.branch.environment_variables["EnvKey"] #=> String
     #   resp.branch.enable_auto_build #=> Boolean
+    #   resp.branch.enable_skew_protection #=> Boolean
     #   resp.branch.custom_domains #=> Array
     #   resp.branch.custom_domains[0] #=> String
     #   resp.branch.framework #=> String
@@ -1276,6 +1294,7 @@ module Aws::Amplify
     #   resp.branch.environment_variables #=> Hash
     #   resp.branch.environment_variables["EnvKey"] #=> String
     #   resp.branch.enable_auto_build #=> Boolean
+    #   resp.branch.enable_skew_protection #=> Boolean
     #   resp.branch.custom_domains #=> Array
     #   resp.branch.custom_domains[0] #=> String
     #   resp.branch.framework #=> String
@@ -1662,6 +1681,7 @@ module Aws::Amplify
     #   resp.branch.environment_variables #=> Hash
     #   resp.branch.environment_variables["EnvKey"] #=> String
     #   resp.branch.enable_auto_build #=> Boolean
+    #   resp.branch.enable_skew_protection #=> Boolean
     #   resp.branch.custom_domains #=> Array
     #   resp.branch.custom_domains[0] #=> String
     #   resp.branch.framework #=> String
@@ -2072,6 +2092,7 @@ module Aws::Amplify
     #   resp.branches[0].environment_variables #=> Hash
     #   resp.branches[0].environment_variables["EnvKey"] #=> String
     #   resp.branches[0].enable_auto_build #=> Boolean
+    #   resp.branches[0].enable_skew_protection #=> Boolean
     #   resp.branches[0].custom_domains #=> Array
     #   resp.branches[0].custom_domains[0] #=> String
     #   resp.branches[0].framework #=> String
@@ -2565,7 +2586,7 @@ module Aws::Amplify
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/amplify-SSR-compute-role.html
     #
     # @option params [String] :iam_service_role_arn
     #   The Amazon Resource Name (ARN) of the IAM service role for the Amplify
@@ -2799,6 +2820,22 @@ module Aws::Amplify
     # @option params [Boolean] :enable_auto_build
     #   Enables auto building for the branch.
     #
+    # @option params [Boolean] :enable_skew_protection
+    #   Specifies whether the skew protection feature is enabled for the
+    #   branch.
+    #
+    #   Deployment skew protection is available to Amplify applications to
+    #   eliminate version skew issues between client and servers in web
+    #   applications. When you apply skew protection to a branch, you can
+    #   ensure that your clients always interact with the correct version of
+    #   server-side assets, regardless of when a deployment occurs. For more
+    #   information about skew protection, see [Skew protection for Amplify
+    #   deployments][1] in the *Amplify User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/skew-protection.html
+    #
     # @option params [Hash<String,String>] :environment_variables
     #   The environment variables for the branch.
     #
@@ -2860,7 +2897,7 @@ module Aws::Amplify
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/amplify-SSR-compute-role.html
     #
     # @return [Types::UpdateBranchResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2876,6 +2913,7 @@ module Aws::Amplify
     #     stage: "PRODUCTION", # accepts PRODUCTION, BETA, DEVELOPMENT, EXPERIMENTAL, PULL_REQUEST
     #     enable_notification: false,
     #     enable_auto_build: false,
+    #     enable_skew_protection: false,
     #     environment_variables: {
     #       "EnvKey" => "EnvValue",
     #     },
@@ -2909,6 +2947,7 @@ module Aws::Amplify
     #   resp.branch.environment_variables #=> Hash
     #   resp.branch.environment_variables["EnvKey"] #=> String
     #   resp.branch.enable_auto_build #=> Boolean
+    #   resp.branch.enable_skew_protection #=> Boolean
     #   resp.branch.custom_domains #=> Array
     #   resp.branch.custom_domains[0] #=> String
     #   resp.branch.framework #=> String
@@ -3077,7 +3116,7 @@ module Aws::Amplify
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-amplify'
-      context[:gem_version] = '1.80.0'
+      context[:gem_version] = '1.81.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

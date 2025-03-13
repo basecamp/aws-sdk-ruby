@@ -3154,11 +3154,24 @@ module Aws::S3Control
     #   access credentials.
     #   @return [String]
     #
+    # @!attribute [rw] grantee
+    #   The user, group, or role that was granted access to the S3 location
+    #   scope. For directory identities, this API also returns the grants of
+    #   the IAM role used for the identity-aware request. For more
+    #   information on identity-aware sessions, see [Granting permissions to
+    #   use identity-aware console sessions][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_control-access_sts-setcontext.html
+    #   @return [Types::Grantee]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/GetDataAccessResult AWS API Documentation
     #
     class GetDataAccessResult < Struct.new(
       :credentials,
-      :matched_grant_target)
+      :matched_grant_target,
+      :grantee)
       SENSITIVE = [:credentials]
       include Aws::Structure
     end

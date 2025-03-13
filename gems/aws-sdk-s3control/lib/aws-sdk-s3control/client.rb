@@ -4375,6 +4375,7 @@ module Aws::S3Control
     #
     #   * {Types::GetDataAccessResult#credentials #credentials} => Types::Credentials
     #   * {Types::GetDataAccessResult#matched_grant_target #matched_grant_target} => String
+    #   * {Types::GetDataAccessResult#grantee #grantee} => Types::Grantee
     #
     # @example Request syntax with placeholder values
     #
@@ -4394,6 +4395,8 @@ module Aws::S3Control
     #   resp.credentials.session_token #=> String
     #   resp.credentials.expiration #=> Time
     #   resp.matched_grant_target #=> String
+    #   resp.grantee.grantee_type #=> String, one of "DIRECTORY_USER", "DIRECTORY_GROUP", "IAM"
+    #   resp.grantee.grantee_identifier #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/GetDataAccess AWS API Documentation
     #
@@ -7757,7 +7760,7 @@ module Aws::S3Control
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-s3control'
-      context[:gem_version] = '1.103.0'
+      context[:gem_version] = '1.104.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

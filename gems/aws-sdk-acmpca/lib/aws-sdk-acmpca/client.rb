@@ -609,7 +609,7 @@ module Aws::ACMPCA
     #
     #   resp = client.create_certificate_authority({
     #     certificate_authority_configuration: { # required
-    #       key_algorithm: "RSA_2048", # required, accepts RSA_2048, RSA_4096, EC_prime256v1, EC_secp384r1, SM2
+    #       key_algorithm: "RSA_2048", # required, accepts RSA_2048, RSA_3072, RSA_4096, EC_prime256v1, EC_secp384r1, EC_secp521r1, SM2
     #       signing_algorithm: "SHA256WITHECDSA", # required, accepts SHA256WITHECDSA, SHA384WITHECDSA, SHA512WITHECDSA, SHA256WITHRSA, SHA384WITHRSA, SHA512WITHRSA, SM3WITHSM2
     #       subject: { # required
     #         country: "CountryCodeString",
@@ -1154,7 +1154,7 @@ module Aws::ACMPCA
     #   resp.certificate_authority.not_before #=> Time
     #   resp.certificate_authority.not_after #=> Time
     #   resp.certificate_authority.failure_reason #=> String, one of "REQUEST_TIMED_OUT", "UNSUPPORTED_ALGORITHM", "OTHER"
-    #   resp.certificate_authority.certificate_authority_configuration.key_algorithm #=> String, one of "RSA_2048", "RSA_4096", "EC_prime256v1", "EC_secp384r1", "SM2"
+    #   resp.certificate_authority.certificate_authority_configuration.key_algorithm #=> String, one of "RSA_2048", "RSA_3072", "RSA_4096", "EC_prime256v1", "EC_secp384r1", "EC_secp521r1", "SM2"
     #   resp.certificate_authority.certificate_authority_configuration.signing_algorithm #=> String, one of "SHA256WITHECDSA", "SHA384WITHECDSA", "SHA512WITHECDSA", "SHA256WITHRSA", "SHA384WITHRSA", "SHA512WITHRSA", "SM3WITHSM2"
     #   resp.certificate_authority.certificate_authority_configuration.subject.country #=> String
     #   resp.certificate_authority.certificate_authority_configuration.subject.organization #=> String
@@ -2005,7 +2005,7 @@ module Aws::ACMPCA
     #   resp.certificate_authorities[0].not_before #=> Time
     #   resp.certificate_authorities[0].not_after #=> Time
     #   resp.certificate_authorities[0].failure_reason #=> String, one of "REQUEST_TIMED_OUT", "UNSUPPORTED_ALGORITHM", "OTHER"
-    #   resp.certificate_authorities[0].certificate_authority_configuration.key_algorithm #=> String, one of "RSA_2048", "RSA_4096", "EC_prime256v1", "EC_secp384r1", "SM2"
+    #   resp.certificate_authorities[0].certificate_authority_configuration.key_algorithm #=> String, one of "RSA_2048", "RSA_3072", "RSA_4096", "EC_prime256v1", "EC_secp384r1", "EC_secp521r1", "SM2"
     #   resp.certificate_authorities[0].certificate_authority_configuration.signing_algorithm #=> String, one of "SHA256WITHECDSA", "SHA384WITHECDSA", "SHA512WITHECDSA", "SHA256WITHRSA", "SHA384WITHRSA", "SHA512WITHRSA", "SM3WITHSM2"
     #   resp.certificate_authorities[0].certificate_authority_configuration.subject.country #=> String
     #   resp.certificate_authorities[0].certificate_authority_configuration.subject.organization #=> String
@@ -2697,7 +2697,7 @@ module Aws::ACMPCA
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-acmpca'
-      context[:gem_version] = '1.90.0'
+      context[:gem_version] = '1.91.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

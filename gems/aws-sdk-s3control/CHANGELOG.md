@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.104.0 (2025-03-13)
+------------------
+
+* Feature - Updating GetDataAccess response for S3 Access Grants to include the matched Grantee for the requested prefix
+
 1.103.0 (2025-02-18)
 ------------------
 

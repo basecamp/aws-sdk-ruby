@@ -2027,7 +2027,11 @@ module Aws::DataZone
     #   The schedule of the data source runs.
     #
     # @option params [required, String] :type
-    #   The type of the data source.
+    #   The type of the data source. In Amazon DataZone, you can use data
+    #   sources to import technical metadata of assets (data) from the source
+    #   databases or data warehouses into Amazon DataZone. In the current
+    #   release of Amazon DataZone, you can create and run data sources for
+    #   Amazon Web Services Glue and Amazon Redshift.
     #
     # @return [Types::CreateDataSourceOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2419,6 +2423,7 @@ module Aws::DataZone
     #   * {Types::CreateEnvironmentOutput#domain_id #domain_id} => String
     #   * {Types::CreateEnvironmentOutput#environment_actions #environment_actions} => Array&lt;Types::ConfigurableEnvironmentAction&gt;
     #   * {Types::CreateEnvironmentOutput#environment_blueprint_id #environment_blueprint_id} => String
+    #   * {Types::CreateEnvironmentOutput#environment_configuration_id #environment_configuration_id} => String
     #   * {Types::CreateEnvironmentOutput#environment_profile_id #environment_profile_id} => String
     #   * {Types::CreateEnvironmentOutput#glossary_terms #glossary_terms} => Array&lt;String&gt;
     #   * {Types::CreateEnvironmentOutput#id #id} => String
@@ -2471,6 +2476,7 @@ module Aws::DataZone
     #   resp.environment_actions[0].parameters[0].value #=> String
     #   resp.environment_actions[0].type #=> String
     #   resp.environment_blueprint_id #=> String
+    #   resp.environment_configuration_id #=> String
     #   resp.environment_profile_id #=> String
     #   resp.glossary_terms #=> Array
     #   resp.glossary_terms[0] #=> String
@@ -3032,6 +3038,7 @@ module Aws::DataZone
     #     user_parameters: [
     #       {
     #         environment_configuration_name: "EnvironmentConfigurationName",
+    #         environment_id: "EnvironmentId",
     #         environment_parameters: [
     #           {
     #             name: "String",
@@ -3063,9 +3070,10 @@ module Aws::DataZone
     #   resp.last_updated_at #=> Time
     #   resp.name #=> String
     #   resp.project_profile_id #=> String
-    #   resp.project_status #=> String, one of "ACTIVE", "DELETING", "DELETE_FAILED"
+    #   resp.project_status #=> String, one of "ACTIVE", "DELETING", "DELETE_FAILED", "UPDATING", "UPDATE_FAILED"
     #   resp.user_parameters #=> Array
     #   resp.user_parameters[0].environment_configuration_name #=> String
+    #   resp.user_parameters[0].environment_id #=> String
     #   resp.user_parameters[0].environment_parameters #=> Array
     #   resp.user_parameters[0].environment_parameters[0].name #=> String
     #   resp.user_parameters[0].environment_parameters[0].value #=> String
@@ -5408,6 +5416,7 @@ module Aws::DataZone
     #   * {Types::GetEnvironmentOutput#domain_id #domain_id} => String
     #   * {Types::GetEnvironmentOutput#environment_actions #environment_actions} => Array&lt;Types::ConfigurableEnvironmentAction&gt;
     #   * {Types::GetEnvironmentOutput#environment_blueprint_id #environment_blueprint_id} => String
+    #   * {Types::GetEnvironmentOutput#environment_configuration_id #environment_configuration_id} => String
     #   * {Types::GetEnvironmentOutput#environment_profile_id #environment_profile_id} => String
     #   * {Types::GetEnvironmentOutput#glossary_terms #glossary_terms} => Array&lt;String&gt;
     #   * {Types::GetEnvironmentOutput#id #id} => String
@@ -5445,6 +5454,7 @@ module Aws::DataZone
     #   resp.environment_actions[0].parameters[0].value #=> String
     #   resp.environment_actions[0].type #=> String
     #   resp.environment_blueprint_id #=> String
+    #   resp.environment_configuration_id #=> String
     #   resp.environment_profile_id #=> String
     #   resp.glossary_terms #=> Array
     #   resp.glossary_terms[0] #=> String
@@ -6356,9 +6366,10 @@ module Aws::DataZone
     #   resp.last_updated_at #=> Time
     #   resp.name #=> String
     #   resp.project_profile_id #=> String
-    #   resp.project_status #=> String, one of "ACTIVE", "DELETING", "DELETE_FAILED"
+    #   resp.project_status #=> String, one of "ACTIVE", "DELETING", "DELETE_FAILED", "UPDATING", "UPDATE_FAILED"
     #   resp.user_parameters #=> Array
     #   resp.user_parameters[0].environment_configuration_name #=> String
+    #   resp.user_parameters[0].environment_id #=> String
     #   resp.user_parameters[0].environment_parameters #=> Array
     #   resp.user_parameters[0].environment_parameters[0].name #=> String
     #   resp.user_parameters[0].environment_parameters[0].value #=> String
@@ -8068,6 +8079,7 @@ module Aws::DataZone
     #   resp.items[0].created_by #=> String
     #   resp.items[0].description #=> String
     #   resp.items[0].domain_id #=> String
+    #   resp.items[0].environment_configuration_id #=> String
     #   resp.items[0].environment_profile_id #=> String
     #   resp.items[0].id #=> String
     #   resp.items[0].name #=> String
@@ -8758,7 +8770,7 @@ module Aws::DataZone
     #   resp.items[0].failure_reasons[0].message #=> String
     #   resp.items[0].id #=> String
     #   resp.items[0].name #=> String
-    #   resp.items[0].project_status #=> String, one of "ACTIVE", "DELETING", "DELETE_FAILED"
+    #   resp.items[0].project_status #=> String, one of "ACTIVE", "DELETING", "DELETE_FAILED", "UPDATING", "UPDATE_FAILED"
     #   resp.items[0].updated_at #=> Time
     #   resp.next_token #=> String
     #
@@ -11502,6 +11514,10 @@ module Aws::DataZone
 
     # Updates the specified environment in Amazon DataZone.
     #
+    # @option params [String] :blueprint_version
+    #   The blueprint version to which the environment should be updated. You
+    #   can only specify the following string for this parameter: `latest`.
+    #
     # @option params [String] :description
     #   The description to be updated as part of the `UpdateEnvironment`
     #   action.
@@ -11520,6 +11536,9 @@ module Aws::DataZone
     # @option params [String] :name
     #   The name to be updated as part of the `UpdateEnvironment` action.
     #
+    # @option params [Array<Types::EnvironmentParameter>] :user_parameters
+    #   The user parameters of the environment.
+    #
     # @return [Types::UpdateEnvironmentOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateEnvironmentOutput#aws_account_id #aws_account_id} => String
@@ -11531,6 +11550,7 @@ module Aws::DataZone
     #   * {Types::UpdateEnvironmentOutput#domain_id #domain_id} => String
     #   * {Types::UpdateEnvironmentOutput#environment_actions #environment_actions} => Array&lt;Types::ConfigurableEnvironmentAction&gt;
     #   * {Types::UpdateEnvironmentOutput#environment_blueprint_id #environment_blueprint_id} => String
+    #   * {Types::UpdateEnvironmentOutput#environment_configuration_id #environment_configuration_id} => String
     #   * {Types::UpdateEnvironmentOutput#environment_profile_id #environment_profile_id} => String
     #   * {Types::UpdateEnvironmentOutput#glossary_terms #glossary_terms} => Array&lt;String&gt;
     #   * {Types::UpdateEnvironmentOutput#id #id} => String
@@ -11547,11 +11567,18 @@ module Aws::DataZone
     # @example Request syntax with placeholder values
     #
     #   resp = client.update_environment({
+    #     blueprint_version: "String",
     #     description: "String",
     #     domain_identifier: "DomainId", # required
     #     glossary_terms: ["GlossaryTermId"],
     #     identifier: "EnvironmentId", # required
     #     name: "String",
+    #     user_parameters: [
+    #       {
+    #         name: "String",
+    #         value: "String",
+    #       },
+    #     ],
     #   })
     #
     # @example Response structure
@@ -11571,6 +11598,7 @@ module Aws::DataZone
     #   resp.environment_actions[0].parameters[0].value #=> String
     #   resp.environment_actions[0].type #=> String
     #   resp.environment_blueprint_id #=> String
+    #   resp.environment_configuration_id #=> String
     #   resp.environment_profile_id #=> String
     #   resp.glossary_terms #=> Array
     #   resp.glossary_terms[0] #=> String
@@ -11972,6 +12000,14 @@ module Aws::DataZone
     # @option params [String] :name
     #   The name to be updated as part of the `UpdateProject` action.
     #
+    # @option params [String] :project_profile_version
+    #   The project profile version to which the project should be updated.
+    #   You can only specify the following string for this parameter:
+    #   `latest`.
+    #
+    # @option params [Array<Types::EnvironmentConfigurationUserParameter>] :user_parameters
+    #   The user parameters of the project.
+    #
     # @return [Types::UpdateProjectOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateProjectOutput#created_at #created_at} => Time
@@ -12008,6 +12044,19 @@ module Aws::DataZone
     #     glossary_terms: ["GlossaryTermId"],
     #     identifier: "ProjectId", # required
     #     name: "ProjectName",
+    #     project_profile_version: "String",
+    #     user_parameters: [
+    #       {
+    #         environment_configuration_name: "EnvironmentConfigurationName",
+    #         environment_id: "EnvironmentId",
+    #         environment_parameters: [
+    #           {
+    #             name: "String",
+    #             value: "String",
+    #           },
+    #         ],
+    #       },
+    #     ],
     #   })
     #
     # @example Response structure
@@ -12031,9 +12080,10 @@ module Aws::DataZone
     #   resp.last_updated_at #=> Time
     #   resp.name #=> String
     #   resp.project_profile_id #=> String
-    #   resp.project_status #=> String, one of "ACTIVE", "DELETING", "DELETE_FAILED"
+    #   resp.project_status #=> String, one of "ACTIVE", "DELETING", "DELETE_FAILED", "UPDATING", "UPDATE_FAILED"
     #   resp.user_parameters #=> Array
     #   resp.user_parameters[0].environment_configuration_name #=> String
+    #   resp.user_parameters[0].environment_id #=> String
     #   resp.user_parameters[0].environment_parameters #=> Array
     #   resp.user_parameters[0].environment_parameters[0].name #=> String
     #   resp.user_parameters[0].environment_parameters[0].value #=> String
@@ -12645,7 +12695,7 @@ module Aws::DataZone
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-datazone'
-      context[:gem_version] = '1.32.0'
+      context[:gem_version] = '1.33.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

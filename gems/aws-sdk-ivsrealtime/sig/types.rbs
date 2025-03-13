@@ -26,6 +26,7 @@ module Aws::IVSRealTime
       attr_accessor media_types: ::Array[("AUDIO_VIDEO" | "AUDIO_ONLY" | "NONE")]
       attr_accessor thumbnail_configuration: Types::ParticipantThumbnailConfiguration
       attr_accessor recording_reconnect_window_seconds: ::Integer
+      attr_accessor hls_configuration: Types::ParticipantRecordingHlsConfiguration
       SENSITIVE: []
     end
 
@@ -44,6 +45,11 @@ module Aws::IVSRealTime
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor start_time: ::Time
       attr_accessor end_time: ::Time
+      SENSITIVE: []
+    end
+
+    class CompositionRecordingHlsConfiguration
+      attr_accessor target_segment_duration_seconds: ::Integer
       SENSITIVE: []
     end
 
@@ -550,6 +556,11 @@ module Aws::IVSRealTime
       SENSITIVE: []
     end
 
+    class ParticipantRecordingHlsConfiguration
+      attr_accessor target_segment_duration_seconds: ::Integer
+      SENSITIVE: []
+    end
+
     class ParticipantSummary
       attr_accessor participant_id: ::String
       attr_accessor user_id: ::String
@@ -630,6 +641,7 @@ module Aws::IVSRealTime
     end
 
     class RecordingConfiguration
+      attr_accessor hls_configuration: Types::CompositionRecordingHlsConfiguration
       attr_accessor format: ("HLS")
       SENSITIVE: []
     end

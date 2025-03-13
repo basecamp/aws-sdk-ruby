@@ -1023,7 +1023,7 @@ module Aws::CodeBuild
     #   resp.projects[0].webhook.branch_filter #=> String
     #   resp.projects[0].webhook.filter_groups #=> Array
     #   resp.projects[0].webhook.filter_groups[0] #=> Array
-    #   resp.projects[0].webhook.filter_groups[0][0].type #=> String, one of "EVENT", "BASE_REF", "HEAD_REF", "ACTOR_ACCOUNT_ID", "FILE_PATH", "COMMIT_MESSAGE", "WORKFLOW_NAME", "TAG_NAME", "RELEASE_NAME", "REPOSITORY_NAME"
+    #   resp.projects[0].webhook.filter_groups[0][0].type #=> String, one of "EVENT", "BASE_REF", "HEAD_REF", "ACTOR_ACCOUNT_ID", "FILE_PATH", "COMMIT_MESSAGE", "WORKFLOW_NAME", "TAG_NAME", "RELEASE_NAME", "REPOSITORY_NAME", "ORGANIZATION_NAME"
     #   resp.projects[0].webhook.filter_groups[0][0].pattern #=> String
     #   resp.projects[0].webhook.filter_groups[0][0].exclude_matched_pattern #=> Boolean
     #   resp.projects[0].webhook.build_type #=> String, one of "BUILD", "BUILD_BATCH", "RUNNER_BUILDKITE_BUILD"
@@ -1896,7 +1896,7 @@ module Aws::CodeBuild
     #   resp.project.webhook.branch_filter #=> String
     #   resp.project.webhook.filter_groups #=> Array
     #   resp.project.webhook.filter_groups[0] #=> Array
-    #   resp.project.webhook.filter_groups[0][0].type #=> String, one of "EVENT", "BASE_REF", "HEAD_REF", "ACTOR_ACCOUNT_ID", "FILE_PATH", "COMMIT_MESSAGE", "WORKFLOW_NAME", "TAG_NAME", "RELEASE_NAME", "REPOSITORY_NAME"
+    #   resp.project.webhook.filter_groups[0][0].type #=> String, one of "EVENT", "BASE_REF", "HEAD_REF", "ACTOR_ACCOUNT_ID", "FILE_PATH", "COMMIT_MESSAGE", "WORKFLOW_NAME", "TAG_NAME", "RELEASE_NAME", "REPOSITORY_NAME", "ORGANIZATION_NAME"
     #   resp.project.webhook.filter_groups[0][0].pattern #=> String
     #   resp.project.webhook.filter_groups[0][0].exclude_matched_pattern #=> Boolean
     #   resp.project.webhook.build_type #=> String, one of "BUILD", "BUILD_BATCH", "RUNNER_BUILDKITE_BUILD"
@@ -2112,7 +2112,7 @@ module Aws::CodeBuild
     #     filter_groups: [
     #       [
     #         {
-    #           type: "EVENT", # required, accepts EVENT, BASE_REF, HEAD_REF, ACTOR_ACCOUNT_ID, FILE_PATH, COMMIT_MESSAGE, WORKFLOW_NAME, TAG_NAME, RELEASE_NAME, REPOSITORY_NAME
+    #           type: "EVENT", # required, accepts EVENT, BASE_REF, HEAD_REF, ACTOR_ACCOUNT_ID, FILE_PATH, COMMIT_MESSAGE, WORKFLOW_NAME, TAG_NAME, RELEASE_NAME, REPOSITORY_NAME, ORGANIZATION_NAME
     #           pattern: "String", # required
     #           exclude_matched_pattern: false,
     #         },
@@ -2135,7 +2135,7 @@ module Aws::CodeBuild
     #   resp.webhook.branch_filter #=> String
     #   resp.webhook.filter_groups #=> Array
     #   resp.webhook.filter_groups[0] #=> Array
-    #   resp.webhook.filter_groups[0][0].type #=> String, one of "EVENT", "BASE_REF", "HEAD_REF", "ACTOR_ACCOUNT_ID", "FILE_PATH", "COMMIT_MESSAGE", "WORKFLOW_NAME", "TAG_NAME", "RELEASE_NAME", "REPOSITORY_NAME"
+    #   resp.webhook.filter_groups[0][0].type #=> String, one of "EVENT", "BASE_REF", "HEAD_REF", "ACTOR_ACCOUNT_ID", "FILE_PATH", "COMMIT_MESSAGE", "WORKFLOW_NAME", "TAG_NAME", "RELEASE_NAME", "REPOSITORY_NAME", "ORGANIZATION_NAME"
     #   resp.webhook.filter_groups[0][0].pattern #=> String
     #   resp.webhook.filter_groups[0][0].exclude_matched_pattern #=> Boolean
     #   resp.webhook.build_type #=> String, one of "BUILD", "BUILD_BATCH", "RUNNER_BUILDKITE_BUILD"
@@ -5897,7 +5897,7 @@ module Aws::CodeBuild
     #   resp.project.webhook.branch_filter #=> String
     #   resp.project.webhook.filter_groups #=> Array
     #   resp.project.webhook.filter_groups[0] #=> Array
-    #   resp.project.webhook.filter_groups[0][0].type #=> String, one of "EVENT", "BASE_REF", "HEAD_REF", "ACTOR_ACCOUNT_ID", "FILE_PATH", "COMMIT_MESSAGE", "WORKFLOW_NAME", "TAG_NAME", "RELEASE_NAME", "REPOSITORY_NAME"
+    #   resp.project.webhook.filter_groups[0][0].type #=> String, one of "EVENT", "BASE_REF", "HEAD_REF", "ACTOR_ACCOUNT_ID", "FILE_PATH", "COMMIT_MESSAGE", "WORKFLOW_NAME", "TAG_NAME", "RELEASE_NAME", "REPOSITORY_NAME", "ORGANIZATION_NAME"
     #   resp.project.webhook.filter_groups[0][0].pattern #=> String
     #   resp.project.webhook.filter_groups[0][0].exclude_matched_pattern #=> Boolean
     #   resp.project.webhook.build_type #=> String, one of "BUILD", "BUILD_BATCH", "RUNNER_BUILDKITE_BUILD"
@@ -6168,7 +6168,7 @@ module Aws::CodeBuild
     #     filter_groups: [
     #       [
     #         {
-    #           type: "EVENT", # required, accepts EVENT, BASE_REF, HEAD_REF, ACTOR_ACCOUNT_ID, FILE_PATH, COMMIT_MESSAGE, WORKFLOW_NAME, TAG_NAME, RELEASE_NAME, REPOSITORY_NAME
+    #           type: "EVENT", # required, accepts EVENT, BASE_REF, HEAD_REF, ACTOR_ACCOUNT_ID, FILE_PATH, COMMIT_MESSAGE, WORKFLOW_NAME, TAG_NAME, RELEASE_NAME, REPOSITORY_NAME, ORGANIZATION_NAME
     #           pattern: "String", # required
     #           exclude_matched_pattern: false,
     #         },
@@ -6185,7 +6185,7 @@ module Aws::CodeBuild
     #   resp.webhook.branch_filter #=> String
     #   resp.webhook.filter_groups #=> Array
     #   resp.webhook.filter_groups[0] #=> Array
-    #   resp.webhook.filter_groups[0][0].type #=> String, one of "EVENT", "BASE_REF", "HEAD_REF", "ACTOR_ACCOUNT_ID", "FILE_PATH", "COMMIT_MESSAGE", "WORKFLOW_NAME", "TAG_NAME", "RELEASE_NAME", "REPOSITORY_NAME"
+    #   resp.webhook.filter_groups[0][0].type #=> String, one of "EVENT", "BASE_REF", "HEAD_REF", "ACTOR_ACCOUNT_ID", "FILE_PATH", "COMMIT_MESSAGE", "WORKFLOW_NAME", "TAG_NAME", "RELEASE_NAME", "REPOSITORY_NAME", "ORGANIZATION_NAME"
     #   resp.webhook.filter_groups[0][0].pattern #=> String
     #   resp.webhook.filter_groups[0][0].exclude_matched_pattern #=> Boolean
     #   resp.webhook.build_type #=> String, one of "BUILD", "BUILD_BATCH", "RUNNER_BUILDKITE_BUILD"
@@ -6224,7 +6224,7 @@ module Aws::CodeBuild
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-codebuild'
-      context[:gem_version] = '1.147.0'
+      context[:gem_version] = '1.148.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

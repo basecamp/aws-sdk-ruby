@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.81.0 (2025-03-13)
+------------------
+
+* Feature - Introduced support for Skew Protection. Added enableSkewProtection field to createBranch and updateBranch API.
+
 1.80.0 (2025-02-18)
 ------------------
 

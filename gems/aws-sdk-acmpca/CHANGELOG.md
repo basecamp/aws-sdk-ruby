@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.91.0 (2025-03-13)
+------------------
+
+* Feature - Private Certificate Authority service now supports P521 and RSA3072 key algorithms.
+
 1.90.0 (2025-02-18)
 ------------------
 

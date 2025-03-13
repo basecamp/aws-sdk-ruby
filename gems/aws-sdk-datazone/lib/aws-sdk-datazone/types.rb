@@ -2687,7 +2687,11 @@ module Aws::DataZone
     #   @return [Types::ScheduleConfiguration]
     #
     # @!attribute [rw] type
-    #   The type of the data source.
+    #   The type of the data source. In Amazon DataZone, you can use data
+    #   sources to import technical metadata of assets (data) from the
+    #   source databases or data warehouses into Amazon DataZone. In the
+    #   current release of Amazon DataZone, you can create and run data
+    #   sources for Amazon Web Services Glue and Amazon Redshift.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/CreateDataSourceInput AWS API Documentation
@@ -3253,6 +3257,10 @@ module Aws::DataZone
     #   was created.
     #   @return [String]
     #
+    # @!attribute [rw] environment_configuration_id
+    #   The configuration ID of the environment.
+    #   @return [String]
+    #
     # @!attribute [rw] environment_profile_id
     #   The ID of the environment profile with which this Amazon DataZone
     #   environment was created.
@@ -3317,6 +3325,7 @@ module Aws::DataZone
       :domain_id,
       :environment_actions,
       :environment_blueprint_id,
+      :environment_configuration_id,
       :environment_profile_id,
       :glossary_terms,
       :id,
@@ -3329,7 +3338,7 @@ module Aws::DataZone
       :status,
       :updated_at,
       :user_parameters)
-      SENSITIVE = [:description, :name]
+      SENSITIVE = [:description, :environment_configuration_id, :name]
       include Aws::Structure
     end
 
@@ -6705,6 +6714,10 @@ module Aws::DataZone
     #   The environment configuration name.
     #   @return [String]
     #
+    # @!attribute [rw] environment_id
+    #   The ID of the environment.
+    #   @return [String]
+    #
     # @!attribute [rw] environment_parameters
     #   The environment parameters.
     #   @return [Array<Types::EnvironmentParameter>]
@@ -6713,6 +6726,7 @@ module Aws::DataZone
     #
     class EnvironmentConfigurationUserParameter < Struct.new(
       :environment_configuration_name,
+      :environment_id,
       :environment_parameters)
       SENSITIVE = [:environment_configuration_name]
       include Aws::Structure
@@ -6873,6 +6887,10 @@ module Aws::DataZone
     #   environment exists.
     #   @return [String]
     #
+    # @!attribute [rw] environment_configuration_id
+    #   The configuration ID with which the environment is created.
+    #   @return [String]
+    #
     # @!attribute [rw] environment_profile_id
     #   The identifier of the environment profile with which the environment
     #   was created.
@@ -6911,6 +6929,7 @@ module Aws::DataZone
       :created_by,
       :description,
       :domain_id,
+      :environment_configuration_id,
       :environment_profile_id,
       :id,
       :name,
@@ -6918,7 +6937,7 @@ module Aws::DataZone
       :provider,
       :status,
       :updated_at)
-      SENSITIVE = [:description, :name]
+      SENSITIVE = [:description, :environment_configuration_id, :name]
       include Aws::Structure
     end
 
@@ -8435,6 +8454,10 @@ module Aws::DataZone
     #   The blueprint with which the environment is created.
     #   @return [String]
     #
+    # @!attribute [rw] environment_configuration_id
+    #   The configuration ID that is used to create the environment.
+    #   @return [String]
+    #
     # @!attribute [rw] environment_profile_id
     #   The ID of the environment profile with which the environment is
     #   created.
@@ -8497,6 +8520,7 @@ module Aws::DataZone
       :domain_id,
       :environment_actions,
       :environment_blueprint_id,
+      :environment_configuration_id,
       :environment_profile_id,
       :glossary_terms,
       :id,
@@ -8509,7 +8533,7 @@ module Aws::DataZone
       :status,
       :updated_at,
       :user_parameters)
-      SENSITIVE = [:description, :name]
+      SENSITIVE = [:description, :environment_configuration_id, :name]
       include Aws::Structure
     end
 
@@ -11041,8 +11065,8 @@ module Aws::DataZone
     #
     # @!attribute [rw] location_registration_role
     #   The role that is used to manage read/write access to the chosen
-    #   Amazon S3 bucket(s) for Data Lake using AWS Lake Formation hybrid
-    #   access mode.
+    #   Amazon S3 bucket(s) for Data Lake using Amazon Web Services Lake
+    #   Formation hybrid access mode.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/LakeFormationConfiguration AWS API Documentation
@@ -18929,6 +18953,12 @@ module Aws::DataZone
       include Aws::Structure
     end
 
+    # @!attribute [rw] blueprint_version
+    #   The blueprint version to which the environment should be updated.
+    #   You can only specify the following string for this parameter:
+    #   `latest`.
+    #   @return [String]
+    #
     # @!attribute [rw] description
     #   The description to be updated as part of the `UpdateEnvironment`
     #   action.
@@ -18952,14 +18982,20 @@ module Aws::DataZone
     #   The name to be updated as part of the `UpdateEnvironment` action.
     #   @return [String]
     #
+    # @!attribute [rw] user_parameters
+    #   The user parameters of the environment.
+    #   @return [Array<Types::EnvironmentParameter>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/UpdateEnvironmentInput AWS API Documentation
     #
     class UpdateEnvironmentInput < Struct.new(
+      :blueprint_version,
       :description,
       :domain_identifier,
       :glossary_terms,
       :identifier,
-      :name)
+      :name,
+      :user_parameters)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -19003,6 +19039,10 @@ module Aws::DataZone
     #
     # @!attribute [rw] environment_blueprint_id
     #   The blueprint identifier of the environment.
+    #   @return [String]
+    #
+    # @!attribute [rw] environment_configuration_id
+    #   The configuration ID of the environment.
     #   @return [String]
     #
     # @!attribute [rw] environment_profile_id
@@ -19069,6 +19109,7 @@ module Aws::DataZone
       :domain_id,
       :environment_actions,
       :environment_blueprint_id,
+      :environment_configuration_id,
       :environment_profile_id,
       :glossary_terms,
       :id,
@@ -19081,7 +19122,7 @@ module Aws::DataZone
       :status,
       :updated_at,
       :user_parameters)
-      SENSITIVE = [:description, :name]
+      SENSITIVE = [:description, :environment_configuration_id, :name]
       include Aws::Structure
     end
 
@@ -19472,6 +19513,16 @@ module Aws::DataZone
     #   The name to be updated as part of the `UpdateProject` action.
     #   @return [String]
     #
+    # @!attribute [rw] project_profile_version
+    #   The project profile version to which the project should be updated.
+    #   You can only specify the following string for this parameter:
+    #   `latest`.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_parameters
+    #   The user parameters of the project.
+    #   @return [Array<Types::EnvironmentConfigurationUserParameter>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/UpdateProjectInput AWS API Documentation
     #
     class UpdateProjectInput < Struct.new(
@@ -19480,7 +19531,9 @@ module Aws::DataZone
       :environment_deployment_details,
       :glossary_terms,
       :identifier,
-      :name)
+      :name,
+      :project_profile_version,
+      :user_parameters)
       SENSITIVE = [:description, :name]
       include Aws::Structure
     end

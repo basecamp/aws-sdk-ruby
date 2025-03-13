@@ -741,6 +741,7 @@ module Aws::S3Control
     class GetDataAccessResult
       attr_accessor credentials: Types::Credentials
       attr_accessor matched_grant_target: ::String
+      attr_accessor grantee: Types::Grantee
       SENSITIVE: [:credentials]
     end
 

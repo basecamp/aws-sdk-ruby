@@ -8894,10 +8894,15 @@ module Aws::EC2
     #
     # @option params [String] :client_token
     #   Unique, case-sensitive identifier you provide to ensure the
-    #   idempotency of the request. For more information, see [Ensuring
-    #   idempotency][1].
+    #   idempotency of the request. If a client token isn't specified, a
+    #   randomly generated token is used in the request to ensure idempotency.
+    #
+    #   For more information, see [Ensuring idempotency][1].
     #
     #   Constraint: Maximum 128 ASCII characters.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
     #
     #
     #
@@ -9297,10 +9302,15 @@ module Aws::EC2
     #
     # @option params [String] :client_token
     #   Unique, case-sensitive identifier you provide to ensure the
-    #   idempotency of the request. For more information, see [Ensuring
-    #   idempotency][1].
+    #   idempotency of the request. If a client token isn't specified, a
+    #   randomly generated token is used in the request to ensure idempotency.
+    #
+    #   For more information, see [Ensuring idempotency][1].
     #
     #   Constraint: Maximum 128 ASCII characters.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
     #
     #
     #
@@ -21149,9 +21159,7 @@ module Aws::EC2
     end
 
     # Describes the Availability Zones, Local Zones, and Wavelength Zones
-    # that are available to you. If there is an event impacting a zone, you
-    # can use this request to view the state and any provided messages for
-    # that zone.
+    # that are available to you.
     #
     # For more information about Availability Zones, Local Zones, and
     # Wavelength Zones, see [Regions and zones][1] in the *Amazon EC2 User
@@ -51646,10 +51654,15 @@ module Aws::EC2
     #
     # @option params [String] :client_token
     #   Unique, case-sensitive identifier you provide to ensure the
-    #   idempotency of the request. For more information, see [Ensuring
-    #   idempotency in Amazon EC2 API requests][1].
+    #   idempotency of the request. If a client token isn't specified, a
+    #   randomly generated token is used in the request to ensure idempotency.
+    #
+    #   For more information, see [Ensuring idempotency][1].
     #
     #   Constraint: Maximum 128 ASCII characters.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
     #
     #
     #
@@ -63389,7 +63402,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.511.0'
+      context[:gem_version] = '1.512.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

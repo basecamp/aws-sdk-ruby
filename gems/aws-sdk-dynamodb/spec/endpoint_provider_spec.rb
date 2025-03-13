@@ -777,218 +777,26 @@ module Aws::DynamoDB
       end
     end
 
-    context "For custom endpoint with account ID available, FIPS enabled, and DualStack enabled" do
+    context "{UseFIPS=true, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
       let(:expected) do
         {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:account_id=>"012345678901", :use_fips=>true, :use_dual_stack=>true, :endpoint=>"https://example.com"})
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
         expect do
           subject.resolve_endpoint(params)
         end.to raise_error(ArgumentError, expected['error'])
-      end
-    end
-
-    context "For custom endpoint with account ID available, FIPS enabled, and DualStack disabled" do
-      let(:expected) do
-        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:account_id=>"012345678901", :use_fips=>true, :use_dual_stack=>false, :endpoint=>"https://example.com"})
-        expect do
-          subject.resolve_endpoint(params)
-        end.to raise_error(ArgumentError, expected['error'])
-      end
-    end
-
-    context "For custom endpoint with account ID available, FIPS disabled, and DualStack enabled" do
-      let(:expected) do
-        {"error"=>"Invalid Configuration: Dualstack and custom endpoint are not supported"}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>true, :endpoint=>"https://example.com"})
-        expect do
-          subject.resolve_endpoint(params)
-        end.to raise_error(ArgumentError, expected['error'])
-      end
-    end
-
-    context "For custom endpoint with account ID available, FIPS disabled, and DualStack disabled" do
-      let(:expected) do
-        {"endpoint"=>{"url"=>"https://example.com"}}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>false, :endpoint=>"https://example.com"})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
       end
 
       it 'produces the correct output from the client when calling list_tables' do
         client = Client.new(
           endpoint: 'https://example.com',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
-          simple_attributes: false,
-          stub_responses: true
-        )
-        resp = client.list_tables(
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
-      end
-    end
-
-    context "For custom endpoint with empty account ID available, FIPS disabled, and DualStack disabled" do
-      let(:expected) do
-        {"endpoint"=>{"url"=>"https://example.com"}}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:account_id=>"", :use_fips=>false, :use_dual_stack=>false, :endpoint=>"https://example.com"})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
-      end
-
-      it 'produces the correct output from the client when calling list_tables' do
-        client = Client.new(
-          endpoint: 'https://example.com',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
-          simple_attributes: false,
-          stub_responses: true
-        )
-        resp = client.list_tables(
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
-      end
-    end
-
-    context "For region local with account ID available, FIPS enabled, and DualStack enabled" do
-      let(:expected) do
-        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"local", :account_id=>"012345678901", :use_fips=>true, :use_dual_stack=>true})
-        expect do
-          subject.resolve_endpoint(params)
-        end.to raise_error(ArgumentError, expected['error'])
-      end
-    end
-
-    context "For region local with account ID available, FIPS enabled, and DualStack disabled" do
-      let(:expected) do
-        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"local", :account_id=>"012345678901", :use_fips=>true, :use_dual_stack=>false})
-        expect do
-          subject.resolve_endpoint(params)
-        end.to raise_error(ArgumentError, expected['error'])
-      end
-    end
-
-    context "For region local with account ID available, FIPS disabled, and DualStack enabled" do
-      let(:expected) do
-        {"error"=>"Invalid Configuration: Dualstack and local endpoint are not supported"}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"local", :account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>true})
-        expect do
-          subject.resolve_endpoint(params)
-        end.to raise_error(ArgumentError, expected['error'])
-      end
-    end
-
-    context "For region local with account ID available, FIPS disabled, and DualStack disabled" do
-      let(:expected) do
-        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"dynamodb", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"local", :account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>false})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
-      end
-
-      it 'produces the correct output from the client when calling list_tables' do
-        client = Client.new(
-          region: 'local',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
-          simple_attributes: false,
-          stub_responses: true
-        )
-        expect_auth({"name"=>"sigv4", "signingName"=>"dynamodb", "signingRegion"=>"us-east-1"})
-        resp = client.list_tables(
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
-      end
-    end
-
-    context "For region local with empty account ID available, FIPS disabled, and DualStack disabled" do
-      let(:expected) do
-        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"dynamodb", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"local", :account_id=>"", :use_fips=>false, :use_dual_stack=>false})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
-      end
-
-      it 'produces the correct output from the client when calling list_tables' do
-        client = Client.new(
-          region: 'local',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
-          simple_attributes: false,
-          stub_responses: true
-        )
-        expect_auth({"name"=>"sigv4", "signingName"=>"dynamodb", "signingRegion"=>"us-east-1"})
-        resp = client.list_tables(
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
-      end
-    end
-
-    context "For AccountIdEndpointMode required and no AccountId set" do
-      let(:expected) do
-        {"error"=>"AccountIdEndpointMode is required but no AccountID was provided or able to be loaded."}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id_endpoint_mode=>"required"})
-        expect do
-          subject.resolve_endpoint(params)
-        end.to raise_error(ArgumentError, expected['error'])
-      end
-
-      it 'produces the correct output from the client when calling list_tables' do
-        client = Client.new(
           region: 'us-east-1',
-          account_id_endpoint_mode: 'required',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
           simple_attributes: false,
           stub_responses: true
         )
@@ -999,166 +807,73 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region us-east-1 with account ID available, FIPS enabled, and DualStack enabled" do
+    context "{UseFIPS=true, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
       let(:expected) do
-        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.api.aws"}}
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id=>"012345678901", :use_fips=>true, :use_dual_stack=>true})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
       end
 
       it 'produces the correct output from the client when calling list_tables' do
         client = Client.new(
+          endpoint: 'https://example.com',
           region: 'us-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
           use_fips_endpoint: true,
-          use_dualstack_endpoint: true,
-          simple_attributes: false,
-          stub_responses: true
-        )
-        resp = client.list_tables(
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
-      end
-    end
-
-    context "For region us-east-1 with account ID available, FIPS enabled, and DualStack disabled" do
-      let(:expected) do
-        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.amazonaws.com"}}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id=>"012345678901", :use_fips=>true, :use_dual_stack=>false})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
-      end
-
-      it 'produces the correct output from the client when calling list_tables' do
-        client = Client.new(
-          region: 'us-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
-          use_fips_endpoint: true,
-          simple_attributes: false,
-          stub_responses: true
-        )
-        resp = client.list_tables(
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
-      end
-    end
-
-    context "For region us-east-1 with account ID available, AccountIdEndpointMode preferred, FIPS enabled, and DualStack disabled" do
-      let(:expected) do
-        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.amazonaws.com"}}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id=>"012345678901", :account_id_endpoint_mode=>"preferred", :use_fips=>true, :use_dual_stack=>false})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
-      end
-
-      it 'produces the correct output from the client when calling list_tables' do
-        client = Client.new(
-          region: 'us-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
           account_id_endpoint_mode: 'preferred',
-          use_fips_endpoint: true,
           simple_attributes: false,
           stub_responses: true
         )
-        resp = client.list_tables(
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
       end
     end
 
-    context "For region us-east-1 with account ID available, AccountIdEndpointMode required, FIPS enabled, and DualStack disabled" do
+    context "{UseFIPS=false, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
       let(:expected) do
-        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.amazonaws.com"}}
+        {"error"=>"Invalid Configuration: Dualstack and custom endpoint are not supported"}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id=>"012345678901", :account_id_endpoint_mode=>"required", :use_fips=>true, :use_dual_stack=>false})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
       end
 
       it 'produces the correct output from the client when calling list_tables' do
         client = Client.new(
+          endpoint: 'https://example.com',
           region: 'us-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
-          account_id_endpoint_mode: 'required',
-          use_fips_endpoint: true,
-          simple_attributes: false,
-          stub_responses: true
-        )
-        resp = client.list_tables(
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
-      end
-    end
-
-    context "For region us-east-1 with account ID available, FIPS disabled, and DualStack enabled" do
-      let(:expected) do
-        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.api.aws"}}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>true})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
-      end
-
-      it 'produces the correct output from the client when calling list_tables' do
-        client = Client.new(
-          region: 'us-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
+          use_fips_endpoint: false,
           use_dualstack_endpoint: true,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
           simple_attributes: false,
           stub_responses: true
         )
-        resp = client.list_tables(
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
       end
     end
 
-    context "For region us-east-1 with account ID available, FIPS disabled, and DualStack enabled" do
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
       let(:expected) do
-        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.api.aws"}}
+        {"endpoint"=>{"url"=>"https://example.com"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>true})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1167,80 +882,11 @@ module Aws::DynamoDB
 
       it 'produces the correct output from the client when calling list_tables' do
         client = Client.new(
+          endpoint: 'https://example.com',
           region: 'us-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
-          use_dualstack_endpoint: true,
-          simple_attributes: false,
-          stub_responses: true
-        )
-        resp = client.list_tables(
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
-      end
-    end
-
-    context "For region us-east-1 with account ID available, AccountIdEndpointMode preferred, FIPS disabled, and DualStack enabled" do
-      let(:expected) do
-        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.api.aws"}}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id=>"012345678901", :account_id_endpoint_mode=>"preferred", :use_fips=>false, :use_dual_stack=>true})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
-      end
-    end
-
-    context "For region us-east-1 with account ID available, AccountIdEndpointMode disabled, FIPS disabled, and DualStack enabled" do
-      let(:expected) do
-        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.api.aws"}}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id=>"012345678901", :account_id_endpoint_mode=>"disabled", :use_fips=>false, :use_dual_stack=>true})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
-      end
-    end
-
-    context "For region us-east-1 with account ID available, AccountIdEndpointMode required, FIPS disabled, and DualStack enabled" do
-      let(:expected) do
-        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.api.aws"}}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id=>"012345678901", :account_id_endpoint_mode=>"required", :use_fips=>false, :use_dual_stack=>true})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
-      end
-    end
-
-    context "For region us-east-1 with account ID available, AccountIdEndpointMode preferred, FIPS disabled, and DualStack disabled" do
-      let(:expected) do
-        {"endpoint"=>{"url"=>"https://012345678901.ddb.us-east-1.amazonaws.com"}}
-      end
-
-      it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"preferred"})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
-      end
-
-      it 'produces the correct output from the client when calling list_tables' do
-        client = Client.new(
-          region: 'us-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
           account_id_endpoint_mode: 'preferred',
           simple_attributes: false,
           stub_responses: true
@@ -1254,13 +900,117 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region us-east-1 with account ID available, AccountIdEndpointMode required, FIPS disabled, and DualStack disabled" do
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
       let(:expected) do
-        {"endpoint"=>{"url"=>"https://012345678901.ddb.us-east-1.amazonaws.com"}}
+        {"endpoint"=>{"url"=>"https://example.com"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"required"})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-west-2:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-west-2:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:s3:us-east-1:333333333333:stream/testStream], AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:s3:us-east-1:333333333333:stream/testStream"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=, AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1269,9 +1019,12 @@ module Aws::DynamoDB
 
       it 'produces the correct output from the client when calling list_tables' do
         client = Client.new(
+          endpoint: 'https://example.com',
           region: 'us-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
-          account_id_endpoint_mode: 'required',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
+          account_id_endpoint_mode: 'preferred',
           simple_attributes: false,
           stub_responses: true
         )
@@ -1284,13 +1037,457 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region us-east-1 with account ID available, AccountIdEndpointMode disabled, FIPS disabled, and DualStack disabled" do
+    context "{UseFIPS=true, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
       let(:expected) do
-        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"disabled"})
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-west-2:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:s3:us-west-2:222222222222:stream/testStream',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=, AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountIdEndpointMode=preferred, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"preferred", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1299,8 +1496,11 @@ module Aws::DynamoDB
 
       it 'produces the correct output from the client when calling list_tables' do
         client = Client.new(
+          endpoint: 'https://example.com',
           region: 'us-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
           account_id_endpoint_mode: 'disabled',
           simple_attributes: false,
           stub_responses: true
@@ -1314,13 +1514,504 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region us-east-1 with empty account ID, FIPS disabled, and DualStack disabled" do
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
       let(:expected) do
-        {"error"=>"Credentials-sourced account ID parameter is invalid"}
+        {"endpoint"=>{"url"=>"https://example.com"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-east-1", :account_id=>"", :use_fips=>false, :use_dual_stack=>false})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-west-2:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-west-2:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:s3:us-east-1:333333333333:stream/testStream], AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:s3:us-east-1:333333333333:stream/testStream"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=, AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-west-2:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:s3:us-west-2:222222222222:stream/testStream',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=, AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountIdEndpointMode=disabled, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"disabled", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
         expect do
           subject.resolve_endpoint(params)
         end.to raise_error(ArgumentError, expected['error'])
@@ -1328,8 +2019,12 @@ module Aws::DynamoDB
 
       it 'produces the correct output from the client when calling list_tables' do
         client = Client.new(
+          endpoint: 'https://example.com',
           region: 'us-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ' '),
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
           simple_attributes: false,
           stub_responses: true
         )
@@ -1340,74 +2035,4281 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region cn-north-1 with account ID available, FIPS enabled, and DualStack enabled" do
+    context "{UseFIPS=true, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-west-2:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-west-2:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:s3:us-east-1:333333333333:stream/testStream], AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:s3:us-east-1:333333333333:stream/testStream"], :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=, AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"", :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-west-2:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:s3:us-west-2:222222222222:stream/testStream',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=, AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"", :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and custom endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          endpoint: 'https://example.com',
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountIdEndpointMode=required, Region=us-east-1, Endpoint=https://example.com}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"required", :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-west-2:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-west-2:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:s3:us-east-1:333333333333:stream/testStream], AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:s3:us-east-1:333333333333:stream/testStream"], :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=, AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"", :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-west-2:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.describe_table(
+          table_name: 'arn:aws:s3:us-west-2:222222222222:stream/testStream',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=, AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"", :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountIdEndpointMode=preferred, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"preferred", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-west-2:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-west-2:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:s3:us-east-1:333333333333:stream/testStream], AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:s3:us-east-1:333333333333:stream/testStream"], :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=, AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"", :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-west-2:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.describe_table(
+          table_name: 'arn:aws:s3:us-west-2:222222222222:stream/testStream',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=, AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"", :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountIdEndpointMode=disabled, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"disabled", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-west-2:333333333333:table/table_name], AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-west-2:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:s3:us-east-1:333333333333:stream/testStream], AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:s3:us-east-1:333333333333:stream/testStream"], :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=, AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"", :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-west-2:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.describe_table(
+          table_name: 'arn:aws:s3:us-west-2:222222222222:stream/testStream',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=, AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"", :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: Dualstack and local endpoint are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"local"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'local',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect_auth({"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"})
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountIdEndpointMode=required, Region=local}" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"dynamodb", "name"=>"sigv4", "signingRegion"=>"us-east-1"}]}, "url"=>"http://localhost:8000"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"required", :region=>"local"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://111111111111.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://333333333333.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://222222222222.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://333333333333.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://333333333333.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-west-2:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://111111111111.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-west-2:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:s3:us-east-1:333333333333:stream/testStream], AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://111111111111.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:s3:us-east-1:333333333333:stream/testStream"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=, AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"Credentials-sourced account ID parameter is invalid"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://222222222222.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-west-2:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:s3:us-west-2:222222222222:stream/testStream',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=, AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"", :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://333333333333.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://222222222222.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountIdEndpointMode=preferred, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"preferred", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and FIPS is enabled, but FIPS account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and FIPS is enabled, but FIPS account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and DualStack is enabled, but DualStack account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://111111111111.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://333333333333.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://222222222222.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://333333333333.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://333333333333.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-west-2:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://111111111111.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-west-2:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:s3:us-east-1:333333333333:stream/testStream], AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://111111111111.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:s3:us-east-1:333333333333:stream/testStream"], :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=, AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"Credentials-sourced account ID parameter is invalid"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"", :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and FIPS is enabled, but FIPS account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and FIPS is enabled, but FIPS account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and DualStack is enabled, but DualStack account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://222222222222.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"AccountIdEndpointMode is required but no AccountID was provided or able to be loaded"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-west-2:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"AccountIdEndpointMode is required but no AccountID was provided or able to be loaded"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:s3:us-west-2:222222222222:stream/testStream',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=, AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"AccountIdEndpointMode is required but no AccountID was provided or able to be loaded"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"", :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and FIPS is enabled, but FIPS account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and FIPS is enabled, but FIPS account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and DualStack is enabled, but DualStack account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://333333333333.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://222222222222.ddb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountIdEndpointMode=required, Region=us-east-1}" do
+      let(:expected) do
+        {"error"=>"AccountIdEndpointMode is required but no AccountID was provided or able to be loaded"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"required", :region=>"us-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and FIPS is enabled, but FIPS account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and FIPS is enabled, but FIPS account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and DualStack is enabled, but DualStack account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-west-2:333333333333:table/table_name], AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-west-2:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:s3:us-east-1:333333333333:stream/testStream], AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:s3:us-east-1:333333333333:stream/testStream"], :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=, AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"", :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.list_tables(
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and FIPS is enabled, but FIPS account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and FIPS is enabled, but FIPS account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and DualStack is enabled, but DualStack account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:dynamodb:us-west-2:222222222222:table/table_name',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.describe_table(
+            table_name: 'arn:aws:s3:us-west-2:222222222222:stream/testStream',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=, AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"", :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and FIPS is enabled, but FIPS account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and FIPS is enabled, but FIPS account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required and DualStack is enabled, but DualStack account endpoints are not supported"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'required',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        expect do
+          client.batch_get_item(
+            request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountIdEndpointMode=required, Region=cn-north-1}" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this partition"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"required", :region=>"cn-north-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-west-2:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-west-2:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:s3:us-east-1:333333333333:stream/testStream], AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:s3:us-east-1:333333333333:stream/testStream"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=, AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_tables' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.list_tables(
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-west-2:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:s3:us-west-2:222222222222:stream/testStream',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=, AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"", :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: true,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'disabled',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountIdEndpointMode=disabled, Region=us-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"disabled", :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=cn-north-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb-fips.cn-north-1.api.amazonwebservices.com.cn"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"cn-north-1", :account_id=>"012345678901", :use_fips=>true, :use_dual_stack=>true})
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
         expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
       end
-
-      it 'produces the correct output from the client when calling list_tables' do
-        client = Client.new(
-          region: 'cn-north-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
-          use_fips_endpoint: true,
-          use_dualstack_endpoint: true,
-          simple_attributes: false,
-          stub_responses: true
-        )
-        resp = client.list_tables(
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
-      end
     end
 
-    context "For region cn-north-1 with account ID available, FIPS enabled, and DualStack disabled" do
+    context "{UseFIPS=true, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=cn-north-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb-fips.cn-north-1.amazonaws.com.cn"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"cn-north-1", :account_id=>"012345678901", :use_fips=>true, :use_dual_stack=>false})
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
         expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
       end
-
-      it 'produces the correct output from the client when calling list_tables' do
-        client = Client.new(
-          region: 'cn-north-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
-          use_fips_endpoint: true,
-          simple_attributes: false,
-          stub_responses: true
-        )
-        resp = client.list_tables(
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
-      end
     end
 
-    context "For region cn-north-1 with account ID available, FIPS disabled, and DualStack enabled" do
+    context "{UseFIPS=false, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=cn-north-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.api.amazonwebservices.com.cn"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"cn-north-1", :account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>true})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1417,8 +6319,10 @@ module Aws::DynamoDB
       it 'produces the correct output from the client when calling list_tables' do
         client = Client.new(
           region: 'cn-north-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
-          use_dualstack_endpoint: true,
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
           simple_attributes: false,
           stub_responses: true
         )
@@ -1431,27 +6335,31 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region cn-north-1 with account ID available, FIPS disabled, and DualStack disabled" do
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=cn-north-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"cn-north-1", :account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>false})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
         expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
       end
 
-      it 'produces the correct output from the client when calling list_tables' do
+      it 'produces the correct output from the client when calling batch_get_item' do
         client = Client.new(
           region: 'cn-north-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
           simple_attributes: false,
           stub_responses: true
         )
-        resp = client.list_tables(
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
         )
         expected_uri = URI.parse(expected['endpoint']['url'])
         expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
@@ -1460,13 +6368,13 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region cn-north-1 with account ID available, AccountIdEndpointMode preferred, FIPS disabled, and DualStack disabled" do
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=cn-north-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"cn-north-1", :account_id=>"012345678901", :account_id_endpoint_mode=>"preferred", :use_fips=>false, :use_dual_stack=>false})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1474,13 +6382,13 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region cn-north-1 with account ID available, AccountIdEndpointMode disabled, FIPS disabled, and DualStack disabled" do
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=cn-north-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"cn-north-1", :account_id=>"012345678901", :account_id_endpoint_mode=>"disabled", :use_fips=>false, :use_dual_stack=>false})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1488,13 +6396,13 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region cn-north-1 with account ID available, AccountIdEndpointMode required, FIPS disabled, and DualStack disabled" do
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=cn-north-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"cn-north-1", :account_id=>"012345678901", :account_id_endpoint_mode=>"required", :use_fips=>false, :use_dual_stack=>false})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1502,13 +6410,41 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region cn-north-1 with empty account ID available, FIPS disabled, and DualStack disabled" do
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-west-2:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=cn-north-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"cn-north-1", :account_id=>"", :use_fips=>false, :use_dual_stack=>false})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-west-2:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:s3:us-east-1:333333333333:stream/testStream], AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:s3:us-east-1:333333333333:stream/testStream"], :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=, AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"", :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1518,7 +6454,10 @@ module Aws::DynamoDB
       it 'produces the correct output from the client when calling list_tables' do
         client = Client.new(
           region: 'cn-north-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
           credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
+          account_id_endpoint_mode: 'preferred',
           simple_attributes: false,
           stub_responses: true
         )
@@ -1531,69 +6470,307 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region us-iso-east-1 with account ID available, FIPS enabled, and DualStack enabled" do
+    context "{UseFIPS=true, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.cn-north-1.api.amazonwebservices.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.api.amazonwebservices.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-west-2:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:s3:us-west-2:222222222222:stream/testStream',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=, AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"", :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.cn-north-1.api.amazonwebservices.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.api.amazonwebservices.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountIdEndpointMode=preferred, Region=cn-north-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"preferred", :region=>"cn-north-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
       let(:expected) do
         {"error"=>"FIPS and DualStack are enabled, but this partition does not support one or both"}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-iso-east-1", :account_id=>"012345678901", :use_fips=>true, :use_dual_stack=>true})
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
         expect do
           subject.resolve_endpoint(params)
         end.to raise_error(ArgumentError, expected['error'])
       end
     end
 
-    context "For region us-iso-east-1 with account ID available, FIPS enabled, and DualStack disabled" do
+    context "{UseFIPS=true, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb-fips.us-iso-east-1.c2s.ic.gov"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-iso-east-1", :account_id=>"012345678901", :use_fips=>true, :use_dual_stack=>false})
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
         expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
       end
-
-      it 'produces the correct output from the client when calling list_tables' do
-        client = Client.new(
-          region: 'us-iso-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
-          use_fips_endpoint: true,
-          simple_attributes: false,
-          stub_responses: true
-        )
-        resp = client.list_tables(
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
-      end
     end
 
-    context "For region us-iso-east-1 with account ID available, FIPS disabled, and DualStack enabled" do
+    context "{UseFIPS=false, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
       let(:expected) do
         {"error"=>"DualStack is enabled but this partition does not support DualStack"}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-iso-east-1", :account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>true})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
         expect do
           subject.resolve_endpoint(params)
         end.to raise_error(ArgumentError, expected['error'])
       end
     end
 
-    context "For region us-iso-east-1 with account ID available, FIPS disabled, and DualStack disabled" do
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-iso-east-1", :account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>false})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1603,7 +6780,10 @@ module Aws::DynamoDB
       it 'produces the correct output from the client when calling list_tables' do
         client = Client.new(
           region: 'us-iso-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
           simple_attributes: false,
           stub_responses: true
         )
@@ -1616,13 +6796,116 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region us-iso-east-1 with empty account ID available, FIPS disabled, and DualStack disabled" do
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-iso-east-1", :account_id=>"", :use_fips=>false, :use_dual_stack=>false})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-iso-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-west-2:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-west-2:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:s3:us-east-1:333333333333:stream/testStream], AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:s3:us-east-1:333333333333:stream/testStream"], :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=, AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"", :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1632,7 +6915,10 @@ module Aws::DynamoDB
       it 'produces the correct output from the client when calling list_tables' do
         client = Client.new(
           region: 'us-iso-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
+          account_id_endpoint_mode: 'preferred',
           simple_attributes: false,
           stub_responses: true
         )
@@ -1645,13 +6931,263 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region us-gov-east-1 with account ID available, FIPS enabled, and DualStack enabled" do
+    context "{UseFIPS=true, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"error"=>"FIPS and DualStack are enabled, but this partition does not support one or both"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"error"=>"DualStack is enabled but this partition does not support DualStack"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-iso-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-iso-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-west-2:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-iso-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:s3:us-west-2:222222222222:stream/testStream',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=, AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"", :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"error"=>"FIPS and DualStack are enabled, but this partition does not support one or both"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"error"=>"DualStack is enabled but this partition does not support DualStack"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-iso-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountIdEndpointMode=preferred, Region=us-iso-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-iso-east-1.c2s.ic.gov"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"preferred", :region=>"us-iso-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb-fips.us-gov-east-1.api.aws"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-gov-east-1", :account_id=>"012345678901", :use_fips=>true, :use_dual_stack=>true})
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1659,13 +7195,13 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region us-gov-east-1 with account ID available, FIPS enabled, and DualStack disabled" do
+    context "{UseFIPS=true, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-gov-east-1", :account_id=>"012345678901", :use_fips=>true, :use_dual_stack=>false})
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1673,13 +7209,13 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region us-gov-east-1 with account ID available, FIPS disabled, and DualStack enabled" do
+    context "{UseFIPS=false, UseDualStack=true, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.api.aws"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-gov-east-1", :account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>true})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1687,13 +7223,13 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region us-gov-east-1 with account ID available, FIPS disabled, and DualStack disabled" do
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-gov-east-1", :account_id=>"012345678901", :use_fips=>false, :use_dual_stack=>false})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1703,7 +7239,10 @@ module Aws::DynamoDB
       it 'produces the correct output from the client when calling list_tables' do
         client = Client.new(
           region: 'us-gov-east-1',
-          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '012345678901'),
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
           simple_attributes: false,
           stub_responses: true
         )
@@ -1716,13 +7255,116 @@ module Aws::DynamoDB
       end
     end
 
-    context "For region us-gov-east-1 with empty account ID available, FIPS disabled, and DualStack disabled" do
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
       let(:expected) do
         {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:region=>"us-gov-east-1", :account_id=>"", :use_fips=>false, :use_dual_stack=>false})
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-gov-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: '111111111111'),
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-west-2:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-west-2:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=111111111111, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, ResourceArnList=[arn:aws:s3:us-east-1:333333333333:stream/testStream], AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"111111111111", :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :resource_arn_list=>["arn:aws:s3:us-east-1:333333333333:stream/testStream"], :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountId=, AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id=>"", :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -1732,7 +7374,10 @@ module Aws::DynamoDB
       it 'produces the correct output from the client when calling list_tables' do
         client = Client.new(
           region: 'us-gov-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
           credentials: Aws::Credentials.new('stubbed-akid', 'stubbed-secret', account_id: ''),
+          account_id_endpoint_mode: 'preferred',
           simple_attributes: false,
           stub_responses: true
         )
@@ -1742,6 +7387,260 @@ module Aws::DynamoDB
         expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
         expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
         expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-gov-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-gov-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-east-1:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-west-2:222222222222:table/table_name, AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-west-2:222222222222:table/table_name", :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-gov-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:dynamodb:us-west-2:222222222222:table/table_name',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:s3:us-west-2:222222222222:stream/testStream, AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:s3:us-west-2:222222222222:stream/testStream", :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling describe_table' do
+        client = Client.new(
+          region: 'us-gov-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.describe_table(
+          table_name: 'arn:aws:s3:us-west-2:222222222222:stream/testStream',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=, AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"", :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb-fips.us-gov-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=true, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>true, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=true, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>true, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling batch_get_item' do
+        client = Client.new(
+          region: 'us-gov-east-1',
+          use_fips_endpoint: false,
+          use_dualstack_endpoint: false,
+          account_id_endpoint_mode: 'preferred',
+          simple_attributes: false,
+          stub_responses: true
+        )
+        resp = client.batch_get_item(
+          request_items: {"arn:aws:dynamodb:us-east-1:333333333333:table/table_name"=>{:keys=>[{"pk"=>{:s=>"value"}}]}},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, ResourceArn=arn:aws:dynamodb:us-east-1:222222222222:table/table_name, ResourceArnList=[arn:aws:dynamodb:us-east-1:333333333333:table/table_name], AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :resource_arn=>"arn:aws:dynamodb:us-east-1:222222222222:table/table_name", :resource_arn_list=>["arn:aws:dynamodb:us-east-1:333333333333:table/table_name"], :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "{UseFIPS=false, UseDualStack=false, AccountIdEndpointMode=preferred, Region=us-gov-east-1}" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://dynamodb.us-gov-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_fips=>false, :use_dual_stack=>false, :account_id_endpoint_mode=>"preferred", :region=>"us-gov-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
       end
     end
 

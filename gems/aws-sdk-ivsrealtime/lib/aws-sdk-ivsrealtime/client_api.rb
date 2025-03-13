@@ -25,6 +25,8 @@ module Aws::IVSRealTime
     Composition = Shapes::StructureShape.new(name: 'Composition')
     CompositionArn = Shapes::StringShape.new(name: 'CompositionArn')
     CompositionClientToken = Shapes::StringShape.new(name: 'CompositionClientToken')
+    CompositionRecordingHlsConfiguration = Shapes::StructureShape.new(name: 'CompositionRecordingHlsConfiguration')
+    CompositionRecordingTargetSegmentDurationSeconds = Shapes::IntegerShape.new(name: 'CompositionRecordingTargetSegmentDurationSeconds')
     CompositionState = Shapes::StringShape.new(name: 'CompositionState')
     CompositionSummary = Shapes::StructureShape.new(name: 'CompositionSummary')
     CompositionSummaryList = Shapes::ListShape.new(name: 'CompositionSummaryList')
@@ -144,12 +146,14 @@ module Aws::IVSRealTime
     ParticipantList = Shapes::ListShape.new(name: 'ParticipantList')
     ParticipantProtocol = Shapes::StringShape.new(name: 'ParticipantProtocol')
     ParticipantRecordingFilterByRecordingState = Shapes::StringShape.new(name: 'ParticipantRecordingFilterByRecordingState')
+    ParticipantRecordingHlsConfiguration = Shapes::StructureShape.new(name: 'ParticipantRecordingHlsConfiguration')
     ParticipantRecordingMediaType = Shapes::StringShape.new(name: 'ParticipantRecordingMediaType')
     ParticipantRecordingMediaTypeList = Shapes::ListShape.new(name: 'ParticipantRecordingMediaTypeList')
     ParticipantRecordingReconnectWindowSeconds = Shapes::IntegerShape.new(name: 'ParticipantRecordingReconnectWindowSeconds')
     ParticipantRecordingS3BucketName = Shapes::StringShape.new(name: 'ParticipantRecordingS3BucketName')
     ParticipantRecordingS3Prefix = Shapes::StringShape.new(name: 'ParticipantRecordingS3Prefix')
     ParticipantRecordingState = Shapes::StringShape.new(name: 'ParticipantRecordingState')
+    ParticipantRecordingTargetSegmentDurationSeconds = Shapes::IntegerShape.new(name: 'ParticipantRecordingTargetSegmentDurationSeconds')
     ParticipantState = Shapes::StringShape.new(name: 'ParticipantState')
     ParticipantSummary = Shapes::StructureShape.new(name: 'ParticipantSummary')
     ParticipantThumbnailConfiguration = Shapes::StructureShape.new(name: 'ParticipantThumbnailConfiguration')
@@ -251,6 +255,7 @@ module Aws::IVSRealTime
     AutoParticipantRecordingConfiguration.add_member(:media_types, Shapes::ShapeRef.new(shape: ParticipantRecordingMediaTypeList, location_name: "mediaTypes"))
     AutoParticipantRecordingConfiguration.add_member(:thumbnail_configuration, Shapes::ShapeRef.new(shape: ParticipantThumbnailConfiguration, location_name: "thumbnailConfiguration"))
     AutoParticipantRecordingConfiguration.add_member(:recording_reconnect_window_seconds, Shapes::ShapeRef.new(shape: ParticipantRecordingReconnectWindowSeconds, location_name: "recordingReconnectWindowSeconds"))
+    AutoParticipantRecordingConfiguration.add_member(:hls_configuration, Shapes::ShapeRef.new(shape: ParticipantRecordingHlsConfiguration, location_name: "hlsConfiguration"))
     AutoParticipantRecordingConfiguration.struct_class = Types::AutoParticipantRecordingConfiguration
 
     ChannelDestinationConfiguration.add_member(:channel_arn, Shapes::ShapeRef.new(shape: ChannelArn, required: true, location_name: "channelArn"))
@@ -266,6 +271,9 @@ module Aws::IVSRealTime
     Composition.add_member(:start_time, Shapes::ShapeRef.new(shape: Time, location_name: "startTime"))
     Composition.add_member(:end_time, Shapes::ShapeRef.new(shape: Time, location_name: "endTime"))
     Composition.struct_class = Types::Composition
+
+    CompositionRecordingHlsConfiguration.add_member(:target_segment_duration_seconds, Shapes::ShapeRef.new(shape: CompositionRecordingTargetSegmentDurationSeconds, location_name: "targetSegmentDurationSeconds"))
+    CompositionRecordingHlsConfiguration.struct_class = Types::CompositionRecordingHlsConfiguration
 
     CompositionSummary.add_member(:arn, Shapes::ShapeRef.new(shape: CompositionArn, required: true, location_name: "arn"))
     CompositionSummary.add_member(:stage_arn, Shapes::ShapeRef.new(shape: StageArn, required: true, location_name: "stageArn"))
@@ -647,6 +655,9 @@ module Aws::IVSRealTime
 
     ParticipantList.member = Shapes::ShapeRef.new(shape: ParticipantSummary)
 
+    ParticipantRecordingHlsConfiguration.add_member(:target_segment_duration_seconds, Shapes::ShapeRef.new(shape: ParticipantRecordingTargetSegmentDurationSeconds, location_name: "targetSegmentDurationSeconds"))
+    ParticipantRecordingHlsConfiguration.struct_class = Types::ParticipantRecordingHlsConfiguration
+
     ParticipantRecordingMediaTypeList.member = Shapes::ShapeRef.new(shape: ParticipantRecordingMediaType)
 
     ParticipantSummary.add_member(:participant_id, Shapes::ShapeRef.new(shape: ParticipantId, location_name: "participantId"))
@@ -723,6 +734,7 @@ module Aws::IVSRealTime
     PublicKeySummary.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     PublicKeySummary.struct_class = Types::PublicKeySummary
 
+    RecordingConfiguration.add_member(:hls_configuration, Shapes::ShapeRef.new(shape: CompositionRecordingHlsConfiguration, location_name: "hlsConfiguration"))
     RecordingConfiguration.add_member(:format, Shapes::ShapeRef.new(shape: RecordingConfigurationFormat, location_name: "format"))
     RecordingConfiguration.struct_class = Types::RecordingConfiguration
 

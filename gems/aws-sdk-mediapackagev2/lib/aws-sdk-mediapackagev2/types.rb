@@ -741,6 +741,18 @@ module Aws::MediaPackageV2
     #   requests for this manifest.
     #   @return [Types::FilterConfiguration]
     #
+    # @!attribute [rw] url_encode_child_manifest
+    #   When enabled, MediaPackage URL-encodes the query string for API
+    #   requests for HLS child manifests to comply with Amazon Web Services
+    #   Signature Version 4 (SigV4) signature signing protocol. For more
+    #   information, see [Amazon Web Services Signature Version 4 for API
+    #   requests][1] in *Identity and Access Management User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_sigv.html
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/CreateHlsManifestConfiguration AWS API Documentation
     #
     class CreateHlsManifestConfiguration < Struct.new(
@@ -750,7 +762,8 @@ module Aws::MediaPackageV2
       :start_tag,
       :manifest_window_seconds,
       :program_date_time_interval_seconds,
-      :filter_configuration)
+      :filter_configuration,
+      :url_encode_child_manifest)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -809,6 +822,18 @@ module Aws::MediaPackageV2
     #   requests for this manifest.
     #   @return [Types::FilterConfiguration]
     #
+    # @!attribute [rw] url_encode_child_manifest
+    #   When enabled, MediaPackage URL-encodes the query string for API
+    #   requests for LL-HLS child manifests to comply with Amazon Web
+    #   Services Signature Version 4 (SigV4) signature signing protocol. For
+    #   more information, see [Amazon Web Services Signature Version 4 for
+    #   API requests][1] in *Identity and Access Management User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_sigv.html
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/CreateLowLatencyHlsManifestConfiguration AWS API Documentation
     #
     class CreateLowLatencyHlsManifestConfiguration < Struct.new(
@@ -818,7 +843,8 @@ module Aws::MediaPackageV2
       :start_tag,
       :manifest_window_seconds,
       :program_date_time_interval_seconds,
-      :filter_configuration)
+      :filter_configuration,
+      :url_encode_child_manifest)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1568,6 +1594,10 @@ module Aws::MediaPackageV2
     #   The date and time the channel was modified.
     #   @return [Time]
     #
+    # @!attribute [rw] reset_at
+    #   The time that the channel was last reset.
+    #   @return [Time]
+    #
     # @!attribute [rw] description
     #   The description for your channel.
     #   @return [String]
@@ -1621,6 +1651,7 @@ module Aws::MediaPackageV2
       :channel_group_name,
       :created_at,
       :modified_at,
+      :reset_at,
       :description,
       :ingest_endpoints,
       :input_type,
@@ -1905,6 +1936,18 @@ module Aws::MediaPackageV2
     #   in the EXT-X-START tag.
     #   @return [Types::StartTag]
     #
+    # @!attribute [rw] url_encode_child_manifest
+    #   When enabled, MediaPackage URL-encodes the query string for API
+    #   requests for HLS child manifests to comply with Amazon Web Services
+    #   Signature Version 4 (SigV4) signature signing protocol. For more
+    #   information, see [Amazon Web Services Signature Version 4 for API
+    #   requests][1] in *Identity and Access Management User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_sigv.html
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/GetHlsManifestConfiguration AWS API Documentation
     #
     class GetHlsManifestConfiguration < Struct.new(
@@ -1915,7 +1958,8 @@ module Aws::MediaPackageV2
       :program_date_time_interval_seconds,
       :scte_hls,
       :filter_configuration,
-      :start_tag)
+      :start_tag,
+      :url_encode_child_manifest)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1978,6 +2022,18 @@ module Aws::MediaPackageV2
     #   in the EXT-X-START tag.
     #   @return [Types::StartTag]
     #
+    # @!attribute [rw] url_encode_child_manifest
+    #   When enabled, MediaPackage URL-encodes the query string for API
+    #   requests for LL-HLS child manifests to comply with Amazon Web
+    #   Services Signature Version 4 (SigV4) signature signing protocol. For
+    #   more information, see [Amazon Web Services Signature Version 4 for
+    #   API requests][1] in *Identity and Access Management User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_sigv.html
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/GetLowLatencyHlsManifestConfiguration AWS API Documentation
     #
     class GetLowLatencyHlsManifestConfiguration < Struct.new(
@@ -1988,7 +2044,8 @@ module Aws::MediaPackageV2
       :program_date_time_interval_seconds,
       :scte_hls,
       :filter_configuration,
-      :start_tag)
+      :start_tag,
+      :url_encode_child_manifest)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2121,6 +2178,10 @@ module Aws::MediaPackageV2
     #   The date and time the origin endpoint was modified.
     #   @return [Time]
     #
+    # @!attribute [rw] reset_at
+    #   The time that the origin endpoint was last reset.
+    #   @return [Time]
+    #
     # @!attribute [rw] description
     #   The description for your origin endpoint.
     #   @return [String]
@@ -2169,6 +2230,7 @@ module Aws::MediaPackageV2
       :segment,
       :created_at,
       :modified_at,
+      :reset_at,
       :description,
       :startover_window_seconds,
       :hls_manifests,
@@ -2872,6 +2934,112 @@ module Aws::MediaPackageV2
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/PutOriginEndpointPolicyResponse AWS API Documentation
     #
     class PutOriginEndpointPolicyResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] channel_group_name
+    #   The name of the channel group that contains the channel that you are
+    #   resetting.
+    #   @return [String]
+    #
+    # @!attribute [rw] channel_name
+    #   The name of the channel that you are resetting.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/ResetChannelStateRequest AWS API Documentation
+    #
+    class ResetChannelStateRequest < Struct.new(
+      :channel_group_name,
+      :channel_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] channel_group_name
+    #   The name of the channel group that contains the channel that you
+    #   just reset.
+    #   @return [String]
+    #
+    # @!attribute [rw] channel_name
+    #   The name of the channel that you just reset.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) associated with the channel that you
+    #   just reset.
+    #   @return [String]
+    #
+    # @!attribute [rw] reset_at
+    #   The time that the channel was last reset.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/ResetChannelStateResponse AWS API Documentation
+    #
+    class ResetChannelStateResponse < Struct.new(
+      :channel_group_name,
+      :channel_name,
+      :arn,
+      :reset_at)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] channel_group_name
+    #   The name of the channel group that contains the channel with the
+    #   origin endpoint that you are resetting.
+    #   @return [String]
+    #
+    # @!attribute [rw] channel_name
+    #   The name of the channel with the origin endpoint that you are
+    #   resetting.
+    #   @return [String]
+    #
+    # @!attribute [rw] origin_endpoint_name
+    #   The name of the origin endpoint that you are resetting.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/ResetOriginEndpointStateRequest AWS API Documentation
+    #
+    class ResetOriginEndpointStateRequest < Struct.new(
+      :channel_group_name,
+      :channel_name,
+      :origin_endpoint_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] channel_group_name
+    #   The name of the channel group that contains the channel with the
+    #   origin endpoint that you just reset.
+    #   @return [String]
+    #
+    # @!attribute [rw] channel_name
+    #   The name of the channel with the origin endpoint that you just
+    #   reset.
+    #   @return [String]
+    #
+    # @!attribute [rw] origin_endpoint_name
+    #   The name of the origin endpoint that you just reset.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) associated with the endpoint that you
+    #   just reset.
+    #   @return [String]
+    #
+    # @!attribute [rw] reset_at
+    #   The time that the origin endpoint was last reset.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/ResetOriginEndpointStateResponse AWS API Documentation
+    #
+    class ResetOriginEndpointStateResponse < Struct.new(
+      :channel_group_name,
+      :channel_name,
+      :origin_endpoint_name,
+      :arn,
+      :reset_at)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # The specified resource doesn't exist.
     #

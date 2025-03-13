@@ -40,6 +40,16 @@ module Aws::DynamoDB
   #
   #   @return [String]
   #
+  # @!attribute resource_arn
+  #   ResourceArn containing arn of resource
+  #
+  #   @return [String]
+  #
+  # @!attribute resource_arn_list
+  #   ResourceArnList containing list of resource arns
+  #
+  #   @return [stringArray]
+  #
   EndpointParameters = Struct.new(
     :region,
     :use_dual_stack,
@@ -47,6 +57,8 @@ module Aws::DynamoDB
     :endpoint,
     :account_id,
     :account_id_endpoint_mode,
+    :resource_arn,
+    :resource_arn_list,
   ) do
     include Aws::Structure
 
@@ -59,6 +71,8 @@ module Aws::DynamoDB
         'Endpoint' => :endpoint,
         'AccountId' => :account_id,
         'AccountIdEndpointMode' => :account_id_endpoint_mode,
+        'ResourceArn' => :resource_arn,
+        'ResourceArnList' => :resource_arn_list,
       }.freeze
     end
 
@@ -71,6 +85,8 @@ module Aws::DynamoDB
       self[:endpoint] = options[:endpoint]
       self[:account_id] = options[:account_id]
       self[:account_id_endpoint_mode] = options[:account_id_endpoint_mode]
+      self[:resource_arn] = options[:resource_arn]
+      self[:resource_arn_list] = options[:resource_arn_list]
     end
 
     def self.create(config, options={})

@@ -65,7 +65,7 @@ module Aws::Amplify
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/amplify-SSR-compute-role.html
     #   @return [String]
     #
     # @!attribute [rw] iam_service_role_arn
@@ -413,6 +413,23 @@ module Aws::Amplify
     #   Enables auto-building on push for a branch of an Amplify app.
     #   @return [Boolean]
     #
+    # @!attribute [rw] enable_skew_protection
+    #   Specifies whether the skew protection feature is enabled for the
+    #   branch.
+    #
+    #   Deployment skew protection is available to Amplify applications to
+    #   eliminate version skew issues between client and servers in web
+    #   applications. When you apply skew protection to a branch, you can
+    #   ensure that your clients always interact with the correct version of
+    #   server-side assets, regardless of when a deployment occurs. For more
+    #   information about skew protection, see [Skew protection for Amplify
+    #   deployments][1] in the *Amplify User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/skew-protection.html
+    #   @return [Boolean]
+    #
     # @!attribute [rw] custom_domains
     #   The custom domains for a branch of an Amplify app.
     #   @return [Array<String>]
@@ -508,7 +525,7 @@ module Aws::Amplify
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/amplify-SSR-compute-role.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/Branch AWS API Documentation
@@ -525,6 +542,7 @@ module Aws::Amplify
       :update_time,
       :environment_variables,
       :enable_auto_build,
+      :enable_skew_protection,
       :custom_domains,
       :framework,
       :active_job_id,
@@ -705,7 +723,7 @@ module Aws::Amplify
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/amplify-SSR-compute-role.html
     #   @return [String]
     #
     # @!attribute [rw] iam_service_role_arn
@@ -939,6 +957,23 @@ module Aws::Amplify
     #   Enables auto building for the branch.
     #   @return [Boolean]
     #
+    # @!attribute [rw] enable_skew_protection
+    #   Specifies whether the skew protection feature is enabled for the
+    #   branch.
+    #
+    #   Deployment skew protection is available to Amplify applications to
+    #   eliminate version skew issues between client and servers in web
+    #   applications. When you apply skew protection to a branch, you can
+    #   ensure that your clients always interact with the correct version of
+    #   server-side assets, regardless of when a deployment occurs. For more
+    #   information about skew protection, see [Skew protection for Amplify
+    #   deployments][1] in the *Amplify User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/skew-protection.html
+    #   @return [Boolean]
+    #
     # @!attribute [rw] environment_variables
     #   The environment variables for the branch.
     #   @return [Hash<String,String>]
@@ -1015,7 +1050,7 @@ module Aws::Amplify
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/amplify-SSR-compute-role.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/CreateBranchRequest AWS API Documentation
@@ -1028,6 +1063,7 @@ module Aws::Amplify
       :framework,
       :enable_notification,
       :enable_auto_build,
+      :enable_skew_protection,
       :environment_variables,
       :basic_auth_credentials,
       :enable_basic_auth,
@@ -2781,7 +2817,7 @@ module Aws::Amplify
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/amplify-SSR-compute-role.html
     #   @return [String]
     #
     # @!attribute [rw] iam_service_role_arn
@@ -2967,6 +3003,23 @@ module Aws::Amplify
     #   Enables auto building for the branch.
     #   @return [Boolean]
     #
+    # @!attribute [rw] enable_skew_protection
+    #   Specifies whether the skew protection feature is enabled for the
+    #   branch.
+    #
+    #   Deployment skew protection is available to Amplify applications to
+    #   eliminate version skew issues between client and servers in web
+    #   applications. When you apply skew protection to a branch, you can
+    #   ensure that your clients always interact with the correct version of
+    #   server-side assets, regardless of when a deployment occurs. For more
+    #   information about skew protection, see [Skew protection for Amplify
+    #   deployments][1] in the *Amplify User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/skew-protection.html
+    #   @return [Boolean]
+    #
     # @!attribute [rw] environment_variables
     #   The environment variables for the branch.
     #   @return [Hash<String,String>]
@@ -3039,7 +3092,7 @@ module Aws::Amplify
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/latest/userguide/amplify-SSR-compute-role.html
+    #   [1]: https://docs.aws.amazon.com/amplify/latest/userguide/amplify-SSR-compute-role.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/UpdateBranchRequest AWS API Documentation
@@ -3052,6 +3105,7 @@ module Aws::Amplify
       :stage,
       :enable_notification,
       :enable_auto_build,
+      :enable_skew_protection,
       :environment_variables,
       :basic_auth_credentials,
       :enable_basic_auth,

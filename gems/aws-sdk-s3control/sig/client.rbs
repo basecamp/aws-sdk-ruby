@@ -914,6 +914,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::GetDataAccessResult]
         def credentials: () -> Types::Credentials
         def matched_grant_target: () -> ::String
+        def grantee: () -> Types::Grantee
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Control/Client.html#get_data_access-instance_method
       def get_data_access: (

@@ -155,6 +155,7 @@ module Aws::MediaPackageV2
       attr_accessor manifest_window_seconds: ::Integer
       attr_accessor program_date_time_interval_seconds: ::Integer
       attr_accessor filter_configuration: Types::FilterConfiguration
+      attr_accessor url_encode_child_manifest: bool
       SENSITIVE: []
     end
 
@@ -166,6 +167,7 @@ module Aws::MediaPackageV2
       attr_accessor manifest_window_seconds: ::Integer
       attr_accessor program_date_time_interval_seconds: ::Integer
       attr_accessor filter_configuration: Types::FilterConfiguration
+      attr_accessor url_encode_child_manifest: bool
       SENSITIVE: []
     end
 
@@ -339,6 +341,7 @@ module Aws::MediaPackageV2
       attr_accessor channel_group_name: ::String
       attr_accessor created_at: ::Time
       attr_accessor modified_at: ::Time
+      attr_accessor reset_at: ::Time
       attr_accessor description: ::String
       attr_accessor ingest_endpoints: ::Array[Types::IngestEndpoint]
       attr_accessor input_type: ("HLS" | "CMAF")
@@ -401,6 +404,7 @@ module Aws::MediaPackageV2
       attr_accessor scte_hls: Types::ScteHls
       attr_accessor filter_configuration: Types::FilterConfiguration
       attr_accessor start_tag: Types::StartTag
+      attr_accessor url_encode_child_manifest: bool
       SENSITIVE: []
     end
 
@@ -413,6 +417,7 @@ module Aws::MediaPackageV2
       attr_accessor scte_hls: Types::ScteHls
       attr_accessor filter_configuration: Types::FilterConfiguration
       attr_accessor start_tag: Types::StartTag
+      attr_accessor url_encode_child_manifest: bool
       SENSITIVE: []
     end
 
@@ -447,6 +452,7 @@ module Aws::MediaPackageV2
       attr_accessor segment: Types::Segment
       attr_accessor created_at: ::Time
       attr_accessor modified_at: ::Time
+      attr_accessor reset_at: ::Time
       attr_accessor description: ::String
       attr_accessor startover_window_seconds: ::Integer
       attr_accessor hls_manifests: ::Array[Types::GetHlsManifestConfiguration]
@@ -645,6 +651,36 @@ module Aws::MediaPackageV2
     end
 
     class PutOriginEndpointPolicyResponse < Aws::EmptyStructure
+    end
+
+    class ResetChannelStateRequest
+      attr_accessor channel_group_name: ::String
+      attr_accessor channel_name: ::String
+      SENSITIVE: []
+    end
+
+    class ResetChannelStateResponse
+      attr_accessor channel_group_name: ::String
+      attr_accessor channel_name: ::String
+      attr_accessor arn: ::String
+      attr_accessor reset_at: ::Time
+      SENSITIVE: []
+    end
+
+    class ResetOriginEndpointStateRequest
+      attr_accessor channel_group_name: ::String
+      attr_accessor channel_name: ::String
+      attr_accessor origin_endpoint_name: ::String
+      SENSITIVE: []
+    end
+
+    class ResetOriginEndpointStateResponse
+      attr_accessor channel_group_name: ::String
+      attr_accessor channel_name: ::String
+      attr_accessor origin_endpoint_name: ::String
+      attr_accessor arn: ::String
+      attr_accessor reset_at: ::Time
+      SENSITIVE: []
     end
 
     class ResourceNotFoundException

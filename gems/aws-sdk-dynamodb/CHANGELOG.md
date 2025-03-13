@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.138.0 (2025-03-13)
+------------------
+
+* Feature - Generate account endpoints for DynamoDB requests using ARN-sourced account ID when available
+
 1.137.0 (2025-02-18)
 ------------------
 

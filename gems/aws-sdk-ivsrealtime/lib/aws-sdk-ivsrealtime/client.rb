@@ -743,6 +743,9 @@ module Aws::IVSRealTime
     #         recording_mode: "INTERVAL", # accepts INTERVAL, DISABLED
     #       },
     #       recording_reconnect_window_seconds: 1,
+    #       hls_configuration: {
+    #         target_segment_duration_seconds: 1,
+    #       },
     #     },
     #   })
     #
@@ -761,6 +764,7 @@ module Aws::IVSRealTime
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage[0] #=> String, one of "SEQUENTIAL", "LATEST"
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.recording_mode #=> String, one of "INTERVAL", "DISABLED"
     #   resp.stage.auto_participant_recording_configuration.recording_reconnect_window_seconds #=> Integer
+    #   resp.stage.auto_participant_recording_configuration.hls_configuration.target_segment_duration_seconds #=> Integer
     #   resp.stage.endpoints.events #=> String
     #   resp.stage.endpoints.whip #=> String
     #   resp.stage.endpoints.rtmp #=> String
@@ -1055,6 +1059,7 @@ module Aws::IVSRealTime
     #   resp.composition.destinations[0].configuration.s3.storage_configuration_arn #=> String
     #   resp.composition.destinations[0].configuration.s3.encoder_configuration_arns #=> Array
     #   resp.composition.destinations[0].configuration.s3.encoder_configuration_arns[0] #=> String
+    #   resp.composition.destinations[0].configuration.s3.recording_configuration.hls_configuration.target_segment_duration_seconds #=> Integer
     #   resp.composition.destinations[0].configuration.s3.recording_configuration.format #=> String, one of "HLS"
     #   resp.composition.destinations[0].configuration.s3.thumbnail_configurations #=> Array
     #   resp.composition.destinations[0].configuration.s3.thumbnail_configurations[0].target_interval_seconds #=> Integer
@@ -1265,6 +1270,7 @@ module Aws::IVSRealTime
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage[0] #=> String, one of "SEQUENTIAL", "LATEST"
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.recording_mode #=> String, one of "INTERVAL", "DISABLED"
     #   resp.stage.auto_participant_recording_configuration.recording_reconnect_window_seconds #=> Integer
+    #   resp.stage.auto_participant_recording_configuration.hls_configuration.target_segment_duration_seconds #=> Integer
     #   resp.stage.endpoints.events #=> String
     #   resp.stage.endpoints.whip #=> String
     #   resp.stage.endpoints.rtmp #=> String
@@ -1980,6 +1986,9 @@ module Aws::IVSRealTime
     #           storage_configuration_arn: "StorageConfigurationArn", # required
     #           encoder_configuration_arns: ["EncoderConfigurationArn"], # required
     #           recording_configuration: {
+    #             hls_configuration: {
+    #               target_segment_duration_seconds: 1,
+    #             },
     #             format: "HLS", # accepts HLS
     #           },
     #           thumbnail_configurations: [
@@ -2027,6 +2036,7 @@ module Aws::IVSRealTime
     #   resp.composition.destinations[0].configuration.s3.storage_configuration_arn #=> String
     #   resp.composition.destinations[0].configuration.s3.encoder_configuration_arns #=> Array
     #   resp.composition.destinations[0].configuration.s3.encoder_configuration_arns[0] #=> String
+    #   resp.composition.destinations[0].configuration.s3.recording_configuration.hls_configuration.target_segment_duration_seconds #=> Integer
     #   resp.composition.destinations[0].configuration.s3.recording_configuration.format #=> String, one of "HLS"
     #   resp.composition.destinations[0].configuration.s3.thumbnail_configurations #=> Array
     #   resp.composition.destinations[0].configuration.s3.thumbnail_configurations[0].target_interval_seconds #=> Integer
@@ -2218,6 +2228,9 @@ module Aws::IVSRealTime
     #         recording_mode: "INTERVAL", # accepts INTERVAL, DISABLED
     #       },
     #       recording_reconnect_window_seconds: 1,
+    #       hls_configuration: {
+    #         target_segment_duration_seconds: 1,
+    #       },
     #     },
     #   })
     #
@@ -2236,6 +2249,7 @@ module Aws::IVSRealTime
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage[0] #=> String, one of "SEQUENTIAL", "LATEST"
     #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.recording_mode #=> String, one of "INTERVAL", "DISABLED"
     #   resp.stage.auto_participant_recording_configuration.recording_reconnect_window_seconds #=> Integer
+    #   resp.stage.auto_participant_recording_configuration.hls_configuration.target_segment_duration_seconds #=> Integer
     #   resp.stage.endpoints.events #=> String
     #   resp.stage.endpoints.whip #=> String
     #   resp.stage.endpoints.rtmp #=> String
@@ -2268,7 +2282,7 @@ module Aws::IVSRealTime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ivsrealtime'
-      context[:gem_version] = '1.39.0'
+      context[:gem_version] = '1.40.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

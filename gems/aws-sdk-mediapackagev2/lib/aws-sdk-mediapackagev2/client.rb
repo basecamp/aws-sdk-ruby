@@ -1617,6 +1617,7 @@ module Aws::MediaPackageV2
     #           time_delay_seconds: 1,
     #           clip_start_time: Time.now,
     #         },
+    #         url_encode_child_manifest: false,
     #       },
     #     ],
     #     low_latency_hls_manifests: [
@@ -1639,6 +1640,7 @@ module Aws::MediaPackageV2
     #           time_delay_seconds: 1,
     #           clip_start_time: Time.now,
     #         },
+    #         url_encode_child_manifest: false,
     #       },
     #     ],
     #     dash_manifests: [
@@ -1718,6 +1720,7 @@ module Aws::MediaPackageV2
     #   resp.hls_manifests[0].filter_configuration.clip_start_time #=> Time
     #   resp.hls_manifests[0].start_tag.time_offset #=> Float
     #   resp.hls_manifests[0].start_tag.precise #=> Boolean
+    #   resp.hls_manifests[0].url_encode_child_manifest #=> Boolean
     #   resp.low_latency_hls_manifests #=> Array
     #   resp.low_latency_hls_manifests[0].manifest_name #=> String
     #   resp.low_latency_hls_manifests[0].url #=> String
@@ -1732,6 +1735,7 @@ module Aws::MediaPackageV2
     #   resp.low_latency_hls_manifests[0].filter_configuration.clip_start_time #=> Time
     #   resp.low_latency_hls_manifests[0].start_tag.time_offset #=> Float
     #   resp.low_latency_hls_manifests[0].start_tag.precise #=> Boolean
+    #   resp.low_latency_hls_manifests[0].url_encode_child_manifest #=> Boolean
     #   resp.dash_manifests #=> Array
     #   resp.dash_manifests[0].manifest_name #=> String
     #   resp.dash_manifests[0].url #=> String
@@ -2011,6 +2015,7 @@ module Aws::MediaPackageV2
     #   * {Types::GetChannelResponse#channel_group_name #channel_group_name} => String
     #   * {Types::GetChannelResponse#created_at #created_at} => Time
     #   * {Types::GetChannelResponse#modified_at #modified_at} => Time
+    #   * {Types::GetChannelResponse#reset_at #reset_at} => Time
     #   * {Types::GetChannelResponse#description #description} => String
     #   * {Types::GetChannelResponse#ingest_endpoints #ingest_endpoints} => Array&lt;Types::IngestEndpoint&gt;
     #   * {Types::GetChannelResponse#input_type #input_type} => String
@@ -2067,6 +2072,7 @@ module Aws::MediaPackageV2
     #   resp.channel_group_name #=> String
     #   resp.created_at #=> Time
     #   resp.modified_at #=> Time
+    #   resp.reset_at #=> Time
     #   resp.description #=> String
     #   resp.ingest_endpoints #=> Array
     #   resp.ingest_endpoints[0].id #=> String
@@ -2379,6 +2385,7 @@ module Aws::MediaPackageV2
     #   * {Types::GetOriginEndpointResponse#segment #segment} => Types::Segment
     #   * {Types::GetOriginEndpointResponse#created_at #created_at} => Time
     #   * {Types::GetOriginEndpointResponse#modified_at #modified_at} => Time
+    #   * {Types::GetOriginEndpointResponse#reset_at #reset_at} => Time
     #   * {Types::GetOriginEndpointResponse#description #description} => String
     #   * {Types::GetOriginEndpointResponse#startover_window_seconds #startover_window_seconds} => Integer
     #   * {Types::GetOriginEndpointResponse#hls_manifests #hls_manifests} => Array&lt;Types::GetHlsManifestConfiguration&gt;
@@ -2534,6 +2541,7 @@ module Aws::MediaPackageV2
     #   resp.segment.encryption.speke_key_provider.url #=> String
     #   resp.created_at #=> Time
     #   resp.modified_at #=> Time
+    #   resp.reset_at #=> Time
     #   resp.description #=> String
     #   resp.startover_window_seconds #=> Integer
     #   resp.hls_manifests #=> Array
@@ -2550,6 +2558,7 @@ module Aws::MediaPackageV2
     #   resp.hls_manifests[0].filter_configuration.clip_start_time #=> Time
     #   resp.hls_manifests[0].start_tag.time_offset #=> Float
     #   resp.hls_manifests[0].start_tag.precise #=> Boolean
+    #   resp.hls_manifests[0].url_encode_child_manifest #=> Boolean
     #   resp.low_latency_hls_manifests #=> Array
     #   resp.low_latency_hls_manifests[0].manifest_name #=> String
     #   resp.low_latency_hls_manifests[0].url #=> String
@@ -2564,6 +2573,7 @@ module Aws::MediaPackageV2
     #   resp.low_latency_hls_manifests[0].filter_configuration.clip_start_time #=> Time
     #   resp.low_latency_hls_manifests[0].start_tag.time_offset #=> Float
     #   resp.low_latency_hls_manifests[0].start_tag.precise #=> Boolean
+    #   resp.low_latency_hls_manifests[0].url_encode_child_manifest #=> Boolean
     #   resp.dash_manifests #=> Array
     #   resp.dash_manifests[0].manifest_name #=> String
     #   resp.dash_manifests[0].url #=> String
@@ -2664,9 +2674,8 @@ module Aws::MediaPackageV2
       req.send_request(options)
     end
 
-    # Retrieves all channel groups that are configured in AWS Elemental
-    # MediaPackage, including the channels and origin endpoints that are
-    # associated with it.
+    # Retrieves all channel groups that are configured in Elemental
+    # MediaPackage.
     #
     # @option params [Integer] :max_results
     #   The maximum number of results to return in the response.
@@ -3218,6 +3227,139 @@ module Aws::MediaPackageV2
     # @param [Hash] params ({})
     def put_origin_endpoint_policy(params = {}, options = {})
       req = build_request(:put_origin_endpoint_policy, params)
+      req.send_request(options)
+    end
+
+    # Resetting the channel can help to clear errors from misconfigurations
+    # in the encoder. A reset refreshes the ingest stream and removes
+    # previous content.
+    #
+    # Be sure to stop the encoder before you reset the channel, and wait at
+    # least 30 seconds before you restart the encoder.
+    #
+    # @option params [required, String] :channel_group_name
+    #   The name of the channel group that contains the channel that you are
+    #   resetting.
+    #
+    # @option params [required, String] :channel_name
+    #   The name of the channel that you are resetting.
+    #
+    # @return [Types::ResetChannelStateResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ResetChannelStateResponse#channel_group_name #channel_group_name} => String
+    #   * {Types::ResetChannelStateResponse#channel_name #channel_name} => String
+    #   * {Types::ResetChannelStateResponse#arn #arn} => String
+    #   * {Types::ResetChannelStateResponse#reset_at #reset_at} => Time
+    #
+    #
+    # @example Example: Reset a Channel
+    #
+    #   resp = client.reset_channel_state({
+    #     channel_group_name: "exampleChannelGroup", 
+    #     channel_name: "exampleChannel", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     arn: "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannel", 
+    #     channel_group_name: "exampleChannelGroup", 
+    #     channel_name: "exampleChannel", 
+    #     reset_at: Time.parse("2024-10-09T09:36:00.00Z"), 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.reset_channel_state({
+    #     channel_group_name: "ResourceName", # required
+    #     channel_name: "ResourceName", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.channel_group_name #=> String
+    #   resp.channel_name #=> String
+    #   resp.arn #=> String
+    #   resp.reset_at #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/ResetChannelState AWS API Documentation
+    #
+    # @overload reset_channel_state(params = {})
+    # @param [Hash] params ({})
+    def reset_channel_state(params = {}, options = {})
+      req = build_request(:reset_channel_state, params)
+      req.send_request(options)
+    end
+
+    # Resetting the origin endpoint can help to resolve unexpected behavior
+    # and other content packaging issues. It also helps to preserve special
+    # events when you don't want the previous content to be available for
+    # viewing. A reset clears out all previous content from the origin
+    # endpoint.
+    #
+    # MediaPackage might return old content from this endpoint in the first
+    # 30 seconds after the endpoint reset. For best results, when possible,
+    # wait 30 seconds from endpoint reset to send playback requests to this
+    # endpoint.
+    #
+    # @option params [required, String] :channel_group_name
+    #   The name of the channel group that contains the channel with the
+    #   origin endpoint that you are resetting.
+    #
+    # @option params [required, String] :channel_name
+    #   The name of the channel with the origin endpoint that you are
+    #   resetting.
+    #
+    # @option params [required, String] :origin_endpoint_name
+    #   The name of the origin endpoint that you are resetting.
+    #
+    # @return [Types::ResetOriginEndpointStateResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ResetOriginEndpointStateResponse#channel_group_name #channel_group_name} => String
+    #   * {Types::ResetOriginEndpointStateResponse#channel_name #channel_name} => String
+    #   * {Types::ResetOriginEndpointStateResponse#origin_endpoint_name #origin_endpoint_name} => String
+    #   * {Types::ResetOriginEndpointStateResponse#arn #arn} => String
+    #   * {Types::ResetOriginEndpointStateResponse#reset_at #reset_at} => Time
+    #
+    #
+    # @example Example: Reset an OriginEndpoint
+    #
+    #   resp = client.reset_origin_endpoint_state({
+    #     channel_group_name: "exampleChannelGroup", 
+    #     channel_name: "exampleChannel", 
+    #     origin_endpoint_name: "exampleOriginEndpoint", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     arn: "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannel/originEndpoint/exampleOriginEndpoint", 
+    #     channel_group_name: "exampleChannelGroup", 
+    #     channel_name: "exampleChannel", 
+    #     origin_endpoint_name: "exampleOriginEndpoint", 
+    #     reset_at: Time.parse("2024-10-09T09:36:00.00Z"), 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.reset_origin_endpoint_state({
+    #     channel_group_name: "ResourceName", # required
+    #     channel_name: "ResourceName", # required
+    #     origin_endpoint_name: "ResourceName", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.channel_group_name #=> String
+    #   resp.channel_name #=> String
+    #   resp.origin_endpoint_name #=> String
+    #   resp.arn #=> String
+    #   resp.reset_at #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/ResetOriginEndpointState AWS API Documentation
+    #
+    # @overload reset_origin_endpoint_state(params = {})
+    # @param [Hash] params ({})
+    def reset_origin_endpoint_state(params = {}, options = {})
+      req = build_request(:reset_origin_endpoint_state, params)
       req.send_request(options)
     end
 
@@ -3856,6 +3998,7 @@ module Aws::MediaPackageV2
     #           time_delay_seconds: 1,
     #           clip_start_time: Time.now,
     #         },
+    #         url_encode_child_manifest: false,
     #       },
     #     ],
     #     low_latency_hls_manifests: [
@@ -3878,6 +4021,7 @@ module Aws::MediaPackageV2
     #           time_delay_seconds: 1,
     #           clip_start_time: Time.now,
     #         },
+    #         url_encode_child_manifest: false,
     #       },
     #     ],
     #     dash_manifests: [
@@ -3955,6 +4099,7 @@ module Aws::MediaPackageV2
     #   resp.hls_manifests[0].filter_configuration.clip_start_time #=> Time
     #   resp.hls_manifests[0].start_tag.time_offset #=> Float
     #   resp.hls_manifests[0].start_tag.precise #=> Boolean
+    #   resp.hls_manifests[0].url_encode_child_manifest #=> Boolean
     #   resp.low_latency_hls_manifests #=> Array
     #   resp.low_latency_hls_manifests[0].manifest_name #=> String
     #   resp.low_latency_hls_manifests[0].url #=> String
@@ -3969,6 +4114,7 @@ module Aws::MediaPackageV2
     #   resp.low_latency_hls_manifests[0].filter_configuration.clip_start_time #=> Time
     #   resp.low_latency_hls_manifests[0].start_tag.time_offset #=> Float
     #   resp.low_latency_hls_manifests[0].start_tag.precise #=> Boolean
+    #   resp.low_latency_hls_manifests[0].url_encode_child_manifest #=> Boolean
     #   resp.force_endpoint_error_configuration.endpoint_error_conditions #=> Array
     #   resp.force_endpoint_error_configuration.endpoint_error_conditions[0] #=> String, one of "STALE_MANIFEST", "INCOMPLETE_MANIFEST", "MISSING_DRM_KEY", "SLATE_INPUT"
     #   resp.etag #=> String
@@ -4021,7 +4167,7 @@ module Aws::MediaPackageV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mediapackagev2'
-      context[:gem_version] = '1.36.0'
+      context[:gem_version] = '1.37.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

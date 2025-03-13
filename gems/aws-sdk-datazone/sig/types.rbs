@@ -880,6 +880,7 @@ module Aws::DataZone
       attr_accessor domain_id: ::String
       attr_accessor environment_actions: ::Array[Types::ConfigurableEnvironmentAction]
       attr_accessor environment_blueprint_id: ::String
+      attr_accessor environment_configuration_id: ::String
       attr_accessor environment_profile_id: ::String
       attr_accessor glossary_terms: ::Array[::String]
       attr_accessor id: ::String
@@ -892,7 +893,7 @@ module Aws::DataZone
       attr_accessor status: ("ACTIVE" | "CREATING" | "UPDATING" | "DELETING" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED" | "VALIDATION_FAILED" | "SUSPENDED" | "DISABLED" | "EXPIRED" | "DELETED" | "INACCESSIBLE")
       attr_accessor updated_at: ::Time
       attr_accessor user_parameters: ::Array[Types::CustomParameter]
-      SENSITIVE: [:description, :name]
+      SENSITIVE: [:description, :environment_configuration_id, :name]
     end
 
     class CreateEnvironmentProfileInput
@@ -1076,7 +1077,7 @@ module Aws::DataZone
       attr_accessor last_updated_at: ::Time
       attr_accessor name: ::String
       attr_accessor project_profile_id: ::String
-      attr_accessor project_status: ("ACTIVE" | "DELETING" | "DELETE_FAILED")
+      attr_accessor project_status: ("ACTIVE" | "DELETING" | "DELETE_FAILED" | "UPDATING" | "UPDATE_FAILED")
       attr_accessor user_parameters: ::Array[Types::EnvironmentConfigurationUserParameter]
       SENSITIVE: [:description, :name]
     end
@@ -1828,6 +1829,7 @@ module Aws::DataZone
 
     class EnvironmentConfigurationUserParameter
       attr_accessor environment_configuration_name: ::String
+      attr_accessor environment_id: ::String
       attr_accessor environment_parameters: ::Array[Types::EnvironmentParameter]
       SENSITIVE: [:environment_configuration_name]
     end
@@ -1872,6 +1874,7 @@ module Aws::DataZone
       attr_accessor created_by: ::String
       attr_accessor description: ::String
       attr_accessor domain_id: ::String
+      attr_accessor environment_configuration_id: ::String
       attr_accessor environment_profile_id: ::String
       attr_accessor id: ::String
       attr_accessor name: ::String
@@ -1879,7 +1882,7 @@ module Aws::DataZone
       attr_accessor provider: ::String
       attr_accessor status: ("ACTIVE" | "CREATING" | "UPDATING" | "DELETING" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED" | "VALIDATION_FAILED" | "SUSPENDED" | "DISABLED" | "EXPIRED" | "DELETED" | "INACCESSIBLE")
       attr_accessor updated_at: ::Time
-      SENSITIVE: [:description, :name]
+      SENSITIVE: [:description, :environment_configuration_id, :name]
     end
 
     class EqualToExpression
@@ -2289,6 +2292,7 @@ module Aws::DataZone
       attr_accessor domain_id: ::String
       attr_accessor environment_actions: ::Array[Types::ConfigurableEnvironmentAction]
       attr_accessor environment_blueprint_id: ::String
+      attr_accessor environment_configuration_id: ::String
       attr_accessor environment_profile_id: ::String
       attr_accessor glossary_terms: ::Array[::String]
       attr_accessor id: ::String
@@ -2301,7 +2305,7 @@ module Aws::DataZone
       attr_accessor status: ("ACTIVE" | "CREATING" | "UPDATING" | "DELETING" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED" | "VALIDATION_FAILED" | "SUSPENDED" | "DISABLED" | "EXPIRED" | "DELETED" | "INACCESSIBLE")
       attr_accessor updated_at: ::Time
       attr_accessor user_parameters: ::Array[Types::CustomParameter]
-      SENSITIVE: [:description, :name]
+      SENSITIVE: [:description, :environment_configuration_id, :name]
     end
 
     class GetEnvironmentProfileInput
@@ -2540,7 +2544,7 @@ module Aws::DataZone
       attr_accessor last_updated_at: ::Time
       attr_accessor name: ::String
       attr_accessor project_profile_id: ::String
-      attr_accessor project_status: ("ACTIVE" | "DELETING" | "DELETE_FAILED")
+      attr_accessor project_status: ("ACTIVE" | "DELETING" | "DELETE_FAILED" | "UPDATING" | "UPDATE_FAILED")
       attr_accessor user_parameters: ::Array[Types::EnvironmentConfigurationUserParameter]
       SENSITIVE: [:description, :name]
     end
@@ -4015,7 +4019,7 @@ module Aws::DataZone
       attr_accessor failure_reasons: ::Array[Types::ProjectDeletionError]
       attr_accessor id: ::String
       attr_accessor name: ::String
-      attr_accessor project_status: ("ACTIVE" | "DELETING" | "DELETE_FAILED")
+      attr_accessor project_status: ("ACTIVE" | "DELETING" | "DELETE_FAILED" | "UPDATING" | "UPDATE_FAILED")
       attr_accessor updated_at: ::Time
       SENSITIVE: [:description, :name]
     end
@@ -5176,11 +5180,13 @@ module Aws::DataZone
     end
 
     class UpdateEnvironmentInput
+      attr_accessor blueprint_version: ::String
       attr_accessor description: ::String
       attr_accessor domain_identifier: ::String
       attr_accessor glossary_terms: ::Array[::String]
       attr_accessor identifier: ::String
       attr_accessor name: ::String
+      attr_accessor user_parameters: ::Array[Types::EnvironmentParameter]
       SENSITIVE: []
     end
 
@@ -5194,6 +5200,7 @@ module Aws::DataZone
       attr_accessor domain_id: ::String
       attr_accessor environment_actions: ::Array[Types::ConfigurableEnvironmentAction]
       attr_accessor environment_blueprint_id: ::String
+      attr_accessor environment_configuration_id: ::String
       attr_accessor environment_profile_id: ::String
       attr_accessor glossary_terms: ::Array[::String]
       attr_accessor id: ::String
@@ -5206,7 +5213,7 @@ module Aws::DataZone
       attr_accessor status: ("ACTIVE" | "CREATING" | "UPDATING" | "DELETING" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED" | "VALIDATION_FAILED" | "SUSPENDED" | "DISABLED" | "EXPIRED" | "DELETED" | "INACCESSIBLE")
       attr_accessor updated_at: ::Time
       attr_accessor user_parameters: ::Array[Types::CustomParameter]
-      SENSITIVE: [:description, :name]
+      SENSITIVE: [:description, :environment_configuration_id, :name]
     end
 
     class UpdateEnvironmentProfileInput
@@ -5302,6 +5309,8 @@ module Aws::DataZone
       attr_accessor glossary_terms: ::Array[::String]
       attr_accessor identifier: ::String
       attr_accessor name: ::String
+      attr_accessor project_profile_version: ::String
+      attr_accessor user_parameters: ::Array[Types::EnvironmentConfigurationUserParameter]
       SENSITIVE: [:description, :name]
     end
 
@@ -5318,7 +5327,7 @@ module Aws::DataZone
       attr_accessor last_updated_at: ::Time
       attr_accessor name: ::String
       attr_accessor project_profile_id: ::String
-      attr_accessor project_status: ("ACTIVE" | "DELETING" | "DELETE_FAILED")
+      attr_accessor project_status: ("ACTIVE" | "DELETING" | "DELETE_FAILED" | "UPDATING" | "UPDATE_FAILED")
       attr_accessor user_parameters: ::Array[Types::EnvironmentConfigurationUserParameter]
       SENSITIVE: [:description, :name]
     end

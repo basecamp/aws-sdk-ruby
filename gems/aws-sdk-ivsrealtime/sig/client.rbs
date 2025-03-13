@@ -149,7 +149,10 @@ module Aws
                               storage: Array[("SEQUENTIAL" | "LATEST")]?,
                               recording_mode: ("INTERVAL" | "DISABLED")?
                             }?,
-                            recording_reconnect_window_seconds: ::Integer?
+                            recording_reconnect_window_seconds: ::Integer?,
+                            hls_configuration: {
+                              target_segment_duration_seconds: ::Integer?
+                            }?
                           }
                         ) -> _CreateStageResponseSuccess
                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateStageResponseSuccess
@@ -492,6 +495,9 @@ module Aws
                                      storage_configuration_arn: ::String,
                                      encoder_configuration_arns: Array[::String],
                                      recording_configuration: {
+                                       hls_configuration: {
+                                         target_segment_duration_seconds: ::Integer?
+                                       }?,
                                        format: ("HLS")?
                                      }?,
                                      thumbnail_configurations: Array[
@@ -563,7 +569,10 @@ module Aws
                               storage: Array[("SEQUENTIAL" | "LATEST")]?,
                               recording_mode: ("INTERVAL" | "DISABLED")?
                             }?,
-                            recording_reconnect_window_seconds: ::Integer?
+                            recording_reconnect_window_seconds: ::Integer?,
+                            hls_configuration: {
+                              target_segment_duration_seconds: ::Integer?
+                            }?
                           }
                         ) -> _UpdateStageResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateStageResponseSuccess

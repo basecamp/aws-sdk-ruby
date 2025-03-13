@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.512.0 (2025-03-13)
+------------------
+
+* Feature - This release changes the CreateLaunchTemplate, CreateLaunchTemplateVersion, ModifyLaunchTemplate CLI and SDKs such that if you do not specify a client token, a randomly generated token is used for the request to ensure idempotency.
+
 1.511.0 (2025-03-11)
 ------------------
 

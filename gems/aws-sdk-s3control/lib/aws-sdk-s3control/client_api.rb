@@ -1056,6 +1056,7 @@ module Aws::S3Control
 
     GetDataAccessResult.add_member(:credentials, Shapes::ShapeRef.new(shape: Credentials, location_name: "Credentials"))
     GetDataAccessResult.add_member(:matched_grant_target, Shapes::ShapeRef.new(shape: S3Prefix, location_name: "MatchedGrantTarget"))
+    GetDataAccessResult.add_member(:grantee, Shapes::ShapeRef.new(shape: Grantee, location_name: "Grantee"))
     GetDataAccessResult.struct_class = Types::GetDataAccessResult
 
     GetJobTaggingRequest.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, location: "header", location_name: "x-amz-account-id", metadata: {"contextParam"=>{"name"=>"AccountId"}}))

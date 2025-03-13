@@ -150,6 +150,10 @@ module Aws::MediaPackageV2
     PutChannelPolicyResponse = Shapes::StructureShape.new(name: 'PutChannelPolicyResponse')
     PutOriginEndpointPolicyRequest = Shapes::StructureShape.new(name: 'PutOriginEndpointPolicyRequest')
     PutOriginEndpointPolicyResponse = Shapes::StructureShape.new(name: 'PutOriginEndpointPolicyResponse')
+    ResetChannelStateRequest = Shapes::StructureShape.new(name: 'ResetChannelStateRequest')
+    ResetChannelStateResponse = Shapes::StructureShape.new(name: 'ResetChannelStateResponse')
+    ResetOriginEndpointStateRequest = Shapes::StructureShape.new(name: 'ResetOriginEndpointStateRequest')
+    ResetOriginEndpointStateResponse = Shapes::StructureShape.new(name: 'ResetOriginEndpointStateResponse')
     ResourceDescription = Shapes::StringShape.new(name: 'ResourceDescription')
     ResourceName = Shapes::StringShape.new(name: 'ResourceName')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
@@ -320,6 +324,7 @@ module Aws::MediaPackageV2
     CreateHlsManifestConfiguration.add_member(:manifest_window_seconds, Shapes::ShapeRef.new(shape: CreateHlsManifestConfigurationManifestWindowSecondsInteger, location_name: "ManifestWindowSeconds"))
     CreateHlsManifestConfiguration.add_member(:program_date_time_interval_seconds, Shapes::ShapeRef.new(shape: CreateHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger, location_name: "ProgramDateTimeIntervalSeconds"))
     CreateHlsManifestConfiguration.add_member(:filter_configuration, Shapes::ShapeRef.new(shape: FilterConfiguration, location_name: "FilterConfiguration"))
+    CreateHlsManifestConfiguration.add_member(:url_encode_child_manifest, Shapes::ShapeRef.new(shape: Boolean, location_name: "UrlEncodeChildManifest"))
     CreateHlsManifestConfiguration.struct_class = Types::CreateHlsManifestConfiguration
 
     CreateHlsManifests.member = Shapes::ShapeRef.new(shape: CreateHlsManifestConfiguration)
@@ -331,6 +336,7 @@ module Aws::MediaPackageV2
     CreateLowLatencyHlsManifestConfiguration.add_member(:manifest_window_seconds, Shapes::ShapeRef.new(shape: CreateLowLatencyHlsManifestConfigurationManifestWindowSecondsInteger, location_name: "ManifestWindowSeconds"))
     CreateLowLatencyHlsManifestConfiguration.add_member(:program_date_time_interval_seconds, Shapes::ShapeRef.new(shape: CreateLowLatencyHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger, location_name: "ProgramDateTimeIntervalSeconds"))
     CreateLowLatencyHlsManifestConfiguration.add_member(:filter_configuration, Shapes::ShapeRef.new(shape: FilterConfiguration, location_name: "FilterConfiguration"))
+    CreateLowLatencyHlsManifestConfiguration.add_member(:url_encode_child_manifest, Shapes::ShapeRef.new(shape: Boolean, location_name: "UrlEncodeChildManifest"))
     CreateLowLatencyHlsManifestConfiguration.struct_class = Types::CreateLowLatencyHlsManifestConfiguration
 
     CreateLowLatencyHlsManifests.member = Shapes::ShapeRef.new(shape: CreateLowLatencyHlsManifestConfiguration)
@@ -465,6 +471,7 @@ module Aws::MediaPackageV2
     GetChannelResponse.add_member(:channel_group_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ChannelGroupName"))
     GetChannelResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "CreatedAt"))
     GetChannelResponse.add_member(:modified_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "ModifiedAt"))
+    GetChannelResponse.add_member(:reset_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "ResetAt"))
     GetChannelResponse.add_member(:description, Shapes::ShapeRef.new(shape: ResourceDescription, location_name: "Description"))
     GetChannelResponse.add_member(:ingest_endpoints, Shapes::ShapeRef.new(shape: IngestEndpointList, location_name: "IngestEndpoints"))
     GetChannelResponse.add_member(:input_type, Shapes::ShapeRef.new(shape: InputType, location_name: "InputType"))
@@ -521,6 +528,7 @@ module Aws::MediaPackageV2
     GetHlsManifestConfiguration.add_member(:scte_hls, Shapes::ShapeRef.new(shape: ScteHls, location_name: "ScteHls"))
     GetHlsManifestConfiguration.add_member(:filter_configuration, Shapes::ShapeRef.new(shape: FilterConfiguration, location_name: "FilterConfiguration"))
     GetHlsManifestConfiguration.add_member(:start_tag, Shapes::ShapeRef.new(shape: StartTag, location_name: "StartTag"))
+    GetHlsManifestConfiguration.add_member(:url_encode_child_manifest, Shapes::ShapeRef.new(shape: Boolean, location_name: "UrlEncodeChildManifest"))
     GetHlsManifestConfiguration.struct_class = Types::GetHlsManifestConfiguration
 
     GetHlsManifests.member = Shapes::ShapeRef.new(shape: GetHlsManifestConfiguration)
@@ -533,6 +541,7 @@ module Aws::MediaPackageV2
     GetLowLatencyHlsManifestConfiguration.add_member(:scte_hls, Shapes::ShapeRef.new(shape: ScteHls, location_name: "ScteHls"))
     GetLowLatencyHlsManifestConfiguration.add_member(:filter_configuration, Shapes::ShapeRef.new(shape: FilterConfiguration, location_name: "FilterConfiguration"))
     GetLowLatencyHlsManifestConfiguration.add_member(:start_tag, Shapes::ShapeRef.new(shape: StartTag, location_name: "StartTag"))
+    GetLowLatencyHlsManifestConfiguration.add_member(:url_encode_child_manifest, Shapes::ShapeRef.new(shape: Boolean, location_name: "UrlEncodeChildManifest"))
     GetLowLatencyHlsManifestConfiguration.struct_class = Types::GetLowLatencyHlsManifestConfiguration
 
     GetLowLatencyHlsManifests.member = Shapes::ShapeRef.new(shape: GetLowLatencyHlsManifestConfiguration)
@@ -561,6 +570,7 @@ module Aws::MediaPackageV2
     GetOriginEndpointResponse.add_member(:segment, Shapes::ShapeRef.new(shape: Segment, required: true, location_name: "Segment"))
     GetOriginEndpointResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "CreatedAt"))
     GetOriginEndpointResponse.add_member(:modified_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "ModifiedAt"))
+    GetOriginEndpointResponse.add_member(:reset_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "ResetAt"))
     GetOriginEndpointResponse.add_member(:description, Shapes::ShapeRef.new(shape: ResourceDescription, location_name: "Description"))
     GetOriginEndpointResponse.add_member(:startover_window_seconds, Shapes::ShapeRef.new(shape: Integer, location_name: "StartoverWindowSeconds"))
     GetOriginEndpointResponse.add_member(:hls_manifests, Shapes::ShapeRef.new(shape: GetHlsManifests, location_name: "HlsManifests"))
@@ -723,6 +733,28 @@ module Aws::MediaPackageV2
     PutOriginEndpointPolicyRequest.struct_class = Types::PutOriginEndpointPolicyRequest
 
     PutOriginEndpointPolicyResponse.struct_class = Types::PutOriginEndpointPolicyResponse
+
+    ResetChannelStateRequest.add_member(:channel_group_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location: "uri", location_name: "ChannelGroupName"))
+    ResetChannelStateRequest.add_member(:channel_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location: "uri", location_name: "ChannelName"))
+    ResetChannelStateRequest.struct_class = Types::ResetChannelStateRequest
+
+    ResetChannelStateResponse.add_member(:channel_group_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ChannelGroupName"))
+    ResetChannelStateResponse.add_member(:channel_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ChannelName"))
+    ResetChannelStateResponse.add_member(:arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Arn"))
+    ResetChannelStateResponse.add_member(:reset_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "ResetAt"))
+    ResetChannelStateResponse.struct_class = Types::ResetChannelStateResponse
+
+    ResetOriginEndpointStateRequest.add_member(:channel_group_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location: "uri", location_name: "ChannelGroupName"))
+    ResetOriginEndpointStateRequest.add_member(:channel_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location: "uri", location_name: "ChannelName"))
+    ResetOriginEndpointStateRequest.add_member(:origin_endpoint_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location: "uri", location_name: "OriginEndpointName"))
+    ResetOriginEndpointStateRequest.struct_class = Types::ResetOriginEndpointStateRequest
+
+    ResetOriginEndpointStateResponse.add_member(:channel_group_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location_name: "ChannelGroupName"))
+    ResetOriginEndpointStateResponse.add_member(:channel_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location_name: "ChannelName"))
+    ResetOriginEndpointStateResponse.add_member(:origin_endpoint_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location_name: "OriginEndpointName"))
+    ResetOriginEndpointStateResponse.add_member(:arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Arn"))
+    ResetOriginEndpointStateResponse.add_member(:reset_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "ResetAt"))
+    ResetOriginEndpointStateResponse.struct_class = Types::ResetOriginEndpointStateResponse
 
     ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
     ResourceNotFoundException.add_member(:resource_type_not_found, Shapes::ShapeRef.new(shape: ResourceTypeNotFound, location_name: "ResourceTypeNotFound"))
@@ -1197,6 +1229,34 @@ module Aws::MediaPackageV2
         o.http_request_uri = "/channelGroup/{ChannelGroupName}/channel/{ChannelName}/originEndpoint/{OriginEndpointName}/policy"
         o.input = Shapes::ShapeRef.new(shape: PutOriginEndpointPolicyRequest)
         o.output = Shapes::ShapeRef.new(shape: PutOriginEndpointPolicyResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
+      api.add_operation(:reset_channel_state, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ResetChannelState"
+        o.http_method = "POST"
+        o.http_request_uri = "/channelGroup/{ChannelGroupName}/channel/{ChannelName}/reset"
+        o.input = Shapes::ShapeRef.new(shape: ResetChannelStateRequest)
+        o.output = Shapes::ShapeRef.new(shape: ResetChannelStateResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
+      api.add_operation(:reset_origin_endpoint_state, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ResetOriginEndpointState"
+        o.http_method = "POST"
+        o.http_request_uri = "/channelGroup/{ChannelGroupName}/channel/{ChannelName}/originEndpoint/{OriginEndpointName}/reset"
+        o.input = Shapes::ShapeRef.new(shape: ResetOriginEndpointStateRequest)
+        o.output = Shapes::ShapeRef.new(shape: ResetOriginEndpointStateResponse)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.33.0 (2025-03-13)
+------------------
+
+* Feature - This release adds support to update projects and environments
+
 1.32.0 (2025-02-18)
 ------------------
 

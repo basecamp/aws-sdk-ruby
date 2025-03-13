@@ -92,6 +92,7 @@ module Aws::Amplify
       attr_accessor update_time: ::Time
       attr_accessor environment_variables: ::Hash[::String, ::String]
       attr_accessor enable_auto_build: bool
+      attr_accessor enable_skew_protection: bool
       attr_accessor custom_domains: ::Array[::String]
       attr_accessor framework: ::String
       attr_accessor active_job_id: ::String
@@ -182,6 +183,7 @@ module Aws::Amplify
       attr_accessor framework: ::String
       attr_accessor enable_notification: bool
       attr_accessor enable_auto_build: bool
+      attr_accessor enable_skew_protection: bool
       attr_accessor environment_variables: ::Hash[::String, ::String]
       attr_accessor basic_auth_credentials: ::String
       attr_accessor enable_basic_auth: bool
@@ -713,6 +715,7 @@ module Aws::Amplify
       attr_accessor stage: ("PRODUCTION" | "BETA" | "DEVELOPMENT" | "EXPERIMENTAL" | "PULL_REQUEST")
       attr_accessor enable_notification: bool
       attr_accessor enable_auto_build: bool
+      attr_accessor enable_skew_protection: bool
       attr_accessor environment_variables: ::Hash[::String, ::String]
       attr_accessor basic_auth_credentials: ::String
       attr_accessor enable_basic_auth: bool

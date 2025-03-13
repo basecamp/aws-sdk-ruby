@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.110.0 (2025-03-13)
+------------------
+
+* Feature - Updated CreateLogAnomalyDetector to accept only kms key arn
+
 1.109.0 (2025-02-18)
 ------------------
 

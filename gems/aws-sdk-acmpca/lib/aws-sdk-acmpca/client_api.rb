@@ -791,6 +791,7 @@ module Aws::ACMPCA
         o.output = Shapes::ShapeRef.new(shape: ListTagsResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArnException)
+        o.errors << Shapes::ShapeRef.new(shape: RequestFailedException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidStateException)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_results",

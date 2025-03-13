@@ -274,7 +274,8 @@ module Aws
                                           end: ::Time?,
                                           time_delay_seconds: ::Integer?,
                                           clip_start_time: ::Time?
-                                        }?
+                                        }?,
+                                        url_encode_child_manifest: bool?
                                       },
                                     ],
                                     ?low_latency_hls_manifests: Array[
@@ -296,7 +297,8 @@ module Aws
                                           end: ::Time?,
                                           time_delay_seconds: ::Integer?,
                                           clip_start_time: ::Time?
-                                        }?
+                                        }?,
+                                        url_encode_child_manifest: bool?
                                       },
                                     ],
                                     ?dash_manifests: Array[
@@ -390,6 +392,7 @@ module Aws
         def channel_group_name: () -> ::String
         def created_at: () -> ::Time
         def modified_at: () -> ::Time
+        def reset_at: () -> ::Time
         def description: () -> ::String
         def ingest_endpoints: () -> ::Array[Types::IngestEndpoint]
         def input_type: () -> ("HLS" | "CMAF")
@@ -472,6 +475,7 @@ module Aws
         def segment: () -> Types::Segment
         def created_at: () -> ::Time
         def modified_at: () -> ::Time
+        def reset_at: () -> ::Time
         def description: () -> ::String
         def startover_window_seconds: () -> ::Integer
         def hls_manifests: () -> ::Array[Types::GetHlsManifestConfiguration]
@@ -591,6 +595,36 @@ module Aws
                                         policy: ::String
                                       ) -> _PutOriginEndpointPolicyResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutOriginEndpointPolicyResponseSuccess
+
+      interface _ResetChannelStateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ResetChannelStateResponse]
+        def channel_group_name: () -> ::String
+        def channel_name: () -> ::String
+        def arn: () -> ::String
+        def reset_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaPackageV2/Client.html#reset_channel_state-instance_method
+      def reset_channel_state: (
+                                 channel_group_name: ::String,
+                                 channel_name: ::String
+                               ) -> _ResetChannelStateResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ResetChannelStateResponseSuccess
+
+      interface _ResetOriginEndpointStateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ResetOriginEndpointStateResponse]
+        def channel_group_name: () -> ::String
+        def channel_name: () -> ::String
+        def origin_endpoint_name: () -> ::String
+        def arn: () -> ::String
+        def reset_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaPackageV2/Client.html#reset_origin_endpoint_state-instance_method
+      def reset_origin_endpoint_state: (
+                                         channel_group_name: ::String,
+                                         channel_name: ::String,
+                                         origin_endpoint_name: ::String
+                                       ) -> _ResetOriginEndpointStateResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ResetOriginEndpointStateResponseSuccess
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaPackageV2/Client.html#tag_resource-instance_method
       def tag_resource: (
@@ -729,7 +763,8 @@ module Aws
                                           end: ::Time?,
                                           time_delay_seconds: ::Integer?,
                                           clip_start_time: ::Time?
-                                        }?
+                                        }?,
+                                        url_encode_child_manifest: bool?
                                       },
                                     ],
                                     ?low_latency_hls_manifests: Array[
@@ -751,7 +786,8 @@ module Aws
                                           end: ::Time?,
                                           time_delay_seconds: ::Integer?,
                                           clip_start_time: ::Time?
-                                        }?
+                                        }?,
+                                        url_encode_child_manifest: bool?
                                       },
                                     ],
                                     ?dash_manifests: Array[

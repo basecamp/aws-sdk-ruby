@@ -65,7 +65,7 @@ module Aws::ACMPCA
     end
 
     class CertificateAuthorityConfiguration
-      attr_accessor key_algorithm: ("RSA_2048" | "RSA_4096" | "EC_prime256v1" | "EC_secp384r1" | "SM2")
+      attr_accessor key_algorithm: ("RSA_2048" | "RSA_3072" | "RSA_4096" | "EC_prime256v1" | "EC_secp384r1" | "EC_secp521r1" | "SM2")
       attr_accessor signing_algorithm: ("SHA256WITHECDSA" | "SHA384WITHECDSA" | "SHA512WITHECDSA" | "SHA256WITHRSA" | "SHA384WITHRSA" | "SHA512WITHRSA" | "SM3WITHSM2")
       attr_accessor subject: Types::ASN1Subject
       attr_accessor csr_extensions: Types::CsrExtensions

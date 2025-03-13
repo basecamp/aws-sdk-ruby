@@ -1737,6 +1737,7 @@ module Aws::DataZone
     CreateEnvironmentOutput.add_member(:domain_id, Shapes::ShapeRef.new(shape: DomainId, required: true, location_name: "domainId"))
     CreateEnvironmentOutput.add_member(:environment_actions, Shapes::ShapeRef.new(shape: EnvironmentActionList, location_name: "environmentActions"))
     CreateEnvironmentOutput.add_member(:environment_blueprint_id, Shapes::ShapeRef.new(shape: EnvironmentBlueprintId, location_name: "environmentBlueprintId"))
+    CreateEnvironmentOutput.add_member(:environment_configuration_id, Shapes::ShapeRef.new(shape: EnvironmentConfigurationId, location_name: "environmentConfigurationId"))
     CreateEnvironmentOutput.add_member(:environment_profile_id, Shapes::ShapeRef.new(shape: EnvironmentProfileId, location_name: "environmentProfileId"))
     CreateEnvironmentOutput.add_member(:glossary_terms, Shapes::ShapeRef.new(shape: GlossaryTerms, location_name: "glossaryTerms"))
     CreateEnvironmentOutput.add_member(:id, Shapes::ShapeRef.new(shape: EnvironmentId, location_name: "id"))
@@ -2507,6 +2508,7 @@ module Aws::DataZone
     EnvironmentConfigurationParametersList.member = Shapes::ShapeRef.new(shape: EnvironmentConfigurationParameter)
 
     EnvironmentConfigurationUserParameter.add_member(:environment_configuration_name, Shapes::ShapeRef.new(shape: EnvironmentConfigurationName, location_name: "environmentConfigurationName"))
+    EnvironmentConfigurationUserParameter.add_member(:environment_id, Shapes::ShapeRef.new(shape: EnvironmentId, location_name: "environmentId"))
     EnvironmentConfigurationUserParameter.add_member(:environment_parameters, Shapes::ShapeRef.new(shape: EnvironmentParametersList, location_name: "environmentParameters"))
     EnvironmentConfigurationUserParameter.struct_class = Types::EnvironmentConfigurationUserParameter
 
@@ -2556,6 +2558,7 @@ module Aws::DataZone
     EnvironmentSummary.add_member(:created_by, Shapes::ShapeRef.new(shape: String, required: true, location_name: "createdBy"))
     EnvironmentSummary.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     EnvironmentSummary.add_member(:domain_id, Shapes::ShapeRef.new(shape: DomainId, required: true, location_name: "domainId"))
+    EnvironmentSummary.add_member(:environment_configuration_id, Shapes::ShapeRef.new(shape: EnvironmentConfigurationId, location_name: "environmentConfigurationId"))
     EnvironmentSummary.add_member(:environment_profile_id, Shapes::ShapeRef.new(shape: EnvironmentProfileId, location_name: "environmentProfileId"))
     EnvironmentSummary.add_member(:id, Shapes::ShapeRef.new(shape: EnvironmentId, location_name: "id"))
     EnvironmentSummary.add_member(:name, Shapes::ShapeRef.new(shape: EnvironmentName, required: true, location_name: "name"))
@@ -2907,6 +2910,7 @@ module Aws::DataZone
     GetEnvironmentOutput.add_member(:domain_id, Shapes::ShapeRef.new(shape: DomainId, required: true, location_name: "domainId"))
     GetEnvironmentOutput.add_member(:environment_actions, Shapes::ShapeRef.new(shape: EnvironmentActionList, location_name: "environmentActions"))
     GetEnvironmentOutput.add_member(:environment_blueprint_id, Shapes::ShapeRef.new(shape: EnvironmentBlueprintId, location_name: "environmentBlueprintId"))
+    GetEnvironmentOutput.add_member(:environment_configuration_id, Shapes::ShapeRef.new(shape: EnvironmentConfigurationId, location_name: "environmentConfigurationId"))
     GetEnvironmentOutput.add_member(:environment_profile_id, Shapes::ShapeRef.new(shape: EnvironmentProfileId, location_name: "environmentProfileId"))
     GetEnvironmentOutput.add_member(:glossary_terms, Shapes::ShapeRef.new(shape: GlossaryTerms, location_name: "glossaryTerms"))
     GetEnvironmentOutput.add_member(:id, Shapes::ShapeRef.new(shape: EnvironmentId, location_name: "id"))
@@ -5203,11 +5207,13 @@ module Aws::DataZone
     UpdateEnvironmentActionOutput.add_member(:parameters, Shapes::ShapeRef.new(shape: ActionParameters, required: true, location_name: "parameters"))
     UpdateEnvironmentActionOutput.struct_class = Types::UpdateEnvironmentActionOutput
 
+    UpdateEnvironmentInput.add_member(:blueprint_version, Shapes::ShapeRef.new(shape: String, location_name: "blueprintVersion"))
     UpdateEnvironmentInput.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "description"))
     UpdateEnvironmentInput.add_member(:domain_identifier, Shapes::ShapeRef.new(shape: DomainId, required: true, location: "uri", location_name: "domainIdentifier"))
     UpdateEnvironmentInput.add_member(:glossary_terms, Shapes::ShapeRef.new(shape: GlossaryTerms, location_name: "glossaryTerms"))
     UpdateEnvironmentInput.add_member(:identifier, Shapes::ShapeRef.new(shape: EnvironmentId, required: true, location: "uri", location_name: "identifier"))
     UpdateEnvironmentInput.add_member(:name, Shapes::ShapeRef.new(shape: String, location_name: "name"))
+    UpdateEnvironmentInput.add_member(:user_parameters, Shapes::ShapeRef.new(shape: EnvironmentParametersList, location_name: "userParameters"))
     UpdateEnvironmentInput.struct_class = Types::UpdateEnvironmentInput
 
     UpdateEnvironmentOutput.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, location_name: "awsAccountId"))
@@ -5219,6 +5225,7 @@ module Aws::DataZone
     UpdateEnvironmentOutput.add_member(:domain_id, Shapes::ShapeRef.new(shape: DomainId, required: true, location_name: "domainId"))
     UpdateEnvironmentOutput.add_member(:environment_actions, Shapes::ShapeRef.new(shape: EnvironmentActionList, location_name: "environmentActions"))
     UpdateEnvironmentOutput.add_member(:environment_blueprint_id, Shapes::ShapeRef.new(shape: EnvironmentBlueprintId, location_name: "environmentBlueprintId"))
+    UpdateEnvironmentOutput.add_member(:environment_configuration_id, Shapes::ShapeRef.new(shape: EnvironmentConfigurationId, location_name: "environmentConfigurationId"))
     UpdateEnvironmentOutput.add_member(:environment_profile_id, Shapes::ShapeRef.new(shape: EnvironmentProfileId, location_name: "environmentProfileId"))
     UpdateEnvironmentOutput.add_member(:glossary_terms, Shapes::ShapeRef.new(shape: GlossaryTerms, location_name: "glossaryTerms"))
     UpdateEnvironmentOutput.add_member(:id, Shapes::ShapeRef.new(shape: EnvironmentId, location_name: "id"))
@@ -5309,6 +5316,8 @@ module Aws::DataZone
     UpdateProjectInput.add_member(:glossary_terms, Shapes::ShapeRef.new(shape: GlossaryTerms, location_name: "glossaryTerms"))
     UpdateProjectInput.add_member(:identifier, Shapes::ShapeRef.new(shape: ProjectId, required: true, location: "uri", location_name: "identifier"))
     UpdateProjectInput.add_member(:name, Shapes::ShapeRef.new(shape: ProjectName, location_name: "name"))
+    UpdateProjectInput.add_member(:project_profile_version, Shapes::ShapeRef.new(shape: String, location_name: "projectProfileVersion"))
+    UpdateProjectInput.add_member(:user_parameters, Shapes::ShapeRef.new(shape: EnvironmentConfigurationUserParametersList, location_name: "userParameters"))
     UpdateProjectInput.struct_class = Types::UpdateProjectInput
 
     UpdateProjectOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "createdAt"))

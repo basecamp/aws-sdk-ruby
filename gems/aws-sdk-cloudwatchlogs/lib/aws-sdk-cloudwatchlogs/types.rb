@@ -298,7 +298,7 @@ module Aws::CloudWatchLogs
     #   @return [String]
     #
     # @!attribute [rw] kms_key_id
-    #   The ID of the KMS key assigned to this anomaly detector, if any.
+    #   The ARN of the KMS key assigned to this anomaly detector, if any.
     #   @return [String]
     #
     # @!attribute [rw] creation_time_stamp
@@ -815,8 +815,9 @@ module Aws::CloudWatchLogs
     #   both this key and for the anomaly detector to retrieve information
     #   about the anomalies that it finds.
     #
-    #   For more information about using a KMS key and to see the required
-    #   IAM policy, see [Use a KMS key with an anomaly detector][1].
+    #   Make sure the value provided is a valid KMS key ARN. For more
+    #   information about using a KMS key and to see the required IAM
+    #   policy, see [Use a KMS key with an anomaly detector][1].
     #
     #
     #
@@ -2843,6 +2844,9 @@ module Aws::CloudWatchLogs
     # @!attribute [rw] next_token
     #   The token to use when requesting the next set of items. The token
     #   expires after 24 hours.
+    #
+    #   If the results don't include a `nextToken`, then pagination is
+    #   finished.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/FilterLogEventsResponse AWS API Documentation
@@ -3124,7 +3128,7 @@ module Aws::CloudWatchLogs
     #   @return [String]
     #
     # @!attribute [rw] kms_key_id
-    #   The ID of the KMS key assigned to this anomaly detector, if any.
+    #   The ARN of the KMS key assigned to this anomaly detector, if any.
     #   @return [String]
     #
     # @!attribute [rw] creation_time_stamp

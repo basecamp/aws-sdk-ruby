@@ -877,6 +877,7 @@ module Aws
         def domain_id: () -> ::String
         def environment_actions: () -> ::Array[Types::ConfigurableEnvironmentAction]
         def environment_blueprint_id: () -> ::String
+        def environment_configuration_id: () -> ::String
         def environment_profile_id: () -> ::String
         def glossary_terms: () -> ::Array[::String]
         def id: () -> ::String
@@ -1084,7 +1085,7 @@ module Aws
         def last_updated_at: () -> ::Time
         def name: () -> ::String
         def project_profile_id: () -> ::String
-        def project_status: () -> ("ACTIVE" | "DELETING" | "DELETE_FAILED")
+        def project_status: () -> ("ACTIVE" | "DELETING" | "DELETE_FAILED" | "UPDATING" | "UPDATE_FAILED")
         def user_parameters: () -> ::Array[Types::EnvironmentConfigurationUserParameter]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#create_project-instance_method
@@ -1098,6 +1099,7 @@ module Aws
                             ?user_parameters: Array[
                               {
                                 environment_configuration_name: ::String?,
+                                environment_id: ::String?,
                                 environment_parameters: Array[
                                   {
                                     name: ::String?,
@@ -1884,6 +1886,7 @@ module Aws
         def domain_id: () -> ::String
         def environment_actions: () -> ::Array[Types::ConfigurableEnvironmentAction]
         def environment_blueprint_id: () -> ::String
+        def environment_configuration_id: () -> ::String
         def environment_profile_id: () -> ::String
         def glossary_terms: () -> ::Array[::String]
         def id: () -> ::String
@@ -2205,7 +2208,7 @@ module Aws
         def last_updated_at: () -> ::Time
         def name: () -> ::String
         def project_profile_id: () -> ::String
-        def project_status: () -> ("ACTIVE" | "DELETING" | "DELETE_FAILED")
+        def project_status: () -> ("ACTIVE" | "DELETING" | "DELETE_FAILED" | "UPDATING" | "UPDATE_FAILED")
         def user_parameters: () -> ::Array[Types::EnvironmentConfigurationUserParameter]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#get_project-instance_method
@@ -3635,6 +3638,7 @@ module Aws
         def domain_id: () -> ::String
         def environment_actions: () -> ::Array[Types::ConfigurableEnvironmentAction]
         def environment_blueprint_id: () -> ::String
+        def environment_configuration_id: () -> ::String
         def environment_profile_id: () -> ::String
         def glossary_terms: () -> ::Array[::String]
         def id: () -> ::String
@@ -3650,11 +3654,18 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#update_environment-instance_method
       def update_environment: (
+                                ?blueprint_version: ::String,
                                 ?description: ::String,
                                 domain_identifier: ::String,
                                 ?glossary_terms: Array[::String],
                                 identifier: ::String,
-                                ?name: ::String
+                                ?name: ::String,
+                                ?user_parameters: Array[
+                                  {
+                                    name: ::String?,
+                                    value: ::String?
+                                  },
+                                ]
                               ) -> _UpdateEnvironmentResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateEnvironmentResponseSuccess
 
@@ -3790,7 +3801,7 @@ module Aws
         def last_updated_at: () -> ::Time
         def name: () -> ::String
         def project_profile_id: () -> ::String
-        def project_status: () -> ("ACTIVE" | "DELETING" | "DELETE_FAILED")
+        def project_status: () -> ("ACTIVE" | "DELETING" | "DELETE_FAILED" | "UPDATING" | "UPDATE_FAILED")
         def user_parameters: () -> ::Array[Types::EnvironmentConfigurationUserParameter]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#update_project-instance_method
@@ -3808,7 +3819,20 @@ module Aws
                             },
                             ?glossary_terms: Array[::String],
                             identifier: ::String,
-                            ?name: ::String
+                            ?name: ::String,
+                            ?project_profile_version: ::String,
+                            ?user_parameters: Array[
+                              {
+                                environment_configuration_name: ::String?,
+                                environment_id: ::String?,
+                                environment_parameters: Array[
+                                  {
+                                    name: ::String?,
+                                    value: ::String?
+                                  },
+                                ]?
+                              },
+                            ]
                           ) -> _UpdateProjectResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateProjectResponseSuccess
 
