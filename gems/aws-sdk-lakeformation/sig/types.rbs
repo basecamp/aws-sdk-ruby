@@ -84,6 +84,7 @@ module Aws::LakeFormation
       attr_accessor principal: Types::DataLakePrincipal
       attr_accessor resource: Types::Resource
       attr_accessor permissions: ::Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")]
+      attr_accessor condition: Types::Condition
       attr_accessor permissions_with_grant_option: ::Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")]
       SENSITIVE: []
     end
@@ -188,6 +189,7 @@ module Aws::LakeFormation
     class CreateLakeFormationOptInRequest
       attr_accessor principal: Types::DataLakePrincipal
       attr_accessor resource: Types::Resource
+      attr_accessor condition: Types::Condition
       SENSITIVE: []
     end
 
@@ -285,6 +287,7 @@ module Aws::LakeFormation
     class DeleteLakeFormationOptInRequest
       attr_accessor principal: Types::DataLakePrincipal
       attr_accessor resource: Types::Resource
+      attr_accessor condition: Types::Condition
       SENSITIVE: []
     end
 
@@ -603,6 +606,7 @@ module Aws::LakeFormation
       attr_accessor principal: Types::DataLakePrincipal
       attr_accessor resource: Types::Resource
       attr_accessor permissions: ::Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")]
+      attr_accessor condition: Types::Condition
       attr_accessor permissions_with_grant_option: ::Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")]
       SENSITIVE: []
     end
@@ -871,6 +875,7 @@ module Aws::LakeFormation
       attr_accessor role_arn: ::String
       attr_accessor with_federation: bool
       attr_accessor hybrid_access_enabled: bool
+      attr_accessor with_privileged_access: bool
       SENSITIVE: []
     end
 
@@ -908,6 +913,7 @@ module Aws::LakeFormation
       attr_accessor last_modified: ::Time
       attr_accessor with_federation: bool
       attr_accessor hybrid_access_enabled: bool
+      attr_accessor with_privileged_access: bool
       SENSITIVE: []
     end
 
@@ -926,6 +932,7 @@ module Aws::LakeFormation
       attr_accessor principal: Types::DataLakePrincipal
       attr_accessor resource: Types::Resource
       attr_accessor permissions: ::Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")]
+      attr_accessor condition: Types::Condition
       attr_accessor permissions_with_grant_option: ::Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")]
       SENSITIVE: []
     end

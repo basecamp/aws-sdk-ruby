@@ -555,6 +555,7 @@ module Aws::Glue
       attr_accessor catalog_properties: Types::CatalogPropertiesOutput
       attr_accessor create_table_default_permissions: ::Array[Types::PrincipalPermissions]
       attr_accessor create_database_default_permissions: ::Array[Types::PrincipalPermissions]
+      attr_accessor allow_full_table_external_data_access: ("True" | "False")
       SENSITIVE: []
     end
 
@@ -597,6 +598,7 @@ module Aws::Glue
       attr_accessor catalog_properties: Types::CatalogProperties
       attr_accessor create_table_default_permissions: ::Array[Types::PrincipalPermissions]
       attr_accessor create_database_default_permissions: ::Array[Types::PrincipalPermissions]
+      attr_accessor allow_full_table_external_data_access: ("True" | "False")
       SENSITIVE: []
     end
 

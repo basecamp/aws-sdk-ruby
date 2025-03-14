@@ -28,6 +28,7 @@ module Aws::Glue
     Aggregate = Shapes::StructureShape.new(name: 'Aggregate')
     AggregateOperation = Shapes::StructureShape.new(name: 'AggregateOperation')
     AggregateOperations = Shapes::ListShape.new(name: 'AggregateOperations')
+    AllowFullTableExternalDataAccessEnum = Shapes::StringShape.new(name: 'AllowFullTableExternalDataAccessEnum')
     AllowedValue = Shapes::StructureShape.new(name: 'AllowedValue')
     AllowedValueDescriptionString = Shapes::StringShape.new(name: 'AllowedValueDescriptionString')
     AllowedValueValueString = Shapes::StringShape.new(name: 'AllowedValueValueString')
@@ -2002,6 +2003,7 @@ module Aws::Glue
     Catalog.add_member(:catalog_properties, Shapes::ShapeRef.new(shape: CatalogPropertiesOutput, location_name: "CatalogProperties"))
     Catalog.add_member(:create_table_default_permissions, Shapes::ShapeRef.new(shape: PrincipalPermissionsList, location_name: "CreateTableDefaultPermissions"))
     Catalog.add_member(:create_database_default_permissions, Shapes::ShapeRef.new(shape: PrincipalPermissionsList, location_name: "CreateDatabaseDefaultPermissions"))
+    Catalog.add_member(:allow_full_table_external_data_access, Shapes::ShapeRef.new(shape: AllowFullTableExternalDataAccessEnum, location_name: "AllowFullTableExternalDataAccess"))
     Catalog.struct_class = Types::Catalog
 
     CatalogDeltaSource.add_member(:name, Shapes::ShapeRef.new(shape: NodeName, required: true, location_name: "Name"))
@@ -2036,6 +2038,7 @@ module Aws::Glue
     CatalogInput.add_member(:catalog_properties, Shapes::ShapeRef.new(shape: CatalogProperties, location_name: "CatalogProperties"))
     CatalogInput.add_member(:create_table_default_permissions, Shapes::ShapeRef.new(shape: PrincipalPermissionsList, location_name: "CreateTableDefaultPermissions"))
     CatalogInput.add_member(:create_database_default_permissions, Shapes::ShapeRef.new(shape: PrincipalPermissionsList, location_name: "CreateDatabaseDefaultPermissions"))
+    CatalogInput.add_member(:allow_full_table_external_data_access, Shapes::ShapeRef.new(shape: AllowFullTableExternalDataAccessEnum, location_name: "AllowFullTableExternalDataAccess"))
     CatalogInput.struct_class = Types::CatalogInput
 
     CatalogKafkaSource.add_member(:name, Shapes::ShapeRef.new(shape: NodeName, required: true, location_name: "Name"))

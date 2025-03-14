@@ -2945,6 +2945,7 @@ module Aws::Glue
     #           permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS
     #         },
     #       ],
+    #       allow_full_table_external_data_access: "True", # accepts True, False
     #     },
     #     tags: {
     #       "TagKey" => "TagValue",
@@ -7155,6 +7156,7 @@ module Aws::Glue
     #   resp.catalog.create_database_default_permissions[0].principal.data_lake_principal_identifier #=> String
     #   resp.catalog.create_database_default_permissions[0].permissions #=> Array
     #   resp.catalog.create_database_default_permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS"
+    #   resp.catalog.allow_full_table_external_data_access #=> String, one of "True", "False"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetCatalog AWS API Documentation
     #
@@ -7273,6 +7275,7 @@ module Aws::Glue
     #   resp.catalog_list[0].create_database_default_permissions[0].principal.data_lake_principal_identifier #=> String
     #   resp.catalog_list[0].create_database_default_permissions[0].permissions #=> Array
     #   resp.catalog_list[0].create_database_default_permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS"
+    #   resp.catalog_list[0].allow_full_table_external_data_access #=> String, one of "True", "False"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetCatalogs AWS API Documentation
@@ -18135,6 +18138,7 @@ module Aws::Glue
     #           permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS
     #         },
     #       ],
+    #       allow_full_table_external_data_access: "True", # accepts True, False
     #     },
     #   })
     #
@@ -20081,7 +20085,7 @@ module Aws::Glue
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-glue'
-      context[:gem_version] = '1.210.0'
+      context[:gem_version] = '1.211.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

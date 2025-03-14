@@ -271,6 +271,11 @@ module Aws::LakeFormation
     #   The permissions to be granted.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] condition
+    #   A Lake Formation condition, which applies to permissions and opt-ins
+    #   that contain an expression.
+    #   @return [Types::Condition]
+    #
     # @!attribute [rw] permissions_with_grant_option
     #   Indicates if the option to pass permissions is granted.
     #   @return [Array<String>]
@@ -282,6 +287,7 @@ module Aws::LakeFormation
       :principal,
       :resource,
       :permissions,
+      :condition,
       :permissions_with_grant_option)
       SENSITIVE = []
       include Aws::Structure
@@ -585,11 +591,17 @@ module Aws::LakeFormation
     #   A structure for the resource.
     #   @return [Types::Resource]
     #
+    # @!attribute [rw] condition
+    #   A Lake Formation condition, which applies to permissions and opt-ins
+    #   that contain an expression.
+    #   @return [Types::Condition]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/CreateLakeFormationOptInRequest AWS API Documentation
     #
     class CreateLakeFormationOptInRequest < Struct.new(
       :principal,
-      :resource)
+      :resource,
+      :condition)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -979,11 +991,17 @@ module Aws::LakeFormation
     #   A structure for the resource.
     #   @return [Types::Resource]
     #
+    # @!attribute [rw] condition
+    #   A Lake Formation condition, which applies to permissions and opt-ins
+    #   that contain an expression.
+    #   @return [Types::Condition]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/DeleteLakeFormationOptInRequest AWS API Documentation
     #
     class DeleteLakeFormationOptInRequest < Struct.new(
       :principal,
-      :resource)
+      :resource,
+      :condition)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2060,6 +2078,11 @@ module Aws::LakeFormation
     #   authorized to perform a specific task on Lake Formation resources.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] condition
+    #   A Lake Formation condition, which applies to permissions and opt-ins
+    #   that contain an expression.
+    #   @return [Types::Condition]
+    #
     # @!attribute [rw] permissions_with_grant_option
     #   Indicates a list of the granted permissions that the principal may
     #   pass to other users. These permissions may only be a subset of the
@@ -2073,6 +2096,7 @@ module Aws::LakeFormation
       :principal,
       :resource,
       :permissions,
+      :condition,
       :permissions_with_grant_option)
       SENSITIVE = []
       include Aws::Structure
@@ -3037,6 +3061,11 @@ module Aws::LakeFormation
     #   S3 bucket policies.
     #   @return [Boolean]
     #
+    # @!attribute [rw] with_privileged_access
+    #   Grants the calling principal the permissions to perform all
+    #   supported Lake Formation operations on the registered data location.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/RegisterResourceRequest AWS API Documentation
     #
     class RegisterResourceRequest < Struct.new(
@@ -3044,7 +3073,8 @@ module Aws::LakeFormation
       :use_service_linked_role,
       :role_arn,
       :with_federation,
-      :hybrid_access_enabled)
+      :hybrid_access_enabled,
+      :with_privileged_access)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3182,6 +3212,11 @@ module Aws::LakeFormation
     #   S3 bucket policies.
     #   @return [Boolean]
     #
+    # @!attribute [rw] with_privileged_access
+    #   Grants the calling principal the permissions to perform all
+    #   supported Lake Formation operations on the registered data location.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/ResourceInfo AWS API Documentation
     #
     class ResourceInfo < Struct.new(
@@ -3189,7 +3224,8 @@ module Aws::LakeFormation
       :role_arn,
       :last_modified,
       :with_federation,
-      :hybrid_access_enabled)
+      :hybrid_access_enabled,
+      :with_privileged_access)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3248,6 +3284,11 @@ module Aws::LakeFormation
     #   [1]: https://docs.aws.amazon.com/lake-formation/latest/dg/security-data-access.html
     #   @return [Array<String>]
     #
+    # @!attribute [rw] condition
+    #   A Lake Formation condition, which applies to permissions and opt-ins
+    #   that contain an expression.
+    #   @return [Types::Condition]
+    #
     # @!attribute [rw] permissions_with_grant_option
     #   Indicates a list of permissions for which to revoke the grant option
     #   allowing the principal to pass permissions to other principals.
@@ -3260,6 +3301,7 @@ module Aws::LakeFormation
       :principal,
       :resource,
       :permissions,
+      :condition,
       :permissions_with_grant_option)
       SENSITIVE = []
       include Aws::Structure

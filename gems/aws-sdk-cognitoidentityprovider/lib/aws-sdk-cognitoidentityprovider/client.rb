@@ -845,16 +845,17 @@ module Aws::CognitoIdentityProvider
     #   email
     #
     #   : The email address where you want the user to receive their
-    #     confirmation code and username. You must provide a value for the
-    #     `email` when you want to set `email_verified` to `true`, or if you
-    #     set `EMAIL` in the `DesiredDeliveryMediums` parameter.
+    #     confirmation code and username. You must provide a value for `email`
+    #     when you want to set `email_verified` to `true`, or if you set
+    #     `EMAIL` in the `DesiredDeliveryMediums` parameter.
     #
     #   phone\_number
     #
     #   : The phone number where you want the user to receive their
-    #     confirmation code and username. You must provide a value for the
-    #     `email` when you want to set `phone_number` to `true`, or if you set
-    #     `SMS` in the `DesiredDeliveryMediums` parameter.
+    #     confirmation code and username. You must provide a value for
+    #     `phone_number` when you want to set `phone_number_verified` to
+    #     `true`, or if you set `SMS` in the `DesiredDeliveryMediums`
+    #     parameter.
     #
     # @option params [Array<Types::AttributeType>] :validation_data
     #   Temporary user attributes that contribute to the outcomes of your pre
@@ -2868,7 +2869,9 @@ module Aws::CognitoIdentityProvider
     # @option params [Types::SoftwareTokenMfaSettingsType] :software_token_mfa_settings
     #   User preferences for time-based one-time password (TOTP) MFA.
     #   Activates or deactivates TOTP MFA and sets it as the preferred MFA
-    #   method when multiple methods are available.
+    #   method when multiple methods are available. This operation can set
+    #   TOTP as a user's preferred MFA method before they register a TOTP
+    #   authenticator.
     #
     # @option params [Types::EmailMfaSettingsType] :email_mfa_settings
     #   User preferences for email message MFA. Activates or deactivates email
@@ -4712,7 +4715,8 @@ module Aws::CognitoIdentityProvider
     #   you have deactivated device remembering in your user pool.
     #
     #   <note markdown="1"> When you provide a value for any `DeviceConfiguration` field, you
-    #   activate the Amazon Cognito device-remembering feature. For more infor
+    #   activate the Amazon Cognito device-remembering feature. For more
+    #   information, see [Working with devices][1].
     #
     #    </note>
     #
@@ -6168,9 +6172,7 @@ module Aws::CognitoIdentityProvider
     #
     #   Provide this parameter only if you want to use a [custom domain][1]
     #   for your user pool. Otherwise, you can omit this parameter and use a
-    #   [prefix
-    #   domain](cognito/latest/developerguide/cognito-user-pools-assign-domain-prefix.html)
-    #   instead.
+    #   [prefix domain][2] instead.
     #
     #   When you create a custom domain, the passkey RP ID defaults to the
     #   custom domain. If you had a prefix domain active, this will cause
@@ -6181,6 +6183,7 @@ module Aws::CognitoIdentityProvider
     #
     #
     #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-add-custom-domain.html
+    #   [2]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain-prefix.html
     #
     # @return [Types::CreateUserPoolDomainResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -6508,8 +6511,8 @@ module Aws::CognitoIdentityProvider
     # your Amazon Web Services account. Amazon Cognito retains deleted user
     # pools in an inactive state for 14 days, then begins a cleanup process
     # that fully removes them from Amazon Web Services systems. In case of
-    # accidental deletion, contact Amazon Web Services Support within 14
-    # days for restoration assistance.
+    # accidental deletion, contact Amazon Web ServicesSupport within 14 days
+    # for restoration assistance.
     #
     # Amazon Cognito begins full deletion of all resources from deleted user
     # pools after 14 days. In the case of large user pools, the cleanup
@@ -10096,8 +10099,11 @@ module Aws::CognitoIdentityProvider
     # Sets up or modifies the logging configuration of a user pool. User
     # pools can export user notification logs and, when threat protection is
     # active, user-activity logs. For more information, see [Exporting user
-    # pool
-    # logs](cognito/latest/developerguide/exporting-quotas-and-usage.html).
+    # pool logs][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/exporting-quotas-and-usage.html
     #
     # @option params [required, String] :user_pool_id
     #   The ID of the user pool where you want to configure logging.
@@ -10417,7 +10423,8 @@ module Aws::CognitoIdentityProvider
     # @option params [Types::SoftwareTokenMfaSettingsType] :software_token_mfa_settings
     #   User preferences for time-based one-time password (TOTP) MFA.
     #   Activates or deactivates TOTP MFA and sets it as the preferred MFA
-    #   method when multiple methods are available.
+    #   method when multiple methods are available. Users must register a TOTP
+    #   authenticator before they set this as their preferred MFA method.
     #
     # @option params [Types::EmailMfaSettingsType] :email_mfa_settings
     #   User preferences for email message MFA. Activates or deactivates email
@@ -11983,7 +11990,8 @@ module Aws::CognitoIdentityProvider
     #   you have deactivated device remembering in your user pool.
     #
     #   <note markdown="1"> When you provide a value for any `DeviceConfiguration` field, you
-    #   activate the Amazon Cognito device-remembering feature. For more infor
+    #   activate the Amazon Cognito device-remembering feature. For more
+    #   information, see [Working with devices][1].
     #
     #    </note>
     #
@@ -12882,7 +12890,7 @@ module Aws::CognitoIdentityProvider
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cognitoidentityprovider'
-      context[:gem_version] = '1.117.0'
+      context[:gem_version] = '1.118.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

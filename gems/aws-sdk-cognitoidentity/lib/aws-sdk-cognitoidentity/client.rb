@@ -478,12 +478,14 @@ module Aws::CognitoIdentity
     # @!group API Operations
 
     # Creates a new identity pool. The identity pool is a store of user
-    # identity information that is specific to your AWS account. The keys
-    # for `SupportedLoginProviders` are as follows:
+    # identity information that is specific to your Amazon Web Services
+    # account. The keys for `SupportedLoginProviders` are as follows:
     #
     # * Facebook: `graph.facebook.com`
     #
     # * Google: `accounts.google.com`
+    #
+    # * Sign in With Apple: `appleid.apple.com`
     #
     # * Amazon: `www.amazon.com`
     #
@@ -491,7 +493,11 @@ module Aws::CognitoIdentity
     #
     # * Digits: `www.digits.com`
     #
-    # You must use AWS Developer credentials to call this API.
+    # If you don't provide a value for a parameter, Amazon Cognito sets it
+    # to its default value.
+    #
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, String] :identity_pool_name
     #   A string that you provide.
@@ -605,7 +611,8 @@ module Aws::CognitoIdentity
     # Deletes identities from an identity pool. You can specify a list of
     # 1-60 identities that you want to delete.
     #
-    # You must use AWS Developer credentials to call this API.
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, Array<String>] :identity_ids_to_delete
     #   A list of 1-60 identities that you want to delete.
@@ -638,7 +645,8 @@ module Aws::CognitoIdentity
     # Deletes an identity pool. Once a pool is deleted, users will not be
     # able to authenticate with the pool.
     #
-    # You must use AWS Developer credentials to call this API.
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, String] :identity_pool_id
     #   An identity pool ID in the format REGION:GUID.
@@ -663,7 +671,8 @@ module Aws::CognitoIdentity
     # Returns metadata related to the given identity, including when the
     # identity was created and any associated linked logins.
     #
-    # You must use AWS Developer credentials to call this API.
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, String] :identity_id
     #   A unique identifier in the format REGION:GUID.
@@ -701,7 +710,8 @@ module Aws::CognitoIdentity
     # Gets details about a particular identity pool, including the pool
     # name, ID description, creation date, and current number of users.
     #
-    # You must use AWS Developer credentials to call this API.
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, String] :identity_pool_id
     #   An identity pool ID in the format REGION:GUID.
@@ -756,7 +766,7 @@ module Aws::CognitoIdentity
 
     # Returns credentials for the provided identity ID. Any provided logins
     # will be validated against supported login providers. If the token is
-    # for cognito-identity.amazonaws.com, it will be passed through to AWS
+    # for `cognito-identity.amazonaws.com`, it will be passed through to
     # Security Token Service with the appropriate role for the token.
     #
     # This is a public API. You do not need any credentials to call this
@@ -820,14 +830,14 @@ module Aws::CognitoIdentity
       req.send_request(options)
     end
 
-    # Generates (or retrieves) a Cognito ID. Supplying multiple logins will
+    # Generates (or retrieves) IdentityID. Supplying multiple logins will
     # create an implicit linked account.
     #
     # This is a public API. You do not need any credentials to call this
     # API.
     #
     # @option params [String] :account_id
-    #   A standard AWS account ID (9+ digits).
+    #   A standard Amazon Web Services account ID (9+ digits).
     #
     # @option params [required, String] :identity_pool_id
     #   An identity pool ID in the format REGION:GUID.
@@ -879,7 +889,8 @@ module Aws::CognitoIdentity
 
     # Gets the roles for an identity pool.
     #
-    # You must use AWS Developer credentials to call this API.
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, String] :identity_pool_id
     #   An identity pool ID in the format REGION:GUID.
@@ -982,7 +993,8 @@ module Aws::CognitoIdentity
     # existing `IdentityId`. This API will create the identity in the
     # specified `IdentityPoolId`.
     #
-    # You must use AWS Developer credentials to call this API.
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, String] :identity_pool_id
     #   An identity pool ID in the format REGION:GUID.
@@ -1010,12 +1022,12 @@ module Aws::CognitoIdentity
     #   The expiration time of the token, in seconds. You can specify a custom
     #   expiration time for the token so that you can cache it. If you don't
     #   provide an expiration time, the token is valid for 15 minutes. You can
-    #   exchange the token with Amazon STS for temporary AWS credentials,
-    #   which are valid for a maximum of one hour. The maximum token duration
-    #   you can set is 24 hours. You should take care in setting the
-    #   expiration time for a token, as there are significant security
-    #   implications: an attacker could use a leaked token to access your AWS
-    #   resources for the token's duration.
+    #   exchange the token with Amazon STS for temporary Amazon Web Services
+    #   credentials, which are valid for a maximum of one hour. The maximum
+    #   token duration you can set is 24 hours. You should take care in
+    #   setting the expiration time for a token, as there are significant
+    #   security implications: an attacker could use a leaked token to access
+    #   your Amazon Web Services resources for the token's duration.
     #
     #   <note markdown="1"> Please provide for a small grace period, usually no more than 5
     #   minutes, to account for clock skew.
@@ -1098,7 +1110,8 @@ module Aws::CognitoIdentity
 
     # Lists the identities in an identity pool.
     #
-    # You must use AWS Developer credentials to call this API.
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, String] :identity_pool_id
     #   An identity pool ID in the format REGION:GUID.
@@ -1151,7 +1164,8 @@ module Aws::CognitoIdentity
 
     # Lists all of the Cognito identity pools registered for your account.
     #
-    # You must use AWS Developer credentials to call this API.
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, Integer] :max_results
     #   The maximum number of identities to return.
@@ -1233,7 +1247,7 @@ module Aws::CognitoIdentity
     # returned as a part of the response. If you supply both,
     # `DeveloperUserIdentifier` will be matched against `IdentityID`. If the
     # values are verified against the database, the response returns both
-    # values and is the same as the request. Otherwise a
+    # values and is the same as the request. Otherwise, a
     # `ResourceConflictException` is thrown.
     #
     # `LookupDeveloperIdentity` is intended for low-throughput control plane
@@ -1243,7 +1257,8 @@ module Aws::CognitoIdentity
     # throttled. GetOpenIdTokenForDeveloperIdentity is a better option for
     # higher-volume operations for user authentication.
     #
-    # You must use AWS Developer credentials to call this API.
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, String] :identity_pool_id
     #   An identity pool ID in the format REGION:GUID.
@@ -1315,7 +1330,8 @@ module Aws::CognitoIdentity
     # destination user, `DestinationUserIdentifier`, together should not be
     # larger than 20. Otherwise, an exception will be thrown.
     #
-    # You must use AWS Developer credentials to call this API.
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, String] :source_user_identifier
     #   User identifier for the source user. The value should be a
@@ -1365,7 +1381,8 @@ module Aws::CognitoIdentity
     # Sets the roles for an identity pool. These roles are used when making
     # calls to GetCredentialsForIdentity action.
     #
-    # You must use AWS Developer credentials to call this API.
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, String] :identity_pool_id
     #   An identity pool ID in the format REGION:GUID.
@@ -1378,8 +1395,8 @@ module Aws::CognitoIdentity
     # @option params [Hash<String,Types::RoleMapping>] :role_mappings
     #   How users for a specific identity provider are to mapped to roles.
     #   This is a string to RoleMapping object map. The string identifies the
-    #   identity provider, for example, "graph.facebook.com" or
-    #   "cognito-idp.us-east-1.amazonaws.com/us-east-1\_abcdefghi:app\_client\_id".
+    #   identity provider, for example, `graph.facebook.com` or
+    #   `cognito-idp.us-east-1.amazonaws.com/us-east-1_abcdefghi:app_client_id`.
     #
     #   Up to 25 rules can be specified per identity provider.
     #
@@ -1523,7 +1540,8 @@ module Aws::CognitoIdentity
     # federated identities as well as the developer user identifier, the
     # Cognito identity becomes inaccessible.
     #
-    # You must use AWS Developer credentials to call this API.
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, String] :identity_id
     #   A unique identifier in the format REGION:GUID.
@@ -1623,9 +1641,13 @@ module Aws::CognitoIdentity
       req.send_request(options)
     end
 
-    # Updates an identity pool.
+    # Updates the configuration of an identity pool.
     #
-    # You must use AWS Developer credentials to call this API.
+    # If you don't provide a value for a parameter, Amazon Cognito sets it
+    # to its default value.
+    #
+    # You must use Amazon Web Services developer credentials to call this
+    # operation.
     #
     # @option params [required, String] :identity_pool_id
     #   An identity pool ID in the format REGION:GUID.
@@ -1752,7 +1774,7 @@ module Aws::CognitoIdentity
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cognitoidentity'
-      context[:gem_version] = '1.70.0'
+      context[:gem_version] = '1.71.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

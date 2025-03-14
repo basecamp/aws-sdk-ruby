@@ -385,16 +385,17 @@ module Aws::CognitoIdentityProvider
     #   email
     #
     #   : The email address where you want the user to receive their
-    #     confirmation code and username. You must provide a value for the
+    #     confirmation code and username. You must provide a value for
     #     `email` when you want to set `email_verified` to `true`, or if you
     #     set `EMAIL` in the `DesiredDeliveryMediums` parameter.
     #
     #   phone\_number
     #
     #   : The phone number where you want the user to receive their
-    #     confirmation code and username. You must provide a value for the
-    #     `email` when you want to set `phone_number` to `true`, or if you
-    #     set `SMS` in the `DesiredDeliveryMediums` parameter.
+    #     confirmation code and username. You must provide a value for
+    #     `phone_number` when you want to set `phone_number_verified` to
+    #     `true`, or if you set `SMS` in the `DesiredDeliveryMediums`
+    #     parameter.
     #   @return [Array<Types::AttributeType>]
     #
     # @!attribute [rw] validation_data
@@ -2073,7 +2074,9 @@ module Aws::CognitoIdentityProvider
     # @!attribute [rw] software_token_mfa_settings
     #   User preferences for time-based one-time password (TOTP) MFA.
     #   Activates or deactivates TOTP MFA and sets it as the preferred MFA
-    #   method when multiple methods are available.
+    #   method when multiple methods are available. This operation can set
+    #   TOTP as a user's preferred MFA method before they register a TOTP
+    #   authenticator.
     #   @return [Types::SoftwareTokenMfaSettingsType]
     #
     # @!attribute [rw] email_mfa_settings
@@ -4322,9 +4325,7 @@ module Aws::CognitoIdentityProvider
     #
     #   Provide this parameter only if you want to use a [custom domain][1]
     #   for your user pool. Otherwise, you can omit this parameter and use a
-    #   [prefix
-    #   domain](cognito/latest/developerguide/cognito-user-pools-assign-domain-prefix.html)
-    #   instead.
+    #   [prefix domain][2] instead.
     #
     #   When you create a custom domain, the passkey RP ID defaults to the
     #   custom domain. If you had a prefix domain active, this will cause
@@ -4335,6 +4336,7 @@ module Aws::CognitoIdentityProvider
     #
     #
     #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-add-custom-domain.html
+    #   [2]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain-prefix.html
     #   @return [Types::CustomDomainConfigType]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/CreateUserPoolDomainRequest AWS API Documentation
@@ -4507,7 +4509,7 @@ module Aws::CognitoIdentityProvider
     #
     #   <note markdown="1"> When you provide a value for any `DeviceConfiguration` field, you
     #   activate the Amazon Cognito device-remembering feature. For more
-    #   infor
+    #   information, see [Working with devices][1].
     #
     #    </note>
     #
@@ -9754,7 +9756,9 @@ module Aws::CognitoIdentityProvider
     # @!attribute [rw] software_token_mfa_settings
     #   User preferences for time-based one-time password (TOTP) MFA.
     #   Activates or deactivates TOTP MFA and sets it as the preferred MFA
-    #   method when multiple methods are available.
+    #   method when multiple methods are available. Users must register a
+    #   TOTP authenticator before they set this as their preferred MFA
+    #   method.
     #   @return [Types::SoftwareTokenMfaSettingsType]
     #
     # @!attribute [rw] email_mfa_settings
@@ -11805,7 +11809,7 @@ module Aws::CognitoIdentityProvider
     #
     #   <note markdown="1"> When you provide a value for any `DeviceConfiguration` field, you
     #   activate the Amazon Cognito device-remembering feature. For more
-    #   infor
+    #   information, see [Working with devices][1].
     #
     #    </note>
     #
@@ -13078,21 +13082,22 @@ module Aws::CognitoIdentityProvider
     # @!attribute [rw] user_status
     #   The user status. This can be one of the following:
     #
-    #   * UNCONFIRMED - User has been created but not confirmed.
+    #   * `UNCONFIRMED`: User has been created but not confirmed.
     #
-    #   * CONFIRMED - User has been confirmed.
+    #   * `CONFIRMED`: User has been confirmed.
     #
-    #   * EXTERNAL\_PROVIDER - User signed in with a third-party IdP.
+    #   * `EXTERNAL_PROVIDER`: User signed in with a third-party IdP.
     #
-    #   * UNKNOWN - User status isn't known.
-    #
-    #   * RESET\_REQUIRED - User is confirmed, but the user must request a
+    #   * `RESET_REQUIRED`: User is confirmed, but the user must request a
     #     code and reset their password before they can sign in.
     #
-    #   * FORCE\_CHANGE\_PASSWORD - The user is confirmed and the user can
+    #   * `FORCE_CHANGE_PASSWORD`: The user is confirmed and the user can
     #     sign in using a temporary password, but on first sign-in, the user
     #     must change their password to a new value before doing anything
     #     else.
+    #
+    #   The statuses `ARCHIVED`, `UNKNOWN`, and `COMPROMISED` are no longer
+    #   used.
     #   @return [String]
     #
     # @!attribute [rw] mfa_options

@@ -234,6 +234,9 @@ module Aws
                                            }?
                                          }?,
                                          permissions: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")]?,
+                                         condition: {
+                                           expression: ::String?
+                                         }?,
                                          permissions_with_grant_option: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")]?
                                        },
                                      ]
@@ -309,6 +312,9 @@ module Aws
                                             }?
                                           }?,
                                           permissions: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")]?,
+                                          condition: {
+                                            expression: ::String?
+                                          }?,
                                           permissions_with_grant_option: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")]?
                                         },
                                       ]
@@ -468,6 +474,9 @@ module Aws
                                               catalog_id: ::String?,
                                               name: ::String
                                             }?
+                                          },
+                                          ?condition: {
+                                            expression: ::String?
                                           }
                                         ) -> _CreateLakeFormationOptInResponseSuccess
                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateLakeFormationOptInResponseSuccess
@@ -575,6 +584,9 @@ module Aws
                                               catalog_id: ::String?,
                                               name: ::String
                                             }?
+                                          },
+                                          ?condition: {
+                                            expression: ::String?
                                           }
                                         ) -> _DeleteLakeFormationOptInResponseSuccess
                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteLakeFormationOptInResponseSuccess
@@ -972,6 +984,9 @@ module Aws
                                  }?
                                },
                                permissions: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")],
+                               ?condition: {
+                                 expression: ::String?
+                               },
                                ?permissions_with_grant_option: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")]
                              ) -> _GrantPermissionsResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GrantPermissionsResponseSuccess
@@ -1270,7 +1285,8 @@ module Aws
                                ?use_service_linked_role: bool,
                                ?role_arn: ::String,
                                ?with_federation: bool,
-                               ?hybrid_access_enabled: bool
+                               ?hybrid_access_enabled: bool,
+                               ?with_privileged_access: bool
                              ) -> _RegisterResourceResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RegisterResourceResponseSuccess
 
@@ -1411,6 +1427,9 @@ module Aws
                                   }?
                                 },
                                 permissions: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")],
+                                ?condition: {
+                                  expression: ::String?
+                                },
                                 ?permissions_with_grant_option: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "DESCRIBE" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS" | "CREATE_LF_TAG" | "ASSOCIATE" | "GRANT_WITH_LF_TAG_EXPRESSION" | "CREATE_LF_TAG_EXPRESSION" | "CREATE_CATALOG" | "SUPER_USER")]
                               ) -> _RevokePermissionsResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RevokePermissionsResponseSuccess

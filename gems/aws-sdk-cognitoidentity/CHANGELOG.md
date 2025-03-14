@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.71.0 (2025-03-14)
+------------------
+
+* Feature - Updated API model build artifacts for identity pools
+
 1.70.0 (2025-02-18)
 ------------------
 

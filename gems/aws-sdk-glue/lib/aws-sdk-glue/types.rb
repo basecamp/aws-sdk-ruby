@@ -1991,6 +1991,11 @@ module Aws::Glue
     #   operations.
     #   @return [Array<Types::PrincipalPermissions>]
     #
+    # @!attribute [rw] allow_full_table_external_data_access
+    #   Allows third-party engines to access data in Amazon S3 locations
+    #   that are registered with Lake Formation.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/Catalog AWS API Documentation
     #
     class Catalog < Struct.new(
@@ -2005,7 +2010,8 @@ module Aws::Glue
       :federated_catalog,
       :catalog_properties,
       :create_table_default_permissions,
-      :create_database_default_permissions)
+      :create_database_default_permissions,
+      :allow_full_table_external_data_access)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2165,6 +2171,11 @@ module Aws::Glue
     #   empty list.
     #   @return [Array<Types::PrincipalPermissions>]
     #
+    # @!attribute [rw] allow_full_table_external_data_access
+    #   Allows third-party engines to access data in Amazon S3 locations
+    #   that are registered with Lake Formation.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CatalogInput AWS API Documentation
     #
     class CatalogInput < Struct.new(
@@ -2174,7 +2185,8 @@ module Aws::Glue
       :target_redshift_catalog,
       :catalog_properties,
       :create_table_default_permissions,
-      :create_database_default_permissions)
+      :create_database_default_permissions,
+      :allow_full_table_external_data_access)
       SENSITIVE = []
       include Aws::Structure
     end

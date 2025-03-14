@@ -37,6 +37,7 @@ module Aws::LakeFormation
     BatchPermissionsRequestEntryList = Shapes::ListShape.new(name: 'BatchPermissionsRequestEntryList')
     BatchRevokePermissionsRequest = Shapes::StructureShape.new(name: 'BatchRevokePermissionsRequest')
     BatchRevokePermissionsResponse = Shapes::StructureShape.new(name: 'BatchRevokePermissionsResponse')
+    Boolean = Shapes::BooleanShape.new(name: 'Boolean')
     BooleanNullable = Shapes::BooleanShape.new(name: 'BooleanNullable')
     CancelTransactionRequest = Shapes::StructureShape.new(name: 'CancelTransactionRequest')
     CancelTransactionResponse = Shapes::StructureShape.new(name: 'CancelTransactionResponse')
@@ -387,6 +388,7 @@ module Aws::LakeFormation
     BatchPermissionsRequestEntry.add_member(:principal, Shapes::ShapeRef.new(shape: DataLakePrincipal, location_name: "Principal"))
     BatchPermissionsRequestEntry.add_member(:resource, Shapes::ShapeRef.new(shape: Resource, location_name: "Resource"))
     BatchPermissionsRequestEntry.add_member(:permissions, Shapes::ShapeRef.new(shape: PermissionList, location_name: "Permissions"))
+    BatchPermissionsRequestEntry.add_member(:condition, Shapes::ShapeRef.new(shape: Condition, location_name: "Condition"))
     BatchPermissionsRequestEntry.add_member(:permissions_with_grant_option, Shapes::ShapeRef.new(shape: PermissionList, location_name: "PermissionsWithGrantOption"))
     BatchPermissionsRequestEntry.struct_class = Types::BatchPermissionsRequestEntry
 
@@ -461,6 +463,7 @@ module Aws::LakeFormation
 
     CreateLakeFormationOptInRequest.add_member(:principal, Shapes::ShapeRef.new(shape: DataLakePrincipal, required: true, location_name: "Principal"))
     CreateLakeFormationOptInRequest.add_member(:resource, Shapes::ShapeRef.new(shape: Resource, required: true, location_name: "Resource"))
+    CreateLakeFormationOptInRequest.add_member(:condition, Shapes::ShapeRef.new(shape: Condition, location_name: "Condition"))
     CreateLakeFormationOptInRequest.struct_class = Types::CreateLakeFormationOptInRequest
 
     CreateLakeFormationOptInResponse.struct_class = Types::CreateLakeFormationOptInResponse
@@ -537,6 +540,7 @@ module Aws::LakeFormation
 
     DeleteLakeFormationOptInRequest.add_member(:principal, Shapes::ShapeRef.new(shape: DataLakePrincipal, required: true, location_name: "Principal"))
     DeleteLakeFormationOptInRequest.add_member(:resource, Shapes::ShapeRef.new(shape: Resource, required: true, location_name: "Resource"))
+    DeleteLakeFormationOptInRequest.add_member(:condition, Shapes::ShapeRef.new(shape: Condition, location_name: "Condition"))
     DeleteLakeFormationOptInRequest.struct_class = Types::DeleteLakeFormationOptInRequest
 
     DeleteLakeFormationOptInResponse.struct_class = Types::DeleteLakeFormationOptInResponse
@@ -764,6 +768,7 @@ module Aws::LakeFormation
     GrantPermissionsRequest.add_member(:principal, Shapes::ShapeRef.new(shape: DataLakePrincipal, required: true, location_name: "Principal"))
     GrantPermissionsRequest.add_member(:resource, Shapes::ShapeRef.new(shape: Resource, required: true, location_name: "Resource"))
     GrantPermissionsRequest.add_member(:permissions, Shapes::ShapeRef.new(shape: PermissionList, required: true, location_name: "Permissions"))
+    GrantPermissionsRequest.add_member(:condition, Shapes::ShapeRef.new(shape: Condition, location_name: "Condition"))
     GrantPermissionsRequest.add_member(:permissions_with_grant_option, Shapes::ShapeRef.new(shape: PermissionList, location_name: "PermissionsWithGrantOption"))
     GrantPermissionsRequest.struct_class = Types::GrantPermissionsRequest
 
@@ -984,6 +989,7 @@ module Aws::LakeFormation
     RegisterResourceRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: IAMRoleArn, location_name: "RoleArn"))
     RegisterResourceRequest.add_member(:with_federation, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "WithFederation"))
     RegisterResourceRequest.add_member(:hybrid_access_enabled, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "HybridAccessEnabled"))
+    RegisterResourceRequest.add_member(:with_privileged_access, Shapes::ShapeRef.new(shape: Boolean, location_name: "WithPrivilegedAccess"))
     RegisterResourceRequest.struct_class = Types::RegisterResourceRequest
 
     RegisterResourceResponse.struct_class = Types::RegisterResourceResponse
@@ -1012,6 +1018,7 @@ module Aws::LakeFormation
     ResourceInfo.add_member(:last_modified, Shapes::ShapeRef.new(shape: LastModifiedTimestamp, location_name: "LastModified"))
     ResourceInfo.add_member(:with_federation, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "WithFederation"))
     ResourceInfo.add_member(:hybrid_access_enabled, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "HybridAccessEnabled"))
+    ResourceInfo.add_member(:with_privileged_access, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "WithPrivilegedAccess"))
     ResourceInfo.struct_class = Types::ResourceInfo
 
     ResourceInfoList.member = Shapes::ShapeRef.new(shape: ResourceInfo)
@@ -1028,6 +1035,7 @@ module Aws::LakeFormation
     RevokePermissionsRequest.add_member(:principal, Shapes::ShapeRef.new(shape: DataLakePrincipal, required: true, location_name: "Principal"))
     RevokePermissionsRequest.add_member(:resource, Shapes::ShapeRef.new(shape: Resource, required: true, location_name: "Resource"))
     RevokePermissionsRequest.add_member(:permissions, Shapes::ShapeRef.new(shape: PermissionList, required: true, location_name: "Permissions"))
+    RevokePermissionsRequest.add_member(:condition, Shapes::ShapeRef.new(shape: Condition, location_name: "Condition"))
     RevokePermissionsRequest.add_member(:permissions_with_grant_option, Shapes::ShapeRef.new(shape: PermissionList, location_name: "PermissionsWithGrantOption"))
     RevokePermissionsRequest.struct_class = Types::RevokePermissionsRequest
 
@@ -1394,6 +1402,7 @@ module Aws::LakeFormation
         o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNumberLimitExceededException)
       end)
 
       api.add_operation(:delete_data_cells_filter, Seahorse::Model::Operation.new.tap do |o|

@@ -724,6 +724,9 @@ module Aws::LakeFormation
     #           },
     #         },
     #         permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
+    #         condition: {
+    #           expression: "ExpressionString",
+    #         },
     #         permissions_with_grant_option: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
     #       },
     #     ],
@@ -768,6 +771,7 @@ module Aws::LakeFormation
     #   resp.failures[0].request_entry.resource.lf_tag_expression.name #=> String
     #   resp.failures[0].request_entry.permissions #=> Array
     #   resp.failures[0].request_entry.permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
+    #   resp.failures[0].request_entry.condition.expression #=> String
     #   resp.failures[0].request_entry.permissions_with_grant_option #=> Array
     #   resp.failures[0].request_entry.permissions_with_grant_option[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
     #   resp.failures[0].error.error_code #=> String
@@ -864,6 +868,9 @@ module Aws::LakeFormation
     #           },
     #         },
     #         permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
+    #         condition: {
+    #           expression: "ExpressionString",
+    #         },
     #         permissions_with_grant_option: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
     #       },
     #     ],
@@ -908,6 +915,7 @@ module Aws::LakeFormation
     #   resp.failures[0].request_entry.resource.lf_tag_expression.name #=> String
     #   resp.failures[0].request_entry.permissions #=> Array
     #   resp.failures[0].request_entry.permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
+    #   resp.failures[0].request_entry.condition.expression #=> String
     #   resp.failures[0].request_entry.permissions_with_grant_option #=> Array
     #   resp.failures[0].request_entry.permissions_with_grant_option[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
     #   resp.failures[0].error.error_code #=> String
@@ -1173,6 +1181,10 @@ module Aws::LakeFormation
     # @option params [required, Types::Resource] :resource
     #   A structure for the resource.
     #
+    # @option params [Types::Condition] :condition
+    #   A Lake Formation condition, which applies to permissions and opt-ins
+    #   that contain an expression.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -1235,6 +1247,9 @@ module Aws::LakeFormation
     #         catalog_id: "CatalogIdString",
     #         name: "NameString", # required
     #       },
+    #     },
+    #     condition: {
+    #       expression: "ExpressionString",
     #     },
     #   })
     #
@@ -1380,6 +1395,10 @@ module Aws::LakeFormation
     # @option params [required, Types::Resource] :resource
     #   A structure for the resource.
     #
+    # @option params [Types::Condition] :condition
+    #   A Lake Formation condition, which applies to permissions and opt-ins
+    #   that contain an expression.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -1442,6 +1461,9 @@ module Aws::LakeFormation
     #         catalog_id: "CatalogIdString",
     #         name: "NameString", # required
     #       },
+    #     },
+    #     condition: {
+    #       expression: "ExpressionString",
     #     },
     #   })
     #
@@ -1605,6 +1627,7 @@ module Aws::LakeFormation
     #   resp.resource_info.last_modified #=> Time
     #   resp.resource_info.with_federation #=> Boolean
     #   resp.resource_info.hybrid_access_enabled #=> Boolean
+    #   resp.resource_info.with_privileged_access #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/DescribeResource AWS API Documentation
     #
@@ -2517,6 +2540,10 @@ module Aws::LakeFormation
     #   Amazon S3. Lake Formation requires that each principal be authorized
     #   to perform a specific task on Lake Formation resources.
     #
+    # @option params [Types::Condition] :condition
+    #   A Lake Formation condition, which applies to permissions and opt-ins
+    #   that contain an expression.
+    #
     # @option params [Array<String>] :permissions_with_grant_option
     #   Indicates a list of the granted permissions that the principal may
     #   pass to other users. These permissions may only be a subset of the
@@ -2587,6 +2614,9 @@ module Aws::LakeFormation
     #       },
     #     },
     #     permissions: ["ALL"], # required, accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
+    #     condition: {
+    #       expression: "ExpressionString",
+    #     },
     #     permissions_with_grant_option: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
     #   })
     #
@@ -3118,6 +3148,7 @@ module Aws::LakeFormation
     #   resp.resource_info_list[0].last_modified #=> Time
     #   resp.resource_info_list[0].with_federation #=> Boolean
     #   resp.resource_info_list[0].hybrid_access_enabled #=> Boolean
+    #   resp.resource_info_list[0].with_privileged_access #=> Boolean
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/ListResources AWS API Documentation
@@ -3328,8 +3359,8 @@ module Aws::LakeFormation
     # Registers the resource as managed by the Data Catalog.
     #
     # To add or update data, Lake Formation needs read/write access to the
-    # chosen Amazon S3 path. Choose a role that you know has permission to
-    # do this, or choose the AWSServiceRoleForLakeFormationDataAccess
+    # chosen data location. Choose a role that you know has permission to do
+    # this, or choose the AWSServiceRoleForLakeFormationDataAccess
     # service-linked role. When you register the first Amazon S3 path, the
     # service-linked role and a new inline policy are created on your
     # behalf. Lake Formation adds the first path to the inline policy and
@@ -3375,6 +3406,10 @@ module Aws::LakeFormation
     #   can be managed by both Lake Formation permissions as well as Amazon S3
     #   bucket policies.
     #
+    # @option params [Boolean] :with_privileged_access
+    #   Grants the calling principal the permissions to perform all supported
+    #   Lake Formation operations on the registered data location.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -3385,6 +3420,7 @@ module Aws::LakeFormation
     #     role_arn: "IAMRoleArn",
     #     with_federation: false,
     #     hybrid_access_enabled: false,
+    #     with_privileged_access: false,
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/RegisterResource AWS API Documentation
@@ -3529,6 +3565,10 @@ module Aws::LakeFormation
     #
     #   [1]: https://docs.aws.amazon.com/lake-formation/latest/dg/security-data-access.html
     #
+    # @option params [Types::Condition] :condition
+    #   A Lake Formation condition, which applies to permissions and opt-ins
+    #   that contain an expression.
+    #
     # @option params [Array<String>] :permissions_with_grant_option
     #   Indicates a list of permissions for which to revoke the grant option
     #   allowing the principal to pass permissions to other principals.
@@ -3598,6 +3638,9 @@ module Aws::LakeFormation
     #       },
     #     },
     #     permissions: ["ALL"], # required, accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
+    #     condition: {
+    #       expression: "ExpressionString",
+    #     },
     #     permissions_with_grant_option: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
     #   })
     #
@@ -4167,7 +4210,7 @@ module Aws::LakeFormation
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-lakeformation'
-      context[:gem_version] = '1.68.0'
+      context[:gem_version] = '1.69.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

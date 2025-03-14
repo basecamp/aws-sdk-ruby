@@ -526,7 +526,8 @@ module Aws
                                   }?,
                                   permissions: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS")]?
                                 },
-                              ]?
+                              ]?,
+                              allow_full_table_external_data_access: ("True" | "False")?
                             },
                             ?tags: Hash[::String, ::String]
                           ) -> _CreateCatalogResponseSuccess
@@ -5433,7 +5434,8 @@ module Aws
                                   }?,
                                   permissions: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS")]?
                                 },
-                              ]?
+                              ]?,
+                              allow_full_table_external_data_access: ("True" | "False")?
                             }
                           ) -> _UpdateCatalogResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateCatalogResponseSuccess

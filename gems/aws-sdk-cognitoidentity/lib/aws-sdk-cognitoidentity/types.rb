@@ -28,8 +28,8 @@ module Aws::CognitoIdentity
     #   Once you set `ServerSideTokenCheck` to TRUE for an identity pool,
     #   that identity pool will check with the integrated user pools to make
     #   sure that the user has not been globally signed out or deleted
-    #   before the identity pool provides an OIDC token or AWS credentials
-    #   for the user.
+    #   before the identity pool provides an OIDC token or Amazon Web
+    #   Services credentials for the user.
     #
     #   If the user is signed out or deleted, the identity pool will return
     #   a 400 Not Authorized error.
@@ -324,7 +324,7 @@ module Aws::CognitoIdentity
     # Input to the GetId action.
     #
     # @!attribute [rw] account_id
-    #   A standard AWS account ID (9+ digits).
+    #   A standard Amazon Web Services account ID (9+ digits).
     #   @return [String]
     #
     # @!attribute [rw] identity_pool_id
@@ -404,8 +404,8 @@ module Aws::CognitoIdentity
     # @!attribute [rw] role_mappings
     #   How users for a specific identity provider are to mapped to roles.
     #   This is a String-to-RoleMapping object map. The string identifies
-    #   the identity provider, for example, "graph.facebook.com" or
-    #   "cognito-idp.us-east-1.amazonaws.com/us-east-1\_abcdefghi:app\_client\_id".
+    #   the identity provider, for example, `graph.facebook.com` or
+    #   `cognito-idp.us-east-1.amazonaws.com/us-east-1_abcdefghi:app_client_id`.
     #   @return [Hash<String,Types::RoleMapping>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-identity-2014-06-30/GetIdentityPoolRolesResponse AWS API Documentation
@@ -451,11 +451,12 @@ module Aws::CognitoIdentity
     #   custom expiration time for the token so that you can cache it. If
     #   you don't provide an expiration time, the token is valid for 15
     #   minutes. You can exchange the token with Amazon STS for temporary
-    #   AWS credentials, which are valid for a maximum of one hour. The
-    #   maximum token duration you can set is 24 hours. You should take care
-    #   in setting the expiration time for a token, as there are significant
-    #   security implications: an attacker could use a leaked token to
-    #   access your AWS resources for the token's duration.
+    #   Amazon Web Services credentials, which are valid for a maximum of
+    #   one hour. The maximum token duration you can set is 24 hours. You
+    #   should take care in setting the expiration time for a token, as
+    #   there are significant security implications: an attacker could use a
+    #   leaked token to access your Amazon Web Services resources for the
+    #   token's duration.
     #
     #   <note markdown="1"> Please provide for a small grace period, usually no more than 5
     #   minutes, to account for clock skew.
@@ -718,8 +719,16 @@ module Aws::CognitoIdentity
       include Aws::Structure
     end
 
-    # Thrown if the identity pool has no role associated for the given auth
-    # type (auth/unauth) or if the AssumeRole fails.
+    # If you provided authentication information in the request, the
+    # identity pool has no authenticated role configured, or STS returned an
+    # error response to the request to assume the authenticated role from
+    # the identity pool. If you provided no authentication information in
+    # the request, the identity pool has no unauthenticated role configured,
+    # or STS returned an error response to the request to assume the
+    # unauthenticated role from the identity pool.
+    #
+    # Your role trust policy must grant `AssumeRoleWithWebIdentity`
+    # permissions to `cognito-identity.amazonaws.com`.
     #
     # @!attribute [rw] message
     #   The message returned for an
@@ -1152,8 +1161,8 @@ module Aws::CognitoIdentity
     # @!attribute [rw] role_mappings
     #   How users for a specific identity provider are to mapped to roles.
     #   This is a string to RoleMapping object map. The string identifies
-    #   the identity provider, for example, "graph.facebook.com" or
-    #   "cognito-idp.us-east-1.amazonaws.com/us-east-1\_abcdefghi:app\_client\_id".
+    #   the identity provider, for example, `graph.facebook.com` or
+    #   `cognito-idp.us-east-1.amazonaws.com/us-east-1_abcdefghi:app_client_id`.
     #
     #   Up to 25 rules can be specified per identity provider.
     #   @return [Hash<String,Types::RoleMapping>]

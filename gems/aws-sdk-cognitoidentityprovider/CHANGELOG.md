@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.118.0 (2025-03-14)
+------------------
+
+* Feature - Minor description updates to API parameters
+
 1.117.0 (2025-03-03)
 ------------------
 
