@@ -39005,9 +39005,8 @@ module Aws::SageMaker
     # @!attribute [rw] kms_key_id
     #   The Amazon Web Services Key Management Service (Amazon Web Services
     #   KMS) key that Amazon SageMaker uses to encrypt the processing job
-    #   output. `KmsKeyId` can be an ID of a KMS key, ARN of a KMS key,
-    #   alias of a KMS key, or alias of a KMS key. The `KmsKeyId` is applied
-    #   to all outputs.
+    #   output. `KmsKeyId` can be an ID of a KMS key, ARN of a KMS key, or
+    #   alias of a KMS key. The `KmsKeyId` is applied to all outputs.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ProcessingOutputConfig AWS API Documentation

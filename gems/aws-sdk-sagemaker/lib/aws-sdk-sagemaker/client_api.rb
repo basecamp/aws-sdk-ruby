@@ -7192,7 +7192,7 @@ module Aws::SageMaker
     ListClusterNodesRequest.add_member(:sort_order, Shapes::ShapeRef.new(shape: SortOrder, location_name: "SortOrder"))
     ListClusterNodesRequest.struct_class = Types::ListClusterNodesRequest
 
-    ListClusterNodesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, required: true, location_name: "NextToken"))
+    ListClusterNodesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
     ListClusterNodesResponse.add_member(:cluster_node_summaries, Shapes::ShapeRef.new(shape: ClusterNodeSummaries, required: true, location_name: "ClusterNodeSummaries"))
     ListClusterNodesResponse.struct_class = Types::ListClusterNodesResponse
 
@@ -7221,7 +7221,7 @@ module Aws::SageMaker
     ListClustersRequest.add_member(:training_plan_arn, Shapes::ShapeRef.new(shape: TrainingPlanArn, location_name: "TrainingPlanArn"))
     ListClustersRequest.struct_class = Types::ListClustersRequest
 
-    ListClustersResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, required: true, location_name: "NextToken"))
+    ListClustersResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
     ListClustersResponse.add_member(:cluster_summaries, Shapes::ShapeRef.new(shape: ClusterSummaries, required: true, location_name: "ClusterSummaries"))
     ListClustersResponse.struct_class = Types::ListClustersResponse
 

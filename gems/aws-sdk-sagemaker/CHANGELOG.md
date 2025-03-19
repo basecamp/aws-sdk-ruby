@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.294.0 (2025-03-19)
+------------------
+
+* Feature - Added support for g6, g6e, m6i, c6i instance types in SageMaker Processing Jobs.
+
 1.293.0 (2025-03-03)
 ------------------
 

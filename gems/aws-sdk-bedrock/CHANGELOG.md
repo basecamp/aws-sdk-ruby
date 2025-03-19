@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.38.0 (2025-03-19)
+------------------
+
+* Feature - Support custom prompt routers for evaluation jobs
+
 1.37.0 (2025-03-06)
 ------------------
 
