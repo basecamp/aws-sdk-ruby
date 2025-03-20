@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.39.0 (2025-03-20)
+------------------
+
+* Feature - With this release, Bedrock Evaluation will now support bring your own inference responses.
+
 1.38.0 (2025-03-19)
 ------------------
 

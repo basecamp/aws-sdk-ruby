@@ -1,6 +1,9 @@
 Unreleased Changes
 ------------------
 
+3.220.2 (2025-03-20)
+------------------
+
 * Issue - Enable ALPN over TLS for H2 by default.
 
 3.220.1 (2025-03-06)
