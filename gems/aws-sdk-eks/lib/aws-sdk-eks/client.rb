@@ -5065,6 +5065,10 @@ module Aws::EKS
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.**
     #
+    # @option params [Boolean] :force
+    #   Set this value to `true` to override upgrade-blocking readiness checks
+    #   when updating a cluster.
+    #
     # @return [Types::UpdateClusterVersionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateClusterVersionResponse#update #update} => Types::Update
@@ -5075,6 +5079,7 @@ module Aws::EKS
     #     name: "String", # required
     #     version: "String", # required
     #     client_request_token: "String",
+    #     force: false,
     #   })
     #
     # @example Response structure
@@ -5500,7 +5505,7 @@ module Aws::EKS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-eks'
-      context[:gem_version] = '1.131.0'
+      context[:gem_version] = '1.132.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.296.0 (2025-03-25)
+------------------
+
+* Feature - This release adds support for customer-managed KMS keys in Amazon SageMaker Partner AI Apps
+
 1.295.0 (2025-03-21)
 ------------------
 

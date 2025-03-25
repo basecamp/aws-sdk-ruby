@@ -1797,6 +1797,7 @@ module Aws::SageMaker
       attr_accessor name: ::String
       attr_accessor type: ("lakera-guard" | "comet" | "deepchecks-llm-evaluation" | "fiddler")
       attr_accessor execution_role_arn: ::String
+      attr_accessor kms_key_id: ::String
       attr_accessor maintenance_config: Types::PartnerAppMaintenanceConfig
       attr_accessor tier: ::String
       attr_accessor application_config: Types::PartnerAppConfig
@@ -3791,7 +3792,9 @@ module Aws::SageMaker
       attr_accessor type: ("lakera-guard" | "comet" | "deepchecks-llm-evaluation" | "fiddler")
       attr_accessor status: ("Creating" | "Updating" | "Deleting" | "Available" | "Failed" | "UpdateFailed" | "Deleted")
       attr_accessor creation_time: ::Time
+      attr_accessor last_modified_time: ::Time
       attr_accessor execution_role_arn: ::String
+      attr_accessor kms_key_id: ::String
       attr_accessor base_url: ::String
       attr_accessor maintenance_config: Types::PartnerAppMaintenanceConfig
       attr_accessor tier: ::String

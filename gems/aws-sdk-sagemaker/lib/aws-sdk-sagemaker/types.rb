@@ -9614,6 +9614,12 @@ module Aws::SageMaker
     #   The ARN of the IAM role that the partner application uses.
     #   @return [String]
     #
+    # @!attribute [rw] kms_key_id
+    #   SageMaker Partner AI Apps uses Amazon Web Services KMS to encrypt
+    #   data at rest using an Amazon Web Services managed key by default.
+    #   For more control, specify a customer managed key.
+    #   @return [String]
+    #
     # @!attribute [rw] maintenance_config
     #   Maintenance configuration settings for the SageMaker Partner AI App.
     #   @return [Types::PartnerAppMaintenanceConfig]
@@ -9657,6 +9663,7 @@ module Aws::SageMaker
       :name,
       :type,
       :execution_role_arn,
+      :kms_key_id,
       :maintenance_config,
       :tier,
       :application_config,
@@ -17905,9 +17912,18 @@ module Aws::SageMaker
     #   The time that the SageMaker Partner AI App was created.
     #   @return [Time]
     #
+    # @!attribute [rw] last_modified_time
+    #   The time that the SageMaker Partner AI App was last modified.
+    #   @return [Time]
+    #
     # @!attribute [rw] execution_role_arn
     #   The ARN of the IAM role associated with the SageMaker Partner AI
     #   App.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_id
+    #   The Amazon Web Services KMS customer managed key used to encrypt the
+    #   data at rest associated with SageMaker Partner AI Apps.
     #   @return [String]
     #
     # @!attribute [rw] base_url
@@ -17956,7 +17972,9 @@ module Aws::SageMaker
       :type,
       :status,
       :creation_time,
+      :last_modified_time,
       :execution_role_arn,
+      :kms_key_id,
       :base_url,
       :maintenance_config,
       :tier,

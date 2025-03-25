@@ -3583,6 +3583,7 @@ module Aws
                                 name: ::String,
                                 type: ("lakera-guard" | "comet" | "deepchecks-llm-evaluation" | "fiddler"),
                                 execution_role_arn: ::String,
+                                ?kms_key_id: ::String,
                                 ?maintenance_config: {
                                   maintenance_window_start: ::String?
                                 },
@@ -6107,7 +6108,9 @@ module Aws
         def type: () -> ("lakera-guard" | "comet" | "deepchecks-llm-evaluation" | "fiddler")
         def status: () -> ("Creating" | "Updating" | "Deleting" | "Available" | "Failed" | "UpdateFailed" | "Deleted")
         def creation_time: () -> ::Time
+        def last_modified_time: () -> ::Time
         def execution_role_arn: () -> ::String
+        def kms_key_id: () -> ::String
         def base_url: () -> ::String
         def maintenance_config: () -> Types::PartnerAppMaintenanceConfig
         def tier: () -> ::String

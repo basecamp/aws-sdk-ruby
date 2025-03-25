@@ -8047,6 +8047,11 @@ module Aws::SageMaker
     # @option params [required, String] :execution_role_arn
     #   The ARN of the IAM role that the partner application uses.
     #
+    # @option params [String] :kms_key_id
+    #   SageMaker Partner AI Apps uses Amazon Web Services KMS to encrypt data
+    #   at rest using an Amazon Web Services managed key by default. For more
+    #   control, specify a customer managed key.
+    #
     # @option params [Types::PartnerAppMaintenanceConfig] :maintenance_config
     #   Maintenance configuration settings for the SageMaker Partner AI App.
     #
@@ -8087,6 +8092,7 @@ module Aws::SageMaker
     #     name: "PartnerAppName", # required
     #     type: "lakera-guard", # required, accepts lakera-guard, comet, deepchecks-llm-evaluation, fiddler
     #     execution_role_arn: "RoleArn", # required
+    #     kms_key_id: "KmsKeyId",
     #     maintenance_config: {
     #       maintenance_window_start: "WeeklyScheduleTimeFormat",
     #     },
@@ -16638,7 +16644,9 @@ module Aws::SageMaker
     #   * {Types::DescribePartnerAppResponse#type #type} => String
     #   * {Types::DescribePartnerAppResponse#status #status} => String
     #   * {Types::DescribePartnerAppResponse#creation_time #creation_time} => Time
+    #   * {Types::DescribePartnerAppResponse#last_modified_time #last_modified_time} => Time
     #   * {Types::DescribePartnerAppResponse#execution_role_arn #execution_role_arn} => String
+    #   * {Types::DescribePartnerAppResponse#kms_key_id #kms_key_id} => String
     #   * {Types::DescribePartnerAppResponse#base_url #base_url} => String
     #   * {Types::DescribePartnerAppResponse#maintenance_config #maintenance_config} => Types::PartnerAppMaintenanceConfig
     #   * {Types::DescribePartnerAppResponse#tier #tier} => String
@@ -16661,7 +16669,9 @@ module Aws::SageMaker
     #   resp.type #=> String, one of "lakera-guard", "comet", "deepchecks-llm-evaluation", "fiddler"
     #   resp.status #=> String, one of "Creating", "Updating", "Deleting", "Available", "Failed", "UpdateFailed", "Deleted"
     #   resp.creation_time #=> Time
+    #   resp.last_modified_time #=> Time
     #   resp.execution_role_arn #=> String
+    #   resp.kms_key_id #=> String
     #   resp.base_url #=> String
     #   resp.maintenance_config.maintenance_window_start #=> String
     #   resp.tier #=> String
@@ -29747,7 +29757,7 @@ module Aws::SageMaker
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sagemaker'
-      context[:gem_version] = '1.295.0'
+      context[:gem_version] = '1.296.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

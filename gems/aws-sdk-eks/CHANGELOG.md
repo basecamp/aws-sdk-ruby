@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.132.0 (2025-03-25)
+------------------
+
+* Feature - Added support to override upgrade-blocking readiness checks via force flag when updating a cluster.
+
 1.131.0 (2025-02-28)
 ------------------
 
