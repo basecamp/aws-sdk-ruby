@@ -1,6 +1,13 @@
 Unreleased Changes
 ------------------
 
+3.222.0 (2025-03-27)
+------------------
+
+* Feature - Updated Aws::SSOOIDC::Client with the latest API changes.
+
+* Feature - This release adds AwsAdditionalDetails in the CreateTokenWithIAM API response.
+
 3.221.0 (2025-03-24)
 ------------------
 
