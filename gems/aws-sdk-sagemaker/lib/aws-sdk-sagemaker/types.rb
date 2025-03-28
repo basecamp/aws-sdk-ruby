@@ -42712,11 +42712,16 @@ module Aws::SageMaker
     #   use the token in the next request.
     #   @return [String]
     #
+    # @!attribute [rw] total_hits
+    #   The total number of matching results.
+    #   @return [Types::TotalHits]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/SearchResponse AWS API Documentation
     #
     class SearchResponse < Struct.new(
       :results,
-      :next_token)
+      :next_token,
+      :total_hits)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -45126,6 +45131,38 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # Represents the total number of matching results and indicates how
+    # accurate that count is.
+    #
+    # The `Value` field provides the count, which may be exact or estimated.
+    # The `Relation` field indicates whether it's an exact figure or a
+    # lower bound. This helps understand the full scope of search results,
+    # especially when dealing with large result sets.
+    #
+    # @!attribute [rw] value
+    #   The total number of matching results. This value may be exact or an
+    #   estimate, depending on the `Relation` field.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] relation
+    #   Indicates the relationship between the returned `Value` and the
+    #   actual total number of matching results. Possible values are:
+    #
+    #   * `EqualTo`: The `Value` is the exact count of matching results.
+    #
+    #   * `GreaterThanOrEqualTo`: The `Value` is a lower bound of the actual
+    #     count of matching results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/TotalHits AWS API Documentation
+    #
+    class TotalHits < Struct.new(
+      :value,
+      :relation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The summary of the tracking server to list.
     #
     # @!attribute [rw] tracking_server_arn
@@ -46646,12 +46683,29 @@ module Aws::SageMaker
     #   [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html
     #   @return [String]
     #
+    # @!attribute [rw] transform_ami_version
+    #   Specifies an option from a collection of preconfigured Amazon
+    #   Machine Image (AMI) images. Each image is configured by Amazon Web
+    #   Services with a set of software and driver versions.
+    #
+    #   al2-ami-sagemaker-batch-gpu-470
+    #   : * Accelerator: GPU
+    #
+    #     * NVIDIA driver version: 470
+    #
+    #   al2-ami-sagemaker-batch-gpu-535
+    #   : * Accelerator: GPU
+    #
+    #     * NVIDIA driver version: 535
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/TransformResources AWS API Documentation
     #
     class TransformResources < Struct.new(
       :instance_type,
       :instance_count,
-      :volume_kms_key_id)
+      :volume_kms_key_id,
+      :transform_ami_version)
       SENSITIVE = []
       include Aws::Structure
     end

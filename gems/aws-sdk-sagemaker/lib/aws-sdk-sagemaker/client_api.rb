@@ -1971,6 +1971,7 @@ module Aws::SageMaker
     ReferenceMinVersion = Shapes::StringShape.new(name: 'ReferenceMinVersion')
     RegisterDevicesRequest = Shapes::StructureShape.new(name: 'RegisterDevicesRequest')
     RegisterModelStepMetadata = Shapes::StructureShape.new(name: 'RegisterModelStepMetadata')
+    Relation = Shapes::StringShape.new(name: 'Relation')
     ReleaseNotes = Shapes::StringShape.new(name: 'ReleaseNotes')
     RemoteDebugConfig = Shapes::StructureShape.new(name: 'RemoteDebugConfig')
     RemoteDebugConfigForUpdate = Shapes::StructureShape.new(name: 'RemoteDebugConfigForUpdate')
@@ -2259,6 +2260,7 @@ module Aws::SageMaker
     TimeSeriesTransformations = Shapes::StructureShape.new(name: 'TimeSeriesTransformations')
     Timestamp = Shapes::TimestampShape.new(name: 'Timestamp')
     TimestampAttributeName = Shapes::StringShape.new(name: 'TimestampAttributeName')
+    TotalHits = Shapes::StructureShape.new(name: 'TotalHits')
     TotalInstanceCount = Shapes::IntegerShape.new(name: 'TotalInstanceCount')
     TrackingServerArn = Shapes::StringShape.new(name: 'TrackingServerArn')
     TrackingServerName = Shapes::StringShape.new(name: 'TrackingServerName')
@@ -2319,6 +2321,7 @@ module Aws::SageMaker
     TrainingRepositoryCredentialsProviderArn = Shapes::StringShape.new(name: 'TrainingRepositoryCredentialsProviderArn')
     TrainingSpecification = Shapes::StructureShape.new(name: 'TrainingSpecification')
     TrainingTimeInSeconds = Shapes::IntegerShape.new(name: 'TrainingTimeInSeconds')
+    TransformAmiVersion = Shapes::StringShape.new(name: 'TransformAmiVersion')
     TransformDataSource = Shapes::StructureShape.new(name: 'TransformDataSource')
     TransformEnvironmentKey = Shapes::StringShape.new(name: 'TransformEnvironmentKey')
     TransformEnvironmentMap = Shapes::MapShape.new(name: 'TransformEnvironmentMap')
@@ -9804,6 +9807,7 @@ module Aws::SageMaker
 
     SearchResponse.add_member(:results, Shapes::ShapeRef.new(shape: SearchResultsList, location_name: "Results"))
     SearchResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    SearchResponse.add_member(:total_hits, Shapes::ShapeRef.new(shape: TotalHits, location_name: "TotalHits"))
     SearchResponse.struct_class = Types::SearchResponse
 
     SearchResultsList.member = Shapes::ShapeRef.new(shape: SearchRecord)
@@ -10188,6 +10192,10 @@ module Aws::SageMaker
     TimeSeriesTransformations.add_member(:aggregation, Shapes::ShapeRef.new(shape: AggregationTransformations, location_name: "Aggregation"))
     TimeSeriesTransformations.struct_class = Types::TimeSeriesTransformations
 
+    TotalHits.add_member(:value, Shapes::ShapeRef.new(shape: Long, location_name: "Value"))
+    TotalHits.add_member(:relation, Shapes::ShapeRef.new(shape: Relation, location_name: "Relation"))
+    TotalHits.struct_class = Types::TotalHits
+
     TrackingServerSummary.add_member(:tracking_server_arn, Shapes::ShapeRef.new(shape: TrackingServerArn, location_name: "TrackingServerArn"))
     TrackingServerSummary.add_member(:tracking_server_name, Shapes::ShapeRef.new(shape: TrackingServerName, location_name: "TrackingServerName"))
     TrackingServerSummary.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "CreationTime"))
@@ -10418,6 +10426,7 @@ module Aws::SageMaker
     TransformResources.add_member(:instance_type, Shapes::ShapeRef.new(shape: TransformInstanceType, required: true, location_name: "InstanceType"))
     TransformResources.add_member(:instance_count, Shapes::ShapeRef.new(shape: TransformInstanceCount, required: true, location_name: "InstanceCount"))
     TransformResources.add_member(:volume_kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "VolumeKmsKeyId"))
+    TransformResources.add_member(:transform_ami_version, Shapes::ShapeRef.new(shape: TransformAmiVersion, location_name: "TransformAmiVersion"))
     TransformResources.struct_class = Types::TransformResources
 
     TransformS3DataSource.add_member(:s3_data_type, Shapes::ShapeRef.new(shape: S3DataType, required: true, location_name: "S3DataType"))

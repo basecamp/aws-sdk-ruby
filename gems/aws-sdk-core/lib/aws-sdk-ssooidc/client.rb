@@ -1062,7 +1062,7 @@ module Aws::SSOOIDC
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-core'
-      context[:gem_version] = '3.222.0'
+      context[:gem_version] = '3.222.1'
       Seahorse::Client::Request.new(handlers, context)
     end
 

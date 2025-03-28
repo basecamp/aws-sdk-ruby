@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.298.0 (2025-03-28)
+------------------
+
+* Feature - TransformAmiVersion for Batch Transform and SageMaker Search Service Aggregate Search API Extension
+
 1.297.0 (2025-03-27)
 ------------------
 
