@@ -1,6 +1,8 @@
 Unreleased Changes
 ------------------
 
+* Issue - Allow explicit modeled headers to override prefixed headers for `rest` protocols. 
+
 3.222.0 (2025-03-27)
 ------------------
 
