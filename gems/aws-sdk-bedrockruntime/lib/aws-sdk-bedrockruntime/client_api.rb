@@ -31,6 +31,8 @@ module Aws::BedrockRuntime
     AutoToolChoice = Shapes::StructureShape.new(name: 'AutoToolChoice')
     Blob = Shapes::BlobShape.new(name: 'Blob')
     Body = Shapes::BlobShape.new(name: 'Body')
+    CachePointBlock = Shapes::StructureShape.new(name: 'CachePointBlock')
+    CachePointType = Shapes::StringShape.new(name: 'CachePointType')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     ContentBlock = Shapes::UnionShape.new(name: 'ContentBlock')
     ContentBlockDelta = Shapes::UnionShape.new(name: 'ContentBlockDelta')
@@ -220,6 +222,8 @@ module Aws::BedrockRuntime
     ThrottlingException = Shapes::StructureShape.new(name: 'ThrottlingException')
     Timestamp = Shapes::TimestampShape.new(name: 'Timestamp', timestampFormat: "iso8601")
     TokenUsage = Shapes::StructureShape.new(name: 'TokenUsage')
+    TokenUsageCacheReadInputTokensInteger = Shapes::IntegerShape.new(name: 'TokenUsageCacheReadInputTokensInteger')
+    TokenUsageCacheWriteInputTokensInteger = Shapes::IntegerShape.new(name: 'TokenUsageCacheWriteInputTokensInteger')
     TokenUsageInputTokensInteger = Shapes::IntegerShape.new(name: 'TokenUsageInputTokensInteger')
     TokenUsageOutputTokensInteger = Shapes::IntegerShape.new(name: 'TokenUsageOutputTokensInteger')
     TokenUsageTotalTokensInteger = Shapes::IntegerShape.new(name: 'TokenUsageTotalTokensInteger')
@@ -289,6 +293,9 @@ module Aws::BedrockRuntime
 
     AutoToolChoice.struct_class = Types::AutoToolChoice
 
+    CachePointBlock.add_member(:type, Shapes::ShapeRef.new(shape: CachePointType, required: true, location_name: "type"))
+    CachePointBlock.struct_class = Types::CachePointBlock
+
     ConflictException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ConflictException.struct_class = Types::ConflictException
 
@@ -299,6 +306,7 @@ module Aws::BedrockRuntime
     ContentBlock.add_member(:tool_use, Shapes::ShapeRef.new(shape: ToolUseBlock, location_name: "toolUse"))
     ContentBlock.add_member(:tool_result, Shapes::ShapeRef.new(shape: ToolResultBlock, location_name: "toolResult"))
     ContentBlock.add_member(:guard_content, Shapes::ShapeRef.new(shape: GuardrailConverseContentBlock, location_name: "guardContent"))
+    ContentBlock.add_member(:cache_point, Shapes::ShapeRef.new(shape: CachePointBlock, location_name: "cachePoint"))
     ContentBlock.add_member(:reasoning_content, Shapes::ShapeRef.new(shape: ReasoningContentBlock, location_name: "reasoningContent"))
     ContentBlock.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     ContentBlock.add_member_subclass(:text, Types::ContentBlock::Text)
@@ -308,6 +316,7 @@ module Aws::BedrockRuntime
     ContentBlock.add_member_subclass(:tool_use, Types::ContentBlock::ToolUse)
     ContentBlock.add_member_subclass(:tool_result, Types::ContentBlock::ToolResult)
     ContentBlock.add_member_subclass(:guard_content, Types::ContentBlock::GuardContent)
+    ContentBlock.add_member_subclass(:cache_point, Types::ContentBlock::CachePoint)
     ContentBlock.add_member_subclass(:reasoning_content, Types::ContentBlock::ReasoningContent)
     ContentBlock.add_member_subclass(:unknown, Types::ContentBlock::Unknown)
     ContentBlock.struct_class = Types::ContentBlock
@@ -813,9 +822,11 @@ module Aws::BedrockRuntime
 
     SystemContentBlock.add_member(:text, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "text"))
     SystemContentBlock.add_member(:guard_content, Shapes::ShapeRef.new(shape: GuardrailConverseContentBlock, location_name: "guardContent"))
+    SystemContentBlock.add_member(:cache_point, Shapes::ShapeRef.new(shape: CachePointBlock, location_name: "cachePoint"))
     SystemContentBlock.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     SystemContentBlock.add_member_subclass(:text, Types::SystemContentBlock::Text)
     SystemContentBlock.add_member_subclass(:guard_content, Types::SystemContentBlock::GuardContent)
+    SystemContentBlock.add_member_subclass(:cache_point, Types::SystemContentBlock::CachePoint)
     SystemContentBlock.add_member_subclass(:unknown, Types::SystemContentBlock::Unknown)
     SystemContentBlock.struct_class = Types::SystemContentBlock
 
@@ -833,11 +844,15 @@ module Aws::BedrockRuntime
     TokenUsage.add_member(:input_tokens, Shapes::ShapeRef.new(shape: TokenUsageInputTokensInteger, required: true, location_name: "inputTokens"))
     TokenUsage.add_member(:output_tokens, Shapes::ShapeRef.new(shape: TokenUsageOutputTokensInteger, required: true, location_name: "outputTokens"))
     TokenUsage.add_member(:total_tokens, Shapes::ShapeRef.new(shape: TokenUsageTotalTokensInteger, required: true, location_name: "totalTokens"))
+    TokenUsage.add_member(:cache_read_input_tokens, Shapes::ShapeRef.new(shape: TokenUsageCacheReadInputTokensInteger, location_name: "cacheReadInputTokens"))
+    TokenUsage.add_member(:cache_write_input_tokens, Shapes::ShapeRef.new(shape: TokenUsageCacheWriteInputTokensInteger, location_name: "cacheWriteInputTokens"))
     TokenUsage.struct_class = Types::TokenUsage
 
     Tool.add_member(:tool_spec, Shapes::ShapeRef.new(shape: ToolSpecification, location_name: "toolSpec"))
+    Tool.add_member(:cache_point, Shapes::ShapeRef.new(shape: CachePointBlock, location_name: "cachePoint"))
     Tool.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     Tool.add_member_subclass(:tool_spec, Types::Tool::ToolSpec)
+    Tool.add_member_subclass(:cache_point, Types::Tool::CachePoint)
     Tool.add_member_subclass(:unknown, Types::Tool::Unknown)
     Tool.struct_class = Types::Tool
 

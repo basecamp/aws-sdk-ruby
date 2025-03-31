@@ -26,6 +26,7 @@ module Aws::Outposts
     AddressType = Shapes::StringShape.new(name: 'AddressType')
     Arn = Shapes::StringShape.new(name: 'Arn')
     AssetId = Shapes::StringShape.new(name: 'AssetId')
+    AssetIdInput = Shapes::StringShape.new(name: 'AssetIdInput')
     AssetIdList = Shapes::ListShape.new(name: 'AssetIdList')
     AssetInfo = Shapes::StructureShape.new(name: 'AssetInfo')
     AssetInstance = Shapes::StructureShape.new(name: 'AssetInstance')
@@ -330,6 +331,7 @@ module Aws::Outposts
     CapacityTaskSummary.add_member(:capacity_task_id, Shapes::ShapeRef.new(shape: CapacityTaskId, location_name: "CapacityTaskId"))
     CapacityTaskSummary.add_member(:outpost_id, Shapes::ShapeRef.new(shape: OutpostId, location_name: "OutpostId"))
     CapacityTaskSummary.add_member(:order_id, Shapes::ShapeRef.new(shape: OrderId, location_name: "OrderId"))
+    CapacityTaskSummary.add_member(:asset_id, Shapes::ShapeRef.new(shape: AssetId, location_name: "AssetId"))
     CapacityTaskSummary.add_member(:capacity_task_status, Shapes::ShapeRef.new(shape: CapacityTaskStatus, location_name: "CapacityTaskStatus"))
     CapacityTaskSummary.add_member(:creation_date, Shapes::ShapeRef.new(shape: ISO8601Timestamp, location_name: "CreationDate"))
     CapacityTaskSummary.add_member(:completion_date, Shapes::ShapeRef.new(shape: ISO8601Timestamp, location_name: "CompletionDate"))
@@ -432,6 +434,7 @@ module Aws::Outposts
     GetCapacityTaskOutput.add_member(:capacity_task_id, Shapes::ShapeRef.new(shape: CapacityTaskId, location_name: "CapacityTaskId"))
     GetCapacityTaskOutput.add_member(:outpost_id, Shapes::ShapeRef.new(shape: OutpostId, location_name: "OutpostId"))
     GetCapacityTaskOutput.add_member(:order_id, Shapes::ShapeRef.new(shape: OrderId, location_name: "OrderId"))
+    GetCapacityTaskOutput.add_member(:asset_id, Shapes::ShapeRef.new(shape: AssetId, location_name: "AssetId"))
     GetCapacityTaskOutput.add_member(:requested_instance_pools, Shapes::ShapeRef.new(shape: RequestedInstancePools, location_name: "RequestedInstancePools"))
     GetCapacityTaskOutput.add_member(:instances_to_exclude, Shapes::ShapeRef.new(shape: InstancesToExclude, location_name: "InstancesToExclude"))
     GetCapacityTaskOutput.add_member(:dry_run, Shapes::ShapeRef.new(shape: DryRun, location_name: "DryRun"))
@@ -481,6 +484,7 @@ module Aws::Outposts
 
     GetOutpostSupportedInstanceTypesInput.add_member(:outpost_identifier, Shapes::ShapeRef.new(shape: OutpostIdentifier, required: true, location: "uri", location_name: "OutpostId"))
     GetOutpostSupportedInstanceTypesInput.add_member(:order_id, Shapes::ShapeRef.new(shape: OrderId, location: "querystring", location_name: "OrderId"))
+    GetOutpostSupportedInstanceTypesInput.add_member(:asset_id, Shapes::ShapeRef.new(shape: AssetIdInput, location: "querystring", location_name: "AssetId"))
     GetOutpostSupportedInstanceTypesInput.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults1000, location: "querystring", location_name: "MaxResults"))
     GetOutpostSupportedInstanceTypesInput.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location: "querystring", location_name: "NextToken"))
     GetOutpostSupportedInstanceTypesInput.struct_class = Types::GetOutpostSupportedInstanceTypesInput
@@ -727,6 +731,7 @@ module Aws::Outposts
 
     StartCapacityTaskInput.add_member(:outpost_identifier, Shapes::ShapeRef.new(shape: OutpostIdentifier, required: true, location: "uri", location_name: "OutpostId"))
     StartCapacityTaskInput.add_member(:order_id, Shapes::ShapeRef.new(shape: OrderId, location_name: "OrderId"))
+    StartCapacityTaskInput.add_member(:asset_id, Shapes::ShapeRef.new(shape: AssetIdInput, location_name: "AssetId"))
     StartCapacityTaskInput.add_member(:instance_pools, Shapes::ShapeRef.new(shape: RequestedInstancePools, required: true, location_name: "InstancePools"))
     StartCapacityTaskInput.add_member(:instances_to_exclude, Shapes::ShapeRef.new(shape: InstancesToExclude, location_name: "InstancesToExclude"))
     StartCapacityTaskInput.add_member(:dry_run, Shapes::ShapeRef.new(shape: DryRun, location_name: "DryRun"))
@@ -736,6 +741,7 @@ module Aws::Outposts
     StartCapacityTaskOutput.add_member(:capacity_task_id, Shapes::ShapeRef.new(shape: CapacityTaskId, location_name: "CapacityTaskId"))
     StartCapacityTaskOutput.add_member(:outpost_id, Shapes::ShapeRef.new(shape: OutpostId, location_name: "OutpostId"))
     StartCapacityTaskOutput.add_member(:order_id, Shapes::ShapeRef.new(shape: OrderId, location_name: "OrderId"))
+    StartCapacityTaskOutput.add_member(:asset_id, Shapes::ShapeRef.new(shape: AssetId, location_name: "AssetId"))
     StartCapacityTaskOutput.add_member(:requested_instance_pools, Shapes::ShapeRef.new(shape: RequestedInstancePools, location_name: "RequestedInstancePools"))
     StartCapacityTaskOutput.add_member(:instances_to_exclude, Shapes::ShapeRef.new(shape: InstancesToExclude, location_name: "InstancesToExclude"))
     StartCapacityTaskOutput.add_member(:dry_run, Shapes::ShapeRef.new(shape: DryRun, location_name: "DryRun"))

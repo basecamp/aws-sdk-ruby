@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.22.0 (2025-03-31)
+------------------
+
+* Feature - With this release you can use a new field to specify the search term match type. Search term match types currently support fuzzy and contains matching.
+
 1.21.0 (2025-02-18)
 ------------------
 

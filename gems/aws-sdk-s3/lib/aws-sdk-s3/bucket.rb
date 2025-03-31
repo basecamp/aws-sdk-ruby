@@ -903,8 +903,9 @@ module Aws::S3
     #   a different Storage Class. For more information, see [Storage
     #   Classes][1] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> * For directory buckets, only the S3 Express One Zone storage class is
-    #     supported to store newly created objects.
+    #   <note markdown="1"> * Directory buckets only support `EXPRESS_ONEZONE` (the S3 Express One
+    #     Zone storage class) in Availability Zones and `ONEZONE_IA` (the S3
+    #     One Zone-Infrequent Access storage class) in Dedicated Local Zones.
     #
     #   * Amazon S3 on Outposts only uses the OUTPOSTS Storage Class.
     #

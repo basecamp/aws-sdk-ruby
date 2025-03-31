@@ -206,6 +206,7 @@ module Aws::S3Control
       attr_accessor vpc_configuration: Types::VpcConfiguration
       attr_accessor public_access_block_configuration: Types::PublicAccessBlockConfiguration
       attr_accessor bucket_account_id: ::String
+      attr_accessor scope: Types::Scope
       SENSITIVE: []
     end
 
@@ -335,6 +336,12 @@ module Aws::S3Control
     end
 
     class DeleteAccessPointRequest
+      attr_accessor account_id: ::String
+      attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteAccessPointScopeRequest
       attr_accessor account_id: ::String
       attr_accessor name: ::String
       SENSITIVE: []
@@ -656,6 +663,17 @@ module Aws::S3Control
       attr_accessor access_point_arn: ::String
       attr_accessor endpoints: ::Hash[::String, ::String]
       attr_accessor bucket_account_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetAccessPointScopeRequest
+      attr_accessor account_id: ::String
+      attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
+    class GetAccessPointScopeResult
+      attr_accessor scope: Types::Scope
       SENSITIVE: []
     end
 
@@ -1131,6 +1149,20 @@ module Aws::S3Control
       SENSITIVE: []
     end
 
+    class ListAccessPointsForDirectoryBucketsRequest
+      attr_accessor account_id: ::String
+      attr_accessor directory_bucket: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListAccessPointsForDirectoryBucketsResult
+      attr_accessor access_point_list: ::Array[Types::AccessPoint]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListAccessPointsForObjectLambdaRequest
       attr_accessor account_id: ::String
       attr_accessor next_token: ::String
@@ -1444,6 +1476,13 @@ module Aws::S3Control
       attr_accessor account_id: ::String
       attr_accessor name: ::String
       attr_accessor policy: ::String
+      SENSITIVE: []
+    end
+
+    class PutAccessPointScopeRequest
+      attr_accessor account_id: ::String
+      attr_accessor name: ::String
+      attr_accessor scope: Types::Scope
       SENSITIVE: []
     end
 
@@ -1773,6 +1812,12 @@ module Aws::S3Control
     end
 
     class SSES3Encryption < Aws::EmptyStructure
+    end
+
+    class Scope
+      attr_accessor prefixes: ::Array[::String]
+      attr_accessor permissions: ::Array[("GetObject" | "GetObjectAttributes" | "ListMultipartUploadParts" | "ListBucket" | "ListBucketMultipartUploads" | "PutObject" | "DeleteObject" | "AbortMultipartUpload")]
+      SENSITIVE: []
     end
 
     class SelectionCriteria

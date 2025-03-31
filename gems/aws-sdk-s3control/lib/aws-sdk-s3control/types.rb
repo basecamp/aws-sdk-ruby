@@ -928,6 +928,17 @@ module Aws::S3Control
     #
     # @!attribute [rw] name
     #   The name you want to assign to this access point.
+    #
+    #   For directory buckets, the access point name must consist of a base
+    #   name that you provide and suffix that includes the `ZoneID` (Amazon
+    #   Web Services Availability Zone or Local Zone) of your bucket
+    #   location, followed by `--xa-s3`. For more information, see [Managing
+    #   access to shared datasets in directory buckets with access
+    #   points][1] in the Amazon S3 User Guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html
     #   @return [String]
     #
     # @!attribute [rw] bucket
@@ -974,6 +985,22 @@ module Aws::S3Control
     #   required.
     #   @return [String]
     #
+    # @!attribute [rw] scope
+    #   For directory buckets, you can filter access control to specific
+    #   prefixes, API operations, or a combination of both. For more
+    #   information, see [Managing access to shared datasets in directory
+    #   buckets with access points][1] in the Amazon S3 User Guide.
+    #
+    #   <note markdown="1"> Scope is not supported for access points for general purpose
+    #   buckets.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html
+    #   @return [Types::Scope]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/CreateAccessPointRequest AWS API Documentation
     #
     class CreateAccessPointRequest < Struct.new(
@@ -982,7 +1009,8 @@ module Aws::S3Control
       :bucket,
       :vpc_configuration,
       :public_access_block_configuration,
-      :bucket_account_id)
+      :bucket_account_id,
+      :scope)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1557,6 +1585,24 @@ module Aws::S3Control
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/DeleteAccessPointRequest AWS API Documentation
     #
     class DeleteAccessPointRequest < Struct.new(
+      :account_id,
+      :name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] account_id
+    #   The Amazon Web Services account ID that owns the access point with
+    #   the scope that you want to delete.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the access point with the scope that you want to delete.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/DeleteAccessPointScopeRequest AWS API Documentation
+    #
+    class DeleteAccessPointScopeRequest < Struct.new(
       :account_id,
       :name)
       SENSITIVE = []
@@ -2820,6 +2866,36 @@ module Aws::S3Control
       :access_point_arn,
       :endpoints,
       :bucket_account_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] account_id
+    #   The Amazon Web Services account ID that owns the access point with
+    #   the scope that you want to retrieve.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the access point with the scope you want to retrieve.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/GetAccessPointScopeRequest AWS API Documentation
+    #
+    class GetAccessPointScopeRequest < Struct.new(
+      :account_id,
+      :name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] scope
+    #   The contents of the access point scope.
+    #   @return [Types::Scope]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/GetAccessPointScopeResult AWS API Documentation
+    #
+    class GetAccessPointScopeResult < Struct.new(
+      :scope)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4846,6 +4922,64 @@ module Aws::S3Control
     end
 
     # @!attribute [rw] account_id
+    #   The Amazon Web Services account ID that owns the access points.
+    #   @return [String]
+    #
+    # @!attribute [rw] directory_bucket
+    #   The name of the directory bucket associated with the access points
+    #   you want to list.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   If `NextToken` is returned, there are more access points available
+    #   than requested in the `maxResults` value. The value of `NextToken`
+    #   is a unique pagination token for each page. Make the call again
+    #   using the returned token to retrieve the next page. Keep all other
+    #   arguments unchanged. Each pagination token expires after 24 hours.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of access points that you would like returned in
+    #   the `ListAccessPointsForDirectoryBuckets` response. If the directory
+    #   bucket is associated with more than this number of access points,
+    #   the results include the pagination token `NextToken`. Make another
+    #   call using the `NextToken` to retrieve more results.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/ListAccessPointsForDirectoryBucketsRequest AWS API Documentation
+    #
+    class ListAccessPointsForDirectoryBucketsRequest < Struct.new(
+      :account_id,
+      :directory_bucket,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] access_point_list
+    #   Contains identification and configuration information for one or
+    #   more access points associated with the directory bucket.
+    #   @return [Array<Types::AccessPoint>]
+    #
+    # @!attribute [rw] next_token
+    #   If `NextToken` is returned, there are more access points available
+    #   than requested in the `maxResults` value. The value of `NextToken`
+    #   is a unique pagination token for each page. Make the call again
+    #   using the returned token to retrieve the next page. Keep all other
+    #   arguments unchanged. Each pagination token expires after 24 hours.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/ListAccessPointsForDirectoryBucketsResult AWS API Documentation
+    #
+    class ListAccessPointsForDirectoryBucketsResult < Struct.new(
+      :access_point_list,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] account_id
     #   The account ID for the account that owns the specified Object Lambda
     #   Access Point.
     #   @return [String]
@@ -6127,9 +6261,12 @@ module Aws::S3Control
     #
     # @!attribute [rw] policy
     #   The policy that you want to apply to the specified access point. For
-    #   more information about access point policies, see [Managing data
-    #   access with Amazon S3 access points][1] in the *Amazon S3 User
-    #   Guide*.
+    #   more information about access point policies, see [Managing access
+    #   to shared datasets in general purpose buckets with access points][1]
+    #   or [Managing access to shared datasets in directory bucekts with
+    #   access
+    #   points](AmazonS3/latest/userguide/access-points-directory-buckets.html)
+    #   in the *Amazon S3 User Guide*.
     #
     #
     #
@@ -6142,6 +6279,30 @@ module Aws::S3Control
       :account_id,
       :name,
       :policy)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] account_id
+    #   The Amazon Web Services account ID that owns the access point with
+    #   scope that you want to create or replace.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the access point with the scope that you want to create
+    #   or replace.
+    #   @return [String]
+    #
+    # @!attribute [rw] scope
+    #   Object prefixes, API operations, or a combination of both.
+    #   @return [Types::Scope]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/PutAccessPointScopeRequest AWS API Documentation
+    #
+    class PutAccessPointScopeRequest < Struct.new(
+      :account_id,
+      :name,
+      :scope)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7687,6 +7848,34 @@ module Aws::S3Control
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/SSES3Encryption AWS API Documentation
     #
     class SSES3Encryption < Aws::EmptyStructure; end
+
+    # You can use the access point scope to restrict access to specific
+    # prefixes, API operations, or a combination of both.
+    #
+    # For more information, see [Manage the scope of your access points for
+    # directory buckets.][1]
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets-manage-scope.html
+    #
+    # @!attribute [rw] prefixes
+    #   You can specify any amount of prefixes, but the total length of
+    #   characters of all prefixes must be less than 512 KB in size.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] permissions
+    #   You can include one or more API operations as permissions.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/Scope AWS API Documentation
+    #
+    class Scope < Struct.new(
+      :prefixes,
+      :permissions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # @!attribute [rw] delimiter
     #   A container for the delimiter of the selection criteria being used.

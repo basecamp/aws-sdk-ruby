@@ -775,7 +775,7 @@ module Aws::Deadline
       attr_accessor name: ::String
       attr_accessor path: ::String
       attr_accessor type: ("SHARED" | "LOCAL")
-      SENSITIVE: [:name]
+      SENSITIVE: []
     end
 
     class FixedBudgetSchedule
@@ -1920,7 +1920,7 @@ module Aws::Deadline
       attr_accessor output_relative_directories: ::Array[::String]
       attr_accessor input_manifest_path: ::String
       attr_accessor input_manifest_hash: ::String
-      SENSITIVE: [:file_system_location_name]
+      SENSITIVE: []
     end
 
     class MemoryMiBRange
@@ -2168,6 +2168,7 @@ module Aws::Deadline
 
     class SearchTermFilterExpression
       attr_accessor search_term: ::String
+      attr_accessor match_type: ("FUZZY_MATCH" | "CONTAINS")
       SENSITIVE: []
     end
 

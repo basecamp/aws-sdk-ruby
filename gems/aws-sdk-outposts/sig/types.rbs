@@ -91,6 +91,7 @@ module Aws::Outposts
       attr_accessor capacity_task_id: ::String
       attr_accessor outpost_id: ::String
       attr_accessor order_id: ::String
+      attr_accessor asset_id: ::String
       attr_accessor capacity_task_status: ("REQUESTED" | "IN_PROGRESS" | "FAILED" | "COMPLETED" | "WAITING_FOR_EVACUATION" | "CANCELLATION_IN_PROGRESS" | "CANCELLED")
       attr_accessor creation_date: ::Time
       attr_accessor completion_date: ::Time
@@ -213,6 +214,7 @@ module Aws::Outposts
       attr_accessor capacity_task_id: ::String
       attr_accessor outpost_id: ::String
       attr_accessor order_id: ::String
+      attr_accessor asset_id: ::String
       attr_accessor requested_instance_pools: ::Array[Types::InstanceTypeCapacity]
       attr_accessor instances_to_exclude: Types::InstancesToExclude
       attr_accessor dry_run: bool
@@ -284,6 +286,7 @@ module Aws::Outposts
     class GetOutpostSupportedInstanceTypesInput
       attr_accessor outpost_identifier: ::String
       attr_accessor order_id: ::String
+      attr_accessor asset_id: ::String
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
       SENSITIVE: []
@@ -581,6 +584,7 @@ module Aws::Outposts
     class StartCapacityTaskInput
       attr_accessor outpost_identifier: ::String
       attr_accessor order_id: ::String
+      attr_accessor asset_id: ::String
       attr_accessor instance_pools: ::Array[Types::InstanceTypeCapacity]
       attr_accessor instances_to_exclude: Types::InstancesToExclude
       attr_accessor dry_run: bool
@@ -592,6 +596,7 @@ module Aws::Outposts
       attr_accessor capacity_task_id: ::String
       attr_accessor outpost_id: ::String
       attr_accessor order_id: ::String
+      attr_accessor asset_id: ::String
       attr_accessor requested_instance_pools: ::Array[Types::InstanceTypeCapacity]
       attr_accessor instances_to_exclude: Types::InstancesToExclude
       attr_accessor dry_run: bool

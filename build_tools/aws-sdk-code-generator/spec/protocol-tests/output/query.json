@@ -484,66 +484,6 @@
             "apiVersion": "2020-01-08"
         },
         "shapes": {
-            "CustomCodeError": {
-                "type": "structure",
-                "members": {
-                    "Message": {
-                        "shape": "String"
-                    }
-                },
-                "error": {
-                    "code": "Customized",
-                    "httpStatusCode": 402,
-                    "senderFault": true
-                },
-                "exception": true
-            },
-            "String": {
-                "type": "string"
-            }
-        },
-        "cases": [
-            {
-                "id": "QueryCustomizedError",
-                "given": {
-                    "name": "GreetingWithErrors",
-                    "http": {
-                        "method": "POST",
-                        "requestUri": "/"
-                    },
-                    "documentation": "<p>This operation has three possible return values:</p> <ol> <li>A successful response in the form of GreetingWithErrorsOutput</li> <li>An InvalidGreeting error.</li> <li>A BadRequest error.</li> </ol>",
-                    "errors": [
-                        {
-                            "shape": "CustomCodeError"
-                        }
-                    ]
-                },
-                "description": "Parses customized XML errors",
-                "errorCode": "Customized",
-                "errorMessage": "Hi",
-                "error": {
-                    "Message": "Hi"
-                },
-                "response": {
-                    "status_code": 402,
-                    "headers": {
-                        "Content-Type": "text/xml"
-                    },
-                    "body": "<ErrorResponse>\n   <Error>\n      <Type>Sender</Type>\n      <Code>Customized</Code>\n      <Message>Hi</Message>\n   </Error>\n   <RequestId>foo-id</RequestId>\n</ErrorResponse>\n"
-                }
-            }
-        ]
-    },
-    {
-        "description": "Test cases for GreetingWithErrors operation",
-        "metadata": {
-            "protocol": "query",
-            "protocols": [
-                "query"
-            ],
-            "apiVersion": "2020-01-08"
-        },
-        "shapes": {
             "ComplexError": {
                 "type": "structure",
                 "members": {
@@ -598,6 +538,66 @@
                         "Content-Type": "text/xml"
                     },
                     "body": "<ErrorResponse>\n   <Error>\n      <Type>Sender</Type>\n      <Code>ComplexError</Code>\n      <TopLevel>Top level</TopLevel>\n      <Nested>\n          <Foo>bar</Foo>\n      </Nested>\n   </Error>\n   <RequestId>foo-id</RequestId>\n</ErrorResponse>\n"
+                }
+            }
+        ]
+    },
+    {
+        "description": "Test cases for GreetingWithErrors operation",
+        "metadata": {
+            "protocol": "query",
+            "protocols": [
+                "query"
+            ],
+            "apiVersion": "2020-01-08"
+        },
+        "shapes": {
+            "CustomCodeError": {
+                "type": "structure",
+                "members": {
+                    "Message": {
+                        "shape": "String"
+                    }
+                },
+                "error": {
+                    "code": "Customized",
+                    "httpStatusCode": 402,
+                    "senderFault": true
+                },
+                "exception": true
+            },
+            "String": {
+                "type": "string"
+            }
+        },
+        "cases": [
+            {
+                "id": "QueryCustomizedError",
+                "given": {
+                    "name": "GreetingWithErrors",
+                    "http": {
+                        "method": "POST",
+                        "requestUri": "/"
+                    },
+                    "documentation": "<p>This operation has three possible return values:</p> <ol> <li>A successful response in the form of GreetingWithErrorsOutput</li> <li>An InvalidGreeting error.</li> <li>A BadRequest error.</li> </ol>",
+                    "errors": [
+                        {
+                            "shape": "CustomCodeError"
+                        }
+                    ]
+                },
+                "description": "Parses customized XML errors",
+                "errorCode": "Customized",
+                "errorMessage": "Hi",
+                "error": {
+                    "Message": "Hi"
+                },
+                "response": {
+                    "status_code": 402,
+                    "headers": {
+                        "Content-Type": "text/xml"
+                    },
+                    "body": "<ErrorResponse>\n   <Error>\n      <Type>Sender</Type>\n      <Code>Customized</Code>\n      <Message>Hi</Message>\n   </Error>\n   <RequestId>foo-id</RequestId>\n</ErrorResponse>\n"
                 }
             }
         ]

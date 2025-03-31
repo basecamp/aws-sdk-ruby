@@ -843,20 +843,18 @@ module Aws::S3Control
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
-    #
-    #  </note>
-    #
-    # Creates an access point and associates it with the specified bucket.
-    # For more information, see [Managing Data Access with Amazon S3 Access
-    # Points][1] in the *Amazon S3 User Guide*.
+    # Creates an access point and associates it to a specified bucket. For
+    # more information, see [Managing access to shared datasets in general
+    # purpose buckets with access points][1] or [Managing access to shared
+    # datasets in directory buckets with access points][2] in the *Amazon S3
+    # User Guide*.
     #
     #
     #
     # <note markdown="1"> S3 on Outposts only supports VPC-style access points.
     #
     #  For more information, see [ Accessing Amazon S3 on Outposts using
-    # virtual private cloud (VPC) only access points][2] in the *Amazon S3
+    # virtual private cloud (VPC) only access points][3] in the *Amazon S3
     # User Guide*.
     #
     #  </note>
@@ -867,26 +865,30 @@ module Aws::S3Control
     # prefix instead of `s3-control`. For an example of the request syntax
     # for Amazon S3 on Outposts that uses the S3 on Outposts endpoint
     # hostname prefix and the `x-amz-outpost-id` derived by using the access
-    # point ARN, see the [Examples][3] section.
+    # point ARN, see the [Examples][4] section.
     #
     #
     #
     # The following actions are related to `CreateAccessPoint`:
     #
-    # * [GetAccessPoint][4]
+    # * [GetAccessPoint][5]
     #
-    # * [DeleteAccessPoint][5]
+    # * [DeleteAccessPoint][6]
     #
-    # * [ListAccessPoints][6]
+    # * [ListAccessPoints][7]
+    #
+    # * [ListAccessPointsForDirectoryBuckets][8]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateAccessPoint.html#API_control_CreateAccessPoint_Examples
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPoint.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteAccessPoint.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListAccessPoints.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateAccessPoint.html#API_control_CreateAccessPoint_Examples
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPoint.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteAccessPoint.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListAccessPoints.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListAccessPointsForDirectoryBuckets.html
     #
     # @option params [String] :account_id
     #   The Amazon Web Services account ID for the account that owns the
@@ -894,6 +896,17 @@ module Aws::S3Control
     #
     # @option params [required, String] :name
     #   The name you want to assign to this access point.
+    #
+    #   For directory buckets, the access point name must consist of a base
+    #   name that you provide and suffix that includes the `ZoneID` (Amazon
+    #   Web Services Availability Zone or Local Zone) of your bucket location,
+    #   followed by `--xa-s3`. For more information, see [Managing access to
+    #   shared datasets in directory buckets with access points][1] in the
+    #   Amazon S3 User Guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html
     #
     # @option params [required, String] :bucket
     #   The name of the bucket that you want to associate this access point
@@ -934,6 +947,20 @@ module Aws::S3Control
     #   cross-account access point when your bucket and access point are not
     #   in the same account, the `BucketAccountId` is required.
     #
+    # @option params [Types::Scope] :scope
+    #   For directory buckets, you can filter access control to specific
+    #   prefixes, API operations, or a combination of both. For more
+    #   information, see [Managing access to shared datasets in directory
+    #   buckets with access points][1] in the Amazon S3 User Guide.
+    #
+    #   <note markdown="1"> Scope is not supported for access points for general purpose buckets.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html
+    #
     # @return [Types::CreateAccessPointResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateAccessPointResult#access_point_arn #access_point_arn} => String
@@ -955,6 +982,10 @@ module Aws::S3Control
     #       restrict_public_buckets: false,
     #     },
     #     bucket_account_id: "AccountId",
+    #     scope: {
+    #       prefixes: ["Prefix"],
+    #       permissions: ["GetObject"], # accepts GetObject, GetObjectAttributes, ListMultipartUploadParts, ListBucket, ListBucketMultipartUploads, PutObject, DeleteObject, AbortMultipartUpload
+    #     },
     #   })
     #
     # @example Response structure
@@ -1847,10 +1878,6 @@ module Aws::S3Control
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
-    #
-    #  </note>
-    #
     # Deletes the specified access point.
     #
     # All Amazon S3 on Outposts REST API requests for this action require an
@@ -1960,10 +1987,6 @@ module Aws::S3Control
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
-    #
-    #  </note>
-    #
     # Deletes the access point policy for the specified access point.
     #
     #
@@ -2066,6 +2089,47 @@ module Aws::S3Control
     # @param [Hash] params ({})
     def delete_access_point_policy_for_object_lambda(params = {}, options = {})
       req = build_request(:delete_access_point_policy_for_object_lambda, params)
+      req.send_request(options)
+    end
+
+    # Deletes an existing access point scope for a directory bucket.
+    #
+    # <note markdown="1"> When you delete the scope of an access point, all prefixes and
+    # permissions are deleted.
+    #
+    #  </note>
+    #
+    # To use this operation, you must have the permission to perform the
+    # `s3express:DeleteAccessPointScope` action.
+    #
+    # For information about REST API errors, see [REST error responses][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#RESTErrorResponses
+    #
+    # @option params [required, String] :account_id
+    #   The Amazon Web Services account ID that owns the access point with the
+    #   scope that you want to delete.
+    #
+    # @option params [required, String] :name
+    #   The name of the access point with the scope that you want to delete.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_access_point_scope({
+    #     account_id: "AccountId", # required
+    #     name: "AccessPointName", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/DeleteAccessPointScope AWS API Documentation
+    #
+    # @overload delete_access_point_scope(params = {})
+    # @param [Hash] params ({})
+    def delete_access_point_scope(params = {}, options = {})
+      req = build_request(:delete_access_point_scope, params)
       req.send_request(options)
     end
 
@@ -3296,10 +3360,6 @@ module Aws::S3Control
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
-    #
-    #  </note>
-    #
     # Returns configuration information about the specified access point.
     #
     #
@@ -3513,10 +3573,6 @@ module Aws::S3Control
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
-    #
-    #  </note>
-    #
     # Returns the access point policy associated with the specified access
     # point.
     #
@@ -3701,6 +3757,51 @@ module Aws::S3Control
     # @param [Hash] params ({})
     def get_access_point_policy_status_for_object_lambda(params = {}, options = {})
       req = build_request(:get_access_point_policy_status_for_object_lambda, params)
+      req.send_request(options)
+    end
+
+    # Returns the access point scope for a directory bucket.
+    #
+    # To use this operation, you must have the permission to perform the
+    # `s3express:GetAccessPointScope` action.
+    #
+    # For information about REST API errors, see [REST error responses][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#RESTErrorResponses
+    #
+    # @option params [required, String] :account_id
+    #   The Amazon Web Services account ID that owns the access point with the
+    #   scope that you want to retrieve.
+    #
+    # @option params [required, String] :name
+    #   The name of the access point with the scope you want to retrieve.
+    #
+    # @return [Types::GetAccessPointScopeResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetAccessPointScopeResult#scope #scope} => Types::Scope
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_access_point_scope({
+    #     account_id: "AccountId", # required
+    #     name: "AccessPointName", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.scope.prefixes #=> Array
+    #   resp.scope.prefixes[0] #=> String
+    #   resp.scope.permissions #=> Array
+    #   resp.scope.permissions[0] #=> String, one of "GetObject", "GetObjectAttributes", "ListMultipartUploadParts", "ListBucket", "ListBucketMultipartUploads", "PutObject", "DeleteObject", "AbortMultipartUpload"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/GetAccessPointScope AWS API Documentation
+    #
+    # @overload get_access_point_scope(params = {})
+    # @param [Hash] params ({})
+    def get_access_point_scope(params = {}, options = {})
+      req = build_request(:get_access_point_scope, params)
       req.send_request(options)
     end
 
@@ -5344,6 +5445,81 @@ module Aws::S3Control
       req.send_request(options)
     end
 
+    # Returns a list of the access points that are owned by the Amazon Web
+    # Services account and that are associated with the specified directory
+    # bucket.
+    #
+    # To list access points for general purpose buckets, see
+    # [ListAccesspoints][1].
+    #
+    # To use this operation, you must have the permission to perform the
+    # `s3express:ListAccessPointsForDirectoryBuckets` action.
+    #
+    # For information about REST API errors, see [REST error responses][2].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListAccessPoints.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#RESTErrorResponses
+    #
+    # @option params [required, String] :account_id
+    #   The Amazon Web Services account ID that owns the access points.
+    #
+    # @option params [String] :directory_bucket
+    #   The name of the directory bucket associated with the access points you
+    #   want to list.
+    #
+    # @option params [String] :next_token
+    #   If `NextToken` is returned, there are more access points available
+    #   than requested in the `maxResults` value. The value of `NextToken` is
+    #   a unique pagination token for each page. Make the call again using the
+    #   returned token to retrieve the next page. Keep all other arguments
+    #   unchanged. Each pagination token expires after 24 hours.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of access points that you would like returned in
+    #   the `ListAccessPointsForDirectoryBuckets` response. If the directory
+    #   bucket is associated with more than this number of access points, the
+    #   results include the pagination token `NextToken`. Make another call
+    #   using the `NextToken` to retrieve more results.
+    #
+    # @return [Types::ListAccessPointsForDirectoryBucketsResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListAccessPointsForDirectoryBucketsResult#access_point_list #access_point_list} => Array&lt;Types::AccessPoint&gt;
+    #   * {Types::ListAccessPointsForDirectoryBucketsResult#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_access_points_for_directory_buckets({
+    #     account_id: "AccountId", # required
+    #     directory_bucket: "BucketName",
+    #     next_token: "NonEmptyMaxLength1024String",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.access_point_list #=> Array
+    #   resp.access_point_list[0].name #=> String
+    #   resp.access_point_list[0].network_origin #=> String, one of "Internet", "VPC"
+    #   resp.access_point_list[0].vpc_configuration.vpc_id #=> String
+    #   resp.access_point_list[0].bucket #=> String
+    #   resp.access_point_list[0].access_point_arn #=> String
+    #   resp.access_point_list[0].alias #=> String
+    #   resp.access_point_list[0].bucket_account_id #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/ListAccessPointsForDirectoryBuckets AWS API Documentation
+    #
+    # @overload list_access_points_for_directory_buckets(params = {})
+    # @param [Hash] params ({})
+    def list_access_points_for_directory_buckets(params = {}, options = {})
+      req = build_request(:list_access_points_for_directory_buckets, params)
+      req.send_request(options)
+    end
+
     # <note markdown="1"> This operation is not supported by directory buckets.
     #
     #  </note>
@@ -6027,10 +6203,6 @@ module Aws::S3Control
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
-    #
-    #  </note>
-    #
     # Associates an access policy with the specified access point. Each
     # access point can have only one policy, so a request made to this API
     # replaces any existing policy associated with the specified access
@@ -6081,8 +6253,11 @@ module Aws::S3Control
     #
     # @option params [required, String] :policy
     #   The policy that you want to apply to the specified access point. For
-    #   more information about access point policies, see [Managing data
-    #   access with Amazon S3 access points][1] in the *Amazon S3 User Guide*.
+    #   more information about access point policies, see [Managing access to
+    #   shared datasets in general purpose buckets with access points][1] or
+    #   [Managing access to shared datasets in directory bucekts with access
+    #   points](AmazonS3/latest/userguide/access-points-directory-buckets.html)
+    #   in the *Amazon S3 User Guide*.
     #
     #
     #
@@ -6154,6 +6329,76 @@ module Aws::S3Control
     # @param [Hash] params ({})
     def put_access_point_policy_for_object_lambda(params = {}, options = {})
       req = build_request(:put_access_point_policy_for_object_lambda, params)
+      req.send_request(options)
+    end
+
+    # Creates or replaces the access point scope for a directory bucket. You
+    # can use the access point scope to restrict access to specific
+    # prefixes, API operations, or a combination of both.
+    #
+    # You can include one or more of the following API operations as
+    # permissions:
+    #
+    # * `PutObjet`
+    #
+    # * `GetObject`
+    #
+    # * `DeleteObject`
+    #
+    # * `ListBucket`
+    #
+    # * `GetObjectAttributes`
+    #
+    # * `AbortMultipartUpload`
+    #
+    # * `ListBucketMultipartUpload`
+    #
+    # * `ListMultiPartUploadParts`
+    #
+    # <note markdown="1"> You can specify any amount of prefixes, but the total length of
+    # characters of all prefixes must be less than 512 KB in size.
+    #
+    #  </note>
+    #
+    # To use this operation, you must have the permission to perform the
+    # `s3express:PutAccessPointScope` action.
+    #
+    # For information about REST API errors, see [REST error responses][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#RESTErrorResponses
+    #
+    # @option params [required, String] :account_id
+    #   The Amazon Web Services account ID that owns the access point with
+    #   scope that you want to create or replace.
+    #
+    # @option params [required, String] :name
+    #   The name of the access point with the scope that you want to create or
+    #   replace.
+    #
+    # @option params [required, Types::Scope] :scope
+    #   Object prefixes, API operations, or a combination of both.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_access_point_scope({
+    #     account_id: "AccountId", # required
+    #     name: "AccessPointName", # required
+    #     scope: { # required
+    #       prefixes: ["Prefix"],
+    #       permissions: ["GetObject"], # accepts GetObject, GetObjectAttributes, ListMultipartUploadParts, ListBucket, ListBucketMultipartUploads, PutObject, DeleteObject, AbortMultipartUpload
+    #     },
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/PutAccessPointScope AWS API Documentation
+    #
+    # @overload put_access_point_scope(params = {})
+    # @param [Hash] params ({})
+    def put_access_point_scope(params = {}, options = {})
+      req = build_request(:put_access_point_scope, params)
       req.send_request(options)
     end
 
@@ -7760,7 +8005,7 @@ module Aws::S3Control
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-s3control'
-      context[:gem_version] = '1.104.0'
+      context[:gem_version] = '1.105.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

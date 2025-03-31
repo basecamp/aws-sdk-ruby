@@ -118,6 +118,7 @@ module Aws::EC2
     ArchitectureTypeSet = Shapes::ListShape.new(name: 'ArchitectureTypeSet')
     ArchitectureValues = Shapes::StringShape.new(name: 'ArchitectureValues')
     ArnList = Shapes::ListShape.new(name: 'ArnList')
+    AsPath = Shapes::ListShape.new(name: 'AsPath')
     AsnAssociation = Shapes::StructureShape.new(name: 'AsnAssociation')
     AsnAssociationSet = Shapes::ListShape.new(name: 'AsnAssociationSet')
     AsnAssociationState = Shapes::StringShape.new(name: 'AsnAssociationState')
@@ -152,6 +153,8 @@ module Aws::EC2
     AssociateIpamResourceDiscoveryResult = Shapes::StructureShape.new(name: 'AssociateIpamResourceDiscoveryResult')
     AssociateNatGatewayAddressRequest = Shapes::StructureShape.new(name: 'AssociateNatGatewayAddressRequest')
     AssociateNatGatewayAddressResult = Shapes::StructureShape.new(name: 'AssociateNatGatewayAddressResult')
+    AssociateRouteServerRequest = Shapes::StructureShape.new(name: 'AssociateRouteServerRequest')
+    AssociateRouteServerResult = Shapes::StructureShape.new(name: 'AssociateRouteServerResult')
     AssociateRouteTableRequest = Shapes::StructureShape.new(name: 'AssociateRouteTableRequest')
     AssociateRouteTableResult = Shapes::StructureShape.new(name: 'AssociateRouteTableResult')
     AssociateSecurityGroupVpcRequest = Shapes::StructureShape.new(name: 'AssociateSecurityGroupVpcRequest')
@@ -248,6 +251,7 @@ module Aws::EC2
     BootModeValues = Shapes::StringShape.new(name: 'BootModeValues')
     BoxedDouble = Shapes::FloatShape.new(name: 'BoxedDouble')
     BoxedInteger = Shapes::IntegerShape.new(name: 'BoxedInteger')
+    BoxedLong = Shapes::IntegerShape.new(name: 'BoxedLong')
     BundleId = Shapes::StringShape.new(name: 'BundleId')
     BundleIdStringList = Shapes::ListShape.new(name: 'BundleIdStringList')
     BundleInstanceRequest = Shapes::StructureShape.new(name: 'BundleInstanceRequest')
@@ -536,6 +540,12 @@ module Aws::EC2
     CreateRestoreImageTaskResult = Shapes::StructureShape.new(name: 'CreateRestoreImageTaskResult')
     CreateRouteRequest = Shapes::StructureShape.new(name: 'CreateRouteRequest')
     CreateRouteResult = Shapes::StructureShape.new(name: 'CreateRouteResult')
+    CreateRouteServerEndpointRequest = Shapes::StructureShape.new(name: 'CreateRouteServerEndpointRequest')
+    CreateRouteServerEndpointResult = Shapes::StructureShape.new(name: 'CreateRouteServerEndpointResult')
+    CreateRouteServerPeerRequest = Shapes::StructureShape.new(name: 'CreateRouteServerPeerRequest')
+    CreateRouteServerPeerResult = Shapes::StructureShape.new(name: 'CreateRouteServerPeerResult')
+    CreateRouteServerRequest = Shapes::StructureShape.new(name: 'CreateRouteServerRequest')
+    CreateRouteServerResult = Shapes::StructureShape.new(name: 'CreateRouteServerResult')
     CreateRouteTableRequest = Shapes::StructureShape.new(name: 'CreateRouteTableRequest')
     CreateRouteTableResult = Shapes::StructureShape.new(name: 'CreateRouteTableResult')
     CreateSecurityGroupRequest = Shapes::StructureShape.new(name: 'CreateSecurityGroupRequest')
@@ -740,6 +750,12 @@ module Aws::EC2
     DeleteQueuedReservedInstancesRequest = Shapes::StructureShape.new(name: 'DeleteQueuedReservedInstancesRequest')
     DeleteQueuedReservedInstancesResult = Shapes::StructureShape.new(name: 'DeleteQueuedReservedInstancesResult')
     DeleteRouteRequest = Shapes::StructureShape.new(name: 'DeleteRouteRequest')
+    DeleteRouteServerEndpointRequest = Shapes::StructureShape.new(name: 'DeleteRouteServerEndpointRequest')
+    DeleteRouteServerEndpointResult = Shapes::StructureShape.new(name: 'DeleteRouteServerEndpointResult')
+    DeleteRouteServerPeerRequest = Shapes::StructureShape.new(name: 'DeleteRouteServerPeerRequest')
+    DeleteRouteServerPeerResult = Shapes::StructureShape.new(name: 'DeleteRouteServerPeerResult')
+    DeleteRouteServerRequest = Shapes::StructureShape.new(name: 'DeleteRouteServerRequest')
+    DeleteRouteServerResult = Shapes::StructureShape.new(name: 'DeleteRouteServerResult')
     DeleteRouteTableRequest = Shapes::StructureShape.new(name: 'DeleteRouteTableRequest')
     DeleteSecurityGroupRequest = Shapes::StructureShape.new(name: 'DeleteSecurityGroupRequest')
     DeleteSecurityGroupResult = Shapes::StructureShape.new(name: 'DeleteSecurityGroupResult')
@@ -1069,6 +1085,12 @@ module Aws::EC2
     DescribeReservedInstancesOfferingsResult = Shapes::StructureShape.new(name: 'DescribeReservedInstancesOfferingsResult')
     DescribeReservedInstancesRequest = Shapes::StructureShape.new(name: 'DescribeReservedInstancesRequest')
     DescribeReservedInstancesResult = Shapes::StructureShape.new(name: 'DescribeReservedInstancesResult')
+    DescribeRouteServerEndpointsRequest = Shapes::StructureShape.new(name: 'DescribeRouteServerEndpointsRequest')
+    DescribeRouteServerEndpointsResult = Shapes::StructureShape.new(name: 'DescribeRouteServerEndpointsResult')
+    DescribeRouteServerPeersRequest = Shapes::StructureShape.new(name: 'DescribeRouteServerPeersRequest')
+    DescribeRouteServerPeersResult = Shapes::StructureShape.new(name: 'DescribeRouteServerPeersResult')
+    DescribeRouteServersRequest = Shapes::StructureShape.new(name: 'DescribeRouteServersRequest')
+    DescribeRouteServersResult = Shapes::StructureShape.new(name: 'DescribeRouteServersResult')
     DescribeRouteTablesMaxResults = Shapes::IntegerShape.new(name: 'DescribeRouteTablesMaxResults')
     DescribeRouteTablesRequest = Shapes::StructureShape.new(name: 'DescribeRouteTablesRequest')
     DescribeRouteTablesResult = Shapes::StructureShape.new(name: 'DescribeRouteTablesResult')
@@ -1265,6 +1287,8 @@ module Aws::EC2
     DisableImageResult = Shapes::StructureShape.new(name: 'DisableImageResult')
     DisableIpamOrganizationAdminAccountRequest = Shapes::StructureShape.new(name: 'DisableIpamOrganizationAdminAccountRequest')
     DisableIpamOrganizationAdminAccountResult = Shapes::StructureShape.new(name: 'DisableIpamOrganizationAdminAccountResult')
+    DisableRouteServerPropagationRequest = Shapes::StructureShape.new(name: 'DisableRouteServerPropagationRequest')
+    DisableRouteServerPropagationResult = Shapes::StructureShape.new(name: 'DisableRouteServerPropagationResult')
     DisableSerialConsoleAccessRequest = Shapes::StructureShape.new(name: 'DisableSerialConsoleAccessRequest')
     DisableSerialConsoleAccessResult = Shapes::StructureShape.new(name: 'DisableSerialConsoleAccessResult')
     DisableSnapshotBlockPublicAccessRequest = Shapes::StructureShape.new(name: 'DisableSnapshotBlockPublicAccessRequest')
@@ -1293,6 +1317,8 @@ module Aws::EC2
     DisassociateIpamResourceDiscoveryResult = Shapes::StructureShape.new(name: 'DisassociateIpamResourceDiscoveryResult')
     DisassociateNatGatewayAddressRequest = Shapes::StructureShape.new(name: 'DisassociateNatGatewayAddressRequest')
     DisassociateNatGatewayAddressResult = Shapes::StructureShape.new(name: 'DisassociateNatGatewayAddressResult')
+    DisassociateRouteServerRequest = Shapes::StructureShape.new(name: 'DisassociateRouteServerRequest')
+    DisassociateRouteServerResult = Shapes::StructureShape.new(name: 'DisassociateRouteServerResult')
     DisassociateRouteTableRequest = Shapes::StructureShape.new(name: 'DisassociateRouteTableRequest')
     DisassociateSecurityGroupVpcRequest = Shapes::StructureShape.new(name: 'DisassociateSecurityGroupVpcRequest')
     DisassociateSecurityGroupVpcResult = Shapes::StructureShape.new(name: 'DisassociateSecurityGroupVpcResult')
@@ -1415,6 +1441,8 @@ module Aws::EC2
     EnableIpamOrganizationAdminAccountResult = Shapes::StructureShape.new(name: 'EnableIpamOrganizationAdminAccountResult')
     EnableReachabilityAnalyzerOrganizationSharingRequest = Shapes::StructureShape.new(name: 'EnableReachabilityAnalyzerOrganizationSharingRequest')
     EnableReachabilityAnalyzerOrganizationSharingResult = Shapes::StructureShape.new(name: 'EnableReachabilityAnalyzerOrganizationSharingResult')
+    EnableRouteServerPropagationRequest = Shapes::StructureShape.new(name: 'EnableRouteServerPropagationRequest')
+    EnableRouteServerPropagationResult = Shapes::StructureShape.new(name: 'EnableRouteServerPropagationResult')
     EnableSerialConsoleAccessRequest = Shapes::StructureShape.new(name: 'EnableSerialConsoleAccessRequest')
     EnableSerialConsoleAccessResult = Shapes::StructureShape.new(name: 'EnableSerialConsoleAccessResult')
     EnableSnapshotBlockPublicAccessRequest = Shapes::StructureShape.new(name: 'EnableSnapshotBlockPublicAccessRequest')
@@ -1621,6 +1649,12 @@ module Aws::EC2
     GetPasswordDataResult = Shapes::StructureShape.new(name: 'GetPasswordDataResult')
     GetReservedInstancesExchangeQuoteRequest = Shapes::StructureShape.new(name: 'GetReservedInstancesExchangeQuoteRequest')
     GetReservedInstancesExchangeQuoteResult = Shapes::StructureShape.new(name: 'GetReservedInstancesExchangeQuoteResult')
+    GetRouteServerAssociationsRequest = Shapes::StructureShape.new(name: 'GetRouteServerAssociationsRequest')
+    GetRouteServerAssociationsResult = Shapes::StructureShape.new(name: 'GetRouteServerAssociationsResult')
+    GetRouteServerPropagationsRequest = Shapes::StructureShape.new(name: 'GetRouteServerPropagationsRequest')
+    GetRouteServerPropagationsResult = Shapes::StructureShape.new(name: 'GetRouteServerPropagationsResult')
+    GetRouteServerRoutingDatabaseRequest = Shapes::StructureShape.new(name: 'GetRouteServerRoutingDatabaseRequest')
+    GetRouteServerRoutingDatabaseResult = Shapes::StructureShape.new(name: 'GetRouteServerRoutingDatabaseResult')
     GetSecurityGroupsForVpcRequest = Shapes::StructureShape.new(name: 'GetSecurityGroupsForVpcRequest')
     GetSecurityGroupsForVpcRequestMaxResults = Shapes::IntegerShape.new(name: 'GetSecurityGroupsForVpcRequestMaxResults')
     GetSecurityGroupsForVpcResult = Shapes::StructureShape.new(name: 'GetSecurityGroupsForVpcResult')
@@ -2291,6 +2325,8 @@ module Aws::EC2
     ModifyPrivateDnsNameOptionsResult = Shapes::StructureShape.new(name: 'ModifyPrivateDnsNameOptionsResult')
     ModifyReservedInstancesRequest = Shapes::StructureShape.new(name: 'ModifyReservedInstancesRequest')
     ModifyReservedInstancesResult = Shapes::StructureShape.new(name: 'ModifyReservedInstancesResult')
+    ModifyRouteServerRequest = Shapes::StructureShape.new(name: 'ModifyRouteServerRequest')
+    ModifyRouteServerResult = Shapes::StructureShape.new(name: 'ModifyRouteServerResult')
     ModifySecurityGroupRulesRequest = Shapes::StructureShape.new(name: 'ModifySecurityGroupRulesRequest')
     ModifySecurityGroupRulesResult = Shapes::StructureShape.new(name: 'ModifySecurityGroupRulesResult')
     ModifySnapshotAttributeRequest = Shapes::StructureShape.new(name: 'ModifySnapshotAttributeRequest')
@@ -2810,6 +2846,43 @@ module Aws::EC2
     RouteGatewayId = Shapes::StringShape.new(name: 'RouteGatewayId')
     RouteList = Shapes::ListShape.new(name: 'RouteList')
     RouteOrigin = Shapes::StringShape.new(name: 'RouteOrigin')
+    RouteServer = Shapes::StructureShape.new(name: 'RouteServer')
+    RouteServerAssociation = Shapes::StructureShape.new(name: 'RouteServerAssociation')
+    RouteServerAssociationState = Shapes::StringShape.new(name: 'RouteServerAssociationState')
+    RouteServerAssociationsList = Shapes::ListShape.new(name: 'RouteServerAssociationsList')
+    RouteServerBfdState = Shapes::StringShape.new(name: 'RouteServerBfdState')
+    RouteServerBfdStatus = Shapes::StructureShape.new(name: 'RouteServerBfdStatus')
+    RouteServerBgpOptions = Shapes::StructureShape.new(name: 'RouteServerBgpOptions')
+    RouteServerBgpOptionsRequest = Shapes::StructureShape.new(name: 'RouteServerBgpOptionsRequest')
+    RouteServerBgpState = Shapes::StringShape.new(name: 'RouteServerBgpState')
+    RouteServerBgpStatus = Shapes::StructureShape.new(name: 'RouteServerBgpStatus')
+    RouteServerEndpoint = Shapes::StructureShape.new(name: 'RouteServerEndpoint')
+    RouteServerEndpointId = Shapes::StringShape.new(name: 'RouteServerEndpointId')
+    RouteServerEndpointIdsList = Shapes::ListShape.new(name: 'RouteServerEndpointIdsList')
+    RouteServerEndpointState = Shapes::StringShape.new(name: 'RouteServerEndpointState')
+    RouteServerEndpointsList = Shapes::ListShape.new(name: 'RouteServerEndpointsList')
+    RouteServerId = Shapes::StringShape.new(name: 'RouteServerId')
+    RouteServerIdsList = Shapes::ListShape.new(name: 'RouteServerIdsList')
+    RouteServerMaxResults = Shapes::IntegerShape.new(name: 'RouteServerMaxResults')
+    RouteServerPeer = Shapes::StructureShape.new(name: 'RouteServerPeer')
+    RouteServerPeerId = Shapes::StringShape.new(name: 'RouteServerPeerId')
+    RouteServerPeerIdsList = Shapes::ListShape.new(name: 'RouteServerPeerIdsList')
+    RouteServerPeerLivenessMode = Shapes::StringShape.new(name: 'RouteServerPeerLivenessMode')
+    RouteServerPeerState = Shapes::StringShape.new(name: 'RouteServerPeerState')
+    RouteServerPeersList = Shapes::ListShape.new(name: 'RouteServerPeersList')
+    RouteServerPersistRoutesAction = Shapes::StringShape.new(name: 'RouteServerPersistRoutesAction')
+    RouteServerPersistRoutesState = Shapes::StringShape.new(name: 'RouteServerPersistRoutesState')
+    RouteServerPropagation = Shapes::StructureShape.new(name: 'RouteServerPropagation')
+    RouteServerPropagationState = Shapes::StringShape.new(name: 'RouteServerPropagationState')
+    RouteServerPropagationsList = Shapes::ListShape.new(name: 'RouteServerPropagationsList')
+    RouteServerRoute = Shapes::StructureShape.new(name: 'RouteServerRoute')
+    RouteServerRouteInstallationDetail = Shapes::StructureShape.new(name: 'RouteServerRouteInstallationDetail')
+    RouteServerRouteInstallationDetails = Shapes::ListShape.new(name: 'RouteServerRouteInstallationDetails')
+    RouteServerRouteInstallationStatus = Shapes::StringShape.new(name: 'RouteServerRouteInstallationStatus')
+    RouteServerRouteList = Shapes::ListShape.new(name: 'RouteServerRouteList')
+    RouteServerRouteStatus = Shapes::StringShape.new(name: 'RouteServerRouteStatus')
+    RouteServerState = Shapes::StringShape.new(name: 'RouteServerState')
+    RouteServersList = Shapes::ListShape.new(name: 'RouteServersList')
     RouteState = Shapes::StringShape.new(name: 'RouteState')
     RouteTable = Shapes::StructureShape.new(name: 'RouteTable')
     RouteTableAssociation = Shapes::StructureShape.new(name: 'RouteTableAssociation')
@@ -3778,6 +3851,8 @@ module Aws::EC2
 
     ArnList.member = Shapes::ShapeRef.new(shape: ResourceArn, location_name: "item")
 
+    AsPath.member = Shapes::ShapeRef.new(shape: String, location_name: "item")
+
     AsnAssociation.add_member(:asn, Shapes::ShapeRef.new(shape: String, location_name: "asn"))
     AsnAssociation.add_member(:cidr, Shapes::ShapeRef.new(shape: String, location_name: "cidr"))
     AsnAssociation.add_member(:status_message, Shapes::ShapeRef.new(shape: String, location_name: "statusMessage"))
@@ -3919,6 +3994,14 @@ module Aws::EC2
     AssociateNatGatewayAddressResult.add_member(:nat_gateway_id, Shapes::ShapeRef.new(shape: NatGatewayId, location_name: "natGatewayId"))
     AssociateNatGatewayAddressResult.add_member(:nat_gateway_addresses, Shapes::ShapeRef.new(shape: NatGatewayAddressList, location_name: "natGatewayAddressSet"))
     AssociateNatGatewayAddressResult.struct_class = Types::AssociateNatGatewayAddressResult
+
+    AssociateRouteServerRequest.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, required: true, location_name: "RouteServerId"))
+    AssociateRouteServerRequest.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, required: true, location_name: "VpcId"))
+    AssociateRouteServerRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    AssociateRouteServerRequest.struct_class = Types::AssociateRouteServerRequest
+
+    AssociateRouteServerResult.add_member(:route_server_association, Shapes::ShapeRef.new(shape: RouteServerAssociation, location_name: "routeServerAssociation"))
+    AssociateRouteServerResult.struct_class = Types::AssociateRouteServerResult
 
     AssociateRouteTableRequest.add_member(:gateway_id, Shapes::ShapeRef.new(shape: RouteGatewayId, location_name: "GatewayId"))
     AssociateRouteTableRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
@@ -4816,7 +4899,7 @@ module Aws::EC2
     CopyFpgaImageResult.add_member(:fpga_image_id, Shapes::ShapeRef.new(shape: String, location_name: "fpgaImageId"))
     CopyFpgaImageResult.struct_class = Types::CopyFpgaImageResult
 
-    CopyImageRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken"))
+    CopyImageRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
     CopyImageRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CopyImageRequest.add_member(:encrypted, Shapes::ShapeRef.new(shape: Boolean, location_name: "encrypted"))
     CopyImageRequest.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "kmsKeyId"))
@@ -5478,6 +5561,38 @@ module Aws::EC2
 
     CreateRouteResult.add_member(:return, Shapes::ShapeRef.new(shape: Boolean, location_name: "return"))
     CreateRouteResult.struct_class = Types::CreateRouteResult
+
+    CreateRouteServerEndpointRequest.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, required: true, location_name: "RouteServerId"))
+    CreateRouteServerEndpointRequest.add_member(:subnet_id, Shapes::ShapeRef.new(shape: SubnetId, required: true, location_name: "SubnetId"))
+    CreateRouteServerEndpointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateRouteServerEndpointRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    CreateRouteServerEndpointRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
+    CreateRouteServerEndpointRequest.struct_class = Types::CreateRouteServerEndpointRequest
+
+    CreateRouteServerEndpointResult.add_member(:route_server_endpoint, Shapes::ShapeRef.new(shape: RouteServerEndpoint, location_name: "routeServerEndpoint"))
+    CreateRouteServerEndpointResult.struct_class = Types::CreateRouteServerEndpointResult
+
+    CreateRouteServerPeerRequest.add_member(:route_server_endpoint_id, Shapes::ShapeRef.new(shape: RouteServerEndpointId, required: true, location_name: "RouteServerEndpointId"))
+    CreateRouteServerPeerRequest.add_member(:peer_address, Shapes::ShapeRef.new(shape: String, required: true, location_name: "PeerAddress"))
+    CreateRouteServerPeerRequest.add_member(:bgp_options, Shapes::ShapeRef.new(shape: RouteServerBgpOptionsRequest, required: true, location_name: "BgpOptions"))
+    CreateRouteServerPeerRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    CreateRouteServerPeerRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
+    CreateRouteServerPeerRequest.struct_class = Types::CreateRouteServerPeerRequest
+
+    CreateRouteServerPeerResult.add_member(:route_server_peer, Shapes::ShapeRef.new(shape: RouteServerPeer, location_name: "routeServerPeer"))
+    CreateRouteServerPeerResult.struct_class = Types::CreateRouteServerPeerResult
+
+    CreateRouteServerRequest.add_member(:amazon_side_asn, Shapes::ShapeRef.new(shape: Long, required: true, location_name: "AmazonSideAsn"))
+    CreateRouteServerRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateRouteServerRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    CreateRouteServerRequest.add_member(:persist_routes, Shapes::ShapeRef.new(shape: RouteServerPersistRoutesAction, location_name: "PersistRoutes"))
+    CreateRouteServerRequest.add_member(:persist_routes_duration, Shapes::ShapeRef.new(shape: BoxedLong, location_name: "PersistRoutesDuration"))
+    CreateRouteServerRequest.add_member(:sns_notifications_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "SnsNotificationsEnabled"))
+    CreateRouteServerRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
+    CreateRouteServerRequest.struct_class = Types::CreateRouteServerRequest
+
+    CreateRouteServerResult.add_member(:route_server, Shapes::ShapeRef.new(shape: RouteServer, location_name: "routeServer"))
+    CreateRouteServerResult.struct_class = Types::CreateRouteServerResult
 
     CreateRouteTableRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateRouteTableRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
@@ -6388,6 +6503,27 @@ module Aws::EC2
     DeleteRouteRequest.add_member(:destination_cidr_block, Shapes::ShapeRef.new(shape: String, location_name: "destinationCidrBlock"))
     DeleteRouteRequest.add_member(:destination_ipv_6_cidr_block, Shapes::ShapeRef.new(shape: String, location_name: "destinationIpv6CidrBlock"))
     DeleteRouteRequest.struct_class = Types::DeleteRouteRequest
+
+    DeleteRouteServerEndpointRequest.add_member(:route_server_endpoint_id, Shapes::ShapeRef.new(shape: RouteServerEndpointId, required: true, location_name: "RouteServerEndpointId"))
+    DeleteRouteServerEndpointRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DeleteRouteServerEndpointRequest.struct_class = Types::DeleteRouteServerEndpointRequest
+
+    DeleteRouteServerEndpointResult.add_member(:route_server_endpoint, Shapes::ShapeRef.new(shape: RouteServerEndpoint, location_name: "routeServerEndpoint"))
+    DeleteRouteServerEndpointResult.struct_class = Types::DeleteRouteServerEndpointResult
+
+    DeleteRouteServerPeerRequest.add_member(:route_server_peer_id, Shapes::ShapeRef.new(shape: RouteServerPeerId, required: true, location_name: "RouteServerPeerId"))
+    DeleteRouteServerPeerRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DeleteRouteServerPeerRequest.struct_class = Types::DeleteRouteServerPeerRequest
+
+    DeleteRouteServerPeerResult.add_member(:route_server_peer, Shapes::ShapeRef.new(shape: RouteServerPeer, location_name: "routeServerPeer"))
+    DeleteRouteServerPeerResult.struct_class = Types::DeleteRouteServerPeerResult
+
+    DeleteRouteServerRequest.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, required: true, location_name: "RouteServerId"))
+    DeleteRouteServerRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DeleteRouteServerRequest.struct_class = Types::DeleteRouteServerRequest
+
+    DeleteRouteServerResult.add_member(:route_server, Shapes::ShapeRef.new(shape: RouteServer, location_name: "routeServer"))
+    DeleteRouteServerResult.struct_class = Types::DeleteRouteServerResult
 
     DeleteRouteTableRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     DeleteRouteTableRequest.add_member(:route_table_id, Shapes::ShapeRef.new(shape: RouteTableId, required: true, location_name: "routeTableId"))
@@ -7813,6 +7949,39 @@ module Aws::EC2
     DescribeReservedInstancesResult.add_member(:reserved_instances, Shapes::ShapeRef.new(shape: ReservedInstancesList, location_name: "reservedInstancesSet"))
     DescribeReservedInstancesResult.struct_class = Types::DescribeReservedInstancesResult
 
+    DescribeRouteServerEndpointsRequest.add_member(:route_server_endpoint_ids, Shapes::ShapeRef.new(shape: RouteServerEndpointIdsList, location_name: "RouteServerEndpointId"))
+    DescribeRouteServerEndpointsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    DescribeRouteServerEndpointsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: RouteServerMaxResults, location_name: "MaxResults"))
+    DescribeRouteServerEndpointsRequest.add_member(:filters, Shapes::ShapeRef.new(shape: FilterList, location_name: "Filter"))
+    DescribeRouteServerEndpointsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DescribeRouteServerEndpointsRequest.struct_class = Types::DescribeRouteServerEndpointsRequest
+
+    DescribeRouteServerEndpointsResult.add_member(:route_server_endpoints, Shapes::ShapeRef.new(shape: RouteServerEndpointsList, location_name: "routeServerEndpointSet"))
+    DescribeRouteServerEndpointsResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    DescribeRouteServerEndpointsResult.struct_class = Types::DescribeRouteServerEndpointsResult
+
+    DescribeRouteServerPeersRequest.add_member(:route_server_peer_ids, Shapes::ShapeRef.new(shape: RouteServerPeerIdsList, location_name: "RouteServerPeerId"))
+    DescribeRouteServerPeersRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    DescribeRouteServerPeersRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: RouteServerMaxResults, location_name: "MaxResults"))
+    DescribeRouteServerPeersRequest.add_member(:filters, Shapes::ShapeRef.new(shape: FilterList, location_name: "Filter"))
+    DescribeRouteServerPeersRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DescribeRouteServerPeersRequest.struct_class = Types::DescribeRouteServerPeersRequest
+
+    DescribeRouteServerPeersResult.add_member(:route_server_peers, Shapes::ShapeRef.new(shape: RouteServerPeersList, location_name: "routeServerPeerSet"))
+    DescribeRouteServerPeersResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    DescribeRouteServerPeersResult.struct_class = Types::DescribeRouteServerPeersResult
+
+    DescribeRouteServersRequest.add_member(:route_server_ids, Shapes::ShapeRef.new(shape: RouteServerIdsList, location_name: "RouteServerId"))
+    DescribeRouteServersRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    DescribeRouteServersRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: RouteServerMaxResults, location_name: "MaxResults"))
+    DescribeRouteServersRequest.add_member(:filters, Shapes::ShapeRef.new(shape: FilterList, location_name: "Filter"))
+    DescribeRouteServersRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DescribeRouteServersRequest.struct_class = Types::DescribeRouteServersRequest
+
+    DescribeRouteServersResult.add_member(:route_servers, Shapes::ShapeRef.new(shape: RouteServersList, location_name: "routeServerSet"))
+    DescribeRouteServersResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    DescribeRouteServersResult.struct_class = Types::DescribeRouteServersResult
+
     DescribeRouteTablesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
     DescribeRouteTablesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: DescribeRouteTablesMaxResults, location_name: "MaxResults"))
     DescribeRouteTablesRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
@@ -8660,6 +8829,14 @@ module Aws::EC2
     DisableIpamOrganizationAdminAccountResult.add_member(:success, Shapes::ShapeRef.new(shape: Boolean, location_name: "success"))
     DisableIpamOrganizationAdminAccountResult.struct_class = Types::DisableIpamOrganizationAdminAccountResult
 
+    DisableRouteServerPropagationRequest.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, required: true, location_name: "RouteServerId"))
+    DisableRouteServerPropagationRequest.add_member(:route_table_id, Shapes::ShapeRef.new(shape: RouteTableId, required: true, location_name: "RouteTableId"))
+    DisableRouteServerPropagationRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DisableRouteServerPropagationRequest.struct_class = Types::DisableRouteServerPropagationRequest
+
+    DisableRouteServerPropagationResult.add_member(:route_server_propagation, Shapes::ShapeRef.new(shape: RouteServerPropagation, location_name: "routeServerPropagation"))
+    DisableRouteServerPropagationResult.struct_class = Types::DisableRouteServerPropagationResult
+
     DisableSerialConsoleAccessRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     DisableSerialConsoleAccessRequest.struct_class = Types::DisableSerialConsoleAccessRequest
 
@@ -8767,6 +8944,14 @@ module Aws::EC2
     DisassociateNatGatewayAddressResult.add_member(:nat_gateway_id, Shapes::ShapeRef.new(shape: NatGatewayId, location_name: "natGatewayId"))
     DisassociateNatGatewayAddressResult.add_member(:nat_gateway_addresses, Shapes::ShapeRef.new(shape: NatGatewayAddressList, location_name: "natGatewayAddressSet"))
     DisassociateNatGatewayAddressResult.struct_class = Types::DisassociateNatGatewayAddressResult
+
+    DisassociateRouteServerRequest.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, required: true, location_name: "RouteServerId"))
+    DisassociateRouteServerRequest.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, required: true, location_name: "VpcId"))
+    DisassociateRouteServerRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DisassociateRouteServerRequest.struct_class = Types::DisassociateRouteServerRequest
+
+    DisassociateRouteServerResult.add_member(:route_server_association, Shapes::ShapeRef.new(shape: RouteServerAssociation, location_name: "routeServerAssociation"))
+    DisassociateRouteServerResult.struct_class = Types::DisassociateRouteServerResult
 
     DisassociateRouteTableRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     DisassociateRouteTableRequest.add_member(:association_id, Shapes::ShapeRef.new(shape: RouteTableAssociationId, required: true, location_name: "associationId"))
@@ -9162,6 +9347,14 @@ module Aws::EC2
 
     EnableReachabilityAnalyzerOrganizationSharingResult.add_member(:return_value, Shapes::ShapeRef.new(shape: Boolean, location_name: "returnValue"))
     EnableReachabilityAnalyzerOrganizationSharingResult.struct_class = Types::EnableReachabilityAnalyzerOrganizationSharingResult
+
+    EnableRouteServerPropagationRequest.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, required: true, location_name: "RouteServerId"))
+    EnableRouteServerPropagationRequest.add_member(:route_table_id, Shapes::ShapeRef.new(shape: RouteTableId, required: true, location_name: "RouteTableId"))
+    EnableRouteServerPropagationRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    EnableRouteServerPropagationRequest.struct_class = Types::EnableRouteServerPropagationRequest
+
+    EnableRouteServerPropagationResult.add_member(:route_server_propagation, Shapes::ShapeRef.new(shape: RouteServerPropagation, location_name: "routeServerPropagation"))
+    EnableRouteServerPropagationResult.struct_class = Types::EnableRouteServerPropagationResult
 
     EnableSerialConsoleAccessRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     EnableSerialConsoleAccessRequest.struct_class = Types::EnableSerialConsoleAccessRequest
@@ -10006,6 +10199,33 @@ module Aws::EC2
     GetReservedInstancesExchangeQuoteResult.add_member(:target_configuration_value_set, Shapes::ShapeRef.new(shape: TargetReservationValueSet, location_name: "targetConfigurationValueSet"))
     GetReservedInstancesExchangeQuoteResult.add_member(:validation_failure_reason, Shapes::ShapeRef.new(shape: String, location_name: "validationFailureReason"))
     GetReservedInstancesExchangeQuoteResult.struct_class = Types::GetReservedInstancesExchangeQuoteResult
+
+    GetRouteServerAssociationsRequest.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, required: true, location_name: "RouteServerId"))
+    GetRouteServerAssociationsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    GetRouteServerAssociationsRequest.struct_class = Types::GetRouteServerAssociationsRequest
+
+    GetRouteServerAssociationsResult.add_member(:route_server_associations, Shapes::ShapeRef.new(shape: RouteServerAssociationsList, location_name: "routeServerAssociationSet"))
+    GetRouteServerAssociationsResult.struct_class = Types::GetRouteServerAssociationsResult
+
+    GetRouteServerPropagationsRequest.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, required: true, location_name: "RouteServerId"))
+    GetRouteServerPropagationsRequest.add_member(:route_table_id, Shapes::ShapeRef.new(shape: RouteTableId, location_name: "RouteTableId"))
+    GetRouteServerPropagationsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    GetRouteServerPropagationsRequest.struct_class = Types::GetRouteServerPropagationsRequest
+
+    GetRouteServerPropagationsResult.add_member(:route_server_propagations, Shapes::ShapeRef.new(shape: RouteServerPropagationsList, location_name: "routeServerPropagationSet"))
+    GetRouteServerPropagationsResult.struct_class = Types::GetRouteServerPropagationsResult
+
+    GetRouteServerRoutingDatabaseRequest.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, required: true, location_name: "RouteServerId"))
+    GetRouteServerRoutingDatabaseRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    GetRouteServerRoutingDatabaseRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: RouteServerMaxResults, location_name: "MaxResults"))
+    GetRouteServerRoutingDatabaseRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    GetRouteServerRoutingDatabaseRequest.add_member(:filters, Shapes::ShapeRef.new(shape: FilterList, location_name: "Filter"))
+    GetRouteServerRoutingDatabaseRequest.struct_class = Types::GetRouteServerRoutingDatabaseRequest
+
+    GetRouteServerRoutingDatabaseResult.add_member(:are_routes_persisted, Shapes::ShapeRef.new(shape: Boolean, location_name: "areRoutesPersisted"))
+    GetRouteServerRoutingDatabaseResult.add_member(:routes, Shapes::ShapeRef.new(shape: RouteServerRouteList, location_name: "routeSet"))
+    GetRouteServerRoutingDatabaseResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    GetRouteServerRoutingDatabaseResult.struct_class = Types::GetRouteServerRoutingDatabaseResult
 
     GetSecurityGroupsForVpcRequest.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, required: true, location_name: "VpcId"))
     GetSecurityGroupsForVpcRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
@@ -12546,6 +12766,16 @@ module Aws::EC2
     ModifyReservedInstancesResult.add_member(:reserved_instances_modification_id, Shapes::ShapeRef.new(shape: String, location_name: "reservedInstancesModificationId"))
     ModifyReservedInstancesResult.struct_class = Types::ModifyReservedInstancesResult
 
+    ModifyRouteServerRequest.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, required: true, location_name: "RouteServerId"))
+    ModifyRouteServerRequest.add_member(:persist_routes, Shapes::ShapeRef.new(shape: RouteServerPersistRoutesAction, location_name: "PersistRoutes"))
+    ModifyRouteServerRequest.add_member(:persist_routes_duration, Shapes::ShapeRef.new(shape: BoxedLong, location_name: "PersistRoutesDuration"))
+    ModifyRouteServerRequest.add_member(:sns_notifications_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "SnsNotificationsEnabled"))
+    ModifyRouteServerRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    ModifyRouteServerRequest.struct_class = Types::ModifyRouteServerRequest
+
+    ModifyRouteServerResult.add_member(:route_server, Shapes::ShapeRef.new(shape: RouteServer, location_name: "routeServer"))
+    ModifyRouteServerResult.struct_class = Types::ModifyRouteServerResult
+
     ModifySecurityGroupRulesRequest.add_member(:group_id, Shapes::ShapeRef.new(shape: SecurityGroupId, required: true, location_name: "GroupId"))
     ModifySecurityGroupRulesRequest.add_member(:security_group_rules, Shapes::ShapeRef.new(shape: SecurityGroupRuleUpdateList, required: true, location_name: "SecurityGroupRule"))
     ModifySecurityGroupRulesRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
@@ -14602,6 +14832,102 @@ module Aws::EC2
     Route.struct_class = Types::Route
 
     RouteList.member = Shapes::ShapeRef.new(shape: Route, location_name: "item")
+
+    RouteServer.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, location_name: "routeServerId"))
+    RouteServer.add_member(:amazon_side_asn, Shapes::ShapeRef.new(shape: Long, location_name: "amazonSideAsn"))
+    RouteServer.add_member(:state, Shapes::ShapeRef.new(shape: RouteServerState, location_name: "state"))
+    RouteServer.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
+    RouteServer.add_member(:persist_routes_state, Shapes::ShapeRef.new(shape: RouteServerPersistRoutesState, location_name: "persistRoutesState"))
+    RouteServer.add_member(:persist_routes_duration, Shapes::ShapeRef.new(shape: BoxedLong, location_name: "persistRoutesDuration"))
+    RouteServer.add_member(:sns_notifications_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "snsNotificationsEnabled"))
+    RouteServer.add_member(:sns_topic_arn, Shapes::ShapeRef.new(shape: String, location_name: "snsTopicArn"))
+    RouteServer.struct_class = Types::RouteServer
+
+    RouteServerAssociation.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, location_name: "routeServerId"))
+    RouteServerAssociation.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, location_name: "vpcId"))
+    RouteServerAssociation.add_member(:state, Shapes::ShapeRef.new(shape: RouteServerAssociationState, location_name: "state"))
+    RouteServerAssociation.struct_class = Types::RouteServerAssociation
+
+    RouteServerAssociationsList.member = Shapes::ShapeRef.new(shape: RouteServerAssociation, location_name: "item")
+
+    RouteServerBfdStatus.add_member(:status, Shapes::ShapeRef.new(shape: RouteServerBfdState, location_name: "status"))
+    RouteServerBfdStatus.struct_class = Types::RouteServerBfdStatus
+
+    RouteServerBgpOptions.add_member(:peer_asn, Shapes::ShapeRef.new(shape: Long, location_name: "peerAsn"))
+    RouteServerBgpOptions.add_member(:peer_liveness_detection, Shapes::ShapeRef.new(shape: RouteServerPeerLivenessMode, location_name: "peerLivenessDetection"))
+    RouteServerBgpOptions.struct_class = Types::RouteServerBgpOptions
+
+    RouteServerBgpOptionsRequest.add_member(:peer_asn, Shapes::ShapeRef.new(shape: Long, required: true, location_name: "PeerAsn"))
+    RouteServerBgpOptionsRequest.add_member(:peer_liveness_detection, Shapes::ShapeRef.new(shape: RouteServerPeerLivenessMode, location_name: "PeerLivenessDetection"))
+    RouteServerBgpOptionsRequest.struct_class = Types::RouteServerBgpOptionsRequest
+
+    RouteServerBgpStatus.add_member(:status, Shapes::ShapeRef.new(shape: RouteServerBgpState, location_name: "status"))
+    RouteServerBgpStatus.struct_class = Types::RouteServerBgpStatus
+
+    RouteServerEndpoint.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, location_name: "routeServerId"))
+    RouteServerEndpoint.add_member(:route_server_endpoint_id, Shapes::ShapeRef.new(shape: RouteServerEndpointId, location_name: "routeServerEndpointId"))
+    RouteServerEndpoint.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, location_name: "vpcId"))
+    RouteServerEndpoint.add_member(:subnet_id, Shapes::ShapeRef.new(shape: SubnetId, location_name: "subnetId"))
+    RouteServerEndpoint.add_member(:eni_id, Shapes::ShapeRef.new(shape: NetworkInterfaceId, location_name: "eniId"))
+    RouteServerEndpoint.add_member(:eni_address, Shapes::ShapeRef.new(shape: String, location_name: "eniAddress"))
+    RouteServerEndpoint.add_member(:state, Shapes::ShapeRef.new(shape: RouteServerEndpointState, location_name: "state"))
+    RouteServerEndpoint.add_member(:failure_reason, Shapes::ShapeRef.new(shape: String, location_name: "failureReason"))
+    RouteServerEndpoint.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
+    RouteServerEndpoint.struct_class = Types::RouteServerEndpoint
+
+    RouteServerEndpointIdsList.member = Shapes::ShapeRef.new(shape: RouteServerEndpointId)
+
+    RouteServerEndpointsList.member = Shapes::ShapeRef.new(shape: RouteServerEndpoint, location_name: "item")
+
+    RouteServerIdsList.member = Shapes::ShapeRef.new(shape: RouteServerId)
+
+    RouteServerPeer.add_member(:route_server_peer_id, Shapes::ShapeRef.new(shape: RouteServerPeerId, location_name: "routeServerPeerId"))
+    RouteServerPeer.add_member(:route_server_endpoint_id, Shapes::ShapeRef.new(shape: RouteServerEndpointId, location_name: "routeServerEndpointId"))
+    RouteServerPeer.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, location_name: "routeServerId"))
+    RouteServerPeer.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, location_name: "vpcId"))
+    RouteServerPeer.add_member(:subnet_id, Shapes::ShapeRef.new(shape: SubnetId, location_name: "subnetId"))
+    RouteServerPeer.add_member(:state, Shapes::ShapeRef.new(shape: RouteServerPeerState, location_name: "state"))
+    RouteServerPeer.add_member(:failure_reason, Shapes::ShapeRef.new(shape: String, location_name: "failureReason"))
+    RouteServerPeer.add_member(:endpoint_eni_id, Shapes::ShapeRef.new(shape: NetworkInterfaceId, location_name: "endpointEniId"))
+    RouteServerPeer.add_member(:endpoint_eni_address, Shapes::ShapeRef.new(shape: String, location_name: "endpointEniAddress"))
+    RouteServerPeer.add_member(:peer_address, Shapes::ShapeRef.new(shape: String, location_name: "peerAddress"))
+    RouteServerPeer.add_member(:bgp_options, Shapes::ShapeRef.new(shape: RouteServerBgpOptions, location_name: "bgpOptions"))
+    RouteServerPeer.add_member(:bgp_status, Shapes::ShapeRef.new(shape: RouteServerBgpStatus, location_name: "bgpStatus"))
+    RouteServerPeer.add_member(:bfd_status, Shapes::ShapeRef.new(shape: RouteServerBfdStatus, location_name: "bfdStatus"))
+    RouteServerPeer.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
+    RouteServerPeer.struct_class = Types::RouteServerPeer
+
+    RouteServerPeerIdsList.member = Shapes::ShapeRef.new(shape: RouteServerPeerId)
+
+    RouteServerPeersList.member = Shapes::ShapeRef.new(shape: RouteServerPeer, location_name: "item")
+
+    RouteServerPropagation.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, location_name: "routeServerId"))
+    RouteServerPropagation.add_member(:route_table_id, Shapes::ShapeRef.new(shape: RouteTableId, location_name: "routeTableId"))
+    RouteServerPropagation.add_member(:state, Shapes::ShapeRef.new(shape: RouteServerPropagationState, location_name: "state"))
+    RouteServerPropagation.struct_class = Types::RouteServerPropagation
+
+    RouteServerPropagationsList.member = Shapes::ShapeRef.new(shape: RouteServerPropagation, location_name: "item")
+
+    RouteServerRoute.add_member(:route_server_endpoint_id, Shapes::ShapeRef.new(shape: RouteServerEndpointId, location_name: "routeServerEndpointId"))
+    RouteServerRoute.add_member(:route_server_peer_id, Shapes::ShapeRef.new(shape: RouteServerPeerId, location_name: "routeServerPeerId"))
+    RouteServerRoute.add_member(:route_installation_details, Shapes::ShapeRef.new(shape: RouteServerRouteInstallationDetails, location_name: "routeInstallationDetailSet"))
+    RouteServerRoute.add_member(:route_status, Shapes::ShapeRef.new(shape: RouteServerRouteStatus, location_name: "routeStatus"))
+    RouteServerRoute.add_member(:prefix, Shapes::ShapeRef.new(shape: String, location_name: "prefix"))
+    RouteServerRoute.add_member(:as_paths, Shapes::ShapeRef.new(shape: AsPath, location_name: "asPathSet"))
+    RouteServerRoute.add_member(:med, Shapes::ShapeRef.new(shape: Integer, location_name: "med"))
+    RouteServerRoute.add_member(:next_hop_ip, Shapes::ShapeRef.new(shape: String, location_name: "nextHopIp"))
+    RouteServerRoute.struct_class = Types::RouteServerRoute
+
+    RouteServerRouteInstallationDetail.add_member(:route_table_id, Shapes::ShapeRef.new(shape: RouteTableId, location_name: "routeTableId"))
+    RouteServerRouteInstallationDetail.add_member(:route_installation_status, Shapes::ShapeRef.new(shape: RouteServerRouteInstallationStatus, location_name: "routeInstallationStatus"))
+    RouteServerRouteInstallationDetail.add_member(:route_installation_status_reason, Shapes::ShapeRef.new(shape: String, location_name: "routeInstallationStatusReason"))
+    RouteServerRouteInstallationDetail.struct_class = Types::RouteServerRouteInstallationDetail
+
+    RouteServerRouteInstallationDetails.member = Shapes::ShapeRef.new(shape: RouteServerRouteInstallationDetail, location_name: "item")
+
+    RouteServerRouteList.member = Shapes::ShapeRef.new(shape: RouteServerRoute, location_name: "item")
+
+    RouteServersList.member = Shapes::ShapeRef.new(shape: RouteServer, location_name: "item")
 
     RouteTable.add_member(:associations, Shapes::ShapeRef.new(shape: RouteTableAssociationList, location_name: "associationSet"))
     RouteTable.add_member(:propagating_vgws, Shapes::ShapeRef.new(shape: PropagatingVgwList, location_name: "propagatingVgwSet"))
@@ -17105,6 +17431,14 @@ module Aws::EC2
         o.output = Shapes::ShapeRef.new(shape: AssociateNatGatewayAddressResult)
       end)
 
+      api.add_operation(:associate_route_server, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "AssociateRouteServer"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: AssociateRouteServerRequest)
+        o.output = Shapes::ShapeRef.new(shape: AssociateRouteServerResult)
+      end)
+
       api.add_operation(:associate_route_table, Seahorse::Model::Operation.new.tap do |o|
         o.name = "AssociateRouteTable"
         o.http_method = "POST"
@@ -17745,6 +18079,30 @@ module Aws::EC2
         o.output = Shapes::ShapeRef.new(shape: CreateRouteResult)
       end)
 
+      api.add_operation(:create_route_server, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateRouteServer"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: CreateRouteServerRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateRouteServerResult)
+      end)
+
+      api.add_operation(:create_route_server_endpoint, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateRouteServerEndpoint"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: CreateRouteServerEndpointRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateRouteServerEndpointResult)
+      end)
+
+      api.add_operation(:create_route_server_peer, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateRouteServerPeer"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: CreateRouteServerPeerRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateRouteServerPeerResult)
+      end)
+
       api.add_operation(:create_route_table, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateRouteTable"
         o.http_method = "POST"
@@ -18367,6 +18725,30 @@ module Aws::EC2
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: DeleteRouteRequest)
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+      end)
+
+      api.add_operation(:delete_route_server, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteRouteServer"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DeleteRouteServerRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteRouteServerResult)
+      end)
+
+      api.add_operation(:delete_route_server_endpoint, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteRouteServerEndpoint"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DeleteRouteServerEndpointRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteRouteServerEndpointResult)
+      end)
+
+      api.add_operation(:delete_route_server_peer, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteRouteServerPeer"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DeleteRouteServerPeerRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteRouteServerPeerResult)
       end)
 
       api.add_operation(:delete_route_table, Seahorse::Model::Operation.new.tap do |o|
@@ -19972,6 +20354,48 @@ module Aws::EC2
         )
       end)
 
+      api.add_operation(:describe_route_server_endpoints, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeRouteServerEndpoints"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeRouteServerEndpointsRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeRouteServerEndpointsResult)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:describe_route_server_peers, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeRouteServerPeers"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeRouteServerPeersRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeRouteServerPeersResult)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:describe_route_servers, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeRouteServers"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeRouteServersRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeRouteServersResult)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:describe_route_tables, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DescribeRouteTables"
         o.http_method = "POST"
@@ -20858,6 +21282,14 @@ module Aws::EC2
         o.output = Shapes::ShapeRef.new(shape: DisableIpamOrganizationAdminAccountResult)
       end)
 
+      api.add_operation(:disable_route_server_propagation, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DisableRouteServerPropagation"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DisableRouteServerPropagationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DisableRouteServerPropagationResult)
+      end)
+
       api.add_operation(:disable_serial_console_access, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DisableSerialConsoleAccess"
         o.http_method = "POST"
@@ -20976,6 +21408,14 @@ module Aws::EC2
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: DisassociateNatGatewayAddressRequest)
         o.output = Shapes::ShapeRef.new(shape: DisassociateNatGatewayAddressResult)
+      end)
+
+      api.add_operation(:disassociate_route_server, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DisassociateRouteServer"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DisassociateRouteServerRequest)
+        o.output = Shapes::ShapeRef.new(shape: DisassociateRouteServerResult)
       end)
 
       api.add_operation(:disassociate_route_table, Seahorse::Model::Operation.new.tap do |o|
@@ -21136,6 +21576,14 @@ module Aws::EC2
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: EnableReachabilityAnalyzerOrganizationSharingRequest)
         o.output = Shapes::ShapeRef.new(shape: EnableReachabilityAnalyzerOrganizationSharingResult)
+      end)
+
+      api.add_operation(:enable_route_server_propagation, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "EnableRouteServerPropagation"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: EnableRouteServerPropagationRequest)
+        o.output = Shapes::ShapeRef.new(shape: EnableRouteServerPropagationResult)
       end)
 
       api.add_operation(:enable_serial_console_access, Seahorse::Model::Operation.new.tap do |o|
@@ -21582,6 +22030,30 @@ module Aws::EC2
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: GetReservedInstancesExchangeQuoteRequest)
         o.output = Shapes::ShapeRef.new(shape: GetReservedInstancesExchangeQuoteResult)
+      end)
+
+      api.add_operation(:get_route_server_associations, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetRouteServerAssociations"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetRouteServerAssociationsRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetRouteServerAssociationsResult)
+      end)
+
+      api.add_operation(:get_route_server_propagations, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetRouteServerPropagations"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetRouteServerPropagationsRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetRouteServerPropagationsResult)
+      end)
+
+      api.add_operation(:get_route_server_routing_database, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetRouteServerRoutingDatabase"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetRouteServerRoutingDatabaseRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetRouteServerRoutingDatabaseResult)
       end)
 
       api.add_operation(:get_security_groups_for_vpc, Seahorse::Model::Operation.new.tap do |o|
@@ -22144,6 +22616,14 @@ module Aws::EC2
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: ModifyReservedInstancesRequest)
         o.output = Shapes::ShapeRef.new(shape: ModifyReservedInstancesResult)
+      end)
+
+      api.add_operation(:modify_route_server, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ModifyRouteServer"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ModifyRouteServerRequest)
+        o.output = Shapes::ShapeRef.new(shape: ModifyRouteServerResult)
       end)
 
       api.add_operation(:modify_security_group_rules, Seahorse::Model::Operation.new.tap do |o|

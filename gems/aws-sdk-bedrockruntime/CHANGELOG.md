@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.42.0 (2025-03-31)
+------------------
+
+* Feature - Add Prompt Caching support to Converse and ConverseStream APIs
+
 1.41.0 (2025-03-28)
 ------------------
 

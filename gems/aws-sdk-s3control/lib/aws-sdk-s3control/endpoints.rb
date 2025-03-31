@@ -64,6 +64,7 @@ module Aws::S3Control
           account_id: context.params[:account_id],
           requires_account_id: true,
           bucket: context.params[:bucket],
+          access_point_name: context.params[:name],
         )
       end
     end
@@ -209,6 +210,19 @@ module Aws::S3Control
           use_dual_stack: context[:use_dualstack_endpoint],
           account_id: context.params[:account_id],
           requires_account_id: true,
+        )
+      end
+    end
+
+    class DeleteAccessPointScope
+      def self.build(context)
+        Aws::S3Control::EndpointParameters.create(
+          context.config,
+          use_dual_stack: context[:use_dualstack_endpoint],
+          account_id: context.params[:account_id],
+          requires_account_id: true,
+          access_point_name: context.params[:name],
+          use_s3_express_control_endpoint: true,
         )
       end
     end
@@ -507,6 +521,19 @@ module Aws::S3Control
       end
     end
 
+    class GetAccessPointScope
+      def self.build(context)
+        Aws::S3Control::EndpointParameters.create(
+          context.config,
+          use_dual_stack: context[:use_dualstack_endpoint],
+          account_id: context.params[:account_id],
+          requires_account_id: true,
+          access_point_name: context.params[:name],
+          use_s3_express_control_endpoint: true,
+        )
+      end
+    end
+
     class GetBucket
       def self.build(context)
         Aws::S3Control::EndpointParameters.create(
@@ -734,6 +761,18 @@ module Aws::S3Control
       end
     end
 
+    class ListAccessPointsForDirectoryBuckets
+      def self.build(context)
+        Aws::S3Control::EndpointParameters.create(
+          context.config,
+          use_dual_stack: context[:use_dualstack_endpoint],
+          account_id: context.params[:account_id],
+          requires_account_id: true,
+          use_s3_express_control_endpoint: true,
+        )
+      end
+    end
+
     class ListAccessPointsForObjectLambda
       def self.build(context)
         Aws::S3Control::EndpointParameters.create(
@@ -864,6 +903,19 @@ module Aws::S3Control
           use_dual_stack: context[:use_dualstack_endpoint],
           account_id: context.params[:account_id],
           requires_account_id: true,
+        )
+      end
+    end
+
+    class PutAccessPointScope
+      def self.build(context)
+        Aws::S3Control::EndpointParameters.create(
+          context.config,
+          use_dual_stack: context[:use_dualstack_endpoint],
+          account_id: context.params[:account_id],
+          requires_account_id: true,
+          access_point_name: context.params[:name],
+          use_s3_express_control_endpoint: true,
         )
       end
     end
@@ -1099,6 +1151,8 @@ module Aws::S3Control
         DeleteAccessPointPolicy.build(context)
       when :delete_access_point_policy_for_object_lambda
         DeleteAccessPointPolicyForObjectLambda.build(context)
+      when :delete_access_point_scope
+        DeleteAccessPointScope.build(context)
       when :delete_bucket
         DeleteBucket.build(context)
       when :delete_bucket_lifecycle_configuration
@@ -1151,6 +1205,8 @@ module Aws::S3Control
         GetAccessPointPolicyStatus.build(context)
       when :get_access_point_policy_status_for_object_lambda
         GetAccessPointPolicyStatusForObjectLambda.build(context)
+      when :get_access_point_scope
+        GetAccessPointScope.build(context)
       when :get_bucket
         GetBucket.build(context)
       when :get_bucket_lifecycle_configuration
@@ -1191,6 +1247,8 @@ module Aws::S3Control
         ListAccessGrantsLocations.build(context)
       when :list_access_points
         ListAccessPoints.build(context)
+      when :list_access_points_for_directory_buckets
+        ListAccessPointsForDirectoryBuckets.build(context)
       when :list_access_points_for_object_lambda
         ListAccessPointsForObjectLambda.build(context)
       when :list_caller_access_grants
@@ -1215,6 +1273,8 @@ module Aws::S3Control
         PutAccessPointPolicy.build(context)
       when :put_access_point_policy_for_object_lambda
         PutAccessPointPolicyForObjectLambda.build(context)
+      when :put_access_point_scope
+        PutAccessPointScope.build(context)
       when :put_bucket_lifecycle_configuration
         PutBucketLifecycleConfiguration.build(context)
       when :put_bucket_policy

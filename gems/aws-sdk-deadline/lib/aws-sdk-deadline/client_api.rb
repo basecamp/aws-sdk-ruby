@@ -296,6 +296,7 @@ module Aws::Deadline
     JobParameterDefinition = Shapes::DocumentShape.new(name: 'JobParameterDefinition', document: true)
     JobParameterDefinitions = Shapes::ListShape.new(name: 'JobParameterDefinitions')
     JobParameters = Shapes::MapShape.new(name: 'JobParameters')
+    JobParametersKeyString = Shapes::StringShape.new(name: 'JobParametersKeyString')
     JobPriority = Shapes::IntegerShape.new(name: 'JobPriority')
     JobRunAsUser = Shapes::StructureShape.new(name: 'JobRunAsUser')
     JobSearchSummaries = Shapes::ListShape.new(name: 'JobSearchSummaries')
@@ -474,6 +475,7 @@ module Aws::Deadline
     SearchTasksResponse = Shapes::StructureShape.new(name: 'SearchTasksResponse')
     SearchTerm = Shapes::StringShape.new(name: 'SearchTerm')
     SearchTermFilterExpression = Shapes::StructureShape.new(name: 'SearchTermFilterExpression')
+    SearchTermMatchingType = Shapes::StringShape.new(name: 'SearchTermMatchingType')
     SearchWorkersRequest = Shapes::StructureShape.new(name: 'SearchWorkersRequest')
     SearchWorkersRequestFleetIdsList = Shapes::ListShape.new(name: 'SearchWorkersRequestFleetIdsList')
     SearchWorkersRequestItemOffsetInteger = Shapes::IntegerShape.new(name: 'SearchWorkersRequestItemOffsetInteger')
@@ -716,7 +718,7 @@ module Aws::Deadline
     AssignedSyncInputJobAttachmentsSessionActionDefinition.add_member(:step_id, Shapes::ShapeRef.new(shape: StepId, location_name: "stepId"))
     AssignedSyncInputJobAttachmentsSessionActionDefinition.struct_class = Types::AssignedSyncInputJobAttachmentsSessionActionDefinition
 
-    AssignedTaskRunSessionActionDefinition.add_member(:task_id, Shapes::ShapeRef.new(shape: TaskId, required: true, location_name: "taskId"))
+    AssignedTaskRunSessionActionDefinition.add_member(:task_id, Shapes::ShapeRef.new(shape: TaskId, location_name: "taskId"))
     AssignedTaskRunSessionActionDefinition.add_member(:step_id, Shapes::ShapeRef.new(shape: StepId, required: true, location_name: "stepId"))
     AssignedTaskRunSessionActionDefinition.add_member(:parameters, Shapes::ShapeRef.new(shape: TaskParameters, required: true, location_name: "parameters"))
     AssignedTaskRunSessionActionDefinition.struct_class = Types::AssignedTaskRunSessionActionDefinition
@@ -1758,7 +1760,7 @@ module Aws::Deadline
 
     JobParameterDefinitions.member = Shapes::ShapeRef.new(shape: JobParameterDefinition)
 
-    JobParameters.key = Shapes::ShapeRef.new(shape: String)
+    JobParameters.key = Shapes::ShapeRef.new(shape: JobParametersKeyString)
     JobParameters.value = Shapes::ShapeRef.new(shape: JobParameter)
 
     JobRunAsUser.add_member(:posix, Shapes::ShapeRef.new(shape: PosixUser, location_name: "posix"))
@@ -2364,6 +2366,7 @@ module Aws::Deadline
     SearchTasksResponse.struct_class = Types::SearchTasksResponse
 
     SearchTermFilterExpression.add_member(:search_term, Shapes::ShapeRef.new(shape: SearchTerm, required: true, location_name: "searchTerm"))
+    SearchTermFilterExpression.add_member(:match_type, Shapes::ShapeRef.new(shape: SearchTermMatchingType, location_name: "matchType"))
     SearchTermFilterExpression.struct_class = Types::SearchTermFilterExpression
 
     SearchWorkersRequest.add_member(:farm_id, Shapes::ShapeRef.new(shape: FarmId, required: true, location: "uri", location_name: "farmId"))
@@ -2640,12 +2643,12 @@ module Aws::Deadline
     TaskParameters.key = Shapes::ShapeRef.new(shape: String)
     TaskParameters.value = Shapes::ShapeRef.new(shape: TaskParameterValue)
 
-    TaskRunSessionActionDefinition.add_member(:task_id, Shapes::ShapeRef.new(shape: TaskId, required: true, location_name: "taskId"))
+    TaskRunSessionActionDefinition.add_member(:task_id, Shapes::ShapeRef.new(shape: TaskId, location_name: "taskId"))
     TaskRunSessionActionDefinition.add_member(:step_id, Shapes::ShapeRef.new(shape: StepId, required: true, location_name: "stepId"))
     TaskRunSessionActionDefinition.add_member(:parameters, Shapes::ShapeRef.new(shape: TaskParameters, required: true, location_name: "parameters"))
     TaskRunSessionActionDefinition.struct_class = Types::TaskRunSessionActionDefinition
 
-    TaskRunSessionActionDefinitionSummary.add_member(:task_id, Shapes::ShapeRef.new(shape: TaskId, required: true, location_name: "taskId"))
+    TaskRunSessionActionDefinitionSummary.add_member(:task_id, Shapes::ShapeRef.new(shape: TaskId, location_name: "taskId"))
     TaskRunSessionActionDefinitionSummary.add_member(:step_id, Shapes::ShapeRef.new(shape: StepId, required: true, location_name: "stepId"))
     TaskRunSessionActionDefinitionSummary.struct_class = Types::TaskRunSessionActionDefinitionSummary
 

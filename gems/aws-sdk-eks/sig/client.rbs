@@ -937,6 +937,18 @@ module Aws
                                      block_storage: {
                                        enabled: bool?
                                      }?
+                                   },
+                                   ?remote_network_config: {
+                                     remote_node_networks: Array[
+                                       {
+                                         cidrs: Array[::String]?
+                                       },
+                                     ]?,
+                                     remote_pod_networks: Array[
+                                       {
+                                         cidrs: Array[::String]?
+                                       },
+                                     ]?
                                    }
                                  ) -> _UpdateClusterConfigResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateClusterConfigResponseSuccess

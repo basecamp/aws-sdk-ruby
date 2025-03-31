@@ -890,10 +890,10 @@ module Aws::Deadline
     #   resp.entities[0].job_details.log_group_name #=> String
     #   resp.entities[0].job_details.queue_role_arn #=> String
     #   resp.entities[0].job_details.parameters #=> Hash
-    #   resp.entities[0].job_details.parameters["String"].int #=> String
-    #   resp.entities[0].job_details.parameters["String"].float #=> String
-    #   resp.entities[0].job_details.parameters["String"].string #=> String
-    #   resp.entities[0].job_details.parameters["String"].path #=> String
+    #   resp.entities[0].job_details.parameters["JobParametersKeyString"].int #=> String
+    #   resp.entities[0].job_details.parameters["JobParametersKeyString"].float #=> String
+    #   resp.entities[0].job_details.parameters["JobParametersKeyString"].string #=> String
+    #   resp.entities[0].job_details.parameters["JobParametersKeyString"].path #=> String
     #   resp.entities[0].job_details.schema_version #=> String
     #   resp.entities[0].job_details.path_mapping_rules #=> Array
     #   resp.entities[0].job_details.path_mapping_rules[0].source_path_format #=> String, one of "windows", "posix"
@@ -1327,9 +1327,9 @@ module Aws::Deadline
     #   The file type for the job template.
     #
     # @option params [required, Integer] :priority
-    #   The priority of the job on a scale of 0 to 100. The highest priority
-    #   (first scheduled) is 100. When two jobs have the same priority, the
-    #   oldest job is scheduled first.
+    #   The priority of the job. The highest priority (first scheduled) is
+    #   100. When two jobs have the same priority, the oldest job is scheduled
+    #   first.
     #
     # @option params [Hash<String,Types::JobParameter>] :parameters
     #   The parameters for the job.
@@ -1381,7 +1381,7 @@ module Aws::Deadline
     #     template_type: "JSON", # accepts JSON, YAML
     #     priority: 1, # required
     #     parameters: {
-    #       "String" => {
+    #       "JobParametersKeyString" => {
     #         int: "IntString",
     #         float: "FloatString",
     #         string: "ParameterString",
@@ -1730,8 +1730,9 @@ module Aws::Deadline
     #
     # @option params [required, Integer] :priority
     #   Sets the priority of the environments in the queue from 0 to 10,000,
-    #   where 0 is the highest priority. If two environments share the same
-    #   priority value, the environment created first takes higher priority.
+    #   where 0 is the highest priority (activated first and deactivated
+    #   last). If two environments share the same priority value, the
+    #   environment created first takes higher priority.
     #
     # @option params [required, String] :template_type
     #   The template's file type, `JSON` or `YAML`.
@@ -2724,10 +2725,10 @@ module Aws::Deadline
     #   resp.max_failed_tasks_count #=> Integer
     #   resp.max_retries_per_task #=> Integer
     #   resp.parameters #=> Hash
-    #   resp.parameters["String"].int #=> String
-    #   resp.parameters["String"].float #=> String
-    #   resp.parameters["String"].string #=> String
-    #   resp.parameters["String"].path #=> String
+    #   resp.parameters["JobParametersKeyString"].int #=> String
+    #   resp.parameters["JobParametersKeyString"].float #=> String
+    #   resp.parameters["JobParametersKeyString"].string #=> String
+    #   resp.parameters["JobParametersKeyString"].path #=> String
     #   resp.attachments.manifests #=> Array
     #   resp.attachments.manifests[0].file_system_location_name #=> String
     #   resp.attachments.manifests[0].root_path #=> String
@@ -5402,6 +5403,7 @@ module Aws::Deadline
     #           },
     #           search_term_filter: {
     #             search_term: "SearchTerm", # required
+    #             match_type: "FUZZY_MATCH", # accepts FUZZY_MATCH, CONTAINS
     #           },
     #           string_filter: {
     #             name: "String", # required
@@ -5454,10 +5456,10 @@ module Aws::Deadline
     #   resp.jobs[0].ended_at #=> Time
     #   resp.jobs[0].started_at #=> Time
     #   resp.jobs[0].job_parameters #=> Hash
-    #   resp.jobs[0].job_parameters["String"].int #=> String
-    #   resp.jobs[0].job_parameters["String"].float #=> String
-    #   resp.jobs[0].job_parameters["String"].string #=> String
-    #   resp.jobs[0].job_parameters["String"].path #=> String
+    #   resp.jobs[0].job_parameters["JobParametersKeyString"].int #=> String
+    #   resp.jobs[0].job_parameters["JobParametersKeyString"].float #=> String
+    #   resp.jobs[0].job_parameters["JobParametersKeyString"].string #=> String
+    #   resp.jobs[0].job_parameters["JobParametersKeyString"].path #=> String
     #   resp.jobs[0].max_worker_count #=> Integer
     #   resp.jobs[0].source_job_id #=> String
     #   resp.next_item_offset #=> Integer
@@ -5525,6 +5527,7 @@ module Aws::Deadline
     #           },
     #           search_term_filter: {
     #             search_term: "SearchTerm", # required
+    #             match_type: "FUZZY_MATCH", # accepts FUZZY_MATCH, CONTAINS
     #           },
     #           string_filter: {
     #             name: "String", # required
@@ -5642,6 +5645,7 @@ module Aws::Deadline
     #           },
     #           search_term_filter: {
     #             search_term: "SearchTerm", # required
+    #             match_type: "FUZZY_MATCH", # accepts FUZZY_MATCH, CONTAINS
     #           },
     #           string_filter: {
     #             name: "String", # required
@@ -5752,6 +5756,7 @@ module Aws::Deadline
     #           },
     #           search_term_filter: {
     #             search_term: "SearchTerm", # required
+    #             match_type: "FUZZY_MATCH", # accepts FUZZY_MATCH, CONTAINS
     #           },
     #           string_filter: {
     #             name: "String", # required
@@ -6994,7 +6999,7 @@ module Aws::Deadline
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-deadline'
-      context[:gem_version] = '1.21.0'
+      context[:gem_version] = '1.22.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -420,15 +420,14 @@ module Aws::S3Control
 
     context "gov cloud with fips@cn-north-1" do
       let(:expected) do
-        {"endpoint"=>{"headers"=>{"x-amz-account-id"=>["123456789012"], "x-amz-outpost-id"=>["op-01234567890123456"]}, "properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3-outposts", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true}]}, "url"=>"https://s3-outposts-fips.cn-north-1.amazonaws.com.cn"}}
+        {"error"=>"Partition does not support FIPS"}
       end
 
       it 'produces the expected output from the EndpointProvider' do
         params = EndpointParameters.new(**{:access_point_name=>"arn:aws-cn:s3-outposts:cn-north-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint", :account_id=>"123456789012", :region=>"cn-north-1", :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>true})
-        endpoint = subject.resolve_endpoint(params)
-        expect(endpoint.url).to eq(expected['endpoint']['url'])
-        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
-        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
       end
 
       it 'produces the correct output from the client when calling get_access_point' do
@@ -437,17 +436,12 @@ module Aws::S3Control
           use_fips_endpoint: true,
           stub_responses: true
         )
-        expect_auth({"name"=>"sigv4", "signingName"=>"s3-outposts", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
-        resp = client.get_access_point(
-          name: 'arn:aws-cn:s3-outposts:cn-north-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
-          account_id: '123456789012',
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
-        expect(resp.context.http_request.headers['x-amz-account-id']).to eq('123456789012')
-        expect(resp.context.http_request.headers['x-amz-outpost-id']).to eq('op-01234567890123456')
+        expect do
+          client.get_access_point(
+            name: 'arn:aws-cn:s3-outposts:cn-north-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
+            account_id: '123456789012',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
       end
 
       it 'produces the correct output from the client when calling delete_access_point' do
@@ -456,17 +450,12 @@ module Aws::S3Control
           use_fips_endpoint: true,
           stub_responses: true
         )
-        expect_auth({"name"=>"sigv4", "signingName"=>"s3-outposts", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
-        resp = client.delete_access_point(
-          name: 'arn:aws-cn:s3-outposts:cn-north-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
-          account_id: '123456789012',
-        )
-        expected_uri = URI.parse(expected['endpoint']['url'])
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
-        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
-        expect(resp.context.http_request.headers['x-amz-account-id']).to eq('123456789012')
-        expect(resp.context.http_request.headers['x-amz-outpost-id']).to eq('op-01234567890123456')
+        expect do
+          client.delete_access_point(
+            name: 'arn:aws-cn:s3-outposts:cn-north-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
+            account_id: '123456789012',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
       end
     end
 
@@ -3079,6 +3068,959 @@ module Aws::S3Control
         params = EndpointParameters.new(**{:region=>"snow", :bucket=>"bucketName", :endpoint=>"https://10.0.1.12:433", :use_fips=>false, :use_dual_stack=>true})
         expect do
           subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "Access Point APIs on express bucket routed to s3express-control" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true}]}, "url"=>"https://s3express-control.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:account_id=>"871317572157", :access_point_name=>"myaccesspoint--abcd-ab1--xa-s3", :region=>"us-east-1", :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling create_access_point' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.create_access_point(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          bucket: 'mybucket--abcd-ab1--x-s3',
+          account_id: '871317572157',
+          scope: {:prefixes=>[], :permissions=>[]},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling get_access_point' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.get_access_point(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.delete_access_point(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling put_access_point_scope' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.put_access_point_scope(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+          scope: {:prefixes=>[], :permissions=>[]},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_scope' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.get_access_point_scope(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point_scope' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.delete_access_point_scope(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling put_access_point_policy' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.put_access_point_policy(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+          policy: 'my-policy',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_policy' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.get_access_point_policy(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point_policy' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.delete_access_point_policy(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_policy_status' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.get_access_point_policy_status(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Access Point APIs on express bucket routed to s3express-control for List" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true}]}, "url"=>"https://s3express-control.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:account_id=>"871317572157", :region=>"us-east-1", :use_s3_express_control_endpoint=>true, :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_access_points_for_directory_buckets' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.list_access_points_for_directory_buckets(
+          directory_bucket: 'mybucket--abcd-ab1--x-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Access Point APIs on express bucket routed to s3express-control for FIPS" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true}]}, "url"=>"https://s3express-control-fips.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:account_id=>"871317572157", :access_point_name=>"myaccesspoint--abcd-ab1--xa-s3", :region=>"us-east-1", :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling create_access_point' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.create_access_point(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          bucket: 'mybucket--abcd-ab1--x-s3',
+          account_id: '871317572157',
+          scope: {:prefixes=>[], :permissions=>[]},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling get_access_point' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.get_access_point(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.delete_access_point(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling put_access_point_scope' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.put_access_point_scope(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+          scope: {:prefixes=>[], :permissions=>[]},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_scope' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.get_access_point_scope(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point_scope' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.delete_access_point_scope(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling put_access_point_policy' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.put_access_point_policy(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+          policy: 'my-policy',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_policy' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.get_access_point_policy(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point_policy' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.delete_access_point_policy(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_policy_status' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.get_access_point_policy_status(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Access Point APIs on express bucket routed to s3express-control for FIPS for List" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true}]}, "url"=>"https://s3express-control-fips.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:account_id=>"871317572157", :region=>"us-east-1", :use_s3_express_control_endpoint=>true, :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_access_points_for_directory_buckets' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.list_access_points_for_directory_buckets(
+          directory_bucket: 'mybucket--abcd-ab1--x-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Access Point APIs on express bucket routed to s3express-control for china region" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true}]}, "url"=>"https://s3express-control.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:access_point_name=>"myaccesspoint--abcd-ab1--xa-s3", :account_id=>"871317572157", :region=>"cn-north-1", :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling create_access_point' do
+        client = Client.new(
+          region: 'cn-north-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
+        resp = client.create_access_point(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          bucket: 'mybucket--abcd-ab1--x-s3',
+          account_id: '871317572157',
+          scope: {:prefixes=>[], :permissions=>[]},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling get_access_point' do
+        client = Client.new(
+          region: 'cn-north-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
+        resp = client.get_access_point(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point' do
+        client = Client.new(
+          region: 'cn-north-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
+        resp = client.delete_access_point(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling put_access_point_scope' do
+        client = Client.new(
+          region: 'cn-north-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
+        resp = client.put_access_point_scope(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+          scope: {:prefixes=>[], :permissions=>[]},
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_scope' do
+        client = Client.new(
+          region: 'cn-north-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
+        resp = client.get_access_point_scope(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point_scope' do
+        client = Client.new(
+          region: 'cn-north-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
+        resp = client.delete_access_point_scope(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling put_access_point_policy' do
+        client = Client.new(
+          region: 'cn-north-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
+        resp = client.put_access_point_policy(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+          policy: 'my-policy',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_policy' do
+        client = Client.new(
+          region: 'cn-north-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
+        resp = client.get_access_point_policy(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point_policy' do
+        client = Client.new(
+          region: 'cn-north-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
+        resp = client.delete_access_point_policy(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_policy_status' do
+        client = Client.new(
+          region: 'cn-north-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
+        resp = client.get_access_point_policy_status(
+          name: 'myaccesspoint--abcd-ab1--xa-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Access Point APIs on express bucket routed to s3express-control for china region for List" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true}]}, "url"=>"https://s3express-control.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:account_id=>"871317572157", :region=>"cn-north-1", :use_s3_express_control_endpoint=>true, :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling list_access_points_for_directory_buckets' do
+        client = Client.new(
+          region: 'cn-north-1',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
+        resp = client.list_access_points_for_directory_buckets(
+          directory_bucket: 'mybucket--abcd-ab1--x-s3',
+          account_id: '871317572157',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Error when Access Point APIs on express bucket routed to s3express-control for china and FIPS" do
+      let(:expected) do
+        {"error"=>"Partition does not support FIPS"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:account_id=>"871317572157", :region=>"cn-north-1", :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>true})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling create_access_point' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect do
+          client.create_access_point(
+            name: 'myaccesspoint--abcd-ab1--xa-s3',
+            bucket: 'mybucket--abcd-ab1--x-s3',
+            account_id: '871317572157',
+            scope: {:prefixes=>[], :permissions=>[]},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_access_point' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect do
+          client.get_access_point(
+            name: 'myaccesspoint--abcd-ab1--xa-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect do
+          client.delete_access_point(
+            name: 'myaccesspoint--abcd-ab1--xa-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling list_access_points_for_directory_buckets' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect do
+          client.list_access_points_for_directory_buckets(
+            directory_bucket: 'mybucket--abcd-ab1--x-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling put_access_point_scope' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect do
+          client.put_access_point_scope(
+            name: 'myaccesspoint--abcd-ab1--xa-s3',
+            account_id: '871317572157',
+            scope: {:prefixes=>[], :permissions=>[]},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_scope' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect do
+          client.get_access_point_scope(
+            name: 'myaccesspoint--abcd-ab1--xa-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point_scope' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect do
+          client.delete_access_point_scope(
+            name: 'myaccesspoint--abcd-ab1--xa-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling put_access_point_policy' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect do
+          client.put_access_point_policy(
+            name: 'myaccesspoint--abcd-ab1--xa-s3',
+            account_id: '871317572157',
+            policy: 'my-policy',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_policy' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect do
+          client.get_access_point_policy(
+            name: 'myaccesspoint--abcd-ab1--xa-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point_policy' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect do
+          client.delete_access_point_policy(
+            name: 'myaccesspoint--abcd-ab1--xa-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_policy_status' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          stub_responses: true
+        )
+        expect do
+          client.get_access_point_policy_status(
+            name: 'myaccesspoint--abcd-ab1--xa-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "Error Access Point APIs on express bucket routed to s3express-control invalid zone" do
+      let(:expected) do
+        {"error"=>"Unrecognized S3Express Access Point name format."}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:access_point_name=>"myaccesspoint-garbage-zone--xa-s3", :account_id=>"871317572157", :region=>"us-east-1", :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>false})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling create_access_point' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect do
+          client.create_access_point(
+            name: 'myaccesspoint-garbage-zone--xa-s3',
+            bucket: 'mybucket-garbage-zone-garbage-zone',
+            account_id: '871317572157',
+            scope: {:prefixes=>[], :permissions=>[]},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_access_point' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect do
+          client.get_access_point(
+            name: 'myaccesspoint-garbage-zone--xa-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect do
+          client.delete_access_point(
+            name: 'myaccesspoint-garbage-zone--xa-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling put_access_point_scope' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect do
+          client.put_access_point_scope(
+            name: 'myaccesspoint-garbage-zone--xa-s3',
+            account_id: '871317572157',
+            scope: {:prefixes=>[], :permissions=>[]},
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_scope' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect do
+          client.get_access_point_scope(
+            name: 'myaccesspoint-garbage-zone--xa-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point_scope' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect do
+          client.delete_access_point_scope(
+            name: 'myaccesspoint-garbage-zone--xa-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling put_access_point_policy' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect do
+          client.put_access_point_policy(
+            name: 'myaccesspoint-garbage-zone--xa-s3',
+            account_id: '871317572157',
+            policy: 'my-policy',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_policy' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect do
+          client.get_access_point_policy(
+            name: 'myaccesspoint-garbage-zone--xa-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling delete_access_point_policy' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect do
+          client.delete_access_point_policy(
+            name: 'myaccesspoint-garbage-zone--xa-s3',
+            account_id: '871317572157',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_access_point_policy_status' do
+        client = Client.new(
+          region: 'us-east-1',
+          stub_responses: true
+        )
+        expect do
+          client.get_access_point_policy_status(
+            name: 'myaccesspoint-garbage-zone--xa-s3',
+            account_id: '871317572157',
+          )
         end.to raise_error(ArgumentError, expected['error'])
       end
     end

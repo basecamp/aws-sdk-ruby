@@ -113,6 +113,105 @@
             "targetPrefix": "JsonRpc10"
         },
         "shapes": {
+            "ComplexError": {
+                "type": "structure",
+                "members": {
+                    "TopLevel": {
+                        "shape": "String"
+                    },
+                    "Nested": {
+                        "shape": "ComplexNestedErrorData"
+                    }
+                },
+                "documentation": "<p>This error is thrown when a request is invalid.</p>",
+                "exception": true
+            },
+            "String": {
+                "type": "string"
+            },
+            "ComplexNestedErrorData": {
+                "type": "structure",
+                "members": {
+                    "Foo": {
+                        "shape": "String"
+                    }
+                }
+            }
+        },
+        "cases": [
+            {
+                "id": "AwsJson10ComplexError",
+                "given": {
+                    "name": "GreetingWithErrors",
+                    "http": {
+                        "method": "POST",
+                        "requestUri": "/"
+                    },
+                    "documentation": "<p>This operation has three possible return values:</p> <ol> <li>A successful response in the form of GreetingWithErrorsOutput</li> <li>An InvalidGreeting error.</li> <li>A ComplexError error.</li> </ol> <p>Implementations must be able to successfully take a response and properly deserialize successful and error responses.</p>",
+                    "idempotent": true,
+                    "errors": [
+                        {
+                            "shape": "ComplexError"
+                        }
+                    ]
+                },
+                "description": "Parses a complex error with no message member",
+                "errorCode": "ComplexError",
+                "error": {
+                    "TopLevel": "Top level",
+                    "Nested": {
+                        "Foo": "bar"
+                    }
+                },
+                "response": {
+                    "status_code": 400,
+                    "headers": {
+                        "Content-Type": "application/x-amz-json-1.0"
+                    },
+                    "body": "{\n    \"__type\": \"aws.protocoltests.json10#ComplexError\",\n    \"TopLevel\": \"Top level\",\n    \"Nested\": {\n        \"Foo\": \"bar\"\n    }\n}"
+                }
+            },
+            {
+                "id": "AwsJson10EmptyComplexError",
+                "given": {
+                    "name": "GreetingWithErrors",
+                    "http": {
+                        "method": "POST",
+                        "requestUri": "/"
+                    },
+                    "documentation": "<p>This operation has three possible return values:</p> <ol> <li>A successful response in the form of GreetingWithErrorsOutput</li> <li>An InvalidGreeting error.</li> <li>A ComplexError error.</li> </ol> <p>Implementations must be able to successfully take a response and properly deserialize successful and error responses.</p>",
+                    "idempotent": true,
+                    "errors": [
+                        {
+                            "shape": "ComplexError"
+                        }
+                    ]
+                },
+                "description": "Parses a complex error with an empty body",
+                "errorCode": "ComplexError",
+                "error": {},
+                "response": {
+                    "status_code": 400,
+                    "headers": {
+                        "Content-Type": "application/x-amz-json-1.0"
+                    },
+                    "body": "{\n    \"__type\": \"aws.protocoltests.json10#ComplexError\"\n}"
+                }
+            }
+        ]
+    },
+    {
+        "description": "Test cases for GreetingWithErrors operation",
+        "metadata": {
+            "protocol": "json",
+            "protocols": [
+                "json"
+            ],
+            "apiVersion": "2020-07-14",
+            "jsonVersion": "1.0",
+            "targetPrefix": "JsonRpc10"
+        },
+        "shapes": {
             "FooError": {
                 "type": "structure",
                 "members": {},
@@ -360,105 +459,6 @@
                         "Content-Type": "application/x-amz-json-1.0"
                     },
                     "body": "{\n    \"__type\": \"aws.protocoltests.json10#FooError:http://internal.amazon.com/coral/com.amazon.coral.validate/\"\n}"
-                }
-            }
-        ]
-    },
-    {
-        "description": "Test cases for GreetingWithErrors operation",
-        "metadata": {
-            "protocol": "json",
-            "protocols": [
-                "json"
-            ],
-            "apiVersion": "2020-07-14",
-            "jsonVersion": "1.0",
-            "targetPrefix": "JsonRpc10"
-        },
-        "shapes": {
-            "ComplexError": {
-                "type": "structure",
-                "members": {
-                    "TopLevel": {
-                        "shape": "String"
-                    },
-                    "Nested": {
-                        "shape": "ComplexNestedErrorData"
-                    }
-                },
-                "documentation": "<p>This error is thrown when a request is invalid.</p>",
-                "exception": true
-            },
-            "String": {
-                "type": "string"
-            },
-            "ComplexNestedErrorData": {
-                "type": "structure",
-                "members": {
-                    "Foo": {
-                        "shape": "String"
-                    }
-                }
-            }
-        },
-        "cases": [
-            {
-                "id": "AwsJson10ComplexError",
-                "given": {
-                    "name": "GreetingWithErrors",
-                    "http": {
-                        "method": "POST",
-                        "requestUri": "/"
-                    },
-                    "documentation": "<p>This operation has three possible return values:</p> <ol> <li>A successful response in the form of GreetingWithErrorsOutput</li> <li>An InvalidGreeting error.</li> <li>A ComplexError error.</li> </ol> <p>Implementations must be able to successfully take a response and properly deserialize successful and error responses.</p>",
-                    "idempotent": true,
-                    "errors": [
-                        {
-                            "shape": "ComplexError"
-                        }
-                    ]
-                },
-                "description": "Parses a complex error with no message member",
-                "errorCode": "ComplexError",
-                "error": {
-                    "TopLevel": "Top level",
-                    "Nested": {
-                        "Foo": "bar"
-                    }
-                },
-                "response": {
-                    "status_code": 400,
-                    "headers": {
-                        "Content-Type": "application/x-amz-json-1.0"
-                    },
-                    "body": "{\n    \"__type\": \"aws.protocoltests.json10#ComplexError\",\n    \"TopLevel\": \"Top level\",\n    \"Nested\": {\n        \"Foo\": \"bar\"\n    }\n}"
-                }
-            },
-            {
-                "id": "AwsJson10EmptyComplexError",
-                "given": {
-                    "name": "GreetingWithErrors",
-                    "http": {
-                        "method": "POST",
-                        "requestUri": "/"
-                    },
-                    "documentation": "<p>This operation has three possible return values:</p> <ol> <li>A successful response in the form of GreetingWithErrorsOutput</li> <li>An InvalidGreeting error.</li> <li>A ComplexError error.</li> </ol> <p>Implementations must be able to successfully take a response and properly deserialize successful and error responses.</p>",
-                    "idempotent": true,
-                    "errors": [
-                        {
-                            "shape": "ComplexError"
-                        }
-                    ]
-                },
-                "description": "Parses a complex error with an empty body",
-                "errorCode": "ComplexError",
-                "error": {},
-                "response": {
-                    "status_code": 400,
-                    "headers": {
-                        "Content-Type": "application/x-amz-json-1.0"
-                    },
-                    "body": "{\n    \"__type\": \"aws.protocoltests.json10#ComplexError\"\n}"
                 }
             }
         ]

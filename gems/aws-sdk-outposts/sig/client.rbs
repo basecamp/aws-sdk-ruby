@@ -203,6 +203,7 @@ module Aws
         def capacity_task_id: () -> ::String
         def outpost_id: () -> ::String
         def order_id: () -> ::String
+        def asset_id: () -> ::String
         def requested_instance_pools: () -> ::Array[Types::InstanceTypeCapacity]
         def instances_to_exclude: () -> Types::InstancesToExclude
         def dry_run: () -> bool
@@ -285,6 +286,7 @@ module Aws
       def get_outpost_supported_instance_types: (
                                                   outpost_identifier: ::String,
                                                   ?order_id: ::String,
+                                                  ?asset_id: ::String,
                                                   ?max_results: ::Integer,
                                                   ?next_token: ::String
                                                 ) -> _GetOutpostSupportedInstanceTypesResponseSuccess
@@ -446,6 +448,7 @@ module Aws
         def capacity_task_id: () -> ::String
         def outpost_id: () -> ::String
         def order_id: () -> ::String
+        def asset_id: () -> ::String
         def requested_instance_pools: () -> ::Array[Types::InstanceTypeCapacity]
         def instances_to_exclude: () -> Types::InstancesToExclude
         def dry_run: () -> bool
@@ -460,6 +463,7 @@ module Aws
       def start_capacity_task: (
                                  outpost_identifier: ::String,
                                  ?order_id: ::String,
+                                 ?asset_id: ::String,
                                  instance_pools: Array[
                                    {
                                      instance_type: ::String,

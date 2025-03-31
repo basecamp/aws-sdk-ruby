@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.114.0 (2025-03-31)
+------------------
+
+* Feature - Add WebAppEndpointPolicy support for WebApps
+
 1.113.0 (2025-02-18)
 ------------------
 

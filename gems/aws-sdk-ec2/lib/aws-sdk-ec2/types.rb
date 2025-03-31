@@ -2396,6 +2396,44 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @!attribute [rw] route_server_id
+    #   The unique identifier for the route server to be associated.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_id
+    #   The ID of the VPC to associate with the route server.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AssociateRouteServerRequest AWS API Documentation
+    #
+    class AssociateRouteServerRequest < Struct.new(
+      :route_server_id,
+      :vpc_id,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_association
+    #   Information about the association between the route server and the
+    #   VPC.
+    #   @return [Types::RouteServerAssociation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AssociateRouteServerResult AWS API Documentation
+    #
+    class AssociateRouteServerResult < Struct.new(
+      :route_server_association)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] gateway_id
     #   The ID of the internet gateway or virtual private gateway.
     #   @return [String]
@@ -7082,6 +7120,9 @@ module Aws::EC2
     #   of the request. For more information, see [Ensuring idempotency][1]
     #   in the *Amazon EC2 API Reference*.
     #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #
     #
     #
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html
@@ -11493,6 +11534,183 @@ module Aws::EC2
     #
     class CreateRouteResult < Struct.new(
       :return)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_id
+    #   The ID of the route server for which to create an endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] subnet_id
+    #   The ID of the subnet in which to create the route server endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   Unique, case-sensitive identifier to ensure idempotency of the
+    #   request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] tag_specifications
+    #   The tags to apply to the route server endpoint during creation.
+    #   @return [Array<Types::TagSpecification>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateRouteServerEndpointRequest AWS API Documentation
+    #
+    class CreateRouteServerEndpointRequest < Struct.new(
+      :route_server_id,
+      :subnet_id,
+      :client_token,
+      :dry_run,
+      :tag_specifications)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_endpoint
+    #   Information about the created route server endpoint.
+    #   @return [Types::RouteServerEndpoint]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateRouteServerEndpointResult AWS API Documentation
+    #
+    class CreateRouteServerEndpointResult < Struct.new(
+      :route_server_endpoint)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_endpoint_id
+    #   The ID of the route server endpoint for which to create a peer.
+    #   @return [String]
+    #
+    # @!attribute [rw] peer_address
+    #   The IPv4 address of the peer.
+    #   @return [String]
+    #
+    # @!attribute [rw] bgp_options
+    #   The BGP options for the peer, including ASN (Autonomous System
+    #   Number) and BFD (Bidrectional Forwarding Detection) settings.
+    #   @return [Types::RouteServerBgpOptionsRequest]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] tag_specifications
+    #   The tags to apply to the route server peer during creation.
+    #   @return [Array<Types::TagSpecification>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateRouteServerPeerRequest AWS API Documentation
+    #
+    class CreateRouteServerPeerRequest < Struct.new(
+      :route_server_endpoint_id,
+      :peer_address,
+      :bgp_options,
+      :dry_run,
+      :tag_specifications)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_peer
+    #   Information about the created route server peer.
+    #   @return [Types::RouteServerPeer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateRouteServerPeerResult AWS API Documentation
+    #
+    class CreateRouteServerPeerResult < Struct.new(
+      :route_server_peer)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] amazon_side_asn
+    #   The private Autonomous System Number (ASN) for the Amazon side of
+    #   the BGP session. Valid values are from 1 to 4294967295. We recommend
+    #   using a private ASN in the 64512–65534 (16-bit ASN) or
+    #   4200000000–4294967294 (32-bit ASN) range.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] client_token
+    #   Unique, case-sensitive identifier to ensure idempotency of the
+    #   request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] persist_routes
+    #   Indicates whether routes should be persisted after all BGP sessions
+    #   are terminated.
+    #   @return [String]
+    #
+    # @!attribute [rw] persist_routes_duration
+    #   The number of minutes a route server will wait after BGP is
+    #   re-established to unpersist the routes in the FIB and RIB. Value
+    #   must be in the range of 1-5. Required if PersistRoutes is `enabled`.
+    #
+    #   If you set the duration to 1 minute, then when your network
+    #   appliance re-establishes BGP with route server, it has 1 minute to
+    #   relearn it's adjacent network and advertise those routes to route
+    #   server before route server resumes normal functionality. In most
+    #   cases, 1 minute is probably sufficient. If, however, you have
+    #   concerns that your BGP network may not be capable of fully
+    #   re-establishing and re-learning everything in 1 minute, you can
+    #   increase the duration up to 5 minutes.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] sns_notifications_enabled
+    #   Indicates whether SNS notifications should be enabled for route
+    #   server events. Enabling SNS notifications persists BGP status
+    #   changes to an SNS topic provisioned by Amazon Web Services.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] tag_specifications
+    #   The tags to apply to the route server during creation.
+    #   @return [Array<Types::TagSpecification>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateRouteServerRequest AWS API Documentation
+    #
+    class CreateRouteServerRequest < Struct.new(
+      :amazon_side_asn,
+      :client_token,
+      :dry_run,
+      :persist_routes,
+      :persist_routes_duration,
+      :sns_notifications_enabled,
+      :tag_specifications)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server
+    #   Information about the created route server.
+    #   @return [Types::RouteServer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateRouteServerResult AWS API Documentation
+    #
+    class CreateRouteServerResult < Struct.new(
+      :route_server)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -16388,6 +16606,102 @@ module Aws::EC2
       :route_table_id,
       :destination_cidr_block,
       :destination_ipv_6_cidr_block)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_endpoint_id
+    #   The ID of the route server endpoint to delete.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteRouteServerEndpointRequest AWS API Documentation
+    #
+    class DeleteRouteServerEndpointRequest < Struct.new(
+      :route_server_endpoint_id,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_endpoint
+    #   Information about the deleted route server endpoint.
+    #   @return [Types::RouteServerEndpoint]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteRouteServerEndpointResult AWS API Documentation
+    #
+    class DeleteRouteServerEndpointResult < Struct.new(
+      :route_server_endpoint)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_peer_id
+    #   The ID of the route server peer to delete.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteRouteServerPeerRequest AWS API Documentation
+    #
+    class DeleteRouteServerPeerRequest < Struct.new(
+      :route_server_peer_id,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_peer
+    #   Information about the deleted route server peer.
+    #   @return [Types::RouteServerPeer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteRouteServerPeerResult AWS API Documentation
+    #
+    class DeleteRouteServerPeerResult < Struct.new(
+      :route_server_peer)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_id
+    #   The ID of the route server to delete.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteRouteServerRequest AWS API Documentation
+    #
+    class DeleteRouteServerRequest < Struct.new(
+      :route_server_id,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server
+    #   Information about the deleted route server.
+    #   @return [Types::RouteServer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteRouteServerResult AWS API Documentation
+    #
+    class DeleteRouteServerResult < Struct.new(
+      :route_server)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -25956,6 +26270,165 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @!attribute [rw] route_server_endpoint_ids
+    #   The IDs of the route server endpoints to describe.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return with a single call.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] filters
+    #   One or more filters to apply to the describe request.
+    #   @return [Array<Types::Filter>]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeRouteServerEndpointsRequest AWS API Documentation
+    #
+    class DescribeRouteServerEndpointsRequest < Struct.new(
+      :route_server_endpoint_ids,
+      :next_token,
+      :max_results,
+      :filters,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_endpoints
+    #   Information about the described route server endpoints.
+    #   @return [Array<Types::RouteServerEndpoint>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use to retrieve the next page of results. This value is
+    #   `null` when there are no more results to return.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeRouteServerEndpointsResult AWS API Documentation
+    #
+    class DescribeRouteServerEndpointsResult < Struct.new(
+      :route_server_endpoints,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_peer_ids
+    #   The IDs of the route server peers to describe.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return with a single call.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] filters
+    #   One or more filters to apply to the describe request.
+    #   @return [Array<Types::Filter>]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeRouteServerPeersRequest AWS API Documentation
+    #
+    class DescribeRouteServerPeersRequest < Struct.new(
+      :route_server_peer_ids,
+      :next_token,
+      :max_results,
+      :filters,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_peers
+    #   Information about the described route server peers.
+    #   @return [Array<Types::RouteServerPeer>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use to retrieve the next page of results. This value is
+    #   `null` when there are no more results to return.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeRouteServerPeersResult AWS API Documentation
+    #
+    class DescribeRouteServerPeersResult < Struct.new(
+      :route_server_peers,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_ids
+    #   The IDs of the route servers to describe.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return with a single call.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] filters
+    #   One or more filters to apply to the describe request.
+    #   @return [Array<Types::Filter>]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeRouteServersRequest AWS API Documentation
+    #
+    class DescribeRouteServersRequest < Struct.new(
+      :route_server_ids,
+      :next_token,
+      :max_results,
+      :filters,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_servers
+    #   Information about the described route servers.
+    #   @return [Array<Types::RouteServer>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use to retrieve the next page of results. This value is
+    #   `null` when there are no more results to return.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeRouteServersResult AWS API Documentation
+    #
+    class DescribeRouteServersResult < Struct.new(
+      :route_servers,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] next_token
     #   The token returned from a previous paginated request. Pagination
     #   continues from the end of the items returned by the previous
@@ -31525,6 +31998,44 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @!attribute [rw] route_server_id
+    #   The ID of the route server for which to disable propagation.
+    #   @return [String]
+    #
+    # @!attribute [rw] route_table_id
+    #   The ID of the route table for which to disable route server
+    #   propagation.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisableRouteServerPropagationRequest AWS API Documentation
+    #
+    class DisableRouteServerPropagationRequest < Struct.new(
+      :route_server_id,
+      :route_table_id,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_propagation
+    #   Information about the disabled route server propagation.
+    #   @return [Types::RouteServerPropagation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisableRouteServerPropagationResult AWS API Documentation
+    #
+    class DisableRouteServerPropagationResult < Struct.new(
+      :route_server_propagation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -32029,6 +32540,43 @@ module Aws::EC2
     class DisassociateNatGatewayAddressResult < Struct.new(
       :nat_gateway_id,
       :nat_gateway_addresses)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_id
+    #   The ID of the route server to disassociate.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_id
+    #   The ID of the VPC to disassociate from the route server.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisassociateRouteServerRequest AWS API Documentation
+    #
+    class DisassociateRouteServerRequest < Struct.new(
+      :route_server_id,
+      :vpc_id,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_association
+    #   Information about the disassociated route server.
+    #   @return [Types::RouteServerAssociation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisassociateRouteServerResult AWS API Documentation
+    #
+    class DisassociateRouteServerResult < Struct.new(
+      :route_server_association)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -33361,12 +33909,12 @@ module Aws::EC2
     #
     # @!attribute [rw] ena_srd_enabled
     #   Specifies whether ENA Express is enabled for the network interface
-    #   when you launch an instance from your launch template.
+    #   when you launch an instance.
     #   @return [Boolean]
     #
     # @!attribute [rw] ena_srd_udp_specification
-    #   Contains ENA Express settings for UDP network traffic in your launch
-    #   template.
+    #   Contains ENA Express settings for UDP network traffic for the
+    #   network interface attached to the instance.
     #   @return [Types::EnaSrdUdpSpecificationRequest]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnaSrdSpecificationRequest AWS API Documentation
@@ -33406,7 +33954,7 @@ module Aws::EC2
     #   Indicates whether UDP traffic uses ENA Express for your instance. To
     #   ensure that UDP traffic can use ENA Express when you launch an
     #   instance, you must also set **EnaSrdEnabled** in the
-    #   **EnaSrdSpecificationRequest** to `true` in your launch template.
+    #   **EnaSrdSpecificationRequest** to `true`.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnaSrdUdpSpecificationRequest AWS API Documentation
@@ -34070,6 +34618,44 @@ module Aws::EC2
     #
     class EnableReachabilityAnalyzerOrganizationSharingResult < Struct.new(
       :return_value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_id
+    #   The ID of the route server for which to enable propagation.
+    #   @return [String]
+    #
+    # @!attribute [rw] route_table_id
+    #   The ID of the route table to which route server will propagate
+    #   routes.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableRouteServerPropagationRequest AWS API Documentation
+    #
+    class EnableRouteServerPropagationRequest < Struct.new(
+      :route_server_id,
+      :route_table_id,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_propagation
+    #   Information about the enabled route server propagation.
+    #   @return [Types::RouteServerPropagation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableRouteServerPropagationResult AWS API Documentation
+    #
+    class EnableRouteServerPropagationResult < Struct.new(
+      :route_server_propagation)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -38851,6 +39437,136 @@ module Aws::EC2
       :target_configuration_value_rollup,
       :target_configuration_value_set,
       :validation_failure_reason)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_id
+    #   The ID of the route server for which to get association information.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetRouteServerAssociationsRequest AWS API Documentation
+    #
+    class GetRouteServerAssociationsRequest < Struct.new(
+      :route_server_id,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_associations
+    #   Information about the associations for the specified route server.
+    #   @return [Array<Types::RouteServerAssociation>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetRouteServerAssociationsResult AWS API Documentation
+    #
+    class GetRouteServerAssociationsResult < Struct.new(
+      :route_server_associations)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_id
+    #   The ID of the route server for which to get propagation information.
+    #   @return [String]
+    #
+    # @!attribute [rw] route_table_id
+    #   The ID of the route table for which to get propagation information.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetRouteServerPropagationsRequest AWS API Documentation
+    #
+    class GetRouteServerPropagationsRequest < Struct.new(
+      :route_server_id,
+      :route_table_id,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_propagations
+    #   Information about the route propagations for the specified route
+    #   server.
+    #   @return [Array<Types::RouteServerPropagation>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetRouteServerPropagationsResult AWS API Documentation
+    #
+    class GetRouteServerPropagationsResult < Struct.new(
+      :route_server_propagations)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server_id
+    #   The ID of the route server for which to get the routing database.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of routing database entries to return in a single
+    #   response.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] filters
+    #   Filters to apply to the routing database query.
+    #   @return [Array<Types::Filter>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetRouteServerRoutingDatabaseRequest AWS API Documentation
+    #
+    class GetRouteServerRoutingDatabaseRequest < Struct.new(
+      :route_server_id,
+      :next_token,
+      :max_results,
+      :dry_run,
+      :filters)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] are_routes_persisted
+    #   Indicates whether routes are being persisted in the routing
+    #   database.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] routes
+    #   The collection of routes in the route server's routing database.
+    #   @return [Array<Types::RouteServerRoute>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use to retrieve the next page of results. This value is
+    #   `null` when there are no more results to return.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetRouteServerRoutingDatabaseResult AWS API Documentation
+    #
+    class GetRouteServerRoutingDatabaseResult < Struct.new(
+      :are_routes_persisted,
+      :routes,
+      :next_token)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -53223,6 +53939,77 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @!attribute [rw] route_server_id
+    #   The ID of the route server to modify.
+    #   @return [String]
+    #
+    # @!attribute [rw] persist_routes
+    #   Specifies whether to persist routes after all BGP sessions are
+    #   terminated.
+    #
+    #   * enable: Routes will be persisted in FIB and RIB after all BGP
+    #     sessions are terminated.
+    #
+    #   * disable: Routes will not be persisted in FIB and RIB after all BGP
+    #     sessions are terminated.
+    #
+    #   * reset: If a route server has persisted routes due to all BGP
+    #     sessions having ended, reset will withdraw all routes and reset
+    #     route server to an empty FIB and RIB.
+    #   @return [String]
+    #
+    # @!attribute [rw] persist_routes_duration
+    #   The number of minutes a route server will wait after BGP is
+    #   re-established to unpersist the routes in the FIB and RIB. Value
+    #   must be in the range of 1-5. Required if PersistRoutes is `enabled`.
+    #
+    #   If you set the duration to 1 minute, then when your network
+    #   appliance re-establishes BGP with route server, it has 1 minute to
+    #   relearn it's adjacent network and advertise those routes to route
+    #   server before route server resumes normal functionality. In most
+    #   cases, 1 minute is probably sufficient. If, however, you have
+    #   concerns that your BGP network may not be capable of fully
+    #   re-establishing and re-learning everything in 1 minute, you can
+    #   increase the duration up to 5 minutes.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] sns_notifications_enabled
+    #   Specifies whether to enable SNS notifications for route server
+    #   events. Enabling SNS notifications persists BGP status changes to an
+    #   SNS topic provisioned by Amazon Web Services.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] dry_run
+    #   A check for whether you have the required permissions for the action
+    #   without actually making the request and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyRouteServerRequest AWS API Documentation
+    #
+    class ModifyRouteServerRequest < Struct.new(
+      :route_server_id,
+      :persist_routes,
+      :persist_routes_duration,
+      :sns_notifications_enabled,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] route_server
+    #   Information about the modified route server.
+    #   @return [Types::RouteServer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyRouteServerResult AWS API Documentation
+    #
+    class ModifyRouteServerResult < Struct.new(
+      :route_server)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] group_id
     #   The ID of the security group.
     #   @return [String]
@@ -63741,6 +64528,507 @@ module Aws::EC2
       :state,
       :vpc_peering_connection_id,
       :core_network_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a route server and its configuration.
+    #
+    # Amazon VPC Route Server simplifies routing for traffic between
+    # workloads that are deployed within a VPC and its internet gateways.
+    # With this feature, VPC Route Server dynamically updates VPC and
+    # gateway route tables with your preferred IPv4 or IPv6 routes to
+    # achieve routing fault tolerance for those workloads. This enables you
+    # to automatically reroute traffic within a VPC, which increases the
+    # manageability of VPC routing and interoperability with third-party
+    # workloads.
+    #
+    # Route server supports the follow route table types:
+    #
+    # * VPC route tables
+    #
+    # * Subnet route tables
+    #
+    # * Internet gateway route tables
+    #
+    # Route server does not support route tables associated with virtual
+    # private gateways. To propagate routes into a transit gateway route
+    # table, use [Transit Gateway Connect][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/vpc/latest/tgw/tgw-connect.html
+    #
+    # @!attribute [rw] route_server_id
+    #   The unique identifier of the route server.
+    #   @return [String]
+    #
+    # @!attribute [rw] amazon_side_asn
+    #   The Border Gateway Protocol (BGP) Autonomous System Number (ASN) for
+    #   the appliance. Valid values are from 1 to 4294967295. We recommend
+    #   using a private ASN in the 64512–65534 (16-bit ASN) or
+    #   4200000000–4294967294 (32-bit ASN) range.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] state
+    #   The current state of the route server.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   Any tags assigned to the route server.
+    #   @return [Array<Types::Tag>]
+    #
+    # @!attribute [rw] persist_routes_state
+    #   The current state of route persistence for the route server.
+    #   @return [String]
+    #
+    # @!attribute [rw] persist_routes_duration
+    #   The number of minutes a route server will wait after BGP is
+    #   re-established to unpersist the routes in the FIB and RIB. Value
+    #   must be in the range of 1-5. The default value is 1. Only valid if
+    #   `persistRoutesState` is 'enabled'.
+    #
+    #   If you set the duration to 1 minute, then when your network
+    #   appliance re-establishes BGP with route server, it has 1 minute to
+    #   relearn it's adjacent network and advertise those routes to route
+    #   server before route server resumes normal functionality. In most
+    #   cases, 1 minute is probably sufficient. If, however, you have
+    #   concerns that your BGP network may not be capable of fully
+    #   re-establishing and re-learning everything in 1 minute, you can
+    #   increase the duration up to 5 minutes.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] sns_notifications_enabled
+    #   Indicates whether SNS notifications are enabled for the route
+    #   server. Enabling SNS notifications persists BGP status changes to an
+    #   SNS topic provisioned by Amazon Web Services.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] sns_topic_arn
+    #   The ARN of the SNS topic where notifications are published.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RouteServer AWS API Documentation
+    #
+    class RouteServer < Struct.new(
+      :route_server_id,
+      :amazon_side_asn,
+      :state,
+      :tags,
+      :persist_routes_state,
+      :persist_routes_duration,
+      :sns_notifications_enabled,
+      :sns_topic_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the association between a route server and a VPC.
+    #
+    # A route server association is the connection established between a
+    # route server and a VPC. This is a fundamental configuration step that
+    # enables the route server to work with appliances in your VPC.
+    #
+    # @!attribute [rw] route_server_id
+    #   The ID of the associated route server.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_id
+    #   The ID of the associated VPC.
+    #   @return [String]
+    #
+    # @!attribute [rw] state
+    #   The current state of the association.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RouteServerAssociation AWS API Documentation
+    #
+    class RouteServerAssociation < Struct.new(
+      :route_server_id,
+      :vpc_id,
+      :state)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The current status of Bidirectional Forwarding Detection (BFD) for a
+    # BGP session.
+    #
+    # @!attribute [rw] status
+    #   The operational status of the BFD session.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RouteServerBfdStatus AWS API Documentation
+    #
+    class RouteServerBfdStatus < Struct.new(
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The BGP configuration options for a route server peer.
+    #
+    # @!attribute [rw] peer_asn
+    #   The Border Gateway Protocol (BGP) Autonomous System Number (ASN) for
+    #   the appliance. Valid values are from 1 to 4294967295. We recommend
+    #   using a private ASN in the 64512–65534 (16-bit ASN) or
+    #   4200000000–4294967294 (32-bit ASN) range.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] peer_liveness_detection
+    #   The liveness detection protocol used for the BGP peer.
+    #
+    #   The requested liveness detection protocol for the BGP peer.
+    #
+    #   * `bgp-keepalive`: The standard BGP keep alive mechanism
+    #     ([RFC4271][1]) that is stable but may take longer to fail-over in
+    #     cases of network impact or router failure.
+    #
+    #   * `bfd`: An additional Bidirectional Forwarding Detection (BFD)
+    #     protocol ([RFC5880][2]) that enables fast failover by using more
+    #     sensitive liveness detection.
+    #
+    #   Defaults to `bgp-keepalive`.
+    #
+    #
+    #
+    #   [1]: https://www.rfc-editor.org/rfc/rfc4271#page-21
+    #   [2]: https://www.rfc-editor.org/rfc/rfc5880
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RouteServerBgpOptions AWS API Documentation
+    #
+    class RouteServerBgpOptions < Struct.new(
+      :peer_asn,
+      :peer_liveness_detection)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The BGP configuration options requested for a route server peer.
+    #
+    # @!attribute [rw] peer_asn
+    #   The Border Gateway Protocol (BGP) Autonomous System Number (ASN) for
+    #   the appliance. Valid values are from 1 to 4294967295. We recommend
+    #   using a private ASN in the 64512–65534 (16-bit ASN) or
+    #   4200000000–4294967294 (32-bit ASN) range.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] peer_liveness_detection
+    #   The requested liveness detection protocol for the BGP peer.
+    #
+    #   * `bgp-keepalive`: The standard BGP keep alive mechanism
+    #     ([RFC4271][1]) that is stable but may take longer to fail-over in
+    #     cases of network impact or router failure.
+    #
+    #   * `bfd`: An additional Bidirectional Forwarding Detection (BFD)
+    #     protocol ([RFC5880][2]) that enables fast failover by using more
+    #     sensitive liveness detection.
+    #
+    #   Defaults to `bgp-keepalive`.
+    #
+    #
+    #
+    #   [1]: https://www.rfc-editor.org/rfc/rfc4271#page-21
+    #   [2]: https://www.rfc-editor.org/rfc/rfc5880
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RouteServerBgpOptionsRequest AWS API Documentation
+    #
+    class RouteServerBgpOptionsRequest < Struct.new(
+      :peer_asn,
+      :peer_liveness_detection)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The current status of a BGP session.
+    #
+    # @!attribute [rw] status
+    #   The operational status of the BGP session. The status enables you to
+    #   monitor session liveness if you lack monitoring on your
+    #   router/appliance.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RouteServerBgpStatus AWS API Documentation
+    #
+    class RouteServerBgpStatus < Struct.new(
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a route server endpoint and its properties.
+    #
+    # A route server endpoint is an Amazon Web Services-managed component
+    # inside a subnet that facilitates BGP (Border Gateway Protocol)
+    # connections between your route server and your BGP peers. Create two
+    # endpoints per subnet for redundancy.
+    #
+    # @!attribute [rw] route_server_id
+    #   The ID of the route server associated with this endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] route_server_endpoint_id
+    #   The unique identifier of the route server endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_id
+    #   The ID of the VPC containing the endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] subnet_id
+    #   The ID of the subnet to place the route server endpoint into.
+    #   @return [String]
+    #
+    # @!attribute [rw] eni_id
+    #   The ID of the Elastic network interface for the endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] eni_address
+    #   The IP address of the Elastic network interface for the endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] state
+    #   The current state of the route server endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] failure_reason
+    #   The reason for any failure in endpoint creation or operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   Any tags assigned to the route server endpoint.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RouteServerEndpoint AWS API Documentation
+    #
+    class RouteServerEndpoint < Struct.new(
+      :route_server_id,
+      :route_server_endpoint_id,
+      :vpc_id,
+      :subnet_id,
+      :eni_id,
+      :eni_address,
+      :state,
+      :failure_reason,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a BGP peer configuration for a route server endpoint.
+    #
+    # A route server peer is a network appliance or function deployed in
+    # Amazon Web Services, such as firewall appliances and other network
+    # security functions, that meet these requirements:
+    #
+    # * Have an elastic network interface in the VPC
+    #
+    # * Support BGP (Border Gateway Protocol)
+    #
+    # * Can initiate BGP sessions
+    #
+    # @!attribute [rw] route_server_peer_id
+    #   The unique identifier of the route server peer.
+    #   @return [String]
+    #
+    # @!attribute [rw] route_server_endpoint_id
+    #   The ID of the route server endpoint associated with this peer.
+    #   @return [String]
+    #
+    # @!attribute [rw] route_server_id
+    #   The ID of the route server associated with this peer.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_id
+    #   The ID of the VPC containing the route server peer.
+    #   @return [String]
+    #
+    # @!attribute [rw] subnet_id
+    #   The ID of the subnet containing the route server peer.
+    #   @return [String]
+    #
+    # @!attribute [rw] state
+    #   The current state of the route server peer.
+    #   @return [String]
+    #
+    # @!attribute [rw] failure_reason
+    #   The reason for any failure in peer creation or operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] endpoint_eni_id
+    #   The ID of the Elastic network interface for the route server
+    #   endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] endpoint_eni_address
+    #   The IP address of the Elastic network interface for the route server
+    #   endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] peer_address
+    #   The IPv4 address of the peer.
+    #   @return [String]
+    #
+    # @!attribute [rw] bgp_options
+    #   The BGP configuration options for this peer, including ASN
+    #   (Autonomous System Number) and BFD (Bidrectional Forwarding
+    #   Detection) settings.
+    #   @return [Types::RouteServerBgpOptions]
+    #
+    # @!attribute [rw] bgp_status
+    #   The current status of the BGP session with this peer.
+    #   @return [Types::RouteServerBgpStatus]
+    #
+    # @!attribute [rw] bfd_status
+    #   The current status of the BFD session with this peer.
+    #   @return [Types::RouteServerBfdStatus]
+    #
+    # @!attribute [rw] tags
+    #   Any tags assigned to the route server peer.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RouteServerPeer AWS API Documentation
+    #
+    class RouteServerPeer < Struct.new(
+      :route_server_peer_id,
+      :route_server_endpoint_id,
+      :route_server_id,
+      :vpc_id,
+      :subnet_id,
+      :state,
+      :failure_reason,
+      :endpoint_eni_id,
+      :endpoint_eni_address,
+      :peer_address,
+      :bgp_options,
+      :bgp_status,
+      :bfd_status,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the route propagation configuration between a route server
+    # and a route table.
+    #
+    # When enabled, route server propagation installs the routes in the FIB
+    # on the route table you've specified. Route server supports IPv4 and
+    # IPv6 route propagation.
+    #
+    # @!attribute [rw] route_server_id
+    #   The ID of the route server configured for route propagation.
+    #   @return [String]
+    #
+    # @!attribute [rw] route_table_id
+    #   The ID of the route table configured for route server propagation.
+    #   @return [String]
+    #
+    # @!attribute [rw] state
+    #   The current state of route propagation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RouteServerPropagation AWS API Documentation
+    #
+    class RouteServerPropagation < Struct.new(
+      :route_server_id,
+      :route_table_id,
+      :state)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a route in the route server's routing database.
+    #
+    # @!attribute [rw] route_server_endpoint_id
+    #   The ID of the route server endpoint that received this route.
+    #   @return [String]
+    #
+    # @!attribute [rw] route_server_peer_id
+    #   The ID of the route server peer that advertised this route.
+    #   @return [String]
+    #
+    # @!attribute [rw] route_installation_details
+    #   Details about the installation status of this route in route tables.
+    #   @return [Array<Types::RouteServerRouteInstallationDetail>]
+    #
+    # @!attribute [rw] route_status
+    #   The current status of the route in the routing database. Values are
+    #   `in-rib` or `in-fib` depending on if the routes are in the RIB or
+    #   the FIB database.
+    #
+    #   The [Routing Information Base (RIB)][1] serves as a database that
+    #   stores all the routing information and network topology data
+    #   collected by a router or routing system, such as routes learned from
+    #   BGP peers. The RIB is constantly updated as new routing information
+    #   is received or existing routes change. This ensures that the route
+    #   server always has the most current view of the network topology and
+    #   can make optimal routing decisions.
+    #
+    #   The [Forwarding Information Base (FIB)][2] serves as a forwarding
+    #   table for what route server has determined are the best-path routes
+    #   in the RIB after evaluating all available routing information and
+    #   policies. The FIB routes that are installed on the route tables. The
+    #   FIB is recomputed whenever there are changes to the RIB.
+    #
+    #
+    #
+    #   [1]: https://en.wikipedia.org/wiki/Routing_table
+    #   [2]: https://en.wikipedia.org/wiki/Forwarding_information_base
+    #   @return [String]
+    #
+    # @!attribute [rw] prefix
+    #   The destination CIDR block of the route.
+    #   @return [String]
+    #
+    # @!attribute [rw] as_paths
+    #   The AS path attributes of the BGP route.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] med
+    #   The Multi-Exit Discriminator (MED) value of the BGP route.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_hop_ip
+    #   The IP address for the next hop.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RouteServerRoute AWS API Documentation
+    #
+    class RouteServerRoute < Struct.new(
+      :route_server_endpoint_id,
+      :route_server_peer_id,
+      :route_installation_details,
+      :route_status,
+      :prefix,
+      :as_paths,
+      :med,
+      :next_hop_ip)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the installation status of a route in a route table.
+    #
+    # @!attribute [rw] route_table_id
+    #   The ID of the route table where the route is being installed.
+    #   @return [String]
+    #
+    # @!attribute [rw] route_installation_status
+    #   The current installation status of the route in the route table.
+    #   @return [String]
+    #
+    # @!attribute [rw] route_installation_status_reason
+    #   The reason for the current installation status of the route.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RouteServerRouteInstallationDetail AWS API Documentation
+    #
+    class RouteServerRouteInstallationDetail < Struct.new(
+      :route_table_id,
+      :route_installation_status,
+      :route_installation_status_reason)
       SENSITIVE = []
       include Aws::Structure
     end

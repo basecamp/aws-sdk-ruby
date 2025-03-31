@@ -364,6 +364,7 @@ module Aws::Transfer
     VpcId = Shapes::StringShape.new(name: 'VpcId')
     WebAppAccessEndpoint = Shapes::StringShape.new(name: 'WebAppAccessEndpoint')
     WebAppEndpoint = Shapes::StringShape.new(name: 'WebAppEndpoint')
+    WebAppEndpointPolicy = Shapes::StringShape.new(name: 'WebAppEndpointPolicy')
     WebAppFaviconFile = Shapes::BlobShape.new(name: 'WebAppFaviconFile')
     WebAppId = Shapes::StringShape.new(name: 'WebAppId')
     WebAppIdentityProviderDetails = Shapes::UnionShape.new(name: 'WebAppIdentityProviderDetails')
@@ -511,6 +512,7 @@ module Aws::Transfer
     CreateWebAppRequest.add_member(:access_endpoint, Shapes::ShapeRef.new(shape: WebAppAccessEndpoint, location_name: "AccessEndpoint"))
     CreateWebAppRequest.add_member(:web_app_units, Shapes::ShapeRef.new(shape: WebAppUnits, location_name: "WebAppUnits"))
     CreateWebAppRequest.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "Tags"))
+    CreateWebAppRequest.add_member(:web_app_endpoint_policy, Shapes::ShapeRef.new(shape: WebAppEndpointPolicy, location_name: "WebAppEndpointPolicy"))
     CreateWebAppRequest.struct_class = Types::CreateWebAppRequest
 
     CreateWebAppResponse.add_member(:web_app_id, Shapes::ShapeRef.new(shape: WebAppId, required: true, location_name: "WebAppId"))
@@ -815,6 +817,7 @@ module Aws::Transfer
     DescribedWebApp.add_member(:web_app_endpoint, Shapes::ShapeRef.new(shape: WebAppEndpoint, location_name: "WebAppEndpoint"))
     DescribedWebApp.add_member(:web_app_units, Shapes::ShapeRef.new(shape: WebAppUnits, location_name: "WebAppUnits"))
     DescribedWebApp.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "Tags"))
+    DescribedWebApp.add_member(:web_app_endpoint_policy, Shapes::ShapeRef.new(shape: WebAppEndpointPolicy, location_name: "WebAppEndpointPolicy"))
     DescribedWebApp.struct_class = Types::DescribedWebApp
 
     DescribedWebAppCustomization.add_member(:arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "Arn"))

@@ -1231,12 +1231,26 @@ module Aws::Transfer
     # @!attribute [rw] identity_provider_details
     #   You can provide a structure that contains the details for the
     #   identity provider to use with your web app.
+    #
+    #   For more details about this parameter, see [Configure your identity
+    #   provider for Transfer Family web apps][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/transfer/latest/userguide/webapp-identity-center.html
     #   @return [Types::WebAppIdentityProviderDetails]
     #
     # @!attribute [rw] access_endpoint
     #   The `AccessEndpoint` is the URL that you provide to your users for
     #   them to interact with the Transfer Family web app. You can specify a
     #   custom URL or use the default value.
+    #
+    #   Before you enter a custom URL for this parameter, follow the steps
+    #   described in [Update your access endpoint with a custom URL][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/transfer/latest/userguide/webapp-customize.html
     #   @return [String]
     #
     # @!attribute [rw] web_app_units
@@ -1248,13 +1262,22 @@ module Aws::Transfer
     #   Key-value pairs that can be used to group and search for web apps.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] web_app_endpoint_policy
+    #   Setting for the type of endpoint policy for the web app. The default
+    #   value is `STANDARD`.
+    #
+    #   If you are creating the web app in an Amazon Web Services GovCloud
+    #   (US) Region, you can set this parameter to `FIPS`.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/CreateWebAppRequest AWS API Documentation
     #
     class CreateWebAppRequest < Struct.new(
       :identity_provider_details,
       :access_endpoint,
       :web_app_units,
-      :tags)
+      :tags,
+      :web_app_endpoint_policy)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3176,6 +3199,13 @@ module Aws::Transfer
     # @!attribute [rw] ssh_public_keys
     #   Specifies the public key portion of the Secure Shell (SSH) keys
     #   stored for the described user.
+    #
+    #   <note markdown="1"> To delete the public key body, set its value to zero keys, as shown
+    #   here:
+    #
+    #    `SshPublicKeys: []`
+    #
+    #    </note>
     #   @return [Array<Types::SshPublicKey>]
     #
     # @!attribute [rw] tags
@@ -3244,6 +3274,15 @@ module Aws::Transfer
     #   Tags are metadata attached to web apps for any purpose.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] web_app_endpoint_policy
+    #   Setting for the type of endpoint policy for the web app. The default
+    #   value is `STANDARD`.
+    #
+    #   If your web app was created in an Amazon Web Services GovCloud (US)
+    #   Region, the value of this parameter can be `FIPS`, which indicates
+    #   the web app endpoint is FIPS-compliant.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribedWebApp AWS API Documentation
     #
     class DescribedWebApp < Struct.new(
@@ -3253,7 +3292,8 @@ module Aws::Transfer
       :access_endpoint,
       :web_app_endpoint,
       :web_app_units,
-      :tags)
+      :tags,
+      :web_app_endpoint_policy)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3279,7 +3319,7 @@ module Aws::Transfer
     #   @return [String]
     #
     # @!attribute [rw] favicon_file
-    #   Returns a icon file data string (in base64 encoding).
+    #   Returns an icon file data string (in base64 encoding).
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribedWebAppCustomization AWS API Documentation
@@ -7080,7 +7120,7 @@ module Aws::Transfer
     #   @return [String]
     #
     # @!attribute [rw] favicon_file
-    #   Specify icon file data string (in base64 encoding).
+    #   Specify an icon file data string (in base64 encoding).
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateWebAppCustomizationRequest AWS API Documentation

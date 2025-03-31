@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.68.0 (2025-03-31)
+------------------
+
+* Feature - Add support for Marketplace Entitlement Service dual-stack endpoints.
+
 1.67.0 (2025-03-25)
 ------------------
 

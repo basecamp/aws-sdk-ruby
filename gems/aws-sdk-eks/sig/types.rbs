@@ -1386,7 +1386,7 @@ module Aws::EKS
     class Update
       attr_accessor id: ::String
       attr_accessor status: ("InProgress" | "Failed" | "Cancelled" | "Successful")
-      attr_accessor type: ("VersionUpdate" | "EndpointAccessUpdate" | "LoggingUpdate" | "ConfigUpdate" | "AssociateIdentityProviderConfig" | "DisassociateIdentityProviderConfig" | "AssociateEncryptionConfig" | "AddonUpdate" | "VpcConfigUpdate" | "AccessConfigUpdate" | "UpgradePolicyUpdate" | "ZonalShiftConfigUpdate" | "AutoModeUpdate")
+      attr_accessor type: ("VersionUpdate" | "EndpointAccessUpdate" | "LoggingUpdate" | "ConfigUpdate" | "AssociateIdentityProviderConfig" | "DisassociateIdentityProviderConfig" | "AssociateEncryptionConfig" | "AddonUpdate" | "VpcConfigUpdate" | "AccessConfigUpdate" | "UpgradePolicyUpdate" | "ZonalShiftConfigUpdate" | "AutoModeUpdate" | "RemoteNetworkConfigUpdate")
       attr_accessor params: ::Array[Types::UpdateParam]
       attr_accessor created_at: ::Time
       attr_accessor errors: ::Array[Types::ErrorDetail]
@@ -1440,6 +1440,7 @@ module Aws::EKS
       attr_accessor compute_config: Types::ComputeConfigRequest
       attr_accessor kubernetes_network_config: Types::KubernetesNetworkConfigRequest
       attr_accessor storage_config: Types::StorageConfigRequest
+      attr_accessor remote_network_config: Types::RemoteNetworkConfigRequest
       SENSITIVE: []
     end
 
@@ -1513,7 +1514,7 @@ module Aws::EKS
     end
 
     class UpdateParam
-      attr_accessor type: ("Version" | "PlatformVersion" | "EndpointPrivateAccess" | "EndpointPublicAccess" | "ClusterLogging" | "DesiredSize" | "LabelsToAdd" | "LabelsToRemove" | "TaintsToAdd" | "TaintsToRemove" | "MaxSize" | "MinSize" | "ReleaseVersion" | "PublicAccessCidrs" | "LaunchTemplateName" | "LaunchTemplateVersion" | "IdentityProviderConfig" | "EncryptionConfig" | "AddonVersion" | "ServiceAccountRoleArn" | "ResolveConflicts" | "MaxUnavailable" | "MaxUnavailablePercentage" | "NodeRepairEnabled" | "UpdateStrategy" | "ConfigurationValues" | "SecurityGroups" | "Subnets" | "AuthenticationMode" | "PodIdentityAssociations" | "UpgradePolicy" | "ZonalShiftConfig" | "ComputeConfig" | "StorageConfig" | "KubernetesNetworkConfig")
+      attr_accessor type: ("Version" | "PlatformVersion" | "EndpointPrivateAccess" | "EndpointPublicAccess" | "ClusterLogging" | "DesiredSize" | "LabelsToAdd" | "LabelsToRemove" | "TaintsToAdd" | "TaintsToRemove" | "MaxSize" | "MinSize" | "ReleaseVersion" | "PublicAccessCidrs" | "LaunchTemplateName" | "LaunchTemplateVersion" | "IdentityProviderConfig" | "EncryptionConfig" | "AddonVersion" | "ServiceAccountRoleArn" | "ResolveConflicts" | "MaxUnavailable" | "MaxUnavailablePercentage" | "NodeRepairEnabled" | "UpdateStrategy" | "ConfigurationValues" | "SecurityGroups" | "Subnets" | "AuthenticationMode" | "PodIdentityAssociations" | "UpgradePolicy" | "ZonalShiftConfig" | "ComputeConfig" | "StorageConfig" | "KubernetesNetworkConfig" | "RemoteNetworkConfig")
       attr_accessor value: ::String
       SENSITIVE: []
     end

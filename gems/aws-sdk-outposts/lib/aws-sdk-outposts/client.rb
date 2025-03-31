@@ -828,6 +828,7 @@ module Aws::Outposts
     #   * {Types::GetCapacityTaskOutput#capacity_task_id #capacity_task_id} => String
     #   * {Types::GetCapacityTaskOutput#outpost_id #outpost_id} => String
     #   * {Types::GetCapacityTaskOutput#order_id #order_id} => String
+    #   * {Types::GetCapacityTaskOutput#asset_id #asset_id} => String
     #   * {Types::GetCapacityTaskOutput#requested_instance_pools #requested_instance_pools} => Array&lt;Types::InstanceTypeCapacity&gt;
     #   * {Types::GetCapacityTaskOutput#instances_to_exclude #instances_to_exclude} => Types::InstancesToExclude
     #   * {Types::GetCapacityTaskOutput#dry_run #dry_run} => Boolean
@@ -850,6 +851,7 @@ module Aws::Outposts
     #   resp.capacity_task_id #=> String
     #   resp.outpost_id #=> String
     #   resp.order_id #=> String
+    #   resp.asset_id #=> String
     #   resp.requested_instance_pools #=> Array
     #   resp.requested_instance_pools[0].instance_type #=> String
     #   resp.requested_instance_pools[0].count #=> Integer
@@ -1113,6 +1115,10 @@ module Aws::Outposts
     # @option params [String] :order_id
     #   The ID for the Amazon Web Services Outposts order.
     #
+    # @option params [String] :asset_id
+    #   The ID of the Outpost asset. An Outpost asset can be a single server
+    #   within an Outposts rack or an Outposts server configuration.
+    #
     # @option params [Integer] :max_results
     #   The maximum page size.
     #
@@ -1131,6 +1137,7 @@ module Aws::Outposts
     #   resp = client.get_outpost_supported_instance_types({
     #     outpost_identifier: "OutpostIdentifier", # required
     #     order_id: "OrderId",
+    #     asset_id: "AssetIdInput",
     #     max_results: 1,
     #     next_token: "Token",
     #   })
@@ -1467,6 +1474,7 @@ module Aws::Outposts
     #   resp.capacity_tasks[0].capacity_task_id #=> String
     #   resp.capacity_tasks[0].outpost_id #=> String
     #   resp.capacity_tasks[0].order_id #=> String
+    #   resp.capacity_tasks[0].asset_id #=> String
     #   resp.capacity_tasks[0].capacity_task_status #=> String, one of "REQUESTED", "IN_PROGRESS", "FAILED", "COMPLETED", "WAITING_FOR_EVACUATION", "CANCELLATION_IN_PROGRESS", "CANCELLED"
     #   resp.capacity_tasks[0].creation_date #=> Time
     #   resp.capacity_tasks[0].completion_date #=> Time
@@ -1778,6 +1786,10 @@ module Aws::Outposts
     #   The ID of the Amazon Web Services Outposts order associated with the
     #   specified capacity task.
     #
+    # @option params [String] :asset_id
+    #   The ID of the Outpost asset. An Outpost asset can be a single server
+    #   within an Outposts rack or an Outposts server configuration.
+    #
     # @option params [required, Array<Types::InstanceTypeCapacity>] :instance_pools
     #   The instance pools specified in the capacity task.
     #
@@ -1805,6 +1817,7 @@ module Aws::Outposts
     #   * {Types::StartCapacityTaskOutput#capacity_task_id #capacity_task_id} => String
     #   * {Types::StartCapacityTaskOutput#outpost_id #outpost_id} => String
     #   * {Types::StartCapacityTaskOutput#order_id #order_id} => String
+    #   * {Types::StartCapacityTaskOutput#asset_id #asset_id} => String
     #   * {Types::StartCapacityTaskOutput#requested_instance_pools #requested_instance_pools} => Array&lt;Types::InstanceTypeCapacity&gt;
     #   * {Types::StartCapacityTaskOutput#instances_to_exclude #instances_to_exclude} => Types::InstancesToExclude
     #   * {Types::StartCapacityTaskOutput#dry_run #dry_run} => Boolean
@@ -1820,6 +1833,7 @@ module Aws::Outposts
     #   resp = client.start_capacity_task({
     #     outpost_identifier: "OutpostIdentifier", # required
     #     order_id: "OrderId",
+    #     asset_id: "AssetIdInput",
     #     instance_pools: [ # required
     #       {
     #         instance_type: "InstanceTypeName", # required
@@ -1840,6 +1854,7 @@ module Aws::Outposts
     #   resp.capacity_task_id #=> String
     #   resp.outpost_id #=> String
     #   resp.order_id #=> String
+    #   resp.asset_id #=> String
     #   resp.requested_instance_pools #=> Array
     #   resp.requested_instance_pools[0].instance_type #=> String
     #   resp.requested_instance_pools[0].count #=> Integer
@@ -2336,7 +2351,7 @@ module Aws::Outposts
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-outposts'
-      context[:gem_version] = '1.78.0'
+      context[:gem_version] = '1.79.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

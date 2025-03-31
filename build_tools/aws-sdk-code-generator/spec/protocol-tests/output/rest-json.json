@@ -610,6 +610,181 @@
             "apiVersion": "2019-12-16"
         },
         "shapes": {
+            "InvalidGreeting": {
+                "type": "structure",
+                "members": {
+                    "Message": {
+                        "shape": "String"
+                    }
+                },
+                "documentation": "<p>This error is thrown when an invalid greeting value is provided.</p>",
+                "error": {
+                    "httpStatusCode": 400,
+                    "senderFault": true
+                },
+                "exception": true
+            },
+            "String": {
+                "type": "string"
+            }
+        },
+        "cases": [
+            {
+                "id": "RestJsonInvalidGreetingError",
+                "given": {
+                    "name": "GreetingWithErrors",
+                    "http": {
+                        "method": "PUT",
+                        "requestUri": "/GreetingWithErrors",
+                        "responseCode": 200
+                    },
+                    "documentation": "<p>This operation has four possible return values:</p> <ol> <li>A successful response in the form of GreetingWithErrorsOutput</li> <li>An InvalidGreeting error.</li> <li>A BadRequest error.</li> <li>A FooError.</li> </ol> <p>Implementations must be able to successfully take a response and properly (de)serialize successful and error responses based on the the presence of the</p>",
+                    "idempotent": true,
+                    "errors": [
+                        {
+                            "shape": "InvalidGreeting"
+                        }
+                    ]
+                },
+                "description": "Parses simple JSON errors",
+                "errorCode": "InvalidGreeting",
+                "errorMessage": "Hi",
+                "error": {
+                    "Message": "Hi"
+                },
+                "response": {
+                    "status_code": 400,
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "X-Amzn-Errortype": "InvalidGreeting"
+                    },
+                    "body": "{\n    \"Message\": \"Hi\"\n}"
+                }
+            }
+        ]
+    },
+    {
+        "description": "Test cases for GreetingWithErrors operation",
+        "metadata": {
+            "protocol": "rest-json",
+            "protocols": [
+                "rest-json"
+            ],
+            "apiVersion": "2019-12-16"
+        },
+        "shapes": {
+            "ComplexError": {
+                "type": "structure",
+                "members": {
+                    "Header": {
+                        "shape": "String",
+                        "location": "header",
+                        "locationName": "X-Header"
+                    },
+                    "TopLevel": {
+                        "shape": "String"
+                    },
+                    "Nested": {
+                        "shape": "ComplexNestedErrorData"
+                    }
+                },
+                "documentation": "<p>This error is thrown when a request is invalid.</p>",
+                "error": {
+                    "httpStatusCode": 403,
+                    "senderFault": true
+                },
+                "exception": true
+            },
+            "String": {
+                "type": "string"
+            },
+            "ComplexNestedErrorData": {
+                "type": "structure",
+                "members": {
+                    "Foo": {
+                        "shape": "String",
+                        "locationName": "Fooooo"
+                    }
+                }
+            }
+        },
+        "cases": [
+            {
+                "id": "RestJsonComplexErrorWithNoMessage",
+                "given": {
+                    "name": "GreetingWithErrors",
+                    "http": {
+                        "method": "PUT",
+                        "requestUri": "/GreetingWithErrors",
+                        "responseCode": 200
+                    },
+                    "documentation": "<p>This operation has four possible return values:</p> <ol> <li>A successful response in the form of GreetingWithErrorsOutput</li> <li>An InvalidGreeting error.</li> <li>A BadRequest error.</li> <li>A FooError.</li> </ol> <p>Implementations must be able to successfully take a response and properly (de)serialize successful and error responses based on the the presence of the</p>",
+                    "idempotent": true,
+                    "errors": [
+                        {
+                            "shape": "ComplexError"
+                        }
+                    ]
+                },
+                "description": "Serializes a complex error with no message member",
+                "errorCode": "ComplexError",
+                "error": {
+                    "Header": "Header",
+                    "TopLevel": "Top level",
+                    "Nested": {
+                        "Foo": "bar"
+                    }
+                },
+                "response": {
+                    "status_code": 403,
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "X-Amzn-Errortype": "ComplexError",
+                        "X-Header": "Header"
+                    },
+                    "body": "{\n    \"TopLevel\": \"Top level\",\n    \"Nested\": {\n        \"Fooooo\": \"bar\"\n    }\n}"
+                }
+            },
+            {
+                "id": "RestJsonEmptyComplexErrorWithNoMessage",
+                "given": {
+                    "name": "GreetingWithErrors",
+                    "http": {
+                        "method": "PUT",
+                        "requestUri": "/GreetingWithErrors",
+                        "responseCode": 200
+                    },
+                    "documentation": "<p>This operation has four possible return values:</p> <ol> <li>A successful response in the form of GreetingWithErrorsOutput</li> <li>An InvalidGreeting error.</li> <li>A BadRequest error.</li> <li>A FooError.</li> </ol> <p>Implementations must be able to successfully take a response and properly (de)serialize successful and error responses based on the the presence of the</p>",
+                    "idempotent": true,
+                    "errors": [
+                        {
+                            "shape": "ComplexError"
+                        }
+                    ]
+                },
+                "errorCode": "ComplexError",
+                "error": {},
+                "response": {
+                    "status_code": 403,
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "X-Amzn-Errortype": "ComplexError"
+                    },
+                    "body": "{}"
+                }
+            }
+        ]
+    },
+    {
+        "description": "Test cases for GreetingWithErrors operation",
+        "metadata": {
+            "protocol": "rest-json",
+            "protocols": [
+                "rest-json"
+            ],
+            "apiVersion": "2019-12-16"
+        },
+        "shapes": {
             "FooError": {
                 "type": "structure",
                 "members": {},
@@ -874,7 +1049,7 @@
         ]
     },
     {
-        "description": "Test cases for GreetingWithErrors operation",
+        "description": "Test cases for HttpEmptyPrefixHeaders operation",
         "metadata": {
             "protocol": "rest-json",
             "protocols": [
@@ -883,131 +1058,29 @@
             "apiVersion": "2019-12-16"
         },
         "shapes": {
-            "ComplexError": {
+            "HttpEmptyPrefixHeadersOutput": {
                 "type": "structure",
                 "members": {
-                    "Header": {
+                    "prefixHeaders": {
+                        "shape": "StringMap",
+                        "location": "headers",
+                        "locationName": ""
+                    },
+                    "specificHeader": {
                         "shape": "String",
                         "location": "header",
-                        "locationName": "X-Header"
-                    },
-                    "TopLevel": {
-                        "shape": "String"
-                    },
-                    "Nested": {
-                        "shape": "ComplexNestedErrorData"
-                    }
-                },
-                "documentation": "<p>This error is thrown when a request is invalid.</p>",
-                "error": {
-                    "httpStatusCode": 403,
-                    "senderFault": true
-                },
-                "exception": true
-            },
-            "String": {
-                "type": "string"
-            },
-            "ComplexNestedErrorData": {
-                "type": "structure",
-                "members": {
-                    "Foo": {
-                        "shape": "String",
-                        "locationName": "Fooooo"
+                        "locationName": "hello"
                     }
                 }
-            }
-        },
-        "cases": [
-            {
-                "id": "RestJsonComplexErrorWithNoMessage",
-                "given": {
-                    "name": "GreetingWithErrors",
-                    "http": {
-                        "method": "PUT",
-                        "requestUri": "/GreetingWithErrors",
-                        "responseCode": 200
-                    },
-                    "documentation": "<p>This operation has four possible return values:</p> <ol> <li>A successful response in the form of GreetingWithErrorsOutput</li> <li>An InvalidGreeting error.</li> <li>A BadRequest error.</li> <li>A FooError.</li> </ol> <p>Implementations must be able to successfully take a response and properly (de)serialize successful and error responses based on the the presence of the</p>",
-                    "idempotent": true,
-                    "errors": [
-                        {
-                            "shape": "ComplexError"
-                        }
-                    ]
-                },
-                "description": "Serializes a complex error with no message member",
-                "errorCode": "ComplexError",
-                "error": {
-                    "Header": "Header",
-                    "TopLevel": "Top level",
-                    "Nested": {
-                        "Foo": "bar"
-                    }
-                },
-                "response": {
-                    "status_code": 403,
-                    "headers": {
-                        "Content-Type": "application/json",
-                        "X-Amzn-Errortype": "ComplexError",
-                        "X-Header": "Header"
-                    },
-                    "body": "{\n    \"TopLevel\": \"Top level\",\n    \"Nested\": {\n        \"Fooooo\": \"bar\"\n    }\n}"
-                }
             },
-            {
-                "id": "RestJsonEmptyComplexErrorWithNoMessage",
-                "given": {
-                    "name": "GreetingWithErrors",
-                    "http": {
-                        "method": "PUT",
-                        "requestUri": "/GreetingWithErrors",
-                        "responseCode": 200
-                    },
-                    "documentation": "<p>This operation has four possible return values:</p> <ol> <li>A successful response in the form of GreetingWithErrorsOutput</li> <li>An InvalidGreeting error.</li> <li>A BadRequest error.</li> <li>A FooError.</li> </ol> <p>Implementations must be able to successfully take a response and properly (de)serialize successful and error responses based on the the presence of the</p>",
-                    "idempotent": true,
-                    "errors": [
-                        {
-                            "shape": "ComplexError"
-                        }
-                    ]
+            "StringMap": {
+                "type": "map",
+                "key": {
+                    "shape": "String"
                 },
-                "errorCode": "ComplexError",
-                "error": {},
-                "response": {
-                    "status_code": 403,
-                    "headers": {
-                        "Content-Type": "application/json",
-                        "X-Amzn-Errortype": "ComplexError"
-                    },
-                    "body": "{}"
+                "value": {
+                    "shape": "String"
                 }
-            }
-        ]
-    },
-    {
-        "description": "Test cases for GreetingWithErrors operation",
-        "metadata": {
-            "protocol": "rest-json",
-            "protocols": [
-                "rest-json"
-            ],
-            "apiVersion": "2019-12-16"
-        },
-        "shapes": {
-            "InvalidGreeting": {
-                "type": "structure",
-                "members": {
-                    "Message": {
-                        "shape": "String"
-                    }
-                },
-                "documentation": "<p>This error is thrown when an invalid greeting value is provided.</p>",
-                "error": {
-                    "httpStatusCode": 400,
-                    "senderFault": true
-                },
-                "exception": true
             },
             "String": {
                 "type": "string"
@@ -1015,35 +1088,33 @@
         },
         "cases": [
             {
-                "id": "RestJsonInvalidGreetingError",
+                "id": "RestJsonHttpEmptyPrefixHeadersResponseClient",
                 "given": {
-                    "name": "GreetingWithErrors",
+                    "name": "HttpEmptyPrefixHeaders",
                     "http": {
-                        "method": "PUT",
-                        "requestUri": "/GreetingWithErrors",
+                        "method": "GET",
+                        "requestUri": "/HttpEmptyPrefixHeaders",
                         "responseCode": 200
                     },
-                    "documentation": "<p>This operation has four possible return values:</p> <ol> <li>A successful response in the form of GreetingWithErrorsOutput</li> <li>An InvalidGreeting error.</li> <li>A BadRequest error.</li> <li>A FooError.</li> </ol> <p>Implementations must be able to successfully take a response and properly (de)serialize successful and error responses based on the the presence of the</p>",
-                    "idempotent": true,
-                    "errors": [
-                        {
-                            "shape": "InvalidGreeting"
-                        }
-                    ]
+                    "output": {
+                        "shape": "HttpEmptyPrefixHeadersOutput"
+                    },
+                    "documentation": "<p>Clients that perform this test extract all headers from the response.</p>"
                 },
-                "description": "Parses simple JSON errors",
-                "errorCode": "InvalidGreeting",
-                "errorMessage": "Hi",
-                "error": {
-                    "Message": "Hi"
+                "description": "Deserializes all response headers with the same for prefix and specific",
+                "result": {
+                    "prefixHeaders": {
+                        "x-foo": "Foo",
+                        "hello": "There"
+                    },
+                    "specificHeader": "There"
                 },
                 "response": {
-                    "status_code": 400,
+                    "status_code": 200,
                     "headers": {
-                        "Content-Type": "application/json",
-                        "X-Amzn-Errortype": "InvalidGreeting"
-                    },
-                    "body": "{\n    \"Message\": \"Hi\"\n}"
+                        "hello": "There",
+                        "x-foo": "Foo"
+                    }
                 }
             }
         ]

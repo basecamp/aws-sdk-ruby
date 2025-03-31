@@ -927,8 +927,8 @@ module Aws::EKS
     #   @return [Types::ZonalShiftConfigResponse]
     #
     # @!attribute [rw] remote_network_config
-    #   The configuration in the cluster for EKS Hybrid Nodes. You can't
-    #   change or update this configuration after the cluster is created.
+    #   The configuration in the cluster for EKS Hybrid Nodes. You can add,
+    #   change, or remove this configuration after the cluster is created.
     #   @return [Types::RemoteNetworkConfigResponse]
     #
     # @!attribute [rw] compute_config
@@ -1721,8 +1721,8 @@ module Aws::EKS
     #   @return [Types::ZonalShiftConfigRequest]
     #
     # @!attribute [rw] remote_network_config
-    #   The configuration in the cluster for EKS Hybrid Nodes. You can't
-    #   change or update this configuration after the cluster is created.
+    #   The configuration in the cluster for EKS Hybrid Nodes. You can add,
+    #   change, or remove this configuration after the cluster is created.
     #   @return [Types::RemoteNetworkConfigRequest]
     #
     # @!attribute [rw] compute_config
@@ -5921,8 +5921,8 @@ module Aws::EKS
       include Aws::Structure
     end
 
-    # The configuration in the cluster for EKS Hybrid Nodes. You can't
-    # change or update this configuration after the cluster is created.
+    # The configuration in the cluster for EKS Hybrid Nodes. You can add,
+    # change, or remove this configuration after the cluster is created.
     #
     # @!attribute [rw] remote_node_networks
     #   The list of network CIDRs that can contain hybrid nodes.
@@ -5992,8 +5992,8 @@ module Aws::EKS
       include Aws::Structure
     end
 
-    # The configuration in the cluster for EKS Hybrid Nodes. You can't
-    # change or update this configuration after the cluster is created.
+    # The configuration in the cluster for EKS Hybrid Nodes. You can add,
+    # change, or remove this configuration after the cluster is created.
     #
     # @!attribute [rw] remote_node_networks
     #   The list of network CIDRs that can contain hybrid nodes.
@@ -6806,6 +6806,11 @@ module Aws::EKS
     #   Auto Mode cluster. For example, enable the capability.
     #   @return [Types::StorageConfigRequest]
     #
+    # @!attribute [rw] remote_network_config
+    #   The configuration in the cluster for EKS Hybrid Nodes. You can add,
+    #   change, or remove this configuration after the cluster is created.
+    #   @return [Types::RemoteNetworkConfigRequest]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/UpdateClusterConfigRequest AWS API Documentation
     #
     class UpdateClusterConfigRequest < Struct.new(
@@ -6818,7 +6823,8 @@ module Aws::EKS
       :zonal_shift_config,
       :compute_config,
       :kubernetes_network_config,
-      :storage_config)
+      :storage_config,
+      :remote_network_config)
       SENSITIVE = []
       include Aws::Structure
     end

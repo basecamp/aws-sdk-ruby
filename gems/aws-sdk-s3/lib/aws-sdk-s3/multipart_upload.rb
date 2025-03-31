@@ -70,8 +70,10 @@ module Aws::S3
 
     # The class of storage used to store the object.
     #
-    # <note markdown="1"> **Directory buckets** - Only the S3 Express One Zone storage class is
-    # supported by directory buckets to store objects.
+    # <note markdown="1"> **Directory buckets** - Directory buckets only support
+    # `EXPRESS_ONEZONE` (the S3 Express One Zone storage class) in
+    # Availability Zones and `ONEZONE_IA` (the S3 One Zone-Infrequent Access
+    # storage class) in Dedicated Local Zones.
     #
     #  </note>
     # @return [String]

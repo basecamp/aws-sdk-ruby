@@ -309,7 +309,8 @@ module Aws
                                 key: ::String,
                                 value: ::String
                               },
-                            ]
+                            ],
+                            ?web_app_endpoint_policy: ("FIPS" | "STANDARD")
                           ) -> _CreateWebAppResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateWebAppResponseSuccess
 

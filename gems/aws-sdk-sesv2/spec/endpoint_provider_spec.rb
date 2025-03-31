@@ -681,7 +681,7 @@ module Aws::SESV2
 
     context "Valid EndpointId with dualstack enabled" do
       let(:expected) do
-        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"ses", "name"=>"sigv4a", "signingRegionSet"=>["*"]}]}, "url"=>"https://abc123.456def.endpoints.email.api.aws"}}
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"ses", "name"=>"sigv4a", "signingRegionSet"=>["*"]}]}, "url"=>"https://abc123.456def.endpoints.email.global.api.aws"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do

@@ -98,6 +98,7 @@ module Aws::S3Control
     DeleteAccessPointPolicyForObjectLambdaRequest = Shapes::StructureShape.new(name: 'DeleteAccessPointPolicyForObjectLambdaRequest')
     DeleteAccessPointPolicyRequest = Shapes::StructureShape.new(name: 'DeleteAccessPointPolicyRequest')
     DeleteAccessPointRequest = Shapes::StructureShape.new(name: 'DeleteAccessPointRequest')
+    DeleteAccessPointScopeRequest = Shapes::StructureShape.new(name: 'DeleteAccessPointScopeRequest')
     DeleteBucketLifecycleConfigurationRequest = Shapes::StructureShape.new(name: 'DeleteBucketLifecycleConfigurationRequest')
     DeleteBucketPolicyRequest = Shapes::StructureShape.new(name: 'DeleteBucketPolicyRequest')
     DeleteBucketReplicationRequest = Shapes::StructureShape.new(name: 'DeleteBucketReplicationRequest')
@@ -161,6 +162,8 @@ module Aws::S3Control
     GetAccessPointPolicyStatusResult = Shapes::StructureShape.new(name: 'GetAccessPointPolicyStatusResult')
     GetAccessPointRequest = Shapes::StructureShape.new(name: 'GetAccessPointRequest')
     GetAccessPointResult = Shapes::StructureShape.new(name: 'GetAccessPointResult')
+    GetAccessPointScopeRequest = Shapes::StructureShape.new(name: 'GetAccessPointScopeRequest')
+    GetAccessPointScopeResult = Shapes::StructureShape.new(name: 'GetAccessPointScopeResult')
     GetBucketLifecycleConfigurationRequest = Shapes::StructureShape.new(name: 'GetBucketLifecycleConfigurationRequest')
     GetBucketLifecycleConfigurationResult = Shapes::StructureShape.new(name: 'GetBucketLifecycleConfigurationResult')
     GetBucketPolicyRequest = Shapes::StructureShape.new(name: 'GetBucketPolicyRequest')
@@ -264,6 +267,8 @@ module Aws::S3Control
     ListAccessGrantsLocationsResult = Shapes::StructureShape.new(name: 'ListAccessGrantsLocationsResult')
     ListAccessGrantsRequest = Shapes::StructureShape.new(name: 'ListAccessGrantsRequest')
     ListAccessGrantsResult = Shapes::StructureShape.new(name: 'ListAccessGrantsResult')
+    ListAccessPointsForDirectoryBucketsRequest = Shapes::StructureShape.new(name: 'ListAccessPointsForDirectoryBucketsRequest')
+    ListAccessPointsForDirectoryBucketsResult = Shapes::StructureShape.new(name: 'ListAccessPointsForDirectoryBucketsResult')
     ListAccessPointsForObjectLambdaRequest = Shapes::StructureShape.new(name: 'ListAccessPointsForObjectLambdaRequest')
     ListAccessPointsForObjectLambdaResult = Shapes::StructureShape.new(name: 'ListAccessPointsForObjectLambdaResult')
     ListAccessPointsRequest = Shapes::StructureShape.new(name: 'ListAccessPointsRequest')
@@ -360,6 +365,7 @@ module Aws::S3Control
     Prefix = Shapes::StringShape.new(name: 'Prefix')
     PrefixLevel = Shapes::StructureShape.new(name: 'PrefixLevel')
     PrefixLevelStorageMetrics = Shapes::StructureShape.new(name: 'PrefixLevelStorageMetrics')
+    PrefixesList = Shapes::ListShape.new(name: 'PrefixesList')
     Priority = Shapes::IntegerShape.new(name: 'Priority')
     Privilege = Shapes::StringShape.new(name: 'Privilege')
     ProposedMultiRegionAccessPointPolicy = Shapes::StructureShape.new(name: 'ProposedMultiRegionAccessPointPolicy')
@@ -370,6 +376,7 @@ module Aws::S3Control
     PutAccessPointConfigurationForObjectLambdaRequest = Shapes::StructureShape.new(name: 'PutAccessPointConfigurationForObjectLambdaRequest')
     PutAccessPointPolicyForObjectLambdaRequest = Shapes::StructureShape.new(name: 'PutAccessPointPolicyForObjectLambdaRequest')
     PutAccessPointPolicyRequest = Shapes::StructureShape.new(name: 'PutAccessPointPolicyRequest')
+    PutAccessPointScopeRequest = Shapes::StructureShape.new(name: 'PutAccessPointScopeRequest')
     PutBucketLifecycleConfigurationRequest = Shapes::StructureShape.new(name: 'PutBucketLifecycleConfigurationRequest')
     PutBucketPolicyRequest = Shapes::StructureShape.new(name: 'PutBucketPolicyRequest')
     PutBucketReplicationRequest = Shapes::StructureShape.new(name: 'PutBucketReplicationRequest')
@@ -463,6 +470,9 @@ module Aws::S3Control
     SSEKMSKeyId = Shapes::StringShape.new(name: 'SSEKMSKeyId')
     SSES3 = Shapes::StructureShape.new(name: 'SSES3', locationName: "SSE-S3")
     SSES3Encryption = Shapes::StructureShape.new(name: 'SSES3Encryption', locationName: "SSE-S3")
+    Scope = Shapes::StructureShape.new(name: 'Scope')
+    ScopePermission = Shapes::StringShape.new(name: 'ScopePermission')
+    ScopePermissionList = Shapes::ListShape.new(name: 'ScopePermissionList')
     SecretAccessKey = Shapes::StringShape.new(name: 'SecretAccessKey')
     SelectionCriteria = Shapes::StructureShape.new(name: 'SelectionCriteria')
     SessionToken = Shapes::StringShape.new(name: 'SessionToken')
@@ -679,11 +689,12 @@ module Aws::S3Control
     CreateAccessPointForObjectLambdaResult.struct_class = Types::CreateAccessPointForObjectLambdaResult
 
     CreateAccessPointRequest.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, location: "header", location_name: "x-amz-account-id", metadata: {"contextParam"=>{"name"=>"AccountId"}}))
-    CreateAccessPointRequest.add_member(:name, Shapes::ShapeRef.new(shape: AccessPointName, required: true, location: "uri", location_name: "name"))
+    CreateAccessPointRequest.add_member(:name, Shapes::ShapeRef.new(shape: AccessPointName, required: true, location: "uri", location_name: "name", metadata: {"contextParam"=>{"name"=>"AccessPointName"}}))
     CreateAccessPointRequest.add_member(:bucket, Shapes::ShapeRef.new(shape: BucketName, required: true, location_name: "Bucket", metadata: {"contextParam"=>{"name"=>"Bucket"}}))
     CreateAccessPointRequest.add_member(:vpc_configuration, Shapes::ShapeRef.new(shape: VpcConfiguration, location_name: "VpcConfiguration"))
     CreateAccessPointRequest.add_member(:public_access_block_configuration, Shapes::ShapeRef.new(shape: PublicAccessBlockConfiguration, location_name: "PublicAccessBlockConfiguration"))
     CreateAccessPointRequest.add_member(:bucket_account_id, Shapes::ShapeRef.new(shape: AccountId, location_name: "BucketAccountId"))
+    CreateAccessPointRequest.add_member(:scope, Shapes::ShapeRef.new(shape: Scope, location_name: "Scope"))
     CreateAccessPointRequest.struct_class = Types::CreateAccessPointRequest
 
     CreateAccessPointResult.add_member(:access_point_arn, Shapes::ShapeRef.new(shape: S3AccessPointArn, location_name: "AccessPointArn"))
@@ -780,6 +791,10 @@ module Aws::S3Control
     DeleteAccessPointRequest.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, location: "header", location_name: "x-amz-account-id", metadata: {"contextParam"=>{"name"=>"AccountId"}}))
     DeleteAccessPointRequest.add_member(:name, Shapes::ShapeRef.new(shape: AccessPointName, required: true, location: "uri", location_name: "name", metadata: {"contextParam"=>{"name"=>"AccessPointName"}}))
     DeleteAccessPointRequest.struct_class = Types::DeleteAccessPointRequest
+
+    DeleteAccessPointScopeRequest.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, required: true, location: "header", location_name: "x-amz-account-id", metadata: {"contextParam"=>{"name"=>"AccountId"}, "hostLabel"=>true, "hostLabelName"=>"AccountId"}))
+    DeleteAccessPointScopeRequest.add_member(:name, Shapes::ShapeRef.new(shape: AccessPointName, required: true, location: "uri", location_name: "name", metadata: {"contextParam"=>{"name"=>"AccessPointName"}}))
+    DeleteAccessPointScopeRequest.struct_class = Types::DeleteAccessPointScopeRequest
 
     DeleteBucketLifecycleConfigurationRequest.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, location: "header", location_name: "x-amz-account-id", metadata: {"contextParam"=>{"name"=>"AccountId"}}))
     DeleteBucketLifecycleConfigurationRequest.add_member(:bucket, Shapes::ShapeRef.new(shape: BucketName, required: true, location: "uri", location_name: "name", metadata: {"contextParam"=>{"name"=>"Bucket"}}))
@@ -1000,6 +1015,13 @@ module Aws::S3Control
     GetAccessPointResult.add_member(:endpoints, Shapes::ShapeRef.new(shape: Endpoints, location_name: "Endpoints"))
     GetAccessPointResult.add_member(:bucket_account_id, Shapes::ShapeRef.new(shape: AccountId, location_name: "BucketAccountId"))
     GetAccessPointResult.struct_class = Types::GetAccessPointResult
+
+    GetAccessPointScopeRequest.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, required: true, location: "header", location_name: "x-amz-account-id", metadata: {"contextParam"=>{"name"=>"AccountId"}, "hostLabel"=>true, "hostLabelName"=>"AccountId"}))
+    GetAccessPointScopeRequest.add_member(:name, Shapes::ShapeRef.new(shape: AccessPointName, required: true, location: "uri", location_name: "name", metadata: {"contextParam"=>{"name"=>"AccessPointName"}}))
+    GetAccessPointScopeRequest.struct_class = Types::GetAccessPointScopeRequest
+
+    GetAccessPointScopeResult.add_member(:scope, Shapes::ShapeRef.new(shape: Scope, location_name: "Scope"))
+    GetAccessPointScopeResult.struct_class = Types::GetAccessPointScopeResult
 
     GetBucketLifecycleConfigurationRequest.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, location: "header", location_name: "x-amz-account-id", metadata: {"contextParam"=>{"name"=>"AccountId"}}))
     GetBucketLifecycleConfigurationRequest.add_member(:bucket, Shapes::ShapeRef.new(shape: BucketName, required: true, location: "uri", location_name: "name", metadata: {"contextParam"=>{"name"=>"Bucket"}}))
@@ -1352,6 +1374,16 @@ module Aws::S3Control
     ListAccessGrantsResult.add_member(:access_grants_list, Shapes::ShapeRef.new(shape: AccessGrantsList, location_name: "AccessGrantsList"))
     ListAccessGrantsResult.struct_class = Types::ListAccessGrantsResult
 
+    ListAccessPointsForDirectoryBucketsRequest.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, required: true, location: "header", location_name: "x-amz-account-id", metadata: {"contextParam"=>{"name"=>"AccountId"}, "hostLabel"=>true, "hostLabelName"=>"AccountId"}))
+    ListAccessPointsForDirectoryBucketsRequest.add_member(:directory_bucket, Shapes::ShapeRef.new(shape: BucketName, location: "querystring", location_name: "directoryBucket"))
+    ListAccessPointsForDirectoryBucketsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NonEmptyMaxLength1024String, location: "querystring", location_name: "nextToken"))
+    ListAccessPointsForDirectoryBucketsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListAccessPointsForDirectoryBucketsRequest.struct_class = Types::ListAccessPointsForDirectoryBucketsRequest
+
+    ListAccessPointsForDirectoryBucketsResult.add_member(:access_point_list, Shapes::ShapeRef.new(shape: AccessPointList, location_name: "AccessPointList"))
+    ListAccessPointsForDirectoryBucketsResult.add_member(:next_token, Shapes::ShapeRef.new(shape: NonEmptyMaxLength1024String, location_name: "NextToken"))
+    ListAccessPointsForDirectoryBucketsResult.struct_class = Types::ListAccessPointsForDirectoryBucketsResult
+
     ListAccessPointsForObjectLambdaRequest.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, location: "header", location_name: "x-amz-account-id", metadata: {"contextParam"=>{"name"=>"AccountId"}}))
     ListAccessPointsForObjectLambdaRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NonEmptyMaxLength1024String, location: "querystring", location_name: "nextToken"))
     ListAccessPointsForObjectLambdaRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
@@ -1557,6 +1589,8 @@ module Aws::S3Control
     PrefixLevelStorageMetrics.add_member(:selection_criteria, Shapes::ShapeRef.new(shape: SelectionCriteria, location_name: "SelectionCriteria"))
     PrefixLevelStorageMetrics.struct_class = Types::PrefixLevelStorageMetrics
 
+    PrefixesList.member = Shapes::ShapeRef.new(shape: Prefix, location_name: "Prefix")
+
     ProposedMultiRegionAccessPointPolicy.add_member(:policy, Shapes::ShapeRef.new(shape: Policy, location_name: "Policy"))
     ProposedMultiRegionAccessPointPolicy.struct_class = Types::ProposedMultiRegionAccessPointPolicy
 
@@ -1590,6 +1624,11 @@ module Aws::S3Control
     PutAccessPointPolicyRequest.add_member(:name, Shapes::ShapeRef.new(shape: AccessPointName, required: true, location: "uri", location_name: "name", metadata: {"contextParam"=>{"name"=>"AccessPointName"}}))
     PutAccessPointPolicyRequest.add_member(:policy, Shapes::ShapeRef.new(shape: Policy, required: true, location_name: "Policy"))
     PutAccessPointPolicyRequest.struct_class = Types::PutAccessPointPolicyRequest
+
+    PutAccessPointScopeRequest.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, required: true, location: "header", location_name: "x-amz-account-id", metadata: {"contextParam"=>{"name"=>"AccountId"}, "hostLabel"=>true, "hostLabelName"=>"AccountId"}))
+    PutAccessPointScopeRequest.add_member(:name, Shapes::ShapeRef.new(shape: AccessPointName, required: true, location: "uri", location_name: "name", metadata: {"contextParam"=>{"name"=>"AccessPointName"}}))
+    PutAccessPointScopeRequest.add_member(:scope, Shapes::ShapeRef.new(shape: Scope, required: true, location_name: "Scope"))
+    PutAccessPointScopeRequest.struct_class = Types::PutAccessPointScopeRequest
 
     PutBucketLifecycleConfigurationRequest.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, location: "header", location_name: "x-amz-account-id", metadata: {"contextParam"=>{"name"=>"AccountId"}}))
     PutBucketLifecycleConfigurationRequest.add_member(:bucket, Shapes::ShapeRef.new(shape: BucketName, required: true, location: "uri", location_name: "name", metadata: {"contextParam"=>{"name"=>"Bucket"}}))
@@ -1857,6 +1896,12 @@ module Aws::S3Control
     SSES3.struct_class = Types::SSES3
 
     SSES3Encryption.struct_class = Types::SSES3Encryption
+
+    Scope.add_member(:prefixes, Shapes::ShapeRef.new(shape: PrefixesList, location_name: "Prefixes"))
+    Scope.add_member(:permissions, Shapes::ShapeRef.new(shape: ScopePermissionList, location_name: "Permissions"))
+    Scope.struct_class = Types::Scope
+
+    ScopePermissionList.member = Shapes::ShapeRef.new(shape: ScopePermission, location_name: "Permission")
 
     SelectionCriteria.add_member(:delimiter, Shapes::ShapeRef.new(shape: StorageLensPrefixLevelDelimiter, location_name: "Delimiter"))
     SelectionCriteria.add_member(:max_depth, Shapes::ShapeRef.new(shape: StorageLensPrefixLevelMaxDepth, location_name: "MaxDepth"))
@@ -2292,6 +2337,14 @@ module Aws::S3Control
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
       end)
 
+      api.add_operation(:delete_access_point_scope, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteAccessPointScope"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/v20180820/accesspoint/{name}/scope"
+        o.input = Shapes::ShapeRef.new(shape: DeleteAccessPointScopeRequest)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+      end)
+
       api.add_operation(:delete_bucket, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DeleteBucket"
         o.http_method = "DELETE"
@@ -2572,6 +2625,14 @@ module Aws::S3Control
         o.output = Shapes::ShapeRef.new(shape: GetAccessPointPolicyStatusForObjectLambdaResult)
       end)
 
+      api.add_operation(:get_access_point_scope, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetAccessPointScope"
+        o.http_method = "GET"
+        o.http_request_uri = "/v20180820/accesspoint/{name}/scope"
+        o.input = Shapes::ShapeRef.new(shape: GetAccessPointScopeRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetAccessPointScopeResult)
+      end)
+
       api.add_operation(:get_bucket, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetBucket"
         o.http_method = "GET"
@@ -2808,6 +2869,20 @@ module Aws::S3Control
         )
       end)
 
+      api.add_operation(:list_access_points_for_directory_buckets, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListAccessPointsForDirectoryBuckets"
+        o.http_method = "GET"
+        o.http_request_uri = "/v20180820/accesspointfordirectory"
+        o.input = Shapes::ShapeRef.new(shape: ListAccessPointsForDirectoryBucketsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListAccessPointsForDirectoryBucketsResult)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_access_points_for_object_lambda, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListAccessPointsForObjectLambda"
         o.http_method = "GET"
@@ -2987,6 +3062,19 @@ module Aws::S3Control
         }
         o.input = Shapes::ShapeRef.new(shape: PutAccessPointPolicyForObjectLambdaRequest,
           location_name: "PutAccessPointPolicyForObjectLambdaRequest",
+          metadata: {
+            "xmlNamespace" => {"uri"=>"http://awss3control.amazonaws.com/doc/2018-08-20/"}
+          }
+        )
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+      end)
+
+      api.add_operation(:put_access_point_scope, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "PutAccessPointScope"
+        o.http_method = "PUT"
+        o.http_request_uri = "/v20180820/accesspoint/{name}/scope"
+        o.input = Shapes::ShapeRef.new(shape: PutAccessPointScopeRequest,
+          location_name: "PutAccessPointScopeRequest",
           metadata: {
             "xmlNamespace" => {"uri"=>"http://awss3control.amazonaws.com/doc/2018-08-20/"}
           }

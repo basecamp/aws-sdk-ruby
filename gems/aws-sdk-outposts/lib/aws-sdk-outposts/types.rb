@@ -90,7 +90,8 @@ module Aws::Outposts
     # Information about hardware assets.
     #
     # @!attribute [rw] asset_id
-    #   The ID of the asset.
+    #   The ID of the asset. An Outpost asset can be a single server within
+    #   an Outposts rack or an Outposts server configuration.
     #   @return [String]
     #
     # @!attribute [rw] rack_id
@@ -132,7 +133,8 @@ module Aws::Outposts
     #   @return [String]
     #
     # @!attribute [rw] asset_id
-    #   The ID of the asset.
+    #   The ID of the asset. An Outpost asset can be a single server within
+    #   an Outposts rack or an Outposts server configuration.
     #   @return [String]
     #
     # @!attribute [rw] account_id
@@ -286,6 +288,11 @@ module Aws::Outposts
     #   associated with the capacity task.
     #   @return [String]
     #
+    # @!attribute [rw] asset_id
+    #   The ID of the asset. An Outpost asset can be a single server within
+    #   an Outposts rack or an Outposts server configuration.
+    #   @return [String]
+    #
     # @!attribute [rw] capacity_task_status
     #   The status of the capacity task.
     #   @return [String]
@@ -308,6 +315,7 @@ module Aws::Outposts
       :capacity_task_id,
       :outpost_id,
       :order_id,
+      :asset_id,
       :capacity_task_status,
       :creation_date,
       :completion_date,
@@ -717,6 +725,11 @@ module Aws::Outposts
     #   specified capacity task.
     #   @return [String]
     #
+    # @!attribute [rw] asset_id
+    #   The ID of the Outpost asset. An Outpost asset can be a single server
+    #   within an Outposts rack or an Outposts server configuration.
+    #   @return [String]
+    #
     # @!attribute [rw] requested_instance_pools
     #   List of instance pools requested in the capacity task.
     #   @return [Array<Types::InstanceTypeCapacity>]
@@ -742,9 +755,18 @@ module Aws::Outposts
     #   * `IN_PROGRESS` - The capacity task is running and cannot be
     #     cancelled.
     #
+    #   * `FAILED` - The capacity task could not be completed.
+    #
+    #   * `COMPLETED` - The capacity task has completed successfully.
+    #
     #   * `WAITING_FOR_EVACUATION` - The capacity task requires capacity to
     #     run. You must stop the recommended EC2 running instances to free
     #     up capacity for the task to run.
+    #
+    #   * `CANCELLATION_IN_PROGRESS` - The capacity task has been cancelled
+    #     and is in the process of cleaning up resources.
+    #
+    #   * `CANCELLED` - The capacity task is cancelled.
     #   @return [String]
     #
     # @!attribute [rw] failed
@@ -780,6 +802,7 @@ module Aws::Outposts
       :capacity_task_id,
       :outpost_id,
       :order_id,
+      :asset_id,
       :requested_instance_pools,
       :instances_to_exclude,
       :dry_run,
@@ -951,6 +974,11 @@ module Aws::Outposts
     #   The ID for the Amazon Web Services Outposts order.
     #   @return [String]
     #
+    # @!attribute [rw] asset_id
+    #   The ID of the Outpost asset. An Outpost asset can be a single server
+    #   within an Outposts rack or an Outposts server configuration.
+    #   @return [String]
+    #
     # @!attribute [rw] max_results
     #   The maximum page size.
     #   @return [Integer]
@@ -964,6 +992,7 @@ module Aws::Outposts
     class GetOutpostSupportedInstanceTypesInput < Struct.new(
       :outpost_identifier,
       :order_id,
+      :asset_id,
       :max_results,
       :next_token)
       SENSITIVE = []
@@ -1182,7 +1211,8 @@ module Aws::Outposts
     # Information about a line item asset.
     #
     # @!attribute [rw] asset_id
-    #   The ID of the asset.
+    #   The ID of the asset. An Outpost asset can be a single server within
+    #   an Outposts rack or an Outposts server configuration.
     #   @return [String]
     #
     # @!attribute [rw] mac_address_list
@@ -2022,6 +2052,11 @@ module Aws::Outposts
     #   specified capacity task.
     #   @return [String]
     #
+    # @!attribute [rw] asset_id
+    #   The ID of the Outpost asset. An Outpost asset can be a single server
+    #   within an Outposts rack or an Outposts server configuration.
+    #   @return [String]
+    #
     # @!attribute [rw] instance_pools
     #   The instance pools specified in the capacity task.
     #   @return [Array<Types::InstanceTypeCapacity>]
@@ -2053,6 +2088,7 @@ module Aws::Outposts
     class StartCapacityTaskInput < Struct.new(
       :outpost_identifier,
       :order_id,
+      :asset_id,
       :instance_pools,
       :instances_to_exclude,
       :dry_run,
@@ -2072,6 +2108,11 @@ module Aws::Outposts
     # @!attribute [rw] order_id
     #   ID of the Amazon Web Services Outposts order of the host associated
     #   with the capacity task.
+    #   @return [String]
+    #
+    # @!attribute [rw] asset_id
+    #   The ID of the asset. An Outpost asset can be a single server within
+    #   an Outposts rack or an Outposts server configuration.
     #   @return [String]
     #
     # @!attribute [rw] requested_instance_pools
@@ -2125,6 +2166,7 @@ module Aws::Outposts
       :capacity_task_id,
       :outpost_id,
       :order_id,
+      :asset_id,
       :requested_instance_pools,
       :instances_to_exclude,
       :dry_run,

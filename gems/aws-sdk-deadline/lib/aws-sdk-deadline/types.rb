@@ -1214,9 +1214,9 @@ module Aws::Deadline
     #   @return [String]
     #
     # @!attribute [rw] priority
-    #   The priority of the job on a scale of 0 to 100. The highest priority
-    #   (first scheduled) is 100. When two jobs have the same priority, the
-    #   oldest job is scheduled first.
+    #   The priority of the job. The highest priority (first scheduled) is
+    #   100. When two jobs have the same priority, the oldest job is
+    #   scheduled first.
     #   @return [Integer]
     #
     # @!attribute [rw] parameters
@@ -1499,8 +1499,9 @@ module Aws::Deadline
     #
     # @!attribute [rw] priority
     #   Sets the priority of the environments in the queue from 0 to 10,000,
-    #   where 0 is the highest priority. If two environments share the same
-    #   priority value, the environment created first takes higher priority.
+    #   where 0 is the highest priority (activated first and deactivated
+    #   last). If two environments share the same priority value, the
+    #   environment created first takes higher priority.
     #   @return [Integer]
     #
     # @!attribute [rw] template_type
@@ -1662,7 +1663,7 @@ module Aws::Deadline
       :required_file_system_location_names,
       :allowed_storage_profile_ids,
       :tags)
-      SENSITIVE = [:description, :required_file_system_location_names]
+      SENSITIVE = [:description]
       include Aws::Structure
     end
 
@@ -2581,7 +2582,7 @@ module Aws::Deadline
       :name,
       :path,
       :type)
-      SENSITIVE = [:name]
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -3861,7 +3862,7 @@ module Aws::Deadline
       :created_by,
       :updated_at,
       :updated_by)
-      SENSITIVE = [:description, :required_file_system_location_names]
+      SENSITIVE = [:description]
       include Aws::Structure
     end
 
@@ -3922,7 +3923,8 @@ module Aws::Deadline
     #   @return [String]
     #
     # @!attribute [rw] process_exit_code
-    #   The exit code to exit the session.
+    #   The process exit code. The default Deadline Cloud worker agent
+    #   converts unsigned 32-bit exit codes to signed 32-bit exit codes.
     #   @return [Integer]
     #
     # @!attribute [rw] progress_message
@@ -6949,7 +6951,7 @@ module Aws::Deadline
       :output_relative_directories,
       :input_manifest_path,
       :input_manifest_hash)
-      SENSITIVE = [:file_system_location_name]
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -7819,10 +7821,23 @@ module Aws::Deadline
     #   The term to search for.
     #   @return [String]
     #
+    # @!attribute [rw] match_type
+    #   Specifies how Deadline Cloud matches your search term in the
+    #   results. If you don't specify a `matchType` the default is
+    #   `FUZZY_MATCH`.
+    #
+    #   * `FUZZY_MATCH` - Matches if a portion of the search term is found
+    #     in the result.
+    #
+    #   * `CONTAINS` - Matches if the exact search term is contained in the
+    #     result.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/deadline-2023-10-12/SearchTermFilterExpression AWS API Documentation
     #
     class SearchTermFilterExpression < Struct.new(
-      :search_term)
+      :search_term,
+      :match_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -9727,7 +9742,7 @@ module Aws::Deadline
       :required_file_system_location_names_to_remove,
       :allowed_storage_profile_ids_to_add,
       :allowed_storage_profile_ids_to_remove)
-      SENSITIVE = [:description, :required_file_system_location_names_to_add, :required_file_system_location_names_to_remove]
+      SENSITIVE = [:description]
       include Aws::Structure
     end
 
@@ -10040,7 +10055,8 @@ module Aws::Deadline
     #   @return [String]
     #
     # @!attribute [rw] process_exit_code
-    #   The process exit code.
+    #   The process exit code. The default Deadline Cloud worker agent
+    #   converts unsigned 32-bit exit codes to signed 32-bit exit codes.
     #   @return [Integer]
     #
     # @!attribute [rw] progress_message

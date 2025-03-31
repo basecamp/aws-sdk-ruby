@@ -60,6 +60,11 @@ module Aws::S3Control
   #
   #   @return [Boolean]
   #
+  # @!attribute use_s3_express_control_endpoint
+  #   Internal parameter to indicate whether S3Express operation should use control plane, (ex. ListDirectoryAccessPoints)
+  #
+  #   @return [Boolean]
+  #
   EndpointParameters = Struct.new(
     :region,
     :use_fips,
@@ -71,6 +76,7 @@ module Aws::S3Control
     :bucket,
     :access_point_name,
     :use_arn_region,
+    :use_s3_express_control_endpoint,
   ) do
     include Aws::Structure
 
@@ -87,6 +93,7 @@ module Aws::S3Control
         'Bucket' => :bucket,
         'AccessPointName' => :access_point_name,
         'UseArnRegion' => :use_arn_region,
+        'UseS3ExpressControlEndpoint' => :use_s3_express_control_endpoint,
       }.freeze
     end
 
@@ -103,6 +110,7 @@ module Aws::S3Control
       self[:bucket] = options[:bucket]
       self[:access_point_name] = options[:access_point_name]
       self[:use_arn_region] = options[:use_arn_region]
+      self[:use_s3_express_control_endpoint] = options[:use_s3_express_control_endpoint]
     end
 
     def self.create(config, options={})

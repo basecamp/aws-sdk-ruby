@@ -63,19 +63,21 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -1005,19 +1007,21 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -1589,19 +1593,21 @@ module Aws::S3
     #
     #    </note>
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -2030,11 +2036,12 @@ module Aws::S3
     #   availability. Depending on performance needs, you can specify a
     #   different Storage Class.
     #
-    #   <note markdown="1"> * <b>Directory buckets </b> - For directory buckets, only the S3
-    #     Express One Zone storage class is supported to store newly created
-    #     objects. Unsupported storage class values won't write a
-    #     destination object and will respond with the HTTP status code `400
-    #     Bad Request`.
+    #   <note markdown="1"> * <b>Directory buckets </b> - Directory buckets only support
+    #     `EXPRESS_ONEZONE` (the S3 Express One Zone storage class) in
+    #     Availability Zones and `ONEZONE_IA` (the S3 One Zone-Infrequent
+    #     Access storage class) in Dedicated Local Zones. Unsupported
+    #     storage class values won't write a destination object and will
+    #     respond with the HTTP status code `400 Bad Request`.
     #
     #   * <b>Amazon S3 on Outposts </b> - S3 on Outposts only uses the
     #     `OUTPOSTS` Storage Class.
@@ -3014,19 +3021,21 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -3405,8 +3414,10 @@ module Aws::S3
     #   specify a different Storage Class. For more information, see
     #   [Storage Classes][1] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> * For directory buckets, only the S3 Express One Zone storage class
-    #     is supported to store newly created objects.
+    #   <note markdown="1"> * Directory buckets only support `EXPRESS_ONEZONE` (the S3 Express
+    #     One Zone storage class) in Availability Zones and `ONEZONE_IA`
+    #     (the S3 One Zone-Infrequent Access storage class) in Dedicated
+    #     Local Zones.
     #
     #   * Amazon S3 on Outposts only uses the OUTPOSTS Storage Class.
     #
@@ -4367,19 +4378,21 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -4537,11 +4550,14 @@ module Aws::S3
     #   The bucket name containing the objects from which to remove the
     #   tags.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
@@ -4632,19 +4648,21 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -6678,8 +6696,7 @@ module Aws::S3
     #   `InvalidAccessPointAliasError` is returned. For more information
     #   about `InvalidAccessPointAliasError`, see [List of Error Codes][2].
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -6964,11 +6981,14 @@ module Aws::S3
     #   The bucket name that contains the object for which to get the ACL
     #   information.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
@@ -7085,8 +7105,10 @@ module Aws::S3
     #
     #   For more information, see [Storage Classes][1].
     #
-    #   <note markdown="1"> **Directory buckets** - Only the S3 Express One Zone storage class
-    #   is supported by directory buckets to store objects.
+    #   <note markdown="1"> **Directory buckets** - Directory buckets only support
+    #   `EXPRESS_ONEZONE` (the S3 Express One Zone storage class) in
+    #   Availability Zones and `ONEZONE_IA` (the S3 One Zone-Infrequent
+    #   Access storage class) in Dedicated Local Zones.
     #
     #    </note>
     #
@@ -7185,19 +7207,21 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -7336,11 +7360,14 @@ module Aws::S3
     #   The bucket name containing the object whose legal hold status you
     #   want to retrieve.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
@@ -7414,11 +7441,14 @@ module Aws::S3
     # @!attribute [rw] bucket
     #   The bucket whose Object Lock configuration you want to retrieve.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
@@ -7492,9 +7522,10 @@ module Aws::S3
     #   Provides information about object restoration action and expiration
     #   time of the restored object copy.
     #
-    #   <note markdown="1"> This functionality is not supported for directory buckets. Only the
-    #   S3 Express One Zone storage class is supported by directory buckets
-    #   to store objects.
+    #   <note markdown="1"> This functionality is not supported for directory buckets. Directory
+    #   buckets only support `EXPRESS_ONEZONE` (the S3 Express One Zone
+    #   storage class) in Availability Zones and `ONEZONE_IA` (the S3 One
+    #   Zone-Infrequent Access storage class) in Dedicated Local Zones.
     #
     #    </note>
     #   @return [String]
@@ -7693,8 +7724,10 @@ module Aws::S3
     #   this header for all objects except for S3 Standard storage class
     #   objects.
     #
-    #   <note markdown="1"> <b>Directory buckets </b> - Only the S3 Express One Zone storage
-    #   class is supported by directory buckets to store objects.
+    #   <note markdown="1"> <b>Directory buckets </b> - Directory buckets only support
+    #   `EXPRESS_ONEZONE` (the S3 Express One Zone storage class) in
+    #   Availability Zones and `ONEZONE_IA` (the S3 One Zone-Infrequent
+    #   Access storage class) in Dedicated Local Zones.
     #
     #    </note>
     #   @return [String]
@@ -7824,11 +7857,14 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
@@ -7841,8 +7877,7 @@ module Aws::S3
     #   hostname takes the form
     #   *AccessPointName*-*AccountId*.s3-object-lambda.*Region*.amazonaws.com.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -8173,11 +8208,14 @@ module Aws::S3
     #   The bucket name containing the object whose retention settings you
     #   want to retrieve.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
@@ -8258,11 +8296,14 @@ module Aws::S3
     #   The bucket name containing the object for which to get the tagging
     #   information.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
@@ -8584,11 +8625,14 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
@@ -8602,8 +8646,7 @@ module Aws::S3
     #   `InvalidAccessPointAliasError` is returned. For more information
     #   about `InvalidAccessPointAliasError`, see [List of Error Codes][3].
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -8690,9 +8733,10 @@ module Aws::S3
     #   For more information about archiving objects, see [Transitioning
     #   Objects: General Considerations][2].
     #
-    #   <note markdown="1"> This functionality is not supported for directory buckets. Only the
-    #   S3 Express One Zone storage class is supported by directory buckets
-    #   to store objects.
+    #   <note markdown="1"> This functionality is not supported for directory buckets. Directory
+    #   buckets only support `EXPRESS_ONEZONE` (the S3 Express One Zone
+    #   storage class) in Availability Zones and `ONEZONE_IA` (the S3 One
+    #   Zone-Infrequent Access storage class) in Dedicated Local Zones.
     #
     #    </note>
     #
@@ -8918,8 +8962,10 @@ module Aws::S3
     #
     #   For more information, see [Storage Classes][1].
     #
-    #   <note markdown="1"> <b>Directory buckets </b> - Only the S3 Express One Zone storage
-    #   class is supported by directory buckets to store objects.
+    #   <note markdown="1"> <b>Directory buckets </b> - Directory buckets only support
+    #   `EXPRESS_ONEZONE` (the S3 Express One Zone storage class) in
+    #   Availability Zones and `ONEZONE_IA` (the S3 One Zone-Infrequent
+    #   Access storage class) in Dedicated Local Zones.
     #
     #    </note>
     #
@@ -9091,19 +9137,21 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -10625,19 +10673,21 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -11152,19 +11202,21 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -11423,19 +11475,21 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -11680,8 +11734,10 @@ module Aws::S3
     # @!attribute [rw] storage_class
     #   The class of storage used to store the uploaded object.
     #
-    #   <note markdown="1"> **Directory buckets** - Only the S3 Express One Zone storage class
-    #   is supported by directory buckets to store objects.
+    #   <note markdown="1"> **Directory buckets** - Directory buckets only support
+    #   `EXPRESS_ONEZONE` (the S3 Express One Zone storage class) in
+    #   Availability Zones and `ONEZONE_IA` (the S3 One Zone-Infrequent
+    #   Access storage class) in Dedicated Local Zones.
     #
     #    </note>
     #   @return [String]
@@ -11748,19 +11804,21 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -12169,8 +12227,10 @@ module Aws::S3
     # @!attribute [rw] storage_class
     #   The class of storage used to store the object.
     #
-    #   <note markdown="1"> **Directory buckets** - Only the S3 Express One Zone storage class
-    #   is supported by directory buckets to store objects.
+    #   <note markdown="1"> **Directory buckets** - Directory buckets only support
+    #   `EXPRESS_ONEZONE` (the S3 Express One Zone storage class) in
+    #   Availability Zones and `ONEZONE_IA` (the S3 One Zone-Infrequent
+    #   Access storage class) in Dedicated Local Zones.
     #
     #    </note>
     #   @return [String]
@@ -12481,8 +12541,10 @@ module Aws::S3
     # @!attribute [rw] storage_class
     #   The class of storage used to store the object.
     #
-    #   <note markdown="1"> **Directory buckets** - Only the S3 Express One Zone storage class
-    #   is supported by directory buckets to store objects.
+    #   <note markdown="1"> **Directory buckets** - Directory buckets only support
+    #   `EXPRESS_ONEZONE` (the S3 Express One Zone storage class) in
+    #   Availability Zones and `ONEZONE_IA` (the S3 One Zone-Infrequent
+    #   Access storage class) in Dedicated Local Zones.
     #
     #    </note>
     #   @return [String]
@@ -12503,9 +12565,10 @@ module Aws::S3
     #   archived objects, see [ Working with archived objects][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> This functionality is not supported for directory buckets. Only the
-    #   S3 Express One Zone storage class is supported by directory buckets
-    #   to store objects.
+    #   <note markdown="1"> This functionality is not supported for directory buckets. Directory
+    #   buckets only support `EXPRESS_ONEZONE` (the S3 Express One Zone
+    #   storage class) in Availability Zones and `ONEZONE_IA` (the S3 One
+    #   Zone-Infrequent Access storage class) in Dedicated Local Zones.
     #
     #    </note>
     #
@@ -14415,11 +14478,14 @@ module Aws::S3
     #   The bucket name that contains the object to which you want to attach
     #   the ACL.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
@@ -14584,11 +14650,14 @@ module Aws::S3
     #   The bucket name containing the object that you want to place a legal
     #   hold on.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
@@ -15061,19 +15130,21 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -15471,8 +15542,10 @@ module Aws::S3
     #   specify a different Storage Class. For more information, see
     #   [Storage Classes][1] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> * For directory buckets, only the S3 Express One Zone storage class
-    #     is supported to store newly created objects.
+    #   <note markdown="1"> * Directory buckets only support `EXPRESS_ONEZONE` (the S3 Express
+    #     One Zone storage class) in Availability Zones and `ONEZONE_IA`
+    #     (the S3 One Zone-Infrequent Access storage class) in Dedicated
+    #     Local Zones.
     #
     #   * Amazon S3 on Outposts only uses the OUTPOSTS Storage Class.
     #
@@ -15765,11 +15838,14 @@ module Aws::S3
     #   The bucket name that contains the object you want to apply this
     #   Object Retention configuration to.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
@@ -15881,11 +15957,14 @@ module Aws::S3
     # @!attribute [rw] bucket
     #   The bucket name containing the object.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
@@ -16134,7 +16213,7 @@ module Aws::S3
     #   record frame. To ensure continuous streaming of data, S3 Select
     #   might split the same record across multiple record frames instead of
     #   aggregating the results in memory. Some S3 clients (for example, the
-    #   SDK for Java) handle this behavior by creating a `ByteStream` out of
+    #   SDKforJava) handle this behavior by creating a `ByteStream` out of
     #   the response by default. Other clients might not handle this
     #   behavior by default. In those cases, you must aggregate the results
     #   on the client side and parse the response.
@@ -16575,11 +16654,14 @@ module Aws::S3
     # @!attribute [rw] bucket
     #   The bucket name containing the object to restore.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
@@ -16740,9 +16822,10 @@ module Aws::S3
     # archived objects, see [ Working with archived objects][1] in the
     # *Amazon S3 User Guide*.
     #
-    # <note markdown="1"> This functionality is not supported for directory buckets. Only the S3
-    # Express One Zone storage class is supported by directory buckets to
-    # store objects.
+    # <note markdown="1"> This functionality is not supported for directory buckets. Directory
+    # buckets only support `EXPRESS_ONEZONE` (the S3 Express One Zone
+    # storage class) in Availability Zones and `ONEZONE_IA` (the S3 One
+    # Zone-Infrequent Access storage class) in Dedicated Local Zones.
     #
     #  </note>
     #
@@ -18017,19 +18100,21 @@ module Aws::S3
     #
     #    </note>
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #
@@ -18483,19 +18568,21 @@ module Aws::S3
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
     #
-    #   **Access points** - When you use this action with an access point,
-    #   you must provide the alias of the access point in place of the
-    #   bucket name or specify the access point ARN. When using the access
-    #   point ARN, you must direct requests to the access point hostname.
-    #   The access point hostname takes the form
+    #   **Access points** - When you use this action with an access point
+    #   for general purpose buckets, you must provide the alias of the
+    #   access point in place of the bucket name or specify the access point
+    #   ARN. When you use this action with an access point for directory
+    #   buckets, you must provide the access point name in place of the
+    #   bucket name. When using the access point ARN, you must direct
+    #   requests to the access point hostname. The access point hostname
+    #   takes the form
     #   *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com.
     #   When using this action with an access point through the Amazon Web
     #   Services SDKs, you provide the access point ARN in place of the
     #   bucket name. For more information about access point ARNs, see
     #   [Using access points][2] in the *Amazon S3 User Guide*.
     #
-    #   <note markdown="1"> Access points and Object Lambda access points are not supported by
-    #   directory buckets.
+    #   <note markdown="1"> Object Lambda access points are not supported by directory buckets.
     #
     #    </note>
     #

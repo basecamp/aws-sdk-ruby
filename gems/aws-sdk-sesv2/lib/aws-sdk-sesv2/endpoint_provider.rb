@@ -18,7 +18,7 @@ module Aws::SESV2
             end
             if Aws::Endpoints::Matchers.boolean_equals?(parameters.use_dual_stack, true)
               if Aws::Endpoints::Matchers.boolean_equals?(true, Aws::Endpoints::Matchers.attr(partition_result, "supportsDualStack"))
-                return Aws::Endpoints::Endpoint.new(url: "https://#{parameters.endpoint_id}.endpoints.email.#{partition_result['dualStackDnsSuffix']}", headers: {}, properties: {"authSchemes"=>[{"name"=>"sigv4a", "signingName"=>"ses", "signingRegionSet"=>["*"]}]})
+                return Aws::Endpoints::Endpoint.new(url: "https://#{parameters.endpoint_id}.endpoints.email.global.#{partition_result['dualStackDnsSuffix']}", headers: {}, properties: {"authSchemes"=>[{"name"=>"sigv4a", "signingName"=>"ses", "signingRegionSet"=>["*"]}]})
               end
               raise ArgumentError, "DualStack is enabled but this partition does not support DualStack"
             end

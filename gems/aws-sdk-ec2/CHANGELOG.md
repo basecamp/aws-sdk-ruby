@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.514.0 (2025-03-31)
+------------------
+
+* Feature - Release VPC Route Server, a new feature allowing dynamic routing in VPCs.
+
 1.513.0 (2025-03-19)
 ------------------
 

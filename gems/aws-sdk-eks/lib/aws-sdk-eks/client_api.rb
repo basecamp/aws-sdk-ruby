@@ -1462,6 +1462,7 @@ module Aws::EKS
     UpdateClusterConfigRequest.add_member(:compute_config, Shapes::ShapeRef.new(shape: ComputeConfigRequest, location_name: "computeConfig"))
     UpdateClusterConfigRequest.add_member(:kubernetes_network_config, Shapes::ShapeRef.new(shape: KubernetesNetworkConfigRequest, location_name: "kubernetesNetworkConfig"))
     UpdateClusterConfigRequest.add_member(:storage_config, Shapes::ShapeRef.new(shape: StorageConfigRequest, location_name: "storageConfig"))
+    UpdateClusterConfigRequest.add_member(:remote_network_config, Shapes::ShapeRef.new(shape: RemoteNetworkConfigRequest, location_name: "remoteNetworkConfig"))
     UpdateClusterConfigRequest.struct_class = Types::UpdateClusterConfigRequest
 
     UpdateClusterConfigResponse.add_member(:update, Shapes::ShapeRef.new(shape: Update, location_name: "update"))

@@ -166,6 +166,7 @@ module Aws::Transfer
       attr_accessor access_endpoint: ::String
       attr_accessor web_app_units: Types::WebAppUnits
       attr_accessor tags: ::Array[Types::Tag]
+      attr_accessor web_app_endpoint_policy: ("FIPS" | "STANDARD")
       SENSITIVE: []
     end
 
@@ -584,6 +585,7 @@ module Aws::Transfer
       attr_accessor web_app_endpoint: ::String
       attr_accessor web_app_units: Types::WebAppUnits
       attr_accessor tags: ::Array[Types::Tag]
+      attr_accessor web_app_endpoint_policy: ("FIPS" | "STANDARD")
       SENSITIVE: []
     end
 

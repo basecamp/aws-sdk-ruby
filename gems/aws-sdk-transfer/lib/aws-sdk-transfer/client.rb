@@ -1549,10 +1549,24 @@ module Aws::Transfer
     #   You can provide a structure that contains the details for the identity
     #   provider to use with your web app.
     #
+    #   For more details about this parameter, see [Configure your identity
+    #   provider for Transfer Family web apps][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/transfer/latest/userguide/webapp-identity-center.html
+    #
     # @option params [String] :access_endpoint
     #   The `AccessEndpoint` is the URL that you provide to your users for
     #   them to interact with the Transfer Family web app. You can specify a
     #   custom URL or use the default value.
+    #
+    #   Before you enter a custom URL for this parameter, follow the steps
+    #   described in [Update your access endpoint with a custom URL][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/transfer/latest/userguide/webapp-customize.html
     #
     # @option params [Types::WebAppUnits] :web_app_units
     #   A union that contains the value for number of concurrent connections
@@ -1560,6 +1574,13 @@ module Aws::Transfer
     #
     # @option params [Array<Types::Tag>] :tags
     #   Key-value pairs that can be used to group and search for web apps.
+    #
+    # @option params [String] :web_app_endpoint_policy
+    #   Setting for the type of endpoint policy for the web app. The default
+    #   value is `STANDARD`.
+    #
+    #   If you are creating the web app in an Amazon Web Services GovCloud
+    #   (US) Region, you can set this parameter to `FIPS`.
     #
     # @return [Types::CreateWebAppResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1584,6 +1605,7 @@ module Aws::Transfer
     #         value: "TagValue", # required
     #       },
     #     ],
+    #     web_app_endpoint_policy: "FIPS", # accepts FIPS, STANDARD
     #   })
     #
     # @example Response structure
@@ -2704,6 +2726,7 @@ module Aws::Transfer
     #   resp.web_app.tags #=> Array
     #   resp.web_app.tags[0].key #=> String
     #   resp.web_app.tags[0].value #=> String
+    #   resp.web_app.web_app_endpoint_policy #=> String, one of "FIPS", "STANDARD"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeWebApp AWS API Documentation
     #
@@ -5329,7 +5352,7 @@ module Aws::Transfer
     #   Specify logo file data string (in base64 encoding).
     #
     # @option params [String, StringIO, File] :favicon_file
-    #   Specify icon file data string (in base64 encoding).
+    #   Specify an icon file data string (in base64 encoding).
     #
     # @return [Types::UpdateWebAppCustomizationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -5375,7 +5398,7 @@ module Aws::Transfer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-transfer'
-      context[:gem_version] = '1.113.0'
+      context[:gem_version] = '1.114.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -67,6 +67,11 @@ module Aws::BedrockRuntime
     class AutoToolChoice < Aws::EmptyStructure
     end
 
+    class CachePointBlock
+      attr_accessor type: ("default")
+      SENSITIVE: []
+    end
+
     class ConflictException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -80,6 +85,7 @@ module Aws::BedrockRuntime
       attr_accessor tool_use: Types::ToolUseBlock
       attr_accessor tool_result: Types::ToolResultBlock
       attr_accessor guard_content: Types::GuardrailConverseContentBlock
+      attr_accessor cache_point: Types::CachePointBlock
       attr_accessor reasoning_content: Types::ReasoningContentBlock
       attr_accessor unknown: untyped
       SENSITIVE: [:reasoning_content]
@@ -97,6 +103,8 @@ module Aws::BedrockRuntime
       class ToolResult < ContentBlock
       end
       class GuardContent < ContentBlock
+      end
+      class CachePoint < ContentBlock
       end
       class ReasoningContent < ContentBlock
       end
@@ -740,12 +748,15 @@ module Aws::BedrockRuntime
     class SystemContentBlock
       attr_accessor text: ::String
       attr_accessor guard_content: Types::GuardrailConverseContentBlock
+      attr_accessor cache_point: Types::CachePointBlock
       attr_accessor unknown: untyped
       SENSITIVE: []
 
       class Text < SystemContentBlock
       end
       class GuardContent < SystemContentBlock
+      end
+      class CachePoint < SystemContentBlock
       end
       class Unknown < SystemContentBlock
       end
@@ -767,15 +778,20 @@ module Aws::BedrockRuntime
       attr_accessor input_tokens: ::Integer
       attr_accessor output_tokens: ::Integer
       attr_accessor total_tokens: ::Integer
+      attr_accessor cache_read_input_tokens: ::Integer
+      attr_accessor cache_write_input_tokens: ::Integer
       SENSITIVE: []
     end
 
     class Tool
       attr_accessor tool_spec: Types::ToolSpecification
+      attr_accessor cache_point: Types::CachePointBlock
       attr_accessor unknown: untyped
       SENSITIVE: []
 
       class ToolSpec < Tool
+      end
+      class CachePoint < Tool
       end
       class Unknown < Tool
       end

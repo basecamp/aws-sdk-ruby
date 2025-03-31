@@ -1613,7 +1613,8 @@ module Aws
                                  value: ::String
                                }?,
                                search_term_filter: {
-                                 search_term: ::String
+                                 search_term: ::String,
+                                 match_type: ("FUZZY_MATCH" | "CONTAINS")?
                                }?,
                                string_filter: {
                                  name: ::String,
@@ -1670,7 +1671,8 @@ module Aws
                                   value: ::String
                                 }?,
                                 search_term_filter: {
-                                  search_term: ::String
+                                  search_term: ::String,
+                                  match_type: ("FUZZY_MATCH" | "CONTAINS")?
                                 }?,
                                 string_filter: {
                                   name: ::String,
@@ -1727,7 +1729,8 @@ module Aws
                                   value: ::String
                                 }?,
                                 search_term_filter: {
-                                  search_term: ::String
+                                  search_term: ::String,
+                                  match_type: ("FUZZY_MATCH" | "CONTAINS")?
                                 }?,
                                 string_filter: {
                                   name: ::String,
@@ -1783,7 +1786,8 @@ module Aws
                                     value: ::String
                                   }?,
                                   search_term_filter: {
-                                    search_term: ::String
+                                    search_term: ::String,
+                                    match_type: ("FUZZY_MATCH" | "CONTAINS")?
                                   }?,
                                   string_filter: {
                                     name: ::String,

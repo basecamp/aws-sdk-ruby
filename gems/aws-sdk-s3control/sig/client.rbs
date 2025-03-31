@@ -183,7 +183,11 @@ module Aws
                                    block_public_policy: bool?,
                                    restrict_public_buckets: bool?
                                  },
-                                 ?bucket_account_id: ::String
+                                 ?bucket_account_id: ::String,
+                                 ?scope: {
+                                   prefixes: Array[::String]?,
+                                   permissions: Array[("GetObject" | "GetObjectAttributes" | "ListMultipartUploadParts" | "ListBucket" | "ListBucketMultipartUploads" | "PutObject" | "DeleteObject" | "AbortMultipartUpload")]?
+                                 }
                                ) -> _CreateAccessPointResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAccessPointResponseSuccess
 
@@ -562,6 +566,13 @@ module Aws
                                                         ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Control/Client.html#delete_access_point_scope-instance_method
+      def delete_access_point_scope: (
+                                       account_id: ::String,
+                                       name: ::String
+                                     ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Control/Client.html#delete_bucket-instance_method
       def delete_bucket: (
                            ?account_id: ::String,
@@ -841,6 +852,17 @@ module Aws
                                                             ) -> _GetAccessPointPolicyStatusForObjectLambdaResponseSuccess
                                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAccessPointPolicyStatusForObjectLambdaResponseSuccess
 
+      interface _GetAccessPointScopeResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetAccessPointScopeResult]
+        def scope: () -> Types::Scope
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Control/Client.html#get_access_point_scope-instance_method
+      def get_access_point_scope: (
+                                    account_id: ::String,
+                                    name: ::String
+                                  ) -> _GetAccessPointScopeResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAccessPointScopeResponseSuccess
+
       interface _GetBucketResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetBucketResult]
         def bucket: () -> ::String
@@ -1085,6 +1107,20 @@ module Aws
                               ) -> _ListAccessPointsResponseSuccess
                             | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAccessPointsResponseSuccess
 
+      interface _ListAccessPointsForDirectoryBucketsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListAccessPointsForDirectoryBucketsResult]
+        def access_point_list: () -> ::Array[Types::AccessPoint]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Control/Client.html#list_access_points_for_directory_buckets-instance_method
+      def list_access_points_for_directory_buckets: (
+                                                      account_id: ::String,
+                                                      ?directory_bucket: ::String,
+                                                      ?next_token: ::String,
+                                                      ?max_results: ::Integer
+                                                    ) -> _ListAccessPointsForDirectoryBucketsResponseSuccess
+                                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAccessPointsForDirectoryBucketsResponseSuccess
+
       interface _ListAccessPointsForObjectLambdaResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListAccessPointsForObjectLambdaResult]
         def object_lambda_access_point_list: () -> ::Array[Types::ObjectLambdaAccessPoint]
@@ -1241,6 +1277,17 @@ module Aws
                                                        policy: ::String
                                                      ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Control/Client.html#put_access_point_scope-instance_method
+      def put_access_point_scope: (
+                                    account_id: ::String,
+                                    name: ::String,
+                                    scope: {
+                                      prefixes: Array[::String]?,
+                                      permissions: Array[("GetObject" | "GetObjectAttributes" | "ListMultipartUploadParts" | "ListBucket" | "ListBucketMultipartUploads" | "PutObject" | "DeleteObject" | "AbortMultipartUpload")]?
+                                    }
+                                  ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Control/Client.html#put_bucket_lifecycle_configuration-instance_method
       def put_bucket_lifecycle_configuration: (

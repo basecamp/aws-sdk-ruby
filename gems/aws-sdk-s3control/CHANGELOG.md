@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.105.0 (2025-03-31)
+------------------
+
+* Feature - Amazon S3 adds support for S3 Access Points for directory buckets in AWS Dedicated Local Zones
+
 1.104.0 (2025-03-13)
 ------------------
 

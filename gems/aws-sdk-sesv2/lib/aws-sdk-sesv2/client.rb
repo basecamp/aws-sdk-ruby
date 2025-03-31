@@ -2999,6 +2999,10 @@ module Aws::SESV2
 
     # Lists all of the contact lists available.
     #
+    # If your output includes a "NextToken" field with a string value,
+    # this indicates there may be additional contacts on the filtered list -
+    # regardless of the number of contacts returned.
+    #
     # @option params [Integer] :page_size
     #   Maximum number of contact lists to return at once. Use this parameter
     #   to paginate results. If additional contact lists exist beyond the
@@ -5470,7 +5474,7 @@ module Aws::SESV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sesv2'
-      context[:gem_version] = '1.72.0'
+      context[:gem_version] = '1.73.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

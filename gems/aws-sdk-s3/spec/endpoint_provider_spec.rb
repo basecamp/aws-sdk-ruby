@@ -6555,6 +6555,123 @@ module Aws::S3
       end
     end
 
+    context "Data Plane with short zone name china region" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://mybucket--abcd-ab1--x-s3.s3express-abcd-ab1.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"cn-north-1", :bucket=>"mybucket--abcd-ab1--x-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'cn-north-1',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'mybucket--abcd-ab1--x-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Data Plane with short zone name with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--abcd-ab1--xa-s3.s3express-abcd-ab1.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-east-1", :bucket=>"myaccesspoint--abcd-ab1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-east-1',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'myaccesspoint--abcd-ab1--xa-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Data Plane with short zone name with AP china region" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--abcd-ab1--xa-s3.s3express-abcd-ab1.cn-north-1.amazonaws.com.cn"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"cn-north-1", :bucket=>"myaccesspoint--abcd-ab1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'cn-north-1',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'myaccesspoint--abcd-ab1--xa-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
     context "Data Plane with short zone names (13 chars)" do
       let(:expected) do
         {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://mybucket--test-zone-ab1--x-s3.s3express-test-zone-ab1.us-west-2.amazonaws.com"}}
@@ -6585,6 +6702,45 @@ module Aws::S3
         expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
         resp = client.get_object(
           bucket: 'mybucket--test-zone-ab1--x-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Data Plane with short zone names (13 chars) with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test-zone-ab1--xa-s3.s3express-test-zone-ab1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test-zone-ab1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-west-2',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'myaccesspoint--test-zone-ab1--xa-s3',
           key: 'key',
         )
         expected_uri = URI.parse(expected['endpoint']['url'])
@@ -6633,6 +6789,45 @@ module Aws::S3
       end
     end
 
+    context "Data Plane with medium zone names (14 chars) with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test1-zone-ab1--xa-s3.s3express-test1-zone-ab1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test1-zone-ab1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-west-2',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'myaccesspoint--test1-zone-ab1--xa-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
     context "Data Plane with long zone names (20 chars)" do
       let(:expected) do
         {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://mybucket--test1-long1-zone-ab1--x-s3.s3express-test1-long1-zone-ab1.us-west-2.amazonaws.com"}}
@@ -6663,6 +6858,45 @@ module Aws::S3
         expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
         resp = client.get_object(
           bucket: 'mybucket--test1-long1-zone-ab1--x-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Data Plane with long zone names (20 chars)" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test1-long1-zone-ab1--xa-s3.s3express-test1-long1-zone-ab1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test1-long1-zone-ab1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-west-2',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'myaccesspoint--test1-long1-zone-ab1--xa-s3',
           key: 'key',
         )
         expected_uri = URI.parse(expected['endpoint']['url'])
@@ -6712,6 +6946,102 @@ module Aws::S3
       end
     end
 
+    context "Data Plane with short zone fips china region" do
+      let(:expected) do
+        {"error"=>"Partition does not support FIPS"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"cn-north-1", :bucket=>"mybucket--test-ab1--x-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        expect do
+          client.get_object(
+            bucket: 'mybucket--test-ab1--x-s3',
+            key: 'key',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "Data Plane with short zone fips with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test-ab1--xa-s3.s3express-fips-test-ab1.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-east-1", :bucket=>"myaccesspoint--test-ab1--xa-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_fips_endpoint: true,
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'myaccesspoint--test-ab1--xa-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Data Plane with short zone fips with AP china region" do
+      let(:expected) do
+        {"error"=>"Partition does not support FIPS"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"cn-north-1", :bucket=>"myaccesspoint--test-ab1--xa-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        expect do
+          client.get_object(
+            bucket: 'myaccesspoint--test-ab1--xa-s3',
+            key: 'key',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
     context "Data Plane with short zone (13 chars) fips" do
       let(:expected) do
         {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://mybucket--test-zone-ab1--x-s3.s3express-fips-test-zone-ab1.us-west-2.amazonaws.com"}}
@@ -6743,6 +7073,46 @@ module Aws::S3
         expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
         resp = client.get_object(
           bucket: 'mybucket--test-zone-ab1--x-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Data Plane with short zone (13 chars) fips with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test-zone-ab1--xa-s3.s3express-fips-test-zone-ab1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test-zone-ab1--xa-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-west-2',
+          use_fips_endpoint: true,
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'myaccesspoint--test-zone-ab1--xa-s3',
           key: 'key',
         )
         expected_uri = URI.parse(expected['endpoint']['url'])
@@ -6792,6 +7162,46 @@ module Aws::S3
       end
     end
 
+    context "Data Plane with medium zone (14 chars) fips with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test1-zone-ab1--xa-s3.s3express-fips-test1-zone-ab1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test1-zone-ab1--xa-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-west-2',
+          use_fips_endpoint: true,
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'myaccesspoint--test1-zone-ab1--xa-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
     context "Data Plane with long zone (20 chars) fips" do
       let(:expected) do
         {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://mybucket--test1-long1-zone-ab1--x-s3.s3express-fips-test1-long1-zone-ab1.us-west-2.amazonaws.com"}}
@@ -6832,6 +7242,46 @@ module Aws::S3
       end
     end
 
+    context "Data Plane with long zone (20 chars) fips with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test1-long1-zone-ab1--xa-s3.s3express-fips-test1-long1-zone-ab1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test1-long1-zone-ab1--xa-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-west-2',
+          use_fips_endpoint: true,
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'myaccesspoint--test1-long1-zone-ab1--xa-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
     context "Data Plane with long AZ" do
       let(:expected) do
         {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://mybucket--test1-az1--x-s3.s3express-test1-az1.us-west-2.amazonaws.com"}}
@@ -6862,6 +7312,45 @@ module Aws::S3
         expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
         resp = client.get_object(
           bucket: 'mybucket--test1-az1--x-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Data Plane with long AZ with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test1-az1--xa-s3.s3express-test1-az1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test1-az1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-west-2',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'myaccesspoint--test1-az1--xa-s3',
           key: 'key',
         )
         expected_uri = URI.parse(expected['endpoint']['url'])
@@ -6911,6 +7400,46 @@ module Aws::S3
       end
     end
 
+    context "Data Plane with long AZ fips with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test1-az1--xa-s3.s3express-fips-test1-az1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test1-az1--xa-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-west-2',
+          use_fips_endpoint: true,
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'myaccesspoint--test1-az1--xa-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
     context "Control plane with short AZ bucket" do
       let(:expected) do
         {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://s3express-control.us-east-1.amazonaws.com/mybucket--test-ab1--x-s3"}}
@@ -6931,6 +7460,36 @@ module Aws::S3
           stub_responses: true
         )
         expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-east-1", "disableDoubleEncoding"=>true})
+        resp = client.create_bucket(
+          bucket: 'mybucket--test-ab1--x-s3',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Control plane with short AZ bucket china region" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://s3express-control.cn-north-1.amazonaws.com.cn/mybucket--test-ab1--x-s3"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"cn-north-1", :bucket=>"mybucket--test-ab1--x-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>true, :disable_s3_express_session_auth=>false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling create_bucket' do
+        client = Client.new(
+          region: 'cn-north-1',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"cn-north-1", "disableDoubleEncoding"=>true})
         resp = client.create_bucket(
           bucket: 'mybucket--test-ab1--x-s3',
         )
@@ -6969,6 +7528,33 @@ module Aws::S3
         expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
         expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
         expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
+    context "Control plane with short AZ bucket and fips china region" do
+      let(:expected) do
+        {"error"=>"Partition does not support FIPS"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"cn-north-1", :bucket=>"mybucket--test-ab1--x-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>true, :disable_s3_express_session_auth=>false})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling create_bucket' do
+        client = Client.new(
+          region: 'cn-north-1',
+          use_fips_endpoint: true,
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        expect do
+          client.create_bucket(
+            bucket: 'mybucket--test-ab1--x-s3',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
       end
     end
 
@@ -7045,6 +7631,20 @@ module Aws::S3
       end
     end
 
+    context "Data Plane sigv4 auth with short AZ with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--usw2-az1--xa-s3.s3express-usw2-az1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--usw2-az1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :disable_s3_express_session_auth=>true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
     context "Data Plane sigv4 auth with short zone (13 chars)" do
       let(:expected) do
         {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://mybucket--test-zone-ab1--x-s3.s3express-test-zone-ab1.us-west-2.amazonaws.com"}}
@@ -7052,6 +7652,20 @@ module Aws::S3
 
       it 'produces the expected output from the EndpointProvider' do
         params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"mybucket--test-zone-ab1--x-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :disable_s3_express_session_auth=>true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "Data Plane sigv4 auth with short zone (13 chars) with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test-zone-ab1--xa-s3.s3express-test-zone-ab1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test-zone-ab1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :disable_s3_express_session_auth=>true})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -7073,6 +7687,20 @@ module Aws::S3
       end
     end
 
+    context "Data Plane sigv4 auth with short AZ fips with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--usw2-az1--xa-s3.s3express-fips-usw2-az1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--usw2-az1--xa-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :disable_s3_express_session_auth=>true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
     context "Data Plane sigv4 auth with short zone (13 chars) fips" do
       let(:expected) do
         {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://mybucket--test-zone-ab1--x-s3.s3express-fips-test-zone-ab1.us-west-2.amazonaws.com"}}
@@ -7080,6 +7708,20 @@ module Aws::S3
 
       it 'produces the expected output from the EndpointProvider' do
         params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"mybucket--test-zone-ab1--x-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :disable_s3_express_session_auth=>true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "Data Plane sigv4 auth with short zone (13 chars) fips with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test-zone-ab1--xa-s3.s3express-fips-test-zone-ab1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test-zone-ab1--xa-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :disable_s3_express_session_auth=>true})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -7101,6 +7743,20 @@ module Aws::S3
       end
     end
 
+    context "Data Plane sigv4 auth with long AZ with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test1-az1--xa-s3.s3express-test1-az1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test1-az1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false, :disable_s3_express_session_auth=>true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
     context "Data Plane sigv4 auth with medium zone(14 chars)" do
       let(:expected) do
         {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://mybucket--test1-zone-ab1--x-s3.s3express-test1-zone-ab1.us-west-2.amazonaws.com"}}
@@ -7108,6 +7764,20 @@ module Aws::S3
 
       it 'produces the expected output from the EndpointProvider' do
         params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"mybucket--test1-zone-ab1--x-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false, :disable_s3_express_session_auth=>true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "Data Plane sigv4 auth with medium zone(14 chars) with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test1-zone-ab1--xa-s3.s3express-test1-zone-ab1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test1-zone-ab1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false, :disable_s3_express_session_auth=>true})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -7129,6 +7799,20 @@ module Aws::S3
       end
     end
 
+    context "Data Plane sigv4 auth with long zone(20 chars) with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test1-long1-zone-ab1--xa-s3.s3express-test1-long1-zone-ab1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test1-long1-zone-ab1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false, :disable_s3_express_session_auth=>true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
     context "Data Plane sigv4 auth with long AZ fips" do
       let(:expected) do
         {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://mybucket--test1-az1--x-s3.s3express-fips-test1-az1.us-west-2.amazonaws.com"}}
@@ -7136,6 +7820,20 @@ module Aws::S3
 
       it 'produces the expected output from the EndpointProvider' do
         params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"mybucket--test1-az1--x-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false, :disable_s3_express_session_auth=>true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "Data Plane sigv4 auth with long AZ fips with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test1-az1--xa-s3.s3express-fips-test1-az1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test1-az1--xa-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false, :disable_s3_express_session_auth=>true})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -7157,6 +7855,20 @@ module Aws::S3
       end
     end
 
+    context "Data Plane sigv4 auth with medium zone (14 chars) fips with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test1-zone-ab1--xa-s3.s3express-fips-test1-zone-ab1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test1-zone-ab1--xa-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false, :disable_s3_express_session_auth=>true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
     context "Data Plane sigv4 auth with long zone (20 chars) fips" do
       let(:expected) do
         {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://mybucket--test1-long1-zone-ab1--x-s3.s3express-fips-test1-long1-zone-ab1.us-west-2.amazonaws.com"}}
@@ -7171,6 +7883,20 @@ module Aws::S3
       end
     end
 
+    context "Data Plane sigv4 auth with long zone (20 chars) fips with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--test1-long1-zone-ab1--xa-s3.s3express-fips-test1-long1-zone-ab1.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--test1-long1-zone-ab1--xa-s3", :use_fips=>true, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false, :disable_s3_express_session_auth=>true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
     context "Control Plane host override" do
       let(:expected) do
         {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://mybucket--usw2-az1--x-s3.custom.com"}}
@@ -7178,6 +7904,20 @@ module Aws::S3
 
       it 'produces the expected output from the EndpointProvider' do
         params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"mybucket--usw2-az1--x-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>true, :disable_s3_express_session_auth=>true, :endpoint=>"https://custom.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "Control Plane host override with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--usw2-az1--xa-s3.custom.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--usw2-az1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>true, :disable_s3_express_session_auth=>true, :endpoint=>"https://custom.com"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -7239,6 +7979,46 @@ module Aws::S3
       end
     end
 
+    context "Data plane host override non virtual session auth with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://10.0.0.1/myaccesspoint--usw2-az1--xa-s3"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--usw2-az1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :endpoint=>"https://10.0.0.1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-west-2',
+          endpoint: 'https://10.0.0.1',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'myaccesspoint--usw2-az1--xa-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
     context "Control Plane host override ip" do
       let(:expected) do
         {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://10.0.0.1/mybucket--usw2-az1--x-s3"}}
@@ -7246,6 +8026,20 @@ module Aws::S3
 
       it 'produces the expected output from the EndpointProvider' do
         params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"mybucket--usw2-az1--x-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>true, :disable_s3_express_session_auth=>true, :endpoint=>"https://10.0.0.1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "Control Plane host override ip with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://10.0.0.1/myaccesspoint--usw2-az1--xa-s3"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--usw2-az1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>true, :disable_s3_express_session_auth=>true, :endpoint=>"https://10.0.0.1"})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -7293,6 +8087,46 @@ module Aws::S3
       end
     end
 
+    context "Data plane host override with AP" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true}], "backend"=>"S3Express"}, "url"=>"https://myaccesspoint--usw2-az1--xa-s3.custom.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"myaccesspoint--usw2-az1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :endpoint=>"https://custom.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-west-2',
+          endpoint: 'https://custom.com',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        client.stub_responses(:create_session, credentials: {
+          access_key_id: 's3-akid',
+          secret_access_key: 's3-secret',
+          session_token: 's3-session',
+          expiration: Time.now + 60 * 5
+        })
+        expect_auth({"name"=>"sigv4", "signingName"=>"s3express"})
+        Aws::S3.express_credentials_cache.clear
+        expect_auth({"name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"us-west-2", "disableDoubleEncoding"=>true})
+        resp = client.get_object(
+          bucket: 'myaccesspoint--usw2-az1--xa-s3',
+          key: 'key',
+        )
+        expected_uri = URI.parse(expected['endpoint']['url'])
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.host)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.scheme)
+        expect(resp.context.http_request.endpoint.to_s).to include(expected_uri.path)
+      end
+    end
+
     context "bad format error" do
       let(:expected) do
         {"error"=>"Unrecognized S3Express bucket name format."}
@@ -7320,6 +8154,33 @@ module Aws::S3
       end
     end
 
+    context "bad AP format error" do
+      let(:expected) do
+        {"error"=>"Unrecognized S3Express bucket name format."}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-east-1", :bucket=>"myaccesspoint--usaz1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-east-1',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        expect do
+          client.get_object(
+            bucket: 'myaccesspoint--usaz1--xa-s3',
+            key: 'key',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
     context "bad format error no session auth" do
       let(:expected) do
         {"error"=>"Unrecognized S3Express bucket name format."}
@@ -7341,6 +8202,33 @@ module Aws::S3
         expect do
           client.get_object(
             bucket: 'mybucket--usaz1--x-s3',
+            key: 'key',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "bad AP format error no session auth" do
+      let(:expected) do
+        {"error"=>"Unrecognized S3Express bucket name format."}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-east-1", :bucket=>"myaccesspoint--usaz1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false, :disable_s3_express_session_auth=>true})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-east-1',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        expect do
+          client.get_object(
+            bucket: 'myaccesspoint--usaz1--xa-s3',
             key: 'key',
           )
         end.to raise_error(ArgumentError, expected['error'])
@@ -7375,6 +8263,34 @@ module Aws::S3
       end
     end
 
+    context "dual-stack error with AP" do
+      let(:expected) do
+        {"error"=>"S3Express does not support Dual-stack."}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-east-1", :bucket=>"myaccesspoint--test-ab1--xa-s3", :use_fips=>false, :use_dual_stack=>true, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_dualstack_endpoint: true,
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        expect do
+          client.get_object(
+            bucket: 'myaccesspoint--test-ab1--xa-s3',
+            key: 'key',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
     context "accelerate error" do
       let(:expected) do
         {"error"=>"S3Express does not support S3 Accelerate."}
@@ -7403,6 +8319,34 @@ module Aws::S3
       end
     end
 
+    context "accelerate error with AP" do
+      let(:expected) do
+        {"error"=>"S3Express does not support S3 Accelerate."}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-east-1", :bucket=>"myaccesspoint--test-ab1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>true, :use_s3_express_control_endpoint=>false})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-east-1',
+          use_accelerate_endpoint: true,
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        expect do
+          client.get_object(
+            bucket: 'myaccesspoint--test-ab1--xa-s3',
+            key: 'key',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
     context "Data plane bucket format error" do
       let(:expected) do
         {"error"=>"S3Express bucket name is not a valid virtual hostable name."}
@@ -7424,6 +8368,33 @@ module Aws::S3
         expect do
           client.get_object(
             bucket: 'my.bucket--test-ab1--x-s3',
+            key: 'key',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "Data plane AP format error" do
+      let(:expected) do
+        {"error"=>"S3Express bucket name is not a valid virtual hostable name."}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-east-1", :bucket=>"my.myaccesspoint--test-ab1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :use_s3_express_control_endpoint=>false})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-east-1',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        expect do
+          client.get_object(
+            bucket: 'my.myaccesspoint--test-ab1--xa-s3',
             key: 'key',
           )
         end.to raise_error(ArgumentError, expected['error'])
@@ -7458,6 +8429,34 @@ module Aws::S3
       end
     end
 
+    context "host override data plane AP error session auth" do
+      let(:expected) do
+        {"error"=>"S3Express bucket name is not a valid virtual hostable name."}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"my.myaccesspoint--usw2-az1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :endpoint=>"https://custom.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+
+      it 'produces the correct output from the client when calling get_object' do
+        client = Client.new(
+          region: 'us-west-2',
+          endpoint: 'https://custom.com',
+          s3_us_east_1_regional_endpoint: 'regional',
+          stub_responses: true
+        )
+        expect do
+          client.get_object(
+            bucket: 'my.myaccesspoint--usw2-az1--xa-s3',
+            key: 'key',
+          )
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
     context "host override data plane bucket error" do
       let(:expected) do
         {"error"=>"S3Express bucket name is not a valid virtual hostable name."}
@@ -7465,6 +8464,19 @@ module Aws::S3
 
       it 'produces the expected output from the EndpointProvider' do
         params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"my.bucket--usw2-az1--x-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :endpoint=>"https://custom.com", :disable_s3_express_session_auth=>true})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "host override data plane AP error" do
+      let(:expected) do
+        {"error"=>"S3Express bucket name is not a valid virtual hostable name."}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:region=>"us-west-2", :bucket=>"my.myaccesspoint--usw2-az1--xa-s3", :use_fips=>false, :use_dual_stack=>false, :accelerate=>false, :endpoint=>"https://custom.com", :disable_s3_express_session_auth=>true})
         expect do
           subject.resolve_endpoint(params)
         end.to raise_error(ArgumentError, expected['error'])

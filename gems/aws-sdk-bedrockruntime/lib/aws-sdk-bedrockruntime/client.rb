@@ -869,6 +869,9 @@ module Aws::BedrockRuntime
     #                 },
     #               },
     #             },
+    #             cache_point: {
+    #               type: "default", # required, accepts default
+    #             },
     #             reasoning_content: {
     #               reasoning_text: {
     #                 text: "String", # required
@@ -895,6 +898,9 @@ module Aws::BedrockRuntime
     #             },
     #           },
     #         },
+    #         cache_point: {
+    #           type: "default", # required, accepts default
+    #         },
     #       },
     #     ],
     #     inference_config: {
@@ -913,6 +919,9 @@ module Aws::BedrockRuntime
     #               json: {
     #               },
     #             },
+    #           },
+    #           cache_point: {
+    #             type: "default", # required, accepts default
     #           },
     #         },
     #       ],
@@ -981,6 +990,7 @@ module Aws::BedrockRuntime
     #   resp.output.message.content[0].guard_content.text.qualifiers[0] #=> String, one of "grounding_source", "query", "guard_content"
     #   resp.output.message.content[0].guard_content.image.format #=> String, one of "png", "jpeg"
     #   resp.output.message.content[0].guard_content.image.source.bytes #=> String
+    #   resp.output.message.content[0].cache_point.type #=> String, one of "default"
     #   resp.output.message.content[0].reasoning_content.reasoning_text.text #=> String
     #   resp.output.message.content[0].reasoning_content.reasoning_text.signature #=> String
     #   resp.output.message.content[0].reasoning_content.redacted_content #=> String
@@ -988,6 +998,8 @@ module Aws::BedrockRuntime
     #   resp.usage.input_tokens #=> Integer
     #   resp.usage.output_tokens #=> Integer
     #   resp.usage.total_tokens #=> Integer
+    #   resp.usage.cache_read_input_tokens #=> Integer
+    #   resp.usage.cache_write_input_tokens #=> Integer
     #   resp.metrics.latency_ms #=> Integer
     #   resp.trace.guardrail.model_output #=> Array
     #   resp.trace.guardrail.model_output[0] #=> String
@@ -1535,6 +1547,9 @@ module Aws::BedrockRuntime
     #                 },
     #               },
     #             },
+    #             cache_point: {
+    #               type: "default", # required, accepts default
+    #             },
     #             reasoning_content: {
     #               reasoning_text: {
     #                 text: "String", # required
@@ -1561,6 +1576,9 @@ module Aws::BedrockRuntime
     #             },
     #           },
     #         },
+    #         cache_point: {
+    #           type: "default", # required, accepts default
+    #         },
     #       },
     #     ],
     #     inference_config: {
@@ -1579,6 +1597,9 @@ module Aws::BedrockRuntime
     #               json: {
     #               },
     #             },
+    #           },
+    #           cache_point: {
+    #             type: "default", # required, accepts default
     #           },
     #         },
     #       ],
@@ -1646,6 +1667,8 @@ module Aws::BedrockRuntime
     #   event.usage.input_tokens #=> Integer
     #   event.usage.output_tokens #=> Integer
     #   event.usage.total_tokens #=> Integer
+    #   event.usage.cache_read_input_tokens #=> Integer
+    #   event.usage.cache_write_input_tokens #=> Integer
     #   event.metrics.latency_ms #=> Integer
     #   event.trace.guardrail.model_output #=> Array
     #   event.trace.guardrail.model_output[0] #=> String
@@ -2475,7 +2498,7 @@ module Aws::BedrockRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockruntime'
-      context[:gem_version] = '1.41.0'
+      context[:gem_version] = '1.42.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
