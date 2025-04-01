@@ -3517,6 +3517,12 @@ module Aws
                                                          {
                                                            content: ::String?
                                                          },
+                                                       ],
+                                                       ?tags: Array[
+                                                         {
+                                                           key: ::String,
+                                                           value: ::String
+                                                         },
                                                        ]
                                                      ) -> _CreateNotebookInstanceLifecycleConfigResponseSuccess
                                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateNotebookInstanceLifecycleConfigResponseSuccess

@@ -2451,6 +2451,7 @@ module Aws::CleanRooms
       attr_accessor collaboration_identifier: ::String
       attr_accessor name: ::String
       attr_accessor description: ::String
+      attr_accessor analytics_engine: ("SPARK" | "CLEAN_ROOMS_SQL")
       SENSITIVE: []
     end
 

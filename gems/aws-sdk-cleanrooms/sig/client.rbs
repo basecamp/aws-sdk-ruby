@@ -1201,7 +1201,8 @@ module Aws
       def update_collaboration: (
                                   collaboration_identifier: ::String,
                                   ?name: ::String,
-                                  ?description: ::String
+                                  ?description: ::String,
+                                  ?analytics_engine: ("SPARK" | "CLEAN_ROOMS_SQL")
                                 ) -> _UpdateCollaborationResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateCollaborationResponseSuccess
 

@@ -4741,6 +4741,9 @@ module Aws::CleanRooms
     # @option params [String] :description
     #   A description of the collaboration.
     #
+    # @option params [String] :analytics_engine
+    #   The analytics engine.
+    #
     # @return [Types::UpdateCollaborationOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateCollaborationOutput#collaboration #collaboration} => Types::Collaboration
@@ -4751,6 +4754,7 @@ module Aws::CleanRooms
     #     collaboration_identifier: "CollaborationIdentifier", # required
     #     name: "CollaborationName",
     #     description: "CollaborationDescription",
+    #     analytics_engine: "SPARK", # accepts SPARK, CLEAN_ROOMS_SQL
     #   })
     #
     # @example Response structure
@@ -5577,7 +5581,7 @@ module Aws::CleanRooms
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cleanrooms'
-      context[:gem_version] = '1.41.0'
+      context[:gem_version] = '1.42.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

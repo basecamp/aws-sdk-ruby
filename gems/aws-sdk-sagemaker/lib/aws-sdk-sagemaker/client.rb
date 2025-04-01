@@ -7837,6 +7837,16 @@ module Aws::SageMaker
     #   including when you create the notebook instance. The shell script must
     #   be a base64-encoded string.
     #
+    # @option params [Array<Types::Tag>] :tags
+    #   An array of key-value pairs. You can use tags to categorize your
+    #   Amazon Web Services resources in different ways, for example, by
+    #   purpose, owner, or environment. For more information, see [Tagging
+    #   Amazon Web Services Resources][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html
+    #
     # @return [Types::CreateNotebookInstanceLifecycleConfigOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateNotebookInstanceLifecycleConfigOutput#notebook_instance_lifecycle_config_arn #notebook_instance_lifecycle_config_arn} => String
@@ -7853,6 +7863,12 @@ module Aws::SageMaker
     #     on_start: [
     #       {
     #         content: "NotebookInstanceLifecycleConfigContent",
+    #       },
+    #     ],
+    #     tags: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue", # required
     #       },
     #     ],
     #   })
@@ -29770,7 +29786,7 @@ module Aws::SageMaker
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sagemaker'
-      context[:gem_version] = '1.298.0'
+      context[:gem_version] = '1.299.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

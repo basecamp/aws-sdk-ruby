@@ -9414,12 +9414,24 @@ module Aws::SageMaker
     #   must be a base64-encoded string.
     #   @return [Array<Types::NotebookInstanceLifecycleHook>]
     #
+    # @!attribute [rw] tags
+    #   An array of key-value pairs. You can use tags to categorize your
+    #   Amazon Web Services resources in different ways, for example, by
+    #   purpose, owner, or environment. For more information, see [Tagging
+    #   Amazon Web Services Resources][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html
+    #   @return [Array<Types::Tag>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CreateNotebookInstanceLifecycleConfigInput AWS API Documentation
     #
     class CreateNotebookInstanceLifecycleConfigInput < Struct.new(
       :notebook_instance_lifecycle_config_name,
       :on_create,
-      :on_start)
+      :on_start,
+      :tags)
       SENSITIVE = []
       include Aws::Structure
     end

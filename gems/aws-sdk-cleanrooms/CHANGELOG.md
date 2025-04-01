@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.42.0 (2025-04-01)
+------------------
+
+* Feature - This release adds support for updating the analytics engine of a collaboration.
+
 1.41.0 (2025-03-18)
 ------------------
 

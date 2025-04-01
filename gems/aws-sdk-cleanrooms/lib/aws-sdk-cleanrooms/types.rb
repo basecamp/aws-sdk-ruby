@@ -8503,12 +8503,17 @@ module Aws::CleanRooms
     #   A description of the collaboration.
     #   @return [String]
     #
+    # @!attribute [rw] analytics_engine
+    #   The analytics engine.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/UpdateCollaborationInput AWS API Documentation
     #
     class UpdateCollaborationInput < Struct.new(
       :collaboration_identifier,
       :name,
-      :description)
+      :description,
+      :analytics_engine)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -2446,6 +2446,7 @@ module Aws::CleanRooms
     UpdateCollaborationInput.add_member(:collaboration_identifier, Shapes::ShapeRef.new(shape: CollaborationIdentifier, required: true, location: "uri", location_name: "collaborationIdentifier"))
     UpdateCollaborationInput.add_member(:name, Shapes::ShapeRef.new(shape: CollaborationName, location_name: "name"))
     UpdateCollaborationInput.add_member(:description, Shapes::ShapeRef.new(shape: CollaborationDescription, location_name: "description"))
+    UpdateCollaborationInput.add_member(:analytics_engine, Shapes::ShapeRef.new(shape: AnalyticsEngine, location_name: "analyticsEngine"))
     UpdateCollaborationInput.struct_class = Types::UpdateCollaborationInput
 
     UpdateCollaborationOutput.add_member(:collaboration, Shapes::ShapeRef.new(shape: Collaboration, required: true, location_name: "collaboration"))

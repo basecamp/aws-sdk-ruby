@@ -1750,6 +1750,7 @@ module Aws::SageMaker
       attr_accessor notebook_instance_lifecycle_config_name: ::String
       attr_accessor on_create: ::Array[Types::NotebookInstanceLifecycleHook]
       attr_accessor on_start: ::Array[Types::NotebookInstanceLifecycleHook]
+      attr_accessor tags: ::Array[Types::Tag]
       SENSITIVE: []
     end
 
