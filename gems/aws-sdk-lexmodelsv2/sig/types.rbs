@@ -428,6 +428,7 @@ module Aws::LexModelsV2
       attr_accessor bot_name: ::String
       attr_accessor role_arn: ::String
       attr_accessor data_privacy: Types::DataPrivacy
+      attr_accessor error_log_settings: Types::ErrorLogSettings
       attr_accessor idle_session_ttl_in_seconds: ::Integer
       attr_accessor bot_tags: ::Hash[::String, ::String]
       attr_accessor test_bot_alias_tags: ::Hash[::String, ::String]
@@ -797,6 +798,7 @@ module Aws::LexModelsV2
       attr_accessor test_bot_alias_tags: ::Hash[::String, ::String]
       attr_accessor bot_type: ("Bot" | "BotNetwork")
       attr_accessor bot_members: ::Array[Types::BotMember]
+      attr_accessor error_log_settings: Types::ErrorLogSettings
       SENSITIVE: []
     end
 
@@ -813,6 +815,7 @@ module Aws::LexModelsV2
       attr_accessor test_bot_alias_tags: ::Hash[::String, ::String]
       attr_accessor bot_type: ("Bot" | "BotNetwork")
       attr_accessor bot_members: ::Array[Types::BotMember]
+      attr_accessor error_log_settings: Types::ErrorLogSettings
       SENSITIVE: []
     end
 
@@ -866,6 +869,7 @@ module Aws::LexModelsV2
       attr_accessor locale_id: ::String
       attr_accessor initial_response_setting: Types::InitialResponseSetting
       attr_accessor qn_a_intent_configuration: Types::QnAIntentConfiguration
+      attr_accessor q_in_connect_intent_configuration: Types::QInConnectIntentConfiguration
       SENSITIVE: []
     end
 
@@ -888,6 +892,7 @@ module Aws::LexModelsV2
       attr_accessor creation_date_time: ::Time
       attr_accessor initial_response_setting: Types::InitialResponseSetting
       attr_accessor qn_a_intent_configuration: Types::QnAIntentConfiguration
+      attr_accessor q_in_connect_intent_configuration: Types::QInConnectIntentConfiguration
       SENSITIVE: []
     end
 
@@ -1371,6 +1376,7 @@ module Aws::LexModelsV2
       attr_accessor bot_type: ("Bot" | "BotNetwork")
       attr_accessor bot_members: ::Array[Types::BotMember]
       attr_accessor failure_reasons: ::Array[::String]
+      attr_accessor error_log_settings: Types::ErrorLogSettings
       SENSITIVE: []
     end
 
@@ -1478,6 +1484,7 @@ module Aws::LexModelsV2
       attr_accessor last_updated_date_time: ::Time
       attr_accessor initial_response_setting: Types::InitialResponseSetting
       attr_accessor qn_a_intent_configuration: Types::QnAIntentConfiguration
+      attr_accessor q_in_connect_intent_configuration: Types::QInConnectIntentConfiguration
       SENSITIVE: []
     end
 
@@ -1665,6 +1672,11 @@ module Aws::LexModelsV2
       attr_accessor bot_locale_export_password: ::String
       attr_accessor associated_transcripts_password: ::String
       SENSITIVE: [:bot_locale_export_password, :associated_transcripts_password]
+    end
+
+    class ErrorLogSettings
+      attr_accessor enabled: bool
+      SENSITIVE: []
     end
 
     class ExactResponseFields
@@ -2658,6 +2670,16 @@ module Aws::LexModelsV2
       SENSITIVE: []
     end
 
+    class QInConnectAssistantConfiguration
+      attr_accessor assistant_arn: ::String
+      SENSITIVE: []
+    end
+
+    class QInConnectIntentConfiguration
+      attr_accessor q_in_connect_assistant_configuration: Types::QInConnectAssistantConfiguration
+      SENSITIVE: []
+    end
+
     class QnAIntentConfiguration
       attr_accessor data_source_configuration: Types::DataSourceConfiguration
       attr_accessor bedrock_model_configuration: Types::BedrockModelSpecification
@@ -3385,6 +3407,7 @@ module Aws::LexModelsV2
       attr_accessor idle_session_ttl_in_seconds: ::Integer
       attr_accessor bot_type: ("Bot" | "BotNetwork")
       attr_accessor bot_members: ::Array[Types::BotMember]
+      attr_accessor error_log_settings: Types::ErrorLogSettings
       SENSITIVE: []
     end
 
@@ -3400,6 +3423,7 @@ module Aws::LexModelsV2
       attr_accessor last_updated_date_time: ::Time
       attr_accessor bot_type: ("Bot" | "BotNetwork")
       attr_accessor bot_members: ::Array[Types::BotMember]
+      attr_accessor error_log_settings: Types::ErrorLogSettings
       SENSITIVE: []
     end
 
@@ -3438,6 +3462,7 @@ module Aws::LexModelsV2
       attr_accessor locale_id: ::String
       attr_accessor initial_response_setting: Types::InitialResponseSetting
       attr_accessor qn_a_intent_configuration: Types::QnAIntentConfiguration
+      attr_accessor q_in_connect_intent_configuration: Types::QInConnectIntentConfiguration
       SENSITIVE: []
     end
 
@@ -3462,6 +3487,7 @@ module Aws::LexModelsV2
       attr_accessor last_updated_date_time: ::Time
       attr_accessor initial_response_setting: Types::InitialResponseSetting
       attr_accessor qn_a_intent_configuration: Types::QnAIntentConfiguration
+      attr_accessor q_in_connect_intent_configuration: Types::QInConnectIntentConfiguration
       SENSITIVE: []
     end
 

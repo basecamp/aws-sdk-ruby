@@ -2161,6 +2161,11 @@ module Aws::LexModelsV2
     #   Lex handles special cases of securing the data for your bot.
     #   @return [Types::DataPrivacy]
     #
+    # @!attribute [rw] error_log_settings
+    #   Allows you to configure destinations where error logs will be
+    #   published during the bot import process.
+    #   @return [Types::ErrorLogSettings]
+    #
     # @!attribute [rw] idle_session_ttl_in_seconds
     #   The time, in seconds, that Amazon Lex should keep information about
     #   a user's conversation with the bot.
@@ -2191,6 +2196,7 @@ module Aws::LexModelsV2
       :bot_name,
       :role_arn,
       :data_privacy,
+      :error_log_settings,
       :idle_session_ttl_in_seconds,
       :bot_tags,
       :test_bot_alias_tags)
@@ -3692,6 +3698,10 @@ module Aws::LexModelsV2
     #   The list of bot members in a network to be created.
     #   @return [Array<Types::BotMember>]
     #
+    # @!attribute [rw] error_log_settings
+    #   Specifies the configuration for error logging during bot creation.
+    #   @return [Types::ErrorLogSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/CreateBotRequest AWS API Documentation
     #
     class CreateBotRequest < Struct.new(
@@ -3703,7 +3713,8 @@ module Aws::LexModelsV2
       :bot_tags,
       :test_bot_alias_tags,
       :bot_type,
-      :bot_members)
+      :bot_members,
+      :error_log_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3760,6 +3771,11 @@ module Aws::LexModelsV2
     #   The list of bots in a network that was created.
     #   @return [Array<Types::BotMember>]
     #
+    # @!attribute [rw] error_log_settings
+    #   Specifies configuration settings for delivering error logs to
+    #   Cloudwatch Logs in an Amazon Lex bot response.
+    #   @return [Types::ErrorLogSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/CreateBotResponse AWS API Documentation
     #
     class CreateBotResponse < Struct.new(
@@ -3774,7 +3790,8 @@ module Aws::LexModelsV2
       :bot_tags,
       :test_bot_alias_tags,
       :bot_type,
-      :bot_members)
+      :bot_members,
+      :error_log_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4041,6 +4058,11 @@ module Aws::LexModelsV2
     #   specify the `kendraConfiguration` field.
     #   @return [Types::QnAIntentConfiguration]
     #
+    # @!attribute [rw] q_in_connect_intent_configuration
+    #   Qinconnect intent configuration details for the create intent
+    #   request.
+    #   @return [Types::QInConnectIntentConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/CreateIntentRequest AWS API Documentation
     #
     class CreateIntentRequest < Struct.new(
@@ -4059,7 +4081,8 @@ module Aws::LexModelsV2
       :bot_version,
       :locale_id,
       :initial_response_setting,
-      :qn_a_intent_configuration)
+      :qn_a_intent_configuration,
+      :q_in_connect_intent_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4139,6 +4162,11 @@ module Aws::LexModelsV2
     #   `Amazon.QnAIntent`.
     #   @return [Types::QnAIntentConfiguration]
     #
+    # @!attribute [rw] q_in_connect_intent_configuration
+    #   Qinconnect intent configuration details for the create intent
+    #   response.
+    #   @return [Types::QInConnectIntentConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/CreateIntentResponse AWS API Documentation
     #
     class CreateIntentResponse < Struct.new(
@@ -4159,7 +4187,8 @@ module Aws::LexModelsV2
       :locale_id,
       :creation_date_time,
       :initial_response_setting,
-      :qn_a_intent_configuration)
+      :qn_a_intent_configuration,
+      :q_in_connect_intent_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6136,6 +6165,12 @@ module Aws::LexModelsV2
     #   the bot couldn't be built.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] error_log_settings
+    #   Contains the configuration for error logging that specifies where
+    #   and how bot errors are recorded, including destinations like
+    #   CloudWatch Logs.
+    #   @return [Types::ErrorLogSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/DescribeBotResponse AWS API Documentation
     #
     class DescribeBotResponse < Struct.new(
@@ -6150,7 +6185,8 @@ module Aws::LexModelsV2
       :last_updated_date_time,
       :bot_type,
       :bot_members,
-      :failure_reasons)
+      :failure_reasons,
+      :error_log_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6569,6 +6605,11 @@ module Aws::LexModelsV2
     #   Details about the configuration of the built-in `Amazon.QnAIntent`.
     #   @return [Types::QnAIntentConfiguration]
     #
+    # @!attribute [rw] q_in_connect_intent_configuration
+    #   Qinconnect intent configuration details for the describe intent
+    #   response.
+    #   @return [Types::QInConnectIntentConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/DescribeIntentResponse AWS API Documentation
     #
     class DescribeIntentResponse < Struct.new(
@@ -6591,7 +6632,8 @@ module Aws::LexModelsV2
       :creation_date_time,
       :last_updated_date_time,
       :initial_response_setting,
-      :qn_a_intent_configuration)
+      :qn_a_intent_configuration,
+      :q_in_connect_intent_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7328,6 +7370,21 @@ module Aws::LexModelsV2
       :bot_locale_export_password,
       :associated_transcripts_password)
       SENSITIVE = [:bot_locale_export_password, :associated_transcripts_password]
+      include Aws::Structure
+    end
+
+    # Settings parameters for the error logs, whether it is enabled or
+    # disabled.
+    #
+    # @!attribute [rw] enabled
+    #   Settings parameters for the error logs, when it is enabled.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/ErrorLogSettings AWS API Documentation
+    #
+    class ErrorLogSettings < Struct.new(
+      :enabled)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -11570,6 +11627,35 @@ module Aws::LexModelsV2
       include Aws::Structure
     end
 
+    # The configuration details of the Qinconnect assistant.
+    #
+    # @!attribute [rw] assistant_arn
+    #   The assistant Arn details of the Qinconnect assistant configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/QInConnectAssistantConfiguration AWS API Documentation
+    #
+    class QInConnectAssistantConfiguration < Struct.new(
+      :assistant_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration details of the Qinconnect intent.
+    #
+    # @!attribute [rw] q_in_connect_assistant_configuration
+    #   The Qinconnect assistant configuration details of the Qinconnect
+    #   intent.
+    #   @return [Types::QInConnectAssistantConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/QInConnectIntentConfiguration AWS API Documentation
+    #
+    class QInConnectIntentConfiguration < Struct.new(
+      :q_in_connect_assistant_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Details about the the configuration of the built-in
     # `Amazon.QnAIntent`.
     #
@@ -14588,6 +14674,12 @@ module Aws::LexModelsV2
     #   action.
     #   @return [Array<Types::BotMember>]
     #
+    # @!attribute [rw] error_log_settings
+    #   Allows you to modify how Amazon Lex logs errors during bot
+    #   interactions, including destinations for error logs and the types of
+    #   errors to be captured.
+    #   @return [Types::ErrorLogSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/UpdateBotRequest AWS API Documentation
     #
     class UpdateBotRequest < Struct.new(
@@ -14598,7 +14690,8 @@ module Aws::LexModelsV2
       :data_privacy,
       :idle_session_ttl_in_seconds,
       :bot_type,
-      :bot_members)
+      :bot_members,
+      :error_log_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -14651,6 +14744,11 @@ module Aws::LexModelsV2
     #   The list of bot members in the network that was updated.
     #   @return [Array<Types::BotMember>]
     #
+    # @!attribute [rw] error_log_settings
+    #   Settings for managing error logs within the response of an update
+    #   bot operation.
+    #   @return [Types::ErrorLogSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/UpdateBotResponse AWS API Documentation
     #
     class UpdateBotResponse < Struct.new(
@@ -14664,7 +14762,8 @@ module Aws::LexModelsV2
       :creation_date_time,
       :last_updated_date_time,
       :bot_type,
-      :bot_members)
+      :bot_members,
+      :error_log_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -14817,6 +14916,11 @@ module Aws::LexModelsV2
     #   specify the `kendraConfiguration` field.
     #   @return [Types::QnAIntentConfiguration]
     #
+    # @!attribute [rw] q_in_connect_intent_configuration
+    #   Qinconnect intent configuration details for the update intent
+    #   request.
+    #   @return [Types::QInConnectIntentConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/UpdateIntentRequest AWS API Documentation
     #
     class UpdateIntentRequest < Struct.new(
@@ -14837,7 +14941,8 @@ module Aws::LexModelsV2
       :bot_version,
       :locale_id,
       :initial_response_setting,
-      :qn_a_intent_configuration)
+      :qn_a_intent_configuration,
+      :q_in_connect_intent_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -14932,6 +15037,11 @@ module Aws::LexModelsV2
     #   Details about the configuration of the built-in `Amazon.QnAIntent`.
     #   @return [Types::QnAIntentConfiguration]
     #
+    # @!attribute [rw] q_in_connect_intent_configuration
+    #   Qinconnect intent configuration details for the update intent
+    #   response.
+    #   @return [Types::QInConnectIntentConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/UpdateIntentResponse AWS API Documentation
     #
     class UpdateIntentResponse < Struct.new(
@@ -14954,7 +15064,8 @@ module Aws::LexModelsV2
       :creation_date_time,
       :last_updated_date_time,
       :initial_response_setting,
-      :qn_a_intent_configuration)
+      :qn_a_intent_configuration,
+      :q_in_connect_intent_configuration)
       SENSITIVE = []
       include Aws::Structure
     end

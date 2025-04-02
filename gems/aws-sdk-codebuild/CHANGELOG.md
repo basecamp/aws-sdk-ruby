@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.150.0 (2025-04-02)
+------------------
+
+* Feature - This release adds support for environment type WINDOWS_SERVER_2022_CONTAINER in ProjectEnvironment
+
 1.149.0 (2025-03-28)
 ------------------
 

@@ -389,6 +389,7 @@ module Aws::LexModelsV2
     Enabled = Shapes::BooleanShape.new(name: 'Enabled')
     EncryptionSetting = Shapes::StructureShape.new(name: 'EncryptionSetting')
     ErrorCode = Shapes::StringShape.new(name: 'ErrorCode')
+    ErrorLogSettings = Shapes::StructureShape.new(name: 'ErrorLogSettings')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
     ExactResponseFields = Shapes::StructureShape.new(name: 'ExactResponseFields')
     ExceptionMessage = Shapes::StringShape.new(name: 'ExceptionMessage')
@@ -599,6 +600,9 @@ module Aws::LexModelsV2
     PromptAttemptsSpecificationMap = Shapes::MapShape.new(name: 'PromptAttemptsSpecificationMap')
     PromptMaxRetries = Shapes::IntegerShape.new(name: 'PromptMaxRetries')
     PromptSpecification = Shapes::StructureShape.new(name: 'PromptSpecification')
+    QInConnectAssistantARN = Shapes::StringShape.new(name: 'QInConnectAssistantARN')
+    QInConnectAssistantConfiguration = Shapes::StructureShape.new(name: 'QInConnectAssistantConfiguration')
+    QInConnectIntentConfiguration = Shapes::StructureShape.new(name: 'QInConnectIntentConfiguration')
     QnAIntentConfiguration = Shapes::StructureShape.new(name: 'QnAIntentConfiguration')
     QnAKendraConfiguration = Shapes::StructureShape.new(name: 'QnAKendraConfiguration')
     QueryFilterString = Shapes::StringShape.new(name: 'QueryFilterString')
@@ -1215,6 +1219,7 @@ module Aws::LexModelsV2
     BotImportSpecification.add_member(:bot_name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "botName"))
     BotImportSpecification.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
     BotImportSpecification.add_member(:data_privacy, Shapes::ShapeRef.new(shape: DataPrivacy, required: true, location_name: "dataPrivacy"))
+    BotImportSpecification.add_member(:error_log_settings, Shapes::ShapeRef.new(shape: ErrorLogSettings, location_name: "errorLogSettings"))
     BotImportSpecification.add_member(:idle_session_ttl_in_seconds, Shapes::ShapeRef.new(shape: SessionTTL, location_name: "idleSessionTTLInSeconds"))
     BotImportSpecification.add_member(:bot_tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "botTags"))
     BotImportSpecification.add_member(:test_bot_alias_tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "testBotAliasTags"))
@@ -1527,6 +1532,7 @@ module Aws::LexModelsV2
     CreateBotRequest.add_member(:test_bot_alias_tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "testBotAliasTags"))
     CreateBotRequest.add_member(:bot_type, Shapes::ShapeRef.new(shape: BotType, location_name: "botType"))
     CreateBotRequest.add_member(:bot_members, Shapes::ShapeRef.new(shape: BotMembers, location_name: "botMembers"))
+    CreateBotRequest.add_member(:error_log_settings, Shapes::ShapeRef.new(shape: ErrorLogSettings, location_name: "errorLogSettings"))
     CreateBotRequest.struct_class = Types::CreateBotRequest
 
     CreateBotResponse.add_member(:bot_id, Shapes::ShapeRef.new(shape: Id, location_name: "botId"))
@@ -1541,6 +1547,7 @@ module Aws::LexModelsV2
     CreateBotResponse.add_member(:test_bot_alias_tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "testBotAliasTags"))
     CreateBotResponse.add_member(:bot_type, Shapes::ShapeRef.new(shape: BotType, location_name: "botType"))
     CreateBotResponse.add_member(:bot_members, Shapes::ShapeRef.new(shape: BotMembers, location_name: "botMembers"))
+    CreateBotResponse.add_member(:error_log_settings, Shapes::ShapeRef.new(shape: ErrorLogSettings, location_name: "errorLogSettings"))
     CreateBotResponse.struct_class = Types::CreateBotResponse
 
     CreateBotVersionRequest.add_member(:bot_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "botId"))
@@ -1586,6 +1593,7 @@ module Aws::LexModelsV2
     CreateIntentRequest.add_member(:locale_id, Shapes::ShapeRef.new(shape: LocaleId, required: true, location: "uri", location_name: "localeId"))
     CreateIntentRequest.add_member(:initial_response_setting, Shapes::ShapeRef.new(shape: InitialResponseSetting, location_name: "initialResponseSetting"))
     CreateIntentRequest.add_member(:qn_a_intent_configuration, Shapes::ShapeRef.new(shape: QnAIntentConfiguration, location_name: "qnAIntentConfiguration"))
+    CreateIntentRequest.add_member(:q_in_connect_intent_configuration, Shapes::ShapeRef.new(shape: QInConnectIntentConfiguration, location_name: "qInConnectIntentConfiguration"))
     CreateIntentRequest.struct_class = Types::CreateIntentRequest
 
     CreateIntentResponse.add_member(:intent_id, Shapes::ShapeRef.new(shape: Id, location_name: "intentId"))
@@ -1606,6 +1614,7 @@ module Aws::LexModelsV2
     CreateIntentResponse.add_member(:creation_date_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "creationDateTime"))
     CreateIntentResponse.add_member(:initial_response_setting, Shapes::ShapeRef.new(shape: InitialResponseSetting, location_name: "initialResponseSetting"))
     CreateIntentResponse.add_member(:qn_a_intent_configuration, Shapes::ShapeRef.new(shape: QnAIntentConfiguration, location_name: "qnAIntentConfiguration"))
+    CreateIntentResponse.add_member(:q_in_connect_intent_configuration, Shapes::ShapeRef.new(shape: QInConnectIntentConfiguration, location_name: "qInConnectIntentConfiguration"))
     CreateIntentResponse.struct_class = Types::CreateIntentResponse
 
     CreateResourcePolicyRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: AmazonResourceName, required: true, location: "uri", location_name: "resourceArn"))
@@ -1975,6 +1984,7 @@ module Aws::LexModelsV2
     DescribeBotResponse.add_member(:bot_type, Shapes::ShapeRef.new(shape: BotType, location_name: "botType"))
     DescribeBotResponse.add_member(:bot_members, Shapes::ShapeRef.new(shape: BotMembers, location_name: "botMembers"))
     DescribeBotResponse.add_member(:failure_reasons, Shapes::ShapeRef.new(shape: FailureReasons, location_name: "failureReasons"))
+    DescribeBotResponse.add_member(:error_log_settings, Shapes::ShapeRef.new(shape: ErrorLogSettings, location_name: "errorLogSettings"))
     DescribeBotResponse.struct_class = Types::DescribeBotResponse
 
     DescribeBotVersionRequest.add_member(:bot_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "botId"))
@@ -2062,6 +2072,7 @@ module Aws::LexModelsV2
     DescribeIntentResponse.add_member(:last_updated_date_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastUpdatedDateTime"))
     DescribeIntentResponse.add_member(:initial_response_setting, Shapes::ShapeRef.new(shape: InitialResponseSetting, location_name: "initialResponseSetting"))
     DescribeIntentResponse.add_member(:qn_a_intent_configuration, Shapes::ShapeRef.new(shape: QnAIntentConfiguration, location_name: "qnAIntentConfiguration"))
+    DescribeIntentResponse.add_member(:q_in_connect_intent_configuration, Shapes::ShapeRef.new(shape: QInConnectIntentConfiguration, location_name: "qInConnectIntentConfiguration"))
     DescribeIntentResponse.struct_class = Types::DescribeIntentResponse
 
     DescribeResourcePolicyRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: AmazonResourceName, required: true, location: "uri", location_name: "resourceArn"))
@@ -2207,6 +2218,9 @@ module Aws::LexModelsV2
     EncryptionSetting.add_member(:bot_locale_export_password, Shapes::ShapeRef.new(shape: FilePassword, location_name: "botLocaleExportPassword"))
     EncryptionSetting.add_member(:associated_transcripts_password, Shapes::ShapeRef.new(shape: FilePassword, location_name: "associatedTranscriptsPassword"))
     EncryptionSetting.struct_class = Types::EncryptionSetting
+
+    ErrorLogSettings.add_member(:enabled, Shapes::ShapeRef.new(shape: BoxedBoolean, required: true, location_name: "enabled"))
+    ErrorLogSettings.struct_class = Types::ErrorLogSettings
 
     ExactResponseFields.add_member(:question_field, Shapes::ShapeRef.new(shape: QuestionField, required: true, location_name: "questionField"))
     ExactResponseFields.add_member(:answer_field, Shapes::ShapeRef.new(shape: AnswerField, required: true, location_name: "answerField"))
@@ -2996,6 +3010,12 @@ module Aws::LexModelsV2
     PromptSpecification.add_member(:prompt_attempts_specification, Shapes::ShapeRef.new(shape: PromptAttemptsSpecificationMap, location_name: "promptAttemptsSpecification"))
     PromptSpecification.struct_class = Types::PromptSpecification
 
+    QInConnectAssistantConfiguration.add_member(:assistant_arn, Shapes::ShapeRef.new(shape: QInConnectAssistantARN, required: true, location_name: "assistantArn"))
+    QInConnectAssistantConfiguration.struct_class = Types::QInConnectAssistantConfiguration
+
+    QInConnectIntentConfiguration.add_member(:q_in_connect_assistant_configuration, Shapes::ShapeRef.new(shape: QInConnectAssistantConfiguration, location_name: "qInConnectAssistantConfiguration"))
+    QInConnectIntentConfiguration.struct_class = Types::QInConnectIntentConfiguration
+
     QnAIntentConfiguration.add_member(:data_source_configuration, Shapes::ShapeRef.new(shape: DataSourceConfiguration, location_name: "dataSourceConfiguration"))
     QnAIntentConfiguration.add_member(:bedrock_model_configuration, Shapes::ShapeRef.new(shape: BedrockModelSpecification, location_name: "bedrockModelConfiguration"))
     QnAIntentConfiguration.struct_class = Types::QnAIntentConfiguration
@@ -3599,6 +3619,7 @@ module Aws::LexModelsV2
     UpdateBotRequest.add_member(:idle_session_ttl_in_seconds, Shapes::ShapeRef.new(shape: SessionTTL, required: true, location_name: "idleSessionTTLInSeconds"))
     UpdateBotRequest.add_member(:bot_type, Shapes::ShapeRef.new(shape: BotType, location_name: "botType"))
     UpdateBotRequest.add_member(:bot_members, Shapes::ShapeRef.new(shape: BotMembers, location_name: "botMembers"))
+    UpdateBotRequest.add_member(:error_log_settings, Shapes::ShapeRef.new(shape: ErrorLogSettings, location_name: "errorLogSettings"))
     UpdateBotRequest.struct_class = Types::UpdateBotRequest
 
     UpdateBotResponse.add_member(:bot_id, Shapes::ShapeRef.new(shape: Id, location_name: "botId"))
@@ -3612,6 +3633,7 @@ module Aws::LexModelsV2
     UpdateBotResponse.add_member(:last_updated_date_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastUpdatedDateTime"))
     UpdateBotResponse.add_member(:bot_type, Shapes::ShapeRef.new(shape: BotType, location_name: "botType"))
     UpdateBotResponse.add_member(:bot_members, Shapes::ShapeRef.new(shape: BotMembers, location_name: "botMembers"))
+    UpdateBotResponse.add_member(:error_log_settings, Shapes::ShapeRef.new(shape: ErrorLogSettings, location_name: "errorLogSettings"))
     UpdateBotResponse.struct_class = Types::UpdateBotResponse
 
     UpdateCustomVocabularyItemsList.member = Shapes::ShapeRef.new(shape: CustomVocabularyItem)
@@ -3646,6 +3668,7 @@ module Aws::LexModelsV2
     UpdateIntentRequest.add_member(:locale_id, Shapes::ShapeRef.new(shape: LocaleId, required: true, location: "uri", location_name: "localeId"))
     UpdateIntentRequest.add_member(:initial_response_setting, Shapes::ShapeRef.new(shape: InitialResponseSetting, location_name: "initialResponseSetting"))
     UpdateIntentRequest.add_member(:qn_a_intent_configuration, Shapes::ShapeRef.new(shape: QnAIntentConfiguration, location_name: "qnAIntentConfiguration"))
+    UpdateIntentRequest.add_member(:q_in_connect_intent_configuration, Shapes::ShapeRef.new(shape: QInConnectIntentConfiguration, location_name: "qInConnectIntentConfiguration"))
     UpdateIntentRequest.struct_class = Types::UpdateIntentRequest
 
     UpdateIntentResponse.add_member(:intent_id, Shapes::ShapeRef.new(shape: Id, location_name: "intentId"))
@@ -3668,6 +3691,7 @@ module Aws::LexModelsV2
     UpdateIntentResponse.add_member(:last_updated_date_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastUpdatedDateTime"))
     UpdateIntentResponse.add_member(:initial_response_setting, Shapes::ShapeRef.new(shape: InitialResponseSetting, location_name: "initialResponseSetting"))
     UpdateIntentResponse.add_member(:qn_a_intent_configuration, Shapes::ShapeRef.new(shape: QnAIntentConfiguration, location_name: "qnAIntentConfiguration"))
+    UpdateIntentResponse.add_member(:q_in_connect_intent_configuration, Shapes::ShapeRef.new(shape: QInConnectIntentConfiguration, location_name: "qInConnectIntentConfiguration"))
     UpdateIntentResponse.struct_class = Types::UpdateIntentResponse
 
     UpdateResourcePolicyRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: AmazonResourceName, required: true, location: "uri", location_name: "resourceArn"))

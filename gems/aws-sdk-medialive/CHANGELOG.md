@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.149.0 (2025-04-02)
+------------------
+
+* Feature - Added support for SMPTE 2110 inputs when running a channel in a MediaLive Anywhere cluster. This feature enables ingestion of SMPTE 2110-compliant video, audio, and ancillary streams by reading SDP files that AWS Elemental MediaLive can retrieve from a network source.
+
 1.148.0 (2025-03-11)
 ------------------
 

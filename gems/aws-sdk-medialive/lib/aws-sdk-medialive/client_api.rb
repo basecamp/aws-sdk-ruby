@@ -536,6 +536,7 @@ module Aws::MediaLive
     InputPrepareScheduleActionSettings = Shapes::StructureShape.new(name: 'InputPrepareScheduleActionSettings')
     InputRequestDestinationRoute = Shapes::StructureShape.new(name: 'InputRequestDestinationRoute')
     InputResolution = Shapes::StringShape.new(name: 'InputResolution')
+    InputSdpLocation = Shapes::StructureShape.new(name: 'InputSdpLocation')
     InputSecurityGroup = Shapes::StructureShape.new(name: 'InputSecurityGroup')
     InputSecurityGroupState = Shapes::StringShape.new(name: 'InputSecurityGroupState')
     InputSecurityGroupWhitelistRequest = Shapes::StructureShape.new(name: 'InputSecurityGroupWhitelistRequest')
@@ -837,6 +838,9 @@ module Aws::MediaLive
     SmoothGroupStreamManifestBehavior = Shapes::StringShape.new(name: 'SmoothGroupStreamManifestBehavior')
     SmoothGroupTimestampOffsetMode = Shapes::StringShape.new(name: 'SmoothGroupTimestampOffsetMode')
     Smpte2038DataPreference = Shapes::StringShape.new(name: 'Smpte2038DataPreference')
+    Smpte2110ReceiverGroup = Shapes::StructureShape.new(name: 'Smpte2110ReceiverGroup')
+    Smpte2110ReceiverGroupSdpSettings = Shapes::StructureShape.new(name: 'Smpte2110ReceiverGroupSdpSettings')
+    Smpte2110ReceiverGroupSettings = Shapes::StructureShape.new(name: 'Smpte2110ReceiverGroupSettings')
     SmpteTtDestinationSettings = Shapes::StructureShape.new(name: 'SmpteTtDestinationSettings')
     SrtCallerDecryption = Shapes::StructureShape.new(name: 'SrtCallerDecryption')
     SrtCallerDecryptionRequest = Shapes::StructureShape.new(name: 'SrtCallerDecryptionRequest')
@@ -1111,6 +1115,7 @@ module Aws::MediaLive
     __listOfInputDeviceSummary = Shapes::ListShape.new(name: '__listOfInputDeviceSummary')
     __listOfInputDeviceUhdAudioChannelPairConfig = Shapes::ListShape.new(name: '__listOfInputDeviceUhdAudioChannelPairConfig')
     __listOfInputRequestDestinationRoute = Shapes::ListShape.new(name: '__listOfInputRequestDestinationRoute')
+    __listOfInputSdpLocation = Shapes::ListShape.new(name: '__listOfInputSdpLocation')
     __listOfInputSecurityGroup = Shapes::ListShape.new(name: '__listOfInputSecurityGroup')
     __listOfInputSource = Shapes::ListShape.new(name: '__listOfInputSource')
     __listOfInputSourceRequest = Shapes::ListShape.new(name: '__listOfInputSourceRequest')
@@ -1150,6 +1155,7 @@ module Aws::MediaLive
     __listOfScheduleAction = Shapes::ListShape.new(name: '__listOfScheduleAction')
     __listOfScte35Descriptor = Shapes::ListShape.new(name: '__listOfScte35Descriptor')
     __listOfSignalMapSummary = Shapes::ListShape.new(name: '__listOfSignalMapSummary')
+    __listOfSmpte2110ReceiverGroup = Shapes::ListShape.new(name: '__listOfSmpte2110ReceiverGroup')
     __listOfSrtCallerSource = Shapes::ListShape.new(name: '__listOfSrtCallerSource')
     __listOfSrtCallerSourceRequest = Shapes::ListShape.new(name: '__listOfSrtCallerSourceRequest')
     __listOfSrtOutputDestinationSettings = Shapes::ListShape.new(name: '__listOfSrtOutputDestinationSettings')
@@ -1971,6 +1977,7 @@ module Aws::MediaLive
     CreateInput.add_member(:srt_settings, Shapes::ShapeRef.new(shape: SrtSettingsRequest, location_name: "srtSettings"))
     CreateInput.add_member(:input_network_location, Shapes::ShapeRef.new(shape: InputNetworkLocation, location_name: "inputNetworkLocation"))
     CreateInput.add_member(:multicast_settings, Shapes::ShapeRef.new(shape: MulticastSettingsCreateRequest, location_name: "multicastSettings"))
+    CreateInput.add_member(:smpte_2110_receiver_group_settings, Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroupSettings, location_name: "smpte2110ReceiverGroupSettings"))
     CreateInput.struct_class = Types::CreateInput
 
     CreateInputRequest.add_member(:destinations, Shapes::ShapeRef.new(shape: __listOfInputDestinationRequest, location_name: "destinations"))
@@ -1987,6 +1994,7 @@ module Aws::MediaLive
     CreateInputRequest.add_member(:srt_settings, Shapes::ShapeRef.new(shape: SrtSettingsRequest, location_name: "srtSettings"))
     CreateInputRequest.add_member(:input_network_location, Shapes::ShapeRef.new(shape: InputNetworkLocation, location_name: "inputNetworkLocation"))
     CreateInputRequest.add_member(:multicast_settings, Shapes::ShapeRef.new(shape: MulticastSettingsCreateRequest, location_name: "multicastSettings"))
+    CreateInputRequest.add_member(:smpte_2110_receiver_group_settings, Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroupSettings, location_name: "smpte2110ReceiverGroupSettings"))
     CreateInputRequest.struct_class = Types::CreateInputRequest
 
     CreateInputResponse.add_member(:input, Shapes::ShapeRef.new(shape: Input, location_name: "input"))
@@ -2489,6 +2497,7 @@ module Aws::MediaLive
     DescribeInputResponse.add_member(:srt_settings, Shapes::ShapeRef.new(shape: SrtSettings, location_name: "srtSettings"))
     DescribeInputResponse.add_member(:input_network_location, Shapes::ShapeRef.new(shape: InputNetworkLocation, location_name: "inputNetworkLocation"))
     DescribeInputResponse.add_member(:multicast_settings, Shapes::ShapeRef.new(shape: MulticastSettings, location_name: "multicastSettings"))
+    DescribeInputResponse.add_member(:smpte_2110_receiver_group_settings, Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroupSettings, location_name: "smpte2110ReceiverGroupSettings"))
     DescribeInputResponse.struct_class = Types::DescribeInputResponse
 
     DescribeInputSecurityGroupRequest.add_member(:input_security_group_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "inputSecurityGroupId"))
@@ -3271,6 +3280,7 @@ module Aws::MediaLive
     Input.add_member(:srt_settings, Shapes::ShapeRef.new(shape: SrtSettings, location_name: "srtSettings"))
     Input.add_member(:input_network_location, Shapes::ShapeRef.new(shape: InputNetworkLocation, location_name: "inputNetworkLocation"))
     Input.add_member(:multicast_settings, Shapes::ShapeRef.new(shape: MulticastSettings, location_name: "multicastSettings"))
+    Input.add_member(:smpte_2110_receiver_group_settings, Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroupSettings, location_name: "smpte2110ReceiverGroupSettings"))
     Input.struct_class = Types::Input
 
     InputAttachment.add_member(:automatic_input_failover_settings, Shapes::ShapeRef.new(shape: AutomaticInputFailoverSettings, location_name: "automaticInputFailoverSettings"))
@@ -3440,6 +3450,10 @@ module Aws::MediaLive
     InputRequestDestinationRoute.add_member(:cidr, Shapes::ShapeRef.new(shape: __string, location_name: "cidr"))
     InputRequestDestinationRoute.add_member(:gateway, Shapes::ShapeRef.new(shape: __string, location_name: "gateway"))
     InputRequestDestinationRoute.struct_class = Types::InputRequestDestinationRoute
+
+    InputSdpLocation.add_member(:media_index, Shapes::ShapeRef.new(shape: __integer, location_name: "mediaIndex"))
+    InputSdpLocation.add_member(:sdp_url, Shapes::ShapeRef.new(shape: __string, location_name: "sdpUrl"))
+    InputSdpLocation.struct_class = Types::InputSdpLocation
 
     InputSecurityGroup.add_member(:arn, Shapes::ShapeRef.new(shape: __string, location_name: "arn"))
     InputSecurityGroup.add_member(:id, Shapes::ShapeRef.new(shape: __string, location_name: "id"))
@@ -4515,6 +4529,17 @@ module Aws::MediaLive
     SignalMapSummary.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
     SignalMapSummary.struct_class = Types::SignalMapSummary
 
+    Smpte2110ReceiverGroup.add_member(:sdp_settings, Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroupSdpSettings, location_name: "sdpSettings"))
+    Smpte2110ReceiverGroup.struct_class = Types::Smpte2110ReceiverGroup
+
+    Smpte2110ReceiverGroupSdpSettings.add_member(:ancillary_sdps, Shapes::ShapeRef.new(shape: __listOfInputSdpLocation, location_name: "ancillarySdps"))
+    Smpte2110ReceiverGroupSdpSettings.add_member(:audio_sdps, Shapes::ShapeRef.new(shape: __listOfInputSdpLocation, location_name: "audioSdps"))
+    Smpte2110ReceiverGroupSdpSettings.add_member(:video_sdp, Shapes::ShapeRef.new(shape: InputSdpLocation, location_name: "videoSdp"))
+    Smpte2110ReceiverGroupSdpSettings.struct_class = Types::Smpte2110ReceiverGroupSdpSettings
+
+    Smpte2110ReceiverGroupSettings.add_member(:smpte_2110_receiver_groups, Shapes::ShapeRef.new(shape: __listOfSmpte2110ReceiverGroup, location_name: "smpte2110ReceiverGroups"))
+    Smpte2110ReceiverGroupSettings.struct_class = Types::Smpte2110ReceiverGroupSettings
+
     SmpteTtDestinationSettings.struct_class = Types::SmpteTtDestinationSettings
 
     SrtCallerDecryption.add_member(:algorithm, Shapes::ShapeRef.new(shape: Algorithm, location_name: "algorithm"))
@@ -5210,6 +5235,7 @@ module Aws::MediaLive
     UpdateInput.add_member(:sources, Shapes::ShapeRef.new(shape: __listOfInputSourceRequest, location_name: "sources"))
     UpdateInput.add_member(:srt_settings, Shapes::ShapeRef.new(shape: SrtSettingsRequest, location_name: "srtSettings"))
     UpdateInput.add_member(:multicast_settings, Shapes::ShapeRef.new(shape: MulticastSettingsUpdateRequest, location_name: "multicastSettings"))
+    UpdateInput.add_member(:smpte_2110_receiver_group_settings, Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroupSettings, location_name: "smpte2110ReceiverGroupSettings"))
     UpdateInput.struct_class = Types::UpdateInput
 
     UpdateInputDevice.add_member(:hd_device_settings, Shapes::ShapeRef.new(shape: InputDeviceConfigurableSettings, location_name: "hdDeviceSettings"))
@@ -5253,6 +5279,7 @@ module Aws::MediaLive
     UpdateInputRequest.add_member(:sources, Shapes::ShapeRef.new(shape: __listOfInputSourceRequest, location_name: "sources"))
     UpdateInputRequest.add_member(:srt_settings, Shapes::ShapeRef.new(shape: SrtSettingsRequest, location_name: "srtSettings"))
     UpdateInputRequest.add_member(:multicast_settings, Shapes::ShapeRef.new(shape: MulticastSettingsUpdateRequest, location_name: "multicastSettings"))
+    UpdateInputRequest.add_member(:smpte_2110_receiver_group_settings, Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroupSettings, location_name: "smpte2110ReceiverGroupSettings"))
     UpdateInputRequest.struct_class = Types::UpdateInputRequest
 
     UpdateInputResponse.add_member(:input, Shapes::ShapeRef.new(shape: Input, location_name: "input"))
@@ -5517,6 +5544,8 @@ module Aws::MediaLive
 
     __listOfInputRequestDestinationRoute.member = Shapes::ShapeRef.new(shape: InputRequestDestinationRoute)
 
+    __listOfInputSdpLocation.member = Shapes::ShapeRef.new(shape: InputSdpLocation)
+
     __listOfInputSecurityGroup.member = Shapes::ShapeRef.new(shape: InputSecurityGroup)
 
     __listOfInputSource.member = Shapes::ShapeRef.new(shape: InputSource)
@@ -5594,6 +5623,8 @@ module Aws::MediaLive
     __listOfScte35Descriptor.member = Shapes::ShapeRef.new(shape: Scte35Descriptor)
 
     __listOfSignalMapSummary.member = Shapes::ShapeRef.new(shape: SignalMapSummary)
+
+    __listOfSmpte2110ReceiverGroup.member = Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroup)
 
     __listOfSrtCallerSource.member = Shapes::ShapeRef.new(shape: SrtCallerSource)
 

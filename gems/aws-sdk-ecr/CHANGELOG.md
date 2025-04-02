@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.99.0 (2025-04-02)
+------------------
+
+* Feature - Fix for customer issues related to AWS account ID and size limitation for token.
+
 1.98.0 (2025-03-11)
 ------------------
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.70.0 (2025-04-02)
+------------------
+
+* Feature - Release feature of errorlogging for lex bot, customer can config this feature in bot version to generate log for error exception which helps debug
+
 1.69.0 (2025-02-18)
 ------------------
 

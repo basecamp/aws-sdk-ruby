@@ -166,7 +166,11 @@ module Aws
                                                     period: ::Integer?,
                                                     account_id: ::String?
                                                   },
-                                                ]?
+                                                ]?,
+                                                dependency_config: {
+                                                  dependency_key_attributes: Hash[::String, ::String],
+                                                  dependency_operation_name: ::String
+                                                }?
                                               },
                                               metric_threshold: ::Float,
                                               comparison_operator: ("GreaterThanOrEqualTo" | "GreaterThan" | "LessThan" | "LessThanOrEqualTo")
@@ -252,6 +256,10 @@ module Aws
                                                       account_id: ::String?
                                                     },
                                                   ]?
+                                                }?,
+                                                dependency_config: {
+                                                  dependency_key_attributes: Hash[::String, ::String],
+                                                  dependency_operation_name: ::String
                                                 }?
                                               },
                                               metric_threshold: ::Float?,
@@ -376,8 +384,13 @@ module Aws
       def list_service_level_objectives: (
                                            ?key_attributes: Hash[::String, ::String],
                                            ?operation_name: ::String,
+                                           ?dependency_config: {
+                                             dependency_key_attributes: Hash[::String, ::String],
+                                             dependency_operation_name: ::String
+                                           },
                                            ?max_results: ::Integer,
                                            ?next_token: ::String,
+                                           ?metric_source_types: Array[("ServiceOperation" | "CloudWatchMetric" | "ServiceDependency")],
                                            ?include_linked_accounts: bool,
                                            ?slo_owner_aws_account_id: ::String
                                          ) -> _ListServiceLevelObjectivesResponseSuccess
@@ -500,7 +513,11 @@ module Aws
                                                     period: ::Integer?,
                                                     account_id: ::String?
                                                   },
-                                                ]?
+                                                ]?,
+                                                dependency_config: {
+                                                  dependency_key_attributes: Hash[::String, ::String],
+                                                  dependency_operation_name: ::String
+                                                }?
                                               },
                                               metric_threshold: ::Float,
                                               comparison_operator: ("GreaterThanOrEqualTo" | "GreaterThan" | "LessThan" | "LessThanOrEqualTo")
@@ -586,6 +603,10 @@ module Aws
                                                       account_id: ::String?
                                                     },
                                                   ]?
+                                                }?,
+                                                dependency_config: {
+                                                  dependency_key_attributes: Hash[::String, ::String],
+                                                  dependency_operation_name: ::String
                                                 }?
                                               },
                                               metric_threshold: ::Float?,

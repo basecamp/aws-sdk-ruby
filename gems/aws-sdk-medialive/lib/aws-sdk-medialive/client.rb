@@ -1929,6 +1929,9 @@ module Aws::MediaLive
     #   Settings for a Multicast input. Contains a list of multicast Urls and
     #   optional source ip addresses.
     #
+    # @option params [Types::Smpte2110ReceiverGroupSettings] :smpte_2110_receiver_group_settings
+    #   Configures the sources for the SMPTE 2110 Receiver Group input.
+    #
     # @return [Types::CreateInputResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateInputResponse#input #input} => Types::Input
@@ -1973,7 +1976,7 @@ module Aws::MediaLive
     #     tags: {
     #       "__string" => "__string",
     #     },
-    #     type: "UDP_PUSH", # accepts UDP_PUSH, RTP_PUSH, RTMP_PUSH, RTMP_PULL, URL_PULL, MP4_FILE, MEDIACONNECT, INPUT_DEVICE, AWS_CDI, TS_FILE, SRT_CALLER, MULTICAST
+    #     type: "UDP_PUSH", # accepts UDP_PUSH, RTP_PUSH, RTMP_PUSH, RTMP_PULL, URL_PULL, MP4_FILE, MEDIACONNECT, INPUT_DEVICE, AWS_CDI, TS_FILE, SRT_CALLER, MULTICAST, SMPTE_2110_RECEIVER_GROUP
     #     vpc: {
     #       security_group_ids: ["__string"],
     #       subnet_ids: ["__string"], # required
@@ -1998,6 +2001,30 @@ module Aws::MediaLive
     #         {
     #           source_ip: "__string",
     #           url: "__string", # required
+    #         },
+    #       ],
+    #     },
+    #     smpte_2110_receiver_group_settings: {
+    #       smpte_2110_receiver_groups: [
+    #         {
+    #           sdp_settings: {
+    #             ancillary_sdps: [
+    #               {
+    #                 media_index: 1,
+    #                 sdp_url: "__string",
+    #               },
+    #             ],
+    #             audio_sdps: [
+    #               {
+    #                 media_index: 1,
+    #                 sdp_url: "__string",
+    #               },
+    #             ],
+    #             video_sdp: {
+    #               media_index: 1,
+    #               sdp_url: "__string",
+    #             },
+    #           },
     #         },
     #       ],
     #     },
@@ -2038,7 +2065,7 @@ module Aws::MediaLive
     #   resp.input.state #=> String, one of "CREATING", "DETACHED", "ATTACHED", "DELETING", "DELETED"
     #   resp.input.tags #=> Hash
     #   resp.input.tags["__string"] #=> String
-    #   resp.input.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST"
+    #   resp.input.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP"
     #   resp.input.srt_settings.srt_caller_sources #=> Array
     #   resp.input.srt_settings.srt_caller_sources[0].decryption.algorithm #=> String, one of "AES128", "AES192", "AES256"
     #   resp.input.srt_settings.srt_caller_sources[0].decryption.passphrase_secret_arn #=> String
@@ -2050,6 +2077,15 @@ module Aws::MediaLive
     #   resp.input.multicast_settings.sources #=> Array
     #   resp.input.multicast_settings.sources[0].source_ip #=> String
     #   resp.input.multicast_settings.sources[0].url #=> String
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups #=> Array
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps #=> Array
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps[0].media_index #=> Integer
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps[0].sdp_url #=> String
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps #=> Array
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].media_index #=> Integer
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].sdp_url #=> String
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.media_index #=> Integer
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.sdp_url #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateInput AWS API Documentation
     #
@@ -2315,7 +2351,7 @@ module Aws::MediaLive
     #   resp.input.state #=> String, one of "CREATING", "DETACHED", "ATTACHED", "DELETING", "DELETED"
     #   resp.input.tags #=> Hash
     #   resp.input.tags["__string"] #=> String
-    #   resp.input.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST"
+    #   resp.input.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP"
     #   resp.input.srt_settings.srt_caller_sources #=> Array
     #   resp.input.srt_settings.srt_caller_sources[0].decryption.algorithm #=> String, one of "AES128", "AES192", "AES256"
     #   resp.input.srt_settings.srt_caller_sources[0].decryption.passphrase_secret_arn #=> String
@@ -2327,6 +2363,15 @@ module Aws::MediaLive
     #   resp.input.multicast_settings.sources #=> Array
     #   resp.input.multicast_settings.sources[0].source_ip #=> String
     #   resp.input.multicast_settings.sources[0].url #=> String
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups #=> Array
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps #=> Array
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps[0].media_index #=> Integer
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps[0].sdp_url #=> String
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps #=> Array
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].media_index #=> Integer
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].sdp_url #=> String
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.media_index #=> Integer
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.sdp_url #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreatePartnerInput AWS API Documentation
     #
@@ -4389,6 +4434,7 @@ module Aws::MediaLive
     #   * {Types::DescribeInputResponse#srt_settings #srt_settings} => Types::SrtSettings
     #   * {Types::DescribeInputResponse#input_network_location #input_network_location} => String
     #   * {Types::DescribeInputResponse#multicast_settings #multicast_settings} => Types::MulticastSettings
+    #   * {Types::DescribeInputResponse#smpte_2110_receiver_group_settings #smpte_2110_receiver_group_settings} => Types::Smpte2110ReceiverGroupSettings
     #
     # @example Request syntax with placeholder values
     #
@@ -4431,7 +4477,7 @@ module Aws::MediaLive
     #   resp.state #=> String, one of "CREATING", "DETACHED", "ATTACHED", "DELETING", "DELETED"
     #   resp.tags #=> Hash
     #   resp.tags["__string"] #=> String
-    #   resp.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST"
+    #   resp.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP"
     #   resp.srt_settings.srt_caller_sources #=> Array
     #   resp.srt_settings.srt_caller_sources[0].decryption.algorithm #=> String, one of "AES128", "AES192", "AES256"
     #   resp.srt_settings.srt_caller_sources[0].decryption.passphrase_secret_arn #=> String
@@ -4443,6 +4489,15 @@ module Aws::MediaLive
     #   resp.multicast_settings.sources #=> Array
     #   resp.multicast_settings.sources[0].source_ip #=> String
     #   resp.multicast_settings.sources[0].url #=> String
+    #   resp.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups #=> Array
+    #   resp.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps #=> Array
+    #   resp.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps[0].media_index #=> Integer
+    #   resp.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps[0].sdp_url #=> String
+    #   resp.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps #=> Array
+    #   resp.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].media_index #=> Integer
+    #   resp.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].sdp_url #=> String
+    #   resp.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.media_index #=> Integer
+    #   resp.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.sdp_url #=> String
     #
     #
     # The following waiters are defined for this operation (see {Client#wait_until} for detailed usage):
@@ -5410,7 +5465,7 @@ module Aws::MediaLive
     #   resp.inputs[0].state #=> String, one of "CREATING", "DETACHED", "ATTACHED", "DELETING", "DELETED"
     #   resp.inputs[0].tags #=> Hash
     #   resp.inputs[0].tags["__string"] #=> String
-    #   resp.inputs[0].type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST"
+    #   resp.inputs[0].type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP"
     #   resp.inputs[0].srt_settings.srt_caller_sources #=> Array
     #   resp.inputs[0].srt_settings.srt_caller_sources[0].decryption.algorithm #=> String, one of "AES128", "AES192", "AES256"
     #   resp.inputs[0].srt_settings.srt_caller_sources[0].decryption.passphrase_secret_arn #=> String
@@ -5422,6 +5477,15 @@ module Aws::MediaLive
     #   resp.inputs[0].multicast_settings.sources #=> Array
     #   resp.inputs[0].multicast_settings.sources[0].source_ip #=> String
     #   resp.inputs[0].multicast_settings.sources[0].url #=> String
+    #   resp.inputs[0].smpte_2110_receiver_group_settings.smpte_2110_receiver_groups #=> Array
+    #   resp.inputs[0].smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps #=> Array
+    #   resp.inputs[0].smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps[0].media_index #=> Integer
+    #   resp.inputs[0].smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps[0].sdp_url #=> String
+    #   resp.inputs[0].smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps #=> Array
+    #   resp.inputs[0].smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].media_index #=> Integer
+    #   resp.inputs[0].smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].sdp_url #=> String
+    #   resp.inputs[0].smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.media_index #=> Integer
+    #   resp.inputs[0].smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.sdp_url #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ListInputs AWS API Documentation
@@ -9518,6 +9582,9 @@ module Aws::MediaLive
     #   Settings for a Multicast input. Contains a list of multicast Urls and
     #   optional source ip addresses.
     #
+    # @option params [Types::Smpte2110ReceiverGroupSettings] :smpte_2110_receiver_group_settings
+    #   Configures the sources for the SMPTE 2110 Receiver Group input.
+    #
     # @return [Types::UpdateInputResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateInputResponse#input #input} => Types::Input
@@ -9581,6 +9648,30 @@ module Aws::MediaLive
     #         },
     #       ],
     #     },
+    #     smpte_2110_receiver_group_settings: {
+    #       smpte_2110_receiver_groups: [
+    #         {
+    #           sdp_settings: {
+    #             ancillary_sdps: [
+    #               {
+    #                 media_index: 1,
+    #                 sdp_url: "__string",
+    #               },
+    #             ],
+    #             audio_sdps: [
+    #               {
+    #                 media_index: 1,
+    #                 sdp_url: "__string",
+    #               },
+    #             ],
+    #             video_sdp: {
+    #               media_index: 1,
+    #               sdp_url: "__string",
+    #             },
+    #           },
+    #         },
+    #       ],
+    #     },
     #   })
     #
     # @example Response structure
@@ -9618,7 +9709,7 @@ module Aws::MediaLive
     #   resp.input.state #=> String, one of "CREATING", "DETACHED", "ATTACHED", "DELETING", "DELETED"
     #   resp.input.tags #=> Hash
     #   resp.input.tags["__string"] #=> String
-    #   resp.input.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST"
+    #   resp.input.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP"
     #   resp.input.srt_settings.srt_caller_sources #=> Array
     #   resp.input.srt_settings.srt_caller_sources[0].decryption.algorithm #=> String, one of "AES128", "AES192", "AES256"
     #   resp.input.srt_settings.srt_caller_sources[0].decryption.passphrase_secret_arn #=> String
@@ -9630,6 +9721,15 @@ module Aws::MediaLive
     #   resp.input.multicast_settings.sources #=> Array
     #   resp.input.multicast_settings.sources[0].source_ip #=> String
     #   resp.input.multicast_settings.sources[0].url #=> String
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups #=> Array
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps #=> Array
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps[0].media_index #=> Integer
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.ancillary_sdps[0].sdp_url #=> String
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps #=> Array
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].media_index #=> Integer
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].sdp_url #=> String
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.media_index #=> Integer
+    #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.sdp_url #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateInput AWS API Documentation
     #
@@ -13807,7 +13907,7 @@ module Aws::MediaLive
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-medialive'
-      context[:gem_version] = '1.148.0'
+      context[:gem_version] = '1.149.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

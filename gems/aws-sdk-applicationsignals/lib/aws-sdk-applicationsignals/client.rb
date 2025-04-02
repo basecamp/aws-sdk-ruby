@@ -542,6 +542,9 @@ module Aws::ApplicationSignals
     #   resp.reports[0].sli.sli_metric.metric_data_queries[0].return_data #=> Boolean
     #   resp.reports[0].sli.sli_metric.metric_data_queries[0].period #=> Integer
     #   resp.reports[0].sli.sli_metric.metric_data_queries[0].account_id #=> String
+    #   resp.reports[0].sli.sli_metric.dependency_config.dependency_key_attributes #=> Hash
+    #   resp.reports[0].sli.sli_metric.dependency_config.dependency_key_attributes["KeyAttributeName"] #=> String
+    #   resp.reports[0].sli.sli_metric.dependency_config.dependency_operation_name #=> String
     #   resp.reports[0].sli.metric_threshold #=> Float
     #   resp.reports[0].sli.comparison_operator #=> String, one of "GreaterThanOrEqualTo", "GreaterThan", "LessThan", "LessThanOrEqualTo"
     #   resp.reports[0].request_based_sli.request_based_sli_metric.key_attributes #=> Hash
@@ -593,6 +596,9 @@ module Aws::ApplicationSignals
     #   resp.reports[0].request_based_sli.request_based_sli_metric.monitored_request_count_metric.bad_count_metric[0].return_data #=> Boolean
     #   resp.reports[0].request_based_sli.request_based_sli_metric.monitored_request_count_metric.bad_count_metric[0].period #=> Integer
     #   resp.reports[0].request_based_sli.request_based_sli_metric.monitored_request_count_metric.bad_count_metric[0].account_id #=> String
+    #   resp.reports[0].request_based_sli.request_based_sli_metric.dependency_config.dependency_key_attributes #=> Hash
+    #   resp.reports[0].request_based_sli.request_based_sli_metric.dependency_config.dependency_key_attributes["KeyAttributeName"] #=> String
+    #   resp.reports[0].request_based_sli.request_based_sli_metric.dependency_config.dependency_operation_name #=> String
     #   resp.reports[0].request_based_sli.metric_threshold #=> Float
     #   resp.reports[0].request_based_sli.comparison_operator #=> String, one of "GreaterThanOrEqualTo", "GreaterThan", "LessThan", "LessThanOrEqualTo"
     #   resp.reports[0].goal.interval.rolling_interval.duration_unit #=> String, one of "MINUTE", "HOUR", "DAY", "MONTH"
@@ -861,6 +867,12 @@ module Aws::ApplicationSignals
     #             account_id: "AccountId",
     #           },
     #         ],
+    #         dependency_config: {
+    #           dependency_key_attributes: { # required
+    #             "KeyAttributeName" => "KeyAttributeValue",
+    #           },
+    #           dependency_operation_name: "OperationName", # required
+    #         },
     #       },
     #       metric_threshold: 1.0, # required
     #       comparison_operator: "GreaterThanOrEqualTo", # required, accepts GreaterThanOrEqualTo, GreaterThan, LessThan, LessThanOrEqualTo
@@ -949,6 +961,12 @@ module Aws::ApplicationSignals
     #             },
     #           ],
     #         },
+    #         dependency_config: {
+    #           dependency_key_attributes: { # required
+    #             "KeyAttributeName" => "KeyAttributeValue",
+    #           },
+    #           dependency_operation_name: "OperationName", # required
+    #         },
     #       },
     #       metric_threshold: 1.0,
     #       comparison_operator: "GreaterThanOrEqualTo", # accepts GreaterThanOrEqualTo, GreaterThan, LessThan, LessThanOrEqualTo
@@ -1007,6 +1025,9 @@ module Aws::ApplicationSignals
     #   resp.slo.sli.sli_metric.metric_data_queries[0].return_data #=> Boolean
     #   resp.slo.sli.sli_metric.metric_data_queries[0].period #=> Integer
     #   resp.slo.sli.sli_metric.metric_data_queries[0].account_id #=> String
+    #   resp.slo.sli.sli_metric.dependency_config.dependency_key_attributes #=> Hash
+    #   resp.slo.sli.sli_metric.dependency_config.dependency_key_attributes["KeyAttributeName"] #=> String
+    #   resp.slo.sli.sli_metric.dependency_config.dependency_operation_name #=> String
     #   resp.slo.sli.metric_threshold #=> Float
     #   resp.slo.sli.comparison_operator #=> String, one of "GreaterThanOrEqualTo", "GreaterThan", "LessThan", "LessThanOrEqualTo"
     #   resp.slo.request_based_sli.request_based_sli_metric.key_attributes #=> Hash
@@ -1058,6 +1079,9 @@ module Aws::ApplicationSignals
     #   resp.slo.request_based_sli.request_based_sli_metric.monitored_request_count_metric.bad_count_metric[0].return_data #=> Boolean
     #   resp.slo.request_based_sli.request_based_sli_metric.monitored_request_count_metric.bad_count_metric[0].period #=> Integer
     #   resp.slo.request_based_sli.request_based_sli_metric.monitored_request_count_metric.bad_count_metric[0].account_id #=> String
+    #   resp.slo.request_based_sli.request_based_sli_metric.dependency_config.dependency_key_attributes #=> Hash
+    #   resp.slo.request_based_sli.request_based_sli_metric.dependency_config.dependency_key_attributes["KeyAttributeName"] #=> String
+    #   resp.slo.request_based_sli.request_based_sli_metric.dependency_config.dependency_operation_name #=> String
     #   resp.slo.request_based_sli.metric_threshold #=> Float
     #   resp.slo.request_based_sli.comparison_operator #=> String, one of "GreaterThanOrEqualTo", "GreaterThan", "LessThan", "LessThanOrEqualTo"
     #   resp.slo.evaluation_type #=> String, one of "PeriodBased", "RequestBased"
@@ -1070,6 +1094,7 @@ module Aws::ApplicationSignals
     #   resp.slo.goal.warning_threshold #=> Float
     #   resp.slo.burn_rate_configurations #=> Array
     #   resp.slo.burn_rate_configurations[0].look_back_window_minutes #=> Integer
+    #   resp.slo.metric_source_type #=> String, one of "ServiceOperation", "CloudWatchMetric", "ServiceDependency"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/CreateServiceLevelObjective AWS API Documentation
     #
@@ -1239,6 +1264,9 @@ module Aws::ApplicationSignals
     #   resp.slo.sli.sli_metric.metric_data_queries[0].return_data #=> Boolean
     #   resp.slo.sli.sli_metric.metric_data_queries[0].period #=> Integer
     #   resp.slo.sli.sli_metric.metric_data_queries[0].account_id #=> String
+    #   resp.slo.sli.sli_metric.dependency_config.dependency_key_attributes #=> Hash
+    #   resp.slo.sli.sli_metric.dependency_config.dependency_key_attributes["KeyAttributeName"] #=> String
+    #   resp.slo.sli.sli_metric.dependency_config.dependency_operation_name #=> String
     #   resp.slo.sli.metric_threshold #=> Float
     #   resp.slo.sli.comparison_operator #=> String, one of "GreaterThanOrEqualTo", "GreaterThan", "LessThan", "LessThanOrEqualTo"
     #   resp.slo.request_based_sli.request_based_sli_metric.key_attributes #=> Hash
@@ -1290,6 +1318,9 @@ module Aws::ApplicationSignals
     #   resp.slo.request_based_sli.request_based_sli_metric.monitored_request_count_metric.bad_count_metric[0].return_data #=> Boolean
     #   resp.slo.request_based_sli.request_based_sli_metric.monitored_request_count_metric.bad_count_metric[0].period #=> Integer
     #   resp.slo.request_based_sli.request_based_sli_metric.monitored_request_count_metric.bad_count_metric[0].account_id #=> String
+    #   resp.slo.request_based_sli.request_based_sli_metric.dependency_config.dependency_key_attributes #=> Hash
+    #   resp.slo.request_based_sli.request_based_sli_metric.dependency_config.dependency_key_attributes["KeyAttributeName"] #=> String
+    #   resp.slo.request_based_sli.request_based_sli_metric.dependency_config.dependency_operation_name #=> String
     #   resp.slo.request_based_sli.metric_threshold #=> Float
     #   resp.slo.request_based_sli.comparison_operator #=> String, one of "GreaterThanOrEqualTo", "GreaterThan", "LessThan", "LessThanOrEqualTo"
     #   resp.slo.evaluation_type #=> String, one of "PeriodBased", "RequestBased"
@@ -1302,6 +1333,7 @@ module Aws::ApplicationSignals
     #   resp.slo.goal.warning_threshold #=> Float
     #   resp.slo.burn_rate_configurations #=> Array
     #   resp.slo.burn_rate_configurations[0].look_back_window_minutes #=> Integer
+    #   resp.slo.metric_source_type #=> String, one of "ServiceOperation", "CloudWatchMetric", "ServiceDependency"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/GetServiceLevelObjective AWS API Documentation
     #
@@ -1588,6 +1620,10 @@ module Aws::ApplicationSignals
     # @option params [String] :operation_name
     #   The name of the operation that this SLO is associated with.
     #
+    # @option params [Types::DependencyConfig] :dependency_config
+    #   Identifies the dependency using the `DependencyKeyAttributes` and
+    #   `DependencyOperationName`.
+    #
     # @option params [Integer] :max_results
     #   The maximum number of results to return in one operation. If you omit
     #   this parameter, the default of 50 is used.
@@ -1595,6 +1631,16 @@ module Aws::ApplicationSignals
     # @option params [String] :next_token
     #   Include this value, if it was returned by the previous operation, to
     #   get the next set of service level objectives.
+    #
+    # @option params [Array<String>] :metric_source_types
+    #   Use this optional field to only include SLOs with the specified metric
+    #   source types in the output. Supported types are:
+    #
+    #   * Service operation
+    #
+    #   * Service dependency
+    #
+    #   * CloudWatch metric
     #
     # @option params [Boolean] :include_linked_accounts
     #   If you are using this operation in a monitoring account, specify
@@ -1622,8 +1668,15 @@ module Aws::ApplicationSignals
     #       "KeyAttributeName" => "KeyAttributeValue",
     #     },
     #     operation_name: "OperationName",
+    #     dependency_config: {
+    #       dependency_key_attributes: { # required
+    #         "KeyAttributeName" => "KeyAttributeValue",
+    #       },
+    #       dependency_operation_name: "OperationName", # required
+    #     },
     #     max_results: 1,
     #     next_token: "NextToken",
+    #     metric_source_types: ["ServiceOperation"], # accepts ServiceOperation, CloudWatchMetric, ServiceDependency
     #     include_linked_accounts: false,
     #     slo_owner_aws_account_id: "AwsAccountId",
     #   })
@@ -1636,7 +1689,12 @@ module Aws::ApplicationSignals
     #   resp.slo_summaries[0].key_attributes #=> Hash
     #   resp.slo_summaries[0].key_attributes["KeyAttributeName"] #=> String
     #   resp.slo_summaries[0].operation_name #=> String
+    #   resp.slo_summaries[0].dependency_config.dependency_key_attributes #=> Hash
+    #   resp.slo_summaries[0].dependency_config.dependency_key_attributes["KeyAttributeName"] #=> String
+    #   resp.slo_summaries[0].dependency_config.dependency_operation_name #=> String
     #   resp.slo_summaries[0].created_time #=> Time
+    #   resp.slo_summaries[0].evaluation_type #=> String, one of "PeriodBased", "RequestBased"
+    #   resp.slo_summaries[0].metric_source_type #=> String, one of "ServiceOperation", "CloudWatchMetric", "ServiceDependency"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/ListServiceLevelObjectives AWS API Documentation
@@ -2080,6 +2138,12 @@ module Aws::ApplicationSignals
     #             account_id: "AccountId",
     #           },
     #         ],
+    #         dependency_config: {
+    #           dependency_key_attributes: { # required
+    #             "KeyAttributeName" => "KeyAttributeValue",
+    #           },
+    #           dependency_operation_name: "OperationName", # required
+    #         },
     #       },
     #       metric_threshold: 1.0, # required
     #       comparison_operator: "GreaterThanOrEqualTo", # required, accepts GreaterThanOrEqualTo, GreaterThan, LessThan, LessThanOrEqualTo
@@ -2168,6 +2232,12 @@ module Aws::ApplicationSignals
     #             },
     #           ],
     #         },
+    #         dependency_config: {
+    #           dependency_key_attributes: { # required
+    #             "KeyAttributeName" => "KeyAttributeValue",
+    #           },
+    #           dependency_operation_name: "OperationName", # required
+    #         },
     #       },
     #       metric_threshold: 1.0,
     #       comparison_operator: "GreaterThanOrEqualTo", # accepts GreaterThanOrEqualTo, GreaterThan, LessThan, LessThanOrEqualTo
@@ -2220,6 +2290,9 @@ module Aws::ApplicationSignals
     #   resp.slo.sli.sli_metric.metric_data_queries[0].return_data #=> Boolean
     #   resp.slo.sli.sli_metric.metric_data_queries[0].period #=> Integer
     #   resp.slo.sli.sli_metric.metric_data_queries[0].account_id #=> String
+    #   resp.slo.sli.sli_metric.dependency_config.dependency_key_attributes #=> Hash
+    #   resp.slo.sli.sli_metric.dependency_config.dependency_key_attributes["KeyAttributeName"] #=> String
+    #   resp.slo.sli.sli_metric.dependency_config.dependency_operation_name #=> String
     #   resp.slo.sli.metric_threshold #=> Float
     #   resp.slo.sli.comparison_operator #=> String, one of "GreaterThanOrEqualTo", "GreaterThan", "LessThan", "LessThanOrEqualTo"
     #   resp.slo.request_based_sli.request_based_sli_metric.key_attributes #=> Hash
@@ -2271,6 +2344,9 @@ module Aws::ApplicationSignals
     #   resp.slo.request_based_sli.request_based_sli_metric.monitored_request_count_metric.bad_count_metric[0].return_data #=> Boolean
     #   resp.slo.request_based_sli.request_based_sli_metric.monitored_request_count_metric.bad_count_metric[0].period #=> Integer
     #   resp.slo.request_based_sli.request_based_sli_metric.monitored_request_count_metric.bad_count_metric[0].account_id #=> String
+    #   resp.slo.request_based_sli.request_based_sli_metric.dependency_config.dependency_key_attributes #=> Hash
+    #   resp.slo.request_based_sli.request_based_sli_metric.dependency_config.dependency_key_attributes["KeyAttributeName"] #=> String
+    #   resp.slo.request_based_sli.request_based_sli_metric.dependency_config.dependency_operation_name #=> String
     #   resp.slo.request_based_sli.metric_threshold #=> Float
     #   resp.slo.request_based_sli.comparison_operator #=> String, one of "GreaterThanOrEqualTo", "GreaterThan", "LessThan", "LessThanOrEqualTo"
     #   resp.slo.evaluation_type #=> String, one of "PeriodBased", "RequestBased"
@@ -2283,6 +2359,7 @@ module Aws::ApplicationSignals
     #   resp.slo.goal.warning_threshold #=> Float
     #   resp.slo.burn_rate_configurations #=> Array
     #   resp.slo.burn_rate_configurations[0].look_back_window_minutes #=> Integer
+    #   resp.slo.metric_source_type #=> String, one of "ServiceOperation", "CloudWatchMetric", "ServiceDependency"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/UpdateServiceLevelObjective AWS API Documentation
     #
@@ -2311,7 +2388,7 @@ module Aws::ApplicationSignals
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-applicationsignals'
-      context[:gem_version] = '1.18.0'
+      context[:gem_version] = '1.19.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

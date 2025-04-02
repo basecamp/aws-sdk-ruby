@@ -619,11 +619,12 @@ module Aws::MediaLive
       attr_accessor role_arn: ::String
       attr_accessor sources: ::Array[Types::InputSourceRequest]
       attr_accessor tags: ::Hash[::String, ::String]
-      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST")
+      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP")
       attr_accessor vpc: Types::InputVpcRequest
       attr_accessor srt_settings: Types::SrtSettingsRequest
       attr_accessor input_network_location: ("AWS" | "ON_PREMISES")
       attr_accessor multicast_settings: Types::MulticastSettingsCreateRequest
+      attr_accessor smpte_2110_receiver_group_settings: Types::Smpte2110ReceiverGroupSettings
       SENSITIVE: []
     end
 
@@ -637,11 +638,12 @@ module Aws::MediaLive
       attr_accessor role_arn: ::String
       attr_accessor sources: ::Array[Types::InputSourceRequest]
       attr_accessor tags: ::Hash[::String, ::String]
-      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST")
+      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP")
       attr_accessor vpc: Types::InputVpcRequest
       attr_accessor srt_settings: Types::SrtSettingsRequest
       attr_accessor input_network_location: ("AWS" | "ON_PREMISES")
       attr_accessor multicast_settings: Types::MulticastSettingsCreateRequest
+      attr_accessor smpte_2110_receiver_group_settings: Types::Smpte2110ReceiverGroupSettings
       SENSITIVE: []
     end
 
@@ -977,10 +979,11 @@ module Aws::MediaLive
       attr_accessor sources: ::Array[Types::InputSource]
       attr_accessor state: ("CREATING" | "DETACHED" | "ATTACHED" | "DELETING" | "DELETED")
       attr_accessor tags: ::Hash[::String, ::String]
-      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST")
+      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP")
       attr_accessor srt_settings: Types::SrtSettings
       attr_accessor input_network_location: ("AWS" | "ON_PREMISES")
       attr_accessor multicast_settings: Types::MulticastSettings
+      attr_accessor smpte_2110_receiver_group_settings: Types::Smpte2110ReceiverGroupSettings
       SENSITIVE: []
     end
 
@@ -1631,10 +1634,11 @@ module Aws::MediaLive
       attr_accessor sources: ::Array[Types::InputSource]
       attr_accessor state: ("CREATING" | "DETACHED" | "ATTACHED" | "DELETING" | "DELETED")
       attr_accessor tags: ::Hash[::String, ::String]
-      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST")
+      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP")
       attr_accessor srt_settings: Types::SrtSettings
       attr_accessor input_network_location: ("AWS" | "ON_PREMISES")
       attr_accessor multicast_settings: Types::MulticastSettings
+      attr_accessor smpte_2110_receiver_group_settings: Types::Smpte2110ReceiverGroupSettings
       SENSITIVE: []
     end
 
@@ -3294,6 +3298,7 @@ module Aws::MediaLive
       attr_accessor sources: ::Array[Types::InputSourceRequest]
       attr_accessor srt_settings: Types::SrtSettingsRequest
       attr_accessor multicast_settings: Types::MulticastSettingsUpdateRequest
+      attr_accessor smpte_2110_receiver_group_settings: Types::Smpte2110ReceiverGroupSettings
       SENSITIVE: []
     end
 
@@ -3345,6 +3350,7 @@ module Aws::MediaLive
       attr_accessor sources: ::Array[Types::InputSourceRequest]
       attr_accessor srt_settings: Types::SrtSettingsRequest
       attr_accessor multicast_settings: Types::MulticastSettingsUpdateRequest
+      attr_accessor smpte_2110_receiver_group_settings: Types::Smpte2110ReceiverGroupSettings
       SENSITIVE: []
     end
 
@@ -5500,6 +5506,29 @@ module Aws::MediaLive
 
     class TimedMetadataScheduleActionSettings
       attr_accessor id_3: ::String
+      SENSITIVE: []
+    end
+
+    class InputSdpLocation
+      attr_accessor media_index: ::Integer
+      attr_accessor sdp_url: ::String
+      SENSITIVE: []
+    end
+
+    class Smpte2110ReceiverGroup
+      attr_accessor sdp_settings: Types::Smpte2110ReceiverGroupSdpSettings
+      SENSITIVE: []
+    end
+
+    class Smpte2110ReceiverGroupSdpSettings
+      attr_accessor ancillary_sdps: ::Array[Types::InputSdpLocation]
+      attr_accessor audio_sdps: ::Array[Types::InputSdpLocation]
+      attr_accessor video_sdp: Types::InputSdpLocation
+      SENSITIVE: []
+    end
+
+    class Smpte2110ReceiverGroupSettings
+      attr_accessor smpte_2110_receiver_groups: ::Array[Types::Smpte2110ReceiverGroup]
       SENSITIVE: []
     end
   end

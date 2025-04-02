@@ -8948,20 +8948,6 @@ module Aws::ECS
     #
     # @!attribute [rw] service_revision_arn
     #   The ARN of the service revision deployed as part of the rollback.
-    #
-    #   When the type is `GPU`, the value is the number of physical `GPUs`
-    #   the Amazon ECS container agent reserves for the container. The
-    #   number of GPUs that's reserved for all containers in a task can't
-    #   exceed the number of available GPUs on the container instance that
-    #   the task is launched on.
-    #
-    #   When the type is `InferenceAccelerator`, the `value` matches the
-    #   `deviceName` for an [InferenceAccelerator][1] specified in a task
-    #   definition.
-    #
-    #
-    #
-    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_InferenceAccelerator.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/Rollback AWS API Documentation

@@ -2387,6 +2387,11 @@ module Aws::MediaLive
     #   Multicast Input settings.
     #   @return [Types::MulticastSettingsCreateRequest]
     #
+    # @!attribute [rw] smpte_2110_receiver_group_settings
+    #   Include this parameter if the input is a SMPTE 2110 input, to
+    #   identify the stream sources for this input.
+    #   @return [Types::Smpte2110ReceiverGroupSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateInput AWS API Documentation
     #
     class CreateInput < Struct.new(
@@ -2403,7 +2408,8 @@ module Aws::MediaLive
       :vpc,
       :srt_settings,
       :input_network_location,
-      :multicast_settings)
+      :multicast_settings,
+      :smpte_2110_receiver_group_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2466,6 +2472,10 @@ module Aws::MediaLive
     #   and optional source ip addresses.
     #   @return [Types::MulticastSettingsCreateRequest]
     #
+    # @!attribute [rw] smpte_2110_receiver_group_settings
+    #   Configures the sources for the SMPTE 2110 Receiver Group input.
+    #   @return [Types::Smpte2110ReceiverGroupSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateInputRequest AWS API Documentation
     #
     class CreateInputRequest < Struct.new(
@@ -2482,7 +2492,8 @@ module Aws::MediaLive
       :vpc,
       :srt_settings,
       :input_network_location,
-      :multicast_settings)
+      :multicast_settings,
+      :smpte_2110_receiver_group_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3514,6 +3525,10 @@ module Aws::MediaLive
     #   and optional source ip addresses.
     #   @return [Types::MulticastSettings]
     #
+    # @!attribute [rw] smpte_2110_receiver_group_settings
+    #   Configures the sources for the SMPTE 2110 Receiver Group input.
+    #   @return [Types::Smpte2110ReceiverGroupSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DescribeInputResponse AWS API Documentation
     #
     class DescribeInputResponse < Struct.new(
@@ -3535,7 +3550,8 @@ module Aws::MediaLive
       :type,
       :srt_settings,
       :input_network_location,
-      :multicast_settings)
+      :multicast_settings,
+      :smpte_2110_receiver_group_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6578,6 +6594,11 @@ module Aws::MediaLive
     #   Multicast Input settings.
     #   @return [Types::MulticastSettings]
     #
+    # @!attribute [rw] smpte_2110_receiver_group_settings
+    #   Include this parameter if the input is a SMPTE 2110 input, to
+    #   identify the stream sources for this input.
+    #   @return [Types::Smpte2110ReceiverGroupSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/Input AWS API Documentation
     #
     class Input < Struct.new(
@@ -6599,7 +6620,8 @@ module Aws::MediaLive
       :type,
       :srt_settings,
       :input_network_location,
-      :multicast_settings)
+      :multicast_settings,
+      :smpte_2110_receiver_group_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -12871,6 +12893,11 @@ module Aws::MediaLive
     #   Multicast Input settings.
     #   @return [Types::MulticastSettingsUpdateRequest]
     #
+    # @!attribute [rw] smpte_2110_receiver_group_settings
+    #   Include this parameter if the input is a SMPTE 2110 input, to
+    #   identify the stream sources for this input.
+    #   @return [Types::Smpte2110ReceiverGroupSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateInput AWS API Documentation
     #
     class UpdateInput < Struct.new(
@@ -12882,7 +12909,8 @@ module Aws::MediaLive
       :role_arn,
       :sources,
       :srt_settings,
-      :multicast_settings)
+      :multicast_settings,
+      :smpte_2110_receiver_group_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -13067,6 +13095,10 @@ module Aws::MediaLive
     #   and optional source ip addresses.
     #   @return [Types::MulticastSettingsUpdateRequest]
     #
+    # @!attribute [rw] smpte_2110_receiver_group_settings
+    #   Configures the sources for the SMPTE 2110 Receiver Group input.
+    #   @return [Types::Smpte2110ReceiverGroupSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateInputRequest AWS API Documentation
     #
     class UpdateInputRequest < Struct.new(
@@ -13079,7 +13111,8 @@ module Aws::MediaLive
       :role_arn,
       :sources,
       :srt_settings,
-      :multicast_settings)
+      :multicast_settings,
+      :smpte_2110_receiver_group_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -21082,6 +21115,86 @@ module Aws::MediaLive
     #
     class TimedMetadataScheduleActionSettings < Struct.new(
       :id_3)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The location of the SDP file for one of the SMPTE 2110 streams in a
+    # receiver group.
+    #
+    # @!attribute [rw] media_index
+    #   The index of the media stream in the SDP file for one SMPTE 2110
+    #   stream.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] sdp_url
+    #   The URL of the SDP file for one SMPTE 2110 stream.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/InputSdpLocation AWS API Documentation
+    #
+    class InputSdpLocation < Struct.new(
+      :media_index,
+      :sdp_url)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A receiver group is a collection of video, audio, and ancillary
+    # streams that you want to group together and attach to one input.
+    #
+    # @!attribute [rw] sdp_settings
+    #   The single Smpte2110ReceiverGroupSdpSettings that identify the
+    #   video, audio, and ancillary streams for this receiver group.
+    #   @return [Types::Smpte2110ReceiverGroupSdpSettings]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/Smpte2110ReceiverGroup AWS API Documentation
+    #
+    class Smpte2110ReceiverGroup < Struct.new(
+      :sdp_settings)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Information about the SDP files that describe the SMPTE 2110 streams
+    # that go into one SMPTE 2110 receiver group.
+    #
+    # @!attribute [rw] ancillary_sdps
+    #   A list of InputSdpLocations. Each item in the list specifies the SDP
+    #   file and index for one ancillary SMPTE 2110 stream. Each stream
+    #   encapsulates one captions stream (out of any number you can include)
+    #   or the single SCTE 35 stream that you can include.
+    #   @return [Array<Types::InputSdpLocation>]
+    #
+    # @!attribute [rw] audio_sdps
+    #   A list of InputSdpLocations. Each item in the list specifies the SDP
+    #   file and index for one audio SMPTE 2110 stream.
+    #   @return [Array<Types::InputSdpLocation>]
+    #
+    # @!attribute [rw] video_sdp
+    #   The InputSdpLocation that specifies the SDP file and index for the
+    #   single video SMPTE 2110 stream for this 2110 input.
+    #   @return [Types::InputSdpLocation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/Smpte2110ReceiverGroupSdpSettings AWS API Documentation
+    #
+    class Smpte2110ReceiverGroupSdpSettings < Struct.new(
+      :ancillary_sdps,
+      :audio_sdps,
+      :video_sdp)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Configures the sources for the SMPTE 2110 Receiver Group input.
+    #
+    # @!attribute [rw] smpte_2110_receiver_groups
+    #   @return [Array<Types::Smpte2110ReceiverGroup>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/Smpte2110ReceiverGroupSettings AWS API Documentation
+    #
+    class Smpte2110ReceiverGroupSettings < Struct.new(
+      :smpte_2110_receiver_groups)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -784,6 +784,9 @@ module Aws::LexModelsV2
     # @option params [Array<Types::BotMember>] :bot_members
     #   The list of bot members in a network to be created.
     #
+    # @option params [Types::ErrorLogSettings] :error_log_settings
+    #   Specifies the configuration for error logging during bot creation.
+    #
     # @return [Types::CreateBotResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateBotResponse#bot_id #bot_id} => String
@@ -798,6 +801,7 @@ module Aws::LexModelsV2
     #   * {Types::CreateBotResponse#test_bot_alias_tags #test_bot_alias_tags} => Hash&lt;String,String&gt;
     #   * {Types::CreateBotResponse#bot_type #bot_type} => String
     #   * {Types::CreateBotResponse#bot_members #bot_members} => Array&lt;Types::BotMember&gt;
+    #   * {Types::CreateBotResponse#error_log_settings #error_log_settings} => Types::ErrorLogSettings
     #
     # @example Request syntax with placeholder values
     #
@@ -825,6 +829,9 @@ module Aws::LexModelsV2
     #         bot_member_version: "BotVersion", # required
     #       },
     #     ],
+    #     error_log_settings: {
+    #       enabled: false, # required
+    #     },
     #   })
     #
     # @example Response structure
@@ -848,6 +855,7 @@ module Aws::LexModelsV2
     #   resp.bot_members[0].bot_member_alias_id #=> String
     #   resp.bot_members[0].bot_member_alias_name #=> String
     #   resp.bot_members[0].bot_member_version #=> String
+    #   resp.error_log_settings.enabled #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/CreateBot AWS API Documentation
     #
@@ -1506,6 +1514,9 @@ module Aws::LexModelsV2
     #   another intent to invoke. If you specify this field, you can't
     #   specify the `kendraConfiguration` field.
     #
+    # @option params [Types::QInConnectIntentConfiguration] :q_in_connect_intent_configuration
+    #   Qinconnect intent configuration details for the create intent request.
+    #
     # @return [Types::CreateIntentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateIntentResponse#intent_id #intent_id} => String
@@ -1526,6 +1537,7 @@ module Aws::LexModelsV2
     #   * {Types::CreateIntentResponse#creation_date_time #creation_date_time} => Time
     #   * {Types::CreateIntentResponse#initial_response_setting #initial_response_setting} => Types::InitialResponseSetting
     #   * {Types::CreateIntentResponse#qn_a_intent_configuration #qn_a_intent_configuration} => Types::QnAIntentConfiguration
+    #   * {Types::CreateIntentResponse#q_in_connect_intent_configuration #q_in_connect_intent_configuration} => Types::QInConnectIntentConfiguration
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/CreateIntent AWS API Documentation
     #
@@ -3401,6 +3413,7 @@ module Aws::LexModelsV2
     #   * {Types::DescribeBotResponse#bot_type #bot_type} => String
     #   * {Types::DescribeBotResponse#bot_members #bot_members} => Array&lt;Types::BotMember&gt;
     #   * {Types::DescribeBotResponse#failure_reasons #failure_reasons} => Array&lt;String&gt;
+    #   * {Types::DescribeBotResponse#error_log_settings #error_log_settings} => Types::ErrorLogSettings
     #
     # @example Request syntax with placeholder values
     #
@@ -3428,6 +3441,7 @@ module Aws::LexModelsV2
     #   resp.bot_members[0].bot_member_version #=> String
     #   resp.failure_reasons #=> Array
     #   resp.failure_reasons[0] #=> String
+    #   resp.error_log_settings.enabled #=> Boolean
     #
     #
     # The following waiters are defined for this operation (see {Client#wait_until} for detailed usage):
@@ -4021,6 +4035,7 @@ module Aws::LexModelsV2
     #   resp.resource_specification.bot_import_specification.bot_name #=> String
     #   resp.resource_specification.bot_import_specification.role_arn #=> String
     #   resp.resource_specification.bot_import_specification.data_privacy.child_directed #=> Boolean
+    #   resp.resource_specification.bot_import_specification.error_log_settings.enabled #=> Boolean
     #   resp.resource_specification.bot_import_specification.idle_session_ttl_in_seconds #=> Integer
     #   resp.resource_specification.bot_import_specification.bot_tags #=> Hash
     #   resp.resource_specification.bot_import_specification.bot_tags["TagKey"] #=> String
@@ -4111,6 +4126,7 @@ module Aws::LexModelsV2
     #   * {Types::DescribeIntentResponse#last_updated_date_time #last_updated_date_time} => Time
     #   * {Types::DescribeIntentResponse#initial_response_setting #initial_response_setting} => Types::InitialResponseSetting
     #   * {Types::DescribeIntentResponse#qn_a_intent_configuration #qn_a_intent_configuration} => Types::QnAIntentConfiguration
+    #   * {Types::DescribeIntentResponse#q_in_connect_intent_configuration #q_in_connect_intent_configuration} => Types::QInConnectIntentConfiguration
     #
     # @example Request syntax with placeholder values
     #
@@ -8437,6 +8453,9 @@ module Aws::LexModelsV2
     #         data_privacy: { # required
     #           child_directed: false, # required
     #         },
+    #         error_log_settings: {
+    #           enabled: false, # required
+    #         },
     #         idle_session_ttl_in_seconds: 1,
     #         bot_tags: {
     #           "TagKey" => "TagValue",
@@ -8489,6 +8508,7 @@ module Aws::LexModelsV2
     #   resp.resource_specification.bot_import_specification.bot_name #=> String
     #   resp.resource_specification.bot_import_specification.role_arn #=> String
     #   resp.resource_specification.bot_import_specification.data_privacy.child_directed #=> Boolean
+    #   resp.resource_specification.bot_import_specification.error_log_settings.enabled #=> Boolean
     #   resp.resource_specification.bot_import_specification.idle_session_ttl_in_seconds #=> Integer
     #   resp.resource_specification.bot_import_specification.bot_tags #=> Hash
     #   resp.resource_specification.bot_import_specification.bot_tags["TagKey"] #=> String
@@ -8837,6 +8857,11 @@ module Aws::LexModelsV2
     #   The list of bot members in the network associated with the update
     #   action.
     #
+    # @option params [Types::ErrorLogSettings] :error_log_settings
+    #   Allows you to modify how Amazon Lex logs errors during bot
+    #   interactions, including destinations for error logs and the types of
+    #   errors to be captured.
+    #
     # @return [Types::UpdateBotResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateBotResponse#bot_id #bot_id} => String
@@ -8850,6 +8875,7 @@ module Aws::LexModelsV2
     #   * {Types::UpdateBotResponse#last_updated_date_time #last_updated_date_time} => Time
     #   * {Types::UpdateBotResponse#bot_type #bot_type} => String
     #   * {Types::UpdateBotResponse#bot_members #bot_members} => Array&lt;Types::BotMember&gt;
+    #   * {Types::UpdateBotResponse#error_log_settings #error_log_settings} => Types::ErrorLogSettings
     #
     # @example Request syntax with placeholder values
     #
@@ -8872,6 +8898,9 @@ module Aws::LexModelsV2
     #         bot_member_version: "BotVersion", # required
     #       },
     #     ],
+    #     error_log_settings: {
+    #       enabled: false, # required
+    #     },
     #   })
     #
     # @example Response structure
@@ -8892,6 +8921,7 @@ module Aws::LexModelsV2
     #   resp.bot_members[0].bot_member_alias_id #=> String
     #   resp.bot_members[0].bot_member_alias_name #=> String
     #   resp.bot_members[0].bot_member_version #=> String
+    #   resp.error_log_settings.enabled #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/UpdateBot AWS API Documentation
     #
@@ -9399,6 +9429,9 @@ module Aws::LexModelsV2
     #   another intent to invoke. If you specify this field, you can't
     #   specify the `kendraConfiguration` field.
     #
+    # @option params [Types::QInConnectIntentConfiguration] :q_in_connect_intent_configuration
+    #   Qinconnect intent configuration details for the update intent request.
+    #
     # @return [Types::UpdateIntentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateIntentResponse#intent_id #intent_id} => String
@@ -9421,6 +9454,7 @@ module Aws::LexModelsV2
     #   * {Types::UpdateIntentResponse#last_updated_date_time #last_updated_date_time} => Time
     #   * {Types::UpdateIntentResponse#initial_response_setting #initial_response_setting} => Types::InitialResponseSetting
     #   * {Types::UpdateIntentResponse#qn_a_intent_configuration #qn_a_intent_configuration} => Types::QnAIntentConfiguration
+    #   * {Types::UpdateIntentResponse#q_in_connect_intent_configuration #q_in_connect_intent_configuration} => Types::QInConnectIntentConfiguration
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/UpdateIntent AWS API Documentation
     #
@@ -10521,7 +10555,7 @@ module Aws::LexModelsV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-lexmodelsv2'
-      context[:gem_version] = '1.69.0'
+      context[:gem_version] = '1.70.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

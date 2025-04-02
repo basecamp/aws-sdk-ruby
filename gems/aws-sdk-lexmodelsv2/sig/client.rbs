@@ -175,6 +175,7 @@ module Aws
         def test_bot_alias_tags: () -> ::Hash[::String, ::String]
         def bot_type: () -> ("Bot" | "BotNetwork")
         def bot_members: () -> ::Array[Types::BotMember]
+        def error_log_settings: () -> Types::ErrorLogSettings
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/LexModelsV2/Client.html#create_bot-instance_method
       def create_bot: (
@@ -196,7 +197,10 @@ module Aws
                             bot_member_alias_name: ::String,
                             bot_member_version: ::String
                           },
-                        ]
+                        ],
+                        ?error_log_settings: {
+                          enabled: bool
+                        }
                       ) -> _CreateBotResponseSuccess
                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateBotResponseSuccess
 
@@ -420,6 +424,7 @@ module Aws
         def creation_date_time: () -> ::Time
         def initial_response_setting: () -> Types::InitialResponseSetting
         def qn_a_intent_configuration: () -> Types::QnAIntentConfiguration
+        def q_in_connect_intent_configuration: () -> Types::QInConnectIntentConfiguration
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/LexModelsV2/Client.html#create_intent-instance_method
       def create_intent: (
@@ -3959,6 +3964,11 @@ module Aws
                                trace_status: ("ENABLED" | "DISABLED")?,
                                custom_prompt: ::String?
                              }?
+                           },
+                           ?q_in_connect_intent_configuration: {
+                             q_in_connect_assistant_configuration: {
+                               assistant_arn: ::String
+                             }?
                            }
                          ) -> _CreateIntentResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateIntentResponseSuccess
@@ -6010,6 +6020,7 @@ module Aws
         def bot_type: () -> ("Bot" | "BotNetwork")
         def bot_members: () -> ::Array[Types::BotMember]
         def failure_reasons: () -> ::Array[::String]
+        def error_log_settings: () -> Types::ErrorLogSettings
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/LexModelsV2/Client.html#describe_bot-instance_method
       def describe_bot: (
@@ -6227,6 +6238,7 @@ module Aws
         def last_updated_date_time: () -> ::Time
         def initial_response_setting: () -> Types::InitialResponseSetting
         def qn_a_intent_configuration: () -> Types::QnAIntentConfiguration
+        def q_in_connect_intent_configuration: () -> Types::QInConnectIntentConfiguration
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/LexModelsV2/Client.html#describe_intent-instance_method
       def describe_intent: (
@@ -7267,6 +7279,9 @@ module Aws
                               data_privacy: {
                                 child_directed: bool
                               },
+                              error_log_settings: {
+                                enabled: bool
+                              }?,
                               idle_session_ttl_in_seconds: ::Integer?,
                               bot_tags: Hash[::String, ::String]?,
                               test_bot_alias_tags: Hash[::String, ::String]?
@@ -7420,6 +7435,7 @@ module Aws
         def last_updated_date_time: () -> ::Time
         def bot_type: () -> ("Bot" | "BotNetwork")
         def bot_members: () -> ::Array[Types::BotMember]
+        def error_log_settings: () -> Types::ErrorLogSettings
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/LexModelsV2/Client.html#update_bot-instance_method
       def update_bot: (
@@ -7440,7 +7456,10 @@ module Aws
                             bot_member_alias_name: ::String,
                             bot_member_version: ::String
                           },
-                        ]
+                        ],
+                        ?error_log_settings: {
+                          enabled: bool
+                        }
                       ) -> _UpdateBotResponseSuccess
                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateBotResponseSuccess
 
@@ -7643,6 +7662,7 @@ module Aws
         def last_updated_date_time: () -> ::Time
         def initial_response_setting: () -> Types::InitialResponseSetting
         def qn_a_intent_configuration: () -> Types::QnAIntentConfiguration
+        def q_in_connect_intent_configuration: () -> Types::QInConnectIntentConfiguration
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/LexModelsV2/Client.html#update_intent-instance_method
       def update_intent: (
@@ -11188,6 +11208,11 @@ module Aws
                                }?,
                                trace_status: ("ENABLED" | "DISABLED")?,
                                custom_prompt: ::String?
+                             }?
+                           },
+                           ?q_in_connect_intent_configuration: {
+                             q_in_connect_assistant_configuration: {
+                               assistant_arn: ::String
                              }?
                            }
                          ) -> _UpdateIntentResponseSuccess

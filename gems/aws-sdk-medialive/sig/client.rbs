@@ -1586,7 +1586,7 @@ module Aws
                             },
                           ],
                           ?tags: Hash[::String, ::String],
-                          ?type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST"),
+                          ?type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP"),
                           ?vpc: {
                             security_group_ids: Array[::String]?,
                             subnet_ids: Array[::String]
@@ -1611,6 +1611,30 @@ module Aws
                               {
                                 source_ip: ::String?,
                                 url: ::String
+                              },
+                            ]?
+                          },
+                          ?smpte_2110_receiver_group_settings: {
+                            smpte_2110_receiver_groups: Array[
+                              {
+                                sdp_settings: {
+                                  ancillary_sdps: Array[
+                                    {
+                                      media_index: ::Integer?,
+                                      sdp_url: ::String?
+                                    },
+                                  ]?,
+                                  audio_sdps: Array[
+                                    {
+                                      media_index: ::Integer?,
+                                      sdp_url: ::String?
+                                    },
+                                  ]?,
+                                  video_sdp: {
+                                    media_index: ::Integer?,
+                                    sdp_url: ::String?
+                                  }?
+                                }?
                               },
                             ]?
                           }
@@ -1878,10 +1902,11 @@ module Aws
         def sources: () -> ::Array[Types::InputSource]
         def state: () -> ("CREATING" | "DETACHED" | "ATTACHED" | "DELETING" | "DELETED")
         def tags: () -> ::Hash[::String, ::String]
-        def type: () -> ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST")
+        def type: () -> ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP")
         def srt_settings: () -> Types::SrtSettings
         def input_network_location: () -> ("AWS" | "ON_PREMISES")
         def multicast_settings: () -> Types::MulticastSettings
+        def smpte_2110_receiver_group_settings: () -> Types::Smpte2110ReceiverGroupSettings
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaLive/Client.html#describe_input-instance_method
       def describe_input: (
@@ -3697,6 +3722,30 @@ module Aws
                               {
                                 source_ip: ::String?,
                                 url: ::String
+                              },
+                            ]?
+                          },
+                          ?smpte_2110_receiver_group_settings: {
+                            smpte_2110_receiver_groups: Array[
+                              {
+                                sdp_settings: {
+                                  ancillary_sdps: Array[
+                                    {
+                                      media_index: ::Integer?,
+                                      sdp_url: ::String?
+                                    },
+                                  ]?,
+                                  audio_sdps: Array[
+                                    {
+                                      media_index: ::Integer?,
+                                      sdp_url: ::String?
+                                    },
+                                  ]?,
+                                  video_sdp: {
+                                    media_index: ::Integer?,
+                                    sdp_url: ::String?
+                                  }?
+                                }?
                               },
                             ]?
                           }

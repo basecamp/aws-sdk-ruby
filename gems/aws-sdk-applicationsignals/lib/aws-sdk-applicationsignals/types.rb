@@ -302,6 +302,50 @@ module Aws::ApplicationSignals
     #
     class DeleteServiceLevelObjectiveOutput < Aws::EmptyStructure; end
 
+    # Identifies the dependency using the `DependencyKeyAttributes` and
+    # `DependencyOperationName`.
+    #
+    # When creating a service dependency SLO, you must specify the
+    # `KeyAttributes` of the service, and the `DependencyConfig` for the
+    # dependency. You can specify the `OperationName` of the service, from
+    # which it calls the dependency. Alternatively, you can exclude
+    # `OperationName` and the SLO will monitor all of the service's
+    # operations that call the dependency.
+    #
+    # @!attribute [rw] dependency_key_attributes
+    #   This is a string-to-string map. It can include the following fields.
+    #
+    #   * `Type` designates the type of object this is.
+    #
+    #   * `ResourceType` specifies the type of the resource. This field is
+    #     used only when the value of the `Type` field is `Resource` or
+    #     `AWS::Resource`.
+    #
+    #   * `Name` specifies the name of the object. This is used only if the
+    #     value of the `Type` field is `Service`, `RemoteService`, or
+    #     `AWS::Service`.
+    #
+    #   * `Identifier` identifies the resource objects of this resource.
+    #     This is used only if the value of the `Type` field is `Resource`
+    #     or `AWS::Resource`.
+    #
+    #   * `Environment` specifies the location where this object is hosted,
+    #     or what it belongs to.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] dependency_operation_name
+    #   The name of the called operation in the dependency.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/DependencyConfig AWS API Documentation
+    #
+    class DependencyConfig < Struct.new(
+      :dependency_key_attributes,
+      :dependency_operation_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A dimension is a name/value pair that is part of the identity of a
     # metric. Because dimensions are part of the unique identifier for a
     # metric, whenever you add a unique name/value pair to one of your
@@ -849,6 +893,11 @@ module Aws::ApplicationSignals
     #   The name of the operation that this SLO is associated with.
     #   @return [String]
     #
+    # @!attribute [rw] dependency_config
+    #   Identifies the dependency using the `DependencyKeyAttributes` and
+    #   `DependencyOperationName`.
+    #   @return [Types::DependencyConfig]
+    #
     # @!attribute [rw] max_results
     #   The maximum number of results to return in one operation. If you
     #   omit this parameter, the default of 50 is used.
@@ -858,6 +907,17 @@ module Aws::ApplicationSignals
     #   Include this value, if it was returned by the previous operation, to
     #   get the next set of service level objectives.
     #   @return [String]
+    #
+    # @!attribute [rw] metric_source_types
+    #   Use this optional field to only include SLOs with the specified
+    #   metric source types in the output. Supported types are:
+    #
+    #   * Service operation
+    #
+    #   * Service dependency
+    #
+    #   * CloudWatch metric
+    #   @return [Array<String>]
     #
     # @!attribute [rw] include_linked_accounts
     #   If you are using this operation in a monitoring account, specify
@@ -878,8 +938,10 @@ module Aws::ApplicationSignals
     class ListServiceLevelObjectivesInput < Struct.new(
       :key_attributes,
       :operation_name,
+      :dependency_config,
       :max_results,
       :next_token,
+      :metric_source_types,
       :include_linked_accounts,
       :slo_owner_aws_account_id)
       SENSITIVE = []
@@ -1560,6 +1622,11 @@ module Aws::ApplicationSignals
     #   tracks.
     #   @return [Types::MonitoredRequestCountMetricDataQueries]
     #
+    # @!attribute [rw] dependency_config
+    #   Identifies the dependency using the `DependencyKeyAttributes` and
+    #   `DependencyOperationName`.
+    #   @return [Types::DependencyConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/RequestBasedServiceLevelIndicatorMetric AWS API Documentation
     #
     class RequestBasedServiceLevelIndicatorMetric < Struct.new(
@@ -1567,7 +1634,8 @@ module Aws::ApplicationSignals
       :operation_name,
       :metric_type,
       :total_request_count_metric,
-      :monitored_request_count_metric)
+      :monitored_request_count_metric,
+      :dependency_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1628,6 +1696,11 @@ module Aws::ApplicationSignals
     #   successful requests that this SLO tracks.
     #   @return [Types::MonitoredRequestCountMetricDataQueries]
     #
+    # @!attribute [rw] dependency_config
+    #   Identifies the dependency using the `DependencyKeyAttributes` and
+    #   `DependencyOperationName`.
+    #   @return [Types::DependencyConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/RequestBasedServiceLevelIndicatorMetricConfig AWS API Documentation
     #
     class RequestBasedServiceLevelIndicatorMetricConfig < Struct.new(
@@ -1635,7 +1708,8 @@ module Aws::ApplicationSignals
       :operation_name,
       :metric_type,
       :total_request_count_metric,
-      :monitored_request_count_metric)
+      :monitored_request_count_metric,
+      :dependency_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1991,13 +2065,19 @@ module Aws::ApplicationSignals
     #   information about that metric or expression.
     #   @return [Array<Types::MetricDataQuery>]
     #
+    # @!attribute [rw] dependency_config
+    #   Identifies the dependency using the `DependencyKeyAttributes` and
+    #   `DependencyOperationName`.
+    #   @return [Types::DependencyConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/ServiceLevelIndicatorMetric AWS API Documentation
     #
     class ServiceLevelIndicatorMetric < Struct.new(
       :key_attributes,
       :operation_name,
       :metric_type,
-      :metric_data_queries)
+      :metric_data_queries,
+      :dependency_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2065,6 +2145,11 @@ module Aws::ApplicationSignals
     #   that metric or expression.
     #   @return [Array<Types::MetricDataQuery>]
     #
+    # @!attribute [rw] dependency_config
+    #   Identifies the dependency using the `DependencyKeyAttributes` and
+    #   `DependencyOperationName`.
+    #   @return [Types::DependencyConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/ServiceLevelIndicatorMetricConfig AWS API Documentation
     #
     class ServiceLevelIndicatorMetricConfig < Struct.new(
@@ -2073,7 +2158,8 @@ module Aws::ApplicationSignals
       :metric_type,
       :statistic,
       :period_seconds,
-      :metric_data_queries)
+      :metric_data_queries,
+      :dependency_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2138,6 +2224,17 @@ module Aws::ApplicationSignals
     #   relative to the attainment goal of the SLO.
     #   @return [Array<Types::BurnRateConfiguration>]
     #
+    # @!attribute [rw] metric_source_type
+    #   Displays the SLI metric source type for this SLO. Supported types
+    #   are:
+    #
+    #   * Service operation
+    #
+    #   * Service dependency
+    #
+    #   * CloudWatch metric
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/ServiceLevelObjective AWS API Documentation
     #
     class ServiceLevelObjective < Struct.new(
@@ -2150,7 +2247,8 @@ module Aws::ApplicationSignals
       :request_based_sli,
       :evaluation_type,
       :goal,
-      :burn_rate_configurations)
+      :burn_rate_configurations,
+      :metric_source_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2348,11 +2446,31 @@ module Aws::ApplicationSignals
     #   this field displays the name of that operation.
     #   @return [String]
     #
+    # @!attribute [rw] dependency_config
+    #   Identifies the dependency using the `DependencyKeyAttributes` and
+    #   `DependencyOperationName`.
+    #   @return [Types::DependencyConfig]
+    #
     # @!attribute [rw] created_time
     #   The date and time that this service level objective was created. It
     #   is expressed as the number of milliseconds since Jan 1, 1970
     #   00:00:00 UTC.
     #   @return [Time]
+    #
+    # @!attribute [rw] evaluation_type
+    #   Displays whether this is a period-based SLO or a request-based SLO.
+    #   @return [String]
+    #
+    # @!attribute [rw] metric_source_type
+    #   Displays the SLI metric source type for this SLO. Supported types
+    #   are:
+    #
+    #   * Service operation
+    #
+    #   * Service dependency
+    #
+    #   * CloudWatch metric
+    #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-signals-2024-04-15/ServiceLevelObjectiveSummary AWS API Documentation
     #
@@ -2361,7 +2479,10 @@ module Aws::ApplicationSignals
       :name,
       :key_attributes,
       :operation_name,
-      :created_time)
+      :dependency_config,
+      :created_time,
+      :evaluation_type,
+      :metric_source_type)
       SENSITIVE = []
       include Aws::Structure
     end
