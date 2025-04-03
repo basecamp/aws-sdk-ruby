@@ -920,29 +920,34 @@ module Aws::OpenSearchService
       req.send_request(options)
     end
 
-    # Creates an OpenSearch Application.
+    # Creates an OpenSearch UI application. For more information, see [Using
+    # the OpenSearch user interface in Amazon OpenSearch Service][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/application.html
     #
     # @option params [String] :client_token
-    #   A unique client idempotency token. It will be auto generated if not
-    #   provided.
+    #   Unique, case-sensitive identifier to ensure idempotency of the
+    #   request.
     #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.**
     #
     # @option params [required, String] :name
-    #   Name of the OpenSearch Appication to create. Application names are
-    #   unique across the applications owned by an account within an Amazon
-    #   Web Services Region.
+    #   The unique name of the OpenSearch application. Names must be unique
+    #   within an Amazon Web Services Region for each account.
     #
     # @option params [Array<Types::DataSource>] :data_sources
-    #   Data sources to be associated with the OpenSearch Application.
+    #   The data sources to link to the OpenSearch application.
     #
     # @option params [Types::IamIdentityCenterOptionsInput] :iam_identity_center_options
-    #   Settings of IAM Identity Center for the OpenSearch Application.
+    #   Configuration settings for integrating Amazon Web Services IAM
+    #   Identity Center with the OpenSearch application.
     #
     # @option params [Array<Types::AppConfig>] :app_configs
-    #   Configurations of the OpenSearch Application, inlcuding admin
-    #   configuration.
+    #   Configuration settings for the OpenSearch application, including
+    #   administrative options.
     #
     # @option params [Array<Types::Tag>] :tag_list
     #   A list of tags attached to a domain.
@@ -1129,7 +1134,8 @@ module Aws::OpenSearchService
     #   Options for fine-grained access control.
     #
     # @option params [Types::IdentityCenterOptionsInput] :identity_center_options
-    #   Options for IAM Identity Center Option control for the domain.
+    #   Configuration options for enabling and managing IAM Identity Center
+    #   integration within a domain.
     #
     # @option params [Array<Types::Tag>] :tag_list
     #   List of tags to add to the domain upon creation.
@@ -1670,11 +1676,10 @@ module Aws::OpenSearchService
       req.send_request(options)
     end
 
-    # Deletes an existing OpenSearch Application.
+    # Deletes a specified OpenSearch application.
     #
     # @option params [required, String] :id
-    #   Unique identifier for the OpenSearch Application that you want to
-    #   delete.
+    #   The unique identifier of the OpenSearch application to delete.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -3495,11 +3500,11 @@ module Aws::OpenSearchService
       req.send_request(options)
     end
 
-    # Check the configuration and status of an existing OpenSearch
-    # Application.
+    # Retrieves the configuration and status of an existing OpenSearch
+    # application.
     #
     # @option params [required, String] :id
-    #   Unique identifier of the checked OpenSearch Application.
+    #   The unique identifier of the OpenSearch application to retrieve.
     #
     # @return [Types::GetApplicationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3854,7 +3859,7 @@ module Aws::OpenSearchService
       req.send_request(options)
     end
 
-    # List all OpenSearch Applications under your account.
+    # Lists all OpenSearch applications under your account.
     #
     # @option params [String] :next_token
     #   When `nextToken` is returned, there are more results available. The
@@ -3862,9 +3867,9 @@ module Aws::OpenSearchService
     #   the request again using the returned token to retrieve the next page.
     #
     # @option params [Array<String>] :statuses
-    #   OpenSearch Application Status can be used as filters for the listing
-    #   request. Possible values are `CREATING`, `UPDATING`, `DELETING`,
-    #   `FAILED`, `ACTIVE`, and `DELETED`.
+    #   Filters the list of OpenSearch applications by status. Possible
+    #   values: `CREATING`, `UPDATING`, `DELETING`, `FAILED`, `ACTIVE`, and
+    #   `DELETED`.
     #
     # @option params [Integer] :max_results
     #   An optional parameter that specifies the maximum number of results to
@@ -4783,16 +4788,17 @@ module Aws::OpenSearchService
       req.send_request(options)
     end
 
-    # Update the OpenSearch Application.
+    # Updates the configuration and settings of an existing OpenSearch
+    # application.
     #
     # @option params [required, String] :id
-    #   Unique identifier of the OpenSearch Application to be updated.
+    #   The unique identifier for the OpenSearch application to be updated.
     #
     # @option params [Array<Types::DataSource>] :data_sources
-    #   Data sources to be associated with the OpenSearch Application.
+    #   The data sources to associate with the OpenSearch application.
     #
     # @option params [Array<Types::AppConfig>] :app_configs
-    #   Configurations to be changed for the OpenSearch Application.
+    #   The configuration settings to modify for the OpenSearch application.
     #
     # @return [Types::UpdateApplicationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -5041,7 +5047,7 @@ module Aws::OpenSearchService
     #   Options for fine-grained access control.
     #
     # @option params [Types::IdentityCenterOptionsInput] :identity_center_options
-    #   Container for IAM Identity Center Options settings.
+    #   Configuration settings for enabling and managing IAM Identity Center.
     #
     # @option params [Types::AutoTuneOptions] :auto_tune_options
     #   Options for Auto-Tune.
@@ -5787,7 +5793,7 @@ module Aws::OpenSearchService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-opensearchservice'
-      context[:gem_version] = '1.65.0'
+      context[:gem_version] = '1.66.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

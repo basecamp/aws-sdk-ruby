@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.117.0 (2025-04-03)
+------------------
+
+* Feature - This Feature Adds Support for the "zh-HK" Locale for Batch Operations
+
 1.116.0 (2025-03-03)
 ------------------
 

@@ -2223,6 +2223,7 @@ module Aws::BedrockAgent
     #           text_field: "FieldName", # required
     #           vector_field: "FieldName", # required
     #         },
+    #         text_index_name: "MongoDbAtlasIndexName",
     #         vector_index_name: "MongoDbAtlasIndexName", # required
     #       },
     #       neptune_analytics_configuration: {
@@ -2264,6 +2265,7 @@ module Aws::BedrockAgent
     #         credentials_secret_arn: "SecretArn", # required
     #         database_name: "RdsDatabaseName", # required
     #         field_mapping: { # required
+    #           custom_metadata_field: "ColumnName",
     #           metadata_field: "ColumnName", # required
     #           primary_key_field: "ColumnName", # required
     #           text_field: "ColumnName", # required
@@ -2342,6 +2344,7 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.text_field #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.vector_field #=> String
+    #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.text_index_name #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.vector_index_name #=> String
     #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.field_mapping.metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.field_mapping.text_field #=> String
@@ -2364,6 +2367,7 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.storage_configuration.pinecone_configuration.namespace #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.credentials_secret_arn #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.database_name #=> String
+    #   resp.knowledge_base.storage_configuration.rds_configuration.field_mapping.custom_metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.field_mapping.metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.field_mapping.primary_key_field #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.field_mapping.text_field #=> String
@@ -4145,6 +4149,7 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.text_field #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.vector_field #=> String
+    #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.text_index_name #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.vector_index_name #=> String
     #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.field_mapping.metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.field_mapping.text_field #=> String
@@ -4167,6 +4172,7 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.storage_configuration.pinecone_configuration.namespace #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.credentials_secret_arn #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.database_name #=> String
+    #   resp.knowledge_base.storage_configuration.rds_configuration.field_mapping.custom_metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.field_mapping.metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.field_mapping.primary_key_field #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.field_mapping.text_field #=> String
@@ -6982,6 +6988,7 @@ module Aws::BedrockAgent
     #           text_field: "FieldName", # required
     #           vector_field: "FieldName", # required
     #         },
+    #         text_index_name: "MongoDbAtlasIndexName",
     #         vector_index_name: "MongoDbAtlasIndexName", # required
     #       },
     #       neptune_analytics_configuration: {
@@ -7023,6 +7030,7 @@ module Aws::BedrockAgent
     #         credentials_secret_arn: "SecretArn", # required
     #         database_name: "RdsDatabaseName", # required
     #         field_mapping: { # required
+    #           custom_metadata_field: "ColumnName",
     #           metadata_field: "ColumnName", # required
     #           primary_key_field: "ColumnName", # required
     #           text_field: "ColumnName", # required
@@ -7098,6 +7106,7 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.text_field #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.field_mapping.vector_field #=> String
+    #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.text_index_name #=> String
     #   resp.knowledge_base.storage_configuration.mongo_db_atlas_configuration.vector_index_name #=> String
     #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.field_mapping.metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.neptune_analytics_configuration.field_mapping.text_field #=> String
@@ -7120,6 +7129,7 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.storage_configuration.pinecone_configuration.namespace #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.credentials_secret_arn #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.database_name #=> String
+    #   resp.knowledge_base.storage_configuration.rds_configuration.field_mapping.custom_metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.field_mapping.metadata_field #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.field_mapping.primary_key_field #=> String
     #   resp.knowledge_base.storage_configuration.rds_configuration.field_mapping.text_field #=> String
@@ -7617,7 +7627,7 @@ module Aws::BedrockAgent
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagent'
-      context[:gem_version] = '1.52.0'
+      context[:gem_version] = '1.53.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

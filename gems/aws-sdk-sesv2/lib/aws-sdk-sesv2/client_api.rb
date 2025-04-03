@@ -23,6 +23,14 @@ module Aws::SESV2
     AmazonResourceName = Shapes::StringShape.new(name: 'AmazonResourceName')
     ArchiveArn = Shapes::StringShape.new(name: 'ArchiveArn')
     ArchivingOptions = Shapes::StructureShape.new(name: 'ArchivingOptions')
+    Attachment = Shapes::StructureShape.new(name: 'Attachment')
+    AttachmentContentDescription = Shapes::StringShape.new(name: 'AttachmentContentDescription')
+    AttachmentContentDisposition = Shapes::StringShape.new(name: 'AttachmentContentDisposition')
+    AttachmentContentId = Shapes::StringShape.new(name: 'AttachmentContentId')
+    AttachmentContentTransferEncoding = Shapes::StringShape.new(name: 'AttachmentContentTransferEncoding')
+    AttachmentContentType = Shapes::StringShape.new(name: 'AttachmentContentType')
+    AttachmentFileName = Shapes::StringShape.new(name: 'AttachmentFileName')
+    AttachmentList = Shapes::ListShape.new(name: 'AttachmentList')
     AttributesData = Shapes::StringShape.new(name: 'AttributesData')
     BadRequestException = Shapes::StructureShape.new(name: 'BadRequestException')
     BatchGetMetricDataQueries = Shapes::ListShape.new(name: 'BatchGetMetricDataQueries')
@@ -425,6 +433,7 @@ module Aws::SESV2
     QueryErrorCode = Shapes::StringShape.new(name: 'QueryErrorCode')
     QueryErrorMessage = Shapes::StringShape.new(name: 'QueryErrorMessage')
     QueryIdentifier = Shapes::StringShape.new(name: 'QueryIdentifier')
+    RawAttachmentData = Shapes::BlobShape.new(name: 'RawAttachmentData')
     RawMessage = Shapes::StructureShape.new(name: 'RawMessage')
     RawMessageData = Shapes::BlobShape.new(name: 'RawMessageData')
     RblName = Shapes::StringShape.new(name: 'RblName')
@@ -544,6 +553,17 @@ module Aws::SESV2
 
     ArchivingOptions.add_member(:archive_arn, Shapes::ShapeRef.new(shape: ArchiveArn, location_name: "ArchiveArn"))
     ArchivingOptions.struct_class = Types::ArchivingOptions
+
+    Attachment.add_member(:raw_content, Shapes::ShapeRef.new(shape: RawAttachmentData, required: true, location_name: "RawContent"))
+    Attachment.add_member(:content_disposition, Shapes::ShapeRef.new(shape: AttachmentContentDisposition, location_name: "ContentDisposition"))
+    Attachment.add_member(:file_name, Shapes::ShapeRef.new(shape: AttachmentFileName, required: true, location_name: "FileName"))
+    Attachment.add_member(:content_description, Shapes::ShapeRef.new(shape: AttachmentContentDescription, location_name: "ContentDescription"))
+    Attachment.add_member(:content_id, Shapes::ShapeRef.new(shape: AttachmentContentId, location_name: "ContentId"))
+    Attachment.add_member(:content_transfer_encoding, Shapes::ShapeRef.new(shape: AttachmentContentTransferEncoding, location_name: "ContentTransferEncoding"))
+    Attachment.add_member(:content_type, Shapes::ShapeRef.new(shape: AttachmentContentType, location_name: "ContentType"))
+    Attachment.struct_class = Types::Attachment
+
+    AttachmentList.member = Shapes::ShapeRef.new(shape: Attachment)
 
     BadRequestException.struct_class = Types::BadRequestException
 
@@ -1463,6 +1483,7 @@ module Aws::SESV2
     Message.add_member(:subject, Shapes::ShapeRef.new(shape: Content, required: true, location_name: "Subject"))
     Message.add_member(:body, Shapes::ShapeRef.new(shape: Body, required: true, location_name: "Body"))
     Message.add_member(:headers, Shapes::ShapeRef.new(shape: MessageHeaderList, location_name: "Headers"))
+    Message.add_member(:attachments, Shapes::ShapeRef.new(shape: AttachmentList, location_name: "Attachments"))
     Message.struct_class = Types::Message
 
     MessageHeader.add_member(:name, Shapes::ShapeRef.new(shape: MessageHeaderName, required: true, location_name: "Name"))
@@ -1830,6 +1851,7 @@ module Aws::SESV2
     Template.add_member(:template_content, Shapes::ShapeRef.new(shape: EmailTemplateContent, location_name: "TemplateContent"))
     Template.add_member(:template_data, Shapes::ShapeRef.new(shape: EmailTemplateData, location_name: "TemplateData"))
     Template.add_member(:headers, Shapes::ShapeRef.new(shape: MessageHeaderList, location_name: "Headers"))
+    Template.add_member(:attachments, Shapes::ShapeRef.new(shape: AttachmentList, location_name: "Attachments"))
     Template.struct_class = Types::Template
 
     TestRenderEmailTemplateRequest.add_member(:template_name, Shapes::ShapeRef.new(shape: EmailTemplateName, required: true, location: "uri", location_name: "TemplateName"))

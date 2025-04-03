@@ -930,6 +930,7 @@ module Aws::ChimeSDKVoice
     PhoneNumberOrder.add_member(:ordered_phone_numbers, Shapes::ShapeRef.new(shape: OrderedPhoneNumberList, location_name: "OrderedPhoneNumbers"))
     PhoneNumberOrder.add_member(:created_timestamp, Shapes::ShapeRef.new(shape: Iso8601Timestamp, location_name: "CreatedTimestamp"))
     PhoneNumberOrder.add_member(:updated_timestamp, Shapes::ShapeRef.new(shape: Iso8601Timestamp, location_name: "UpdatedTimestamp"))
+    PhoneNumberOrder.add_member(:foc_date, Shapes::ShapeRef.new(shape: Iso8601Timestamp, location_name: "FocDate"))
     PhoneNumberOrder.struct_class = Types::PhoneNumberOrder
 
     PhoneNumberOrderList.member = Shapes::ShapeRef.new(shape: PhoneNumberOrder)
@@ -2958,6 +2959,7 @@ module Aws::ChimeSDKVoice
         o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottledClientException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceFailureException)
       end)

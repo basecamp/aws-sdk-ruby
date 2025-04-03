@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.300.0 (2025-04-03)
+------------------
+
+* Feature - Adds support for i3en, m7i, r7i instance types for SageMaker Hyperpod
+
 1.299.0 (2025-04-01)
 ------------------
 

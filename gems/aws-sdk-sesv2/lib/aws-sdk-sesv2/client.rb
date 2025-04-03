@@ -966,6 +966,17 @@ module Aws::SESV2
     #             value: "MessageHeaderValue", # required
     #           },
     #         ],
+    #         attachments: [
+    #           {
+    #             raw_content: "data", # required
+    #             content_disposition: "ATTACHMENT", # accepts ATTACHMENT, INLINE
+    #             file_name: "AttachmentFileName", # required
+    #             content_description: "AttachmentContentDescription",
+    #             content_id: "AttachmentContentId",
+    #             content_transfer_encoding: "BASE64", # accepts BASE64, QUOTED_PRINTABLE, SEVEN_BIT
+    #             content_type: "AttachmentContentType",
+    #           },
+    #         ],
     #       },
     #       raw: {
     #         data: "data", # required
@@ -983,6 +994,17 @@ module Aws::SESV2
     #           {
     #             name: "MessageHeaderName", # required
     #             value: "MessageHeaderValue", # required
+    #           },
+    #         ],
+    #         attachments: [
+    #           {
+    #             raw_content: "data", # required
+    #             content_disposition: "ATTACHMENT", # accepts ATTACHMENT, INLINE
+    #             file_name: "AttachmentFileName", # required
+    #             content_description: "AttachmentContentDescription",
+    #             content_id: "AttachmentContentId",
+    #             content_transfer_encoding: "BASE64", # accepts BASE64, QUOTED_PRINTABLE, SEVEN_BIT
+    #             content_type: "AttachmentContentType",
     #           },
     #         ],
     #       },
@@ -4746,6 +4768,17 @@ module Aws::SESV2
     #             value: "MessageHeaderValue", # required
     #           },
     #         ],
+    #         attachments: [
+    #           {
+    #             raw_content: "data", # required
+    #             content_disposition: "ATTACHMENT", # accepts ATTACHMENT, INLINE
+    #             file_name: "AttachmentFileName", # required
+    #             content_description: "AttachmentContentDescription",
+    #             content_id: "AttachmentContentId",
+    #             content_transfer_encoding: "BASE64", # accepts BASE64, QUOTED_PRINTABLE, SEVEN_BIT
+    #             content_type: "AttachmentContentType",
+    #           },
+    #         ],
     #       },
     #     },
     #     bulk_email_entries: [ # required
@@ -4981,6 +5014,17 @@ module Aws::SESV2
     #             value: "MessageHeaderValue", # required
     #           },
     #         ],
+    #         attachments: [
+    #           {
+    #             raw_content: "data", # required
+    #             content_disposition: "ATTACHMENT", # accepts ATTACHMENT, INLINE
+    #             file_name: "AttachmentFileName", # required
+    #             content_description: "AttachmentContentDescription",
+    #             content_id: "AttachmentContentId",
+    #             content_transfer_encoding: "BASE64", # accepts BASE64, QUOTED_PRINTABLE, SEVEN_BIT
+    #             content_type: "AttachmentContentType",
+    #           },
+    #         ],
     #       },
     #       raw: {
     #         data: "data", # required
@@ -4998,6 +5042,17 @@ module Aws::SESV2
     #           {
     #             name: "MessageHeaderName", # required
     #             value: "MessageHeaderValue", # required
+    #           },
+    #         ],
+    #         attachments: [
+    #           {
+    #             raw_content: "data", # required
+    #             content_disposition: "ATTACHMENT", # accepts ATTACHMENT, INLINE
+    #             file_name: "AttachmentFileName", # required
+    #             content_description: "AttachmentContentDescription",
+    #             content_id: "AttachmentContentId",
+    #             content_transfer_encoding: "BASE64", # accepts BASE64, QUOTED_PRINTABLE, SEVEN_BIT
+    #             content_type: "AttachmentContentType",
     #           },
     #         ],
     #       },
@@ -5474,7 +5529,7 @@ module Aws::SESV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sesv2'
-      context[:gem_version] = '1.73.0'
+      context[:gem_version] = '1.74.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

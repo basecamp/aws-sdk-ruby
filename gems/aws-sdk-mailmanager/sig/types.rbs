@@ -209,6 +209,7 @@ module Aws::MailManager
       attr_accessor client_token: ::String
       attr_accessor ingress_point_configuration: Types::IngressPointConfiguration
       attr_accessor ingress_point_name: ::String
+      attr_accessor network_configuration: Types::NetworkConfiguration
       attr_accessor rule_set_id: ::String
       attr_accessor tags: ::Array[Types::Tag]
       attr_accessor traffic_policy_id: ::String
@@ -540,6 +541,7 @@ module Aws::MailManager
       attr_accessor ingress_point_id: ::String
       attr_accessor ingress_point_name: ::String
       attr_accessor last_updated_timestamp: ::Time
+      attr_accessor network_configuration: Types::NetworkConfiguration
       attr_accessor rule_set_id: ::String
       attr_accessor status: ("PROVISIONING" | "DEPROVISIONING" | "UPDATING" | "ACTIVE" | "CLOSED" | "FAILED")
       attr_accessor traffic_policy_id: ::String
@@ -671,6 +673,24 @@ module Aws::MailManager
       attr_accessor operator: ("CIDR_MATCHES" | "NOT_CIDR_MATCHES")
       attr_accessor values: ::Array[::String]
       SENSITIVE: []
+    end
+
+    class IngressIpv6Expression
+      attr_accessor evaluate: Types::IngressIpv6ToEvaluate
+      attr_accessor operator: ("CIDR_MATCHES" | "NOT_CIDR_MATCHES")
+      attr_accessor values: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class IngressIpv6ToEvaluate
+      attr_accessor attribute: ("SENDER_IPV6")
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Attribute < IngressIpv6ToEvaluate
+      end
+      class Unknown < IngressIpv6ToEvaluate
+      end
     end
 
     class IngressIsInAddressList
@@ -937,12 +957,27 @@ module Aws::MailManager
       SENSITIVE: [:sender_ip_address]
     end
 
+    class NetworkConfiguration
+      attr_accessor private_network_configuration: Types::PrivateNetworkConfiguration
+      attr_accessor public_network_configuration: Types::PublicNetworkConfiguration
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class PrivateNetworkConfiguration < NetworkConfiguration
+      end
+      class PublicNetworkConfiguration < NetworkConfiguration
+      end
+      class Unknown < NetworkConfiguration
+      end
+    end
+
     class NoAuthentication < Aws::EmptyStructure
     end
 
     class PolicyCondition
       attr_accessor boolean_expression: Types::IngressBooleanExpression
       attr_accessor ip_expression: Types::IngressIpv4Expression
+      attr_accessor ipv_6_expression: Types::IngressIpv6Expression
       attr_accessor string_expression: Types::IngressStringExpression
       attr_accessor tls_expression: Types::IngressTlsProtocolExpression
       attr_accessor unknown: untyped
@@ -951,6 +986,8 @@ module Aws::MailManager
       class BooleanExpression < PolicyCondition
       end
       class IpExpression < PolicyCondition
+      end
+      class Ipv6Expression < PolicyCondition
       end
       class StringExpression < PolicyCondition
       end
@@ -963,6 +1000,16 @@ module Aws::MailManager
     class PolicyStatement
       attr_accessor action: ("ALLOW" | "DENY")
       attr_accessor conditions: ::Array[Types::PolicyCondition]
+      SENSITIVE: []
+    end
+
+    class PrivateNetworkConfiguration
+      attr_accessor vpc_endpoint_id: ::String
+      SENSITIVE: []
+    end
+
+    class PublicNetworkConfiguration
+      attr_accessor ip_type: ("IPV4" | "DUAL_STACK")
       SENSITIVE: []
     end
 

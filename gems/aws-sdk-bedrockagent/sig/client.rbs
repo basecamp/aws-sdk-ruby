@@ -762,6 +762,7 @@ module Aws
                                          text_field: ::String,
                                          vector_field: ::String
                                        },
+                                       text_index_name: ::String?,
                                        vector_index_name: ::String
                                      }?,
                                      neptune_analytics_configuration: {
@@ -803,6 +804,7 @@ module Aws
                                        credentials_secret_arn: ::String,
                                        database_name: ::String,
                                        field_mapping: {
+                                         custom_metadata_field: ::String?,
                                          metadata_field: ::String,
                                          primary_key_field: ::String,
                                          text_field: ::String,
@@ -2335,6 +2337,7 @@ module Aws
                                          text_field: ::String,
                                          vector_field: ::String
                                        },
+                                       text_index_name: ::String?,
                                        vector_index_name: ::String
                                      }?,
                                      neptune_analytics_configuration: {
@@ -2376,6 +2379,7 @@ module Aws
                                        credentials_secret_arn: ::String,
                                        database_name: ::String,
                                        field_mapping: {
+                                         custom_metadata_field: ::String?,
                                          metadata_field: ::String,
                                          primary_key_field: ::String,
                                          text_field: ::String,

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.23.0 (2025-04-03)
+------------------
+
+* Feature - Add support for Dual_Stack and PrivateLink types of IngressPoint. For configuration requests, SES Mail Manager will now accept both IPv4/IPv6 dual-stack endpoints and AWS PrivateLink VPC endpoints for email receiving.
+
 1.22.0 (2025-03-20)
 ------------------
 

@@ -289,6 +289,17 @@ module Aws
                                                        name: ::String,
                                                        value: ::String
                                                      },
+                                                   ]?,
+                                                   attachments: Array[
+                                                     {
+                                                       raw_content: ::String,
+                                                       content_disposition: ("ATTACHMENT" | "INLINE")?,
+                                                       file_name: ::String,
+                                                       content_description: ::String?,
+                                                       content_id: ::String?,
+                                                       content_transfer_encoding: ("BASE64" | "QUOTED_PRINTABLE" | "SEVEN_BIT")?,
+                                                       content_type: ::String?
+                                                     },
                                                    ]?
                                                  }?,
                                                  raw: {
@@ -307,6 +318,17 @@ module Aws
                                                      {
                                                        name: ::String,
                                                        value: ::String
+                                                     },
+                                                   ]?,
+                                                   attachments: Array[
+                                                     {
+                                                       raw_content: ::String,
+                                                       content_disposition: ("ATTACHMENT" | "INLINE")?,
+                                                       file_name: ::String,
+                                                       content_description: ::String?,
+                                                       content_id: ::String?,
+                                                       content_transfer_encoding: ("BASE64" | "QUOTED_PRINTABLE" | "SEVEN_BIT")?,
+                                                       content_type: ::String?
                                                      },
                                                    ]?
                                                  }?
@@ -1351,6 +1373,17 @@ module Aws
                                      name: ::String,
                                      value: ::String
                                    },
+                                 ]?,
+                                 attachments: Array[
+                                   {
+                                     raw_content: ::String,
+                                     content_disposition: ("ATTACHMENT" | "INLINE")?,
+                                     file_name: ::String,
+                                     content_description: ::String?,
+                                     content_id: ::String?,
+                                     content_transfer_encoding: ("BASE64" | "QUOTED_PRINTABLE" | "SEVEN_BIT")?,
+                                     content_type: ::String?
+                                   },
                                  ]?
                                }?
                              },
@@ -1434,6 +1467,17 @@ module Aws
                                 name: ::String,
                                 value: ::String
                               },
+                            ]?,
+                            attachments: Array[
+                              {
+                                raw_content: ::String,
+                                content_disposition: ("ATTACHMENT" | "INLINE")?,
+                                file_name: ::String,
+                                content_description: ::String?,
+                                content_id: ::String?,
+                                content_transfer_encoding: ("BASE64" | "QUOTED_PRINTABLE" | "SEVEN_BIT")?,
+                                content_type: ::String?
+                              },
                             ]?
                           }?,
                           raw: {
@@ -1452,6 +1496,17 @@ module Aws
                               {
                                 name: ::String,
                                 value: ::String
+                              },
+                            ]?,
+                            attachments: Array[
+                              {
+                                raw_content: ::String,
+                                content_disposition: ("ATTACHMENT" | "INLINE")?,
+                                file_name: ::String,
+                                content_description: ::String?,
+                                content_id: ::String?,
+                                content_transfer_encoding: ("BASE64" | "QUOTED_PRINTABLE" | "SEVEN_BIT")?,
+                                content_type: ::String?
                               },
                             ]?
                           }?

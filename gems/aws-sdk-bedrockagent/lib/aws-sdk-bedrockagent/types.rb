@@ -7125,6 +7125,11 @@ module Aws::BedrockAgent
     #   the vector store.
     #   @return [Types::MongoDbAtlasFieldMapping]
     #
+    # @!attribute [rw] text_index_name
+    #   The name of the text search index in the MongoDB collection. This is
+    #   required for using the hybrid search feature.
+    #   @return [String]
+    #
     # @!attribute [rw] vector_index_name
     #   The name of the MongoDB Atlas vector search index.
     #   @return [String]
@@ -7138,6 +7143,7 @@ module Aws::BedrockAgent
       :endpoint,
       :endpoint_service_name,
       :field_mapping,
+      :text_index_name,
       :vector_index_name)
       SENSITIVE = []
       include Aws::Structure
@@ -8403,6 +8409,11 @@ module Aws::BedrockAgent
     # Contains the names of the fields to which to map information about the
     # vector store.
     #
+    # @!attribute [rw] custom_metadata_field
+    #   Provide a name for the universal metadata field where Amazon Bedrock
+    #   will store any custom metadata from your data source.
+    #   @return [String]
+    #
     # @!attribute [rw] metadata_field
     #   The name of the field in which Amazon Bedrock stores metadata about
     #   the vector store.
@@ -8427,6 +8438,7 @@ module Aws::BedrockAgent
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/RdsFieldMapping AWS API Documentation
     #
     class RdsFieldMapping < Struct.new(
+      :custom_metadata_field,
       :metadata_field,
       :primary_key_field,
       :text_field,

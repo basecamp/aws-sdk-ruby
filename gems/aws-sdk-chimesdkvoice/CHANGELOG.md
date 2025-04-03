@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.38.0 (2025-04-03)
+------------------
+
+* Feature - Added FOC date as an attribute of PhoneNumberOrder, added AccessDeniedException as a possible return type of ValidateE911Address
+
 1.37.0 (2025-02-18)
 ------------------
 

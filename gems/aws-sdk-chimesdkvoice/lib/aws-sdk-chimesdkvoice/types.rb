@@ -2442,6 +2442,12 @@ module Aws::ChimeSDKVoice
     #   The updated phone number order time stamp, in ISO 8601 format.
     #   @return [Time]
     #
+    # @!attribute [rw] foc_date
+    #   The Firm Order Commitment (FOC) date for phone number porting
+    #   orders. This field is null if a phone number order is not a porting
+    #   order.
+    #   @return [Time]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/PhoneNumberOrder AWS API Documentation
     #
     class PhoneNumberOrder < Struct.new(
@@ -2451,7 +2457,8 @@ module Aws::ChimeSDKVoice
       :order_type,
       :ordered_phone_numbers,
       :created_timestamp,
-      :updated_timestamp)
+      :updated_timestamp,
+      :foc_date)
       SENSITIVE = []
       include Aws::Structure
     end

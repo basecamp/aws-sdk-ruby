@@ -460,15 +460,21 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
-    # Configurations of the OpenSearch Application.
+    # Configuration settings for an OpenSearch application. For more
+    # information, see see [Using the OpenSearch user interface in Amazon
+    # OpenSearch Service][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/application.html
     #
     # @!attribute [rw] key
-    #   Specify the item to configure, such as admin role for the OpenSearch
-    #   Application.
+    #   The configuration item to set, such as the admin role for the
+    #   OpenSearch application.
     #   @return [String]
     #
     # @!attribute [rw] value
-    #   Specifies the value to configure for the key, such as an IAM user
+    #   The value assigned to the configuration key, such as an IAM user
     #   ARN.
     #   @return [String]
     #
@@ -481,10 +487,10 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
-    # Basic information of the OpenSearch Application.
+    # Basic details of an OpenSearch application.
     #
     # @!attribute [rw] id
-    #   Unique identifier for an OpenSearch application.
+    #   The unique identifier of an OpenSearch application.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -498,24 +504,25 @@ module Aws::OpenSearchService
     #   @return [String]
     #
     # @!attribute [rw] name
-    #   Name of an OpenSearch Application.
+    #   The name of an OpenSearch application.
     #   @return [String]
     #
     # @!attribute [rw] endpoint
-    #   Endpoint URL of an OpenSearch Application.
+    #   The endpoint URL of an OpenSearch application.
     #   @return [String]
     #
     # @!attribute [rw] status
-    #   Status of an OpenSearch Application. Possible values are `CREATING`,
-    #   `UPDATING`,` DELETING`, `FAILED`, `ACTIVE`, and `DELETED`.
+    #   The current status of an OpenSearch application. Possible values:
+    #   `CREATING`, `UPDATING`, `DELETING`, `FAILED`, `ACTIVE`, and
+    #   `DELETED`.
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   Timestamp at which an OpenSearch Application was created.
+    #   The timestamp when an OpenSearch application was created.
     #   @return [Time]
     #
     # @!attribute [rw] last_updated_at
-    #   Timestamp at which an OpenSearch Application was last updated.
+    #   The timestamp of the last update to an OpenSearch application.
     #   @return [Time]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/ApplicationSummary AWS API Documentation
@@ -1497,30 +1504,30 @@ module Aws::OpenSearchService
     end
 
     # @!attribute [rw] client_token
-    #   A unique client idempotency token. It will be auto generated if not
-    #   provided.
+    #   Unique, case-sensitive identifier to ensure idempotency of the
+    #   request.
     #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.
     #   @return [String]
     #
     # @!attribute [rw] name
-    #   Name of the OpenSearch Appication to create. Application names are
-    #   unique across the applications owned by an account within an Amazon
-    #   Web Services Region.
+    #   The unique name of the OpenSearch application. Names must be unique
+    #   within an Amazon Web Services Region for each account.
     #   @return [String]
     #
     # @!attribute [rw] data_sources
-    #   Data sources to be associated with the OpenSearch Application.
+    #   The data sources to link to the OpenSearch application.
     #   @return [Array<Types::DataSource>]
     #
     # @!attribute [rw] iam_identity_center_options
-    #   Settings of IAM Identity Center for the OpenSearch Application.
+    #   Configuration settings for integrating Amazon Web Services IAM
+    #   Identity Center with the OpenSearch application.
     #   @return [Types::IamIdentityCenterOptionsInput]
     #
     # @!attribute [rw] app_configs
-    #   Configurations of the OpenSearch Application, inlcuding admin
-    #   configuration.
+    #   Configuration settings for the OpenSearch application, including
+    #   administrative options.
     #   @return [Array<Types::AppConfig>]
     #
     # @!attribute [rw] tag_list
@@ -1541,11 +1548,11 @@ module Aws::OpenSearchService
     end
 
     # @!attribute [rw] id
-    #   Unique identifier for the created OpenSearch Application.
+    #   The unique identifier assigned to the OpenSearch application.
     #   @return [String]
     #
     # @!attribute [rw] name
-    #   Name of the created OpenSearch Application.
+    #   The name of the OpenSearch application.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -1559,17 +1566,17 @@ module Aws::OpenSearchService
     #   @return [String]
     #
     # @!attribute [rw] data_sources
-    #   Data sources associated with the created OpenSearch Application.
+    #   The data sources linked to the OpenSearch application.
     #   @return [Array<Types::DataSource>]
     #
     # @!attribute [rw] iam_identity_center_options
-    #   Settings of IAM Identity Center for the created OpenSearch
-    #   Application.
+    #   The IAM Identity Center settings configured for the OpenSearch
+    #   application.
     #   @return [Types::IamIdentityCenterOptions]
     #
     # @!attribute [rw] app_configs
-    #   Configurations of the OpenSearch Application, inlcuding admin
-    #   configuration.
+    #   Configuration settings for the OpenSearch application, including
+    #   administrative options.
     #   @return [Array<Types::AppConfig>]
     #
     # @!attribute [rw] tag_list
@@ -1577,7 +1584,8 @@ module Aws::OpenSearchService
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] created_at
-    #   Timestamp when the OpenSearch Application was created.
+    #   The timestamp indicating when the OpenSearch application was
+    #   created.
     #   @return [Time]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/CreateApplicationResponse AWS API Documentation
@@ -1716,7 +1724,8 @@ module Aws::OpenSearchService
     #   @return [Types::AdvancedSecurityOptionsInput]
     #
     # @!attribute [rw] identity_center_options
-    #   Options for IAM Identity Center Option control for the domain.
+    #   Configuration options for enabling and managing IAM Identity Center
+    #   integration within a domain.
     #   @return [Types::IdentityCenterOptionsInput]
     #
     # @!attribute [rw] tag_list
@@ -2065,8 +2074,7 @@ module Aws::OpenSearchService
     end
 
     # @!attribute [rw] id
-    #   Unique identifier for the OpenSearch Application that you want to
-    #   delete.
+    #   The unique identifier of the OpenSearch application to delete.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/DeleteApplicationRequest AWS API Documentation
@@ -3233,7 +3241,8 @@ module Aws::OpenSearchService
     #   @return [Types::AdvancedSecurityOptionsStatus]
     #
     # @!attribute [rw] identity_center_options
-    #   Container for IAM Identity Center Option control for the domain.
+    #   Configuration options for enabling and managing IAM Identity Center
+    #   integration within a domain.
     #   @return [Types::IdentityCenterOptionsStatus]
     #
     # @!attribute [rw] auto_tune_options
@@ -3448,7 +3457,7 @@ module Aws::OpenSearchService
     #   @return [String]
     #
     # @!attribute [rw] node_type
-    #   Indicates whether the nodes is a data, master, or ultrawarm node.
+    #   Indicates whether the nodes is a data, master, or UltraWarm node.
     #   @return [String]
     #
     # @!attribute [rw] availability_zone
@@ -3468,8 +3477,8 @@ module Aws::OpenSearchService
     #   @return [String]
     #
     # @!attribute [rw] storage_volume_type
-    #   If the nodes has EBS storage, indicates if the volume type is GP2 or
-    #   GP3. Only applicable for data nodes.
+    #   If the nodes has EBS storage, indicates if the volume type is gp2 or
+    #   gp3. Only applicable for data nodes.
     #   @return [String]
     #
     # @!attribute [rw] storage_size
@@ -3703,7 +3712,8 @@ module Aws::OpenSearchService
     #   @return [Types::AdvancedSecurityOptions]
     #
     # @!attribute [rw] identity_center_options
-    #   Container for IAM Identity Center Option control for the domain.
+    #   Configuration options for controlling IAM Identity Center
+    #   integration within a domain.
     #   @return [Types::IdentityCenterOptions]
     #
     # @!attribute [rw] auto_tune_options
@@ -4028,7 +4038,7 @@ module Aws::OpenSearchService
     end
 
     # @!attribute [rw] id
-    #   Unique identifier of the checked OpenSearch Application.
+    #   The unique identifier of the OpenSearch application to retrieve.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/GetApplicationRequest AWS API Documentation
@@ -4040,7 +4050,7 @@ module Aws::OpenSearchService
     end
 
     # @!attribute [rw] id
-    #   Unique identifier of the checked OpenSearch Application.
+    #   The unique identifier of the OpenSearch application.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -4054,38 +4064,38 @@ module Aws::OpenSearchService
     #   @return [String]
     #
     # @!attribute [rw] name
-    #   Name of the checked OpenSearch Application.
+    #   The name of the OpenSearch application.
     #   @return [String]
     #
     # @!attribute [rw] endpoint
-    #   Endpoint URL of the checked OpenSearch Application.
+    #   The endpoint URL of the OpenSearch application.
     #   @return [String]
     #
     # @!attribute [rw] status
-    #   Current status of the checked OpenSearch Application. Possible
-    #   values are `CREATING`, `UPDATING`, `DELETING`, `FAILED`, `ACTIVE`,
-    #   and `DELETED`.
+    #   The current status of the OpenSearch application. Possible values:
+    #   `CREATING`, `UPDATING`, `DELETING`, `FAILED`, `ACTIVE`, and
+    #   `DELETED`.
     #   @return [String]
     #
     # @!attribute [rw] iam_identity_center_options
-    #   IAM Identity Center settings for the checked OpenSearch Application.
+    #   The IAM Identity Center settings configured for the OpenSearch
+    #   application.
     #   @return [Types::IamIdentityCenterOptions]
     #
     # @!attribute [rw] data_sources
-    #   Associated data sources to the checked OpenSearch Application.
+    #   The data sources associated with the OpenSearch application.
     #   @return [Array<Types::DataSource>]
     #
     # @!attribute [rw] app_configs
-    #   App configurations of the checked OpenSearch Application.
+    #   The configuration settings of the OpenSearch application.
     #   @return [Array<Types::AppConfig>]
     #
     # @!attribute [rw] created_at
-    #   Timestamp at which the checked OpenSearch Application was created.
+    #   The timestamp when the OpenSearch application was created.
     #   @return [Time]
     #
     # @!attribute [rw] last_updated_at
-    #   Timestamp at which the checked OpenSearch Application was last
-    #   updated.
+    #   The timestamp of the last update to the OpenSearch application.
     #   @return [Time]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/GetApplicationResponse AWS API Documentation
@@ -4466,10 +4476,12 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
-    # Settings for IAM Identity Center for an OpenSearch Application.
+    # Configuration settings for IAM Identity Center in an OpenSearch
+    # Application.
     #
     # @!attribute [rw] enabled
-    #   IAM Identity Center is enabled for the OpenSearch Application.
+    #   Indicates whether IAM Identity Center is enabled for the OpenSearch
+    #   Application.
     #   @return [Boolean]
     #
     # @!attribute [rw] iam_identity_center_instance_arn
@@ -4483,9 +4495,8 @@ module Aws::OpenSearchService
     #   @return [String]
     #
     # @!attribute [rw] iam_role_for_identity_center_application_arn
-    #   Amazon Resource Name of the IAM Identity Center's Application
-    #   created for the OpenSearch Application after enabling IAM Identity
-    #   Center.
+    #   The Amazon Resource Name (ARN) of the IAM role assigned to the IAM
+    #   Identity Center application for the OpenSearch Application.
     #   @return [String]
     #
     # @!attribute [rw] iam_identity_center_application_arn
@@ -4509,10 +4520,10 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
-    # Settings for IAM Identity Center.
+    # Configuration settings for enabling and managing IAM Identity Center.
     #
     # @!attribute [rw] enabled
-    #   Enable/disable settings for IAM Identity Center.
+    #   Specifies whether IAM Identity Center is enabled or disabled.
     #   @return [Boolean]
     #
     # @!attribute [rw] iam_identity_center_instance_arn
@@ -4526,7 +4537,8 @@ module Aws::OpenSearchService
     #   @return [String]
     #
     # @!attribute [rw] iam_role_for_identity_center_application_arn
-    #   Amazon Resource Name of IAM Identity Center's application.
+    #   The ARN of the IAM role associated with the IAM Identity Center
+    #   application.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/IamIdentityCenterOptionsInput AWS API Documentation
@@ -4539,34 +4551,38 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
-    # Container for IAM Identity Center Options settings.
+    # Settings container for integrating IAM Identity Center with OpenSearch
+    # UI applications, which enables enabling secure user authentication and
+    # access control across multiple data sources. This setup supports
+    # single sign-on (SSO) through IAM Identity Center, allowing centralized
+    # user management.
     #
     # @!attribute [rw] enabled_api_access
-    #   True to enable IAM Identity Center for API access in Amazon
-    #   OpenSearch Service.
+    #   Indicates whether IAM Identity Center is enabled for the
+    #   application.
     #   @return [Boolean]
     #
     # @!attribute [rw] identity_center_instance_arn
-    #   The ARN for IAM Identity Center Instance.
+    #   The Amazon Resource Name (ARN) of the IAM Identity Center instance.
     #   @return [String]
     #
     # @!attribute [rw] subject_key
-    #   Specify the attribute that contains the subject (username, userID,
-    #   email) of IAM Identity Center.
+    #   Specifies the attribute that contains the subject identifier (such
+    #   as username, user ID, or email) in IAM Identity Center.
     #   @return [String]
     #
     # @!attribute [rw] roles_key
-    #   Specify the attribute that contains the backend role (groupName,
-    #   groupID) of IAM Identity Center
+    #   Specifies the attribute that contains the backend role identifier
+    #   (such as group name or group ID) in IAM Identity Center.
     #   @return [String]
     #
     # @!attribute [rw] identity_center_application_arn
-    #   The ARN for IAM Identity Center Application which will integrate
-    #   with Amazon OpenSearch Service.
+    #   The ARN of the IAM Identity Center application that integrates with
+    #   Amazon OpenSearch Service.
     #   @return [String]
     #
     # @!attribute [rw] identity_store_id
-    #   The ID of IAM Identity Store.
+    #   The identifier of the IAM Identity Store.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/IdentityCenterOptions AWS API Documentation
@@ -4582,26 +4598,27 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
-    # Container for IAM Identity Center Options settings.
+    # Configuration settings for enabling and managing IAM Identity Center.
     #
     # @!attribute [rw] enabled_api_access
-    #   True to enable IAM Identity Center for API access in Amazon
-    #   OpenSearch Service.
+    #   Indicates whether IAM Identity Center is enabled for API access in
+    #   Amazon OpenSearch Service.
     #   @return [Boolean]
     #
     # @!attribute [rw] identity_center_instance_arn
-    #   The ARN for IAM Identity Center Instance which will be used for IAM
-    #   Identity Center Application creation.
+    #   The ARN of the IAM Identity Center instance used to create an
+    #   OpenSearch UI application that uses IAM Identity Center for
+    #   authentication.
     #   @return [String]
     #
     # @!attribute [rw] subject_key
-    #   Specify the attribute that contains the subject (username, userID,
-    #   email) of IAM Identity Center.
+    #   Specifies the attribute that contains the subject identifier (such
+    #   as username, user ID, or email) in IAM Identity Center.
     #   @return [String]
     #
     # @!attribute [rw] roles_key
-    #   Specify the attribute that contains the backend role (groupName,
-    #   groupID) of IAM Identity Center
+    #   Specifies the attribute that contains the backend role identifier
+    #   (such as group name or group ID) in IAM Identity Center.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/IdentityCenterOptionsInput AWS API Documentation
@@ -4615,14 +4632,15 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
-    # The status of IAM Identity Center Options settings for a domain.
+    # The status of IAM Identity Center configuration settings for a domain.
     #
     # @!attribute [rw] options
-    #   Container for IAM Identity Center Options settings.
+    #   Configuration settings for IAM Identity Center integration.
     #   @return [Types::IdentityCenterOptions]
     #
     # @!attribute [rw] status
-    #   The status of IAM Identity Center Options settings for a domain.
+    #   The status of IAM Identity Center configuration settings for a
+    #   domain.
     #   @return [Types::OptionStatus]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/IdentityCenterOptionsStatus AWS API Documentation
@@ -4944,9 +4962,9 @@ module Aws::OpenSearchService
     #   @return [String]
     #
     # @!attribute [rw] statuses
-    #   OpenSearch Application Status can be used as filters for the listing
-    #   request. Possible values are `CREATING`, `UPDATING`, `DELETING`,
-    #   `FAILED`, `ACTIVE`, and `DELETED`.
+    #   Filters the list of OpenSearch applications by status. Possible
+    #   values: `CREATING`, `UPDATING`, `DELETING`, `FAILED`, `ACTIVE`, and
+    #   `DELETED`.
     #   @return [Array<String>]
     #
     # @!attribute [rw] max_results
@@ -4965,8 +4983,8 @@ module Aws::OpenSearchService
     end
 
     # @!attribute [rw] application_summaries
-    #   Summary of the OpenSearch Applications, including ID, ARN, name,
-    #   endpoint, status, create time and last update time.
+    #   Summarizes OpenSearch applications, including ID, ARN, name,
+    #   endpoint, status, creation time, and last update time.
     #   @return [Array<Types::ApplicationSummary>]
     #
     # @!attribute [rw] next_token
@@ -5710,19 +5728,20 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
-    # Container for specifying configuration of any node type.
+    # Configuration options for defining the setup of any node type within
+    # the cluster.
     #
     # @!attribute [rw] enabled
-    #   A boolean that indicates whether a particular node type is enabled
-    #   or not.
+    #   A boolean value indicating whether a specific node type is active or
+    #   inactive.
     #   @return [Boolean]
     #
     # @!attribute [rw] type
-    #   The instance type of a particular node type in the cluster.
+    #   The instance type of a particular node within the cluster.
     #   @return [String]
     #
     # @!attribute [rw] count
-    #   The number of nodes of a particular node type in the cluster.
+    #   The number of nodes of a specific type within the cluster.
     #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/NodeConfig AWS API Documentation
@@ -5735,14 +5754,14 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
-    # Container for specifying node type.
+    # Configuration settings for defining the node type within a cluster.
     #
     # @!attribute [rw] node_type
-    #   Container for node type like coordinating.
+    #   Defines the type of node, such as coordinating nodes.
     #   @return [String]
     #
     # @!attribute [rw] node_config
-    #   Container for specifying configuration of any node type.
+    #   Configuration options for defining the setup of any node type.
     #   @return [Types::NodeConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/NodeOption AWS API Documentation
@@ -6112,8 +6131,8 @@ module Aws::OpenSearchService
     #   @return [Array<String>]
     #
     # @!attribute [rw] package_owner
-    #   The owner of the package who is allowed to create/update a package
-    #   and add users to the package scope.
+    #   The owner of the package who is allowed to create and update a
+    #   package and add users to the package scope.
     #   @return [String]
     #
     # @!attribute [rw] package_vending_options
@@ -6121,7 +6140,7 @@ module Aws::OpenSearchService
     #   @return [Types::PackageVendingOptions]
     #
     # @!attribute [rw] package_encryption_options
-    #   Package Encryption Options for a package.
+    #   Encryption options for a package.
     #   @return [Types::PackageEncryptionOptions]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/PackageDetails AWS API Documentation
@@ -6154,8 +6173,8 @@ module Aws::OpenSearchService
     #   @return [String]
     #
     # @!attribute [rw] prerequisite_package_id_list
-    #   List of package IDs that must be associated with the domain with or
-    #   before the package can be associated.
+    #   List of package IDs that must be linked to the domain before or
+    #   simultaneously with the package association.
     #   @return [Array<String>]
     #
     # @!attribute [rw] association_configuration
@@ -6180,7 +6199,7 @@ module Aws::OpenSearchService
     #   @return [String]
     #
     # @!attribute [rw] encryption_enabled
-    #   This indicates whether encryption is enabled for the package.
+    #   Whether encryption is enabled for the package.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/PackageEncryptionOptions AWS API Documentation
@@ -6211,12 +6230,12 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
-    # The vending options for a package to determine if the package can be
-    # used by other users.
+    # Configuration options for determining whether a package can be made
+    # available for use by other users.
     #
     # @!attribute [rw] vending_enabled
-    #   This indicates whether vending is enabled for the package to
-    #   determine if package can be used by other users.
+    #   Indicates whether the package vending feature is enabled, allowing
+    #   the package to be used by other users.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/PackageVendingOptions AWS API Documentation
@@ -7157,15 +7176,15 @@ module Aws::OpenSearchService
     end
 
     # @!attribute [rw] id
-    #   Unique identifier of the OpenSearch Application to be updated.
+    #   The unique identifier for the OpenSearch application to be updated.
     #   @return [String]
     #
     # @!attribute [rw] data_sources
-    #   Data sources to be associated with the OpenSearch Application.
+    #   The data sources to associate with the OpenSearch application.
     #   @return [Array<Types::DataSource>]
     #
     # @!attribute [rw] app_configs
-    #   Configurations to be changed for the OpenSearch Application.
+    #   The configuration settings to modify for the OpenSearch application.
     #   @return [Array<Types::AppConfig>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/UpdateApplicationRequest AWS API Documentation
@@ -7179,11 +7198,11 @@ module Aws::OpenSearchService
     end
 
     # @!attribute [rw] id
-    #   Unique identifier of the updated OpenSearch Application.
+    #   The unique identifier of the updated OpenSearch application.
     #   @return [String]
     #
     # @!attribute [rw] name
-    #   Name of the updated OpenSearch Application.
+    #   The name of the updated OpenSearch application.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -7197,23 +7216,25 @@ module Aws::OpenSearchService
     #   @return [String]
     #
     # @!attribute [rw] data_sources
-    #   Data sources associated with the updated OpenSearch Application.
+    #   The data sources associated with the updated OpenSearch application.
     #   @return [Array<Types::DataSource>]
     #
     # @!attribute [rw] iam_identity_center_options
-    #   IAM Identity Center settings for the updated OpenSearch Application.
+    #   The IAM Identity Center configuration for the updated OpenSearch
+    #   application.
     #   @return [Types::IamIdentityCenterOptions]
     #
     # @!attribute [rw] app_configs
-    #   Configurations for the updated OpenSearch Application.
+    #   The configuration settings for the updated OpenSearch application.
     #   @return [Array<Types::AppConfig>]
     #
     # @!attribute [rw] created_at
-    #   Timestamp at which the OpenSearch Application was created.
+    #   The timestamp when the OpenSearch application was originally
+    #   created.
     #   @return [Time]
     #
     # @!attribute [rw] last_updated_at
-    #   Timestamp at which the OpenSearch Application was last updated.
+    #   The timestamp when the OpenSearch application was last updated.
     #   @return [Time]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/UpdateApplicationResponse AWS API Documentation
@@ -7421,7 +7442,8 @@ module Aws::OpenSearchService
     #   @return [Types::AdvancedSecurityOptionsInput]
     #
     # @!attribute [rw] identity_center_options
-    #   Container for IAM Identity Center Options settings.
+    #   Configuration settings for enabling and managing IAM Identity
+    #   Center.
     #   @return [Types::IdentityCenterOptionsInput]
     #
     # @!attribute [rw] auto_tune_options

@@ -657,6 +657,13 @@ module Aws::MailManager
     #   A user friendly name for an ingress endpoint resource.
     #   @return [String]
     #
+    # @!attribute [rw] network_configuration
+    #   Specifies the network configuration for the ingress point. This
+    #   allows you to create an IPv4-only, Dual-Stack, or PrivateLink type
+    #   of ingress point. If not specified, the default network type is
+    #   IPv4-only.
+    #   @return [Types::NetworkConfiguration]
+    #
     # @!attribute [rw] rule_set_id
     #   The identifier of an existing rule set that you attach to an ingress
     #   endpoint resource.
@@ -683,6 +690,7 @@ module Aws::MailManager
       :client_token,
       :ingress_point_configuration,
       :ingress_point_name,
+      :network_configuration,
       :rule_set_id,
       :tags,
       :traffic_policy_id,
@@ -1717,6 +1725,10 @@ module Aws::MailManager
     #   The timestamp of when the ingress endpoint was last updated.
     #   @return [Time]
     #
+    # @!attribute [rw] network_configuration
+    #   The network configuration for the ingress point.
+    #   @return [Types::NetworkConfiguration]
+    #
     # @!attribute [rw] rule_set_id
     #   The identifier of a rule set resource associated with the ingress
     #   endpoint.
@@ -1745,6 +1757,7 @@ module Aws::MailManager
       :ingress_point_id,
       :ingress_point_name,
       :last_updated_timestamp,
+      :network_configuration,
       :rule_set_id,
       :status,
       :traffic_policy_id,
@@ -2164,6 +2177,56 @@ module Aws::MailManager
       :values)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # The union type representing the allowed types for the left hand side
+    # of an IPv6 condition.
+    #
+    # @!attribute [rw] evaluate
+    #   The left hand side argument of an IPv6 condition expression.
+    #   @return [Types::IngressIpv6ToEvaluate]
+    #
+    # @!attribute [rw] operator
+    #   The matching operator for an IPv6 condition expression.
+    #   @return [String]
+    #
+    # @!attribute [rw] values
+    #   The right hand side argument of an IPv6 condition expression.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mailmanager-2023-10-17/IngressIpv6Expression AWS API Documentation
+    #
+    class IngressIpv6Expression < Struct.new(
+      :evaluate,
+      :operator,
+      :values)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The structure for an IPv6 based condition matching on the incoming
+    # mail.
+    #
+    # @note IngressIpv6ToEvaluate is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note IngressIpv6ToEvaluate is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of IngressIpv6ToEvaluate corresponding to the set member.
+    #
+    # @!attribute [rw] attribute
+    #   An enum type representing the allowed attribute types for an IPv6
+    #   condition.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mailmanager-2023-10-17/IngressIpv6ToEvaluate AWS API Documentation
+    #
+    class IngressIpv6ToEvaluate < Struct.new(
+      :attribute,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Attribute < IngressIpv6ToEvaluate; end
+      class Unknown < IngressIpv6ToEvaluate; end
     end
 
     # The address lists and the address list attribute value that is
@@ -3041,6 +3104,36 @@ module Aws::MailManager
       include Aws::Structure
     end
 
+    # The network type (IPv4-only, Dual-Stack, PrivateLink) of the ingress
+    # endpoint resource.
+    #
+    # @note NetworkConfiguration is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note NetworkConfiguration is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of NetworkConfiguration corresponding to the set member.
+    #
+    # @!attribute [rw] private_network_configuration
+    #   Specifies the network configuration for the private ingress point.
+    #   @return [Types::PrivateNetworkConfiguration]
+    #
+    # @!attribute [rw] public_network_configuration
+    #   Specifies the network configuration for the public ingress point.
+    #   @return [Types::PublicNetworkConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mailmanager-2023-10-17/NetworkConfiguration AWS API Documentation
+    #
+    class NetworkConfiguration < Struct.new(
+      :private_network_configuration,
+      :public_network_configuration,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class PrivateNetworkConfiguration < NetworkConfiguration; end
+      class PublicNetworkConfiguration < NetworkConfiguration; end
+      class Unknown < NetworkConfiguration; end
+    end
+
     # Explicitly indicate that the relay destination server does not require
     # SMTP credential authentication.
     #
@@ -3069,6 +3162,12 @@ module Aws::MailManager
     #   the 'Protocol' object against the 'Value'.
     #   @return [Types::IngressIpv4Expression]
     #
+    # @!attribute [rw] ipv_6_expression
+    #   This represents an IPv6 based condition matching on the incoming
+    #   mail. It performs the operation configured in 'Operator' and
+    #   evaluates the 'Protocol' object against the 'Value'.
+    #   @return [Types::IngressIpv6Expression]
+    #
     # @!attribute [rw] string_expression
     #   This represents a string based condition matching on the incoming
     #   mail. It performs the string operation configured in 'Operator'
@@ -3086,6 +3185,7 @@ module Aws::MailManager
     class PolicyCondition < Struct.new(
       :boolean_expression,
       :ip_expression,
+      :ipv_6_expression,
       :string_expression,
       :tls_expression,
       :unknown)
@@ -3095,6 +3195,7 @@ module Aws::MailManager
 
       class BooleanExpression < PolicyCondition; end
       class IpExpression < PolicyCondition; end
+      class Ipv6Expression < PolicyCondition; end
       class StringExpression < PolicyCondition; end
       class TlsExpression < PolicyCondition; end
       class Unknown < PolicyCondition; end
@@ -3117,6 +3218,36 @@ module Aws::MailManager
     class PolicyStatement < Struct.new(
       :action,
       :conditions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies the network configuration for the private ingress point.
+    #
+    # @!attribute [rw] vpc_endpoint_id
+    #   The identifier of the VPC endpoint to associate with this private
+    #   ingress point.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mailmanager-2023-10-17/PrivateNetworkConfiguration AWS API Documentation
+    #
+    class PrivateNetworkConfiguration < Struct.new(
+      :vpc_endpoint_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies the network configuration for the public ingress point.
+    #
+    # @!attribute [rw] ip_type
+    #   The IP address type for the public ingress point. Valid values are
+    #   IPV4 and DUAL\_STACK.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mailmanager-2023-10-17/PublicNetworkConfiguration AWS API Documentation
+    #
+    class PublicNetworkConfiguration < Struct.new(
+      :ip_type)
       SENSITIVE = []
       include Aws::Structure
     end

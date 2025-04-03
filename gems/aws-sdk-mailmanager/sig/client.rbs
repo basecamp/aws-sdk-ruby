@@ -178,6 +178,14 @@ module Aws
                                     smtp_password: ::String?
                                   },
                                   ingress_point_name: ::String,
+                                  ?network_configuration: {
+                                    private_network_configuration: {
+                                      vpc_endpoint_id: ::String
+                                    }?,
+                                    public_network_configuration: {
+                                      ip_type: ("IPV4" | "DUAL_STACK")
+                                    }?
+                                  },
                                   rule_set_id: ::String,
                                   ?tags: Array[
                                     {
@@ -428,6 +436,13 @@ module Aws
                                            ip_expression: {
                                              evaluate: {
                                                attribute: ("SENDER_IP")?
+                                             },
+                                             operator: ("CIDR_MATCHES" | "NOT_CIDR_MATCHES"),
+                                             values: Array[::String]
+                                           }?,
+                                           ipv_6_expression: {
+                                             evaluate: {
+                                               attribute: ("SENDER_IPV6")?
                                              },
                                              operator: ("CIDR_MATCHES" | "NOT_CIDR_MATCHES"),
                                              values: Array[::String]
@@ -694,6 +709,7 @@ module Aws
         def ingress_point_id: () -> ::String
         def ingress_point_name: () -> ::String
         def last_updated_timestamp: () -> ::Time
+        def network_configuration: () -> Types::NetworkConfiguration
         def rule_set_id: () -> ::String
         def status: () -> ("PROVISIONING" | "DEPROVISIONING" | "UPDATING" | "ACTIVE" | "CLOSED" | "FAILED")
         def traffic_policy_id: () -> ::String
@@ -1354,6 +1370,13 @@ module Aws
                                            ip_expression: {
                                              evaluate: {
                                                attribute: ("SENDER_IP")?
+                                             },
+                                             operator: ("CIDR_MATCHES" | "NOT_CIDR_MATCHES"),
+                                             values: Array[::String]
+                                           }?,
+                                           ipv_6_expression: {
+                                             evaluate: {
+                                               attribute: ("SENDER_IPV6")?
                                              },
                                              operator: ("CIDR_MATCHES" | "NOT_CIDR_MATCHES"),
                                              values: Array[::String]

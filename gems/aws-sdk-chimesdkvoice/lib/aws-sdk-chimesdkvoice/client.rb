@@ -673,6 +673,7 @@ module Aws::ChimeSDKVoice
     #   resp.phone_number_order.ordered_phone_numbers[0].status #=> String, one of "Processing", "Acquired", "Failed"
     #   resp.phone_number_order.created_timestamp #=> Time
     #   resp.phone_number_order.updated_timestamp #=> Time
+    #   resp.phone_number_order.foc_date #=> Time
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/CreatePhoneNumberOrder AWS API Documentation
     #
@@ -1753,6 +1754,7 @@ module Aws::ChimeSDKVoice
     #   resp.phone_number_order.ordered_phone_numbers[0].status #=> String, one of "Processing", "Acquired", "Failed"
     #   resp.phone_number_order.created_timestamp #=> Time
     #   resp.phone_number_order.updated_timestamp #=> Time
+    #   resp.phone_number_order.foc_date #=> Time
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/GetPhoneNumberOrder AWS API Documentation
     #
@@ -2526,6 +2528,7 @@ module Aws::ChimeSDKVoice
     #   resp.phone_number_orders[0].ordered_phone_numbers[0].status #=> String, one of "Processing", "Acquired", "Failed"
     #   resp.phone_number_orders[0].created_timestamp #=> Time
     #   resp.phone_number_orders[0].updated_timestamp #=> Time
+    #   resp.phone_number_orders[0].foc_date #=> Time
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/ListPhoneNumberOrders AWS API Documentation
@@ -4432,7 +4435,7 @@ module Aws::ChimeSDKVoice
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-chimesdkvoice'
-      context[:gem_version] = '1.37.0'
+      context[:gem_version] = '1.38.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

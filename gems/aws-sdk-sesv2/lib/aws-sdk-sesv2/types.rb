@@ -87,6 +87,67 @@ module Aws::SESV2
       include Aws::Structure
     end
 
+    # Contains metadata and attachment raw content.
+    #
+    # @!attribute [rw] raw_content
+    #   The raw data of the attachment. It needs to be base64-encoded if you
+    #   are accessing Amazon SES directly through the HTTPS interface. If
+    #   you are accessing Amazon SES using an Amazon Web Services SDK, the
+    #   SDK takes care of the base 64-encoding for you.
+    #   @return [String]
+    #
+    # @!attribute [rw] content_disposition
+    #   A standard descriptor indicating how the attachment should be
+    #   rendered in the email. Supported values: `ATTACHMENT` or `INLINE`.
+    #   @return [String]
+    #
+    # @!attribute [rw] file_name
+    #   The file name for the attachment as it will appear in the email.
+    #   Amazon SES restricts certain file extensions. To ensure attachments
+    #   are accepted, check the [Unsupported attachment types][1] in the
+    #   Amazon SES Developer Guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ses/latest/dg/mime-types.html
+    #   @return [String]
+    #
+    # @!attribute [rw] content_description
+    #   A brief description of the attachment content.
+    #   @return [String]
+    #
+    # @!attribute [rw] content_id
+    #   Unique identifier for the attachment, used for referencing
+    #   attachments with INLINE disposition in HTML content.
+    #   @return [String]
+    #
+    # @!attribute [rw] content_transfer_encoding
+    #   Specifies how the attachment is encoded. Supported values: `BASE64`,
+    #   `QUOTED_PRINTABLE`, `SEVEN_BIT`.
+    #   @return [String]
+    #
+    # @!attribute [rw] content_type
+    #   The MIME type of the attachment.
+    #
+    #   <note markdown="1"> Example: `application/pdf`, `image/jpeg`
+    #
+    #    </note>
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/Attachment AWS API Documentation
+    #
+    class Attachment < Struct.new(
+      :raw_content,
+      :content_disposition,
+      :file_name,
+      :content_description,
+      :content_id,
+      :content_transfer_encoding,
+      :content_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The input you provided is invalid.
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/BadRequestException AWS API Documentation
@@ -2421,15 +2482,16 @@ module Aws::SESV2
     end
 
     # An object that defines the entire content of the email, including the
-    # message headers and the body content. You can create a simple email
-    # message, in which you specify the subject and the text and HTML
-    # versions of the message body. You can also create raw messages, in
-    # which you specify a complete MIME-formatted message. Raw messages can
-    # include attachments and custom headers.
+    # message headers, body content, and attachments. For a simple email
+    # message, you specify the subject and provide both text and HTML
+    # versions of the message body. You can also add attachments to simple
+    # and templated messages. For a raw message, you provide a complete
+    # MIME-formatted message, which can include custom headers and
+    # attachments.
     #
     # @!attribute [rw] simple
-    #   The simple email message. The message consists of a subject and a
-    #   message body.
+    #   The simple email message. The message consists of a subject, message
+    #   body and attachments list.
     #   @return [Types::Message]
     #
     # @!attribute [rw] raw
@@ -5404,12 +5466,18 @@ module Aws::SESV2
     #   The list of message headers that will be added to the email message.
     #   @return [Array<Types::MessageHeader>]
     #
+    # @!attribute [rw] attachments
+    #   The List of attachments to include in your email. All recipients
+    #   will receive the same attachments.
+    #   @return [Array<Types::Attachment>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/Message AWS API Documentation
     #
     class Message < Struct.new(
       :subject,
       :body,
-      :headers)
+      :headers,
+      :attachments)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7520,6 +7588,11 @@ module Aws::SESV2
     #   The list of message headers that will be added to the email message.
     #   @return [Array<Types::MessageHeader>]
     #
+    # @!attribute [rw] attachments
+    #   The List of attachments to include in your email. All recipients
+    #   will receive the same attachments.
+    #   @return [Array<Types::Attachment>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/Template AWS API Documentation
     #
     class Template < Struct.new(
@@ -7527,7 +7600,8 @@ module Aws::SESV2
       :template_arn,
       :template_content,
       :template_data,
-      :headers)
+      :headers,
+      :attachments)
       SENSITIVE = []
       include Aws::Structure
     end

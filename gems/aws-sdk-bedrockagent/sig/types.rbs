@@ -1807,6 +1807,7 @@ module Aws::BedrockAgent
       attr_accessor endpoint: ::String
       attr_accessor endpoint_service_name: ::String
       attr_accessor field_mapping: Types::MongoDbAtlasFieldMapping
+      attr_accessor text_index_name: ::String
       attr_accessor vector_index_name: ::String
       SENSITIVE: []
     end
@@ -2120,6 +2121,7 @@ module Aws::BedrockAgent
     end
 
     class RdsFieldMapping
+      attr_accessor custom_metadata_field: ::String
       attr_accessor metadata_field: ::String
       attr_accessor primary_key_field: ::String
       attr_accessor text_field: ::String

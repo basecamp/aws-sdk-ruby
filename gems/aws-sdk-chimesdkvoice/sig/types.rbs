@@ -822,6 +822,7 @@ module Aws::ChimeSDKVoice
       attr_accessor ordered_phone_numbers: ::Array[Types::OrderedPhoneNumber]
       attr_accessor created_timestamp: ::Time
       attr_accessor updated_timestamp: ::Time
+      attr_accessor foc_date: ::Time
       SENSITIVE: []
     end
 

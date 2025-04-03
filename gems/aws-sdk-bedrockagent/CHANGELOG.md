@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.53.0 (2025-04-03)
+------------------
+
+* Feature - Added optional "customMetadataField" for Amazon Aurora knowledge bases, allowing single-column metadata. Also added optional "textIndexName" for MongoDB Atlas knowledge bases, enabling hybrid search support.
+
 1.52.0 (2025-03-25)
 ------------------
 

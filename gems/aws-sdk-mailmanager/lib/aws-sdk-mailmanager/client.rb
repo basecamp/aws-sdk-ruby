@@ -747,6 +747,11 @@ module Aws::MailManager
     # @option params [required, String] :ingress_point_name
     #   A user friendly name for an ingress endpoint resource.
     #
+    # @option params [Types::NetworkConfiguration] :network_configuration
+    #   Specifies the network configuration for the ingress point. This allows
+    #   you to create an IPv4-only, Dual-Stack, or PrivateLink type of ingress
+    #   point. If not specified, the default network type is IPv4-only.
+    #
     # @option params [required, String] :rule_set_id
     #   The identifier of an existing rule set that you attach to an ingress
     #   endpoint resource.
@@ -776,6 +781,14 @@ module Aws::MailManager
     #       smtp_password: "SmtpPassword",
     #     },
     #     ingress_point_name: "IngressPointName", # required
+    #     network_configuration: {
+    #       private_network_configuration: {
+    #         vpc_endpoint_id: "VpcEndpointId", # required
+    #       },
+    #       public_network_configuration: {
+    #         ip_type: "IPV4", # required, accepts IPV4, DUAL_STACK
+    #       },
+    #     },
     #     rule_set_id: "RuleSetId", # required
     #     tags: [
     #       {
@@ -1145,6 +1158,13 @@ module Aws::MailManager
     #               },
     #               operator: "CIDR_MATCHES", # required, accepts CIDR_MATCHES, NOT_CIDR_MATCHES
     #               values: ["Ipv4Cidr"], # required
+    #             },
+    #             ipv_6_expression: {
+    #               evaluate: { # required
+    #                 attribute: "SENDER_IPV6", # accepts SENDER_IPV6
+    #               },
+    #               operator: "CIDR_MATCHES", # required, accepts CIDR_MATCHES, NOT_CIDR_MATCHES
+    #               values: ["Ipv6Cidr"], # required
     #             },
     #             string_expression: {
     #               evaluate: { # required
@@ -1849,6 +1869,7 @@ module Aws::MailManager
     #   * {Types::GetIngressPointResponse#ingress_point_id #ingress_point_id} => String
     #   * {Types::GetIngressPointResponse#ingress_point_name #ingress_point_name} => String
     #   * {Types::GetIngressPointResponse#last_updated_timestamp #last_updated_timestamp} => Time
+    #   * {Types::GetIngressPointResponse#network_configuration #network_configuration} => Types::NetworkConfiguration
     #   * {Types::GetIngressPointResponse#rule_set_id #rule_set_id} => String
     #   * {Types::GetIngressPointResponse#status #status} => String
     #   * {Types::GetIngressPointResponse#traffic_policy_id #traffic_policy_id} => String
@@ -1872,6 +1893,8 @@ module Aws::MailManager
     #   resp.ingress_point_id #=> String
     #   resp.ingress_point_name #=> String
     #   resp.last_updated_timestamp #=> Time
+    #   resp.network_configuration.private_network_configuration.vpc_endpoint_id #=> String
+    #   resp.network_configuration.public_network_configuration.ip_type #=> String, one of "IPV4", "DUAL_STACK"
     #   resp.rule_set_id #=> String
     #   resp.status #=> String, one of "PROVISIONING", "DEPROVISIONING", "UPDATING", "ACTIVE", "CLOSED", "FAILED"
     #   resp.traffic_policy_id #=> String
@@ -2129,6 +2152,10 @@ module Aws::MailManager
     #   resp.policy_statements[0].conditions[0].ip_expression.operator #=> String, one of "CIDR_MATCHES", "NOT_CIDR_MATCHES"
     #   resp.policy_statements[0].conditions[0].ip_expression.values #=> Array
     #   resp.policy_statements[0].conditions[0].ip_expression.values[0] #=> String
+    #   resp.policy_statements[0].conditions[0].ipv_6_expression.evaluate.attribute #=> String, one of "SENDER_IPV6"
+    #   resp.policy_statements[0].conditions[0].ipv_6_expression.operator #=> String, one of "CIDR_MATCHES", "NOT_CIDR_MATCHES"
+    #   resp.policy_statements[0].conditions[0].ipv_6_expression.values #=> Array
+    #   resp.policy_statements[0].conditions[0].ipv_6_expression.values[0] #=> String
     #   resp.policy_statements[0].conditions[0].string_expression.evaluate.analysis.analyzer #=> String
     #   resp.policy_statements[0].conditions[0].string_expression.evaluate.analysis.result_field #=> String
     #   resp.policy_statements[0].conditions[0].string_expression.evaluate.attribute #=> String, one of "RECIPIENT"
@@ -3444,6 +3471,13 @@ module Aws::MailManager
     #               operator: "CIDR_MATCHES", # required, accepts CIDR_MATCHES, NOT_CIDR_MATCHES
     #               values: ["Ipv4Cidr"], # required
     #             },
+    #             ipv_6_expression: {
+    #               evaluate: { # required
+    #                 attribute: "SENDER_IPV6", # accepts SENDER_IPV6
+    #               },
+    #               operator: "CIDR_MATCHES", # required, accepts CIDR_MATCHES, NOT_CIDR_MATCHES
+    #               values: ["Ipv6Cidr"], # required
+    #             },
     #             string_expression: {
     #               evaluate: { # required
     #                 analysis: {
@@ -3497,7 +3531,7 @@ module Aws::MailManager
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mailmanager'
-      context[:gem_version] = '1.22.0'
+      context[:gem_version] = '1.23.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

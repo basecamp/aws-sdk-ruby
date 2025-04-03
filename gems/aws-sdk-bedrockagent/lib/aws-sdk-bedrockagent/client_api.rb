@@ -2029,6 +2029,7 @@ module Aws::BedrockAgent
     MongoDbAtlasConfiguration.add_member(:endpoint, Shapes::ShapeRef.new(shape: MongoDbAtlasEndpoint, required: true, location_name: "endpoint"))
     MongoDbAtlasConfiguration.add_member(:endpoint_service_name, Shapes::ShapeRef.new(shape: MongoDbAtlasEndpointServiceName, location_name: "endpointServiceName"))
     MongoDbAtlasConfiguration.add_member(:field_mapping, Shapes::ShapeRef.new(shape: MongoDbAtlasFieldMapping, required: true, location_name: "fieldMapping"))
+    MongoDbAtlasConfiguration.add_member(:text_index_name, Shapes::ShapeRef.new(shape: MongoDbAtlasIndexName, location_name: "textIndexName"))
     MongoDbAtlasConfiguration.add_member(:vector_index_name, Shapes::ShapeRef.new(shape: MongoDbAtlasIndexName, required: true, location_name: "vectorIndexName"))
     MongoDbAtlasConfiguration.struct_class = Types::MongoDbAtlasConfiguration
 
@@ -2261,6 +2262,7 @@ module Aws::BedrockAgent
     RdsConfiguration.add_member(:table_name, Shapes::ShapeRef.new(shape: RdsTableName, required: true, location_name: "tableName"))
     RdsConfiguration.struct_class = Types::RdsConfiguration
 
+    RdsFieldMapping.add_member(:custom_metadata_field, Shapes::ShapeRef.new(shape: ColumnName, location_name: "customMetadataField"))
     RdsFieldMapping.add_member(:metadata_field, Shapes::ShapeRef.new(shape: ColumnName, required: true, location_name: "metadataField"))
     RdsFieldMapping.add_member(:primary_key_field, Shapes::ShapeRef.new(shape: ColumnName, required: true, location_name: "primaryKeyField"))
     RdsFieldMapping.add_member(:text_field, Shapes::ShapeRef.new(shape: ColumnName, required: true, location_name: "textField"))

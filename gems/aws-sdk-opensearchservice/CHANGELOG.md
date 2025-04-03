@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.66.0 (2025-04-03)
+------------------
+
+* Feature - Improve descriptions for various API commands and data types.
+
 1.65.0 (2025-02-18)
 ------------------
 

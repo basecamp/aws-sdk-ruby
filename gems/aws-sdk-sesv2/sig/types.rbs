@@ -29,6 +29,17 @@ module Aws::SESV2
       SENSITIVE: []
     end
 
+    class Attachment
+      attr_accessor raw_content: ::String
+      attr_accessor content_disposition: ("ATTACHMENT" | "INLINE")
+      attr_accessor file_name: ::String
+      attr_accessor content_description: ::String
+      attr_accessor content_id: ::String
+      attr_accessor content_transfer_encoding: ("BASE64" | "QUOTED_PRINTABLE" | "SEVEN_BIT")
+      attr_accessor content_type: ::String
+      SENSITIVE: []
+    end
+
     class BadRequestException < Aws::EmptyStructure
     end
 
@@ -1210,6 +1221,7 @@ module Aws::SESV2
       attr_accessor subject: Types::Content
       attr_accessor body: Types::Body
       attr_accessor headers: ::Array[Types::MessageHeader]
+      attr_accessor attachments: ::Array[Types::Attachment]
       SENSITIVE: []
     end
 
@@ -1693,6 +1705,7 @@ module Aws::SESV2
       attr_accessor template_content: Types::EmailTemplateContent
       attr_accessor template_data: ::String
       attr_accessor headers: ::Array[Types::MessageHeader]
+      attr_accessor attachments: ::Array[Types::Attachment]
       SENSITIVE: []
     end
 

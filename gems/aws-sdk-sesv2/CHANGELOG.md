@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.74.0 (2025-04-03)
+------------------
+
+* Feature - This release enables customers to provide attachments in the SESv2 SendEmail and SendBulkEmail APIs.
+
 1.73.0 (2025-03-31)
 ------------------
 

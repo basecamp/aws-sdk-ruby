@@ -162,6 +162,9 @@ module Aws::MailManager
     IngressIpToEvaluate = Shapes::UnionShape.new(name: 'IngressIpToEvaluate')
     IngressIpv4Attribute = Shapes::StringShape.new(name: 'IngressIpv4Attribute')
     IngressIpv4Expression = Shapes::StructureShape.new(name: 'IngressIpv4Expression')
+    IngressIpv6Attribute = Shapes::StringShape.new(name: 'IngressIpv6Attribute')
+    IngressIpv6Expression = Shapes::StructureShape.new(name: 'IngressIpv6Expression')
+    IngressIpv6ToEvaluate = Shapes::UnionShape.new(name: 'IngressIpv6ToEvaluate')
     IngressIsInAddressList = Shapes::StructureShape.new(name: 'IngressIsInAddressList')
     IngressPoint = Shapes::StructureShape.new(name: 'IngressPoint')
     IngressPointARecord = Shapes::StringShape.new(name: 'IngressPointARecord')
@@ -185,8 +188,11 @@ module Aws::MailManager
     IngressTlsProtocolOperator = Shapes::StringShape.new(name: 'IngressTlsProtocolOperator')
     IngressTlsProtocolToEvaluate = Shapes::UnionShape.new(name: 'IngressTlsProtocolToEvaluate')
     Integer = Shapes::IntegerShape.new(name: 'Integer')
+    IpType = Shapes::StringShape.new(name: 'IpType')
     Ipv4Cidr = Shapes::StringShape.new(name: 'Ipv4Cidr')
     Ipv4Cidrs = Shapes::ListShape.new(name: 'Ipv4Cidrs')
+    Ipv6Cidr = Shapes::StringShape.new(name: 'Ipv6Cidr')
+    Ipv6Cidrs = Shapes::ListShape.new(name: 'Ipv6Cidrs')
     JobId = Shapes::StringShape.new(name: 'JobId')
     JobItemsCount = Shapes::IntegerShape.new(name: 'JobItemsCount')
     JobName = Shapes::StringShape.new(name: 'JobName')
@@ -224,6 +230,7 @@ module Aws::MailManager
     Metadata = Shapes::StructureShape.new(name: 'Metadata')
     MimeHeaderAttribute = Shapes::StringShape.new(name: 'MimeHeaderAttribute')
     NameOrArn = Shapes::StringShape.new(name: 'NameOrArn')
+    NetworkConfiguration = Shapes::UnionShape.new(name: 'NetworkConfiguration')
     NoAuthentication = Shapes::StructureShape.new(name: 'NoAuthentication')
     PageSize = Shapes::IntegerShape.new(name: 'PageSize')
     PaginationToken = Shapes::StringShape.new(name: 'PaginationToken')
@@ -232,6 +239,8 @@ module Aws::MailManager
     PolicyStatement = Shapes::StructureShape.new(name: 'PolicyStatement')
     PolicyStatementList = Shapes::ListShape.new(name: 'PolicyStatementList')
     PreSignedUrl = Shapes::StringShape.new(name: 'PreSignedUrl')
+    PrivateNetworkConfiguration = Shapes::StructureShape.new(name: 'PrivateNetworkConfiguration')
+    PublicNetworkConfiguration = Shapes::StructureShape.new(name: 'PublicNetworkConfiguration')
     QBusinessApplicationId = Shapes::StringShape.new(name: 'QBusinessApplicationId')
     QBusinessIndexId = Shapes::StringShape.new(name: 'QBusinessIndexId')
     Recipients = Shapes::ListShape.new(name: 'Recipients')
@@ -360,6 +369,7 @@ module Aws::MailManager
     UpdateTrafficPolicyRequest = Shapes::StructureShape.new(name: 'UpdateTrafficPolicyRequest')
     UpdateTrafficPolicyResponse = Shapes::StructureShape.new(name: 'UpdateTrafficPolicyResponse')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
+    VpcEndpointId = Shapes::StringShape.new(name: 'VpcEndpointId')
 
     AccessDeniedException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     AccessDeniedException.struct_class = Types::AccessDeniedException
@@ -504,6 +514,7 @@ module Aws::MailManager
     CreateIngressPointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
     CreateIngressPointRequest.add_member(:ingress_point_configuration, Shapes::ShapeRef.new(shape: IngressPointConfiguration, location_name: "IngressPointConfiguration"))
     CreateIngressPointRequest.add_member(:ingress_point_name, Shapes::ShapeRef.new(shape: IngressPointName, required: true, location_name: "IngressPointName"))
+    CreateIngressPointRequest.add_member(:network_configuration, Shapes::ShapeRef.new(shape: NetworkConfiguration, location_name: "NetworkConfiguration"))
     CreateIngressPointRequest.add_member(:rule_set_id, Shapes::ShapeRef.new(shape: RuleSetId, required: true, location_name: "RuleSetId"))
     CreateIngressPointRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CreateIngressPointRequest.add_member(:traffic_policy_id, Shapes::ShapeRef.new(shape: TrafficPolicyId, required: true, location_name: "TrafficPolicyId"))
@@ -738,6 +749,7 @@ module Aws::MailManager
     GetIngressPointResponse.add_member(:ingress_point_id, Shapes::ShapeRef.new(shape: IngressPointId, required: true, location_name: "IngressPointId"))
     GetIngressPointResponse.add_member(:ingress_point_name, Shapes::ShapeRef.new(shape: IngressPointName, required: true, location_name: "IngressPointName"))
     GetIngressPointResponse.add_member(:last_updated_timestamp, Shapes::ShapeRef.new(shape: Timestamp, location_name: "LastUpdatedTimestamp"))
+    GetIngressPointResponse.add_member(:network_configuration, Shapes::ShapeRef.new(shape: NetworkConfiguration, location_name: "NetworkConfiguration"))
     GetIngressPointResponse.add_member(:rule_set_id, Shapes::ShapeRef.new(shape: RuleSetId, location_name: "RuleSetId"))
     GetIngressPointResponse.add_member(:status, Shapes::ShapeRef.new(shape: IngressPointStatus, location_name: "Status"))
     GetIngressPointResponse.add_member(:traffic_policy_id, Shapes::ShapeRef.new(shape: TrafficPolicyId, location_name: "TrafficPolicyId"))
@@ -837,6 +849,17 @@ module Aws::MailManager
     IngressIpv4Expression.add_member(:values, Shapes::ShapeRef.new(shape: Ipv4Cidrs, required: true, location_name: "Values"))
     IngressIpv4Expression.struct_class = Types::IngressIpv4Expression
 
+    IngressIpv6Expression.add_member(:evaluate, Shapes::ShapeRef.new(shape: IngressIpv6ToEvaluate, required: true, location_name: "Evaluate"))
+    IngressIpv6Expression.add_member(:operator, Shapes::ShapeRef.new(shape: IngressIpOperator, required: true, location_name: "Operator"))
+    IngressIpv6Expression.add_member(:values, Shapes::ShapeRef.new(shape: Ipv6Cidrs, required: true, location_name: "Values"))
+    IngressIpv6Expression.struct_class = Types::IngressIpv6Expression
+
+    IngressIpv6ToEvaluate.add_member(:attribute, Shapes::ShapeRef.new(shape: IngressIpv6Attribute, location_name: "Attribute"))
+    IngressIpv6ToEvaluate.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    IngressIpv6ToEvaluate.add_member_subclass(:attribute, Types::IngressIpv6ToEvaluate::Attribute)
+    IngressIpv6ToEvaluate.add_member_subclass(:unknown, Types::IngressIpv6ToEvaluate::Unknown)
+    IngressIpv6ToEvaluate.struct_class = Types::IngressIpv6ToEvaluate
+
     IngressIsInAddressList.add_member(:address_lists, Shapes::ShapeRef.new(shape: IngressAddressListArnList, required: true, location_name: "AddressLists"))
     IngressIsInAddressList.add_member(:attribute, Shapes::ShapeRef.new(shape: IngressAddressListEmailAttribute, required: true, location_name: "Attribute"))
     IngressIsInAddressList.struct_class = Types::IngressIsInAddressList
@@ -892,6 +915,8 @@ module Aws::MailManager
     IngressTlsProtocolToEvaluate.struct_class = Types::IngressTlsProtocolToEvaluate
 
     Ipv4Cidrs.member = Shapes::ShapeRef.new(shape: Ipv4Cidr)
+
+    Ipv6Cidrs.member = Shapes::ShapeRef.new(shape: Ipv6Cidr)
 
     ListAddonInstancesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "NextToken"))
     ListAddonInstancesRequest.add_member(:page_size, Shapes::ShapeRef.new(shape: PageSize, location_name: "PageSize"))
@@ -1020,15 +1045,25 @@ module Aws::MailManager
     Metadata.add_member(:traffic_policy_id, Shapes::ShapeRef.new(shape: TrafficPolicyId, location_name: "TrafficPolicyId"))
     Metadata.struct_class = Types::Metadata
 
+    NetworkConfiguration.add_member(:private_network_configuration, Shapes::ShapeRef.new(shape: PrivateNetworkConfiguration, location_name: "PrivateNetworkConfiguration"))
+    NetworkConfiguration.add_member(:public_network_configuration, Shapes::ShapeRef.new(shape: PublicNetworkConfiguration, location_name: "PublicNetworkConfiguration"))
+    NetworkConfiguration.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    NetworkConfiguration.add_member_subclass(:private_network_configuration, Types::NetworkConfiguration::PrivateNetworkConfiguration)
+    NetworkConfiguration.add_member_subclass(:public_network_configuration, Types::NetworkConfiguration::PublicNetworkConfiguration)
+    NetworkConfiguration.add_member_subclass(:unknown, Types::NetworkConfiguration::Unknown)
+    NetworkConfiguration.struct_class = Types::NetworkConfiguration
+
     NoAuthentication.struct_class = Types::NoAuthentication
 
     PolicyCondition.add_member(:boolean_expression, Shapes::ShapeRef.new(shape: IngressBooleanExpression, location_name: "BooleanExpression"))
     PolicyCondition.add_member(:ip_expression, Shapes::ShapeRef.new(shape: IngressIpv4Expression, location_name: "IpExpression"))
+    PolicyCondition.add_member(:ipv_6_expression, Shapes::ShapeRef.new(shape: IngressIpv6Expression, location_name: "Ipv6Expression"))
     PolicyCondition.add_member(:string_expression, Shapes::ShapeRef.new(shape: IngressStringExpression, location_name: "StringExpression"))
     PolicyCondition.add_member(:tls_expression, Shapes::ShapeRef.new(shape: IngressTlsProtocolExpression, location_name: "TlsExpression"))
     PolicyCondition.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     PolicyCondition.add_member_subclass(:boolean_expression, Types::PolicyCondition::BooleanExpression)
     PolicyCondition.add_member_subclass(:ip_expression, Types::PolicyCondition::IpExpression)
+    PolicyCondition.add_member_subclass(:ipv_6_expression, Types::PolicyCondition::Ipv6Expression)
     PolicyCondition.add_member_subclass(:string_expression, Types::PolicyCondition::StringExpression)
     PolicyCondition.add_member_subclass(:tls_expression, Types::PolicyCondition::TlsExpression)
     PolicyCondition.add_member_subclass(:unknown, Types::PolicyCondition::Unknown)
@@ -1041,6 +1076,12 @@ module Aws::MailManager
     PolicyStatement.struct_class = Types::PolicyStatement
 
     PolicyStatementList.member = Shapes::ShapeRef.new(shape: PolicyStatement)
+
+    PrivateNetworkConfiguration.add_member(:vpc_endpoint_id, Shapes::ShapeRef.new(shape: VpcEndpointId, required: true, location_name: "VpcEndpointId"))
+    PrivateNetworkConfiguration.struct_class = Types::PrivateNetworkConfiguration
+
+    PublicNetworkConfiguration.add_member(:ip_type, Shapes::ShapeRef.new(shape: IpType, required: true, location_name: "IpType"))
+    PublicNetworkConfiguration.struct_class = Types::PublicNetworkConfiguration
 
     Recipients.member = Shapes::ShapeRef.new(shape: EmailAddress)
 
