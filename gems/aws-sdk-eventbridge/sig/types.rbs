@@ -206,6 +206,7 @@ module Aws::EventBridge
       attr_accessor description: ::String
       attr_accessor event_pattern: ::String
       attr_accessor retention_days: ::Integer
+      attr_accessor kms_key_identifier: ::String
       SENSITIVE: []
     end
 
@@ -431,6 +432,7 @@ module Aws::EventBridge
       attr_accessor event_pattern: ::String
       attr_accessor state: ("ENABLED" | "DISABLED" | "CREATING" | "UPDATING" | "CREATE_FAILED" | "UPDATE_FAILED")
       attr_accessor state_reason: ::String
+      attr_accessor kms_key_identifier: ::String
       attr_accessor retention_days: ::Integer
       attr_accessor size_bytes: ::Integer
       attr_accessor event_count: ::Integer
@@ -1238,6 +1240,7 @@ module Aws::EventBridge
       attr_accessor description: ::String
       attr_accessor event_pattern: ::String
       attr_accessor retention_days: ::Integer
+      attr_accessor kms_key_identifier: ::String
       SENSITIVE: []
     end
 

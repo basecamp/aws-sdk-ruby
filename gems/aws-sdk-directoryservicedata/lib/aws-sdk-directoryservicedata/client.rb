@@ -815,7 +815,7 @@ module Aws::DirectoryServiceData
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data-attributes.html
+    #   [1]: https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data_attributes.html
     #
     # @option params [String] :realm
     #   The domain name that's associated with the group.
@@ -1701,7 +1701,7 @@ module Aws::DirectoryServiceData
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data-attributes.html
+    #   [1]: https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data_attributes.html
     #
     # @option params [required, String] :sam_account_name
     #   The name of the user.
@@ -1758,7 +1758,7 @@ module Aws::DirectoryServiceData
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-directoryservicedata'
-      context[:gem_version] = '1.7.0'
+      context[:gem_version] = '1.8.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

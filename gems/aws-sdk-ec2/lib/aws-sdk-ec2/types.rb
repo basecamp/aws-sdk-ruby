@@ -11594,7 +11594,7 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] peer_address
-    #   The IPv4 address of the peer.
+    #   The IPv4 address of the peer device.
     #   @return [String]
     #
     # @!attribute [rw] bgp_options
@@ -22450,6 +22450,9 @@ module Aws::EC2
     #   * `current-generation` - Indicates whether this instance type is the
     #     latest generation instance type of an instance family (`true` \|
     #     `false`).
+    #
+    #   * `dedicated-hosts-supported` - Indicates whether the instance type
+    #     supports Dedicated Hosts. (`true` \| `false`)
     #
     #   * `ebs-info.ebs-optimized-info.baseline-bandwidth-in-mbps` - The
     #     baseline bandwidth performance for an EBS-optimized instance type,
@@ -49658,11 +49661,13 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] device_index
-    #   The device index for the network interface attachment. Each network
-    #   interface requires a device index. If you create a launch template
-    #   that includes secondary network interfaces but not a primary network
-    #   interface, then you must add a primary network interface as a launch
-    #   parameter when you launch an instance from the template.
+    #   The device index for the network interface attachment. The primary
+    #   network interface has a device index of 0. Each network interface is
+    #   of type `interface`, you must specify a device index. If you create
+    #   a launch template that includes secondary network interfaces but not
+    #   a primary network interface, then you must add a primary network
+    #   interface as a launch parameter when you launch an instance from the
+    #   template.
     #   @return [Integer]
     #
     # @!attribute [rw] groups
@@ -52434,6 +52439,14 @@ module Aws::EC2
     #
     # @!attribute [rw] attribute
     #   The name of the attribute to modify.
+    #
+    #   <note markdown="1"> When changing the instance type: If the original instance type is
+    #   configured for configurable bandwidth, and the desired instance type
+    #   doesn't support configurable bandwidth, first set the existing
+    #   bandwidth configuration to `default` using the
+    #   ModifyInstanceNetworkPerformanceOptions operation.
+    #
+    #    </note>
     #
     #   You can modify the following attributes only:
     #   `disableApiTermination` \| `instanceType` \| `kernel` \| `ramdisk`
@@ -64537,15 +64550,15 @@ module Aws::EC2
     # Amazon VPC Route Server simplifies routing for traffic between
     # workloads that are deployed within a VPC and its internet gateways.
     # With this feature, VPC Route Server dynamically updates VPC and
-    # gateway route tables with your preferred IPv4 or IPv6 routes to
-    # achieve routing fault tolerance for those workloads. This enables you
-    # to automatically reroute traffic within a VPC, which increases the
+    # internet gateway route tables with your preferred IPv4 or IPv6 routes
+    # to achieve routing fault tolerance for those workloads. This enables
+    # you to automatically reroute traffic within a VPC, which increases the
     # manageability of VPC routing and interoperability with third-party
     # workloads.
     #
     # Route server supports the follow route table types:
     #
-    # * VPC route tables
+    # * VPC route tables not associated with subnets
     #
     # * Subnet route tables
     #
@@ -64626,8 +64639,7 @@ module Aws::EC2
     # Describes the association between a route server and a VPC.
     #
     # A route server association is the connection established between a
-    # route server and a VPC. This is a fundamental configuration step that
-    # enables the route server to work with appliances in your VPC.
+    # route server and a VPC.
     #
     # @!attribute [rw] route_server_id
     #   The ID of the associated route server.
@@ -64761,9 +64773,12 @@ module Aws::EC2
     # Describes a route server endpoint and its properties.
     #
     # A route server endpoint is an Amazon Web Services-managed component
-    # inside a subnet that facilitates BGP (Border Gateway Protocol)
-    # connections between your route server and your BGP peers. Create two
-    # endpoints per subnet for redundancy.
+    # inside a subnet that facilitates [BGP (Border Gateway Protocol)][1]
+    # connections between your route server and your BGP peers.
+    #
+    #
+    #
+    # [1]: https://en.wikipedia.org/wiki/Border_Gateway_Protocol
     #
     # @!attribute [rw] route_server_id
     #   The ID of the route server associated with this endpoint.
@@ -64819,9 +64834,10 @@ module Aws::EC2
 
     # Describes a BGP peer configuration for a route server endpoint.
     #
-    # A route server peer is a network appliance or function deployed in
-    # Amazon Web Services, such as firewall appliances and other network
-    # security functions, that meet these requirements:
+    # A route server peer is a session between a route server endpoint and
+    # the device deployed in Amazon Web Services (such as a firewall
+    # appliance or other network security function running on an EC2
+    # instance). The device must meet these requirements:
     #
     # * Have an elastic network interface in the VPC
     #
@@ -64868,7 +64884,7 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] peer_address
-    #   The IPv4 address of the peer.
+    #   The IPv4 address of the peer device.
     #   @return [String]
     #
     # @!attribute [rw] bgp_options
@@ -64969,8 +64985,8 @@ module Aws::EC2
     #   The [Forwarding Information Base (FIB)][2] serves as a forwarding
     #   table for what route server has determined are the best-path routes
     #   in the RIB after evaluating all available routing information and
-    #   policies. The FIB routes that are installed on the route tables. The
-    #   FIB is recomputed whenever there are changes to the RIB.
+    #   policies. The FIB routes are installed on the route tables. The FIB
+    #   is recomputed whenever there are changes to the RIB.
     #
     #
     #

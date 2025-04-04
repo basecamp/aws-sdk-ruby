@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.106.0 (2025-04-04)
+------------------
+
+* Feature - Updated max size of Prefixes parameter of Scope data type.
+
 1.105.0 (2025-03-31)
 ------------------
 

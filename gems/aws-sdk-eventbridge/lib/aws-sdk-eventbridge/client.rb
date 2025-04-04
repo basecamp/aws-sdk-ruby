@@ -608,28 +608,17 @@ module Aws::EventBridge
     # archive, all events are sent to the archive except replayed events.
     # Replayed events are not sent to an archive.
     #
-    # <note markdown="1"> Archives and schema discovery are not supported for event buses
-    # encrypted using a customer managed key. EventBridge returns an error
-    # if:
+    # If you have specified that EventBridge use a customer managed key for
+    # encrypting the source event bus, we strongly recommend you also
+    # specify a customer managed key for any archives for the event bus as
+    # well.
     #
-    #  * You call ` CreateArchive ` on an event bus set to use a customer
-    #   managed key for encryption.
-    #
-    # * You call ` CreateDiscoverer ` on an event bus set to use a customer
-    #   managed key for encryption.
-    #
-    # * You call ` UpdatedEventBus ` to set a customer managed key on an
-    #   event bus with an archives or schema discovery enabled.
-    #
-    #  To enable archives or schema discovery on an event bus, choose to use
-    # an Amazon Web Services owned key. For more information, see [Data
-    # encryption in EventBridge][1] in the *Amazon EventBridge User Guide*.
-    #
-    #  </note>
+    #  For more information, see [Encrypting archives][1] in the *Amazon
+    # EventBridge User Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html
+    # [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html
     #
     # @option params [required, String] :archive_name
     #   The name for the archive to create.
@@ -647,6 +636,31 @@ module Aws::EventBridge
     #   The number of days to retain events for. Default value is 0. If set to
     #   0, events are retained indefinitely
     #
+    # @option params [String] :kms_key_identifier
+    #   The identifier of the KMS customer managed key for EventBridge to use,
+    #   if you choose to use a customer managed key to encrypt this archive.
+    #   The identifier can be the key Amazon Resource Name (ARN), KeyId, key
+    #   alias, or key alias ARN.
+    #
+    #   If you do not specify a customer managed key identifier, EventBridge
+    #   uses an Amazon Web Services owned key to encrypt the archive.
+    #
+    #   For more information, see [Identify and view keys][1] in the *Key
+    #   Management Service Developer Guide*.
+    #
+    #   If you have specified that EventBridge use a customer managed key for
+    #   encrypting the source event bus, we strongly recommend you also
+    #   specify a customer managed key for any archives for the event bus as
+    #   well.
+    #
+    #    For more information, see [Encrypting archives][2] in the *Amazon
+    #   EventBridge User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html
+    #   [2]: https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html
+    #
     # @return [Types::CreateArchiveResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateArchiveResponse#archive_arn #archive_arn} => String
@@ -658,10 +672,11 @@ module Aws::EventBridge
     #
     #   resp = client.create_archive({
     #     archive_name: "ArchiveName", # required
-    #     event_source_arn: "Arn", # required
+    #     event_source_arn: "EventBusArn", # required
     #     description: "ArchiveDescription",
     #     event_pattern: "EventPattern",
     #     retention_days: 1,
+    #     kms_key_identifier: "KmsKeyIdentifier",
     #   })
     #
     # @example Response structure
@@ -711,15 +726,15 @@ module Aws::EventBridge
     #   `AuthorizationType` you specify.
     #
     # @option params [Types::ConnectivityResourceParameters] :invocation_connectivity_parameters
-    #   For connections to private resource endpoints, the parameters to use
-    #   for invoking the resource endpoint.
+    #   For connections to private APIs, the parameters to use for invoking
+    #   the API.
     #
-    #   For more information, see [Connecting to private resources][1] in the
-    #   <i> <i>Amazon EventBridge User Guide</i> </i>.
+    #   For more information, see [Connecting to private APIs][1] in the <i>
+    #   <i>Amazon EventBridge User Guide</i> </i>.
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-private.html
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html
     #
     # @return [Types::CreateConnectionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -949,32 +964,33 @@ module Aws::EventBridge
     #   uses an Amazon Web Services owned key to encrypt events on the event
     #   bus.
     #
-    #   For more information, see [Managing keys][1] in the *Key Management
-    #   Service Developer Guide*.
+    #   For more information, see [Identify and view keys][1] in the *Key
+    #   Management Service Developer Guide*.
     #
-    #   <note markdown="1"> Archives and schema discovery are not supported for event buses
-    #   encrypted using a customer managed key. EventBridge returns an error
-    #   if:
+    #   <note markdown="1"> Schema discovery is not supported for event buses encrypted using a
+    #   customer managed key. EventBridge returns an error if you call `
+    #   CreateDiscoverer ` on an event bus set to use a customer managed key
+    #   for encryption.
     #
-    #    * You call ` CreateArchive ` on an event bus set to use a customer
-    #     managed key for encryption.
-    #
-    #   * You call ` CreateDiscoverer ` on an event bus set to use a customer
-    #     managed key for encryption.
-    #
-    #   * You call ` UpdatedEventBus ` to set a customer managed key on an
-    #     event bus with an archives or schema discovery enabled.
-    #
-    #    To enable archives or schema discovery on an event bus, choose to use
-    #   an Amazon Web Services owned key. For more information, see [Data
-    #   encryption in EventBridge][2] in the *Amazon EventBridge User Guide*.
+    #    To enable schema discovery on an event bus, choose to use an Amazon
+    #   Web Services owned key. For more information, see [Encrypting
+    #   events][2] in the *Amazon EventBridge User Guide*.
     #
     #    </note>
     #
+    #   If you have specified that EventBridge use a customer managed key for
+    #   encrypting the source event bus, we strongly recommend you also
+    #   specify a customer managed key for any archives for the event bus as
+    #   well.
+    #
+    #    For more information, see [Encrypting archives][3] in the *Amazon
+    #   EventBridge User Guide*.
     #
     #
-    #   [1]: https://docs.aws.amazon.com/kms/latest/developerguide/getting-started.html
-    #   [2]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html
+    #
+    #   [1]: https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html
+    #   [2]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption-event-bus-cmkey.html
+    #   [3]: https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html
     #
     # @option params [Types::DeadLetterConfig] :dead_letter_config
     #   Configuration details of the Amazon SQS queue for EventBridge to use
@@ -1460,6 +1476,7 @@ module Aws::EventBridge
     #   * {Types::DescribeArchiveResponse#event_pattern #event_pattern} => String
     #   * {Types::DescribeArchiveResponse#state #state} => String
     #   * {Types::DescribeArchiveResponse#state_reason #state_reason} => String
+    #   * {Types::DescribeArchiveResponse#kms_key_identifier #kms_key_identifier} => String
     #   * {Types::DescribeArchiveResponse#retention_days #retention_days} => Integer
     #   * {Types::DescribeArchiveResponse#size_bytes #size_bytes} => Integer
     #   * {Types::DescribeArchiveResponse#event_count #event_count} => Integer
@@ -1480,6 +1497,7 @@ module Aws::EventBridge
     #   resp.event_pattern #=> String
     #   resp.state #=> String, one of "ENABLED", "DISABLED", "CREATING", "UPDATING", "CREATE_FAILED", "UPDATE_FAILED"
     #   resp.state_reason #=> String
+    #   resp.kms_key_identifier #=> String
     #   resp.retention_days #=> Integer
     #   resp.size_bytes #=> Integer
     #   resp.event_count #=> Integer
@@ -2058,7 +2076,7 @@ module Aws::EventBridge
     #
     #   resp = client.list_archives({
     #     name_prefix: "ArchiveName",
-    #     event_source_arn: "Arn",
+    #     event_source_arn: "EventBusArn",
     #     state: "ENABLED", # accepts ENABLED, DISABLED, CREATING, UPDATING, CREATE_FAILED, UPDATE_FAILED
     #     next_token: "NextToken",
     #     limit: 1,
@@ -2484,7 +2502,7 @@ module Aws::EventBridge
     #   resp = client.list_replays({
     #     name_prefix: "ReplayName",
     #     state: "STARTING", # accepts STARTING, RUNNING, CANCELLING, COMPLETED, CANCELLED, FAILED
-    #     event_source_arn: "Arn",
+    #     event_source_arn: "ArchiveArn",
     #     next_token: "NextToken",
     #     limit: 1,
     #   })
@@ -2791,11 +2809,11 @@ module Aws::EventBridge
     # Sends custom events to Amazon EventBridge so that they can be matched
     # to rules.
     #
-    # The maximum size for a PutEvents event entry is 256 KB. Entry size is
-    # calculated including the event and any necessary characters and keys
-    # of the JSON representation of the event. To learn more, see
-    # [Calculating PutEvents event entry size][1] in the <i> <i>Amazon
-    # EventBridge User Guide</i> </i>
+    # You can batch multiple event entries into one request for efficiency.
+    # However, the total entry size must be less than 256KB. You can
+    # calculate the entry size before you send the events. For more
+    # information, see [Calculating PutEvents event entry size][1] in the
+    # <i> <i>Amazon EventBridge User Guide</i> </i>.
     #
     # PutEvents accepts the data in JSON format. For the JSON number
     # (integer) data type, the constraints are: a minimum value of
@@ -2808,7 +2826,7 @@ module Aws::EventBridge
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevent-size.html
+    # [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevents.html#eb-putevent-size
     #
     # @option params [required, Array<Types::PutEventsRequestEntry>] :entries
     #   The entry that defines an event in your system. You can specify
@@ -3632,7 +3650,7 @@ module Aws::EventBridge
     #   resp = client.start_replay({
     #     replay_name: "ReplayName", # required
     #     description: "ReplayDescription",
-    #     event_source_arn: "Arn", # required
+    #     event_source_arn: "ArchiveArn", # required
     #     event_start_time: Time.now, # required
     #     event_end_time: Time.now, # required
     #     destination: { # required
@@ -3862,6 +3880,31 @@ module Aws::EventBridge
     # @option params [Integer] :retention_days
     #   The number of days to retain events in the archive.
     #
+    # @option params [String] :kms_key_identifier
+    #   The identifier of the KMS customer managed key for EventBridge to use,
+    #   if you choose to use a customer managed key to encrypt this archive.
+    #   The identifier can be the key Amazon Resource Name (ARN), KeyId, key
+    #   alias, or key alias ARN.
+    #
+    #   If you do not specify a customer managed key identifier, EventBridge
+    #   uses an Amazon Web Services owned key to encrypt the archive.
+    #
+    #   For more information, see [Identify and view keys][1] in the *Key
+    #   Management Service Developer Guide*.
+    #
+    #   If you have specified that EventBridge use a customer managed key for
+    #   encrypting the source event bus, we strongly recommend you also
+    #   specify a customer managed key for any archives for the event bus as
+    #   well.
+    #
+    #    For more information, see [Encrypting archives][2] in the *Amazon
+    #   EventBridge User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html
+    #   [2]: https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html
+    #
     # @return [Types::UpdateArchiveResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateArchiveResponse#archive_arn #archive_arn} => String
@@ -3876,6 +3919,7 @@ module Aws::EventBridge
     #     description: "ArchiveDescription",
     #     event_pattern: "EventPattern",
     #     retention_days: 1,
+    #     kms_key_identifier: "KmsKeyIdentifier",
     #   })
     #
     # @example Response structure
@@ -3909,15 +3953,15 @@ module Aws::EventBridge
     #   The authorization parameters to use for the connection.
     #
     # @option params [Types::ConnectivityResourceParameters] :invocation_connectivity_parameters
-    #   For connections to private resource endpoints, the parameters to use
-    #   for invoking the resource endpoint.
+    #   For connections to private APIs, the parameters to use for invoking
+    #   the API.
     #
-    #   For more information, see [Connecting to private resources][1] in the
-    #   <i> <i>Amazon EventBridge User Guide</i> </i>.
+    #   For more information, see [Connecting to private APIs][1] in the <i>
+    #   <i>Amazon EventBridge User Guide</i> </i>.
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-private.html
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html
     #
     # @return [Types::UpdateConnectionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -4130,32 +4174,33 @@ module Aws::EventBridge
     #   uses an Amazon Web Services owned key to encrypt events on the event
     #   bus.
     #
-    #   For more information, see [Managing keys][1] in the *Key Management
-    #   Service Developer Guide*.
+    #   For more information, see [Identify and view keys][1] in the *Key
+    #   Management Service Developer Guide*.
     #
-    #   <note markdown="1"> Archives and schema discovery are not supported for event buses
-    #   encrypted using a customer managed key. EventBridge returns an error
-    #   if:
+    #   <note markdown="1"> Schema discovery is not supported for event buses encrypted using a
+    #   customer managed key. EventBridge returns an error if you call `
+    #   CreateDiscoverer ` on an event bus set to use a customer managed key
+    #   for encryption.
     #
-    #    * You call ` CreateArchive ` on an event bus set to use a customer
-    #     managed key for encryption.
-    #
-    #   * You call ` CreateDiscoverer ` on an event bus set to use a customer
-    #     managed key for encryption.
-    #
-    #   * You call ` UpdatedEventBus ` to set a customer managed key on an
-    #     event bus with an archives or schema discovery enabled.
-    #
-    #    To enable archives or schema discovery on an event bus, choose to use
-    #   an Amazon Web Services owned key. For more information, see [Data
-    #   encryption in EventBridge][2] in the *Amazon EventBridge User Guide*.
+    #    To enable schema discovery on an event bus, choose to use an Amazon
+    #   Web Services owned key. For more information, see [Encrypting
+    #   events][2] in the *Amazon EventBridge User Guide*.
     #
     #    </note>
     #
+    #   If you have specified that EventBridge use a customer managed key for
+    #   encrypting the source event bus, we strongly recommend you also
+    #   specify a customer managed key for any archives for the event bus as
+    #   well.
+    #
+    #    For more information, see [Encrypting archives][3] in the *Amazon
+    #   EventBridge User Guide*.
     #
     #
-    #   [1]: https://docs.aws.amazon.com/kms/latest/developerguide/getting-started.html
-    #   [2]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html
+    #
+    #   [1]: https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html
+    #   [2]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption-event-bus-cmkey.html
+    #   [3]: https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html
     #
     # @option params [String] :description
     #   The event bus description.
@@ -4225,7 +4270,7 @@ module Aws::EventBridge
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-eventbridge'
-      context[:gem_version] = '1.77.0'
+      context[:gem_version] = '1.78.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

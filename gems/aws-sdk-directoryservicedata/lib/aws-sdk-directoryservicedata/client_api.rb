@@ -404,6 +404,7 @@ module Aws::DirectoryServiceData
 
       api.metadata = {
         "apiVersion" => "2023-05-31",
+        "auth" => ["aws.auth#sigv4"],
         "endpointPrefix" => "ds-data",
         "jsonVersion" => "1.1",
         "protocol" => "rest-json",

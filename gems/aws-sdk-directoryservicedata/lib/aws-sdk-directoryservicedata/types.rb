@@ -464,7 +464,7 @@ module Aws::DirectoryServiceData
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data-attributes.html
+    #   [1]: https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data_attributes.html
     #   @return [Array<String>]
     #
     # @!attribute [rw] realm
@@ -656,7 +656,7 @@ module Aws::DirectoryServiceData
     #
     #
     #
-    #   [1]: https://www.ietf.org/rfc/rfc0822.txt
+    #   [1]: https://datatracker.ietf.org/doc/html/rfc822
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/directory-service-data-2023-05-31/DescribeUserResult AWS API Documentation
@@ -1583,7 +1583,7 @@ module Aws::DirectoryServiceData
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data-attributes.html
+    #   [1]: https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data_attributes.html
     #   @return [Hash<String,Types::AttributeValue>]
     #
     # @!attribute [rw] sam_account_name
@@ -1666,7 +1666,7 @@ module Aws::DirectoryServiceData
     #
     #
     #
-    #   [1]: https://www.ietf.org/rfc/rfc0822.txt
+    #   [1]: https://datatracker.ietf.org/doc/html/rfc822
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/directory-service-data-2023-05-31/User AWS API Documentation

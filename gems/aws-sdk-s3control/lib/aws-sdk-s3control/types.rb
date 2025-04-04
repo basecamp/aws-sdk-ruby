@@ -7861,7 +7861,7 @@ module Aws::S3Control
     #
     # @!attribute [rw] prefixes
     #   You can specify any amount of prefixes, but the total length of
-    #   characters of all prefixes must be less than 512 KB in size.
+    #   characters of all prefixes must be less than 256 bytes in size.
     #   @return [Array<String>]
     #
     # @!attribute [rw] permissions

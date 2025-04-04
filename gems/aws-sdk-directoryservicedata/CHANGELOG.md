@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.8.0 (2025-04-04)
+------------------
+
+* Feature - Doc only update - fixed broken links.
+
 1.7.0 (2025-02-18)
 ------------------
 

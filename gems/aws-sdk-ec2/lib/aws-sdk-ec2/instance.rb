@@ -1115,6 +1115,14 @@ module Aws::EC2
     # @option options [String] :attribute
     #   The name of the attribute to modify.
     #
+    #   <note markdown="1"> When changing the instance type: If the original instance type is
+    #   configured for configurable bandwidth, and the desired instance type
+    #   doesn't support configurable bandwidth, first set the existing
+    #   bandwidth configuration to `default` using the
+    #   ModifyInstanceNetworkPerformanceOptions operation.
+    #
+    #    </note>
+    #
     #   You can modify the following attributes only: `disableApiTermination`
     #   \| `instanceType` \| `kernel` \| `ramdisk` \|
     #   `instanceInitiatedShutdownBehavior` \| `blockDeviceMapping` \|

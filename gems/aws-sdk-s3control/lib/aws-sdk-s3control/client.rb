@@ -6336,27 +6336,8 @@ module Aws::S3Control
     # can use the access point scope to restrict access to specific
     # prefixes, API operations, or a combination of both.
     #
-    # You can include one or more of the following API operations as
-    # permissions:
-    #
-    # * `PutObjet`
-    #
-    # * `GetObject`
-    #
-    # * `DeleteObject`
-    #
-    # * `ListBucket`
-    #
-    # * `GetObjectAttributes`
-    #
-    # * `AbortMultipartUpload`
-    #
-    # * `ListBucketMultipartUpload`
-    #
-    # * `ListMultiPartUploadParts`
-    #
     # <note markdown="1"> You can specify any amount of prefixes, but the total length of
-    # characters of all prefixes must be less than 512 KB in size.
+    # characters of all prefixes must be less than 256 bytes in size.
     #
     #  </note>
     #
@@ -8005,7 +7986,7 @@ module Aws::S3Control
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-s3control'
-      context[:gem_version] = '1.105.0'
+      context[:gem_version] = '1.106.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

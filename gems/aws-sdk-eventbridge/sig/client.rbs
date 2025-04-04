@@ -127,7 +127,8 @@ module Aws
                             event_source_arn: ::String,
                             ?description: ::String,
                             ?event_pattern: ::String,
-                            ?retention_days: ::Integer
+                            ?retention_days: ::Integer,
+                            ?kms_key_identifier: ::String
                           ) -> _CreateArchiveResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateArchiveResponseSuccess
 
@@ -402,6 +403,7 @@ module Aws
         def event_pattern: () -> ::String
         def state: () -> ("ENABLED" | "DISABLED" | "CREATING" | "UPDATING" | "CREATE_FAILED" | "UPDATE_FAILED")
         def state_reason: () -> ::String
+        def kms_key_identifier: () -> ::String
         def retention_days: () -> ::Integer
         def size_bytes: () -> ::Integer
         def event_count: () -> ::Integer
@@ -1042,7 +1044,8 @@ module Aws
                             archive_name: ::String,
                             ?description: ::String,
                             ?event_pattern: ::String,
-                            ?retention_days: ::Integer
+                            ?retention_days: ::Integer,
+                            ?kms_key_identifier: ::String
                           ) -> _UpdateArchiveResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateArchiveResponseSuccess
 
