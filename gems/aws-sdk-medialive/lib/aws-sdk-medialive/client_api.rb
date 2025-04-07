@@ -215,6 +215,8 @@ module Aws::MediaLive
     CreatePartnerInputRequest = Shapes::StructureShape.new(name: 'CreatePartnerInputRequest')
     CreatePartnerInputResponse = Shapes::StructureShape.new(name: 'CreatePartnerInputResponse')
     CreatePartnerInputResultModel = Shapes::StructureShape.new(name: 'CreatePartnerInputResultModel')
+    CreateSdiSourceRequest = Shapes::StructureShape.new(name: 'CreateSdiSourceRequest')
+    CreateSdiSourceResponse = Shapes::StructureShape.new(name: 'CreateSdiSourceResponse')
     CreateSignalMapRequest = Shapes::StructureShape.new(name: 'CreateSignalMapRequest')
     CreateSignalMapRequestContent = Shapes::StructureShape.new(name: 'CreateSignalMapRequestContent')
     CreateSignalMapResponse = Shapes::StructureShape.new(name: 'CreateSignalMapResponse')
@@ -248,6 +250,8 @@ module Aws::MediaLive
     DeleteReservationResponse = Shapes::StructureShape.new(name: 'DeleteReservationResponse')
     DeleteScheduleRequest = Shapes::StructureShape.new(name: 'DeleteScheduleRequest')
     DeleteScheduleResponse = Shapes::StructureShape.new(name: 'DeleteScheduleResponse')
+    DeleteSdiSourceRequest = Shapes::StructureShape.new(name: 'DeleteSdiSourceRequest')
+    DeleteSdiSourceResponse = Shapes::StructureShape.new(name: 'DeleteSdiSourceResponse')
     DeleteSignalMapRequest = Shapes::StructureShape.new(name: 'DeleteSignalMapRequest')
     DeleteTagsRequest = Shapes::StructureShape.new(name: 'DeleteTagsRequest')
     DescribeAccountConfigurationRequest = Shapes::StructureShape.new(name: 'DescribeAccountConfigurationRequest')
@@ -290,6 +294,8 @@ module Aws::MediaLive
     DescribeReservationResponse = Shapes::StructureShape.new(name: 'DescribeReservationResponse')
     DescribeScheduleRequest = Shapes::StructureShape.new(name: 'DescribeScheduleRequest')
     DescribeScheduleResponse = Shapes::StructureShape.new(name: 'DescribeScheduleResponse')
+    DescribeSdiSourceRequest = Shapes::StructureShape.new(name: 'DescribeSdiSourceRequest')
+    DescribeSdiSourceResponse = Shapes::StructureShape.new(name: 'DescribeSdiSourceResponse')
     DescribeThumbnailsRequest = Shapes::StructureShape.new(name: 'DescribeThumbnailsRequest')
     DescribeThumbnailsResponse = Shapes::StructureShape.new(name: 'DescribeThumbnailsResponse')
     DescribeThumbnailsResultModel = Shapes::StructureShape.new(name: 'DescribeThumbnailsResultModel')
@@ -536,6 +542,7 @@ module Aws::MediaLive
     InputPrepareScheduleActionSettings = Shapes::StructureShape.new(name: 'InputPrepareScheduleActionSettings')
     InputRequestDestinationRoute = Shapes::StructureShape.new(name: 'InputRequestDestinationRoute')
     InputResolution = Shapes::StringShape.new(name: 'InputResolution')
+    InputSdiSources = Shapes::ListShape.new(name: 'InputSdiSources')
     InputSdpLocation = Shapes::StructureShape.new(name: 'InputSdpLocation')
     InputSecurityGroup = Shapes::StructureShape.new(name: 'InputSecurityGroup')
     InputSecurityGroupState = Shapes::StringShape.new(name: 'InputSecurityGroupState')
@@ -617,6 +624,8 @@ module Aws::MediaLive
     ListReservationsRequest = Shapes::StructureShape.new(name: 'ListReservationsRequest')
     ListReservationsResponse = Shapes::StructureShape.new(name: 'ListReservationsResponse')
     ListReservationsResultModel = Shapes::StructureShape.new(name: 'ListReservationsResultModel')
+    ListSdiSourcesRequest = Shapes::StructureShape.new(name: 'ListSdiSourcesRequest')
+    ListSdiSourcesResponse = Shapes::StructureShape.new(name: 'ListSdiSourcesResponse')
     ListSignalMapsRequest = Shapes::StructureShape.new(name: 'ListSignalMapsRequest')
     ListSignalMapsResponse = Shapes::StructureShape.new(name: 'ListSignalMapsResponse')
     ListSignalMapsResponseContent = Shapes::StructureShape.new(name: 'ListSignalMapsResponseContent')
@@ -826,6 +835,15 @@ module Aws::MediaLive
     Scte35TimeSignalScheduleActionSettings = Shapes::StructureShape.new(name: 'Scte35TimeSignalScheduleActionSettings')
     Scte35Type = Shapes::StringShape.new(name: 'Scte35Type')
     Scte35WebDeliveryAllowedFlag = Shapes::StringShape.new(name: 'Scte35WebDeliveryAllowedFlag')
+    SdiSource = Shapes::StructureShape.new(name: 'SdiSource')
+    SdiSourceMapping = Shapes::StructureShape.new(name: 'SdiSourceMapping')
+    SdiSourceMappingUpdateRequest = Shapes::StructureShape.new(name: 'SdiSourceMappingUpdateRequest')
+    SdiSourceMappings = Shapes::ListShape.new(name: 'SdiSourceMappings')
+    SdiSourceMappingsUpdateRequest = Shapes::ListShape.new(name: 'SdiSourceMappingsUpdateRequest')
+    SdiSourceMode = Shapes::StringShape.new(name: 'SdiSourceMode')
+    SdiSourceState = Shapes::StringShape.new(name: 'SdiSourceState')
+    SdiSourceSummary = Shapes::StructureShape.new(name: 'SdiSourceSummary')
+    SdiSourceType = Shapes::StringShape.new(name: 'SdiSourceType')
     SignalMapMonitorDeploymentStatus = Shapes::StringShape.new(name: 'SignalMapMonitorDeploymentStatus')
     SignalMapStatus = Shapes::StringShape.new(name: 'SignalMapStatus')
     SignalMapSummary = Shapes::StructureShape.new(name: 'SignalMapSummary')
@@ -982,6 +1000,8 @@ module Aws::MediaLive
     UpdateReservationRequest = Shapes::StructureShape.new(name: 'UpdateReservationRequest')
     UpdateReservationResponse = Shapes::StructureShape.new(name: 'UpdateReservationResponse')
     UpdateReservationResultModel = Shapes::StructureShape.new(name: 'UpdateReservationResultModel')
+    UpdateSdiSourceRequest = Shapes::StructureShape.new(name: 'UpdateSdiSourceRequest')
+    UpdateSdiSourceResponse = Shapes::StructureShape.new(name: 'UpdateSdiSourceResponse')
     ValidationError = Shapes::StructureShape.new(name: 'ValidationError')
     VideoBlackFailoverSettings = Shapes::StructureShape.new(name: 'VideoBlackFailoverSettings')
     VideoCodecSettings = Shapes::StructureShape.new(name: 'VideoCodecSettings')
@@ -1154,6 +1174,7 @@ module Aws::MediaLive
     __listOfRtmpAdMarkers = Shapes::ListShape.new(name: '__listOfRtmpAdMarkers')
     __listOfScheduleAction = Shapes::ListShape.new(name: '__listOfScheduleAction')
     __listOfScte35Descriptor = Shapes::ListShape.new(name: '__listOfScte35Descriptor')
+    __listOfSdiSourceSummary = Shapes::ListShape.new(name: '__listOfSdiSourceSummary')
     __listOfSignalMapSummary = Shapes::ListShape.new(name: '__listOfSignalMapSummary')
     __listOfSmpte2110ReceiverGroup = Shapes::ListShape.new(name: '__listOfSmpte2110ReceiverGroup')
     __listOfSrtCallerSource = Shapes::ListShape.new(name: '__listOfSrtCallerSource')
@@ -1978,6 +1999,7 @@ module Aws::MediaLive
     CreateInput.add_member(:input_network_location, Shapes::ShapeRef.new(shape: InputNetworkLocation, location_name: "inputNetworkLocation"))
     CreateInput.add_member(:multicast_settings, Shapes::ShapeRef.new(shape: MulticastSettingsCreateRequest, location_name: "multicastSettings"))
     CreateInput.add_member(:smpte_2110_receiver_group_settings, Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroupSettings, location_name: "smpte2110ReceiverGroupSettings"))
+    CreateInput.add_member(:sdi_sources, Shapes::ShapeRef.new(shape: InputSdiSources, location_name: "sdiSources"))
     CreateInput.struct_class = Types::CreateInput
 
     CreateInputRequest.add_member(:destinations, Shapes::ShapeRef.new(shape: __listOfInputDestinationRequest, location_name: "destinations"))
@@ -1995,6 +2017,7 @@ module Aws::MediaLive
     CreateInputRequest.add_member(:input_network_location, Shapes::ShapeRef.new(shape: InputNetworkLocation, location_name: "inputNetworkLocation"))
     CreateInputRequest.add_member(:multicast_settings, Shapes::ShapeRef.new(shape: MulticastSettingsCreateRequest, location_name: "multicastSettings"))
     CreateInputRequest.add_member(:smpte_2110_receiver_group_settings, Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroupSettings, location_name: "smpte2110ReceiverGroupSettings"))
+    CreateInputRequest.add_member(:sdi_sources, Shapes::ShapeRef.new(shape: InputSdiSources, location_name: "sdiSources"))
     CreateInputRequest.struct_class = Types::CreateInputRequest
 
     CreateInputResponse.add_member(:input, Shapes::ShapeRef.new(shape: Input, location_name: "input"))
@@ -2098,6 +2121,7 @@ module Aws::MediaLive
     CreateNodeResponse.add_member(:node_interface_mappings, Shapes::ShapeRef.new(shape: __listOfNodeInterfaceMapping, location_name: "nodeInterfaceMappings"))
     CreateNodeResponse.add_member(:role, Shapes::ShapeRef.new(shape: NodeRole, location_name: "role"))
     CreateNodeResponse.add_member(:state, Shapes::ShapeRef.new(shape: NodeState, location_name: "state"))
+    CreateNodeResponse.add_member(:sdi_source_mappings, Shapes::ShapeRef.new(shape: SdiSourceMappings, location_name: "sdiSourceMappings"))
     CreateNodeResponse.struct_class = Types::CreateNodeResponse
 
     CreatePartnerInput.add_member(:request_id, Shapes::ShapeRef.new(shape: __string, location_name: "requestId", metadata: {"idempotencyToken"=>true}))
@@ -2114,6 +2138,16 @@ module Aws::MediaLive
 
     CreatePartnerInputResultModel.add_member(:input, Shapes::ShapeRef.new(shape: Input, location_name: "input"))
     CreatePartnerInputResultModel.struct_class = Types::CreatePartnerInputResultModel
+
+    CreateSdiSourceRequest.add_member(:mode, Shapes::ShapeRef.new(shape: SdiSourceMode, location_name: "mode"))
+    CreateSdiSourceRequest.add_member(:name, Shapes::ShapeRef.new(shape: __string, location_name: "name"))
+    CreateSdiSourceRequest.add_member(:request_id, Shapes::ShapeRef.new(shape: __string, location_name: "requestId", metadata: {"idempotencyToken"=>true}))
+    CreateSdiSourceRequest.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
+    CreateSdiSourceRequest.add_member(:type, Shapes::ShapeRef.new(shape: SdiSourceType, location_name: "type"))
+    CreateSdiSourceRequest.struct_class = Types::CreateSdiSourceRequest
+
+    CreateSdiSourceResponse.add_member(:sdi_source, Shapes::ShapeRef.new(shape: SdiSource, location_name: "sdiSource"))
+    CreateSdiSourceResponse.struct_class = Types::CreateSdiSourceResponse
 
     CreateSignalMapRequest.add_member(:cloud_watch_alarm_template_group_identifiers, Shapes::ShapeRef.new(shape: __listOf__stringPatternS, location_name: "cloudWatchAlarmTemplateGroupIdentifiers"))
     CreateSignalMapRequest.add_member(:description, Shapes::ShapeRef.new(shape: __stringMin0Max1024, location_name: "description"))
@@ -2302,6 +2336,7 @@ module Aws::MediaLive
     DeleteNodeResponse.add_member(:node_interface_mappings, Shapes::ShapeRef.new(shape: __listOfNodeInterfaceMapping, location_name: "nodeInterfaceMappings"))
     DeleteNodeResponse.add_member(:role, Shapes::ShapeRef.new(shape: NodeRole, location_name: "role"))
     DeleteNodeResponse.add_member(:state, Shapes::ShapeRef.new(shape: NodeState, location_name: "state"))
+    DeleteNodeResponse.add_member(:sdi_source_mappings, Shapes::ShapeRef.new(shape: SdiSourceMappings, location_name: "sdiSourceMappings"))
     DeleteNodeResponse.struct_class = Types::DeleteNodeResponse
 
     DeleteReservationRequest.add_member(:reservation_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "reservationId"))
@@ -2332,6 +2367,12 @@ module Aws::MediaLive
     DeleteScheduleRequest.struct_class = Types::DeleteScheduleRequest
 
     DeleteScheduleResponse.struct_class = Types::DeleteScheduleResponse
+
+    DeleteSdiSourceRequest.add_member(:sdi_source_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "sdiSourceId"))
+    DeleteSdiSourceRequest.struct_class = Types::DeleteSdiSourceRequest
+
+    DeleteSdiSourceResponse.add_member(:sdi_source, Shapes::ShapeRef.new(shape: SdiSource, location_name: "sdiSource"))
+    DeleteSdiSourceResponse.struct_class = Types::DeleteSdiSourceResponse
 
     DeleteSignalMapRequest.add_member(:identifier, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "identifier"))
     DeleteSignalMapRequest.struct_class = Types::DeleteSignalMapRequest
@@ -2498,6 +2539,7 @@ module Aws::MediaLive
     DescribeInputResponse.add_member(:input_network_location, Shapes::ShapeRef.new(shape: InputNetworkLocation, location_name: "inputNetworkLocation"))
     DescribeInputResponse.add_member(:multicast_settings, Shapes::ShapeRef.new(shape: MulticastSettings, location_name: "multicastSettings"))
     DescribeInputResponse.add_member(:smpte_2110_receiver_group_settings, Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroupSettings, location_name: "smpte2110ReceiverGroupSettings"))
+    DescribeInputResponse.add_member(:sdi_sources, Shapes::ShapeRef.new(shape: InputSdiSources, location_name: "sdiSources"))
     DescribeInputResponse.struct_class = Types::DescribeInputResponse
 
     DescribeInputSecurityGroupRequest.add_member(:input_security_group_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "inputSecurityGroupId"))
@@ -2581,6 +2623,7 @@ module Aws::MediaLive
     DescribeNodeResponse.add_member(:node_interface_mappings, Shapes::ShapeRef.new(shape: __listOfNodeInterfaceMapping, location_name: "nodeInterfaceMappings"))
     DescribeNodeResponse.add_member(:role, Shapes::ShapeRef.new(shape: NodeRole, location_name: "role"))
     DescribeNodeResponse.add_member(:state, Shapes::ShapeRef.new(shape: NodeState, location_name: "state"))
+    DescribeNodeResponse.add_member(:sdi_source_mappings, Shapes::ShapeRef.new(shape: SdiSourceMappings, location_name: "sdiSourceMappings"))
     DescribeNodeResponse.struct_class = Types::DescribeNodeResponse
 
     DescribeNodeResult.add_member(:arn, Shapes::ShapeRef.new(shape: __string, location_name: "arn"))
@@ -2593,6 +2636,7 @@ module Aws::MediaLive
     DescribeNodeResult.add_member(:node_interface_mappings, Shapes::ShapeRef.new(shape: __listOfNodeInterfaceMapping, location_name: "nodeInterfaceMappings"))
     DescribeNodeResult.add_member(:role, Shapes::ShapeRef.new(shape: NodeRole, location_name: "role"))
     DescribeNodeResult.add_member(:state, Shapes::ShapeRef.new(shape: NodeState, location_name: "state"))
+    DescribeNodeResult.add_member(:sdi_source_mappings, Shapes::ShapeRef.new(shape: SdiSourceMappings, location_name: "sdiSourceMappings"))
     DescribeNodeResult.struct_class = Types::DescribeNodeResult
 
     DescribeNodeSummary.add_member(:arn, Shapes::ShapeRef.new(shape: __string, location_name: "arn"))
@@ -2606,6 +2650,7 @@ module Aws::MediaLive
     DescribeNodeSummary.add_member(:node_interface_mappings, Shapes::ShapeRef.new(shape: __listOfNodeInterfaceMapping, location_name: "nodeInterfaceMappings"))
     DescribeNodeSummary.add_member(:role, Shapes::ShapeRef.new(shape: NodeRole, location_name: "role"))
     DescribeNodeSummary.add_member(:state, Shapes::ShapeRef.new(shape: NodeState, location_name: "state"))
+    DescribeNodeSummary.add_member(:sdi_source_mappings, Shapes::ShapeRef.new(shape: SdiSourceMappings, location_name: "sdiSourceMappings"))
     DescribeNodeSummary.struct_class = Types::DescribeNodeSummary
 
     DescribeOfferingRequest.add_member(:offering_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "offeringId"))
@@ -2656,6 +2701,12 @@ module Aws::MediaLive
     DescribeScheduleResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: __string, location_name: "nextToken"))
     DescribeScheduleResponse.add_member(:schedule_actions, Shapes::ShapeRef.new(shape: __listOfScheduleAction, location_name: "scheduleActions"))
     DescribeScheduleResponse.struct_class = Types::DescribeScheduleResponse
+
+    DescribeSdiSourceRequest.add_member(:sdi_source_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "sdiSourceId"))
+    DescribeSdiSourceRequest.struct_class = Types::DescribeSdiSourceRequest
+
+    DescribeSdiSourceResponse.add_member(:sdi_source, Shapes::ShapeRef.new(shape: SdiSource, location_name: "sdiSource"))
+    DescribeSdiSourceResponse.struct_class = Types::DescribeSdiSourceResponse
 
     DescribeThumbnailsRequest.add_member(:channel_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "channelId"))
     DescribeThumbnailsRequest.add_member(:pipeline_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "querystring", location_name: "pipelineId"))
@@ -3281,6 +3332,7 @@ module Aws::MediaLive
     Input.add_member(:input_network_location, Shapes::ShapeRef.new(shape: InputNetworkLocation, location_name: "inputNetworkLocation"))
     Input.add_member(:multicast_settings, Shapes::ShapeRef.new(shape: MulticastSettings, location_name: "multicastSettings"))
     Input.add_member(:smpte_2110_receiver_group_settings, Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroupSettings, location_name: "smpte2110ReceiverGroupSettings"))
+    Input.add_member(:sdi_sources, Shapes::ShapeRef.new(shape: InputSdiSources, location_name: "sdiSources"))
     Input.struct_class = Types::Input
 
     InputAttachment.add_member(:automatic_input_failover_settings, Shapes::ShapeRef.new(shape: AutomaticInputFailoverSettings, location_name: "automaticInputFailoverSettings"))
@@ -3450,6 +3502,8 @@ module Aws::MediaLive
     InputRequestDestinationRoute.add_member(:cidr, Shapes::ShapeRef.new(shape: __string, location_name: "cidr"))
     InputRequestDestinationRoute.add_member(:gateway, Shapes::ShapeRef.new(shape: __string, location_name: "gateway"))
     InputRequestDestinationRoute.struct_class = Types::InputRequestDestinationRoute
+
+    InputSdiSources.member = Shapes::ShapeRef.new(shape: __string)
 
     InputSdpLocation.add_member(:media_index, Shapes::ShapeRef.new(shape: __integer, location_name: "mediaIndex"))
     InputSdpLocation.add_member(:sdp_url, Shapes::ShapeRef.new(shape: __string, location_name: "sdpUrl"))
@@ -3782,6 +3836,14 @@ module Aws::MediaLive
     ListReservationsResultModel.add_member(:next_token, Shapes::ShapeRef.new(shape: __string, location_name: "nextToken"))
     ListReservationsResultModel.add_member(:reservations, Shapes::ShapeRef.new(shape: __listOfReservation, location_name: "reservations"))
     ListReservationsResultModel.struct_class = Types::ListReservationsResultModel
+
+    ListSdiSourcesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListSdiSourcesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: __string, location: "querystring", location_name: "nextToken"))
+    ListSdiSourcesRequest.struct_class = Types::ListSdiSourcesRequest
+
+    ListSdiSourcesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: __string, location_name: "nextToken"))
+    ListSdiSourcesResponse.add_member(:sdi_sources, Shapes::ShapeRef.new(shape: __listOfSdiSourceSummary, location_name: "sdiSources"))
+    ListSdiSourcesResponse.struct_class = Types::ListSdiSourcesResponse
 
     ListSignalMapsRequest.add_member(:cloud_watch_alarm_template_group_identifier, Shapes::ShapeRef.new(shape: __string, location: "querystring", location_name: "cloudWatchAlarmTemplateGroupIdentifier"))
     ListSignalMapsRequest.add_member(:event_bridge_rule_template_group_identifier, Shapes::ShapeRef.new(shape: __string, location: "querystring", location_name: "eventBridgeRuleTemplateGroupIdentifier"))
@@ -4518,6 +4580,38 @@ module Aws::MediaLive
     Scte35TimeSignalScheduleActionSettings.add_member(:scte_35_descriptors, Shapes::ShapeRef.new(shape: __listOfScte35Descriptor, required: true, location_name: "scte35Descriptors"))
     Scte35TimeSignalScheduleActionSettings.struct_class = Types::Scte35TimeSignalScheduleActionSettings
 
+    SdiSource.add_member(:arn, Shapes::ShapeRef.new(shape: __string, location_name: "arn"))
+    SdiSource.add_member(:id, Shapes::ShapeRef.new(shape: __string, location_name: "id"))
+    SdiSource.add_member(:inputs, Shapes::ShapeRef.new(shape: __listOf__string, location_name: "inputs"))
+    SdiSource.add_member(:mode, Shapes::ShapeRef.new(shape: SdiSourceMode, location_name: "mode"))
+    SdiSource.add_member(:name, Shapes::ShapeRef.new(shape: __string, location_name: "name"))
+    SdiSource.add_member(:state, Shapes::ShapeRef.new(shape: SdiSourceState, location_name: "state"))
+    SdiSource.add_member(:type, Shapes::ShapeRef.new(shape: SdiSourceType, location_name: "type"))
+    SdiSource.struct_class = Types::SdiSource
+
+    SdiSourceMapping.add_member(:card_number, Shapes::ShapeRef.new(shape: __integer, location_name: "cardNumber"))
+    SdiSourceMapping.add_member(:channel_number, Shapes::ShapeRef.new(shape: __integer, location_name: "channelNumber"))
+    SdiSourceMapping.add_member(:sdi_source, Shapes::ShapeRef.new(shape: __string, location_name: "sdiSource"))
+    SdiSourceMapping.struct_class = Types::SdiSourceMapping
+
+    SdiSourceMappingUpdateRequest.add_member(:card_number, Shapes::ShapeRef.new(shape: __integer, location_name: "cardNumber"))
+    SdiSourceMappingUpdateRequest.add_member(:channel_number, Shapes::ShapeRef.new(shape: __integer, location_name: "channelNumber"))
+    SdiSourceMappingUpdateRequest.add_member(:sdi_source, Shapes::ShapeRef.new(shape: __string, location_name: "sdiSource"))
+    SdiSourceMappingUpdateRequest.struct_class = Types::SdiSourceMappingUpdateRequest
+
+    SdiSourceMappings.member = Shapes::ShapeRef.new(shape: SdiSourceMapping)
+
+    SdiSourceMappingsUpdateRequest.member = Shapes::ShapeRef.new(shape: SdiSourceMappingUpdateRequest)
+
+    SdiSourceSummary.add_member(:arn, Shapes::ShapeRef.new(shape: __string, location_name: "arn"))
+    SdiSourceSummary.add_member(:id, Shapes::ShapeRef.new(shape: __string, location_name: "id"))
+    SdiSourceSummary.add_member(:inputs, Shapes::ShapeRef.new(shape: __listOf__string, location_name: "inputs"))
+    SdiSourceSummary.add_member(:mode, Shapes::ShapeRef.new(shape: SdiSourceMode, location_name: "mode"))
+    SdiSourceSummary.add_member(:name, Shapes::ShapeRef.new(shape: __string, location_name: "name"))
+    SdiSourceSummary.add_member(:state, Shapes::ShapeRef.new(shape: SdiSourceState, location_name: "state"))
+    SdiSourceSummary.add_member(:type, Shapes::ShapeRef.new(shape: SdiSourceType, location_name: "type"))
+    SdiSourceSummary.struct_class = Types::SdiSourceSummary
+
     SignalMapSummary.add_member(:arn, Shapes::ShapeRef.new(shape: __stringPatternArnMedialiveSignalMap, required: true, location_name: "arn"))
     SignalMapSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: __timestampIso8601, required: true, location_name: "createdAt"))
     SignalMapSummary.add_member(:description, Shapes::ShapeRef.new(shape: __stringMin0Max1024, location_name: "description"))
@@ -5236,6 +5330,7 @@ module Aws::MediaLive
     UpdateInput.add_member(:srt_settings, Shapes::ShapeRef.new(shape: SrtSettingsRequest, location_name: "srtSettings"))
     UpdateInput.add_member(:multicast_settings, Shapes::ShapeRef.new(shape: MulticastSettingsUpdateRequest, location_name: "multicastSettings"))
     UpdateInput.add_member(:smpte_2110_receiver_group_settings, Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroupSettings, location_name: "smpte2110ReceiverGroupSettings"))
+    UpdateInput.add_member(:sdi_sources, Shapes::ShapeRef.new(shape: InputSdiSources, location_name: "sdiSources"))
     UpdateInput.struct_class = Types::UpdateInput
 
     UpdateInputDevice.add_member(:hd_device_settings, Shapes::ShapeRef.new(shape: InputDeviceConfigurableSettings, location_name: "hdDeviceSettings"))
@@ -5280,6 +5375,7 @@ module Aws::MediaLive
     UpdateInputRequest.add_member(:srt_settings, Shapes::ShapeRef.new(shape: SrtSettingsRequest, location_name: "srtSettings"))
     UpdateInputRequest.add_member(:multicast_settings, Shapes::ShapeRef.new(shape: MulticastSettingsUpdateRequest, location_name: "multicastSettings"))
     UpdateInputRequest.add_member(:smpte_2110_receiver_group_settings, Shapes::ShapeRef.new(shape: Smpte2110ReceiverGroupSettings, location_name: "smpte2110ReceiverGroupSettings"))
+    UpdateInputRequest.add_member(:sdi_sources, Shapes::ShapeRef.new(shape: InputSdiSources, location_name: "sdiSources"))
     UpdateInputRequest.struct_class = Types::UpdateInputRequest
 
     UpdateInputResponse.add_member(:input, Shapes::ShapeRef.new(shape: Input, location_name: "input"))
@@ -5358,6 +5454,7 @@ module Aws::MediaLive
     UpdateNodeRequest.add_member(:name, Shapes::ShapeRef.new(shape: __string, location_name: "name"))
     UpdateNodeRequest.add_member(:node_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "nodeId"))
     UpdateNodeRequest.add_member(:role, Shapes::ShapeRef.new(shape: NodeRole, location_name: "role"))
+    UpdateNodeRequest.add_member(:sdi_source_mappings, Shapes::ShapeRef.new(shape: SdiSourceMappingsUpdateRequest, location_name: "sdiSourceMappings"))
     UpdateNodeRequest.struct_class = Types::UpdateNodeRequest
 
     UpdateNodeResponse.add_member(:arn, Shapes::ShapeRef.new(shape: __string, location_name: "arn"))
@@ -5370,6 +5467,7 @@ module Aws::MediaLive
     UpdateNodeResponse.add_member(:node_interface_mappings, Shapes::ShapeRef.new(shape: __listOfNodeInterfaceMapping, location_name: "nodeInterfaceMappings"))
     UpdateNodeResponse.add_member(:role, Shapes::ShapeRef.new(shape: NodeRole, location_name: "role"))
     UpdateNodeResponse.add_member(:state, Shapes::ShapeRef.new(shape: NodeState, location_name: "state"))
+    UpdateNodeResponse.add_member(:sdi_source_mappings, Shapes::ShapeRef.new(shape: SdiSourceMappings, location_name: "sdiSourceMappings"))
     UpdateNodeResponse.struct_class = Types::UpdateNodeResponse
 
     UpdateNodeStateRequest.add_member(:cluster_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "clusterId"))
@@ -5387,6 +5485,7 @@ module Aws::MediaLive
     UpdateNodeStateResponse.add_member(:node_interface_mappings, Shapes::ShapeRef.new(shape: __listOfNodeInterfaceMapping, location_name: "nodeInterfaceMappings"))
     UpdateNodeStateResponse.add_member(:role, Shapes::ShapeRef.new(shape: NodeRole, location_name: "role"))
     UpdateNodeStateResponse.add_member(:state, Shapes::ShapeRef.new(shape: NodeState, location_name: "state"))
+    UpdateNodeStateResponse.add_member(:sdi_source_mappings, Shapes::ShapeRef.new(shape: SdiSourceMappings, location_name: "sdiSourceMappings"))
     UpdateNodeStateResponse.struct_class = Types::UpdateNodeStateResponse
 
     UpdateReservation.add_member(:name, Shapes::ShapeRef.new(shape: __string, location_name: "name"))
@@ -5403,6 +5502,15 @@ module Aws::MediaLive
 
     UpdateReservationResultModel.add_member(:reservation, Shapes::ShapeRef.new(shape: Reservation, location_name: "reservation"))
     UpdateReservationResultModel.struct_class = Types::UpdateReservationResultModel
+
+    UpdateSdiSourceRequest.add_member(:mode, Shapes::ShapeRef.new(shape: SdiSourceMode, location_name: "mode"))
+    UpdateSdiSourceRequest.add_member(:name, Shapes::ShapeRef.new(shape: __string, location_name: "name"))
+    UpdateSdiSourceRequest.add_member(:sdi_source_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "sdiSourceId"))
+    UpdateSdiSourceRequest.add_member(:type, Shapes::ShapeRef.new(shape: SdiSourceType, location_name: "type"))
+    UpdateSdiSourceRequest.struct_class = Types::UpdateSdiSourceRequest
+
+    UpdateSdiSourceResponse.add_member(:sdi_source, Shapes::ShapeRef.new(shape: SdiSource, location_name: "sdiSource"))
+    UpdateSdiSourceResponse.struct_class = Types::UpdateSdiSourceResponse
 
     ValidationError.add_member(:element_path, Shapes::ShapeRef.new(shape: __string, location_name: "elementPath"))
     ValidationError.add_member(:error_message, Shapes::ShapeRef.new(shape: __string, location_name: "errorMessage"))
@@ -5621,6 +5729,8 @@ module Aws::MediaLive
     __listOfScheduleAction.member = Shapes::ShapeRef.new(shape: ScheduleAction)
 
     __listOfScte35Descriptor.member = Shapes::ShapeRef.new(shape: Scte35Descriptor)
+
+    __listOfSdiSourceSummary.member = Shapes::ShapeRef.new(shape: SdiSourceSummary)
 
     __listOfSignalMapSummary.member = Shapes::ShapeRef.new(shape: SignalMapSummary)
 
@@ -7488,6 +7598,87 @@ module Aws::MediaLive
         o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
         o.errors << Shapes::ShapeRef.new(shape: BadGatewayException)
         o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: GatewayTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+      end)
+
+      api.add_operation(:create_sdi_source, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateSdiSource"
+        o.http_method = "POST"
+        o.http_request_uri = "/prod/sdiSources"
+        o.input = Shapes::ShapeRef.new(shape: CreateSdiSourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateSdiSourceResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: BadGatewayException)
+        o.errors << Shapes::ShapeRef.new(shape: GatewayTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+      end)
+
+      api.add_operation(:delete_sdi_source, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteSdiSource"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/prod/sdiSources/{sdiSourceId}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteSdiSourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteSdiSourceResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: BadGatewayException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: GatewayTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+      end)
+
+      api.add_operation(:describe_sdi_source, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeSdiSource"
+        o.http_method = "GET"
+        o.http_request_uri = "/prod/sdiSources/{sdiSourceId}"
+        o.input = Shapes::ShapeRef.new(shape: DescribeSdiSourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeSdiSourceResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: BadGatewayException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: GatewayTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+      end)
+
+      api.add_operation(:list_sdi_sources, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListSdiSources"
+        o.http_method = "GET"
+        o.http_request_uri = "/prod/sdiSources"
+        o.input = Shapes::ShapeRef.new(shape: ListSdiSourcesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListSdiSourcesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: BadGatewayException)
+        o.errors << Shapes::ShapeRef.new(shape: GatewayTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:update_sdi_source, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateSdiSource"
+        o.http_method = "PUT"
+        o.http_request_uri = "/prod/sdiSources/{sdiSourceId}"
+        o.input = Shapes::ShapeRef.new(shape: UpdateSdiSourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateSdiSourceResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: BadGatewayException)
         o.errors << Shapes::ShapeRef.new(shape: GatewayTimeoutException)
         o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)

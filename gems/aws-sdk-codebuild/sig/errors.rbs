@@ -13,6 +13,8 @@ module Aws
 
       class AccountLimitExceededException < ::Aws::Errors::ServiceError
       end
+      class AccountSuspendedException < ::Aws::Errors::ServiceError
+      end
       class InvalidInputException < ::Aws::Errors::ServiceError
       end
       class OAuthProviderException < ::Aws::Errors::ServiceError

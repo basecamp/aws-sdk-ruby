@@ -111,6 +111,18 @@ module Aws
                             ) -> _BatchGetBuildsResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchGetBuildsResponseSuccess
 
+      interface _BatchGetCommandExecutionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchGetCommandExecutionsOutput]
+        def command_executions: () -> ::Array[Types::CommandExecution]
+        def command_executions_not_found: () -> ::Array[::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CodeBuild/Client.html#batch_get_command_executions-instance_method
+      def batch_get_command_executions: (
+                                          sandbox_id: ::String,
+                                          command_execution_ids: Array[::String]
+                                        ) -> _BatchGetCommandExecutionsResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchGetCommandExecutionsResponseSuccess
+
       interface _BatchGetFleetsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::BatchGetFleetsOutput]
         def fleets: () -> ::Array[Types::Fleet]
@@ -154,6 +166,17 @@ module Aws
                                report_arns: Array[::String]
                              ) -> _BatchGetReportsResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchGetReportsResponseSuccess
+
+      interface _BatchGetSandboxesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchGetSandboxesOutput]
+        def sandboxes: () -> ::Array[Types::Sandbox]
+        def sandboxes_not_found: () -> ::Array[::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CodeBuild/Client.html#batch_get_sandboxes-instance_method
+      def batch_get_sandboxes: (
+                                 ids: Array[::String]
+                               ) -> _BatchGetSandboxesResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchGetSandboxesResponseSuccess
 
       interface _CreateFleetResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateFleetOutput]
@@ -649,6 +672,20 @@ module Aws
                                    ) -> _ListBuildsForProjectResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBuildsForProjectResponseSuccess
 
+      interface _ListCommandExecutionsForSandboxResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListCommandExecutionsForSandboxOutput]
+        def command_executions: () -> ::Array[Types::CommandExecution]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CodeBuild/Client.html#list_command_executions_for_sandbox-instance_method
+      def list_command_executions_for_sandbox: (
+                                                 sandbox_id: ::String,
+                                                 ?max_results: ::Integer,
+                                                 ?sort_order: ("ASCENDING" | "DESCENDING"),
+                                                 ?next_token: ::String
+                                               ) -> _ListCommandExecutionsForSandboxResponseSuccess
+                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListCommandExecutionsForSandboxResponseSuccess
+
       interface _ListCuratedEnvironmentImagesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListCuratedEnvironmentImagesOutput]
         def platforms: () -> ::Array[Types::EnvironmentPlatform]
@@ -731,6 +768,33 @@ module Aws
                                            }
                                          ) -> _ListReportsForReportGroupResponseSuccess
                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListReportsForReportGroupResponseSuccess
+
+      interface _ListSandboxesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListSandboxesOutput]
+        def ids: () -> ::Array[::String]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CodeBuild/Client.html#list_sandboxes-instance_method
+      def list_sandboxes: (
+                            ?max_results: ::Integer,
+                            ?sort_order: ("ASCENDING" | "DESCENDING"),
+                            ?next_token: ::String
+                          ) -> _ListSandboxesResponseSuccess
+                        | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListSandboxesResponseSuccess
+
+      interface _ListSandboxesForProjectResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListSandboxesForProjectOutput]
+        def ids: () -> ::Array[::String]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CodeBuild/Client.html#list_sandboxes_for_project-instance_method
+      def list_sandboxes_for_project: (
+                                        project_name: ::String,
+                                        ?max_results: ::Integer,
+                                        ?sort_order: ("ASCENDING" | "DESCENDING"),
+                                        ?next_token: ::String
+                                      ) -> _ListSandboxesForProjectResponseSuccess
+                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListSandboxesForProjectResponseSuccess
 
       interface _ListSharedProjectsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListSharedProjectsOutput]
@@ -1062,6 +1126,39 @@ module Aws
                              ) -> _StartBuildBatchResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartBuildBatchResponseSuccess
 
+      interface _StartCommandExecutionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartCommandExecutionOutput]
+        def command_execution: () -> Types::CommandExecution
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CodeBuild/Client.html#start_command_execution-instance_method
+      def start_command_execution: (
+                                     sandbox_id: ::String,
+                                     command: ::String,
+                                     ?type: ("SHELL")
+                                   ) -> _StartCommandExecutionResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartCommandExecutionResponseSuccess
+
+      interface _StartSandboxResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartSandboxOutput]
+        def sandbox: () -> Types::Sandbox
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CodeBuild/Client.html#start_sandbox-instance_method
+      def start_sandbox: (
+                           ?project_name: ::String,
+                           ?idempotency_token: ::String
+                         ) -> _StartSandboxResponseSuccess
+                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartSandboxResponseSuccess
+
+      interface _StartSandboxConnectionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartSandboxConnectionOutput]
+        def ssm_session: () -> Types::SSMSession
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CodeBuild/Client.html#start_sandbox_connection-instance_method
+      def start_sandbox_connection: (
+                                      sandbox_id: ::String
+                                    ) -> _StartSandboxConnectionResponseSuccess
+                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartSandboxConnectionResponseSuccess
+
       interface _StopBuildResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StopBuildOutput]
         def build: () -> Types::Build
@@ -1081,6 +1178,16 @@ module Aws
                               id: ::String
                             ) -> _StopBuildBatchResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StopBuildBatchResponseSuccess
+
+      interface _StopSandboxResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StopSandboxOutput]
+        def sandbox: () -> Types::Sandbox
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CodeBuild/Client.html#stop_sandbox-instance_method
+      def stop_sandbox: (
+                          id: ::String
+                        ) -> _StopSandboxResponseSuccess
+                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StopSandboxResponseSuccess
 
       interface _UpdateFleetResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateFleetOutput]

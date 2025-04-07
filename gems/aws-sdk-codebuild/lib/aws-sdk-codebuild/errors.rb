@@ -28,6 +28,7 @@ module Aws::CodeBuild
   #
   # ## Error Classes
   # * {AccountLimitExceededException}
+  # * {AccountSuspendedException}
   # * {InvalidInputException}
   # * {OAuthProviderException}
   # * {ResourceAlreadyExistsException}
@@ -44,6 +45,16 @@ module Aws::CodeBuild
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::CodeBuild::Types::AccountLimitExceededException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class AccountSuspendedException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::CodeBuild::Types::AccountSuspendedException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

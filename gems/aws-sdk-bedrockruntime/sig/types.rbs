@@ -21,12 +21,14 @@ module Aws::BedrockRuntime
       attr_accessor guardrail_version: ::String
       attr_accessor source: ("INPUT" | "OUTPUT")
       attr_accessor content: ::Array[Types::GuardrailContentBlock]
+      attr_accessor output_scope: ("INTERVENTIONS" | "FULL")
       SENSITIVE: []
     end
 
     class ApplyGuardrailResponse
       attr_accessor usage: Types::GuardrailUsage
       attr_accessor action: ("NONE" | "GUARDRAIL_INTERVENED")
+      attr_accessor action_reason: ::String
       attr_accessor outputs: ::Array[Types::GuardrailOutputContent]
       attr_accessor assessments: ::Array[Types::GuardrailAssessment]
       attr_accessor guardrail_coverage: Types::GuardrailCoverage
@@ -297,7 +299,7 @@ module Aws::BedrockRuntime
     class GuardrailConfiguration
       attr_accessor guardrail_identifier: ::String
       attr_accessor guardrail_version: ::String
-      attr_accessor trace: ("enabled" | "disabled")
+      attr_accessor trace: ("enabled" | "disabled" | "enabled_full")
       SENSITIVE: []
     end
 
@@ -319,7 +321,8 @@ module Aws::BedrockRuntime
       attr_accessor type: ("INSULTS" | "HATE" | "SEXUAL" | "VIOLENCE" | "MISCONDUCT" | "PROMPT_ATTACK")
       attr_accessor confidence: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
       attr_accessor filter_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
-      attr_accessor action: ("BLOCKED")
+      attr_accessor action: ("BLOCKED" | "NONE")
+      attr_accessor detected: bool
       SENSITIVE: []
     end
 
@@ -333,6 +336,7 @@ module Aws::BedrockRuntime
       attr_accessor threshold: ::Float
       attr_accessor score: ::Float
       attr_accessor action: ("BLOCKED" | "NONE")
+      attr_accessor detected: bool
       SENSITIVE: []
     end
 
@@ -386,7 +390,8 @@ module Aws::BedrockRuntime
 
     class GuardrailCustomWord
       attr_accessor match: ::String
-      attr_accessor action: ("BLOCKED")
+      attr_accessor action: ("BLOCKED" | "NONE")
+      attr_accessor detected: bool
       SENSITIVE: []
     end
 
@@ -423,7 +428,8 @@ module Aws::BedrockRuntime
     class GuardrailManagedWord
       attr_accessor match: ::String
       attr_accessor type: ("PROFANITY")
-      attr_accessor action: ("BLOCKED")
+      attr_accessor action: ("BLOCKED" | "NONE")
+      attr_accessor detected: bool
       SENSITIVE: []
     end
 
@@ -435,7 +441,8 @@ module Aws::BedrockRuntime
     class GuardrailPiiEntityFilter
       attr_accessor match: ::String
       attr_accessor type: ("ADDRESS" | "AGE" | "AWS_ACCESS_KEY" | "AWS_SECRET_KEY" | "CA_HEALTH_NUMBER" | "CA_SOCIAL_INSURANCE_NUMBER" | "CREDIT_DEBIT_CARD_CVV" | "CREDIT_DEBIT_CARD_EXPIRY" | "CREDIT_DEBIT_CARD_NUMBER" | "DRIVER_ID" | "EMAIL" | "INTERNATIONAL_BANK_ACCOUNT_NUMBER" | "IP_ADDRESS" | "LICENSE_PLATE" | "MAC_ADDRESS" | "NAME" | "PASSWORD" | "PHONE" | "PIN" | "SWIFT_CODE" | "UK_NATIONAL_HEALTH_SERVICE_NUMBER" | "UK_NATIONAL_INSURANCE_NUMBER" | "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER" | "URL" | "USERNAME" | "US_BANK_ACCOUNT_NUMBER" | "US_BANK_ROUTING_NUMBER" | "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER" | "US_PASSPORT_NUMBER" | "US_SOCIAL_SECURITY_NUMBER" | "VEHICLE_IDENTIFICATION_NUMBER")
-      attr_accessor action: ("ANONYMIZED" | "BLOCKED")
+      attr_accessor action: ("ANONYMIZED" | "BLOCKED" | "NONE")
+      attr_accessor detected: bool
       SENSITIVE: []
     end
 
@@ -443,7 +450,8 @@ module Aws::BedrockRuntime
       attr_accessor name: ::String
       attr_accessor match: ::String
       attr_accessor regex: ::String
-      attr_accessor action: ("ANONYMIZED" | "BLOCKED")
+      attr_accessor action: ("ANONYMIZED" | "BLOCKED" | "NONE")
+      attr_accessor detected: bool
       SENSITIVE: []
     end
 
@@ -456,7 +464,7 @@ module Aws::BedrockRuntime
     class GuardrailStreamConfiguration
       attr_accessor guardrail_identifier: ::String
       attr_accessor guardrail_version: ::String
-      attr_accessor trace: ("enabled" | "disabled")
+      attr_accessor trace: ("enabled" | "disabled" | "enabled_full")
       attr_accessor stream_processing_mode: ("sync" | "async")
       SENSITIVE: []
     end
@@ -476,7 +484,8 @@ module Aws::BedrockRuntime
     class GuardrailTopic
       attr_accessor name: ::String
       attr_accessor type: ("DENY")
-      attr_accessor action: ("BLOCKED")
+      attr_accessor action: ("BLOCKED" | "NONE")
+      attr_accessor detected: bool
       SENSITIVE: []
     end
 
@@ -489,6 +498,7 @@ module Aws::BedrockRuntime
       attr_accessor model_output: ::Array[::String]
       attr_accessor input_assessment: ::Hash[::String, Types::GuardrailAssessment]
       attr_accessor output_assessments: ::Hash[::String, ::Array[Types::GuardrailAssessment]]
+      attr_accessor action_reason: ::String
       SENSITIVE: []
     end
 
@@ -545,7 +555,7 @@ module Aws::BedrockRuntime
       attr_accessor content_type: ::String
       attr_accessor accept: ::String
       attr_accessor model_id: ::String
-      attr_accessor trace: ("ENABLED" | "DISABLED")
+      attr_accessor trace: ("ENABLED" | "DISABLED" | "ENABLED_FULL")
       attr_accessor guardrail_identifier: ::String
       attr_accessor guardrail_version: ::String
       attr_accessor performance_config_latency: ("standard" | "optimized")
@@ -564,7 +574,7 @@ module Aws::BedrockRuntime
       attr_accessor content_type: ::String
       attr_accessor accept: ::String
       attr_accessor model_id: ::String
-      attr_accessor trace: ("ENABLED" | "DISABLED")
+      attr_accessor trace: ("ENABLED" | "DISABLED" | "ENABLED_FULL")
       attr_accessor guardrail_identifier: ::String
       attr_accessor guardrail_version: ::String
       attr_accessor performance_config_latency: ("standard" | "optimized")

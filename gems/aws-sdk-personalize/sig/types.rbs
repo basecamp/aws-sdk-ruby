@@ -819,6 +819,13 @@ module Aws::Personalize
       SENSITIVE: []
     end
 
+    class EventParameters
+      attr_accessor event_type: ::String
+      attr_accessor event_value_threshold: ::Float
+      attr_accessor weight: ::Float
+      SENSITIVE: []
+    end
+
     class EventTracker
       attr_accessor name: ::String
       attr_accessor event_tracker_arn: ::String
@@ -837,6 +844,11 @@ module Aws::Personalize
       attr_accessor status: ::String
       attr_accessor creation_date_time: ::Time
       attr_accessor last_updated_date_time: ::Time
+      SENSITIVE: []
+    end
+
+    class EventsConfig
+      attr_accessor event_parameters_list: ::Array[Types::EventParameters]
       SENSITIVE: []
     end
 
@@ -1322,6 +1334,7 @@ module Aws::Personalize
       attr_accessor algorithm_hyper_parameters: ::Hash[::String, ::String]
       attr_accessor feature_transformation_parameters: ::Hash[::String, ::String]
       attr_accessor auto_ml_config: Types::AutoMLConfig
+      attr_accessor events_config: Types::EventsConfig
       attr_accessor optimization_objective: Types::OptimizationObjective
       attr_accessor training_data_config: Types::TrainingDataConfig
       attr_accessor auto_training_config: Types::AutoTrainingConfig
@@ -1340,6 +1353,7 @@ module Aws::Personalize
 
     class SolutionUpdateConfig
       attr_accessor auto_training_config: Types::AutoTrainingConfig
+      attr_accessor events_config: Types::EventsConfig
       SENSITIVE: []
     end
 
@@ -1413,7 +1427,7 @@ module Aws::Personalize
     class Tag
       attr_accessor tag_key: ::String
       attr_accessor tag_value: ::String
-      SENSITIVE: []
+      SENSITIVE: [:tag_key, :tag_value]
     end
 
     class TagResourceRequest

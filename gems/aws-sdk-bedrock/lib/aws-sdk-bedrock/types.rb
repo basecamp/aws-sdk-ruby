@@ -3441,6 +3441,38 @@ module Aws::Bedrock
     #   The output modalities selected for the guardrail content filter.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] input_action
+    #   The action to take when harmful content is detected in the input.
+    #   Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_action
+    #   The action to take when harmful content is detected in the output.
+    #   Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_enabled
+    #   Indicates whether guardrail evaluation is enabled on the input. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] output_enabled
+    #   Indicates whether guardrail evaluation is enabled on the output.
+    #   When disabled, you aren't charged for the evaluation. The
+    #   evaluation doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailContentFilter AWS API Documentation
     #
     class GuardrailContentFilter < Struct.new(
@@ -3448,8 +3480,12 @@ module Aws::Bedrock
       :input_strength,
       :output_strength,
       :input_modalities,
-      :output_modalities)
-      SENSITIVE = [:input_modalities, :output_modalities]
+      :output_modalities,
+      :input_action,
+      :output_action,
+      :input_enabled,
+      :output_enabled)
+      SENSITIVE = [:input_modalities, :output_modalities, :input_action, :output_action]
       include Aws::Structure
     end
 
@@ -3520,6 +3556,38 @@ module Aws::Bedrock
     #   configuration.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] input_action
+    #   Specifies the action to take when harmful content is detected.
+    #   Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_action
+    #   Specifies the action to take when harmful content is detected in the
+    #   output. Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_enabled
+    #   Specifies whether to enable guardrail evaluation on the input. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] output_enabled
+    #   Specifies whether to enable guardrail evaluation on the output. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailContentFilterConfig AWS API Documentation
     #
     class GuardrailContentFilterConfig < Struct.new(
@@ -3527,8 +3595,12 @@ module Aws::Bedrock
       :input_strength,
       :output_strength,
       :input_modalities,
-      :output_modalities)
-      SENSITIVE = [:input_modalities, :output_modalities]
+      :output_modalities,
+      :input_action,
+      :output_action,
+      :input_enabled,
+      :output_enabled)
+      SENSITIVE = [:input_modalities, :output_modalities, :input_action, :output_action]
       include Aws::Structure
     end
 
@@ -3584,12 +3656,30 @@ module Aws::Bedrock
     #   filter.
     #   @return [Float]
     #
+    # @!attribute [rw] action
+    #   The action to take when content fails the contextual grounding
+    #   evaluation. Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] enabled
+    #   Indicates whether contextual grounding is enabled for evaluation.
+    #   When disabled, you aren't charged for the evaluation. The
+    #   evaluation doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailContextualGroundingFilter AWS API Documentation
     #
     class GuardrailContextualGroundingFilter < Struct.new(
       :type,
-      :threshold)
-      SENSITIVE = []
+      :threshold,
+      :action,
+      :enabled)
+      SENSITIVE = [:action]
       include Aws::Structure
     end
 
@@ -3605,12 +3695,30 @@ module Aws::Bedrock
     #   filter.
     #   @return [Float]
     #
+    # @!attribute [rw] action
+    #   Specifies the action to take when content fails the contextual
+    #   grounding evaluation. Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] enabled
+    #   Specifies whether to enable contextual grounding evaluation. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailContextualGroundingFilterConfig AWS API Documentation
     #
     class GuardrailContextualGroundingFilterConfig < Struct.new(
       :type,
-      :threshold)
-      SENSITIVE = []
+      :threshold,
+      :action,
+      :enabled)
+      SENSITIVE = [:action]
       include Aws::Structure
     end
 
@@ -3652,11 +3760,47 @@ module Aws::Bedrock
     #   guardrail. (For now, we only offer profanity word list)
     #   @return [String]
     #
+    # @!attribute [rw] input_action
+    #   The action to take when harmful content is detected in the input.
+    #   Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_action
+    #   The action to take when harmful content is detected in the output.
+    #   Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_enabled
+    #   Indicates whether guardrail evaluation is enabled on the input. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] output_enabled
+    #   Indicates whether guardrail evaluation is enabled on the output.
+    #   When disabled, you aren't charged for the evaluation. The
+    #   evaluation doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailManagedWords AWS API Documentation
     #
     class GuardrailManagedWords < Struct.new(
-      :type)
-      SENSITIVE = []
+      :type,
+      :input_action,
+      :output_action,
+      :input_enabled,
+      :output_enabled)
+      SENSITIVE = [:input_action, :output_action]
       include Aws::Structure
     end
 
@@ -3666,11 +3810,47 @@ module Aws::Bedrock
     #   The managed word type to configure for the guardrail.
     #   @return [String]
     #
+    # @!attribute [rw] input_action
+    #   Specifies the action to take when harmful content is detected in the
+    #   input. Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_action
+    #   Specifies the action to take when harmful content is detected in the
+    #   output. Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_enabled
+    #   Specifies whether to enable guardrail evaluation on the input. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] output_enabled
+    #   Specifies whether to enable guardrail evaluation on the output. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailManagedWordsConfig AWS API Documentation
     #
     class GuardrailManagedWordsConfig < Struct.new(
-      :type)
-      SENSITIVE = []
+      :type,
+      :input_action,
+      :output_action,
+      :input_enabled,
+      :output_enabled)
+      SENSITIVE = [:input_action, :output_action]
       include Aws::Structure
     end
 
@@ -3684,11 +3864,53 @@ module Aws::Bedrock
     #   The configured guardrail action when PII entity is detected.
     #   @return [String]
     #
+    # @!attribute [rw] input_action
+    #   The action to take when harmful content is detected in the input.
+    #   Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `ANONYMIZE` – Mask the content and replace it with identifier
+    #     tags.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_action
+    #   The action to take when harmful content is detected in the output.
+    #   Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `ANONYMIZE` – Mask the content and replace it with identifier
+    #     tags.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_enabled
+    #   Indicates whether guardrail evaluation is enabled on the input. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] output_enabled
+    #   Indicates whether guardrail evaluation is enabled on the output.
+    #   When disabled, you aren't charged for the evaluation. The
+    #   evaluation doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailPiiEntity AWS API Documentation
     #
     class GuardrailPiiEntity < Struct.new(
       :type,
-      :action)
+      :action,
+      :input_action,
+      :output_action,
+      :input_enabled,
+      :output_enabled)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3922,11 +4144,53 @@ module Aws::Bedrock
     #   Configure guardrail action when the PII entity is detected.
     #   @return [String]
     #
+    # @!attribute [rw] input_action
+    #   Specifies the action to take when harmful content is detected in the
+    #   input. Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `ANONYMIZE` – Mask the content and replace it with identifier
+    #     tags.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_action
+    #   Specifies the action to take when harmful content is detected in the
+    #   output. Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `ANONYMIZE` – Mask the content and replace it with identifier
+    #     tags.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_enabled
+    #   Specifies whether to enable guardrail evaluation on the input. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] output_enabled
+    #   Specifies whether to enable guardrail evaluation on the output. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailPiiEntityConfig AWS API Documentation
     #
     class GuardrailPiiEntityConfig < Struct.new(
       :type,
-      :action)
+      :action,
+      :input_action,
+      :output_action,
+      :input_enabled,
+      :output_enabled)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3949,13 +4213,49 @@ module Aws::Bedrock
     #   The action taken when a match to the regular expression is detected.
     #   @return [String]
     #
+    # @!attribute [rw] input_action
+    #   The action to take when harmful content is detected in the input.
+    #   Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_action
+    #   The action to take when harmful content is detected in the output.
+    #   Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_enabled
+    #   Indicates whether guardrail evaluation is enabled on the input. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] output_enabled
+    #   Indicates whether guardrail evaluation is enabled on the output.
+    #   When disabled, you aren't charged for the evaluation. The
+    #   evaluation doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailRegex AWS API Documentation
     #
     class GuardrailRegex < Struct.new(
       :name,
       :description,
       :pattern,
-      :action)
+      :action,
+      :input_action,
+      :output_action,
+      :input_enabled,
+      :output_enabled)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3980,13 +4280,49 @@ module Aws::Bedrock
     #   is detected.
     #   @return [String]
     #
+    # @!attribute [rw] input_action
+    #   Specifies the action to take when harmful content is detected in the
+    #   input. Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_action
+    #   Specifies the action to take when harmful content is detected in the
+    #   output. Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_enabled
+    #   Specifies whether to enable guardrail evaluation on the input. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] output_enabled
+    #   Specifies whether to enable guardrail evaluation on the output. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailRegexConfig AWS API Documentation
     #
     class GuardrailRegexConfig < Struct.new(
       :name,
       :description,
       :pattern,
-      :action)
+      :action,
+      :input_action,
+      :output_action,
+      :input_enabled,
+      :output_enabled)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4119,14 +4455,50 @@ module Aws::Bedrock
     #   Specifies to deny the topic.
     #   @return [String]
     #
+    # @!attribute [rw] input_action
+    #   The action to take when harmful content is detected in the input.
+    #   Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_action
+    #   The action to take when harmful content is detected in the output.
+    #   Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_enabled
+    #   Indicates whether guardrail evaluation is enabled on the input. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] output_enabled
+    #   Indicates whether guardrail evaluation is enabled on the output.
+    #   When disabled, you aren't charged for the evaluation. The
+    #   evaluation doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailTopic AWS API Documentation
     #
     class GuardrailTopic < Struct.new(
       :name,
       :definition,
       :examples,
-      :type)
-      SENSITIVE = [:name, :definition, :examples]
+      :type,
+      :input_action,
+      :output_action,
+      :input_enabled,
+      :output_enabled)
+      SENSITIVE = [:name, :definition, :examples, :input_action, :output_action]
       include Aws::Structure
     end
 
@@ -4149,14 +4521,50 @@ module Aws::Bedrock
     #   Specifies to deny the topic.
     #   @return [String]
     #
+    # @!attribute [rw] input_action
+    #   Specifies the action to take when harmful content is detected in the
+    #   input. Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_action
+    #   Specifies the action to take when harmful content is detected in the
+    #   output. Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_enabled
+    #   Specifies whether to enable guardrail evaluation on the input. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] output_enabled
+    #   Specifies whether to enable guardrail evaluation on the output. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailTopicConfig AWS API Documentation
     #
     class GuardrailTopicConfig < Struct.new(
       :name,
       :definition,
       :examples,
-      :type)
-      SENSITIVE = [:name, :definition, :examples]
+      :type,
+      :input_action,
+      :output_action,
+      :input_enabled,
+      :output_enabled)
+      SENSITIVE = [:name, :definition, :examples, :input_action, :output_action]
       include Aws::Structure
     end
 
@@ -4206,11 +4614,47 @@ module Aws::Bedrock
     #   Text of the word configured for the guardrail to block.
     #   @return [String]
     #
+    # @!attribute [rw] input_action
+    #   The action to take when harmful content is detected in the input.
+    #   Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_action
+    #   The action to take when harmful content is detected in the output.
+    #   Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_enabled
+    #   Indicates whether guardrail evaluation is enabled on the input. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] output_enabled
+    #   Indicates whether guardrail evaluation is enabled on the output.
+    #   When disabled, you aren't charged for the evaluation. The
+    #   evaluation doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailWord AWS API Documentation
     #
     class GuardrailWord < Struct.new(
-      :text)
-      SENSITIVE = []
+      :text,
+      :input_action,
+      :output_action,
+      :input_enabled,
+      :output_enabled)
+      SENSITIVE = [:input_action, :output_action]
       include Aws::Structure
     end
 
@@ -4220,11 +4664,47 @@ module Aws::Bedrock
     #   Text of the word configured for the guardrail to block.
     #   @return [String]
     #
+    # @!attribute [rw] input_action
+    #   Specifies the action to take when harmful content is detected in the
+    #   input. Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_action
+    #   Specifies the action to take when harmful content is detected in the
+    #   output. Supported values include:
+    #
+    #   * `BLOCK` – Block the content and replace it with blocked messaging.
+    #
+    #   * `NONE` – Take no action but return detection information in the
+    #     trace response.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_enabled
+    #   Specifies whether to enable guardrail evaluation on the intput. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] output_enabled
+    #   Specifies whether to enable guardrail evaluation on the output. When
+    #   disabled, you aren't charged for the evaluation. The evaluation
+    #   doesn't appear in the response.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailWordConfig AWS API Documentation
     #
     class GuardrailWordConfig < Struct.new(
-      :text)
-      SENSITIVE = []
+      :text,
+      :input_action,
+      :output_action,
+      :input_enabled,
+      :output_enabled)
+      SENSITIVE = [:input_action, :output_action]
       include Aws::Structure
     end
 

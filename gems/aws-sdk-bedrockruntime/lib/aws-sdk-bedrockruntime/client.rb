@@ -503,10 +503,21 @@ module Aws::BedrockRuntime
     # @option params [required, Array<Types::GuardrailContentBlock>] :content
     #   The content details used in the request to apply the guardrail.
     #
+    # @option params [String] :output_scope
+    #   Specifies the scope of the output that you get in the response. Set to
+    #   `FULL` to return the entire output, including any detected and
+    #   non-detected entries in the response for enhanced debugging.
+    #
+    #   Note that the full output scope doesn't apply to word filters or
+    #   regex in sensitive information filters. It does apply to all other
+    #   filtering policies, including sensitive information with filters that
+    #   can detect personally identifiable information (PII).
+    #
     # @return [Types::ApplyGuardrailResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ApplyGuardrailResponse#usage #usage} => Types::GuardrailUsage
     #   * {Types::ApplyGuardrailResponse#action #action} => String
+    #   * {Types::ApplyGuardrailResponse#action_reason #action_reason} => String
     #   * {Types::ApplyGuardrailResponse#outputs #outputs} => Array&lt;Types::GuardrailOutputContent&gt;
     #   * {Types::ApplyGuardrailResponse#assessments #assessments} => Array&lt;Types::GuardrailAssessment&gt;
     #   * {Types::ApplyGuardrailResponse#guardrail_coverage #guardrail_coverage} => Types::GuardrailCoverage
@@ -531,6 +542,7 @@ module Aws::BedrockRuntime
     #         },
     #       },
     #     ],
+    #     output_scope: "INTERVENTIONS", # accepts INTERVENTIONS, FULL
     #   })
     #
     # @example Response structure
@@ -543,39 +555,47 @@ module Aws::BedrockRuntime
     #   resp.usage.contextual_grounding_policy_units #=> Integer
     #   resp.usage.content_policy_image_units #=> Integer
     #   resp.action #=> String, one of "NONE", "GUARDRAIL_INTERVENED"
+    #   resp.action_reason #=> String
     #   resp.outputs #=> Array
     #   resp.outputs[0].text #=> String
     #   resp.assessments #=> Array
     #   resp.assessments[0].topic_policy.topics #=> Array
     #   resp.assessments[0].topic_policy.topics[0].name #=> String
     #   resp.assessments[0].topic_policy.topics[0].type #=> String, one of "DENY"
-    #   resp.assessments[0].topic_policy.topics[0].action #=> String, one of "BLOCKED"
+    #   resp.assessments[0].topic_policy.topics[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.assessments[0].topic_policy.topics[0].detected #=> Boolean
     #   resp.assessments[0].content_policy.filters #=> Array
     #   resp.assessments[0].content_policy.filters[0].type #=> String, one of "INSULTS", "HATE", "SEXUAL", "VIOLENCE", "MISCONDUCT", "PROMPT_ATTACK"
     #   resp.assessments[0].content_policy.filters[0].confidence #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
     #   resp.assessments[0].content_policy.filters[0].filter_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
-    #   resp.assessments[0].content_policy.filters[0].action #=> String, one of "BLOCKED"
+    #   resp.assessments[0].content_policy.filters[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.assessments[0].content_policy.filters[0].detected #=> Boolean
     #   resp.assessments[0].word_policy.custom_words #=> Array
     #   resp.assessments[0].word_policy.custom_words[0].match #=> String
-    #   resp.assessments[0].word_policy.custom_words[0].action #=> String, one of "BLOCKED"
+    #   resp.assessments[0].word_policy.custom_words[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.assessments[0].word_policy.custom_words[0].detected #=> Boolean
     #   resp.assessments[0].word_policy.managed_word_lists #=> Array
     #   resp.assessments[0].word_policy.managed_word_lists[0].match #=> String
     #   resp.assessments[0].word_policy.managed_word_lists[0].type #=> String, one of "PROFANITY"
-    #   resp.assessments[0].word_policy.managed_word_lists[0].action #=> String, one of "BLOCKED"
+    #   resp.assessments[0].word_policy.managed_word_lists[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.assessments[0].word_policy.managed_word_lists[0].detected #=> Boolean
     #   resp.assessments[0].sensitive_information_policy.pii_entities #=> Array
     #   resp.assessments[0].sensitive_information_policy.pii_entities[0].match #=> String
     #   resp.assessments[0].sensitive_information_policy.pii_entities[0].type #=> String, one of "ADDRESS", "AGE", "AWS_ACCESS_KEY", "AWS_SECRET_KEY", "CA_HEALTH_NUMBER", "CA_SOCIAL_INSURANCE_NUMBER", "CREDIT_DEBIT_CARD_CVV", "CREDIT_DEBIT_CARD_EXPIRY", "CREDIT_DEBIT_CARD_NUMBER", "DRIVER_ID", "EMAIL", "INTERNATIONAL_BANK_ACCOUNT_NUMBER", "IP_ADDRESS", "LICENSE_PLATE", "MAC_ADDRESS", "NAME", "PASSWORD", "PHONE", "PIN", "SWIFT_CODE", "UK_NATIONAL_HEALTH_SERVICE_NUMBER", "UK_NATIONAL_INSURANCE_NUMBER", "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER", "URL", "USERNAME", "US_BANK_ACCOUNT_NUMBER", "US_BANK_ROUTING_NUMBER", "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER", "US_PASSPORT_NUMBER", "US_SOCIAL_SECURITY_NUMBER", "VEHICLE_IDENTIFICATION_NUMBER"
-    #   resp.assessments[0].sensitive_information_policy.pii_entities[0].action #=> String, one of "ANONYMIZED", "BLOCKED"
+    #   resp.assessments[0].sensitive_information_policy.pii_entities[0].action #=> String, one of "ANONYMIZED", "BLOCKED", "NONE"
+    #   resp.assessments[0].sensitive_information_policy.pii_entities[0].detected #=> Boolean
     #   resp.assessments[0].sensitive_information_policy.regexes #=> Array
     #   resp.assessments[0].sensitive_information_policy.regexes[0].name #=> String
     #   resp.assessments[0].sensitive_information_policy.regexes[0].match #=> String
     #   resp.assessments[0].sensitive_information_policy.regexes[0].regex #=> String
-    #   resp.assessments[0].sensitive_information_policy.regexes[0].action #=> String, one of "ANONYMIZED", "BLOCKED"
+    #   resp.assessments[0].sensitive_information_policy.regexes[0].action #=> String, one of "ANONYMIZED", "BLOCKED", "NONE"
+    #   resp.assessments[0].sensitive_information_policy.regexes[0].detected #=> Boolean
     #   resp.assessments[0].contextual_grounding_policy.filters #=> Array
     #   resp.assessments[0].contextual_grounding_policy.filters[0].type #=> String, one of "GROUNDING", "RELEVANCE"
     #   resp.assessments[0].contextual_grounding_policy.filters[0].threshold #=> Float
     #   resp.assessments[0].contextual_grounding_policy.filters[0].score #=> Float
     #   resp.assessments[0].contextual_grounding_policy.filters[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.assessments[0].contextual_grounding_policy.filters[0].detected #=> Boolean
     #   resp.assessments[0].invocation_metrics.guardrail_processing_latency #=> Integer
     #   resp.assessments[0].invocation_metrics.usage.topic_policy_units #=> Integer
     #   resp.assessments[0].invocation_metrics.usage.content_policy_units #=> Integer
@@ -938,7 +958,7 @@ module Aws::BedrockRuntime
     #     guardrail_config: {
     #       guardrail_identifier: "GuardrailIdentifier", # required
     #       guardrail_version: "GuardrailVersion", # required
-    #       trace: "enabled", # accepts enabled, disabled
+    #       trace: "enabled", # accepts enabled, disabled, enabled_full
     #     },
     #     additional_model_request_fields: {
     #     },
@@ -1007,33 +1027,40 @@ module Aws::BedrockRuntime
     #   resp.trace.guardrail.input_assessment["String"].topic_policy.topics #=> Array
     #   resp.trace.guardrail.input_assessment["String"].topic_policy.topics[0].name #=> String
     #   resp.trace.guardrail.input_assessment["String"].topic_policy.topics[0].type #=> String, one of "DENY"
-    #   resp.trace.guardrail.input_assessment["String"].topic_policy.topics[0].action #=> String, one of "BLOCKED"
+    #   resp.trace.guardrail.input_assessment["String"].topic_policy.topics[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.trace.guardrail.input_assessment["String"].topic_policy.topics[0].detected #=> Boolean
     #   resp.trace.guardrail.input_assessment["String"].content_policy.filters #=> Array
     #   resp.trace.guardrail.input_assessment["String"].content_policy.filters[0].type #=> String, one of "INSULTS", "HATE", "SEXUAL", "VIOLENCE", "MISCONDUCT", "PROMPT_ATTACK"
     #   resp.trace.guardrail.input_assessment["String"].content_policy.filters[0].confidence #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
     #   resp.trace.guardrail.input_assessment["String"].content_policy.filters[0].filter_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
-    #   resp.trace.guardrail.input_assessment["String"].content_policy.filters[0].action #=> String, one of "BLOCKED"
+    #   resp.trace.guardrail.input_assessment["String"].content_policy.filters[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.trace.guardrail.input_assessment["String"].content_policy.filters[0].detected #=> Boolean
     #   resp.trace.guardrail.input_assessment["String"].word_policy.custom_words #=> Array
     #   resp.trace.guardrail.input_assessment["String"].word_policy.custom_words[0].match #=> String
-    #   resp.trace.guardrail.input_assessment["String"].word_policy.custom_words[0].action #=> String, one of "BLOCKED"
+    #   resp.trace.guardrail.input_assessment["String"].word_policy.custom_words[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.trace.guardrail.input_assessment["String"].word_policy.custom_words[0].detected #=> Boolean
     #   resp.trace.guardrail.input_assessment["String"].word_policy.managed_word_lists #=> Array
     #   resp.trace.guardrail.input_assessment["String"].word_policy.managed_word_lists[0].match #=> String
     #   resp.trace.guardrail.input_assessment["String"].word_policy.managed_word_lists[0].type #=> String, one of "PROFANITY"
-    #   resp.trace.guardrail.input_assessment["String"].word_policy.managed_word_lists[0].action #=> String, one of "BLOCKED"
+    #   resp.trace.guardrail.input_assessment["String"].word_policy.managed_word_lists[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.trace.guardrail.input_assessment["String"].word_policy.managed_word_lists[0].detected #=> Boolean
     #   resp.trace.guardrail.input_assessment["String"].sensitive_information_policy.pii_entities #=> Array
     #   resp.trace.guardrail.input_assessment["String"].sensitive_information_policy.pii_entities[0].match #=> String
     #   resp.trace.guardrail.input_assessment["String"].sensitive_information_policy.pii_entities[0].type #=> String, one of "ADDRESS", "AGE", "AWS_ACCESS_KEY", "AWS_SECRET_KEY", "CA_HEALTH_NUMBER", "CA_SOCIAL_INSURANCE_NUMBER", "CREDIT_DEBIT_CARD_CVV", "CREDIT_DEBIT_CARD_EXPIRY", "CREDIT_DEBIT_CARD_NUMBER", "DRIVER_ID", "EMAIL", "INTERNATIONAL_BANK_ACCOUNT_NUMBER", "IP_ADDRESS", "LICENSE_PLATE", "MAC_ADDRESS", "NAME", "PASSWORD", "PHONE", "PIN", "SWIFT_CODE", "UK_NATIONAL_HEALTH_SERVICE_NUMBER", "UK_NATIONAL_INSURANCE_NUMBER", "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER", "URL", "USERNAME", "US_BANK_ACCOUNT_NUMBER", "US_BANK_ROUTING_NUMBER", "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER", "US_PASSPORT_NUMBER", "US_SOCIAL_SECURITY_NUMBER", "VEHICLE_IDENTIFICATION_NUMBER"
-    #   resp.trace.guardrail.input_assessment["String"].sensitive_information_policy.pii_entities[0].action #=> String, one of "ANONYMIZED", "BLOCKED"
+    #   resp.trace.guardrail.input_assessment["String"].sensitive_information_policy.pii_entities[0].action #=> String, one of "ANONYMIZED", "BLOCKED", "NONE"
+    #   resp.trace.guardrail.input_assessment["String"].sensitive_information_policy.pii_entities[0].detected #=> Boolean
     #   resp.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes #=> Array
     #   resp.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes[0].name #=> String
     #   resp.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes[0].match #=> String
     #   resp.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes[0].regex #=> String
-    #   resp.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes[0].action #=> String, one of "ANONYMIZED", "BLOCKED"
+    #   resp.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes[0].action #=> String, one of "ANONYMIZED", "BLOCKED", "NONE"
+    #   resp.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes[0].detected #=> Boolean
     #   resp.trace.guardrail.input_assessment["String"].contextual_grounding_policy.filters #=> Array
     #   resp.trace.guardrail.input_assessment["String"].contextual_grounding_policy.filters[0].type #=> String, one of "GROUNDING", "RELEVANCE"
     #   resp.trace.guardrail.input_assessment["String"].contextual_grounding_policy.filters[0].threshold #=> Float
     #   resp.trace.guardrail.input_assessment["String"].contextual_grounding_policy.filters[0].score #=> Float
     #   resp.trace.guardrail.input_assessment["String"].contextual_grounding_policy.filters[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.trace.guardrail.input_assessment["String"].contextual_grounding_policy.filters[0].detected #=> Boolean
     #   resp.trace.guardrail.input_assessment["String"].invocation_metrics.guardrail_processing_latency #=> Integer
     #   resp.trace.guardrail.input_assessment["String"].invocation_metrics.usage.topic_policy_units #=> Integer
     #   resp.trace.guardrail.input_assessment["String"].invocation_metrics.usage.content_policy_units #=> Integer
@@ -1051,33 +1078,40 @@ module Aws::BedrockRuntime
     #   resp.trace.guardrail.output_assessments["String"][0].topic_policy.topics #=> Array
     #   resp.trace.guardrail.output_assessments["String"][0].topic_policy.topics[0].name #=> String
     #   resp.trace.guardrail.output_assessments["String"][0].topic_policy.topics[0].type #=> String, one of "DENY"
-    #   resp.trace.guardrail.output_assessments["String"][0].topic_policy.topics[0].action #=> String, one of "BLOCKED"
+    #   resp.trace.guardrail.output_assessments["String"][0].topic_policy.topics[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.trace.guardrail.output_assessments["String"][0].topic_policy.topics[0].detected #=> Boolean
     #   resp.trace.guardrail.output_assessments["String"][0].content_policy.filters #=> Array
     #   resp.trace.guardrail.output_assessments["String"][0].content_policy.filters[0].type #=> String, one of "INSULTS", "HATE", "SEXUAL", "VIOLENCE", "MISCONDUCT", "PROMPT_ATTACK"
     #   resp.trace.guardrail.output_assessments["String"][0].content_policy.filters[0].confidence #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
     #   resp.trace.guardrail.output_assessments["String"][0].content_policy.filters[0].filter_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
-    #   resp.trace.guardrail.output_assessments["String"][0].content_policy.filters[0].action #=> String, one of "BLOCKED"
+    #   resp.trace.guardrail.output_assessments["String"][0].content_policy.filters[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.trace.guardrail.output_assessments["String"][0].content_policy.filters[0].detected #=> Boolean
     #   resp.trace.guardrail.output_assessments["String"][0].word_policy.custom_words #=> Array
     #   resp.trace.guardrail.output_assessments["String"][0].word_policy.custom_words[0].match #=> String
-    #   resp.trace.guardrail.output_assessments["String"][0].word_policy.custom_words[0].action #=> String, one of "BLOCKED"
+    #   resp.trace.guardrail.output_assessments["String"][0].word_policy.custom_words[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.trace.guardrail.output_assessments["String"][0].word_policy.custom_words[0].detected #=> Boolean
     #   resp.trace.guardrail.output_assessments["String"][0].word_policy.managed_word_lists #=> Array
     #   resp.trace.guardrail.output_assessments["String"][0].word_policy.managed_word_lists[0].match #=> String
     #   resp.trace.guardrail.output_assessments["String"][0].word_policy.managed_word_lists[0].type #=> String, one of "PROFANITY"
-    #   resp.trace.guardrail.output_assessments["String"][0].word_policy.managed_word_lists[0].action #=> String, one of "BLOCKED"
+    #   resp.trace.guardrail.output_assessments["String"][0].word_policy.managed_word_lists[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.trace.guardrail.output_assessments["String"][0].word_policy.managed_word_lists[0].detected #=> Boolean
     #   resp.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.pii_entities #=> Array
     #   resp.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.pii_entities[0].match #=> String
     #   resp.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.pii_entities[0].type #=> String, one of "ADDRESS", "AGE", "AWS_ACCESS_KEY", "AWS_SECRET_KEY", "CA_HEALTH_NUMBER", "CA_SOCIAL_INSURANCE_NUMBER", "CREDIT_DEBIT_CARD_CVV", "CREDIT_DEBIT_CARD_EXPIRY", "CREDIT_DEBIT_CARD_NUMBER", "DRIVER_ID", "EMAIL", "INTERNATIONAL_BANK_ACCOUNT_NUMBER", "IP_ADDRESS", "LICENSE_PLATE", "MAC_ADDRESS", "NAME", "PASSWORD", "PHONE", "PIN", "SWIFT_CODE", "UK_NATIONAL_HEALTH_SERVICE_NUMBER", "UK_NATIONAL_INSURANCE_NUMBER", "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER", "URL", "USERNAME", "US_BANK_ACCOUNT_NUMBER", "US_BANK_ROUTING_NUMBER", "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER", "US_PASSPORT_NUMBER", "US_SOCIAL_SECURITY_NUMBER", "VEHICLE_IDENTIFICATION_NUMBER"
-    #   resp.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.pii_entities[0].action #=> String, one of "ANONYMIZED", "BLOCKED"
+    #   resp.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.pii_entities[0].action #=> String, one of "ANONYMIZED", "BLOCKED", "NONE"
+    #   resp.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.pii_entities[0].detected #=> Boolean
     #   resp.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes #=> Array
     #   resp.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes[0].name #=> String
     #   resp.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes[0].match #=> String
     #   resp.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes[0].regex #=> String
-    #   resp.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes[0].action #=> String, one of "ANONYMIZED", "BLOCKED"
+    #   resp.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes[0].action #=> String, one of "ANONYMIZED", "BLOCKED", "NONE"
+    #   resp.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes[0].detected #=> Boolean
     #   resp.trace.guardrail.output_assessments["String"][0].contextual_grounding_policy.filters #=> Array
     #   resp.trace.guardrail.output_assessments["String"][0].contextual_grounding_policy.filters[0].type #=> String, one of "GROUNDING", "RELEVANCE"
     #   resp.trace.guardrail.output_assessments["String"][0].contextual_grounding_policy.filters[0].threshold #=> Float
     #   resp.trace.guardrail.output_assessments["String"][0].contextual_grounding_policy.filters[0].score #=> Float
     #   resp.trace.guardrail.output_assessments["String"][0].contextual_grounding_policy.filters[0].action #=> String, one of "BLOCKED", "NONE"
+    #   resp.trace.guardrail.output_assessments["String"][0].contextual_grounding_policy.filters[0].detected #=> Boolean
     #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_processing_latency #=> Integer
     #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.usage.topic_policy_units #=> Integer
     #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.usage.content_policy_units #=> Integer
@@ -1090,6 +1124,7 @@ module Aws::BedrockRuntime
     #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.text_characters.total #=> Integer
     #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.images.guarded #=> Integer
     #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.images.total #=> Integer
+    #   resp.trace.guardrail.action_reason #=> String
     #   resp.trace.prompt_router.invoked_model_id #=> String
     #   resp.performance_config.latency #=> String, one of "standard", "optimized"
     #
@@ -1616,7 +1651,7 @@ module Aws::BedrockRuntime
     #     guardrail_config: {
     #       guardrail_identifier: "GuardrailIdentifier", # required
     #       guardrail_version: "GuardrailVersion", # required
-    #       trace: "enabled", # accepts enabled, disabled
+    #       trace: "enabled", # accepts enabled, disabled, enabled_full
     #       stream_processing_mode: "sync", # accepts sync, async
     #     },
     #     additional_model_request_fields: {
@@ -1676,33 +1711,40 @@ module Aws::BedrockRuntime
     #   event.trace.guardrail.input_assessment["String"].topic_policy.topics #=> Array
     #   event.trace.guardrail.input_assessment["String"].topic_policy.topics[0].name #=> String
     #   event.trace.guardrail.input_assessment["String"].topic_policy.topics[0].type #=> String, one of "DENY"
-    #   event.trace.guardrail.input_assessment["String"].topic_policy.topics[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail.input_assessment["String"].topic_policy.topics[0].action #=> String, one of "BLOCKED", "NONE"
+    #   event.trace.guardrail.input_assessment["String"].topic_policy.topics[0].detected #=> Boolean
     #   event.trace.guardrail.input_assessment["String"].content_policy.filters #=> Array
     #   event.trace.guardrail.input_assessment["String"].content_policy.filters[0].type #=> String, one of "INSULTS", "HATE", "SEXUAL", "VIOLENCE", "MISCONDUCT", "PROMPT_ATTACK"
     #   event.trace.guardrail.input_assessment["String"].content_policy.filters[0].confidence #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
     #   event.trace.guardrail.input_assessment["String"].content_policy.filters[0].filter_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
-    #   event.trace.guardrail.input_assessment["String"].content_policy.filters[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail.input_assessment["String"].content_policy.filters[0].action #=> String, one of "BLOCKED", "NONE"
+    #   event.trace.guardrail.input_assessment["String"].content_policy.filters[0].detected #=> Boolean
     #   event.trace.guardrail.input_assessment["String"].word_policy.custom_words #=> Array
     #   event.trace.guardrail.input_assessment["String"].word_policy.custom_words[0].match #=> String
-    #   event.trace.guardrail.input_assessment["String"].word_policy.custom_words[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail.input_assessment["String"].word_policy.custom_words[0].action #=> String, one of "BLOCKED", "NONE"
+    #   event.trace.guardrail.input_assessment["String"].word_policy.custom_words[0].detected #=> Boolean
     #   event.trace.guardrail.input_assessment["String"].word_policy.managed_word_lists #=> Array
     #   event.trace.guardrail.input_assessment["String"].word_policy.managed_word_lists[0].match #=> String
     #   event.trace.guardrail.input_assessment["String"].word_policy.managed_word_lists[0].type #=> String, one of "PROFANITY"
-    #   event.trace.guardrail.input_assessment["String"].word_policy.managed_word_lists[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail.input_assessment["String"].word_policy.managed_word_lists[0].action #=> String, one of "BLOCKED", "NONE"
+    #   event.trace.guardrail.input_assessment["String"].word_policy.managed_word_lists[0].detected #=> Boolean
     #   event.trace.guardrail.input_assessment["String"].sensitive_information_policy.pii_entities #=> Array
     #   event.trace.guardrail.input_assessment["String"].sensitive_information_policy.pii_entities[0].match #=> String
     #   event.trace.guardrail.input_assessment["String"].sensitive_information_policy.pii_entities[0].type #=> String, one of "ADDRESS", "AGE", "AWS_ACCESS_KEY", "AWS_SECRET_KEY", "CA_HEALTH_NUMBER", "CA_SOCIAL_INSURANCE_NUMBER", "CREDIT_DEBIT_CARD_CVV", "CREDIT_DEBIT_CARD_EXPIRY", "CREDIT_DEBIT_CARD_NUMBER", "DRIVER_ID", "EMAIL", "INTERNATIONAL_BANK_ACCOUNT_NUMBER", "IP_ADDRESS", "LICENSE_PLATE", "MAC_ADDRESS", "NAME", "PASSWORD", "PHONE", "PIN", "SWIFT_CODE", "UK_NATIONAL_HEALTH_SERVICE_NUMBER", "UK_NATIONAL_INSURANCE_NUMBER", "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER", "URL", "USERNAME", "US_BANK_ACCOUNT_NUMBER", "US_BANK_ROUTING_NUMBER", "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER", "US_PASSPORT_NUMBER", "US_SOCIAL_SECURITY_NUMBER", "VEHICLE_IDENTIFICATION_NUMBER"
-    #   event.trace.guardrail.input_assessment["String"].sensitive_information_policy.pii_entities[0].action #=> String, one of "ANONYMIZED", "BLOCKED"
+    #   event.trace.guardrail.input_assessment["String"].sensitive_information_policy.pii_entities[0].action #=> String, one of "ANONYMIZED", "BLOCKED", "NONE"
+    #   event.trace.guardrail.input_assessment["String"].sensitive_information_policy.pii_entities[0].detected #=> Boolean
     #   event.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes #=> Array
     #   event.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes[0].name #=> String
     #   event.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes[0].match #=> String
     #   event.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes[0].regex #=> String
-    #   event.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes[0].action #=> String, one of "ANONYMIZED", "BLOCKED"
+    #   event.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes[0].action #=> String, one of "ANONYMIZED", "BLOCKED", "NONE"
+    #   event.trace.guardrail.input_assessment["String"].sensitive_information_policy.regexes[0].detected #=> Boolean
     #   event.trace.guardrail.input_assessment["String"].contextual_grounding_policy.filters #=> Array
     #   event.trace.guardrail.input_assessment["String"].contextual_grounding_policy.filters[0].type #=> String, one of "GROUNDING", "RELEVANCE"
     #   event.trace.guardrail.input_assessment["String"].contextual_grounding_policy.filters[0].threshold #=> Float
     #   event.trace.guardrail.input_assessment["String"].contextual_grounding_policy.filters[0].score #=> Float
     #   event.trace.guardrail.input_assessment["String"].contextual_grounding_policy.filters[0].action #=> String, one of "BLOCKED", "NONE"
+    #   event.trace.guardrail.input_assessment["String"].contextual_grounding_policy.filters[0].detected #=> Boolean
     #   event.trace.guardrail.input_assessment["String"].invocation_metrics.guardrail_processing_latency #=> Integer
     #   event.trace.guardrail.input_assessment["String"].invocation_metrics.usage.topic_policy_units #=> Integer
     #   event.trace.guardrail.input_assessment["String"].invocation_metrics.usage.content_policy_units #=> Integer
@@ -1720,33 +1762,40 @@ module Aws::BedrockRuntime
     #   event.trace.guardrail.output_assessments["String"][0].topic_policy.topics #=> Array
     #   event.trace.guardrail.output_assessments["String"][0].topic_policy.topics[0].name #=> String
     #   event.trace.guardrail.output_assessments["String"][0].topic_policy.topics[0].type #=> String, one of "DENY"
-    #   event.trace.guardrail.output_assessments["String"][0].topic_policy.topics[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail.output_assessments["String"][0].topic_policy.topics[0].action #=> String, one of "BLOCKED", "NONE"
+    #   event.trace.guardrail.output_assessments["String"][0].topic_policy.topics[0].detected #=> Boolean
     #   event.trace.guardrail.output_assessments["String"][0].content_policy.filters #=> Array
     #   event.trace.guardrail.output_assessments["String"][0].content_policy.filters[0].type #=> String, one of "INSULTS", "HATE", "SEXUAL", "VIOLENCE", "MISCONDUCT", "PROMPT_ATTACK"
     #   event.trace.guardrail.output_assessments["String"][0].content_policy.filters[0].confidence #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
     #   event.trace.guardrail.output_assessments["String"][0].content_policy.filters[0].filter_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
-    #   event.trace.guardrail.output_assessments["String"][0].content_policy.filters[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail.output_assessments["String"][0].content_policy.filters[0].action #=> String, one of "BLOCKED", "NONE"
+    #   event.trace.guardrail.output_assessments["String"][0].content_policy.filters[0].detected #=> Boolean
     #   event.trace.guardrail.output_assessments["String"][0].word_policy.custom_words #=> Array
     #   event.trace.guardrail.output_assessments["String"][0].word_policy.custom_words[0].match #=> String
-    #   event.trace.guardrail.output_assessments["String"][0].word_policy.custom_words[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail.output_assessments["String"][0].word_policy.custom_words[0].action #=> String, one of "BLOCKED", "NONE"
+    #   event.trace.guardrail.output_assessments["String"][0].word_policy.custom_words[0].detected #=> Boolean
     #   event.trace.guardrail.output_assessments["String"][0].word_policy.managed_word_lists #=> Array
     #   event.trace.guardrail.output_assessments["String"][0].word_policy.managed_word_lists[0].match #=> String
     #   event.trace.guardrail.output_assessments["String"][0].word_policy.managed_word_lists[0].type #=> String, one of "PROFANITY"
-    #   event.trace.guardrail.output_assessments["String"][0].word_policy.managed_word_lists[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail.output_assessments["String"][0].word_policy.managed_word_lists[0].action #=> String, one of "BLOCKED", "NONE"
+    #   event.trace.guardrail.output_assessments["String"][0].word_policy.managed_word_lists[0].detected #=> Boolean
     #   event.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.pii_entities #=> Array
     #   event.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.pii_entities[0].match #=> String
     #   event.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.pii_entities[0].type #=> String, one of "ADDRESS", "AGE", "AWS_ACCESS_KEY", "AWS_SECRET_KEY", "CA_HEALTH_NUMBER", "CA_SOCIAL_INSURANCE_NUMBER", "CREDIT_DEBIT_CARD_CVV", "CREDIT_DEBIT_CARD_EXPIRY", "CREDIT_DEBIT_CARD_NUMBER", "DRIVER_ID", "EMAIL", "INTERNATIONAL_BANK_ACCOUNT_NUMBER", "IP_ADDRESS", "LICENSE_PLATE", "MAC_ADDRESS", "NAME", "PASSWORD", "PHONE", "PIN", "SWIFT_CODE", "UK_NATIONAL_HEALTH_SERVICE_NUMBER", "UK_NATIONAL_INSURANCE_NUMBER", "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER", "URL", "USERNAME", "US_BANK_ACCOUNT_NUMBER", "US_BANK_ROUTING_NUMBER", "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER", "US_PASSPORT_NUMBER", "US_SOCIAL_SECURITY_NUMBER", "VEHICLE_IDENTIFICATION_NUMBER"
-    #   event.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.pii_entities[0].action #=> String, one of "ANONYMIZED", "BLOCKED"
+    #   event.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.pii_entities[0].action #=> String, one of "ANONYMIZED", "BLOCKED", "NONE"
+    #   event.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.pii_entities[0].detected #=> Boolean
     #   event.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes #=> Array
     #   event.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes[0].name #=> String
     #   event.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes[0].match #=> String
     #   event.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes[0].regex #=> String
-    #   event.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes[0].action #=> String, one of "ANONYMIZED", "BLOCKED"
+    #   event.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes[0].action #=> String, one of "ANONYMIZED", "BLOCKED", "NONE"
+    #   event.trace.guardrail.output_assessments["String"][0].sensitive_information_policy.regexes[0].detected #=> Boolean
     #   event.trace.guardrail.output_assessments["String"][0].contextual_grounding_policy.filters #=> Array
     #   event.trace.guardrail.output_assessments["String"][0].contextual_grounding_policy.filters[0].type #=> String, one of "GROUNDING", "RELEVANCE"
     #   event.trace.guardrail.output_assessments["String"][0].contextual_grounding_policy.filters[0].threshold #=> Float
     #   event.trace.guardrail.output_assessments["String"][0].contextual_grounding_policy.filters[0].score #=> Float
     #   event.trace.guardrail.output_assessments["String"][0].contextual_grounding_policy.filters[0].action #=> String, one of "BLOCKED", "NONE"
+    #   event.trace.guardrail.output_assessments["String"][0].contextual_grounding_policy.filters[0].detected #=> Boolean
     #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_processing_latency #=> Integer
     #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.usage.topic_policy_units #=> Integer
     #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.usage.content_policy_units #=> Integer
@@ -1759,6 +1808,7 @@ module Aws::BedrockRuntime
     #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.text_characters.total #=> Integer
     #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.images.guarded #=> Integer
     #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.images.total #=> Integer
+    #   event.trace.guardrail.action_reason #=> String
     #   event.trace.prompt_router.invoked_model_id #=> String
     #   event.performance_config.latency #=> String, one of "standard", "optimized"
     #
@@ -1976,7 +2026,7 @@ module Aws::BedrockRuntime
     #     content_type: "MimeType",
     #     accept: "MimeType",
     #     model_id: "InvokeModelIdentifier", # required
-    #     trace: "ENABLED", # accepts ENABLED, DISABLED
+    #     trace: "ENABLED", # accepts ENABLED, DISABLED, ENABLED_FULL
     #     guardrail_identifier: "GuardrailIdentifier",
     #     guardrail_version: "GuardrailVersion",
     #     performance_config_latency: "standard", # accepts standard, optimized
@@ -2267,7 +2317,7 @@ module Aws::BedrockRuntime
     #     content_type: "MimeType",
     #     accept: "MimeType",
     #     model_id: "InvokeModelIdentifier", # required
-    #     trace: "ENABLED", # accepts ENABLED, DISABLED
+    #     trace: "ENABLED", # accepts ENABLED, DISABLED, ENABLED_FULL
     #     guardrail_identifier: "GuardrailIdentifier",
     #     guardrail_version: "GuardrailVersion",
     #     performance_config_latency: "standard", # accepts standard, optimized
@@ -2498,7 +2548,7 @@ module Aws::BedrockRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockruntime'
-      context[:gem_version] = '1.42.0'
+      context[:gem_version] = '1.43.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -883,7 +883,11 @@ module Aws::Bedrock
       attr_accessor output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
       attr_accessor input_modalities: ::Array[("TEXT" | "IMAGE")]
       attr_accessor output_modalities: ::Array[("TEXT" | "IMAGE")]
-      SENSITIVE: []
+      attr_accessor input_action: ("BLOCK" | "NONE")
+      attr_accessor output_action: ("BLOCK" | "NONE")
+      attr_accessor input_enabled: bool
+      attr_accessor output_enabled: bool
+      SENSITIVE: [:input_action, :output_action]
     end
 
     class GuardrailContentFilterConfig
@@ -892,7 +896,11 @@ module Aws::Bedrock
       attr_accessor output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
       attr_accessor input_modalities: ::Array[("TEXT" | "IMAGE")]
       attr_accessor output_modalities: ::Array[("TEXT" | "IMAGE")]
-      SENSITIVE: []
+      attr_accessor input_action: ("BLOCK" | "NONE")
+      attr_accessor output_action: ("BLOCK" | "NONE")
+      attr_accessor input_enabled: bool
+      attr_accessor output_enabled: bool
+      SENSITIVE: [:input_action, :output_action]
     end
 
     class GuardrailContentPolicy
@@ -908,13 +916,17 @@ module Aws::Bedrock
     class GuardrailContextualGroundingFilter
       attr_accessor type: ("GROUNDING" | "RELEVANCE")
       attr_accessor threshold: ::Float
-      SENSITIVE: []
+      attr_accessor action: ("BLOCK" | "NONE")
+      attr_accessor enabled: bool
+      SENSITIVE: [:action]
     end
 
     class GuardrailContextualGroundingFilterConfig
       attr_accessor type: ("GROUNDING" | "RELEVANCE")
       attr_accessor threshold: ::Float
-      SENSITIVE: []
+      attr_accessor action: ("BLOCK" | "NONE")
+      attr_accessor enabled: bool
+      SENSITIVE: [:action]
     end
 
     class GuardrailContextualGroundingPolicy
@@ -929,23 +941,39 @@ module Aws::Bedrock
 
     class GuardrailManagedWords
       attr_accessor type: ("PROFANITY")
-      SENSITIVE: []
+      attr_accessor input_action: ("BLOCK" | "NONE")
+      attr_accessor output_action: ("BLOCK" | "NONE")
+      attr_accessor input_enabled: bool
+      attr_accessor output_enabled: bool
+      SENSITIVE: [:input_action, :output_action]
     end
 
     class GuardrailManagedWordsConfig
       attr_accessor type: ("PROFANITY")
-      SENSITIVE: []
+      attr_accessor input_action: ("BLOCK" | "NONE")
+      attr_accessor output_action: ("BLOCK" | "NONE")
+      attr_accessor input_enabled: bool
+      attr_accessor output_enabled: bool
+      SENSITIVE: [:input_action, :output_action]
     end
 
     class GuardrailPiiEntity
       attr_accessor type: ("ADDRESS" | "AGE" | "AWS_ACCESS_KEY" | "AWS_SECRET_KEY" | "CA_HEALTH_NUMBER" | "CA_SOCIAL_INSURANCE_NUMBER" | "CREDIT_DEBIT_CARD_CVV" | "CREDIT_DEBIT_CARD_EXPIRY" | "CREDIT_DEBIT_CARD_NUMBER" | "DRIVER_ID" | "EMAIL" | "INTERNATIONAL_BANK_ACCOUNT_NUMBER" | "IP_ADDRESS" | "LICENSE_PLATE" | "MAC_ADDRESS" | "NAME" | "PASSWORD" | "PHONE" | "PIN" | "SWIFT_CODE" | "UK_NATIONAL_HEALTH_SERVICE_NUMBER" | "UK_NATIONAL_INSURANCE_NUMBER" | "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER" | "URL" | "USERNAME" | "US_BANK_ACCOUNT_NUMBER" | "US_BANK_ROUTING_NUMBER" | "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER" | "US_PASSPORT_NUMBER" | "US_SOCIAL_SECURITY_NUMBER" | "VEHICLE_IDENTIFICATION_NUMBER")
-      attr_accessor action: ("BLOCK" | "ANONYMIZE")
+      attr_accessor action: ("BLOCK" | "ANONYMIZE" | "NONE")
+      attr_accessor input_action: ("BLOCK" | "ANONYMIZE" | "NONE")
+      attr_accessor output_action: ("BLOCK" | "ANONYMIZE" | "NONE")
+      attr_accessor input_enabled: bool
+      attr_accessor output_enabled: bool
       SENSITIVE: []
     end
 
     class GuardrailPiiEntityConfig
       attr_accessor type: ("ADDRESS" | "AGE" | "AWS_ACCESS_KEY" | "AWS_SECRET_KEY" | "CA_HEALTH_NUMBER" | "CA_SOCIAL_INSURANCE_NUMBER" | "CREDIT_DEBIT_CARD_CVV" | "CREDIT_DEBIT_CARD_EXPIRY" | "CREDIT_DEBIT_CARD_NUMBER" | "DRIVER_ID" | "EMAIL" | "INTERNATIONAL_BANK_ACCOUNT_NUMBER" | "IP_ADDRESS" | "LICENSE_PLATE" | "MAC_ADDRESS" | "NAME" | "PASSWORD" | "PHONE" | "PIN" | "SWIFT_CODE" | "UK_NATIONAL_HEALTH_SERVICE_NUMBER" | "UK_NATIONAL_INSURANCE_NUMBER" | "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER" | "URL" | "USERNAME" | "US_BANK_ACCOUNT_NUMBER" | "US_BANK_ROUTING_NUMBER" | "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER" | "US_PASSPORT_NUMBER" | "US_SOCIAL_SECURITY_NUMBER" | "VEHICLE_IDENTIFICATION_NUMBER")
-      attr_accessor action: ("BLOCK" | "ANONYMIZE")
+      attr_accessor action: ("BLOCK" | "ANONYMIZE" | "NONE")
+      attr_accessor input_action: ("BLOCK" | "ANONYMIZE" | "NONE")
+      attr_accessor output_action: ("BLOCK" | "ANONYMIZE" | "NONE")
+      attr_accessor input_enabled: bool
+      attr_accessor output_enabled: bool
       SENSITIVE: []
     end
 
@@ -953,7 +981,11 @@ module Aws::Bedrock
       attr_accessor name: ::String
       attr_accessor description: ::String
       attr_accessor pattern: ::String
-      attr_accessor action: ("BLOCK" | "ANONYMIZE")
+      attr_accessor action: ("BLOCK" | "ANONYMIZE" | "NONE")
+      attr_accessor input_action: ("BLOCK" | "ANONYMIZE" | "NONE")
+      attr_accessor output_action: ("BLOCK" | "ANONYMIZE" | "NONE")
+      attr_accessor input_enabled: bool
+      attr_accessor output_enabled: bool
       SENSITIVE: []
     end
 
@@ -961,7 +993,11 @@ module Aws::Bedrock
       attr_accessor name: ::String
       attr_accessor description: ::String
       attr_accessor pattern: ::String
-      attr_accessor action: ("BLOCK" | "ANONYMIZE")
+      attr_accessor action: ("BLOCK" | "ANONYMIZE" | "NONE")
+      attr_accessor input_action: ("BLOCK" | "ANONYMIZE" | "NONE")
+      attr_accessor output_action: ("BLOCK" | "ANONYMIZE" | "NONE")
+      attr_accessor input_enabled: bool
+      attr_accessor output_enabled: bool
       SENSITIVE: []
     end
 
@@ -994,7 +1030,11 @@ module Aws::Bedrock
       attr_accessor definition: ::String
       attr_accessor examples: ::Array[::String]
       attr_accessor type: ("DENY")
-      SENSITIVE: [:name, :definition]
+      attr_accessor input_action: ("BLOCK" | "NONE")
+      attr_accessor output_action: ("BLOCK" | "NONE")
+      attr_accessor input_enabled: bool
+      attr_accessor output_enabled: bool
+      SENSITIVE: [:name, :definition, :input_action, :output_action]
     end
 
     class GuardrailTopicConfig
@@ -1002,7 +1042,11 @@ module Aws::Bedrock
       attr_accessor definition: ::String
       attr_accessor examples: ::Array[::String]
       attr_accessor type: ("DENY")
-      SENSITIVE: [:name, :definition]
+      attr_accessor input_action: ("BLOCK" | "NONE")
+      attr_accessor output_action: ("BLOCK" | "NONE")
+      attr_accessor input_enabled: bool
+      attr_accessor output_enabled: bool
+      SENSITIVE: [:name, :definition, :input_action, :output_action]
     end
 
     class GuardrailTopicPolicy
@@ -1017,12 +1061,20 @@ module Aws::Bedrock
 
     class GuardrailWord
       attr_accessor text: ::String
-      SENSITIVE: []
+      attr_accessor input_action: ("BLOCK" | "NONE")
+      attr_accessor output_action: ("BLOCK" | "NONE")
+      attr_accessor input_enabled: bool
+      attr_accessor output_enabled: bool
+      SENSITIVE: [:input_action, :output_action]
     end
 
     class GuardrailWordConfig
       attr_accessor text: ::String
-      SENSITIVE: []
+      attr_accessor input_action: ("BLOCK" | "NONE")
+      attr_accessor output_action: ("BLOCK" | "NONE")
+      attr_accessor input_enabled: bool
+      attr_accessor output_enabled: bool
+      SENSITIVE: [:input_action, :output_action]
     end
 
     class GuardrailWordPolicy

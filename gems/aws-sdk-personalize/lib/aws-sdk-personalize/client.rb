@@ -2097,6 +2097,15 @@ module Aws::Personalize
     #         metric_name: "MetricName",
     #         recipe_list: ["Arn"],
     #       },
+    #       events_config: {
+    #         event_parameters_list: [
+    #           {
+    #             event_type: "EventType",
+    #             event_value_threshold: 1.0,
+    #             weight: 1.0,
+    #           },
+    #         ],
+    #       },
     #       optimization_objective: {
     #         item_attribute: "ItemAttribute",
     #         objective_sensitivity: "LOW", # accepts LOW, MEDIUM, HIGH, OFF
@@ -2286,12 +2295,12 @@ module Aws::Personalize
 
     # Deletes a dataset. You can't delete a dataset if an associated
     # `DatasetImportJob` or `SolutionVersion` is in the CREATE PENDING or IN
-    # PROGRESS state. For more information on datasets, see
-    # [CreateDataset][1].
+    # PROGRESS state. For more information about deleting datasets, see
+    # [Deleting a dataset][1].
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/personalize/latest/dg/API_CreateDataset.html
+    # [1]: https://docs.aws.amazon.com/personalize/latest/dg/delete-dataset.html
     #
     # @option params [required, String] :dataset_arn
     #   The Amazon Resource Name (ARN) of the dataset to delete.
@@ -3301,6 +3310,10 @@ module Aws::Personalize
     #   resp.solution.solution_config.auto_ml_config.metric_name #=> String
     #   resp.solution.solution_config.auto_ml_config.recipe_list #=> Array
     #   resp.solution.solution_config.auto_ml_config.recipe_list[0] #=> String
+    #   resp.solution.solution_config.events_config.event_parameters_list #=> Array
+    #   resp.solution.solution_config.events_config.event_parameters_list[0].event_type #=> String
+    #   resp.solution.solution_config.events_config.event_parameters_list[0].event_value_threshold #=> Float
+    #   resp.solution.solution_config.events_config.event_parameters_list[0].weight #=> Float
     #   resp.solution.solution_config.optimization_objective.item_attribute #=> String
     #   resp.solution.solution_config.optimization_objective.objective_sensitivity #=> String, one of "LOW", "MEDIUM", "HIGH", "OFF"
     #   resp.solution.solution_config.training_data_config.excluded_dataset_columns #=> Hash
@@ -3319,6 +3332,10 @@ module Aws::Personalize
     #   resp.solution.latest_solution_version.last_updated_date_time #=> Time
     #   resp.solution.latest_solution_version.failure_reason #=> String
     #   resp.solution.latest_solution_update.solution_update_config.auto_training_config.scheduling_expression #=> String
+    #   resp.solution.latest_solution_update.solution_update_config.events_config.event_parameters_list #=> Array
+    #   resp.solution.latest_solution_update.solution_update_config.events_config.event_parameters_list[0].event_type #=> String
+    #   resp.solution.latest_solution_update.solution_update_config.events_config.event_parameters_list[0].event_value_threshold #=> Float
+    #   resp.solution.latest_solution_update.solution_update_config.events_config.event_parameters_list[0].weight #=> Float
     #   resp.solution.latest_solution_update.status #=> String
     #   resp.solution.latest_solution_update.perform_auto_training #=> Boolean
     #   resp.solution.latest_solution_update.creation_date_time #=> Time
@@ -3389,6 +3406,10 @@ module Aws::Personalize
     #   resp.solution_version.solution_config.auto_ml_config.metric_name #=> String
     #   resp.solution_version.solution_config.auto_ml_config.recipe_list #=> Array
     #   resp.solution_version.solution_config.auto_ml_config.recipe_list[0] #=> String
+    #   resp.solution_version.solution_config.events_config.event_parameters_list #=> Array
+    #   resp.solution_version.solution_config.events_config.event_parameters_list[0].event_type #=> String
+    #   resp.solution_version.solution_config.events_config.event_parameters_list[0].event_value_threshold #=> Float
+    #   resp.solution_version.solution_config.events_config.event_parameters_list[0].weight #=> Float
     #   resp.solution_version.solution_config.optimization_objective.item_attribute #=> String
     #   resp.solution_version.solution_config.optimization_objective.objective_sensitivity #=> String, one of "LOW", "MEDIUM", "HIGH", "OFF"
     #   resp.solution_version.solution_config.training_data_config.excluded_dataset_columns #=> Hash
@@ -4855,6 +4876,15 @@ module Aws::Personalize
     #       auto_training_config: {
     #         scheduling_expression: "SchedulingExpression",
     #       },
+    #       events_config: {
+    #         event_parameters_list: [
+    #           {
+    #             event_type: "EventType",
+    #             event_value_threshold: 1.0,
+    #             weight: 1.0,
+    #           },
+    #         ],
+    #       },
     #     },
     #   })
     #
@@ -4889,7 +4919,7 @@ module Aws::Personalize
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-personalize'
-      context[:gem_version] = '1.79.0'
+      context[:gem_version] = '1.80.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

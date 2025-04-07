@@ -935,6 +935,29 @@ module Aws
                                ) -> _StartFileTransferResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartFileTransferResponseSuccess
 
+      interface _StartRemoteDeleteResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartRemoteDeleteResponse]
+        def delete_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#start_remote_delete-instance_method
+      def start_remote_delete: (
+                                 connector_id: ::String,
+                                 delete_path: ::String
+                               ) -> _StartRemoteDeleteResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartRemoteDeleteResponseSuccess
+
+      interface _StartRemoteMoveResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartRemoteMoveResponse]
+        def move_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#start_remote_move-instance_method
+      def start_remote_move: (
+                               connector_id: ::String,
+                               source_path: ::String,
+                               target_path: ::String
+                             ) -> _StartRemoteMoveResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartRemoteMoveResponseSuccess
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#start_server-instance_method
       def start_server: (
                           server_id: ::String

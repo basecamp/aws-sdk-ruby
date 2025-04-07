@@ -54,13 +54,25 @@ module Aws::BedrockRuntime
     #   The content details used in the request to apply the guardrail.
     #   @return [Array<Types::GuardrailContentBlock>]
     #
+    # @!attribute [rw] output_scope
+    #   Specifies the scope of the output that you get in the response. Set
+    #   to `FULL` to return the entire output, including any detected and
+    #   non-detected entries in the response for enhanced debugging.
+    #
+    #   Note that the full output scope doesn't apply to word filters or
+    #   regex in sensitive information filters. It does apply to all other
+    #   filtering policies, including sensitive information with filters
+    #   that can detect personally identifiable information (PII).
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ApplyGuardrailRequest AWS API Documentation
     #
     class ApplyGuardrailRequest < Struct.new(
       :guardrail_identifier,
       :guardrail_version,
       :source,
-      :content)
+      :content,
+      :output_scope)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -71,6 +83,10 @@ module Aws::BedrockRuntime
     #
     # @!attribute [rw] action
     #   The action taken in the response from the guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] action_reason
+    #   The reason for the action taken when harmful content is detected.
     #   @return [String]
     #
     # @!attribute [rw] outputs
@@ -90,6 +106,7 @@ module Aws::BedrockRuntime
     class ApplyGuardrailResponse < Struct.new(
       :usage,
       :action,
+      :action_reason,
       :outputs,
       :assessments,
       :guardrail_coverage)
@@ -1161,13 +1178,19 @@ module Aws::BedrockRuntime
     #   The guardrail action.
     #   @return [String]
     #
+    # @!attribute [rw] detected
+    #   Indicates whether content that breaches the guardrail configuration
+    #   is detected.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailContentFilter AWS API Documentation
     #
     class GuardrailContentFilter < Struct.new(
       :type,
       :confidence,
       :filter_strength,
-      :action)
+      :action,
+      :detected)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1205,13 +1228,20 @@ module Aws::BedrockRuntime
     #   The action performed by the guardrails contextual grounding filter.
     #   @return [String]
     #
+    # @!attribute [rw] detected
+    #   Indicates whether content that fails the contextual grounding
+    #   evaluation (grounding or relevance score less than the corresponding
+    #   threshold) was detected.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailContextualGroundingFilter AWS API Documentation
     #
     class GuardrailContextualGroundingFilter < Struct.new(
       :type,
       :threshold,
       :score,
-      :action)
+      :action,
+      :detected)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1363,11 +1393,17 @@ module Aws::BedrockRuntime
     #   The action for the custom word.
     #   @return [String]
     #
+    # @!attribute [rw] detected
+    #   Indicates whether custom word content that breaches the guardrail
+    #   configuration is detected.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailCustomWord AWS API Documentation
     #
     class GuardrailCustomWord < Struct.new(
       :match,
-      :action)
+      :action,
+      :detected)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1475,12 +1511,18 @@ module Aws::BedrockRuntime
     #   The action for the managed word.
     #   @return [String]
     #
+    # @!attribute [rw] detected
+    #   Indicates whether managed word content that breaches the guardrail
+    #   configuration is detected.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailManagedWord AWS API Documentation
     #
     class GuardrailManagedWord < Struct.new(
       :match,
       :type,
-      :action)
+      :action,
+      :detected)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1514,12 +1556,18 @@ module Aws::BedrockRuntime
     #   The PII entity filter action.
     #   @return [String]
     #
+    # @!attribute [rw] detected
+    #   Indicates whether personally identifiable information (PII) that
+    #   breaches the guardrail configuration is detected.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailPiiEntityFilter AWS API Documentation
     #
     class GuardrailPiiEntityFilter < Struct.new(
       :match,
       :type,
-      :action)
+      :action,
+      :detected)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1542,13 +1590,19 @@ module Aws::BedrockRuntime
     #   The region filter action.
     #   @return [String]
     #
+    # @!attribute [rw] detected
+    #   Indicates whether custom regex entities that breach the guardrail
+    #   configuration are detected.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailRegexFilter AWS API Documentation
     #
     class GuardrailRegexFilter < Struct.new(
       :name,
       :match,
       :regex,
-      :action)
+      :action,
+      :detected)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1658,12 +1712,18 @@ module Aws::BedrockRuntime
     #   The action the guardrail should take when it intervenes on a topic.
     #   @return [String]
     #
+    # @!attribute [rw] detected
+    #   Indicates whether topic content that breaches the guardrail
+    #   configuration is detected.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailTopic AWS API Documentation
     #
     class GuardrailTopic < Struct.new(
       :name,
       :type,
-      :action)
+      :action,
+      :detected)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1697,12 +1757,18 @@ module Aws::BedrockRuntime
     #   the output assessments.
     #   @return [Hash<String,Array<Types::GuardrailAssessment>>]
     #
+    # @!attribute [rw] action_reason
+    #   Provides the reason for the action taken when harmful content is
+    #   detected.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailTraceAssessment AWS API Documentation
     #
     class GuardrailTraceAssessment < Struct.new(
       :model_output,
       :input_assessment,
-      :output_assessments)
+      :output_assessments,
+      :action_reason)
       SENSITIVE = []
       include Aws::Structure
     end

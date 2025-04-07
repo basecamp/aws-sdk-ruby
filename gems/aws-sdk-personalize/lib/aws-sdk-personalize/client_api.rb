@@ -159,11 +159,16 @@ module Aws::Personalize
     DockerURI = Shapes::StringShape.new(name: 'DockerURI')
     Domain = Shapes::StringShape.new(name: 'Domain')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
+    EventParameters = Shapes::StructureShape.new(name: 'EventParameters')
+    EventParametersList = Shapes::ListShape.new(name: 'EventParametersList')
     EventTracker = Shapes::StructureShape.new(name: 'EventTracker')
     EventTrackerSummary = Shapes::StructureShape.new(name: 'EventTrackerSummary')
     EventTrackers = Shapes::ListShape.new(name: 'EventTrackers')
     EventType = Shapes::StringShape.new(name: 'EventType')
+    EventTypeThresholdValue = Shapes::FloatShape.new(name: 'EventTypeThresholdValue')
+    EventTypeWeight = Shapes::FloatShape.new(name: 'EventTypeWeight')
     EventValueThreshold = Shapes::StringShape.new(name: 'EventValueThreshold')
+    EventsConfig = Shapes::StructureShape.new(name: 'EventsConfig')
     ExcludedDatasetColumns = Shapes::MapShape.new(name: 'ExcludedDatasetColumns')
     FailureReason = Shapes::StringShape.new(name: 'FailureReason')
     FeatureTransformation = Shapes::StructureShape.new(name: 'FeatureTransformation')
@@ -935,6 +940,13 @@ module Aws::Personalize
     DescribeSolutionVersionResponse.add_member(:solution_version, Shapes::ShapeRef.new(shape: SolutionVersion, location_name: "solutionVersion"))
     DescribeSolutionVersionResponse.struct_class = Types::DescribeSolutionVersionResponse
 
+    EventParameters.add_member(:event_type, Shapes::ShapeRef.new(shape: EventType, location_name: "eventType"))
+    EventParameters.add_member(:event_value_threshold, Shapes::ShapeRef.new(shape: EventTypeThresholdValue, location_name: "eventValueThreshold"))
+    EventParameters.add_member(:weight, Shapes::ShapeRef.new(shape: EventTypeWeight, location_name: "weight"))
+    EventParameters.struct_class = Types::EventParameters
+
+    EventParametersList.member = Shapes::ShapeRef.new(shape: EventParameters)
+
     EventTracker.add_member(:name, Shapes::ShapeRef.new(shape: Name, location_name: "name"))
     EventTracker.add_member(:event_tracker_arn, Shapes::ShapeRef.new(shape: Arn, location_name: "eventTrackerArn"))
     EventTracker.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, location_name: "accountId"))
@@ -953,6 +965,9 @@ module Aws::Personalize
     EventTrackerSummary.struct_class = Types::EventTrackerSummary
 
     EventTrackers.member = Shapes::ShapeRef.new(shape: EventTrackerSummary)
+
+    EventsConfig.add_member(:event_parameters_list, Shapes::ShapeRef.new(shape: EventParametersList, location_name: "eventParametersList"))
+    EventsConfig.struct_class = Types::EventsConfig
 
     ExcludedDatasetColumns.key = Shapes::ShapeRef.new(shape: DatasetType)
     ExcludedDatasetColumns.value = Shapes::ShapeRef.new(shape: ColumnNamesList)
@@ -1337,6 +1352,7 @@ module Aws::Personalize
     SolutionConfig.add_member(:algorithm_hyper_parameters, Shapes::ShapeRef.new(shape: HyperParameters, location_name: "algorithmHyperParameters"))
     SolutionConfig.add_member(:feature_transformation_parameters, Shapes::ShapeRef.new(shape: FeatureTransformationParameters, location_name: "featureTransformationParameters"))
     SolutionConfig.add_member(:auto_ml_config, Shapes::ShapeRef.new(shape: AutoMLConfig, location_name: "autoMLConfig"))
+    SolutionConfig.add_member(:events_config, Shapes::ShapeRef.new(shape: EventsConfig, location_name: "eventsConfig"))
     SolutionConfig.add_member(:optimization_objective, Shapes::ShapeRef.new(shape: OptimizationObjective, location_name: "optimizationObjective"))
     SolutionConfig.add_member(:training_data_config, Shapes::ShapeRef.new(shape: TrainingDataConfig, location_name: "trainingDataConfig"))
     SolutionConfig.add_member(:auto_training_config, Shapes::ShapeRef.new(shape: AutoTrainingConfig, location_name: "autoTrainingConfig"))
@@ -1351,6 +1367,7 @@ module Aws::Personalize
     SolutionSummary.struct_class = Types::SolutionSummary
 
     SolutionUpdateConfig.add_member(:auto_training_config, Shapes::ShapeRef.new(shape: AutoTrainingConfig, location_name: "autoTrainingConfig"))
+    SolutionUpdateConfig.add_member(:events_config, Shapes::ShapeRef.new(shape: EventsConfig, location_name: "eventsConfig"))
     SolutionUpdateConfig.struct_class = Types::SolutionUpdateConfig
 
     SolutionUpdateSummary.add_member(:solution_update_config, Shapes::ShapeRef.new(shape: SolutionUpdateConfig, location_name: "solutionUpdateConfig"))

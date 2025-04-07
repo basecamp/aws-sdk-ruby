@@ -190,12 +190,14 @@ module Aws::Bedrock
     GuardrailConfigurationGuardrailIdString = Shapes::StringShape.new(name: 'GuardrailConfigurationGuardrailIdString')
     GuardrailConfigurationGuardrailVersionString = Shapes::StringShape.new(name: 'GuardrailConfigurationGuardrailVersionString')
     GuardrailContentFilter = Shapes::StructureShape.new(name: 'GuardrailContentFilter')
+    GuardrailContentFilterAction = Shapes::StringShape.new(name: 'GuardrailContentFilterAction')
     GuardrailContentFilterConfig = Shapes::StructureShape.new(name: 'GuardrailContentFilterConfig')
     GuardrailContentFilterType = Shapes::StringShape.new(name: 'GuardrailContentFilterType')
     GuardrailContentFilters = Shapes::ListShape.new(name: 'GuardrailContentFilters')
     GuardrailContentFiltersConfig = Shapes::ListShape.new(name: 'GuardrailContentFiltersConfig')
     GuardrailContentPolicy = Shapes::StructureShape.new(name: 'GuardrailContentPolicy')
     GuardrailContentPolicyConfig = Shapes::StructureShape.new(name: 'GuardrailContentPolicyConfig')
+    GuardrailContextualGroundingAction = Shapes::StringShape.new(name: 'GuardrailContextualGroundingAction')
     GuardrailContextualGroundingFilter = Shapes::StructureShape.new(name: 'GuardrailContextualGroundingFilter')
     GuardrailContextualGroundingFilterConfig = Shapes::StructureShape.new(name: 'GuardrailContextualGroundingFilterConfig')
     GuardrailContextualGroundingFilterConfigThresholdDouble = Shapes::FloatShape.new(name: 'GuardrailContextualGroundingFilterConfigThresholdDouble')
@@ -245,6 +247,7 @@ module Aws::Bedrock
     GuardrailSummaries = Shapes::ListShape.new(name: 'GuardrailSummaries')
     GuardrailSummary = Shapes::StructureShape.new(name: 'GuardrailSummary')
     GuardrailTopic = Shapes::StructureShape.new(name: 'GuardrailTopic')
+    GuardrailTopicAction = Shapes::StringShape.new(name: 'GuardrailTopicAction')
     GuardrailTopicConfig = Shapes::StructureShape.new(name: 'GuardrailTopicConfig')
     GuardrailTopicDefinition = Shapes::StringShape.new(name: 'GuardrailTopicDefinition')
     GuardrailTopicExample = Shapes::StringShape.new(name: 'GuardrailTopicExample')
@@ -257,6 +260,7 @@ module Aws::Bedrock
     GuardrailTopicsConfig = Shapes::ListShape.new(name: 'GuardrailTopicsConfig')
     GuardrailVersion = Shapes::StringShape.new(name: 'GuardrailVersion')
     GuardrailWord = Shapes::StructureShape.new(name: 'GuardrailWord')
+    GuardrailWordAction = Shapes::StringShape.new(name: 'GuardrailWordAction')
     GuardrailWordConfig = Shapes::StructureShape.new(name: 'GuardrailWordConfig')
     GuardrailWordConfigTextString = Shapes::StringShape.new(name: 'GuardrailWordConfigTextString')
     GuardrailWordPolicy = Shapes::StructureShape.new(name: 'GuardrailWordPolicy')
@@ -1175,6 +1179,10 @@ module Aws::Bedrock
     GuardrailContentFilter.add_member(:output_strength, Shapes::ShapeRef.new(shape: GuardrailFilterStrength, required: true, location_name: "outputStrength"))
     GuardrailContentFilter.add_member(:input_modalities, Shapes::ShapeRef.new(shape: GuardrailModalities, location_name: "inputModalities"))
     GuardrailContentFilter.add_member(:output_modalities, Shapes::ShapeRef.new(shape: GuardrailModalities, location_name: "outputModalities"))
+    GuardrailContentFilter.add_member(:input_action, Shapes::ShapeRef.new(shape: GuardrailContentFilterAction, location_name: "inputAction"))
+    GuardrailContentFilter.add_member(:output_action, Shapes::ShapeRef.new(shape: GuardrailContentFilterAction, location_name: "outputAction"))
+    GuardrailContentFilter.add_member(:input_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "inputEnabled"))
+    GuardrailContentFilter.add_member(:output_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "outputEnabled"))
     GuardrailContentFilter.struct_class = Types::GuardrailContentFilter
 
     GuardrailContentFilterConfig.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailContentFilterType, required: true, location_name: "type"))
@@ -1182,6 +1190,10 @@ module Aws::Bedrock
     GuardrailContentFilterConfig.add_member(:output_strength, Shapes::ShapeRef.new(shape: GuardrailFilterStrength, required: true, location_name: "outputStrength"))
     GuardrailContentFilterConfig.add_member(:input_modalities, Shapes::ShapeRef.new(shape: GuardrailModalities, location_name: "inputModalities"))
     GuardrailContentFilterConfig.add_member(:output_modalities, Shapes::ShapeRef.new(shape: GuardrailModalities, location_name: "outputModalities"))
+    GuardrailContentFilterConfig.add_member(:input_action, Shapes::ShapeRef.new(shape: GuardrailContentFilterAction, location_name: "inputAction"))
+    GuardrailContentFilterConfig.add_member(:output_action, Shapes::ShapeRef.new(shape: GuardrailContentFilterAction, location_name: "outputAction"))
+    GuardrailContentFilterConfig.add_member(:input_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "inputEnabled"))
+    GuardrailContentFilterConfig.add_member(:output_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "outputEnabled"))
     GuardrailContentFilterConfig.struct_class = Types::GuardrailContentFilterConfig
 
     GuardrailContentFilters.member = Shapes::ShapeRef.new(shape: GuardrailContentFilter)
@@ -1196,10 +1208,14 @@ module Aws::Bedrock
 
     GuardrailContextualGroundingFilter.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailContextualGroundingFilterType, required: true, location_name: "type"))
     GuardrailContextualGroundingFilter.add_member(:threshold, Shapes::ShapeRef.new(shape: GuardrailContextualGroundingFilterThresholdDouble, required: true, location_name: "threshold"))
+    GuardrailContextualGroundingFilter.add_member(:action, Shapes::ShapeRef.new(shape: GuardrailContextualGroundingAction, location_name: "action"))
+    GuardrailContextualGroundingFilter.add_member(:enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "enabled"))
     GuardrailContextualGroundingFilter.struct_class = Types::GuardrailContextualGroundingFilter
 
     GuardrailContextualGroundingFilterConfig.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailContextualGroundingFilterType, required: true, location_name: "type"))
     GuardrailContextualGroundingFilterConfig.add_member(:threshold, Shapes::ShapeRef.new(shape: GuardrailContextualGroundingFilterConfigThresholdDouble, required: true, location_name: "threshold"))
+    GuardrailContextualGroundingFilterConfig.add_member(:action, Shapes::ShapeRef.new(shape: GuardrailContextualGroundingAction, location_name: "action"))
+    GuardrailContextualGroundingFilterConfig.add_member(:enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "enabled"))
     GuardrailContextualGroundingFilterConfig.struct_class = Types::GuardrailContextualGroundingFilterConfig
 
     GuardrailContextualGroundingFilters.member = Shapes::ShapeRef.new(shape: GuardrailContextualGroundingFilter)
@@ -1219,9 +1235,17 @@ module Aws::Bedrock
     GuardrailManagedWordListsConfig.member = Shapes::ShapeRef.new(shape: GuardrailManagedWordsConfig)
 
     GuardrailManagedWords.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailManagedWordsType, required: true, location_name: "type"))
+    GuardrailManagedWords.add_member(:input_action, Shapes::ShapeRef.new(shape: GuardrailWordAction, location_name: "inputAction"))
+    GuardrailManagedWords.add_member(:output_action, Shapes::ShapeRef.new(shape: GuardrailWordAction, location_name: "outputAction"))
+    GuardrailManagedWords.add_member(:input_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "inputEnabled"))
+    GuardrailManagedWords.add_member(:output_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "outputEnabled"))
     GuardrailManagedWords.struct_class = Types::GuardrailManagedWords
 
     GuardrailManagedWordsConfig.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailManagedWordsType, required: true, location_name: "type"))
+    GuardrailManagedWordsConfig.add_member(:input_action, Shapes::ShapeRef.new(shape: GuardrailWordAction, location_name: "inputAction"))
+    GuardrailManagedWordsConfig.add_member(:output_action, Shapes::ShapeRef.new(shape: GuardrailWordAction, location_name: "outputAction"))
+    GuardrailManagedWordsConfig.add_member(:input_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "inputEnabled"))
+    GuardrailManagedWordsConfig.add_member(:output_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "outputEnabled"))
     GuardrailManagedWordsConfig.struct_class = Types::GuardrailManagedWordsConfig
 
     GuardrailModalities.member = Shapes::ShapeRef.new(shape: GuardrailModality)
@@ -1232,22 +1256,38 @@ module Aws::Bedrock
 
     GuardrailPiiEntity.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailPiiEntityType, required: true, location_name: "type"))
     GuardrailPiiEntity.add_member(:action, Shapes::ShapeRef.new(shape: GuardrailSensitiveInformationAction, required: true, location_name: "action"))
+    GuardrailPiiEntity.add_member(:input_action, Shapes::ShapeRef.new(shape: GuardrailSensitiveInformationAction, location_name: "inputAction"))
+    GuardrailPiiEntity.add_member(:output_action, Shapes::ShapeRef.new(shape: GuardrailSensitiveInformationAction, location_name: "outputAction"))
+    GuardrailPiiEntity.add_member(:input_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "inputEnabled"))
+    GuardrailPiiEntity.add_member(:output_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "outputEnabled"))
     GuardrailPiiEntity.struct_class = Types::GuardrailPiiEntity
 
     GuardrailPiiEntityConfig.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailPiiEntityType, required: true, location_name: "type"))
     GuardrailPiiEntityConfig.add_member(:action, Shapes::ShapeRef.new(shape: GuardrailSensitiveInformationAction, required: true, location_name: "action"))
+    GuardrailPiiEntityConfig.add_member(:input_action, Shapes::ShapeRef.new(shape: GuardrailSensitiveInformationAction, location_name: "inputAction"))
+    GuardrailPiiEntityConfig.add_member(:output_action, Shapes::ShapeRef.new(shape: GuardrailSensitiveInformationAction, location_name: "outputAction"))
+    GuardrailPiiEntityConfig.add_member(:input_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "inputEnabled"))
+    GuardrailPiiEntityConfig.add_member(:output_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "outputEnabled"))
     GuardrailPiiEntityConfig.struct_class = Types::GuardrailPiiEntityConfig
 
     GuardrailRegex.add_member(:name, Shapes::ShapeRef.new(shape: GuardrailRegexNameString, required: true, location_name: "name"))
     GuardrailRegex.add_member(:description, Shapes::ShapeRef.new(shape: GuardrailRegexDescriptionString, location_name: "description"))
     GuardrailRegex.add_member(:pattern, Shapes::ShapeRef.new(shape: GuardrailRegexPatternString, required: true, location_name: "pattern"))
     GuardrailRegex.add_member(:action, Shapes::ShapeRef.new(shape: GuardrailSensitiveInformationAction, required: true, location_name: "action"))
+    GuardrailRegex.add_member(:input_action, Shapes::ShapeRef.new(shape: GuardrailSensitiveInformationAction, location_name: "inputAction"))
+    GuardrailRegex.add_member(:output_action, Shapes::ShapeRef.new(shape: GuardrailSensitiveInformationAction, location_name: "outputAction"))
+    GuardrailRegex.add_member(:input_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "inputEnabled"))
+    GuardrailRegex.add_member(:output_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "outputEnabled"))
     GuardrailRegex.struct_class = Types::GuardrailRegex
 
     GuardrailRegexConfig.add_member(:name, Shapes::ShapeRef.new(shape: GuardrailRegexConfigNameString, required: true, location_name: "name"))
     GuardrailRegexConfig.add_member(:description, Shapes::ShapeRef.new(shape: GuardrailRegexConfigDescriptionString, location_name: "description"))
     GuardrailRegexConfig.add_member(:pattern, Shapes::ShapeRef.new(shape: GuardrailRegexConfigPatternString, required: true, location_name: "pattern"))
     GuardrailRegexConfig.add_member(:action, Shapes::ShapeRef.new(shape: GuardrailSensitiveInformationAction, required: true, location_name: "action"))
+    GuardrailRegexConfig.add_member(:input_action, Shapes::ShapeRef.new(shape: GuardrailSensitiveInformationAction, location_name: "inputAction"))
+    GuardrailRegexConfig.add_member(:output_action, Shapes::ShapeRef.new(shape: GuardrailSensitiveInformationAction, location_name: "outputAction"))
+    GuardrailRegexConfig.add_member(:input_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "inputEnabled"))
+    GuardrailRegexConfig.add_member(:output_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "outputEnabled"))
     GuardrailRegexConfig.struct_class = Types::GuardrailRegexConfig
 
     GuardrailRegexes.member = Shapes::ShapeRef.new(shape: GuardrailRegex)
@@ -1280,12 +1320,20 @@ module Aws::Bedrock
     GuardrailTopic.add_member(:definition, Shapes::ShapeRef.new(shape: GuardrailTopicDefinition, required: true, location_name: "definition"))
     GuardrailTopic.add_member(:examples, Shapes::ShapeRef.new(shape: GuardrailTopicExamples, location_name: "examples"))
     GuardrailTopic.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailTopicType, location_name: "type"))
+    GuardrailTopic.add_member(:input_action, Shapes::ShapeRef.new(shape: GuardrailTopicAction, location_name: "inputAction"))
+    GuardrailTopic.add_member(:output_action, Shapes::ShapeRef.new(shape: GuardrailTopicAction, location_name: "outputAction"))
+    GuardrailTopic.add_member(:input_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "inputEnabled"))
+    GuardrailTopic.add_member(:output_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "outputEnabled"))
     GuardrailTopic.struct_class = Types::GuardrailTopic
 
     GuardrailTopicConfig.add_member(:name, Shapes::ShapeRef.new(shape: GuardrailTopicName, required: true, location_name: "name"))
     GuardrailTopicConfig.add_member(:definition, Shapes::ShapeRef.new(shape: GuardrailTopicDefinition, required: true, location_name: "definition"))
     GuardrailTopicConfig.add_member(:examples, Shapes::ShapeRef.new(shape: GuardrailTopicExamples, location_name: "examples"))
     GuardrailTopicConfig.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailTopicType, required: true, location_name: "type"))
+    GuardrailTopicConfig.add_member(:input_action, Shapes::ShapeRef.new(shape: GuardrailTopicAction, location_name: "inputAction"))
+    GuardrailTopicConfig.add_member(:output_action, Shapes::ShapeRef.new(shape: GuardrailTopicAction, location_name: "outputAction"))
+    GuardrailTopicConfig.add_member(:input_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "inputEnabled"))
+    GuardrailTopicConfig.add_member(:output_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "outputEnabled"))
     GuardrailTopicConfig.struct_class = Types::GuardrailTopicConfig
 
     GuardrailTopicExamples.member = Shapes::ShapeRef.new(shape: GuardrailTopicExample)
@@ -1301,9 +1349,17 @@ module Aws::Bedrock
     GuardrailTopicsConfig.member = Shapes::ShapeRef.new(shape: GuardrailTopicConfig)
 
     GuardrailWord.add_member(:text, Shapes::ShapeRef.new(shape: GuardrailWordTextString, required: true, location_name: "text"))
+    GuardrailWord.add_member(:input_action, Shapes::ShapeRef.new(shape: GuardrailWordAction, location_name: "inputAction"))
+    GuardrailWord.add_member(:output_action, Shapes::ShapeRef.new(shape: GuardrailWordAction, location_name: "outputAction"))
+    GuardrailWord.add_member(:input_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "inputEnabled"))
+    GuardrailWord.add_member(:output_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "outputEnabled"))
     GuardrailWord.struct_class = Types::GuardrailWord
 
     GuardrailWordConfig.add_member(:text, Shapes::ShapeRef.new(shape: GuardrailWordConfigTextString, required: true, location_name: "text"))
+    GuardrailWordConfig.add_member(:input_action, Shapes::ShapeRef.new(shape: GuardrailWordAction, location_name: "inputAction"))
+    GuardrailWordConfig.add_member(:output_action, Shapes::ShapeRef.new(shape: GuardrailWordAction, location_name: "outputAction"))
+    GuardrailWordConfig.add_member(:input_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "inputEnabled"))
+    GuardrailWordConfig.add_member(:output_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "outputEnabled"))
     GuardrailWordConfig.struct_class = Types::GuardrailWordConfig
 
     GuardrailWordPolicy.add_member(:words, Shapes::ShapeRef.new(shape: GuardrailWords, location_name: "words"))

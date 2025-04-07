@@ -84,6 +84,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::ApplyGuardrailResponse]
         def usage: () -> Types::GuardrailUsage
         def action: () -> ("NONE" | "GUARDRAIL_INTERVENED")
+        def action_reason: () -> ::String
         def outputs: () -> ::Array[Types::GuardrailOutputContent]
         def assessments: () -> ::Array[Types::GuardrailAssessment]
         def guardrail_coverage: () -> Types::GuardrailCoverage
@@ -106,7 +107,8 @@ module Aws
                                    }
                                  }?
                                },
-                             ]
+                             ],
+                             ?output_scope: ("INTERVENTIONS" | "FULL")
                            ) -> _ApplyGuardrailResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ApplyGuardrailResponseSuccess
 
@@ -273,7 +275,7 @@ module Aws
                       ?guardrail_config: {
                         guardrail_identifier: ::String,
                         guardrail_version: ::String,
-                        trace: ("enabled" | "disabled")?
+                        trace: ("enabled" | "disabled" | "enabled_full")?
                       },
                       ?additional_model_request_fields: {
                       },
@@ -445,7 +447,7 @@ module Aws
                              ?guardrail_config: {
                                guardrail_identifier: ::String,
                                guardrail_version: ::String,
-                               trace: ("enabled" | "disabled")?,
+                               trace: ("enabled" | "disabled" | "enabled_full")?,
                                stream_processing_mode: ("sync" | "async")?
                              },
                              ?additional_model_request_fields: {
@@ -491,7 +493,7 @@ module Aws
                           ?content_type: ::String,
                           ?accept: ::String,
                           model_id: ::String,
-                          ?trace: ("ENABLED" | "DISABLED"),
+                          ?trace: ("ENABLED" | "DISABLED" | "ENABLED_FULL"),
                           ?guardrail_identifier: ::String,
                           ?guardrail_version: ::String,
                           ?performance_config_latency: ("standard" | "optimized")
@@ -510,7 +512,7 @@ module Aws
                                                ?content_type: ::String,
                                                ?accept: ::String,
                                                model_id: ::String,
-                                               ?trace: ("ENABLED" | "DISABLED"),
+                                               ?trace: ("ENABLED" | "DISABLED" | "ENABLED_FULL"),
                                                ?guardrail_identifier: ::String,
                                                ?guardrail_version: ::String,
                                                ?performance_config_latency: ("standard" | "optimized")

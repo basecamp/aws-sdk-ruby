@@ -1152,6 +1152,29 @@ module Aws::Transfer
       SENSITIVE: []
     end
 
+    class StartRemoteDeleteRequest
+      attr_accessor connector_id: ::String
+      attr_accessor delete_path: ::String
+      SENSITIVE: []
+    end
+
+    class StartRemoteDeleteResponse
+      attr_accessor delete_id: ::String
+      SENSITIVE: []
+    end
+
+    class StartRemoteMoveRequest
+      attr_accessor connector_id: ::String
+      attr_accessor source_path: ::String
+      attr_accessor target_path: ::String
+      SENSITIVE: []
+    end
+
+    class StartRemoteMoveResponse
+      attr_accessor move_id: ::String
+      SENSITIVE: []
+    end
+
     class StartServerRequest
       attr_accessor server_id: ::String
       SENSITIVE: []

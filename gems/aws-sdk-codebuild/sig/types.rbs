@@ -11,6 +11,9 @@ module Aws::CodeBuild
     class AccountLimitExceededException < Aws::EmptyStructure
     end
 
+    class AccountSuspendedException < Aws::EmptyStructure
+    end
+
     class AutoRetryConfig
       attr_accessor auto_retry_limit: ::Integer
       attr_accessor auto_retry_number: ::Integer
@@ -49,6 +52,18 @@ module Aws::CodeBuild
     class BatchGetBuildsOutput
       attr_accessor builds: ::Array[Types::Build]
       attr_accessor builds_not_found: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class BatchGetCommandExecutionsInput
+      attr_accessor sandbox_id: ::String
+      attr_accessor command_execution_ids: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class BatchGetCommandExecutionsOutput
+      attr_accessor command_executions: ::Array[Types::CommandExecution]
+      attr_accessor command_executions_not_found: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -93,6 +108,17 @@ module Aws::CodeBuild
     class BatchGetReportsOutput
       attr_accessor reports: ::Array[Types::Report]
       attr_accessor reports_not_found: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class BatchGetSandboxesInput
+      attr_accessor ids: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class BatchGetSandboxesOutput
+      attr_accessor sandboxes: ::Array[Types::Sandbox]
+      attr_accessor sandboxes_not_found: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -270,6 +296,23 @@ module Aws::CodeBuild
       attr_accessor branches_covered: ::Integer
       attr_accessor branches_missed: ::Integer
       SENSITIVE: []
+    end
+
+    class CommandExecution
+      attr_accessor id: ::String
+      attr_accessor sandbox_id: ::String
+      attr_accessor submit_time: ::Time
+      attr_accessor start_time: ::Time
+      attr_accessor end_time: ::Time
+      attr_accessor status: ::String
+      attr_accessor command: ::String
+      attr_accessor type: ("SHELL")
+      attr_accessor exit_code: ::String
+      attr_accessor standard_output_content: ::String
+      attr_accessor standard_err_content: ::String
+      attr_accessor logs: Types::LogsLocation
+      attr_accessor sandbox_arn: ::String
+      SENSITIVE: [:command, :standard_output_content, :standard_err_content]
     end
 
     class ComputeConfiguration
@@ -642,6 +685,20 @@ module Aws::CodeBuild
       SENSITIVE: []
     end
 
+    class ListCommandExecutionsForSandboxInput
+      attr_accessor sandbox_id: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor sort_order: ("ASCENDING" | "DESCENDING")
+      attr_accessor next_token: ::String
+      SENSITIVE: [:next_token]
+    end
+
+    class ListCommandExecutionsForSandboxOutput
+      attr_accessor command_executions: ::Array[Types::CommandExecution]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListCuratedEnvironmentImagesInput < Aws::EmptyStructure
     end
 
@@ -717,6 +774,33 @@ module Aws::CodeBuild
     class ListReportsOutput
       attr_accessor next_token: ::String
       attr_accessor reports: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class ListSandboxesForProjectInput
+      attr_accessor project_name: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor sort_order: ("ASCENDING" | "DESCENDING")
+      attr_accessor next_token: ::String
+      SENSITIVE: [:next_token]
+    end
+
+    class ListSandboxesForProjectOutput
+      attr_accessor ids: ::Array[::String]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListSandboxesInput
+      attr_accessor max_results: ::Integer
+      attr_accessor sort_order: ("ASCENDING" | "DESCENDING")
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListSandboxesOutput
+      attr_accessor ids: ::Array[::String]
+      attr_accessor next_token: ::String
       SENSITIVE: []
     end
 
@@ -1036,6 +1120,60 @@ module Aws::CodeBuild
       SENSITIVE: []
     end
 
+    class SSMSession
+      attr_accessor session_id: ::String
+      attr_accessor token_value: ::String
+      attr_accessor stream_url: ::String
+      SENSITIVE: []
+    end
+
+    class Sandbox
+      attr_accessor id: ::String
+      attr_accessor arn: ::String
+      attr_accessor project_name: ::String
+      attr_accessor request_time: ::Time
+      attr_accessor start_time: ::Time
+      attr_accessor end_time: ::Time
+      attr_accessor status: ::String
+      attr_accessor source: Types::ProjectSource
+      attr_accessor source_version: ::String
+      attr_accessor secondary_sources: ::Array[Types::ProjectSource]
+      attr_accessor secondary_source_versions: ::Array[Types::ProjectSourceVersion]
+      attr_accessor environment: Types::ProjectEnvironment
+      attr_accessor file_system_locations: ::Array[Types::ProjectFileSystemLocation]
+      attr_accessor timeout_in_minutes: ::Integer
+      attr_accessor queued_timeout_in_minutes: ::Integer
+      attr_accessor vpc_config: Types::VpcConfig
+      attr_accessor log_config: Types::LogsConfig
+      attr_accessor encryption_key: ::String
+      attr_accessor service_role: ::String
+      attr_accessor current_session: Types::SandboxSession
+      SENSITIVE: []
+    end
+
+    class SandboxSession
+      attr_accessor id: ::String
+      attr_accessor status: ::String
+      attr_accessor start_time: ::Time
+      attr_accessor end_time: ::Time
+      attr_accessor current_phase: ::String
+      attr_accessor phases: ::Array[Types::SandboxSessionPhase]
+      attr_accessor resolved_source_version: ::String
+      attr_accessor logs: Types::LogsLocation
+      attr_accessor network_interface: Types::NetworkInterface
+      SENSITIVE: []
+    end
+
+    class SandboxSessionPhase
+      attr_accessor phase_type: ::String
+      attr_accessor phase_status: ("SUCCEEDED" | "FAILED" | "FAULT" | "TIMED_OUT" | "IN_PROGRESS" | "STOPPED")
+      attr_accessor start_time: ::Time
+      attr_accessor end_time: ::Time
+      attr_accessor duration_in_seconds: ::Integer
+      attr_accessor contexts: ::Array[Types::PhaseContext]
+      SENSITIVE: []
+    end
+
     class ScalingConfigurationInput
       attr_accessor scaling_type: ("TARGET_TRACKING_SCALING")
       attr_accessor target_tracking_scaling_configs: ::Array[Types::TargetTrackingScalingConfiguration]
@@ -1154,6 +1292,39 @@ module Aws::CodeBuild
       SENSITIVE: []
     end
 
+    class StartCommandExecutionInput
+      attr_accessor sandbox_id: ::String
+      attr_accessor command: ::String
+      attr_accessor type: ("SHELL")
+      SENSITIVE: [:command]
+    end
+
+    class StartCommandExecutionOutput
+      attr_accessor command_execution: Types::CommandExecution
+      SENSITIVE: []
+    end
+
+    class StartSandboxConnectionInput
+      attr_accessor sandbox_id: ::String
+      SENSITIVE: []
+    end
+
+    class StartSandboxConnectionOutput
+      attr_accessor ssm_session: Types::SSMSession
+      SENSITIVE: []
+    end
+
+    class StartSandboxInput
+      attr_accessor project_name: ::String
+      attr_accessor idempotency_token: ::String
+      SENSITIVE: [:idempotency_token]
+    end
+
+    class StartSandboxOutput
+      attr_accessor sandbox: Types::Sandbox
+      SENSITIVE: []
+    end
+
     class StopBuildBatchInput
       attr_accessor id: ::String
       SENSITIVE: []
@@ -1171,6 +1342,16 @@ module Aws::CodeBuild
 
     class StopBuildOutput
       attr_accessor build: Types::Build
+      SENSITIVE: []
+    end
+
+    class StopSandboxInput
+      attr_accessor id: ::String
+      SENSITIVE: []
+    end
+
+    class StopSandboxOutput
+      attr_accessor sandbox: Types::Sandbox
       SENSITIVE: []
     end
 

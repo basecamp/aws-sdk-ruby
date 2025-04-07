@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.212.0 (2025-04-07)
+------------------
+
+* Feature - Add input validations for multiple Glue APIs
+
 1.211.0 (2025-03-14)
 ------------------
 

@@ -17,6 +17,13 @@ module Aws::CodeBuild
     #
     class AccountLimitExceededException < Aws::EmptyStructure; end
 
+    # The CodeBuild access has been suspended for the calling Amazon Web
+    # Services account.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/AccountSuspendedException AWS API Documentation
+    #
+    class AccountSuspendedException < Aws::EmptyStructure; end
+
     # Information about the auto-retry configuration for the build.
     #
     # @!attribute [rw] auto_retry_limit
@@ -142,6 +149,41 @@ module Aws::CodeBuild
       include Aws::Structure
     end
 
+    # @!attribute [rw] sandbox_id
+    #   A `sandboxId` or `sandboxArn`.
+    #   @return [String]
+    #
+    # @!attribute [rw] command_execution_ids
+    #   A comma separated list of `commandExecutionIds`.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/BatchGetCommandExecutionsInput AWS API Documentation
+    #
+    class BatchGetCommandExecutionsInput < Struct.new(
+      :sandbox_id,
+      :command_execution_ids)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] command_executions
+    #   Information about the requested command executions.
+    #   @return [Array<Types::CommandExecution>]
+    #
+    # @!attribute [rw] command_executions_not_found
+    #   The IDs of command executions for which information could not be
+    #   found.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/BatchGetCommandExecutionsOutput AWS API Documentation
+    #
+    class BatchGetCommandExecutionsOutput < Struct.new(
+      :command_executions,
+      :command_executions_not_found)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] names
     #   The names or ARNs of the compute fleets.
     #   @return [Array<String>]
@@ -261,6 +303,35 @@ module Aws::CodeBuild
     class BatchGetReportsOutput < Struct.new(
       :reports,
       :reports_not_found)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ids
+    #   A comma separated list of `sandboxIds` or `sandboxArns`.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/BatchGetSandboxesInput AWS API Documentation
+    #
+    class BatchGetSandboxesInput < Struct.new(
+      :ids)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] sandboxes
+    #   Information about the requested sandboxes.
+    #   @return [Array<Types::Sandbox>]
+    #
+    # @!attribute [rw] sandboxes_not_found
+    #   The IDs of sandboxes for which information could not be found.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/BatchGetSandboxesOutput AWS API Documentation
+    #
+    class BatchGetSandboxesOutput < Struct.new(
+      :sandboxes,
+      :sandboxes_not_found)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1452,6 +1523,83 @@ module Aws::CodeBuild
       :branches_covered,
       :branches_missed)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains command execution information.
+    #
+    # @!attribute [rw] id
+    #   The ID of the command execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] sandbox_id
+    #   A `sandboxId`.
+    #   @return [String]
+    #
+    # @!attribute [rw] submit_time
+    #   When the command execution process was initially submitted,
+    #   expressed in Unix time format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] start_time
+    #   When the command execution process started, expressed in Unix time
+    #   format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   When the command execution process ended, expressed in Unix time
+    #   format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] status
+    #   The status of the command execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] command
+    #   The command that needs to be executed.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The command type.
+    #   @return [String]
+    #
+    # @!attribute [rw] exit_code
+    #   The exit code to return upon completion.
+    #   @return [String]
+    #
+    # @!attribute [rw] standard_output_content
+    #   The text written by the command to stdout.
+    #   @return [String]
+    #
+    # @!attribute [rw] standard_err_content
+    #   The text written by the command to stderr.
+    #   @return [String]
+    #
+    # @!attribute [rw] logs
+    #   Information about build logs in CloudWatch Logs.
+    #   @return [Types::LogsLocation]
+    #
+    # @!attribute [rw] sandbox_arn
+    #   A `sandboxArn`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/CommandExecution AWS API Documentation
+    #
+    class CommandExecution < Struct.new(
+      :id,
+      :sandbox_id,
+      :submit_time,
+      :start_time,
+      :end_time,
+      :status,
+      :command,
+      :type,
+      :exit_code,
+      :standard_output_content,
+      :standard_err_content,
+      :logs,
+      :sandbox_arn)
+      SENSITIVE = [:command, :standard_output_content, :standard_err_content]
       include Aws::Structure
     end
 
@@ -3325,6 +3473,51 @@ module Aws::CodeBuild
       include Aws::Structure
     end
 
+    # @!attribute [rw] sandbox_id
+    #   A `sandboxId` or `sandboxArn`.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of sandbox records to be retrieved.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] sort_order
+    #   The order in which sandbox records should be retrieved.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   The next token, if any, to get paginated results. You will get this
+    #   value from previous execution of list sandboxes.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ListCommandExecutionsForSandboxInput AWS API Documentation
+    #
+    class ListCommandExecutionsForSandboxInput < Struct.new(
+      :sandbox_id,
+      :max_results,
+      :sort_order,
+      :next_token)
+      SENSITIVE = [:next_token]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] command_executions
+    #   Information about the requested command executions.
+    #   @return [Array<Types::CommandExecution>]
+    #
+    # @!attribute [rw] next_token
+    #   Information about the next token to get paginated results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ListCommandExecutionsForSandboxOutput AWS API Documentation
+    #
+    class ListCommandExecutionsForSandboxOutput < Struct.new(
+      :command_executions,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @api private
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ListCuratedEnvironmentImagesInput AWS API Documentation
@@ -3679,6 +3872,91 @@ module Aws::CodeBuild
     class ListReportsOutput < Struct.new(
       :next_token,
       :reports)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] project_name
+    #   The CodeBuild project name.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of sandbox records to be retrieved.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] sort_order
+    #   The order in which sandbox records should be retrieved.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   The next token, if any, to get paginated results. You will get this
+    #   value from previous execution of list sandboxes.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ListSandboxesForProjectInput AWS API Documentation
+    #
+    class ListSandboxesForProjectInput < Struct.new(
+      :project_name,
+      :max_results,
+      :sort_order,
+      :next_token)
+      SENSITIVE = [:next_token]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ids
+    #   Information about the requested sandbox IDs.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] next_token
+    #   Information about the next token to get paginated results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ListSandboxesForProjectOutput AWS API Documentation
+    #
+    class ListSandboxesForProjectOutput < Struct.new(
+      :ids,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   The maximum number of sandbox records to be retrieved.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] sort_order
+    #   The order in which sandbox records should be retrieved.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   The next token, if any, to get paginated results. You will get this
+    #   value from previous execution of list sandboxes.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ListSandboxesInput AWS API Documentation
+    #
+    class ListSandboxesInput < Struct.new(
+      :max_results,
+      :sort_order,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ids
+    #   Information about the requested sandbox IDs.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] next_token
+    #   Information about the next token to get paginated results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ListSandboxesOutput AWS API Documentation
+    #
+    class ListSandboxesOutput < Struct.new(
+      :ids,
+      :next_token)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5705,6 +5983,267 @@ module Aws::CodeBuild
       include Aws::Structure
     end
 
+    # Contains information about the Session Manager session.
+    #
+    # @!attribute [rw] session_id
+    #   The ID of the session.
+    #   @return [String]
+    #
+    # @!attribute [rw] token_value
+    #   An encrypted token value containing session and caller information.
+    #   @return [String]
+    #
+    # @!attribute [rw] stream_url
+    #   A URL back to SSM Agent on the managed node that the Session Manager
+    #   client uses to send commands and receive output from the node.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/SSMSession AWS API Documentation
+    #
+    class SSMSession < Struct.new(
+      :session_id,
+      :token_value,
+      :stream_url)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains sandbox information.
+    #
+    # @!attribute [rw] id
+    #   The ID of the sandbox.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The ARN of the sandbox.
+    #   @return [String]
+    #
+    # @!attribute [rw] project_name
+    #   The CodeBuild project name.
+    #   @return [String]
+    #
+    # @!attribute [rw] request_time
+    #   When the sandbox process was initially requested, expressed in Unix
+    #   time format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] start_time
+    #   When the sandbox process started, expressed in Unix time format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   When the sandbox process ended, expressed in Unix time format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] status
+    #   The status of the sandbox.
+    #   @return [String]
+    #
+    # @!attribute [rw] source
+    #   Information about the build input source code for the build project.
+    #   @return [Types::ProjectSource]
+    #
+    # @!attribute [rw] source_version
+    #   Any version identifier for the version of the sandbox to be built.
+    #   @return [String]
+    #
+    # @!attribute [rw] secondary_sources
+    #   An array of `ProjectSource` objects.
+    #   @return [Array<Types::ProjectSource>]
+    #
+    # @!attribute [rw] secondary_source_versions
+    #   An array of `ProjectSourceVersion` objects.
+    #   @return [Array<Types::ProjectSourceVersion>]
+    #
+    # @!attribute [rw] environment
+    #   Information about the build environment of the build project.
+    #   @return [Types::ProjectEnvironment]
+    #
+    # @!attribute [rw] file_system_locations
+    #   An array of `ProjectFileSystemLocation` objects for a CodeBuild
+    #   build project. A `ProjectFileSystemLocation` object specifies the
+    #   `identifier`, `location`, `mountOptions`, `mountPoint`, and `type`
+    #   of a file system created using Amazon Elastic File System.
+    #   @return [Array<Types::ProjectFileSystemLocation>]
+    #
+    # @!attribute [rw] timeout_in_minutes
+    #   How long, in minutes, from 5 to 2160 (36 hours), for CodeBuild to
+    #   wait before timing out this sandbox if it does not get marked as
+    #   completed.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] queued_timeout_in_minutes
+    #   The number of minutes a sandbox is allowed to be queued before it
+    #   times out.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] vpc_config
+    #   Information about the VPC configuration that CodeBuild accesses.
+    #   @return [Types::VpcConfig]
+    #
+    # @!attribute [rw] log_config
+    #   Information about logs for a build project. These can be logs in
+    #   CloudWatch Logs, built in a specified S3 bucket, or both.
+    #   @return [Types::LogsConfig]
+    #
+    # @!attribute [rw] encryption_key
+    #   The Key Management Service customer master key (CMK) to be used for
+    #   encrypting the sandbox output artifacts.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_role
+    #   The name of a service role used for this sandbox.
+    #   @return [String]
+    #
+    # @!attribute [rw] current_session
+    #   The current session for the sandbox.
+    #   @return [Types::SandboxSession]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/Sandbox AWS API Documentation
+    #
+    class Sandbox < Struct.new(
+      :id,
+      :arn,
+      :project_name,
+      :request_time,
+      :start_time,
+      :end_time,
+      :status,
+      :source,
+      :source_version,
+      :secondary_sources,
+      :secondary_source_versions,
+      :environment,
+      :file_system_locations,
+      :timeout_in_minutes,
+      :queued_timeout_in_minutes,
+      :vpc_config,
+      :log_config,
+      :encryption_key,
+      :service_role,
+      :current_session)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the sandbox session.
+    #
+    # @!attribute [rw] id
+    #   The ID of the sandbox session.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the sandbox session.
+    #   @return [String]
+    #
+    # @!attribute [rw] start_time
+    #   When the sandbox session started, expressed in Unix time format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   When the sandbox session ended, expressed in Unix time format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] current_phase
+    #   The current phase for the sandbox.
+    #   @return [String]
+    #
+    # @!attribute [rw] phases
+    #   An array of `SandboxSessionPhase` objects.
+    #   @return [Array<Types::SandboxSessionPhase>]
+    #
+    # @!attribute [rw] resolved_source_version
+    #   An identifier for the version of this sandbox's source code.
+    #   @return [String]
+    #
+    # @!attribute [rw] logs
+    #   Information about build logs in CloudWatch Logs.
+    #   @return [Types::LogsLocation]
+    #
+    # @!attribute [rw] network_interface
+    #   Describes a network interface.
+    #   @return [Types::NetworkInterface]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/SandboxSession AWS API Documentation
+    #
+    class SandboxSession < Struct.new(
+      :id,
+      :status,
+      :start_time,
+      :end_time,
+      :current_phase,
+      :phases,
+      :resolved_source_version,
+      :logs,
+      :network_interface)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the sandbox phase.
+    #
+    # @!attribute [rw] phase_type
+    #   The name of the sandbox phase.
+    #   @return [String]
+    #
+    # @!attribute [rw] phase_status
+    #   The current status of the sandbox phase. Valid values include:
+    #
+    #   FAILED
+    #
+    #   : The sandbox phase failed.
+    #
+    #   FAULT
+    #
+    #   : The sandbox phase faulted.
+    #
+    #   IN\_PROGRESS
+    #
+    #   : The sandbox phase is still in progress.
+    #
+    #   STOPPED
+    #
+    #   : The sandbox phase stopped.
+    #
+    #   SUCCEEDED
+    #
+    #   : The sandbox phase succeeded.
+    #
+    #   TIMED\_OUT
+    #
+    #   : The sandbox phase timed out.
+    #   @return [String]
+    #
+    # @!attribute [rw] start_time
+    #   When the sandbox phase started, expressed in Unix time format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   When the sandbox phase ended, expressed in Unix time format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] duration_in_seconds
+    #   How long, in seconds, between the starting and ending times of the
+    #   sandbox's phase.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] contexts
+    #   An array of `PhaseContext` objects.
+    #   @return [Array<Types::PhaseContext>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/SandboxSessionPhase AWS API Documentation
+    #
+    class SandboxSessionPhase < Struct.new(
+      :phase_type,
+      :phase_status,
+      :start_time,
+      :end_time,
+      :duration_in_seconds,
+      :contexts)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The scaling configuration input of a compute fleet.
     #
     # @!attribute [rw] scaling_type
@@ -6477,6 +7016,93 @@ module Aws::CodeBuild
       include Aws::Structure
     end
 
+    # @!attribute [rw] sandbox_id
+    #   A `sandboxId` or `sandboxArn`.
+    #   @return [String]
+    #
+    # @!attribute [rw] command
+    #   The command that needs to be executed.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The command type.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StartCommandExecutionInput AWS API Documentation
+    #
+    class StartCommandExecutionInput < Struct.new(
+      :sandbox_id,
+      :command,
+      :type)
+      SENSITIVE = [:command]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] command_execution
+    #   Information about the requested command executions.
+    #   @return [Types::CommandExecution]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StartCommandExecutionOutput AWS API Documentation
+    #
+    class StartCommandExecutionOutput < Struct.new(
+      :command_execution)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] sandbox_id
+    #   A `sandboxId` or `sandboxArn`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StartSandboxConnectionInput AWS API Documentation
+    #
+    class StartSandboxConnectionInput < Struct.new(
+      :sandbox_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ssm_session
+    #   Information about the Session Manager session.
+    #   @return [Types::SSMSession]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StartSandboxConnectionOutput AWS API Documentation
+    #
+    class StartSandboxConnectionOutput < Struct.new(
+      :ssm_session)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] project_name
+    #   The CodeBuild project name.
+    #   @return [String]
+    #
+    # @!attribute [rw] idempotency_token
+    #   A unique client token.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StartSandboxInput AWS API Documentation
+    #
+    class StartSandboxInput < Struct.new(
+      :project_name,
+      :idempotency_token)
+      SENSITIVE = [:idempotency_token]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] sandbox
+    #   Information about the requested sandbox.
+    #   @return [Types::Sandbox]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StartSandboxOutput AWS API Documentation
+    #
+    class StartSandboxOutput < Struct.new(
+      :sandbox)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] id
     #   The identifier of the batch build to stop.
     #   @return [String]
@@ -6521,6 +7147,30 @@ module Aws::CodeBuild
     #
     class StopBuildOutput < Struct.new(
       :build)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] id
+    #   Information about the requested sandbox ID.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StopSandboxInput AWS API Documentation
+    #
+    class StopSandboxInput < Struct.new(
+      :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] sandbox
+    #   Information about the requested sandbox.
+    #   @return [Types::Sandbox]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StopSandboxOutput AWS API Documentation
+    #
+    class StopSandboxOutput < Struct.new(
+      :sandbox)
       SENSITIVE = []
       include Aws::Structure
     end

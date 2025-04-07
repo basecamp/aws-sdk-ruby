@@ -1151,7 +1151,7 @@ module Aws::Transfer
     # @option params [String] :logging_role
     #   The Amazon Resource Name (ARN) of the Identity and Access Management
     #   (IAM) role that allows a server to turn on Amazon CloudWatch logging
-    #   for Amazon S3 or Amazon EFSevents. When set, you can view user
+    #   for Amazon S3 or Amazon EFS events. When set, you can view user
     #   activity in your CloudWatch logs.
     #
     # @option params [String] :post_authentication_login_banner
@@ -2862,6 +2862,14 @@ module Aws::Transfer
     # Imports the signing and encryption certificates that you need to
     # create local (AS2) profiles and partner profiles.
     #
+    # You can import both the certificate and its chain in the `Certificate`
+    # parameter.
+    #
+    # <note markdown="1"> If you use the `Certificate` parameter to upload both the certificate
+    # and its chain, don't use the `CertificateChain` parameter.
+    #
+    #  </note>
+    #
     # @option params [required, String] :usage
     #   Specifies how this certificate is used. It can be used in the
     #   following ways:
@@ -2880,23 +2888,35 @@ module Aws::Transfer
     #   * For the SDK, specify the raw content of a certificate file. For
     #     example, `` --certificate "`cat encryption-cert.pem`" ``.
     #
+    #   <note markdown="1"> You can provide both the certificate and its chain in this parameter,
+    #   without needing to use the `CertificateChain` parameter. If you use
+    #   this parameter for both the certificate and its chain, do not use the
+    #   `CertificateChain` parameter.
+    #
+    #    </note>
+    #
     # @option params [String] :certificate_chain
     #   An optional list of certificates that make up the chain for the
     #   certificate that's being imported.
     #
     # @option params [String] :private_key
-    #   * For the CLI, provide a file path for a private key in URI format.For
-    #     example, `--private-key file://encryption-key.pem`. Alternatively,
-    #     you can provide the raw content of the private key file.
+    #   * For the CLI, provide a file path for a private key in URI format.
+    #     For example, `--private-key file://encryption-key.pem`.
+    #     Alternatively, you can provide the raw content of the private key
+    #     file.
     #
     #   * For the SDK, specify the raw content of a private key file. For
     #     example, `` --private-key "`cat encryption-key.pem`" ``
     #
     # @option params [Time,DateTime,Date,Integer,String] :active_date
     #   An optional date that specifies when the certificate becomes active.
+    #   If you do not specify a value, `ActiveDate` takes the same value as
+    #   `NotBeforeDate`, which is specified by the CA.
     #
     # @option params [Time,DateTime,Date,Integer,String] :inactive_date
     #   An optional date that specifies when the certificate becomes inactive.
+    #   If you do not specify a value, `InactiveDate` takes the same value as
+    #   `NotAfterDate`, which is specified by the CA.
     #
     # @option params [String] :description
     #   A short description that helps identify the certificate.
@@ -3968,6 +3988,76 @@ module Aws::Transfer
       req.send_request(options)
     end
 
+    # Deletes a file or directory on the remote SFTP server.
+    #
+    # @option params [required, String] :connector_id
+    #   The unique identifier for the connector.
+    #
+    # @option params [required, String] :delete_path
+    #   The absolute path of the file or directory to delete. You can only
+    #   specify one path per call to this operation.
+    #
+    # @return [Types::StartRemoteDeleteResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartRemoteDeleteResponse#delete_id #delete_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_remote_delete({
+    #     connector_id: "ConnectorId", # required
+    #     delete_path: "FilePath", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.delete_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/StartRemoteDelete AWS API Documentation
+    #
+    # @overload start_remote_delete(params = {})
+    # @param [Hash] params ({})
+    def start_remote_delete(params = {}, options = {})
+      req = build_request(:start_remote_delete, params)
+      req.send_request(options)
+    end
+
+    # Moves or renames a file or directory on the remote SFTP server.
+    #
+    # @option params [required, String] :connector_id
+    #   The unique identifier for the connector.
+    #
+    # @option params [required, String] :source_path
+    #   The absolute path of the file or directory to move or rename. You can
+    #   only specify one path per call to this operation.
+    #
+    # @option params [required, String] :target_path
+    #   The absolute path for the target of the move/rename operation.
+    #
+    # @return [Types::StartRemoteMoveResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartRemoteMoveResponse#move_id #move_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_remote_move({
+    #     connector_id: "ConnectorId", # required
+    #     source_path: "FilePath", # required
+    #     target_path: "FilePath", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.move_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/StartRemoteMove AWS API Documentation
+    #
+    # @overload start_remote_move(params = {})
+    # @param [Hash] params ({})
+    def start_remote_move(params = {}, options = {})
+      req = build_request(:start_remote_move, params)
+      req.send_request(options)
+    end
+
     # Changes the state of a file transfer protocol-enabled server from
     # `OFFLINE` to `ONLINE`. It has no impact on a server that is already
     # `ONLINE`. An `ONLINE` server can accept and process file transfer
@@ -4574,9 +4664,13 @@ module Aws::Transfer
     #
     # @option params [Time,DateTime,Date,Integer,String] :active_date
     #   An optional date that specifies when the certificate becomes active.
+    #   If you do not specify a value, `ActiveDate` takes the same value as
+    #   `NotBeforeDate`, which is specified by the CA.
     #
     # @option params [Time,DateTime,Date,Integer,String] :inactive_date
     #   An optional date that specifies when the certificate becomes inactive.
+    #   If you do not specify a value, `InactiveDate` takes the same value as
+    #   `NotAfterDate`, which is specified by the CA.
     #
     # @option params [String] :description
     #   A short description to help identify the certificate.
@@ -4935,7 +5029,7 @@ module Aws::Transfer
     # @option params [String] :logging_role
     #   The Amazon Resource Name (ARN) of the Identity and Access Management
     #   (IAM) role that allows a server to turn on Amazon CloudWatch logging
-    #   for Amazon S3 or Amazon EFSevents. When set, you can view user
+    #   for Amazon S3 or Amazon EFS events. When set, you can view user
     #   activity in your CloudWatch logs.
     #
     # @option params [String] :post_authentication_login_banner
@@ -5398,7 +5492,7 @@ module Aws::Transfer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-transfer'
-      context[:gem_version] = '1.114.0'
+      context[:gem_version] = '1.115.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

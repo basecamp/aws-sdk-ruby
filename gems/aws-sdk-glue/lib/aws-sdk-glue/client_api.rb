@@ -259,6 +259,8 @@ module Aws::Glue
     ConnectionPropertyKey = Shapes::StringShape.new(name: 'ConnectionPropertyKey')
     ConnectionSchemaVersion = Shapes::IntegerShape.new(name: 'ConnectionSchemaVersion')
     ConnectionStatus = Shapes::StringShape.new(name: 'ConnectionStatus')
+    ConnectionString = Shapes::StringShape.new(name: 'ConnectionString')
+    ConnectionStringList = Shapes::ListShape.new(name: 'ConnectionStringList')
     ConnectionType = Shapes::StringShape.new(name: 'ConnectionType')
     ConnectionTypeBrief = Shapes::StructureShape.new(name: 'ConnectionTypeBrief')
     ConnectionTypeList = Shapes::ListShape.new(name: 'ConnectionTypeList')
@@ -1528,6 +1530,7 @@ module Aws::Glue
     ViewValidationList = Shapes::ListShape.new(name: 'ViewValidationList')
     WorkerType = Shapes::StringShape.new(name: 'WorkerType')
     Workflow = Shapes::StructureShape.new(name: 'Workflow')
+    WorkflowDescriptionString = Shapes::StringShape.new(name: 'WorkflowDescriptionString')
     WorkflowGraph = Shapes::StructureShape.new(name: 'WorkflowGraph')
     WorkflowNames = Shapes::ListShape.new(name: 'WorkflowNames')
     WorkflowRun = Shapes::StructureShape.new(name: 'WorkflowRun')
@@ -2416,6 +2419,8 @@ module Aws::Glue
     ConnectionProperties.key = Shapes::ShapeRef.new(shape: ConnectionPropertyKey)
     ConnectionProperties.value = Shapes::ShapeRef.new(shape: ValueString)
 
+    ConnectionStringList.member = Shapes::ShapeRef.new(shape: ConnectionString)
+
     ConnectionTypeBrief.add_member(:connection_type, Shapes::ShapeRef.new(shape: ConnectionType, location_name: "ConnectionType"))
     ConnectionTypeBrief.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "Description"))
     ConnectionTypeBrief.add_member(:capabilities, Shapes::ShapeRef.new(shape: Capabilities, location_name: "Capabilities"))
@@ -2423,7 +2428,7 @@ module Aws::Glue
 
     ConnectionTypeList.member = Shapes::ShapeRef.new(shape: ConnectionTypeBrief)
 
-    ConnectionsList.add_member(:connections, Shapes::ShapeRef.new(shape: OrchestrationStringList, location_name: "Connections"))
+    ConnectionsList.add_member(:connections, Shapes::ShapeRef.new(shape: ConnectionStringList, location_name: "Connections"))
     ConnectionsList.struct_class = Types::ConnectionsList
 
     ConnectorDataSource.add_member(:name, Shapes::ShapeRef.new(shape: NodeName, required: true, location_name: "Name"))
@@ -2916,7 +2921,7 @@ module Aws::Glue
     CreateUserDefinedFunctionResponse.struct_class = Types::CreateUserDefinedFunctionResponse
 
     CreateWorkflowRequest.add_member(:name, Shapes::ShapeRef.new(shape: NameString, required: true, location_name: "Name"))
-    CreateWorkflowRequest.add_member(:description, Shapes::ShapeRef.new(shape: GenericString, location_name: "Description"))
+    CreateWorkflowRequest.add_member(:description, Shapes::ShapeRef.new(shape: WorkflowDescriptionString, location_name: "Description"))
     CreateWorkflowRequest.add_member(:default_run_properties, Shapes::ShapeRef.new(shape: WorkflowRunProperties, location_name: "DefaultRunProperties"))
     CreateWorkflowRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagsMap, location_name: "Tags"))
     CreateWorkflowRequest.add_member(:max_concurrent_runs, Shapes::ShapeRef.new(shape: NullableInteger, location_name: "MaxConcurrentRuns"))
@@ -7103,7 +7108,7 @@ module Aws::Glue
     UpdateUserDefinedFunctionResponse.struct_class = Types::UpdateUserDefinedFunctionResponse
 
     UpdateWorkflowRequest.add_member(:name, Shapes::ShapeRef.new(shape: NameString, required: true, location_name: "Name"))
-    UpdateWorkflowRequest.add_member(:description, Shapes::ShapeRef.new(shape: GenericString, location_name: "Description"))
+    UpdateWorkflowRequest.add_member(:description, Shapes::ShapeRef.new(shape: WorkflowDescriptionString, location_name: "Description"))
     UpdateWorkflowRequest.add_member(:default_run_properties, Shapes::ShapeRef.new(shape: WorkflowRunProperties, location_name: "DefaultRunProperties"))
     UpdateWorkflowRequest.add_member(:max_concurrent_runs, Shapes::ShapeRef.new(shape: NullableInteger, location_name: "MaxConcurrentRuns"))
     UpdateWorkflowRequest.struct_class = Types::UpdateWorkflowRequest

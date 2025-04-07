@@ -2392,6 +2392,10 @@ module Aws::MediaLive
     #   identify the stream sources for this input.
     #   @return [Types::Smpte2110ReceiverGroupSettings]
     #
+    # @!attribute [rw] sdi_sources
+    #   SDI Sources for this Input.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateInput AWS API Documentation
     #
     class CreateInput < Struct.new(
@@ -2409,7 +2413,8 @@ module Aws::MediaLive
       :srt_settings,
       :input_network_location,
       :multicast_settings,
-      :smpte_2110_receiver_group_settings)
+      :smpte_2110_receiver_group_settings,
+      :sdi_sources)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2476,6 +2481,10 @@ module Aws::MediaLive
     #   Configures the sources for the SMPTE 2110 Receiver Group input.
     #   @return [Types::Smpte2110ReceiverGroupSettings]
     #
+    # @!attribute [rw] sdi_sources
+    #   SDI Sources for this Input.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateInputRequest AWS API Documentation
     #
     class CreateInputRequest < Struct.new(
@@ -2493,7 +2502,8 @@ module Aws::MediaLive
       :srt_settings,
       :input_network_location,
       :multicast_settings,
-      :smpte_2110_receiver_group_settings)
+      :smpte_2110_receiver_group_settings,
+      :sdi_sources)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3529,6 +3539,10 @@ module Aws::MediaLive
     #   Configures the sources for the SMPTE 2110 Receiver Group input.
     #   @return [Types::Smpte2110ReceiverGroupSettings]
     #
+    # @!attribute [rw] sdi_sources
+    #   SDI Sources for this Input.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DescribeInputResponse AWS API Documentation
     #
     class DescribeInputResponse < Struct.new(
@@ -3551,7 +3565,8 @@ module Aws::MediaLive
       :srt_settings,
       :input_network_location,
       :multicast_settings,
-      :smpte_2110_receiver_group_settings)
+      :smpte_2110_receiver_group_settings,
+      :sdi_sources)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6599,6 +6614,10 @@ module Aws::MediaLive
     #   identify the stream sources for this input.
     #   @return [Types::Smpte2110ReceiverGroupSettings]
     #
+    # @!attribute [rw] sdi_sources
+    #   SDI Sources for this Input.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/Input AWS API Documentation
     #
     class Input < Struct.new(
@@ -6621,7 +6640,8 @@ module Aws::MediaLive
       :srt_settings,
       :input_network_location,
       :multicast_settings,
-      :smpte_2110_receiver_group_settings)
+      :smpte_2110_receiver_group_settings,
+      :sdi_sources)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -12898,6 +12918,10 @@ module Aws::MediaLive
     #   identify the stream sources for this input.
     #   @return [Types::Smpte2110ReceiverGroupSettings]
     #
+    # @!attribute [rw] sdi_sources
+    #   SDI Sources for this Input.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateInput AWS API Documentation
     #
     class UpdateInput < Struct.new(
@@ -12910,7 +12934,8 @@ module Aws::MediaLive
       :sources,
       :srt_settings,
       :multicast_settings,
-      :smpte_2110_receiver_group_settings)
+      :smpte_2110_receiver_group_settings,
+      :sdi_sources)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -13099,6 +13124,10 @@ module Aws::MediaLive
     #   Configures the sources for the SMPTE 2110 Receiver Group input.
     #   @return [Types::Smpte2110ReceiverGroupSettings]
     #
+    # @!attribute [rw] sdi_sources
+    #   SDI Sources for this Input.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateInputRequest AWS API Documentation
     #
     class UpdateInputRequest < Struct.new(
@@ -13112,7 +13141,8 @@ module Aws::MediaLive
       :sources,
       :srt_settings,
       :multicast_settings,
-      :smpte_2110_receiver_group_settings)
+      :smpte_2110_receiver_group_settings,
+      :sdi_sources)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -18784,6 +18814,10 @@ module Aws::MediaLive
     #   Used in DescribeNodeSummary.
     #   @return [String]
     #
+    # @!attribute [rw] sdi_source_mappings
+    #   Used in SdiSourceMappings.
+    #   @return [Array<Types::SdiSourceMapping>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateNodeResponse AWS API Documentation
     #
     class CreateNodeResponse < Struct.new(
@@ -18796,7 +18830,8 @@ module Aws::MediaLive
       :name,
       :node_interface_mappings,
       :role,
-      :state)
+      :state,
+      :sdi_source_mappings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -19005,6 +19040,10 @@ module Aws::MediaLive
     #   Used in DescribeNodeSummary.
     #   @return [String]
     #
+    # @!attribute [rw] sdi_source_mappings
+    #   Used in SdiSourceMappings.
+    #   @return [Array<Types::SdiSourceMapping>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DeleteNodeResponse AWS API Documentation
     #
     class DeleteNodeResponse < Struct.new(
@@ -19017,7 +19056,8 @@ module Aws::MediaLive
       :name,
       :node_interface_mappings,
       :role,
-      :state)
+      :state,
+      :sdi_source_mappings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -19557,6 +19597,10 @@ module Aws::MediaLive
     #   Used in DescribeNodeSummary.
     #   @return [String]
     #
+    # @!attribute [rw] sdi_source_mappings
+    #   Used in SdiSourceMappings.
+    #   @return [Array<Types::SdiSourceMapping>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DescribeNodeResponse AWS API Documentation
     #
     class DescribeNodeResponse < Struct.new(
@@ -19569,7 +19613,8 @@ module Aws::MediaLive
       :name,
       :node_interface_mappings,
       :role,
-      :state)
+      :state,
+      :sdi_source_mappings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -19628,6 +19673,12 @@ module Aws::MediaLive
     #   The current state of the Node.
     #   @return [String]
     #
+    # @!attribute [rw] sdi_source_mappings
+    #   An array of SDI source mappings. Each mapping connects one logical
+    #   SdiSource to the physical SDI card and port that the physical SDI
+    #   source uses.
+    #   @return [Array<Types::SdiSourceMapping>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DescribeNodeResult AWS API Documentation
     #
     class DescribeNodeResult < Struct.new(
@@ -19640,7 +19691,8 @@ module Aws::MediaLive
       :name,
       :node_interface_mappings,
       :role,
-      :state)
+      :state,
+      :sdi_source_mappings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -19701,6 +19753,12 @@ module Aws::MediaLive
     #   The current state of the Node.
     #   @return [String]
     #
+    # @!attribute [rw] sdi_source_mappings
+    #   An array of SDI source mappings. Each mapping connects one logical
+    #   SdiSource to the physical SDI card and port that the physical SDI
+    #   source uses.
+    #   @return [Array<Types::SdiSourceMapping>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DescribeNodeSummary AWS API Documentation
     #
     class DescribeNodeSummary < Struct.new(
@@ -19714,7 +19772,8 @@ module Aws::MediaLive
       :name,
       :node_interface_mappings,
       :role,
-      :state)
+      :state,
+      :sdi_source_mappings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -20749,13 +20808,18 @@ module Aws::MediaLive
     #   and might get used if an ACTIVE Node fails.
     #   @return [String]
     #
+    # @!attribute [rw] sdi_source_mappings
+    #   The mappings of a SDI capture card port to a logical SDI data stream
+    #   @return [Array<Types::SdiSourceMappingUpdateRequest>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateNodeRequest AWS API Documentation
     #
     class UpdateNodeRequest < Struct.new(
       :cluster_id,
       :name,
       :node_id,
-      :role)
+      :role,
+      :sdi_source_mappings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -20794,6 +20858,10 @@ module Aws::MediaLive
     #   Used in DescribeNodeSummary.
     #   @return [String]
     #
+    # @!attribute [rw] sdi_source_mappings
+    #   Used in SdiSourceMappings.
+    #   @return [Array<Types::SdiSourceMapping>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateNodeResponse AWS API Documentation
     #
     class UpdateNodeResponse < Struct.new(
@@ -20806,7 +20874,8 @@ module Aws::MediaLive
       :name,
       :node_interface_mappings,
       :role,
-      :state)
+      :state,
+      :sdi_source_mappings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -20872,6 +20941,10 @@ module Aws::MediaLive
     #   Used in DescribeNodeSummary.
     #   @return [String]
     #
+    # @!attribute [rw] sdi_source_mappings
+    #   Used in SdiSourceMappings.
+    #   @return [Array<Types::SdiSourceMapping>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateNodeStateResponse AWS API Documentation
     #
     class UpdateNodeStateResponse < Struct.new(
@@ -20884,7 +20957,8 @@ module Aws::MediaLive
       :name,
       :node_interface_mappings,
       :role,
-      :state)
+      :state,
+      :sdi_source_mappings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -21195,6 +21269,352 @@ module Aws::MediaLive
     #
     class Smpte2110ReceiverGroupSettings < Struct.new(
       :smpte_2110_receiver_groups)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Used in the CreateSdiSource operation.
+    #
+    # @!attribute [rw] mode
+    #   Applies only if the type is QUAD. Specify the mode for handling the
+    #   quad-link signal: QUADRANT or INTERLEAVE.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   Specify a name that is unique in the AWS account. We recommend you
+    #   assign a name that describes the source, for example
+    #   curling-cameraA. Names are case-sensitive.
+    #   @return [String]
+    #
+    # @!attribute [rw] request_id
+    #   An ID that you assign to a create request. This ID ensures idempotency when creating resources.**A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   A collection of key-value pairs.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] type
+    #   Specify the type of the SDI source: SINGLE: The source is a
+    #   single-link source. QUAD: The source is one part of a quad-link
+    #   source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateSdiSourceRequest AWS API Documentation
+    #
+    class CreateSdiSourceRequest < Struct.new(
+      :mode,
+      :name,
+      :request_id,
+      :tags,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Used in CreateSdiSourceResponse.
+    #
+    # @!attribute [rw] sdi_source
+    #   Settings for the SDI source.
+    #   @return [Types::SdiSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateSdiSourceResponse AWS API Documentation
+    #
+    class CreateSdiSourceResponse < Struct.new(
+      :sdi_source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] sdi_source_id
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DeleteSdiSourceRequest AWS API Documentation
+    #
+    class DeleteSdiSourceRequest < Struct.new(
+      :sdi_source_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Used in DeleteSdiSourceResponse.
+    #
+    # @!attribute [rw] sdi_source
+    #   Settings for the SDI source.
+    #   @return [Types::SdiSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DeleteSdiSourceResponse AWS API Documentation
+    #
+    class DeleteSdiSourceResponse < Struct.new(
+      :sdi_source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] sdi_source_id
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DescribeSdiSourceRequest AWS API Documentation
+    #
+    class DescribeSdiSourceRequest < Struct.new(
+      :sdi_source_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Used in DescribeSdiSourceResponse.
+    #
+    # @!attribute [rw] sdi_source
+    #   Settings for the SDI source.
+    #   @return [Types::SdiSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DescribeSdiSourceResponse AWS API Documentation
+    #
+    class DescribeSdiSourceResponse < Struct.new(
+      :sdi_source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ListSdiSourcesRequest AWS API Documentation
+    #
+    class ListSdiSourcesRequest < Struct.new(
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Response for the ListSdiSources operation.
+    #
+    # @!attribute [rw] next_token
+    #   @return [String]
+    #
+    # @!attribute [rw] sdi_sources
+    #   @return [Array<Types::SdiSourceSummary>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ListSdiSourcesResponse AWS API Documentation
+    #
+    class ListSdiSourcesResponse < Struct.new(
+      :next_token,
+      :sdi_sources)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Used in CreateSdiSourceResponse, DeleteSdiSourceResponse,
+    # DescribeSdiSourceResponse, ListSdiSourcesResponse,
+    # UpdateSdiSourceResponse
+    #
+    # @!attribute [rw] arn
+    #   The ARN of this SdiSource. It is automatically assigned when the
+    #   SdiSource is created.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the SdiSource. Unique in the AWS account.The ID is the
+    #   resource-id portion of the ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] inputs
+    #   The list of inputs that are currently using this SDI source. This
+    #   list will be empty if the SdiSource has just been deleted.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] mode
+    #   Applies only if the type is QUAD. The mode for handling the
+    #   quad-link signal QUADRANT or INTERLEAVE.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the SdiSource.
+    #   @return [String]
+    #
+    # @!attribute [rw] state
+    #   Specifies whether the SDI source is attached to an SDI input
+    #   (IN\_USE) or not (IDLE).
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   Used in SdiSource, CreateSdiSourceRequest, UpdateSdiSourceRequest.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/SdiSource AWS API Documentation
+    #
+    class SdiSource < Struct.new(
+      :arn,
+      :id,
+      :inputs,
+      :mode,
+      :name,
+      :state,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Used in DescribeNodeSummary, DescribeNodeResult.
+    #
+    # @!attribute [rw] card_number
+    #   A number that uniquely identifies the SDI card on the node hardware.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] channel_number
+    #   A number that uniquely identifies a port on the SDI card.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] sdi_source
+    #   The ID of the SdiSource to associate with this port on this card.
+    #   You can use the ListSdiSources operation to discover all the IDs.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/SdiSourceMapping AWS API Documentation
+    #
+    class SdiSourceMapping < Struct.new(
+      :card_number,
+      :channel_number,
+      :sdi_source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Used in SdiSourceMappingsUpdateRequest. One SDI source mapping. It
+    # connects one logical SdiSource to the physical SDI card and port that
+    # the physical SDI source uses. You must specify all three parameters in
+    # this object.
+    #
+    # @!attribute [rw] card_number
+    #   A number that uniquely identifies the SDI card on the node hardware.
+    #   For information about how physical cards are identified on your node
+    #   hardware, see the documentation for your node hardware. The
+    #   numbering always starts at 1.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] channel_number
+    #   A number that uniquely identifies a port on the card. This must be
+    #   an SDI port (not a timecode port, for example). For information
+    #   about how ports are identified on physical cards, see the
+    #   documentation for your node hardware.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] sdi_source
+    #   The ID of a SDI source streaming on the given SDI capture card port.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/SdiSourceMappingUpdateRequest AWS API Documentation
+    #
+    class SdiSourceMappingUpdateRequest < Struct.new(
+      :card_number,
+      :channel_number,
+      :sdi_source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Used in CreateSdiSourceResponse, DeleteSdiSourceResponse,
+    # DescribeSdiSourceResponse, ListSdiSourcesResponse,
+    # UpdateSdiSourceResponse
+    #
+    # @!attribute [rw] arn
+    #   The ARN of this SdiSource. It is automatically assigned when the
+    #   SdiSource is created.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the SdiSource. Unique in the AWS account.The ID is the
+    #   resource-id portion of the ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] inputs
+    #   The list of inputs that are currently using this SDI source. This
+    #   list will be empty if the SdiSource has just been deleted.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] mode
+    #   Applies only if the type is QUAD. The mode for handling the
+    #   quad-link signal QUADRANT or INTERLEAVE.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the SdiSource.
+    #   @return [String]
+    #
+    # @!attribute [rw] state
+    #   Specifies whether the SDI source is attached to an SDI input
+    #   (IN\_USE) or not (IDLE).
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   Used in SdiSource, CreateSdiSourceRequest, UpdateSdiSourceRequest.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/SdiSourceSummary AWS API Documentation
+    #
+    class SdiSourceSummary < Struct.new(
+      :arn,
+      :id,
+      :inputs,
+      :mode,
+      :name,
+      :state,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Used in UpdateSdiSourceRequest.
+    #
+    # @!attribute [rw] mode
+    #   Include this parameter only if you want to change the name of the
+    #   SdiSource. Specify a name that is unique in the AWS account. We
+    #   recommend you assign a name that describes the source, for example
+    #   curling-cameraA. Names are case-sensitive.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   Include this parameter only if you want to change the name of the
+    #   SdiSource. Specify a name that is unique in the AWS account. We
+    #   recommend you assign a name that describes the source, for example
+    #   curling-cameraA. Names are case-sensitive.
+    #   @return [String]
+    #
+    # @!attribute [rw] sdi_source_id
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   Include this parameter only if you want to change the mode. Specify
+    #   the type of the SDI source: SINGLE: The source is a single-link
+    #   source. QUAD: The source is one part of a quad-link source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateSdiSourceRequest AWS API Documentation
+    #
+    class UpdateSdiSourceRequest < Struct.new(
+      :mode,
+      :name,
+      :sdi_source_id,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Used in UpdateSdiSourceResponse.
+    #
+    # @!attribute [rw] sdi_source
+    #   Settings for the SDI source.
+    #   @return [Types::SdiSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateSdiSourceResponse AWS API Documentation
+    #
+    class UpdateSdiSourceResponse < Struct.new(
+      :sdi_source)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -619,12 +619,13 @@ module Aws::MediaLive
       attr_accessor role_arn: ::String
       attr_accessor sources: ::Array[Types::InputSourceRequest]
       attr_accessor tags: ::Hash[::String, ::String]
-      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP")
+      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP" | "SDI")
       attr_accessor vpc: Types::InputVpcRequest
       attr_accessor srt_settings: Types::SrtSettingsRequest
       attr_accessor input_network_location: ("AWS" | "ON_PREMISES")
       attr_accessor multicast_settings: Types::MulticastSettingsCreateRequest
       attr_accessor smpte_2110_receiver_group_settings: Types::Smpte2110ReceiverGroupSettings
+      attr_accessor sdi_sources: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -638,12 +639,13 @@ module Aws::MediaLive
       attr_accessor role_arn: ::String
       attr_accessor sources: ::Array[Types::InputSourceRequest]
       attr_accessor tags: ::Hash[::String, ::String]
-      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP")
+      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP" | "SDI")
       attr_accessor vpc: Types::InputVpcRequest
       attr_accessor srt_settings: Types::SrtSettingsRequest
       attr_accessor input_network_location: ("AWS" | "ON_PREMISES")
       attr_accessor multicast_settings: Types::MulticastSettingsCreateRequest
       attr_accessor smpte_2110_receiver_group_settings: Types::Smpte2110ReceiverGroupSettings
+      attr_accessor sdi_sources: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -979,11 +981,12 @@ module Aws::MediaLive
       attr_accessor sources: ::Array[Types::InputSource]
       attr_accessor state: ("CREATING" | "DETACHED" | "ATTACHED" | "DELETING" | "DELETED")
       attr_accessor tags: ::Hash[::String, ::String]
-      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP")
+      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP" | "SDI")
       attr_accessor srt_settings: Types::SrtSettings
       attr_accessor input_network_location: ("AWS" | "ON_PREMISES")
       attr_accessor multicast_settings: Types::MulticastSettings
       attr_accessor smpte_2110_receiver_group_settings: Types::Smpte2110ReceiverGroupSettings
+      attr_accessor sdi_sources: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -1634,11 +1637,12 @@ module Aws::MediaLive
       attr_accessor sources: ::Array[Types::InputSource]
       attr_accessor state: ("CREATING" | "DETACHED" | "ATTACHED" | "DELETING" | "DELETED")
       attr_accessor tags: ::Hash[::String, ::String]
-      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP")
+      attr_accessor type: ("UDP_PUSH" | "RTP_PUSH" | "RTMP_PUSH" | "RTMP_PULL" | "URL_PULL" | "MP4_FILE" | "MEDIACONNECT" | "INPUT_DEVICE" | "AWS_CDI" | "TS_FILE" | "SRT_CALLER" | "MULTICAST" | "SMPTE_2110_RECEIVER_GROUP" | "SDI")
       attr_accessor srt_settings: Types::SrtSettings
       attr_accessor input_network_location: ("AWS" | "ON_PREMISES")
       attr_accessor multicast_settings: Types::MulticastSettings
       attr_accessor smpte_2110_receiver_group_settings: Types::Smpte2110ReceiverGroupSettings
+      attr_accessor sdi_sources: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -3299,6 +3303,7 @@ module Aws::MediaLive
       attr_accessor srt_settings: Types::SrtSettingsRequest
       attr_accessor multicast_settings: Types::MulticastSettingsUpdateRequest
       attr_accessor smpte_2110_receiver_group_settings: Types::Smpte2110ReceiverGroupSettings
+      attr_accessor sdi_sources: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -3351,6 +3356,7 @@ module Aws::MediaLive
       attr_accessor srt_settings: Types::SrtSettingsRequest
       attr_accessor multicast_settings: Types::MulticastSettingsUpdateRequest
       attr_accessor smpte_2110_receiver_group_settings: Types::Smpte2110ReceiverGroupSettings
+      attr_accessor sdi_sources: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -4867,6 +4873,7 @@ module Aws::MediaLive
       attr_accessor node_interface_mappings: ::Array[Types::NodeInterfaceMapping]
       attr_accessor role: ("BACKUP" | "ACTIVE")
       attr_accessor state: ("CREATED" | "REGISTERING" | "READY_TO_ACTIVATE" | "REGISTRATION_FAILED" | "ACTIVATION_FAILED" | "ACTIVE" | "READY" | "IN_USE" | "DEREGISTERING" | "DRAINING" | "DEREGISTRATION_FAILED" | "DEREGISTERED")
+      attr_accessor sdi_source_mappings: ::Array[Types::SdiSourceMapping]
       SENSITIVE: []
     end
 
@@ -4937,6 +4944,7 @@ module Aws::MediaLive
       attr_accessor node_interface_mappings: ::Array[Types::NodeInterfaceMapping]
       attr_accessor role: ("BACKUP" | "ACTIVE")
       attr_accessor state: ("CREATED" | "REGISTERING" | "READY_TO_ACTIVATE" | "REGISTRATION_FAILED" | "ACTIVATION_FAILED" | "ACTIVE" | "READY" | "IN_USE" | "DEREGISTERING" | "DRAINING" | "DEREGISTRATION_FAILED" | "DEREGISTERED")
+      attr_accessor sdi_source_mappings: ::Array[Types::SdiSourceMapping]
       SENSITIVE: []
     end
 
@@ -5081,6 +5089,7 @@ module Aws::MediaLive
       attr_accessor node_interface_mappings: ::Array[Types::NodeInterfaceMapping]
       attr_accessor role: ("BACKUP" | "ACTIVE")
       attr_accessor state: ("CREATED" | "REGISTERING" | "READY_TO_ACTIVATE" | "REGISTRATION_FAILED" | "ACTIVATION_FAILED" | "ACTIVE" | "READY" | "IN_USE" | "DEREGISTERING" | "DRAINING" | "DEREGISTRATION_FAILED" | "DEREGISTERED")
+      attr_accessor sdi_source_mappings: ::Array[Types::SdiSourceMapping]
       SENSITIVE: []
     end
 
@@ -5095,6 +5104,7 @@ module Aws::MediaLive
       attr_accessor node_interface_mappings: ::Array[Types::NodeInterfaceMapping]
       attr_accessor role: ("BACKUP" | "ACTIVE")
       attr_accessor state: ("CREATED" | "REGISTERING" | "READY_TO_ACTIVATE" | "REGISTRATION_FAILED" | "ACTIVATION_FAILED" | "ACTIVE" | "READY" | "IN_USE" | "DEREGISTERING" | "DRAINING" | "DEREGISTRATION_FAILED" | "DEREGISTERED")
+      attr_accessor sdi_source_mappings: ::Array[Types::SdiSourceMapping]
       SENSITIVE: []
     end
 
@@ -5110,6 +5120,7 @@ module Aws::MediaLive
       attr_accessor node_interface_mappings: ::Array[Types::NodeInterfaceMapping]
       attr_accessor role: ("BACKUP" | "ACTIVE")
       attr_accessor state: ("CREATED" | "REGISTERING" | "READY_TO_ACTIVATE" | "REGISTRATION_FAILED" | "ACTIVATION_FAILED" | "ACTIVE" | "READY" | "IN_USE" | "DEREGISTERING" | "DRAINING" | "DEREGISTRATION_FAILED" | "DEREGISTERED")
+      attr_accessor sdi_source_mappings: ::Array[Types::SdiSourceMapping]
       SENSITIVE: []
     end
 
@@ -5412,6 +5423,7 @@ module Aws::MediaLive
       attr_accessor name: ::String
       attr_accessor node_id: ::String
       attr_accessor role: ("BACKUP" | "ACTIVE")
+      attr_accessor sdi_source_mappings: ::Array[Types::SdiSourceMappingUpdateRequest]
       SENSITIVE: []
     end
 
@@ -5426,6 +5438,7 @@ module Aws::MediaLive
       attr_accessor node_interface_mappings: ::Array[Types::NodeInterfaceMapping]
       attr_accessor role: ("BACKUP" | "ACTIVE")
       attr_accessor state: ("CREATED" | "REGISTERING" | "READY_TO_ACTIVATE" | "REGISTRATION_FAILED" | "ACTIVATION_FAILED" | "ACTIVE" | "READY" | "IN_USE" | "DEREGISTERING" | "DRAINING" | "DEREGISTRATION_FAILED" | "DEREGISTERED")
+      attr_accessor sdi_source_mappings: ::Array[Types::SdiSourceMapping]
       SENSITIVE: []
     end
 
@@ -5447,6 +5460,7 @@ module Aws::MediaLive
       attr_accessor node_interface_mappings: ::Array[Types::NodeInterfaceMapping]
       attr_accessor role: ("BACKUP" | "ACTIVE")
       attr_accessor state: ("CREATED" | "REGISTERING" | "READY_TO_ACTIVATE" | "REGISTRATION_FAILED" | "ACTIVATION_FAILED" | "ACTIVE" | "READY" | "IN_USE" | "DEREGISTERING" | "DRAINING" | "DEREGISTRATION_FAILED" | "DEREGISTERED")
+      attr_accessor sdi_source_mappings: ::Array[Types::SdiSourceMapping]
       SENSITIVE: []
     end
 
@@ -5529,6 +5543,101 @@ module Aws::MediaLive
 
     class Smpte2110ReceiverGroupSettings
       attr_accessor smpte_2110_receiver_groups: ::Array[Types::Smpte2110ReceiverGroup]
+      SENSITIVE: []
+    end
+
+    class CreateSdiSourceRequest
+      attr_accessor mode: ("QUADRANT" | "INTERLEAVE")
+      attr_accessor name: ::String
+      attr_accessor request_id: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor type: ("SINGLE" | "QUAD")
+      SENSITIVE: []
+    end
+
+    class CreateSdiSourceResponse
+      attr_accessor sdi_source: Types::SdiSource
+      SENSITIVE: []
+    end
+
+    class DeleteSdiSourceRequest
+      attr_accessor sdi_source_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteSdiSourceResponse
+      attr_accessor sdi_source: Types::SdiSource
+      SENSITIVE: []
+    end
+
+    class DescribeSdiSourceRequest
+      attr_accessor sdi_source_id: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeSdiSourceResponse
+      attr_accessor sdi_source: Types::SdiSource
+      SENSITIVE: []
+    end
+
+    class ListSdiSourcesRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListSdiSourcesResponse
+      attr_accessor next_token: ::String
+      attr_accessor sdi_sources: ::Array[Types::SdiSourceSummary]
+      SENSITIVE: []
+    end
+
+    class SdiSource
+      attr_accessor arn: ::String
+      attr_accessor id: ::String
+      attr_accessor inputs: ::Array[::String]
+      attr_accessor mode: ("QUADRANT" | "INTERLEAVE")
+      attr_accessor name: ::String
+      attr_accessor state: ("IDLE" | "IN_USE" | "DELETED")
+      attr_accessor type: ("SINGLE" | "QUAD")
+      SENSITIVE: []
+    end
+
+    class SdiSourceMapping
+      attr_accessor card_number: ::Integer
+      attr_accessor channel_number: ::Integer
+      attr_accessor sdi_source: ::String
+      SENSITIVE: []
+    end
+
+    class SdiSourceMappingUpdateRequest
+      attr_accessor card_number: ::Integer
+      attr_accessor channel_number: ::Integer
+      attr_accessor sdi_source: ::String
+      SENSITIVE: []
+    end
+
+    class SdiSourceSummary
+      attr_accessor arn: ::String
+      attr_accessor id: ::String
+      attr_accessor inputs: ::Array[::String]
+      attr_accessor mode: ("QUADRANT" | "INTERLEAVE")
+      attr_accessor name: ::String
+      attr_accessor state: ("IDLE" | "IN_USE" | "DELETED")
+      attr_accessor type: ("SINGLE" | "QUAD")
+      SENSITIVE: []
+    end
+
+    class UpdateSdiSourceRequest
+      attr_accessor mode: ("QUADRANT" | "INTERLEAVE")
+      attr_accessor name: ::String
+      attr_accessor sdi_source_id: ::String
+      attr_accessor type: ("SINGLE" | "QUAD")
+      SENSITIVE: []
+    end
+
+    class UpdateSdiSourceResponse
+      attr_accessor sdi_source: Types::SdiSource
       SENSITIVE: []
     end
   end

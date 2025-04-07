@@ -15,6 +15,7 @@ module Aws::CodeBuild
     include Seahorse::Model
 
     AccountLimitExceededException = Shapes::StructureShape.new(name: 'AccountLimitExceededException')
+    AccountSuspendedException = Shapes::StructureShape.new(name: 'AccountSuspendedException')
     ArtifactNamespace = Shapes::StringShape.new(name: 'ArtifactNamespace')
     ArtifactPackaging = Shapes::StringShape.new(name: 'ArtifactPackaging')
     ArtifactsType = Shapes::StringShape.new(name: 'ArtifactsType')
@@ -26,6 +27,8 @@ module Aws::CodeBuild
     BatchGetBuildBatchesOutput = Shapes::StructureShape.new(name: 'BatchGetBuildBatchesOutput')
     BatchGetBuildsInput = Shapes::StructureShape.new(name: 'BatchGetBuildsInput')
     BatchGetBuildsOutput = Shapes::StructureShape.new(name: 'BatchGetBuildsOutput')
+    BatchGetCommandExecutionsInput = Shapes::StructureShape.new(name: 'BatchGetCommandExecutionsInput')
+    BatchGetCommandExecutionsOutput = Shapes::StructureShape.new(name: 'BatchGetCommandExecutionsOutput')
     BatchGetFleetsInput = Shapes::StructureShape.new(name: 'BatchGetFleetsInput')
     BatchGetFleetsOutput = Shapes::StructureShape.new(name: 'BatchGetFleetsOutput')
     BatchGetProjectsInput = Shapes::StructureShape.new(name: 'BatchGetProjectsInput')
@@ -34,6 +37,8 @@ module Aws::CodeBuild
     BatchGetReportGroupsOutput = Shapes::StructureShape.new(name: 'BatchGetReportGroupsOutput')
     BatchGetReportsInput = Shapes::StructureShape.new(name: 'BatchGetReportsInput')
     BatchGetReportsOutput = Shapes::StructureShape.new(name: 'BatchGetReportsOutput')
+    BatchGetSandboxesInput = Shapes::StructureShape.new(name: 'BatchGetSandboxesInput')
+    BatchGetSandboxesOutput = Shapes::StructureShape.new(name: 'BatchGetSandboxesOutput')
     BatchReportModeType = Shapes::StringShape.new(name: 'BatchReportModeType')
     BatchRestrictions = Shapes::StructureShape.new(name: 'BatchRestrictions')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
@@ -68,6 +73,10 @@ module Aws::CodeBuild
     CodeCoverage = Shapes::StructureShape.new(name: 'CodeCoverage')
     CodeCoverageReportSummary = Shapes::StructureShape.new(name: 'CodeCoverageReportSummary')
     CodeCoverages = Shapes::ListShape.new(name: 'CodeCoverages')
+    CommandExecution = Shapes::StructureShape.new(name: 'CommandExecution')
+    CommandExecutionIds = Shapes::ListShape.new(name: 'CommandExecutionIds')
+    CommandExecutions = Shapes::ListShape.new(name: 'CommandExecutions')
+    CommandType = Shapes::StringShape.new(name: 'CommandType')
     ComputeConfiguration = Shapes::StructureShape.new(name: 'ComputeConfiguration')
     ComputeType = Shapes::StringShape.new(name: 'ComputeType')
     ComputeTypesAllowed = Shapes::ListShape.new(name: 'ComputeTypesAllowed')
@@ -160,6 +169,8 @@ module Aws::CodeBuild
     ListBuildsForProjectOutput = Shapes::StructureShape.new(name: 'ListBuildsForProjectOutput')
     ListBuildsInput = Shapes::StructureShape.new(name: 'ListBuildsInput')
     ListBuildsOutput = Shapes::StructureShape.new(name: 'ListBuildsOutput')
+    ListCommandExecutionsForSandboxInput = Shapes::StructureShape.new(name: 'ListCommandExecutionsForSandboxInput')
+    ListCommandExecutionsForSandboxOutput = Shapes::StructureShape.new(name: 'ListCommandExecutionsForSandboxOutput')
     ListCuratedEnvironmentImagesInput = Shapes::StructureShape.new(name: 'ListCuratedEnvironmentImagesInput')
     ListCuratedEnvironmentImagesOutput = Shapes::StructureShape.new(name: 'ListCuratedEnvironmentImagesOutput')
     ListFleetsInput = Shapes::StructureShape.new(name: 'ListFleetsInput')
@@ -172,6 +183,10 @@ module Aws::CodeBuild
     ListReportsForReportGroupOutput = Shapes::StructureShape.new(name: 'ListReportsForReportGroupOutput')
     ListReportsInput = Shapes::StructureShape.new(name: 'ListReportsInput')
     ListReportsOutput = Shapes::StructureShape.new(name: 'ListReportsOutput')
+    ListSandboxesForProjectInput = Shapes::StructureShape.new(name: 'ListSandboxesForProjectInput')
+    ListSandboxesForProjectOutput = Shapes::StructureShape.new(name: 'ListSandboxesForProjectOutput')
+    ListSandboxesInput = Shapes::StructureShape.new(name: 'ListSandboxesInput')
+    ListSandboxesOutput = Shapes::StructureShape.new(name: 'ListSandboxesOutput')
     ListSharedProjectsInput = Shapes::StructureShape.new(name: 'ListSharedProjectsInput')
     ListSharedProjectsOutput = Shapes::StructureShape.new(name: 'ListSharedProjectsOutput')
     ListSharedReportGroupsInput = Shapes::StructureShape.new(name: 'ListSharedReportGroupsInput')
@@ -249,6 +264,13 @@ module Aws::CodeBuild
     RetryBuildOutput = Shapes::StructureShape.new(name: 'RetryBuildOutput')
     S3LogsConfig = Shapes::StructureShape.new(name: 'S3LogsConfig')
     S3ReportExportConfig = Shapes::StructureShape.new(name: 'S3ReportExportConfig')
+    SSMSession = Shapes::StructureShape.new(name: 'SSMSession')
+    Sandbox = Shapes::StructureShape.new(name: 'Sandbox')
+    SandboxIds = Shapes::ListShape.new(name: 'SandboxIds')
+    SandboxSession = Shapes::StructureShape.new(name: 'SandboxSession')
+    SandboxSessionPhase = Shapes::StructureShape.new(name: 'SandboxSessionPhase')
+    SandboxSessionPhases = Shapes::ListShape.new(name: 'SandboxSessionPhases')
+    Sandboxes = Shapes::ListShape.new(name: 'Sandboxes')
     ScalingConfigurationInput = Shapes::StructureShape.new(name: 'ScalingConfigurationInput')
     ScalingConfigurationOutput = Shapes::StructureShape.new(name: 'ScalingConfigurationOutput')
     ScopeConfiguration = Shapes::StructureShape.new(name: 'ScopeConfiguration')
@@ -267,11 +289,19 @@ module Aws::CodeBuild
     StartBuildBatchOutput = Shapes::StructureShape.new(name: 'StartBuildBatchOutput')
     StartBuildInput = Shapes::StructureShape.new(name: 'StartBuildInput')
     StartBuildOutput = Shapes::StructureShape.new(name: 'StartBuildOutput')
+    StartCommandExecutionInput = Shapes::StructureShape.new(name: 'StartCommandExecutionInput')
+    StartCommandExecutionOutput = Shapes::StructureShape.new(name: 'StartCommandExecutionOutput')
+    StartSandboxConnectionInput = Shapes::StructureShape.new(name: 'StartSandboxConnectionInput')
+    StartSandboxConnectionOutput = Shapes::StructureShape.new(name: 'StartSandboxConnectionOutput')
+    StartSandboxInput = Shapes::StructureShape.new(name: 'StartSandboxInput')
+    StartSandboxOutput = Shapes::StructureShape.new(name: 'StartSandboxOutput')
     StatusType = Shapes::StringShape.new(name: 'StatusType')
     StopBuildBatchInput = Shapes::StructureShape.new(name: 'StopBuildBatchInput')
     StopBuildBatchOutput = Shapes::StructureShape.new(name: 'StopBuildBatchOutput')
     StopBuildInput = Shapes::StructureShape.new(name: 'StopBuildInput')
     StopBuildOutput = Shapes::StructureShape.new(name: 'StopBuildOutput')
+    StopSandboxInput = Shapes::StructureShape.new(name: 'StopSandboxInput')
+    StopSandboxOutput = Shapes::StructureShape.new(name: 'StopSandboxOutput')
     String = Shapes::StringShape.new(name: 'String')
     Subnets = Shapes::ListShape.new(name: 'Subnets')
     Tag = Shapes::StructureShape.new(name: 'Tag')
@@ -309,6 +339,8 @@ module Aws::CodeBuild
 
     AccountLimitExceededException.struct_class = Types::AccountLimitExceededException
 
+    AccountSuspendedException.struct_class = Types::AccountSuspendedException
+
     AutoRetryConfig.add_member(:auto_retry_limit, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "autoRetryLimit"))
     AutoRetryConfig.add_member(:auto_retry_number, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "autoRetryNumber"))
     AutoRetryConfig.add_member(:next_auto_retry, Shapes::ShapeRef.new(shape: String, location_name: "nextAutoRetry"))
@@ -335,6 +367,14 @@ module Aws::CodeBuild
     BatchGetBuildsOutput.add_member(:builds, Shapes::ShapeRef.new(shape: Builds, location_name: "builds"))
     BatchGetBuildsOutput.add_member(:builds_not_found, Shapes::ShapeRef.new(shape: BuildIds, location_name: "buildsNotFound"))
     BatchGetBuildsOutput.struct_class = Types::BatchGetBuildsOutput
+
+    BatchGetCommandExecutionsInput.add_member(:sandbox_id, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location_name: "sandboxId"))
+    BatchGetCommandExecutionsInput.add_member(:command_execution_ids, Shapes::ShapeRef.new(shape: CommandExecutionIds, required: true, location_name: "commandExecutionIds"))
+    BatchGetCommandExecutionsInput.struct_class = Types::BatchGetCommandExecutionsInput
+
+    BatchGetCommandExecutionsOutput.add_member(:command_executions, Shapes::ShapeRef.new(shape: CommandExecutions, location_name: "commandExecutions"))
+    BatchGetCommandExecutionsOutput.add_member(:command_executions_not_found, Shapes::ShapeRef.new(shape: CommandExecutionIds, location_name: "commandExecutionsNotFound"))
+    BatchGetCommandExecutionsOutput.struct_class = Types::BatchGetCommandExecutionsOutput
 
     BatchGetFleetsInput.add_member(:names, Shapes::ShapeRef.new(shape: FleetNames, required: true, location_name: "names"))
     BatchGetFleetsInput.struct_class = Types::BatchGetFleetsInput
@@ -363,6 +403,13 @@ module Aws::CodeBuild
     BatchGetReportsOutput.add_member(:reports, Shapes::ShapeRef.new(shape: Reports, location_name: "reports"))
     BatchGetReportsOutput.add_member(:reports_not_found, Shapes::ShapeRef.new(shape: ReportArns, location_name: "reportsNotFound"))
     BatchGetReportsOutput.struct_class = Types::BatchGetReportsOutput
+
+    BatchGetSandboxesInput.add_member(:ids, Shapes::ShapeRef.new(shape: SandboxIds, required: true, location_name: "ids"))
+    BatchGetSandboxesInput.struct_class = Types::BatchGetSandboxesInput
+
+    BatchGetSandboxesOutput.add_member(:sandboxes, Shapes::ShapeRef.new(shape: Sandboxes, location_name: "sandboxes"))
+    BatchGetSandboxesOutput.add_member(:sandboxes_not_found, Shapes::ShapeRef.new(shape: SandboxIds, location_name: "sandboxesNotFound"))
+    BatchGetSandboxesOutput.struct_class = Types::BatchGetSandboxesOutput
 
     BatchRestrictions.add_member(:maximum_builds_allowed, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "maximumBuildsAllowed"))
     BatchRestrictions.add_member(:compute_types_allowed, Shapes::ShapeRef.new(shape: ComputeTypesAllowed, location_name: "computeTypesAllowed"))
@@ -535,6 +582,25 @@ module Aws::CodeBuild
     CodeCoverageReportSummary.struct_class = Types::CodeCoverageReportSummary
 
     CodeCoverages.member = Shapes::ShapeRef.new(shape: CodeCoverage)
+
+    CommandExecution.add_member(:id, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "id"))
+    CommandExecution.add_member(:sandbox_id, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "sandboxId"))
+    CommandExecution.add_member(:submit_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "submitTime"))
+    CommandExecution.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "startTime"))
+    CommandExecution.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
+    CommandExecution.add_member(:status, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "status"))
+    CommandExecution.add_member(:command, Shapes::ShapeRef.new(shape: SensitiveNonEmptyString, location_name: "command"))
+    CommandExecution.add_member(:type, Shapes::ShapeRef.new(shape: CommandType, location_name: "type"))
+    CommandExecution.add_member(:exit_code, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "exitCode"))
+    CommandExecution.add_member(:standard_output_content, Shapes::ShapeRef.new(shape: SensitiveNonEmptyString, location_name: "standardOutputContent"))
+    CommandExecution.add_member(:standard_err_content, Shapes::ShapeRef.new(shape: SensitiveNonEmptyString, location_name: "standardErrContent"))
+    CommandExecution.add_member(:logs, Shapes::ShapeRef.new(shape: LogsLocation, location_name: "logs"))
+    CommandExecution.add_member(:sandbox_arn, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "sandboxArn"))
+    CommandExecution.struct_class = Types::CommandExecution
+
+    CommandExecutionIds.member = Shapes::ShapeRef.new(shape: NonEmptyString)
+
+    CommandExecutions.member = Shapes::ShapeRef.new(shape: CommandExecution)
 
     ComputeConfiguration.add_member(:v_cpu, Shapes::ShapeRef.new(shape: WrapperLong, location_name: "vCpu"))
     ComputeConfiguration.add_member(:memory, Shapes::ShapeRef.new(shape: WrapperLong, location_name: "memory"))
@@ -834,6 +900,16 @@ module Aws::CodeBuild
     ListBuildsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
     ListBuildsOutput.struct_class = Types::ListBuildsOutput
 
+    ListCommandExecutionsForSandboxInput.add_member(:sandbox_id, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location_name: "sandboxId"))
+    ListCommandExecutionsForSandboxInput.add_member(:max_results, Shapes::ShapeRef.new(shape: PageSize, location_name: "maxResults"))
+    ListCommandExecutionsForSandboxInput.add_member(:sort_order, Shapes::ShapeRef.new(shape: SortOrderType, location_name: "sortOrder"))
+    ListCommandExecutionsForSandboxInput.add_member(:next_token, Shapes::ShapeRef.new(shape: SensitiveString, location_name: "nextToken"))
+    ListCommandExecutionsForSandboxInput.struct_class = Types::ListCommandExecutionsForSandboxInput
+
+    ListCommandExecutionsForSandboxOutput.add_member(:command_executions, Shapes::ShapeRef.new(shape: CommandExecutions, location_name: "commandExecutions"))
+    ListCommandExecutionsForSandboxOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    ListCommandExecutionsForSandboxOutput.struct_class = Types::ListCommandExecutionsForSandboxOutput
+
     ListCuratedEnvironmentImagesInput.struct_class = Types::ListCuratedEnvironmentImagesInput
 
     ListCuratedEnvironmentImagesOutput.add_member(:platforms, Shapes::ShapeRef.new(shape: EnvironmentPlatforms, location_name: "platforms"))
@@ -888,6 +964,25 @@ module Aws::CodeBuild
     ListReportsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
     ListReportsOutput.add_member(:reports, Shapes::ShapeRef.new(shape: ReportArns, location_name: "reports"))
     ListReportsOutput.struct_class = Types::ListReportsOutput
+
+    ListSandboxesForProjectInput.add_member(:project_name, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location_name: "projectName"))
+    ListSandboxesForProjectInput.add_member(:max_results, Shapes::ShapeRef.new(shape: PageSize, location_name: "maxResults"))
+    ListSandboxesForProjectInput.add_member(:sort_order, Shapes::ShapeRef.new(shape: SortOrderType, location_name: "sortOrder"))
+    ListSandboxesForProjectInput.add_member(:next_token, Shapes::ShapeRef.new(shape: SensitiveString, location_name: "nextToken"))
+    ListSandboxesForProjectInput.struct_class = Types::ListSandboxesForProjectInput
+
+    ListSandboxesForProjectOutput.add_member(:ids, Shapes::ShapeRef.new(shape: SandboxIds, location_name: "ids"))
+    ListSandboxesForProjectOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    ListSandboxesForProjectOutput.struct_class = Types::ListSandboxesForProjectOutput
+
+    ListSandboxesInput.add_member(:max_results, Shapes::ShapeRef.new(shape: PageSize, location_name: "maxResults"))
+    ListSandboxesInput.add_member(:sort_order, Shapes::ShapeRef.new(shape: SortOrderType, location_name: "sortOrder"))
+    ListSandboxesInput.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    ListSandboxesInput.struct_class = Types::ListSandboxesInput
+
+    ListSandboxesOutput.add_member(:ids, Shapes::ShapeRef.new(shape: SandboxIds, location_name: "ids"))
+    ListSandboxesOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    ListSandboxesOutput.struct_class = Types::ListSandboxesOutput
 
     ListSharedProjectsInput.add_member(:sort_by, Shapes::ShapeRef.new(shape: SharedResourceSortByType, location_name: "sortBy"))
     ListSharedProjectsInput.add_member(:sort_order, Shapes::ShapeRef.new(shape: SortOrderType, location_name: "sortOrder"))
@@ -1162,6 +1257,58 @@ module Aws::CodeBuild
     S3ReportExportConfig.add_member(:encryption_disabled, Shapes::ShapeRef.new(shape: WrapperBoolean, location_name: "encryptionDisabled"))
     S3ReportExportConfig.struct_class = Types::S3ReportExportConfig
 
+    SSMSession.add_member(:session_id, Shapes::ShapeRef.new(shape: String, location_name: "sessionId"))
+    SSMSession.add_member(:token_value, Shapes::ShapeRef.new(shape: String, location_name: "tokenValue"))
+    SSMSession.add_member(:stream_url, Shapes::ShapeRef.new(shape: String, location_name: "streamUrl"))
+    SSMSession.struct_class = Types::SSMSession
+
+    Sandbox.add_member(:id, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "id"))
+    Sandbox.add_member(:arn, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "arn"))
+    Sandbox.add_member(:project_name, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "projectName"))
+    Sandbox.add_member(:request_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "requestTime"))
+    Sandbox.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "startTime"))
+    Sandbox.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
+    Sandbox.add_member(:status, Shapes::ShapeRef.new(shape: String, location_name: "status"))
+    Sandbox.add_member(:source, Shapes::ShapeRef.new(shape: ProjectSource, location_name: "source"))
+    Sandbox.add_member(:source_version, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "sourceVersion"))
+    Sandbox.add_member(:secondary_sources, Shapes::ShapeRef.new(shape: ProjectSources, location_name: "secondarySources"))
+    Sandbox.add_member(:secondary_source_versions, Shapes::ShapeRef.new(shape: ProjectSecondarySourceVersions, location_name: "secondarySourceVersions"))
+    Sandbox.add_member(:environment, Shapes::ShapeRef.new(shape: ProjectEnvironment, location_name: "environment"))
+    Sandbox.add_member(:file_system_locations, Shapes::ShapeRef.new(shape: ProjectFileSystemLocations, location_name: "fileSystemLocations"))
+    Sandbox.add_member(:timeout_in_minutes, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "timeoutInMinutes"))
+    Sandbox.add_member(:queued_timeout_in_minutes, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "queuedTimeoutInMinutes"))
+    Sandbox.add_member(:vpc_config, Shapes::ShapeRef.new(shape: VpcConfig, location_name: "vpcConfig"))
+    Sandbox.add_member(:log_config, Shapes::ShapeRef.new(shape: LogsConfig, location_name: "logConfig"))
+    Sandbox.add_member(:encryption_key, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "encryptionKey"))
+    Sandbox.add_member(:service_role, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "serviceRole"))
+    Sandbox.add_member(:current_session, Shapes::ShapeRef.new(shape: SandboxSession, location_name: "currentSession"))
+    Sandbox.struct_class = Types::Sandbox
+
+    SandboxIds.member = Shapes::ShapeRef.new(shape: NonEmptyString)
+
+    SandboxSession.add_member(:id, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "id"))
+    SandboxSession.add_member(:status, Shapes::ShapeRef.new(shape: String, location_name: "status"))
+    SandboxSession.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "startTime"))
+    SandboxSession.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
+    SandboxSession.add_member(:current_phase, Shapes::ShapeRef.new(shape: String, location_name: "currentPhase"))
+    SandboxSession.add_member(:phases, Shapes::ShapeRef.new(shape: SandboxSessionPhases, location_name: "phases"))
+    SandboxSession.add_member(:resolved_source_version, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "resolvedSourceVersion"))
+    SandboxSession.add_member(:logs, Shapes::ShapeRef.new(shape: LogsLocation, location_name: "logs"))
+    SandboxSession.add_member(:network_interface, Shapes::ShapeRef.new(shape: NetworkInterface, location_name: "networkInterface"))
+    SandboxSession.struct_class = Types::SandboxSession
+
+    SandboxSessionPhase.add_member(:phase_type, Shapes::ShapeRef.new(shape: String, location_name: "phaseType"))
+    SandboxSessionPhase.add_member(:phase_status, Shapes::ShapeRef.new(shape: StatusType, location_name: "phaseStatus"))
+    SandboxSessionPhase.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "startTime"))
+    SandboxSessionPhase.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
+    SandboxSessionPhase.add_member(:duration_in_seconds, Shapes::ShapeRef.new(shape: WrapperLong, location_name: "durationInSeconds"))
+    SandboxSessionPhase.add_member(:contexts, Shapes::ShapeRef.new(shape: PhaseContexts, location_name: "contexts"))
+    SandboxSessionPhase.struct_class = Types::SandboxSessionPhase
+
+    SandboxSessionPhases.member = Shapes::ShapeRef.new(shape: SandboxSessionPhase)
+
+    Sandboxes.member = Shapes::ShapeRef.new(shape: Sandbox)
+
     ScalingConfigurationInput.add_member(:scaling_type, Shapes::ShapeRef.new(shape: FleetScalingType, location_name: "scalingType"))
     ScalingConfigurationInput.add_member(:target_tracking_scaling_configs, Shapes::ShapeRef.new(shape: TargetTrackingScalingConfigurations, location_name: "targetTrackingScalingConfigs"))
     ScalingConfigurationInput.add_member(:max_capacity, Shapes::ShapeRef.new(shape: FleetCapacity, location_name: "maxCapacity"))
@@ -1266,6 +1413,27 @@ module Aws::CodeBuild
     StartBuildOutput.add_member(:build, Shapes::ShapeRef.new(shape: Build, location_name: "build"))
     StartBuildOutput.struct_class = Types::StartBuildOutput
 
+    StartCommandExecutionInput.add_member(:sandbox_id, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location_name: "sandboxId"))
+    StartCommandExecutionInput.add_member(:command, Shapes::ShapeRef.new(shape: SensitiveNonEmptyString, required: true, location_name: "command"))
+    StartCommandExecutionInput.add_member(:type, Shapes::ShapeRef.new(shape: CommandType, location_name: "type"))
+    StartCommandExecutionInput.struct_class = Types::StartCommandExecutionInput
+
+    StartCommandExecutionOutput.add_member(:command_execution, Shapes::ShapeRef.new(shape: CommandExecution, location_name: "commandExecution"))
+    StartCommandExecutionOutput.struct_class = Types::StartCommandExecutionOutput
+
+    StartSandboxConnectionInput.add_member(:sandbox_id, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location_name: "sandboxId"))
+    StartSandboxConnectionInput.struct_class = Types::StartSandboxConnectionInput
+
+    StartSandboxConnectionOutput.add_member(:ssm_session, Shapes::ShapeRef.new(shape: SSMSession, location_name: "ssmSession"))
+    StartSandboxConnectionOutput.struct_class = Types::StartSandboxConnectionOutput
+
+    StartSandboxInput.add_member(:project_name, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "projectName"))
+    StartSandboxInput.add_member(:idempotency_token, Shapes::ShapeRef.new(shape: SensitiveString, location_name: "idempotencyToken"))
+    StartSandboxInput.struct_class = Types::StartSandboxInput
+
+    StartSandboxOutput.add_member(:sandbox, Shapes::ShapeRef.new(shape: Sandbox, location_name: "sandbox"))
+    StartSandboxOutput.struct_class = Types::StartSandboxOutput
+
     StopBuildBatchInput.add_member(:id, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location_name: "id"))
     StopBuildBatchInput.struct_class = Types::StopBuildBatchInput
 
@@ -1277,6 +1445,12 @@ module Aws::CodeBuild
 
     StopBuildOutput.add_member(:build, Shapes::ShapeRef.new(shape: Build, location_name: "build"))
     StopBuildOutput.struct_class = Types::StopBuildOutput
+
+    StopSandboxInput.add_member(:id, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location_name: "id"))
+    StopSandboxInput.struct_class = Types::StopSandboxInput
+
+    StopSandboxOutput.add_member(:sandbox, Shapes::ShapeRef.new(shape: Sandbox, location_name: "sandbox"))
+    StopSandboxOutput.struct_class = Types::StopSandboxOutput
 
     Subnets.member = Shapes::ShapeRef.new(shape: NonEmptyString)
 
@@ -1456,6 +1630,15 @@ module Aws::CodeBuild
         o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
       end)
 
+      api.add_operation(:batch_get_command_executions, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "BatchGetCommandExecutions"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: BatchGetCommandExecutionsInput)
+        o.output = Shapes::ShapeRef.new(shape: BatchGetCommandExecutionsOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+      end)
+
       api.add_operation(:batch_get_fleets, Seahorse::Model::Operation.new.tap do |o|
         o.name = "BatchGetFleets"
         o.http_method = "POST"
@@ -1489,6 +1672,15 @@ module Aws::CodeBuild
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: BatchGetReportsInput)
         o.output = Shapes::ShapeRef.new(shape: BatchGetReportsOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+      end)
+
+      api.add_operation(:batch_get_sandboxes, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "BatchGetSandboxes"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: BatchGetSandboxesInput)
+        o.output = Shapes::ShapeRef.new(shape: BatchGetSandboxesOutput)
         o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
       end)
 
@@ -1744,6 +1936,22 @@ module Aws::CodeBuild
         )
       end)
 
+      api.add_operation(:list_command_executions_for_sandbox, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListCommandExecutionsForSandbox"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListCommandExecutionsForSandboxInput)
+        o.output = Shapes::ShapeRef.new(shape: ListCommandExecutionsForSandboxOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_curated_environment_images, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListCuratedEnvironmentImages"
         o.http_method = "POST"
@@ -1817,6 +2025,37 @@ module Aws::CodeBuild
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: ListReportsForReportGroupInput)
         o.output = Shapes::ShapeRef.new(shape: ListReportsForReportGroupOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_sandboxes, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListSandboxes"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListSandboxesInput)
+        o.output = Shapes::ShapeRef.new(shape: ListSandboxesOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_sandboxes_for_project, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListSandboxesForProject"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListSandboxesForProjectInput)
+        o.output = Shapes::ShapeRef.new(shape: ListSandboxesForProjectOutput)
         o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o[:pager] = Aws::Pager.new(
@@ -1918,6 +2157,37 @@ module Aws::CodeBuild
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
+      api.add_operation(:start_command_execution, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartCommandExecution"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: StartCommandExecutionInput)
+        o.output = Shapes::ShapeRef.new(shape: StartCommandExecutionOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
+      api.add_operation(:start_sandbox, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartSandbox"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: StartSandboxInput)
+        o.output = Shapes::ShapeRef.new(shape: StartSandboxOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccountSuspendedException)
+      end)
+
+      api.add_operation(:start_sandbox_connection, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartSandboxConnection"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: StartSandboxConnectionInput)
+        o.output = Shapes::ShapeRef.new(shape: StartSandboxConnectionOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
       api.add_operation(:stop_build, Seahorse::Model::Operation.new.tap do |o|
         o.name = "StopBuild"
         o.http_method = "POST"
@@ -1934,6 +2204,16 @@ module Aws::CodeBuild
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: StopBuildBatchInput)
         o.output = Shapes::ShapeRef.new(shape: StopBuildBatchOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
+      api.add_operation(:stop_sandbox, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StopSandbox"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: StopSandboxInput)
+        o.output = Shapes::ShapeRef.new(shape: StopSandboxOutput)
         o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)

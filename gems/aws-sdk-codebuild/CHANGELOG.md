@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.151.0 (2025-04-07)
+------------------
+
+* Feature - AWS CodeBuild now offers an enhanced debugging experience.
+
 1.150.0 (2025-04-02)
 ------------------
 

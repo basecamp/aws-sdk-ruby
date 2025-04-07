@@ -435,6 +435,15 @@ module Aws
                                  metric_name: ::String?,
                                  recipe_list: Array[::String]?
                                }?,
+                               events_config: {
+                                 event_parameters_list: Array[
+                                   {
+                                     event_type: ::String?,
+                                     event_value_threshold: ::Float?,
+                                     weight: ::Float?
+                                   },
+                                 ]?
+                               }?,
                                optimization_objective: {
                                  item_attribute: ::String?,
                                  objective_sensitivity: ("LOW" | "MEDIUM" | "HIGH" | "OFF")?
@@ -1081,6 +1090,15 @@ module Aws
                              ?solution_update_config: {
                                auto_training_config: {
                                  scheduling_expression: ::String?
+                               }?,
+                               events_config: {
+                                 event_parameters_list: Array[
+                                   {
+                                     event_type: ::String?,
+                                     event_value_threshold: ::Float?,
+                                     weight: ::Float?
+                                   },
+                                 ]?
                                }?
                              }
                            ) -> _UpdateSolutionResponseSuccess

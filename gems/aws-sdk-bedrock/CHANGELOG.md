@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.41.0 (2025-04-07)
+------------------
+
+* Feature - New options for how to handle harmful content detected by Amazon Bedrock Guardrails.
+
 1.40.0 (2025-03-21)
 ------------------
 

@@ -71,6 +71,7 @@ module Aws::Transfer
     DeleteCertificateRequest = Shapes::StructureShape.new(name: 'DeleteCertificateRequest')
     DeleteConnectorRequest = Shapes::StructureShape.new(name: 'DeleteConnectorRequest')
     DeleteHostKeyRequest = Shapes::StructureShape.new(name: 'DeleteHostKeyRequest')
+    DeleteId = Shapes::StringShape.new(name: 'DeleteId')
     DeleteProfileRequest = Shapes::StructureShape.new(name: 'DeleteProfileRequest')
     DeleteServerRequest = Shapes::StructureShape.new(name: 'DeleteServerRequest')
     DeleteSshPublicKeyRequest = Shapes::StructureShape.new(name: 'DeleteSshPublicKeyRequest')
@@ -233,6 +234,7 @@ module Aws::Transfer
     MdnSigningAlg = Shapes::StringShape.new(name: 'MdnSigningAlg')
     Message = Shapes::StringShape.new(name: 'Message')
     MessageSubject = Shapes::StringShape.new(name: 'MessageSubject')
+    MoveId = Shapes::StringShape.new(name: 'MoveId')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
     NullableRole = Shapes::StringShape.new(name: 'NullableRole')
     OnPartialUploadWorkflowDetails = Shapes::ListShape.new(name: 'OnPartialUploadWorkflowDetails')
@@ -308,6 +310,10 @@ module Aws::Transfer
     StartDirectoryListingResponse = Shapes::StructureShape.new(name: 'StartDirectoryListingResponse')
     StartFileTransferRequest = Shapes::StructureShape.new(name: 'StartFileTransferRequest')
     StartFileTransferResponse = Shapes::StructureShape.new(name: 'StartFileTransferResponse')
+    StartRemoteDeleteRequest = Shapes::StructureShape.new(name: 'StartRemoteDeleteRequest')
+    StartRemoteDeleteResponse = Shapes::StructureShape.new(name: 'StartRemoteDeleteResponse')
+    StartRemoteMoveRequest = Shapes::StructureShape.new(name: 'StartRemoteMoveRequest')
+    StartRemoteMoveResponse = Shapes::StructureShape.new(name: 'StartRemoteMoveResponse')
     StartServerRequest = Shapes::StructureShape.new(name: 'StartServerRequest')
     State = Shapes::StringShape.new(name: 'State')
     Status = Shapes::StringShape.new(name: 'Status')
@@ -1272,6 +1278,21 @@ module Aws::Transfer
 
     StartFileTransferResponse.add_member(:transfer_id, Shapes::ShapeRef.new(shape: TransferId, required: true, location_name: "TransferId"))
     StartFileTransferResponse.struct_class = Types::StartFileTransferResponse
+
+    StartRemoteDeleteRequest.add_member(:connector_id, Shapes::ShapeRef.new(shape: ConnectorId, required: true, location_name: "ConnectorId"))
+    StartRemoteDeleteRequest.add_member(:delete_path, Shapes::ShapeRef.new(shape: FilePath, required: true, location_name: "DeletePath"))
+    StartRemoteDeleteRequest.struct_class = Types::StartRemoteDeleteRequest
+
+    StartRemoteDeleteResponse.add_member(:delete_id, Shapes::ShapeRef.new(shape: DeleteId, required: true, location_name: "DeleteId"))
+    StartRemoteDeleteResponse.struct_class = Types::StartRemoteDeleteResponse
+
+    StartRemoteMoveRequest.add_member(:connector_id, Shapes::ShapeRef.new(shape: ConnectorId, required: true, location_name: "ConnectorId"))
+    StartRemoteMoveRequest.add_member(:source_path, Shapes::ShapeRef.new(shape: FilePath, required: true, location_name: "SourcePath"))
+    StartRemoteMoveRequest.add_member(:target_path, Shapes::ShapeRef.new(shape: FilePath, required: true, location_name: "TargetPath"))
+    StartRemoteMoveRequest.struct_class = Types::StartRemoteMoveRequest
+
+    StartRemoteMoveResponse.add_member(:move_id, Shapes::ShapeRef.new(shape: MoveId, required: true, location_name: "MoveId"))
+    StartRemoteMoveResponse.struct_class = Types::StartRemoteMoveResponse
 
     StartServerRequest.add_member(:server_id, Shapes::ShapeRef.new(shape: ServerId, required: true, location_name: "ServerId"))
     StartServerRequest.struct_class = Types::StartServerRequest
@@ -2258,6 +2279,32 @@ module Aws::Transfer
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: StartFileTransferRequest)
         o.output = Shapes::ShapeRef.new(shape: StartFileTransferResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+      end)
+
+      api.add_operation(:start_remote_delete, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartRemoteDelete"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: StartRemoteDeleteRequest)
+        o.output = Shapes::ShapeRef.new(shape: StartRemoteDeleteResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+      end)
+
+      api.add_operation(:start_remote_move, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartRemoteMove"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: StartRemoteMoveRequest)
+        o.output = Shapes::ShapeRef.new(shape: StartRemoteMoveResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)

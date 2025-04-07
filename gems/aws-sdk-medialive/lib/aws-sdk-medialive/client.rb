@@ -1932,6 +1932,9 @@ module Aws::MediaLive
     # @option params [Types::Smpte2110ReceiverGroupSettings] :smpte_2110_receiver_group_settings
     #   Configures the sources for the SMPTE 2110 Receiver Group input.
     #
+    # @option params [Array<String>] :sdi_sources
+    #   SDI Sources for this Input.
+    #
     # @return [Types::CreateInputResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateInputResponse#input #input} => Types::Input
@@ -1976,7 +1979,7 @@ module Aws::MediaLive
     #     tags: {
     #       "__string" => "__string",
     #     },
-    #     type: "UDP_PUSH", # accepts UDP_PUSH, RTP_PUSH, RTMP_PUSH, RTMP_PULL, URL_PULL, MP4_FILE, MEDIACONNECT, INPUT_DEVICE, AWS_CDI, TS_FILE, SRT_CALLER, MULTICAST, SMPTE_2110_RECEIVER_GROUP
+    #     type: "UDP_PUSH", # accepts UDP_PUSH, RTP_PUSH, RTMP_PUSH, RTMP_PULL, URL_PULL, MP4_FILE, MEDIACONNECT, INPUT_DEVICE, AWS_CDI, TS_FILE, SRT_CALLER, MULTICAST, SMPTE_2110_RECEIVER_GROUP, SDI
     #     vpc: {
     #       security_group_ids: ["__string"],
     #       subnet_ids: ["__string"], # required
@@ -2028,6 +2031,7 @@ module Aws::MediaLive
     #         },
     #       ],
     #     },
+    #     sdi_sources: ["__string"],
     #   })
     #
     # @example Response structure
@@ -2065,7 +2069,7 @@ module Aws::MediaLive
     #   resp.input.state #=> String, one of "CREATING", "DETACHED", "ATTACHED", "DELETING", "DELETED"
     #   resp.input.tags #=> Hash
     #   resp.input.tags["__string"] #=> String
-    #   resp.input.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP"
+    #   resp.input.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP", "SDI"
     #   resp.input.srt_settings.srt_caller_sources #=> Array
     #   resp.input.srt_settings.srt_caller_sources[0].decryption.algorithm #=> String, one of "AES128", "AES192", "AES256"
     #   resp.input.srt_settings.srt_caller_sources[0].decryption.passphrase_secret_arn #=> String
@@ -2086,6 +2090,8 @@ module Aws::MediaLive
     #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].sdp_url #=> String
     #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.media_index #=> Integer
     #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.sdp_url #=> String
+    #   resp.input.sdi_sources #=> Array
+    #   resp.input.sdi_sources[0] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateInput AWS API Documentation
     #
@@ -2351,7 +2357,7 @@ module Aws::MediaLive
     #   resp.input.state #=> String, one of "CREATING", "DETACHED", "ATTACHED", "DELETING", "DELETED"
     #   resp.input.tags #=> Hash
     #   resp.input.tags["__string"] #=> String
-    #   resp.input.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP"
+    #   resp.input.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP", "SDI"
     #   resp.input.srt_settings.srt_caller_sources #=> Array
     #   resp.input.srt_settings.srt_caller_sources[0].decryption.algorithm #=> String, one of "AES128", "AES192", "AES256"
     #   resp.input.srt_settings.srt_caller_sources[0].decryption.passphrase_secret_arn #=> String
@@ -2372,6 +2378,8 @@ module Aws::MediaLive
     #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].sdp_url #=> String
     #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.media_index #=> Integer
     #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.sdp_url #=> String
+    #   resp.input.sdi_sources #=> Array
+    #   resp.input.sdi_sources[0] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreatePartnerInput AWS API Documentation
     #
@@ -4435,6 +4443,7 @@ module Aws::MediaLive
     #   * {Types::DescribeInputResponse#input_network_location #input_network_location} => String
     #   * {Types::DescribeInputResponse#multicast_settings #multicast_settings} => Types::MulticastSettings
     #   * {Types::DescribeInputResponse#smpte_2110_receiver_group_settings #smpte_2110_receiver_group_settings} => Types::Smpte2110ReceiverGroupSettings
+    #   * {Types::DescribeInputResponse#sdi_sources #sdi_sources} => Array&lt;String&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -4477,7 +4486,7 @@ module Aws::MediaLive
     #   resp.state #=> String, one of "CREATING", "DETACHED", "ATTACHED", "DELETING", "DELETED"
     #   resp.tags #=> Hash
     #   resp.tags["__string"] #=> String
-    #   resp.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP"
+    #   resp.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP", "SDI"
     #   resp.srt_settings.srt_caller_sources #=> Array
     #   resp.srt_settings.srt_caller_sources[0].decryption.algorithm #=> String, one of "AES128", "AES192", "AES256"
     #   resp.srt_settings.srt_caller_sources[0].decryption.passphrase_secret_arn #=> String
@@ -4498,6 +4507,8 @@ module Aws::MediaLive
     #   resp.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].sdp_url #=> String
     #   resp.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.media_index #=> Integer
     #   resp.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.sdp_url #=> String
+    #   resp.sdi_sources #=> Array
+    #   resp.sdi_sources[0] #=> String
     #
     #
     # The following waiters are defined for this operation (see {Client#wait_until} for detailed usage):
@@ -5465,7 +5476,7 @@ module Aws::MediaLive
     #   resp.inputs[0].state #=> String, one of "CREATING", "DETACHED", "ATTACHED", "DELETING", "DELETED"
     #   resp.inputs[0].tags #=> Hash
     #   resp.inputs[0].tags["__string"] #=> String
-    #   resp.inputs[0].type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP"
+    #   resp.inputs[0].type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP", "SDI"
     #   resp.inputs[0].srt_settings.srt_caller_sources #=> Array
     #   resp.inputs[0].srt_settings.srt_caller_sources[0].decryption.algorithm #=> String, one of "AES128", "AES192", "AES256"
     #   resp.inputs[0].srt_settings.srt_caller_sources[0].decryption.passphrase_secret_arn #=> String
@@ -5486,6 +5497,8 @@ module Aws::MediaLive
     #   resp.inputs[0].smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].sdp_url #=> String
     #   resp.inputs[0].smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.media_index #=> Integer
     #   resp.inputs[0].smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.sdp_url #=> String
+    #   resp.inputs[0].sdi_sources #=> Array
+    #   resp.inputs[0].sdi_sources[0] #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ListInputs AWS API Documentation
@@ -9585,6 +9598,9 @@ module Aws::MediaLive
     # @option params [Types::Smpte2110ReceiverGroupSettings] :smpte_2110_receiver_group_settings
     #   Configures the sources for the SMPTE 2110 Receiver Group input.
     #
+    # @option params [Array<String>] :sdi_sources
+    #   SDI Sources for this Input.
+    #
     # @return [Types::UpdateInputResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateInputResponse#input #input} => Types::Input
@@ -9672,6 +9688,7 @@ module Aws::MediaLive
     #         },
     #       ],
     #     },
+    #     sdi_sources: ["__string"],
     #   })
     #
     # @example Response structure
@@ -9709,7 +9726,7 @@ module Aws::MediaLive
     #   resp.input.state #=> String, one of "CREATING", "DETACHED", "ATTACHED", "DELETING", "DELETED"
     #   resp.input.tags #=> Hash
     #   resp.input.tags["__string"] #=> String
-    #   resp.input.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP"
+    #   resp.input.type #=> String, one of "UDP_PUSH", "RTP_PUSH", "RTMP_PUSH", "RTMP_PULL", "URL_PULL", "MP4_FILE", "MEDIACONNECT", "INPUT_DEVICE", "AWS_CDI", "TS_FILE", "SRT_CALLER", "MULTICAST", "SMPTE_2110_RECEIVER_GROUP", "SDI"
     #   resp.input.srt_settings.srt_caller_sources #=> Array
     #   resp.input.srt_settings.srt_caller_sources[0].decryption.algorithm #=> String, one of "AES128", "AES192", "AES256"
     #   resp.input.srt_settings.srt_caller_sources[0].decryption.passphrase_secret_arn #=> String
@@ -9730,6 +9747,8 @@ module Aws::MediaLive
     #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.audio_sdps[0].sdp_url #=> String
     #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.media_index #=> Integer
     #   resp.input.smpte_2110_receiver_group_settings.smpte_2110_receiver_groups[0].sdp_settings.video_sdp.sdp_url #=> String
+    #   resp.input.sdi_sources #=> Array
+    #   resp.input.sdi_sources[0] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateInput AWS API Documentation
     #
@@ -12858,6 +12877,7 @@ module Aws::MediaLive
     #   * {Types::CreateNodeResponse#node_interface_mappings #node_interface_mappings} => Array&lt;Types::NodeInterfaceMapping&gt;
     #   * {Types::CreateNodeResponse#role #role} => String
     #   * {Types::CreateNodeResponse#state #state} => String
+    #   * {Types::CreateNodeResponse#sdi_source_mappings #sdi_source_mappings} => Array&lt;Types::SdiSourceMapping&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -12894,6 +12914,10 @@ module Aws::MediaLive
     #   resp.node_interface_mappings[0].physical_interface_name #=> String
     #   resp.role #=> String, one of "BACKUP", "ACTIVE"
     #   resp.state #=> String, one of "CREATED", "REGISTERING", "READY_TO_ACTIVATE", "REGISTRATION_FAILED", "ACTIVATION_FAILED", "ACTIVE", "READY", "IN_USE", "DEREGISTERING", "DRAINING", "DEREGISTRATION_FAILED", "DEREGISTERED"
+    #   resp.sdi_source_mappings #=> Array
+    #   resp.sdi_source_mappings[0].card_number #=> Integer
+    #   resp.sdi_source_mappings[0].channel_number #=> Integer
+    #   resp.sdi_source_mappings[0].sdi_source #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateNode AWS API Documentation
     #
@@ -13125,6 +13149,7 @@ module Aws::MediaLive
     #   * {Types::DeleteNodeResponse#node_interface_mappings #node_interface_mappings} => Array&lt;Types::NodeInterfaceMapping&gt;
     #   * {Types::DeleteNodeResponse#role #role} => String
     #   * {Types::DeleteNodeResponse#state #state} => String
+    #   * {Types::DeleteNodeResponse#sdi_source_mappings #sdi_source_mappings} => Array&lt;Types::SdiSourceMapping&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -13149,6 +13174,10 @@ module Aws::MediaLive
     #   resp.node_interface_mappings[0].physical_interface_name #=> String
     #   resp.role #=> String, one of "BACKUP", "ACTIVE"
     #   resp.state #=> String, one of "CREATED", "REGISTERING", "READY_TO_ACTIVATE", "REGISTRATION_FAILED", "ACTIVATION_FAILED", "ACTIVE", "READY", "IN_USE", "DEREGISTERING", "DRAINING", "DEREGISTRATION_FAILED", "DEREGISTERED"
+    #   resp.sdi_source_mappings #=> Array
+    #   resp.sdi_source_mappings[0].card_number #=> Integer
+    #   resp.sdi_source_mappings[0].channel_number #=> Integer
+    #   resp.sdi_source_mappings[0].sdi_source #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DeleteNode AWS API Documentation
     #
@@ -13322,6 +13351,7 @@ module Aws::MediaLive
     #   * {Types::DescribeNodeResponse#node_interface_mappings #node_interface_mappings} => Array&lt;Types::NodeInterfaceMapping&gt;
     #   * {Types::DescribeNodeResponse#role #role} => String
     #   * {Types::DescribeNodeResponse#state #state} => String
+    #   * {Types::DescribeNodeResponse#sdi_source_mappings #sdi_source_mappings} => Array&lt;Types::SdiSourceMapping&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -13346,6 +13376,10 @@ module Aws::MediaLive
     #   resp.node_interface_mappings[0].physical_interface_name #=> String
     #   resp.role #=> String, one of "BACKUP", "ACTIVE"
     #   resp.state #=> String, one of "CREATED", "REGISTERING", "READY_TO_ACTIVATE", "REGISTRATION_FAILED", "ACTIVATION_FAILED", "ACTIVE", "READY", "IN_USE", "DEREGISTERING", "DRAINING", "DEREGISTRATION_FAILED", "DEREGISTERED"
+    #   resp.sdi_source_mappings #=> Array
+    #   resp.sdi_source_mappings[0].card_number #=> Integer
+    #   resp.sdi_source_mappings[0].channel_number #=> Integer
+    #   resp.sdi_source_mappings[0].sdi_source #=> String
     #
     #
     # The following waiters are defined for this operation (see {Client#wait_until} for detailed usage):
@@ -13541,6 +13575,10 @@ module Aws::MediaLive
     #   resp.nodes[0].node_interface_mappings[0].physical_interface_name #=> String
     #   resp.nodes[0].role #=> String, one of "BACKUP", "ACTIVE"
     #   resp.nodes[0].state #=> String, one of "CREATED", "REGISTERING", "READY_TO_ACTIVATE", "REGISTRATION_FAILED", "ACTIVATION_FAILED", "ACTIVE", "READY", "IN_USE", "DEREGISTERING", "DRAINING", "DEREGISTRATION_FAILED", "DEREGISTERED"
+    #   resp.nodes[0].sdi_source_mappings #=> Array
+    #   resp.nodes[0].sdi_source_mappings[0].card_number #=> Integer
+    #   resp.nodes[0].sdi_source_mappings[0].channel_number #=> Integer
+    #   resp.nodes[0].sdi_source_mappings[0].sdi_source #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ListNodes AWS API Documentation
     #
@@ -13759,6 +13797,9 @@ module Aws::MediaLive
     #   available for encoding. BACKUP means the Node is a redundant Node and
     #   might get used if an ACTIVE Node fails.
     #
+    # @option params [Array<Types::SdiSourceMappingUpdateRequest>] :sdi_source_mappings
+    #   The mappings of a SDI capture card port to a logical SDI data stream
+    #
     # @return [Types::UpdateNodeResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateNodeResponse#arn #arn} => String
@@ -13771,6 +13812,7 @@ module Aws::MediaLive
     #   * {Types::UpdateNodeResponse#node_interface_mappings #node_interface_mappings} => Array&lt;Types::NodeInterfaceMapping&gt;
     #   * {Types::UpdateNodeResponse#role #role} => String
     #   * {Types::UpdateNodeResponse#state #state} => String
+    #   * {Types::UpdateNodeResponse#sdi_source_mappings #sdi_source_mappings} => Array&lt;Types::SdiSourceMapping&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -13779,6 +13821,13 @@ module Aws::MediaLive
     #     name: "__string",
     #     node_id: "__string", # required
     #     role: "BACKUP", # accepts BACKUP, ACTIVE
+    #     sdi_source_mappings: [
+    #       {
+    #         card_number: 1,
+    #         channel_number: 1,
+    #         sdi_source: "__string",
+    #       },
+    #     ],
     #   })
     #
     # @example Response structure
@@ -13797,6 +13846,10 @@ module Aws::MediaLive
     #   resp.node_interface_mappings[0].physical_interface_name #=> String
     #   resp.role #=> String, one of "BACKUP", "ACTIVE"
     #   resp.state #=> String, one of "CREATED", "REGISTERING", "READY_TO_ACTIVATE", "REGISTRATION_FAILED", "ACTIVATION_FAILED", "ACTIVE", "READY", "IN_USE", "DEREGISTERING", "DRAINING", "DEREGISTRATION_FAILED", "DEREGISTERED"
+    #   resp.sdi_source_mappings #=> Array
+    #   resp.sdi_source_mappings[0].card_number #=> Integer
+    #   resp.sdi_source_mappings[0].channel_number #=> Integer
+    #   resp.sdi_source_mappings[0].sdi_source #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateNode AWS API Documentation
     #
@@ -13832,6 +13885,7 @@ module Aws::MediaLive
     #   * {Types::UpdateNodeStateResponse#node_interface_mappings #node_interface_mappings} => Array&lt;Types::NodeInterfaceMapping&gt;
     #   * {Types::UpdateNodeStateResponse#role #role} => String
     #   * {Types::UpdateNodeStateResponse#state #state} => String
+    #   * {Types::UpdateNodeStateResponse#sdi_source_mappings #sdi_source_mappings} => Array&lt;Types::SdiSourceMapping&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -13857,6 +13911,10 @@ module Aws::MediaLive
     #   resp.node_interface_mappings[0].physical_interface_name #=> String
     #   resp.role #=> String, one of "BACKUP", "ACTIVE"
     #   resp.state #=> String, one of "CREATED", "REGISTERING", "READY_TO_ACTIVATE", "REGISTRATION_FAILED", "ACTIVATION_FAILED", "ACTIVE", "READY", "IN_USE", "DEREGISTERING", "DRAINING", "DEREGISTRATION_FAILED", "DEREGISTERED"
+    #   resp.sdi_source_mappings #=> Array
+    #   resp.sdi_source_mappings[0].card_number #=> Integer
+    #   resp.sdi_source_mappings[0].channel_number #=> Integer
+    #   resp.sdi_source_mappings[0].sdi_source #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateNodeState AWS API Documentation
     #
@@ -13889,6 +13947,234 @@ module Aws::MediaLive
       req.send_request(options)
     end
 
+    # Create an SdiSource for each video source that uses the SDI protocol.
+    # You will reference the SdiSource when you create an SDI input in
+    # MediaLive. You will also reference it in an SdiSourceMapping, in order
+    # to create a connection between the logical SdiSource and the physical
+    # SDI card and port that the physical SDI source uses.
+    #
+    # @option params [String] :mode
+    #   Applies only if the type is QUAD. Specify the mode for handling the
+    #   quad-link signal: QUADRANT or INTERLEAVE.
+    #
+    # @option params [String] :name
+    #   Specify a name that is unique in the AWS account. We recommend you
+    #   assign a name that describes the source, for example curling-cameraA.
+    #   Names are case-sensitive.
+    #
+    # @option params [String] :request_id
+    #   An ID that you assign to a create request. This ID ensures idempotency when creating resources.**A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [Hash<String,String>] :tags
+    #   A collection of key-value pairs.
+    #
+    # @option params [String] :type
+    #   Specify the type of the SDI source: SINGLE: The source is a
+    #   single-link source. QUAD: The source is one part of a quad-link
+    #   source.
+    #
+    # @return [Types::CreateSdiSourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateSdiSourceResponse#sdi_source #sdi_source} => Types::SdiSource
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_sdi_source({
+    #     mode: "QUADRANT", # accepts QUADRANT, INTERLEAVE
+    #     name: "__string",
+    #     request_id: "__string",
+    #     tags: {
+    #       "__string" => "__string",
+    #     },
+    #     type: "SINGLE", # accepts SINGLE, QUAD
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.sdi_source.arn #=> String
+    #   resp.sdi_source.id #=> String
+    #   resp.sdi_source.inputs #=> Array
+    #   resp.sdi_source.inputs[0] #=> String
+    #   resp.sdi_source.mode #=> String, one of "QUADRANT", "INTERLEAVE"
+    #   resp.sdi_source.name #=> String
+    #   resp.sdi_source.state #=> String, one of "IDLE", "IN_USE", "DELETED"
+    #   resp.sdi_source.type #=> String, one of "SINGLE", "QUAD"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateSdiSource AWS API Documentation
+    #
+    # @overload create_sdi_source(params = {})
+    # @param [Hash] params ({})
+    def create_sdi_source(params = {}, options = {})
+      req = build_request(:create_sdi_source, params)
+      req.send_request(options)
+    end
+
+    # Delete an SdiSource. The SdiSource must not be part of any
+    # SidSourceMapping and must not be attached to any input.
+    #
+    # @option params [required, String] :sdi_source_id
+    #
+    # @return [Types::DeleteSdiSourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteSdiSourceResponse#sdi_source #sdi_source} => Types::SdiSource
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_sdi_source({
+    #     sdi_source_id: "__string", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.sdi_source.arn #=> String
+    #   resp.sdi_source.id #=> String
+    #   resp.sdi_source.inputs #=> Array
+    #   resp.sdi_source.inputs[0] #=> String
+    #   resp.sdi_source.mode #=> String, one of "QUADRANT", "INTERLEAVE"
+    #   resp.sdi_source.name #=> String
+    #   resp.sdi_source.state #=> String, one of "IDLE", "IN_USE", "DELETED"
+    #   resp.sdi_source.type #=> String, one of "SINGLE", "QUAD"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DeleteSdiSource AWS API Documentation
+    #
+    # @overload delete_sdi_source(params = {})
+    # @param [Hash] params ({})
+    def delete_sdi_source(params = {}, options = {})
+      req = build_request(:delete_sdi_source, params)
+      req.send_request(options)
+    end
+
+    # Gets details about a SdiSource.
+    #
+    # @option params [required, String] :sdi_source_id
+    #
+    # @return [Types::DescribeSdiSourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeSdiSourceResponse#sdi_source #sdi_source} => Types::SdiSource
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_sdi_source({
+    #     sdi_source_id: "__string", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.sdi_source.arn #=> String
+    #   resp.sdi_source.id #=> String
+    #   resp.sdi_source.inputs #=> Array
+    #   resp.sdi_source.inputs[0] #=> String
+    #   resp.sdi_source.mode #=> String, one of "QUADRANT", "INTERLEAVE"
+    #   resp.sdi_source.name #=> String
+    #   resp.sdi_source.state #=> String, one of "IDLE", "IN_USE", "DELETED"
+    #   resp.sdi_source.type #=> String, one of "SINGLE", "QUAD"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DescribeSdiSource AWS API Documentation
+    #
+    # @overload describe_sdi_source(params = {})
+    # @param [Hash] params ({})
+    def describe_sdi_source(params = {}, options = {})
+      req = build_request(:describe_sdi_source, params)
+      req.send_request(options)
+    end
+
+    # List all the SdiSources in the AWS account.
+    #
+    # @option params [Integer] :max_results
+    #
+    # @option params [String] :next_token
+    #
+    # @return [Types::ListSdiSourcesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListSdiSourcesResponse#next_token #next_token} => String
+    #   * {Types::ListSdiSourcesResponse#sdi_sources #sdi_sources} => Array&lt;Types::SdiSourceSummary&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_sdi_sources({
+    #     max_results: 1,
+    #     next_token: "__string",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.sdi_sources #=> Array
+    #   resp.sdi_sources[0].arn #=> String
+    #   resp.sdi_sources[0].id #=> String
+    #   resp.sdi_sources[0].inputs #=> Array
+    #   resp.sdi_sources[0].inputs[0] #=> String
+    #   resp.sdi_sources[0].mode #=> String, one of "QUADRANT", "INTERLEAVE"
+    #   resp.sdi_sources[0].name #=> String
+    #   resp.sdi_sources[0].state #=> String, one of "IDLE", "IN_USE", "DELETED"
+    #   resp.sdi_sources[0].type #=> String, one of "SINGLE", "QUAD"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ListSdiSources AWS API Documentation
+    #
+    # @overload list_sdi_sources(params = {})
+    # @param [Hash] params ({})
+    def list_sdi_sources(params = {}, options = {})
+      req = build_request(:list_sdi_sources, params)
+      req.send_request(options)
+    end
+
+    # Change some of the settings in an SdiSource.
+    #
+    # @option params [String] :mode
+    #   Include this parameter only if you want to change the name of the
+    #   SdiSource. Specify a name that is unique in the AWS account. We
+    #   recommend you assign a name that describes the source, for example
+    #   curling-cameraA. Names are case-sensitive.
+    #
+    # @option params [String] :name
+    #   Include this parameter only if you want to change the name of the
+    #   SdiSource. Specify a name that is unique in the AWS account. We
+    #   recommend you assign a name that describes the source, for example
+    #   curling-cameraA. Names are case-sensitive.
+    #
+    # @option params [required, String] :sdi_source_id
+    #
+    # @option params [String] :type
+    #   Include this parameter only if you want to change the mode. Specify
+    #   the type of the SDI source: SINGLE: The source is a single-link
+    #   source. QUAD: The source is one part of a quad-link source.
+    #
+    # @return [Types::UpdateSdiSourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateSdiSourceResponse#sdi_source #sdi_source} => Types::SdiSource
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_sdi_source({
+    #     mode: "QUADRANT", # accepts QUADRANT, INTERLEAVE
+    #     name: "__string",
+    #     sdi_source_id: "__string", # required
+    #     type: "SINGLE", # accepts SINGLE, QUAD
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.sdi_source.arn #=> String
+    #   resp.sdi_source.id #=> String
+    #   resp.sdi_source.inputs #=> Array
+    #   resp.sdi_source.inputs[0] #=> String
+    #   resp.sdi_source.mode #=> String, one of "QUADRANT", "INTERLEAVE"
+    #   resp.sdi_source.name #=> String
+    #   resp.sdi_source.state #=> String, one of "IDLE", "IN_USE", "DELETED"
+    #   resp.sdi_source.type #=> String, one of "SINGLE", "QUAD"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateSdiSource AWS API Documentation
+    #
+    # @overload update_sdi_source(params = {})
+    # @param [Hash] params ({})
+    def update_sdi_source(params = {}, options = {})
+      req = build_request(:update_sdi_source, params)
+      req.send_request(options)
+    end
+
     # @!endgroup
 
     # @param params ({})
@@ -13907,7 +14193,7 @@ module Aws::MediaLive
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-medialive'
-      context[:gem_version] = '1.149.0'
+      context[:gem_version] = '1.150.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

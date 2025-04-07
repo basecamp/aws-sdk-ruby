@@ -3379,6 +3379,33 @@ module Aws::Personalize
       include Aws::Structure
     end
 
+    # Describes the parameters of events, which are used in solution
+    # creation.
+    #
+    # @!attribute [rw] event_type
+    #   The name of the event type to be considered for solution creation.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_value_threshold
+    #   The threshold of the event type. Only events with a value greater or
+    #   equal to this threshold will be considered for solution creation.
+    #   @return [Float]
+    #
+    # @!attribute [rw] weight
+    #   The weight of the event type. A higher weight means higher
+    #   importance of the event type for the created solution.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/personalize-2018-05-22/EventParameters AWS API Documentation
+    #
+    class EventParameters < Struct.new(
+      :event_type,
+      :event_value_threshold,
+      :weight)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Provides information about an event tracker.
     #
     # @!attribute [rw] name
@@ -3486,6 +3513,22 @@ module Aws::Personalize
       :status,
       :creation_date_time,
       :last_updated_date_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the configuration of events, which are used in solution
+    # creation.
+    #
+    # @!attribute [rw] event_parameters_list
+    #   A list of event parameters, which includes event types and their
+    #   event value thresholds and weights.
+    #   @return [Array<Types::EventParameters>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/personalize-2018-05-22/EventsConfig AWS API Documentation
+    #
+    class EventsConfig < Struct.new(
+      :event_parameters_list)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5364,6 +5407,12 @@ module Aws::Personalize
     #   [1]: https://docs.aws.amazon.com/personalize/latest/dg/API_AutoMLConfig.html
     #   @return [Types::AutoMLConfig]
     #
+    # @!attribute [rw] events_config
+    #   Describes the configuration of an event, which includes a list of
+    #   event parameters. You can specify up to 10 event parameters. Events
+    #   are used in solution creation.
+    #   @return [Types::EventsConfig]
+    #
     # @!attribute [rw] optimization_objective
     #   Describes the additional objective for the solution, such as
     #   maximizing streaming minutes or increasing revenue. For more
@@ -5391,6 +5440,7 @@ module Aws::Personalize
       :algorithm_hyper_parameters,
       :feature_transformation_parameters,
       :auto_ml_config,
+      :events_config,
       :optimization_objective,
       :training_data_config,
       :auto_training_config)
@@ -5456,10 +5506,17 @@ module Aws::Personalize
     #   `performAutoTraining` is true.
     #   @return [Types::AutoTrainingConfig]
     #
+    # @!attribute [rw] events_config
+    #   Describes the configuration of an event, which includes a list of
+    #   event parameters. You can specify up to 10 event parameters. Events
+    #   are used in solution creation.
+    #   @return [Types::EventsConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/personalize-2018-05-22/SolutionUpdateConfig AWS API Documentation
     #
     class SolutionUpdateConfig < Struct.new(
-      :auto_training_config)
+      :auto_training_config,
+      :events_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5787,7 +5844,7 @@ module Aws::Personalize
     class Tag < Struct.new(
       :tag_key,
       :tag_value)
-      SENSITIVE = []
+      SENSITIVE = [:tag_key, :tag_value]
       include Aws::Structure
     end
 
@@ -5911,7 +5968,7 @@ module Aws::Personalize
     class UntagResourceRequest < Struct.new(
       :resource_arn,
       :tag_keys)
-      SENSITIVE = []
+      SENSITIVE = [:tag_keys]
       include Aws::Structure
     end
 

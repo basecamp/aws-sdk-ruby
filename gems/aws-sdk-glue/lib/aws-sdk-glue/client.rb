@@ -5002,7 +5002,7 @@ module Aws::Glue
     #       "OrchestrationNameString" => "OrchestrationArgumentsValue",
     #     },
     #     connections: {
-    #       connections: ["GenericString"],
+    #       connections: ["ConnectionString"],
     #     },
     #     max_capacity: 1.0,
     #     number_of_workers: 1,
@@ -5515,7 +5515,7 @@ module Aws::Glue
     #
     #   resp = client.create_workflow({
     #     name: "NameString", # required
-    #     description: "GenericString",
+    #     description: "WorkflowDescriptionString",
     #     default_run_properties: {
     #       "IdString" => "GenericString",
     #     },
@@ -20047,7 +20047,7 @@ module Aws::Glue
     #
     #   resp = client.update_workflow({
     #     name: "NameString", # required
-    #     description: "GenericString",
+    #     description: "WorkflowDescriptionString",
     #     default_run_properties: {
     #       "IdString" => "GenericString",
     #     },
@@ -20085,7 +20085,7 @@ module Aws::Glue
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-glue'
-      context[:gem_version] = '1.211.0'
+      context[:gem_version] = '1.212.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

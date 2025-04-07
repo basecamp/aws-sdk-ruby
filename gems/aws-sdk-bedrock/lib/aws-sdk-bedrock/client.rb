@@ -1006,6 +1006,10 @@ module Aws::Bedrock
     #           definition: "GuardrailTopicDefinition", # required
     #           examples: ["GuardrailTopicExample"],
     #           type: "DENY", # required, accepts DENY
+    #           input_action: "BLOCK", # accepts BLOCK, NONE
+    #           output_action: "BLOCK", # accepts BLOCK, NONE
+    #           input_enabled: false,
+    #           output_enabled: false,
     #         },
     #       ],
     #     },
@@ -1017,6 +1021,10 @@ module Aws::Bedrock
     #           output_strength: "NONE", # required, accepts NONE, LOW, MEDIUM, HIGH
     #           input_modalities: ["TEXT"], # accepts TEXT, IMAGE
     #           output_modalities: ["TEXT"], # accepts TEXT, IMAGE
+    #           input_action: "BLOCK", # accepts BLOCK, NONE
+    #           output_action: "BLOCK", # accepts BLOCK, NONE
+    #           input_enabled: false,
+    #           output_enabled: false,
     #         },
     #       ],
     #     },
@@ -1024,11 +1032,19 @@ module Aws::Bedrock
     #       words_config: [
     #         {
     #           text: "GuardrailWordConfigTextString", # required
+    #           input_action: "BLOCK", # accepts BLOCK, NONE
+    #           output_action: "BLOCK", # accepts BLOCK, NONE
+    #           input_enabled: false,
+    #           output_enabled: false,
     #         },
     #       ],
     #       managed_word_lists_config: [
     #         {
     #           type: "PROFANITY", # required, accepts PROFANITY
+    #           input_action: "BLOCK", # accepts BLOCK, NONE
+    #           output_action: "BLOCK", # accepts BLOCK, NONE
+    #           input_enabled: false,
+    #           output_enabled: false,
     #         },
     #       ],
     #     },
@@ -1036,7 +1052,11 @@ module Aws::Bedrock
     #       pii_entities_config: [
     #         {
     #           type: "ADDRESS", # required, accepts ADDRESS, AGE, AWS_ACCESS_KEY, AWS_SECRET_KEY, CA_HEALTH_NUMBER, CA_SOCIAL_INSURANCE_NUMBER, CREDIT_DEBIT_CARD_CVV, CREDIT_DEBIT_CARD_EXPIRY, CREDIT_DEBIT_CARD_NUMBER, DRIVER_ID, EMAIL, INTERNATIONAL_BANK_ACCOUNT_NUMBER, IP_ADDRESS, LICENSE_PLATE, MAC_ADDRESS, NAME, PASSWORD, PHONE, PIN, SWIFT_CODE, UK_NATIONAL_HEALTH_SERVICE_NUMBER, UK_NATIONAL_INSURANCE_NUMBER, UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER, URL, USERNAME, US_BANK_ACCOUNT_NUMBER, US_BANK_ROUTING_NUMBER, US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER, US_PASSPORT_NUMBER, US_SOCIAL_SECURITY_NUMBER, VEHICLE_IDENTIFICATION_NUMBER
-    #           action: "BLOCK", # required, accepts BLOCK, ANONYMIZE
+    #           action: "BLOCK", # required, accepts BLOCK, ANONYMIZE, NONE
+    #           input_action: "BLOCK", # accepts BLOCK, ANONYMIZE, NONE
+    #           output_action: "BLOCK", # accepts BLOCK, ANONYMIZE, NONE
+    #           input_enabled: false,
+    #           output_enabled: false,
     #         },
     #       ],
     #       regexes_config: [
@@ -1044,7 +1064,11 @@ module Aws::Bedrock
     #           name: "GuardrailRegexConfigNameString", # required
     #           description: "GuardrailRegexConfigDescriptionString",
     #           pattern: "GuardrailRegexConfigPatternString", # required
-    #           action: "BLOCK", # required, accepts BLOCK, ANONYMIZE
+    #           action: "BLOCK", # required, accepts BLOCK, ANONYMIZE, NONE
+    #           input_action: "BLOCK", # accepts BLOCK, ANONYMIZE, NONE
+    #           output_action: "BLOCK", # accepts BLOCK, ANONYMIZE, NONE
+    #           input_enabled: false,
+    #           output_enabled: false,
     #         },
     #       ],
     #     },
@@ -1053,6 +1077,8 @@ module Aws::Bedrock
     #         {
     #           type: "GROUNDING", # required, accepts GROUNDING, RELEVANCE
     #           threshold: 1.0, # required
+    #           action: "BLOCK", # accepts BLOCK, NONE
+    #           enabled: false,
     #         },
     #       ],
     #     },
@@ -2535,6 +2561,10 @@ module Aws::Bedrock
     #   resp.topic_policy.topics[0].examples #=> Array
     #   resp.topic_policy.topics[0].examples[0] #=> String
     #   resp.topic_policy.topics[0].type #=> String, one of "DENY"
+    #   resp.topic_policy.topics[0].input_action #=> String, one of "BLOCK", "NONE"
+    #   resp.topic_policy.topics[0].output_action #=> String, one of "BLOCK", "NONE"
+    #   resp.topic_policy.topics[0].input_enabled #=> Boolean
+    #   resp.topic_policy.topics[0].output_enabled #=> Boolean
     #   resp.content_policy.filters #=> Array
     #   resp.content_policy.filters[0].type #=> String, one of "SEXUAL", "VIOLENCE", "HATE", "INSULTS", "MISCONDUCT", "PROMPT_ATTACK"
     #   resp.content_policy.filters[0].input_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
@@ -2543,21 +2573,43 @@ module Aws::Bedrock
     #   resp.content_policy.filters[0].input_modalities[0] #=> String, one of "TEXT", "IMAGE"
     #   resp.content_policy.filters[0].output_modalities #=> Array
     #   resp.content_policy.filters[0].output_modalities[0] #=> String, one of "TEXT", "IMAGE"
+    #   resp.content_policy.filters[0].input_action #=> String, one of "BLOCK", "NONE"
+    #   resp.content_policy.filters[0].output_action #=> String, one of "BLOCK", "NONE"
+    #   resp.content_policy.filters[0].input_enabled #=> Boolean
+    #   resp.content_policy.filters[0].output_enabled #=> Boolean
     #   resp.word_policy.words #=> Array
     #   resp.word_policy.words[0].text #=> String
+    #   resp.word_policy.words[0].input_action #=> String, one of "BLOCK", "NONE"
+    #   resp.word_policy.words[0].output_action #=> String, one of "BLOCK", "NONE"
+    #   resp.word_policy.words[0].input_enabled #=> Boolean
+    #   resp.word_policy.words[0].output_enabled #=> Boolean
     #   resp.word_policy.managed_word_lists #=> Array
     #   resp.word_policy.managed_word_lists[0].type #=> String, one of "PROFANITY"
+    #   resp.word_policy.managed_word_lists[0].input_action #=> String, one of "BLOCK", "NONE"
+    #   resp.word_policy.managed_word_lists[0].output_action #=> String, one of "BLOCK", "NONE"
+    #   resp.word_policy.managed_word_lists[0].input_enabled #=> Boolean
+    #   resp.word_policy.managed_word_lists[0].output_enabled #=> Boolean
     #   resp.sensitive_information_policy.pii_entities #=> Array
     #   resp.sensitive_information_policy.pii_entities[0].type #=> String, one of "ADDRESS", "AGE", "AWS_ACCESS_KEY", "AWS_SECRET_KEY", "CA_HEALTH_NUMBER", "CA_SOCIAL_INSURANCE_NUMBER", "CREDIT_DEBIT_CARD_CVV", "CREDIT_DEBIT_CARD_EXPIRY", "CREDIT_DEBIT_CARD_NUMBER", "DRIVER_ID", "EMAIL", "INTERNATIONAL_BANK_ACCOUNT_NUMBER", "IP_ADDRESS", "LICENSE_PLATE", "MAC_ADDRESS", "NAME", "PASSWORD", "PHONE", "PIN", "SWIFT_CODE", "UK_NATIONAL_HEALTH_SERVICE_NUMBER", "UK_NATIONAL_INSURANCE_NUMBER", "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER", "URL", "USERNAME", "US_BANK_ACCOUNT_NUMBER", "US_BANK_ROUTING_NUMBER", "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER", "US_PASSPORT_NUMBER", "US_SOCIAL_SECURITY_NUMBER", "VEHICLE_IDENTIFICATION_NUMBER"
-    #   resp.sensitive_information_policy.pii_entities[0].action #=> String, one of "BLOCK", "ANONYMIZE"
+    #   resp.sensitive_information_policy.pii_entities[0].action #=> String, one of "BLOCK", "ANONYMIZE", "NONE"
+    #   resp.sensitive_information_policy.pii_entities[0].input_action #=> String, one of "BLOCK", "ANONYMIZE", "NONE"
+    #   resp.sensitive_information_policy.pii_entities[0].output_action #=> String, one of "BLOCK", "ANONYMIZE", "NONE"
+    #   resp.sensitive_information_policy.pii_entities[0].input_enabled #=> Boolean
+    #   resp.sensitive_information_policy.pii_entities[0].output_enabled #=> Boolean
     #   resp.sensitive_information_policy.regexes #=> Array
     #   resp.sensitive_information_policy.regexes[0].name #=> String
     #   resp.sensitive_information_policy.regexes[0].description #=> String
     #   resp.sensitive_information_policy.regexes[0].pattern #=> String
-    #   resp.sensitive_information_policy.regexes[0].action #=> String, one of "BLOCK", "ANONYMIZE"
+    #   resp.sensitive_information_policy.regexes[0].action #=> String, one of "BLOCK", "ANONYMIZE", "NONE"
+    #   resp.sensitive_information_policy.regexes[0].input_action #=> String, one of "BLOCK", "ANONYMIZE", "NONE"
+    #   resp.sensitive_information_policy.regexes[0].output_action #=> String, one of "BLOCK", "ANONYMIZE", "NONE"
+    #   resp.sensitive_information_policy.regexes[0].input_enabled #=> Boolean
+    #   resp.sensitive_information_policy.regexes[0].output_enabled #=> Boolean
     #   resp.contextual_grounding_policy.filters #=> Array
     #   resp.contextual_grounding_policy.filters[0].type #=> String, one of "GROUNDING", "RELEVANCE"
     #   resp.contextual_grounding_policy.filters[0].threshold #=> Float
+    #   resp.contextual_grounding_policy.filters[0].action #=> String, one of "BLOCK", "NONE"
+    #   resp.contextual_grounding_policy.filters[0].enabled #=> Boolean
     #   resp.created_at #=> Time
     #   resp.updated_at #=> Time
     #   resp.status_reasons #=> Array
@@ -4580,6 +4632,10 @@ module Aws::Bedrock
     #           definition: "GuardrailTopicDefinition", # required
     #           examples: ["GuardrailTopicExample"],
     #           type: "DENY", # required, accepts DENY
+    #           input_action: "BLOCK", # accepts BLOCK, NONE
+    #           output_action: "BLOCK", # accepts BLOCK, NONE
+    #           input_enabled: false,
+    #           output_enabled: false,
     #         },
     #       ],
     #     },
@@ -4591,6 +4647,10 @@ module Aws::Bedrock
     #           output_strength: "NONE", # required, accepts NONE, LOW, MEDIUM, HIGH
     #           input_modalities: ["TEXT"], # accepts TEXT, IMAGE
     #           output_modalities: ["TEXT"], # accepts TEXT, IMAGE
+    #           input_action: "BLOCK", # accepts BLOCK, NONE
+    #           output_action: "BLOCK", # accepts BLOCK, NONE
+    #           input_enabled: false,
+    #           output_enabled: false,
     #         },
     #       ],
     #     },
@@ -4598,11 +4658,19 @@ module Aws::Bedrock
     #       words_config: [
     #         {
     #           text: "GuardrailWordConfigTextString", # required
+    #           input_action: "BLOCK", # accepts BLOCK, NONE
+    #           output_action: "BLOCK", # accepts BLOCK, NONE
+    #           input_enabled: false,
+    #           output_enabled: false,
     #         },
     #       ],
     #       managed_word_lists_config: [
     #         {
     #           type: "PROFANITY", # required, accepts PROFANITY
+    #           input_action: "BLOCK", # accepts BLOCK, NONE
+    #           output_action: "BLOCK", # accepts BLOCK, NONE
+    #           input_enabled: false,
+    #           output_enabled: false,
     #         },
     #       ],
     #     },
@@ -4610,7 +4678,11 @@ module Aws::Bedrock
     #       pii_entities_config: [
     #         {
     #           type: "ADDRESS", # required, accepts ADDRESS, AGE, AWS_ACCESS_KEY, AWS_SECRET_KEY, CA_HEALTH_NUMBER, CA_SOCIAL_INSURANCE_NUMBER, CREDIT_DEBIT_CARD_CVV, CREDIT_DEBIT_CARD_EXPIRY, CREDIT_DEBIT_CARD_NUMBER, DRIVER_ID, EMAIL, INTERNATIONAL_BANK_ACCOUNT_NUMBER, IP_ADDRESS, LICENSE_PLATE, MAC_ADDRESS, NAME, PASSWORD, PHONE, PIN, SWIFT_CODE, UK_NATIONAL_HEALTH_SERVICE_NUMBER, UK_NATIONAL_INSURANCE_NUMBER, UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER, URL, USERNAME, US_BANK_ACCOUNT_NUMBER, US_BANK_ROUTING_NUMBER, US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER, US_PASSPORT_NUMBER, US_SOCIAL_SECURITY_NUMBER, VEHICLE_IDENTIFICATION_NUMBER
-    #           action: "BLOCK", # required, accepts BLOCK, ANONYMIZE
+    #           action: "BLOCK", # required, accepts BLOCK, ANONYMIZE, NONE
+    #           input_action: "BLOCK", # accepts BLOCK, ANONYMIZE, NONE
+    #           output_action: "BLOCK", # accepts BLOCK, ANONYMIZE, NONE
+    #           input_enabled: false,
+    #           output_enabled: false,
     #         },
     #       ],
     #       regexes_config: [
@@ -4618,7 +4690,11 @@ module Aws::Bedrock
     #           name: "GuardrailRegexConfigNameString", # required
     #           description: "GuardrailRegexConfigDescriptionString",
     #           pattern: "GuardrailRegexConfigPatternString", # required
-    #           action: "BLOCK", # required, accepts BLOCK, ANONYMIZE
+    #           action: "BLOCK", # required, accepts BLOCK, ANONYMIZE, NONE
+    #           input_action: "BLOCK", # accepts BLOCK, ANONYMIZE, NONE
+    #           output_action: "BLOCK", # accepts BLOCK, ANONYMIZE, NONE
+    #           input_enabled: false,
+    #           output_enabled: false,
     #         },
     #       ],
     #     },
@@ -4627,6 +4703,8 @@ module Aws::Bedrock
     #         {
     #           type: "GROUNDING", # required, accepts GROUNDING, RELEVANCE
     #           threshold: 1.0, # required
+    #           action: "BLOCK", # accepts BLOCK, NONE
+    #           enabled: false,
     #         },
     #       ],
     #     },
@@ -4788,7 +4866,7 @@ module Aws::Bedrock
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrock'
-      context[:gem_version] = '1.40.0'
+      context[:gem_version] = '1.41.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

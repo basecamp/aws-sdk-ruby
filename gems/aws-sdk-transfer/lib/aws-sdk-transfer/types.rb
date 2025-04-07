@@ -72,7 +72,7 @@ module Aws::Transfer
     #   @return [String]
     #
     # @!attribute [rw] mdn_response
-    #   Used for outbound requests (from an Transfer Family server to a
+    #   Used for outbound requests (from an Transfer Family connector to a
     #   partner AS2 server) to determine whether the partner response for
     #   transfers is synchronous or asynchronous. Specify either of the
     #   following values:
@@ -878,7 +878,7 @@ module Aws::Transfer
     # @!attribute [rw] logging_role
     #   The Amazon Resource Name (ARN) of the Identity and Access Management
     #   (IAM) role that allows a server to turn on Amazon CloudWatch logging
-    #   for Amazon S3 or Amazon EFSevents. When set, you can view user
+    #   for Amazon S3 or Amazon EFS events. When set, you can view user
     #   activity in your CloudWatch logs.
     #   @return [String]
     #
@@ -2394,8 +2394,17 @@ module Aws::Transfer
     #   @return [String]
     #
     # @!attribute [rw] status
-    #   Currently, the only available status is `ACTIVE`: all other values
-    #   are reserved for future use.
+    #   A certificate's status can be either `ACTIVE` or `INACTIVE`.
+    #
+    #   You can set `ActiveDate` and `InactiveDate` in the
+    #   `UpdateCertificate` call. If you set values for these parameters,
+    #   those values are used to determine whether the certificate has a
+    #   status of `ACTIVE` or `INACTIVE`.
+    #
+    #   If you don't set values for `ActiveDate` and `InactiveDate`, we use
+    #   the `NotBefore` and `NotAfter` date as specified on the X509
+    #   certificate to determine when a certificate is active and when it is
+    #   inactive.
     #   @return [String]
     #
     # @!attribute [rw] certificate
@@ -2408,11 +2417,14 @@ module Aws::Transfer
     #
     # @!attribute [rw] active_date
     #   An optional date that specifies when the certificate becomes active.
+    #   If you do not specify a value, `ActiveDate` takes the same value as
+    #   `NotBeforeDate`, which is specified by the CA.
     #   @return [Time]
     #
     # @!attribute [rw] inactive_date
     #   An optional date that specifies when the certificate becomes
-    #   inactive.
+    #   inactive. If you do not specify a value, `InactiveDate` takes the
+    #   same value as `NotAfterDate`, which is specified by the CA.
     #   @return [Time]
     #
     # @!attribute [rw] serial
@@ -2938,7 +2950,7 @@ module Aws::Transfer
     # @!attribute [rw] logging_role
     #   The Amazon Resource Name (ARN) of the Identity and Access Management
     #   (IAM) role that allows a server to turn on Amazon CloudWatch logging
-    #   for Amazon S3 or Amazon EFSevents. When set, you can view user
+    #   for Amazon S3 or Amazon EFS events. When set, you can view user
     #   activity in your CloudWatch logs.
     #   @return [String]
     #
@@ -3815,6 +3827,13 @@ module Aws::Transfer
     #
     #   * For the SDK, specify the raw content of a certificate file. For
     #     example, `` --certificate "`cat encryption-cert.pem`" ``.
+    #
+    #   <note markdown="1"> You can provide both the certificate and its chain in this
+    #   parameter, without needing to use the `CertificateChain` parameter.
+    #   If you use this parameter for both the certificate and its chain, do
+    #   not use the `CertificateChain` parameter.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] certificate_chain
@@ -3823,8 +3842,8 @@ module Aws::Transfer
     #   @return [String]
     #
     # @!attribute [rw] private_key
-    #   * For the CLI, provide a file path for a private key in URI
-    #     format.For example, `--private-key file://encryption-key.pem`.
+    #   * For the CLI, provide a file path for a private key in URI format.
+    #     For example, `--private-key file://encryption-key.pem`.
     #     Alternatively, you can provide the raw content of the private key
     #     file.
     #
@@ -3834,11 +3853,14 @@ module Aws::Transfer
     #
     # @!attribute [rw] active_date
     #   An optional date that specifies when the certificate becomes active.
+    #   If you do not specify a value, `ActiveDate` takes the same value as
+    #   `NotBeforeDate`, which is specified by the CA.
     #   @return [Time]
     #
     # @!attribute [rw] inactive_date
     #   An optional date that specifies when the certificate becomes
-    #   inactive.
+    #   inactive. If you do not specify a value, `InactiveDate` takes the
+    #   same value as `NotAfterDate`, which is specified by the CA.
     #   @return [Time]
     #
     # @!attribute [rw] description
@@ -4862,11 +4884,14 @@ module Aws::Transfer
     #
     # @!attribute [rw] active_date
     #   An optional date that specifies when the certificate becomes active.
+    #   If you do not specify a value, `ActiveDate` takes the same value as
+    #   `NotBeforeDate`, which is specified by the CA.
     #   @return [Time]
     #
     # @!attribute [rw] inactive_date
     #   An optional date that specifies when the certificate becomes
-    #   inactive.
+    #   inactive. If you do not specify a value, `InactiveDate` takes the
+    #   same value as `NotAfterDate`, which is specified by the CA.
     #   @return [Time]
     #
     # @!attribute [rw] type
@@ -5092,7 +5117,7 @@ module Aws::Transfer
     # @!attribute [rw] logging_role
     #   The Amazon Resource Name (ARN) of the Identity and Access Management
     #   (IAM) role that allows a server to turn on Amazon CloudWatch logging
-    #   for Amazon S3 or Amazon EFSevents. When set, you can view user
+    #   for Amazon S3 or Amazon EFS events. When set, you can view user
     #   activity in your CloudWatch logs.
     #   @return [String]
     #
@@ -5277,7 +5302,7 @@ module Aws::Transfer
     # @!attribute [rw] logging_role
     #   The Amazon Resource Name (ARN) of the Identity and Access Management
     #   (IAM) role that allows a server to turn on Amazon CloudWatch logging
-    #   for Amazon S3 or Amazon EFSevents. When set, you can view user
+    #   for Amazon S3 or Amazon EFS events. When set, you can view user
     #   activity in your CloudWatch logs.
     #   @return [String]
     #
@@ -5859,6 +5884,71 @@ module Aws::Transfer
     #
     class StartFileTransferResponse < Struct.new(
       :transfer_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] connector_id
+    #   The unique identifier for the connector.
+    #   @return [String]
+    #
+    # @!attribute [rw] delete_path
+    #   The absolute path of the file or directory to delete. You can only
+    #   specify one path per call to this operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/StartRemoteDeleteRequest AWS API Documentation
+    #
+    class StartRemoteDeleteRequest < Struct.new(
+      :connector_id,
+      :delete_path)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] delete_id
+    #   Returns a unique identifier for the delete operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/StartRemoteDeleteResponse AWS API Documentation
+    #
+    class StartRemoteDeleteResponse < Struct.new(
+      :delete_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] connector_id
+    #   The unique identifier for the connector.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_path
+    #   The absolute path of the file or directory to move or rename. You
+    #   can only specify one path per call to this operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_path
+    #   The absolute path for the target of the move/rename operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/StartRemoteMoveRequest AWS API Documentation
+    #
+    class StartRemoteMoveRequest < Struct.new(
+      :connector_id,
+      :source_path,
+      :target_path)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] move_id
+    #   Returns a unique identifier for the move/rename operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/StartRemoteMoveResponse AWS API Documentation
+    #
+    class StartRemoteMoveResponse < Struct.new(
+      :move_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6445,11 +6535,14 @@ module Aws::Transfer
     #
     # @!attribute [rw] active_date
     #   An optional date that specifies when the certificate becomes active.
+    #   If you do not specify a value, `ActiveDate` takes the same value as
+    #   `NotBeforeDate`, which is specified by the CA.
     #   @return [Time]
     #
     # @!attribute [rw] inactive_date
     #   An optional date that specifies when the certificate becomes
-    #   inactive.
+    #   inactive. If you do not specify a value, `InactiveDate` takes the
+    #   same value as `NotAfterDate`, which is specified by the CA.
     #   @return [Time]
     #
     # @!attribute [rw] description
@@ -6796,7 +6889,7 @@ module Aws::Transfer
     # @!attribute [rw] logging_role
     #   The Amazon Resource Name (ARN) of the Identity and Access Management
     #   (IAM) role that allows a server to turn on Amazon CloudWatch logging
-    #   for Amazon S3 or Amazon EFSevents. When set, you can view user
+    #   for Amazon S3 or Amazon EFS events. When set, you can view user
     #   activity in your CloudWatch logs.
     #   @return [String]
     #

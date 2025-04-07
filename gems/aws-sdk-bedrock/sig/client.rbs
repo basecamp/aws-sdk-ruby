@@ -414,7 +414,11 @@ module Aws
                                     name: ::String,
                                     definition: ::String,
                                     examples: Array[::String]?,
-                                    type: ("DENY")
+                                    type: ("DENY"),
+                                    input_action: ("BLOCK" | "NONE")?,
+                                    output_action: ("BLOCK" | "NONE")?,
+                                    input_enabled: bool?,
+                                    output_enabled: bool?
                                   },
                                 ]
                               },
@@ -425,19 +429,31 @@ module Aws
                                     input_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
                                     output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
                                     input_modalities: Array[("TEXT" | "IMAGE")]?,
-                                    output_modalities: Array[("TEXT" | "IMAGE")]?
+                                    output_modalities: Array[("TEXT" | "IMAGE")]?,
+                                    input_action: ("BLOCK" | "NONE")?,
+                                    output_action: ("BLOCK" | "NONE")?,
+                                    input_enabled: bool?,
+                                    output_enabled: bool?
                                   },
                                 ]
                               },
                               ?word_policy_config: {
                                 words_config: Array[
                                   {
-                                    text: ::String
+                                    text: ::String,
+                                    input_action: ("BLOCK" | "NONE")?,
+                                    output_action: ("BLOCK" | "NONE")?,
+                                    input_enabled: bool?,
+                                    output_enabled: bool?
                                   },
                                 ]?,
                                 managed_word_lists_config: Array[
                                   {
-                                    type: ("PROFANITY")
+                                    type: ("PROFANITY"),
+                                    input_action: ("BLOCK" | "NONE")?,
+                                    output_action: ("BLOCK" | "NONE")?,
+                                    input_enabled: bool?,
+                                    output_enabled: bool?
                                   },
                                 ]?
                               },
@@ -445,7 +461,11 @@ module Aws
                                 pii_entities_config: Array[
                                   {
                                     type: ("ADDRESS" | "AGE" | "AWS_ACCESS_KEY" | "AWS_SECRET_KEY" | "CA_HEALTH_NUMBER" | "CA_SOCIAL_INSURANCE_NUMBER" | "CREDIT_DEBIT_CARD_CVV" | "CREDIT_DEBIT_CARD_EXPIRY" | "CREDIT_DEBIT_CARD_NUMBER" | "DRIVER_ID" | "EMAIL" | "INTERNATIONAL_BANK_ACCOUNT_NUMBER" | "IP_ADDRESS" | "LICENSE_PLATE" | "MAC_ADDRESS" | "NAME" | "PASSWORD" | "PHONE" | "PIN" | "SWIFT_CODE" | "UK_NATIONAL_HEALTH_SERVICE_NUMBER" | "UK_NATIONAL_INSURANCE_NUMBER" | "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER" | "URL" | "USERNAME" | "US_BANK_ACCOUNT_NUMBER" | "US_BANK_ROUTING_NUMBER" | "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER" | "US_PASSPORT_NUMBER" | "US_SOCIAL_SECURITY_NUMBER" | "VEHICLE_IDENTIFICATION_NUMBER"),
-                                    action: ("BLOCK" | "ANONYMIZE")
+                                    action: ("BLOCK" | "ANONYMIZE" | "NONE"),
+                                    input_action: ("BLOCK" | "ANONYMIZE" | "NONE")?,
+                                    output_action: ("BLOCK" | "ANONYMIZE" | "NONE")?,
+                                    input_enabled: bool?,
+                                    output_enabled: bool?
                                   },
                                 ]?,
                                 regexes_config: Array[
@@ -453,7 +473,11 @@ module Aws
                                     name: ::String,
                                     description: ::String?,
                                     pattern: ::String,
-                                    action: ("BLOCK" | "ANONYMIZE")
+                                    action: ("BLOCK" | "ANONYMIZE" | "NONE"),
+                                    input_action: ("BLOCK" | "ANONYMIZE" | "NONE")?,
+                                    output_action: ("BLOCK" | "ANONYMIZE" | "NONE")?,
+                                    input_enabled: bool?,
+                                    output_enabled: bool?
                                   },
                                 ]?
                               },
@@ -461,7 +485,9 @@ module Aws
                                 filters_config: Array[
                                   {
                                     type: ("GROUNDING" | "RELEVANCE"),
-                                    threshold: ::Float
+                                    threshold: ::Float,
+                                    action: ("BLOCK" | "NONE")?,
+                                    enabled: bool?
                                   },
                                 ]
                               },
@@ -1452,7 +1478,11 @@ module Aws
                                     name: ::String,
                                     definition: ::String,
                                     examples: Array[::String]?,
-                                    type: ("DENY")
+                                    type: ("DENY"),
+                                    input_action: ("BLOCK" | "NONE")?,
+                                    output_action: ("BLOCK" | "NONE")?,
+                                    input_enabled: bool?,
+                                    output_enabled: bool?
                                   },
                                 ]
                               },
@@ -1463,19 +1493,31 @@ module Aws
                                     input_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
                                     output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
                                     input_modalities: Array[("TEXT" | "IMAGE")]?,
-                                    output_modalities: Array[("TEXT" | "IMAGE")]?
+                                    output_modalities: Array[("TEXT" | "IMAGE")]?,
+                                    input_action: ("BLOCK" | "NONE")?,
+                                    output_action: ("BLOCK" | "NONE")?,
+                                    input_enabled: bool?,
+                                    output_enabled: bool?
                                   },
                                 ]
                               },
                               ?word_policy_config: {
                                 words_config: Array[
                                   {
-                                    text: ::String
+                                    text: ::String,
+                                    input_action: ("BLOCK" | "NONE")?,
+                                    output_action: ("BLOCK" | "NONE")?,
+                                    input_enabled: bool?,
+                                    output_enabled: bool?
                                   },
                                 ]?,
                                 managed_word_lists_config: Array[
                                   {
-                                    type: ("PROFANITY")
+                                    type: ("PROFANITY"),
+                                    input_action: ("BLOCK" | "NONE")?,
+                                    output_action: ("BLOCK" | "NONE")?,
+                                    input_enabled: bool?,
+                                    output_enabled: bool?
                                   },
                                 ]?
                               },
@@ -1483,7 +1525,11 @@ module Aws
                                 pii_entities_config: Array[
                                   {
                                     type: ("ADDRESS" | "AGE" | "AWS_ACCESS_KEY" | "AWS_SECRET_KEY" | "CA_HEALTH_NUMBER" | "CA_SOCIAL_INSURANCE_NUMBER" | "CREDIT_DEBIT_CARD_CVV" | "CREDIT_DEBIT_CARD_EXPIRY" | "CREDIT_DEBIT_CARD_NUMBER" | "DRIVER_ID" | "EMAIL" | "INTERNATIONAL_BANK_ACCOUNT_NUMBER" | "IP_ADDRESS" | "LICENSE_PLATE" | "MAC_ADDRESS" | "NAME" | "PASSWORD" | "PHONE" | "PIN" | "SWIFT_CODE" | "UK_NATIONAL_HEALTH_SERVICE_NUMBER" | "UK_NATIONAL_INSURANCE_NUMBER" | "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER" | "URL" | "USERNAME" | "US_BANK_ACCOUNT_NUMBER" | "US_BANK_ROUTING_NUMBER" | "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER" | "US_PASSPORT_NUMBER" | "US_SOCIAL_SECURITY_NUMBER" | "VEHICLE_IDENTIFICATION_NUMBER"),
-                                    action: ("BLOCK" | "ANONYMIZE")
+                                    action: ("BLOCK" | "ANONYMIZE" | "NONE"),
+                                    input_action: ("BLOCK" | "ANONYMIZE" | "NONE")?,
+                                    output_action: ("BLOCK" | "ANONYMIZE" | "NONE")?,
+                                    input_enabled: bool?,
+                                    output_enabled: bool?
                                   },
                                 ]?,
                                 regexes_config: Array[
@@ -1491,7 +1537,11 @@ module Aws
                                     name: ::String,
                                     description: ::String?,
                                     pattern: ::String,
-                                    action: ("BLOCK" | "ANONYMIZE")
+                                    action: ("BLOCK" | "ANONYMIZE" | "NONE"),
+                                    input_action: ("BLOCK" | "ANONYMIZE" | "NONE")?,
+                                    output_action: ("BLOCK" | "ANONYMIZE" | "NONE")?,
+                                    input_enabled: bool?,
+                                    output_enabled: bool?
                                   },
                                 ]?
                               },
@@ -1499,7 +1549,9 @@ module Aws
                                 filters_config: Array[
                                   {
                                     type: ("GROUNDING" | "RELEVANCE"),
-                                    threshold: ::Float
+                                    threshold: ::Float,
+                                    action: ("BLOCK" | "NONE")?,
+                                    enabled: bool?
                                   },
                                 ]
                               },

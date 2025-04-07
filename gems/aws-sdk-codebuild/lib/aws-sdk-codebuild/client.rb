@@ -846,6 +846,66 @@ module Aws::CodeBuild
       req.send_request(options)
     end
 
+    # Gets information about the command executions.
+    #
+    # @option params [required, String] :sandbox_id
+    #   A `sandboxId` or `sandboxArn`.
+    #
+    # @option params [required, Array<String>] :command_execution_ids
+    #   A comma separated list of `commandExecutionIds`.
+    #
+    # @return [Types::BatchGetCommandExecutionsOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::BatchGetCommandExecutionsOutput#command_executions #command_executions} => Array&lt;Types::CommandExecution&gt;
+    #   * {Types::BatchGetCommandExecutionsOutput#command_executions_not_found #command_executions_not_found} => Array&lt;String&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.batch_get_command_executions({
+    #     sandbox_id: "NonEmptyString", # required
+    #     command_execution_ids: ["NonEmptyString"], # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.command_executions #=> Array
+    #   resp.command_executions[0].id #=> String
+    #   resp.command_executions[0].sandbox_id #=> String
+    #   resp.command_executions[0].submit_time #=> Time
+    #   resp.command_executions[0].start_time #=> Time
+    #   resp.command_executions[0].end_time #=> Time
+    #   resp.command_executions[0].status #=> String
+    #   resp.command_executions[0].command #=> String
+    #   resp.command_executions[0].type #=> String, one of "SHELL"
+    #   resp.command_executions[0].exit_code #=> String
+    #   resp.command_executions[0].standard_output_content #=> String
+    #   resp.command_executions[0].standard_err_content #=> String
+    #   resp.command_executions[0].logs.group_name #=> String
+    #   resp.command_executions[0].logs.stream_name #=> String
+    #   resp.command_executions[0].logs.deep_link #=> String
+    #   resp.command_executions[0].logs.s3_deep_link #=> String
+    #   resp.command_executions[0].logs.cloud_watch_logs_arn #=> String
+    #   resp.command_executions[0].logs.s3_logs_arn #=> String
+    #   resp.command_executions[0].logs.cloud_watch_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.command_executions[0].logs.cloud_watch_logs.group_name #=> String
+    #   resp.command_executions[0].logs.cloud_watch_logs.stream_name #=> String
+    #   resp.command_executions[0].logs.s3_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.command_executions[0].logs.s3_logs.location #=> String
+    #   resp.command_executions[0].logs.s3_logs.encryption_disabled #=> Boolean
+    #   resp.command_executions[0].logs.s3_logs.bucket_owner_access #=> String, one of "NONE", "READ_ONLY", "FULL"
+    #   resp.command_executions[0].sandbox_arn #=> String
+    #   resp.command_executions_not_found #=> Array
+    #   resp.command_executions_not_found[0] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/BatchGetCommandExecutions AWS API Documentation
+    #
+    # @overload batch_get_command_executions(params = {})
+    # @param [Hash] params ({})
+    def batch_get_command_executions(params = {}, options = {})
+      req = build_request(:batch_get_command_executions, params)
+      req.send_request(options)
+    end
+
     # Gets information about one or more compute fleets.
     #
     # @option params [required, Array<String>] :names
@@ -1185,6 +1245,142 @@ module Aws::CodeBuild
     # @param [Hash] params ({})
     def batch_get_reports(params = {}, options = {})
       req = build_request(:batch_get_reports, params)
+      req.send_request(options)
+    end
+
+    # Gets information about the sandbox status.
+    #
+    # @option params [required, Array<String>] :ids
+    #   A comma separated list of `sandboxIds` or `sandboxArns`.
+    #
+    # @return [Types::BatchGetSandboxesOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::BatchGetSandboxesOutput#sandboxes #sandboxes} => Array&lt;Types::Sandbox&gt;
+    #   * {Types::BatchGetSandboxesOutput#sandboxes_not_found #sandboxes_not_found} => Array&lt;String&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.batch_get_sandboxes({
+    #     ids: ["NonEmptyString"], # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.sandboxes #=> Array
+    #   resp.sandboxes[0].id #=> String
+    #   resp.sandboxes[0].arn #=> String
+    #   resp.sandboxes[0].project_name #=> String
+    #   resp.sandboxes[0].request_time #=> Time
+    #   resp.sandboxes[0].start_time #=> Time
+    #   resp.sandboxes[0].end_time #=> Time
+    #   resp.sandboxes[0].status #=> String
+    #   resp.sandboxes[0].source.type #=> String, one of "CODECOMMIT", "CODEPIPELINE", "GITHUB", "GITLAB", "GITLAB_SELF_MANAGED", "S3", "BITBUCKET", "GITHUB_ENTERPRISE", "NO_SOURCE"
+    #   resp.sandboxes[0].source.location #=> String
+    #   resp.sandboxes[0].source.git_clone_depth #=> Integer
+    #   resp.sandboxes[0].source.git_submodules_config.fetch_submodules #=> Boolean
+    #   resp.sandboxes[0].source.buildspec #=> String
+    #   resp.sandboxes[0].source.auth.type #=> String, one of "OAUTH", "CODECONNECTIONS", "SECRETS_MANAGER"
+    #   resp.sandboxes[0].source.auth.resource #=> String
+    #   resp.sandboxes[0].source.report_build_status #=> Boolean
+    #   resp.sandboxes[0].source.build_status_config.context #=> String
+    #   resp.sandboxes[0].source.build_status_config.target_url #=> String
+    #   resp.sandboxes[0].source.insecure_ssl #=> Boolean
+    #   resp.sandboxes[0].source.source_identifier #=> String
+    #   resp.sandboxes[0].source_version #=> String
+    #   resp.sandboxes[0].secondary_sources #=> Array
+    #   resp.sandboxes[0].secondary_sources[0].type #=> String, one of "CODECOMMIT", "CODEPIPELINE", "GITHUB", "GITLAB", "GITLAB_SELF_MANAGED", "S3", "BITBUCKET", "GITHUB_ENTERPRISE", "NO_SOURCE"
+    #   resp.sandboxes[0].secondary_sources[0].location #=> String
+    #   resp.sandboxes[0].secondary_sources[0].git_clone_depth #=> Integer
+    #   resp.sandboxes[0].secondary_sources[0].git_submodules_config.fetch_submodules #=> Boolean
+    #   resp.sandboxes[0].secondary_sources[0].buildspec #=> String
+    #   resp.sandboxes[0].secondary_sources[0].auth.type #=> String, one of "OAUTH", "CODECONNECTIONS", "SECRETS_MANAGER"
+    #   resp.sandboxes[0].secondary_sources[0].auth.resource #=> String
+    #   resp.sandboxes[0].secondary_sources[0].report_build_status #=> Boolean
+    #   resp.sandboxes[0].secondary_sources[0].build_status_config.context #=> String
+    #   resp.sandboxes[0].secondary_sources[0].build_status_config.target_url #=> String
+    #   resp.sandboxes[0].secondary_sources[0].insecure_ssl #=> Boolean
+    #   resp.sandboxes[0].secondary_sources[0].source_identifier #=> String
+    #   resp.sandboxes[0].secondary_source_versions #=> Array
+    #   resp.sandboxes[0].secondary_source_versions[0].source_identifier #=> String
+    #   resp.sandboxes[0].secondary_source_versions[0].source_version #=> String
+    #   resp.sandboxes[0].environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
+    #   resp.sandboxes[0].environment.image #=> String
+    #   resp.sandboxes[0].environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.sandboxes[0].environment.compute_configuration.v_cpu #=> Integer
+    #   resp.sandboxes[0].environment.compute_configuration.memory #=> Integer
+    #   resp.sandboxes[0].environment.compute_configuration.disk #=> Integer
+    #   resp.sandboxes[0].environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.sandboxes[0].environment.fleet.fleet_arn #=> String
+    #   resp.sandboxes[0].environment.environment_variables #=> Array
+    #   resp.sandboxes[0].environment.environment_variables[0].name #=> String
+    #   resp.sandboxes[0].environment.environment_variables[0].value #=> String
+    #   resp.sandboxes[0].environment.environment_variables[0].type #=> String, one of "PLAINTEXT", "PARAMETER_STORE", "SECRETS_MANAGER"
+    #   resp.sandboxes[0].environment.privileged_mode #=> Boolean
+    #   resp.sandboxes[0].environment.certificate #=> String
+    #   resp.sandboxes[0].environment.registry_credential.credential #=> String
+    #   resp.sandboxes[0].environment.registry_credential.credential_provider #=> String, one of "SECRETS_MANAGER"
+    #   resp.sandboxes[0].environment.image_pull_credentials_type #=> String, one of "CODEBUILD", "SERVICE_ROLE"
+    #   resp.sandboxes[0].file_system_locations #=> Array
+    #   resp.sandboxes[0].file_system_locations[0].type #=> String, one of "EFS"
+    #   resp.sandboxes[0].file_system_locations[0].location #=> String
+    #   resp.sandboxes[0].file_system_locations[0].mount_point #=> String
+    #   resp.sandboxes[0].file_system_locations[0].identifier #=> String
+    #   resp.sandboxes[0].file_system_locations[0].mount_options #=> String
+    #   resp.sandboxes[0].timeout_in_minutes #=> Integer
+    #   resp.sandboxes[0].queued_timeout_in_minutes #=> Integer
+    #   resp.sandboxes[0].vpc_config.vpc_id #=> String
+    #   resp.sandboxes[0].vpc_config.subnets #=> Array
+    #   resp.sandboxes[0].vpc_config.subnets[0] #=> String
+    #   resp.sandboxes[0].vpc_config.security_group_ids #=> Array
+    #   resp.sandboxes[0].vpc_config.security_group_ids[0] #=> String
+    #   resp.sandboxes[0].log_config.cloud_watch_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.sandboxes[0].log_config.cloud_watch_logs.group_name #=> String
+    #   resp.sandboxes[0].log_config.cloud_watch_logs.stream_name #=> String
+    #   resp.sandboxes[0].log_config.s3_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.sandboxes[0].log_config.s3_logs.location #=> String
+    #   resp.sandboxes[0].log_config.s3_logs.encryption_disabled #=> Boolean
+    #   resp.sandboxes[0].log_config.s3_logs.bucket_owner_access #=> String, one of "NONE", "READ_ONLY", "FULL"
+    #   resp.sandboxes[0].encryption_key #=> String
+    #   resp.sandboxes[0].service_role #=> String
+    #   resp.sandboxes[0].current_session.id #=> String
+    #   resp.sandboxes[0].current_session.status #=> String
+    #   resp.sandboxes[0].current_session.start_time #=> Time
+    #   resp.sandboxes[0].current_session.end_time #=> Time
+    #   resp.sandboxes[0].current_session.current_phase #=> String
+    #   resp.sandboxes[0].current_session.phases #=> Array
+    #   resp.sandboxes[0].current_session.phases[0].phase_type #=> String
+    #   resp.sandboxes[0].current_session.phases[0].phase_status #=> String, one of "SUCCEEDED", "FAILED", "FAULT", "TIMED_OUT", "IN_PROGRESS", "STOPPED"
+    #   resp.sandboxes[0].current_session.phases[0].start_time #=> Time
+    #   resp.sandboxes[0].current_session.phases[0].end_time #=> Time
+    #   resp.sandboxes[0].current_session.phases[0].duration_in_seconds #=> Integer
+    #   resp.sandboxes[0].current_session.phases[0].contexts #=> Array
+    #   resp.sandboxes[0].current_session.phases[0].contexts[0].status_code #=> String
+    #   resp.sandboxes[0].current_session.phases[0].contexts[0].message #=> String
+    #   resp.sandboxes[0].current_session.resolved_source_version #=> String
+    #   resp.sandboxes[0].current_session.logs.group_name #=> String
+    #   resp.sandboxes[0].current_session.logs.stream_name #=> String
+    #   resp.sandboxes[0].current_session.logs.deep_link #=> String
+    #   resp.sandboxes[0].current_session.logs.s3_deep_link #=> String
+    #   resp.sandboxes[0].current_session.logs.cloud_watch_logs_arn #=> String
+    #   resp.sandboxes[0].current_session.logs.s3_logs_arn #=> String
+    #   resp.sandboxes[0].current_session.logs.cloud_watch_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.sandboxes[0].current_session.logs.cloud_watch_logs.group_name #=> String
+    #   resp.sandboxes[0].current_session.logs.cloud_watch_logs.stream_name #=> String
+    #   resp.sandboxes[0].current_session.logs.s3_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.sandboxes[0].current_session.logs.s3_logs.location #=> String
+    #   resp.sandboxes[0].current_session.logs.s3_logs.encryption_disabled #=> Boolean
+    #   resp.sandboxes[0].current_session.logs.s3_logs.bucket_owner_access #=> String, one of "NONE", "READ_ONLY", "FULL"
+    #   resp.sandboxes[0].current_session.network_interface.subnet_id #=> String
+    #   resp.sandboxes[0].current_session.network_interface.network_interface_id #=> String
+    #   resp.sandboxes_not_found #=> Array
+    #   resp.sandboxes_not_found[0] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/BatchGetSandboxes AWS API Documentation
+    #
+    # @overload batch_get_sandboxes(params = {})
+    # @param [Hash] params ({})
+    def batch_get_sandboxes(params = {}, options = {})
+      req = build_request(:batch_get_sandboxes, params)
       req.send_request(options)
     end
 
@@ -2943,6 +3139,76 @@ module Aws::CodeBuild
       req.send_request(options)
     end
 
+    # Gets a list of command executions for a sandbox.
+    #
+    # @option params [required, String] :sandbox_id
+    #   A `sandboxId` or `sandboxArn`.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of sandbox records to be retrieved.
+    #
+    # @option params [String] :sort_order
+    #   The order in which sandbox records should be retrieved.
+    #
+    # @option params [String] :next_token
+    #   The next token, if any, to get paginated results. You will get this
+    #   value from previous execution of list sandboxes.
+    #
+    # @return [Types::ListCommandExecutionsForSandboxOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListCommandExecutionsForSandboxOutput#command_executions #command_executions} => Array&lt;Types::CommandExecution&gt;
+    #   * {Types::ListCommandExecutionsForSandboxOutput#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_command_executions_for_sandbox({
+    #     sandbox_id: "NonEmptyString", # required
+    #     max_results: 1,
+    #     sort_order: "ASCENDING", # accepts ASCENDING, DESCENDING
+    #     next_token: "SensitiveString",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.command_executions #=> Array
+    #   resp.command_executions[0].id #=> String
+    #   resp.command_executions[0].sandbox_id #=> String
+    #   resp.command_executions[0].submit_time #=> Time
+    #   resp.command_executions[0].start_time #=> Time
+    #   resp.command_executions[0].end_time #=> Time
+    #   resp.command_executions[0].status #=> String
+    #   resp.command_executions[0].command #=> String
+    #   resp.command_executions[0].type #=> String, one of "SHELL"
+    #   resp.command_executions[0].exit_code #=> String
+    #   resp.command_executions[0].standard_output_content #=> String
+    #   resp.command_executions[0].standard_err_content #=> String
+    #   resp.command_executions[0].logs.group_name #=> String
+    #   resp.command_executions[0].logs.stream_name #=> String
+    #   resp.command_executions[0].logs.deep_link #=> String
+    #   resp.command_executions[0].logs.s3_deep_link #=> String
+    #   resp.command_executions[0].logs.cloud_watch_logs_arn #=> String
+    #   resp.command_executions[0].logs.s3_logs_arn #=> String
+    #   resp.command_executions[0].logs.cloud_watch_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.command_executions[0].logs.cloud_watch_logs.group_name #=> String
+    #   resp.command_executions[0].logs.cloud_watch_logs.stream_name #=> String
+    #   resp.command_executions[0].logs.s3_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.command_executions[0].logs.s3_logs.location #=> String
+    #   resp.command_executions[0].logs.s3_logs.encryption_disabled #=> Boolean
+    #   resp.command_executions[0].logs.s3_logs.bucket_owner_access #=> String, one of "NONE", "READ_ONLY", "FULL"
+    #   resp.command_executions[0].sandbox_arn #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ListCommandExecutionsForSandbox AWS API Documentation
+    #
+    # @overload list_command_executions_for_sandbox(params = {})
+    # @param [Hash] params ({})
+    def list_command_executions_for_sandbox(params = {}, options = {})
+      req = build_request(:list_command_executions_for_sandbox, params)
+      req.send_request(options)
+    end
+
     # Gets information about Docker images that are managed by CodeBuild.
     #
     # @return [Types::ListCuratedEnvironmentImagesOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
@@ -3291,6 +3557,94 @@ module Aws::CodeBuild
     # @param [Hash] params ({})
     def list_reports_for_report_group(params = {}, options = {})
       req = build_request(:list_reports_for_report_group, params)
+      req.send_request(options)
+    end
+
+    # Gets a list of sandboxes.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of sandbox records to be retrieved.
+    #
+    # @option params [String] :sort_order
+    #   The order in which sandbox records should be retrieved.
+    #
+    # @option params [String] :next_token
+    #   The next token, if any, to get paginated results. You will get this
+    #   value from previous execution of list sandboxes.
+    #
+    # @return [Types::ListSandboxesOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListSandboxesOutput#ids #ids} => Array&lt;String&gt;
+    #   * {Types::ListSandboxesOutput#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_sandboxes({
+    #     max_results: 1,
+    #     sort_order: "ASCENDING", # accepts ASCENDING, DESCENDING
+    #     next_token: "String",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.ids #=> Array
+    #   resp.ids[0] #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ListSandboxes AWS API Documentation
+    #
+    # @overload list_sandboxes(params = {})
+    # @param [Hash] params ({})
+    def list_sandboxes(params = {}, options = {})
+      req = build_request(:list_sandboxes, params)
+      req.send_request(options)
+    end
+
+    # Gets a list of sandboxes for a given project.
+    #
+    # @option params [required, String] :project_name
+    #   The CodeBuild project name.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of sandbox records to be retrieved.
+    #
+    # @option params [String] :sort_order
+    #   The order in which sandbox records should be retrieved.
+    #
+    # @option params [String] :next_token
+    #   The next token, if any, to get paginated results. You will get this
+    #   value from previous execution of list sandboxes.
+    #
+    # @return [Types::ListSandboxesForProjectOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListSandboxesForProjectOutput#ids #ids} => Array&lt;String&gt;
+    #   * {Types::ListSandboxesForProjectOutput#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_sandboxes_for_project({
+    #     project_name: "NonEmptyString", # required
+    #     max_results: 1,
+    #     sort_order: "ASCENDING", # accepts ASCENDING, DESCENDING
+    #     next_token: "SensitiveString",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.ids #=> Array
+    #   resp.ids[0] #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ListSandboxesForProject AWS API Documentation
+    #
+    # @overload list_sandboxes_for_project(params = {})
+    # @param [Hash] params ({})
+    def list_sandboxes_for_project(params = {}, options = {})
+      req = build_request(:list_sandboxes_for_project, params)
       req.send_request(options)
     end
 
@@ -4868,6 +5222,232 @@ module Aws::CodeBuild
       req.send_request(options)
     end
 
+    # Starts a command execution.
+    #
+    # @option params [required, String] :sandbox_id
+    #   A `sandboxId` or `sandboxArn`.
+    #
+    # @option params [required, String] :command
+    #   The command that needs to be executed.
+    #
+    # @option params [String] :type
+    #   The command type.
+    #
+    # @return [Types::StartCommandExecutionOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartCommandExecutionOutput#command_execution #command_execution} => Types::CommandExecution
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_command_execution({
+    #     sandbox_id: "NonEmptyString", # required
+    #     command: "SensitiveNonEmptyString", # required
+    #     type: "SHELL", # accepts SHELL
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.command_execution.id #=> String
+    #   resp.command_execution.sandbox_id #=> String
+    #   resp.command_execution.submit_time #=> Time
+    #   resp.command_execution.start_time #=> Time
+    #   resp.command_execution.end_time #=> Time
+    #   resp.command_execution.status #=> String
+    #   resp.command_execution.command #=> String
+    #   resp.command_execution.type #=> String, one of "SHELL"
+    #   resp.command_execution.exit_code #=> String
+    #   resp.command_execution.standard_output_content #=> String
+    #   resp.command_execution.standard_err_content #=> String
+    #   resp.command_execution.logs.group_name #=> String
+    #   resp.command_execution.logs.stream_name #=> String
+    #   resp.command_execution.logs.deep_link #=> String
+    #   resp.command_execution.logs.s3_deep_link #=> String
+    #   resp.command_execution.logs.cloud_watch_logs_arn #=> String
+    #   resp.command_execution.logs.s3_logs_arn #=> String
+    #   resp.command_execution.logs.cloud_watch_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.command_execution.logs.cloud_watch_logs.group_name #=> String
+    #   resp.command_execution.logs.cloud_watch_logs.stream_name #=> String
+    #   resp.command_execution.logs.s3_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.command_execution.logs.s3_logs.location #=> String
+    #   resp.command_execution.logs.s3_logs.encryption_disabled #=> Boolean
+    #   resp.command_execution.logs.s3_logs.bucket_owner_access #=> String, one of "NONE", "READ_ONLY", "FULL"
+    #   resp.command_execution.sandbox_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StartCommandExecution AWS API Documentation
+    #
+    # @overload start_command_execution(params = {})
+    # @param [Hash] params ({})
+    def start_command_execution(params = {}, options = {})
+      req = build_request(:start_command_execution, params)
+      req.send_request(options)
+    end
+
+    # Starts a sandbox.
+    #
+    # @option params [String] :project_name
+    #   The CodeBuild project name.
+    #
+    # @option params [String] :idempotency_token
+    #   A unique client token.
+    #
+    # @return [Types::StartSandboxOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartSandboxOutput#sandbox #sandbox} => Types::Sandbox
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_sandbox({
+    #     project_name: "NonEmptyString",
+    #     idempotency_token: "SensitiveString",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.sandbox.id #=> String
+    #   resp.sandbox.arn #=> String
+    #   resp.sandbox.project_name #=> String
+    #   resp.sandbox.request_time #=> Time
+    #   resp.sandbox.start_time #=> Time
+    #   resp.sandbox.end_time #=> Time
+    #   resp.sandbox.status #=> String
+    #   resp.sandbox.source.type #=> String, one of "CODECOMMIT", "CODEPIPELINE", "GITHUB", "GITLAB", "GITLAB_SELF_MANAGED", "S3", "BITBUCKET", "GITHUB_ENTERPRISE", "NO_SOURCE"
+    #   resp.sandbox.source.location #=> String
+    #   resp.sandbox.source.git_clone_depth #=> Integer
+    #   resp.sandbox.source.git_submodules_config.fetch_submodules #=> Boolean
+    #   resp.sandbox.source.buildspec #=> String
+    #   resp.sandbox.source.auth.type #=> String, one of "OAUTH", "CODECONNECTIONS", "SECRETS_MANAGER"
+    #   resp.sandbox.source.auth.resource #=> String
+    #   resp.sandbox.source.report_build_status #=> Boolean
+    #   resp.sandbox.source.build_status_config.context #=> String
+    #   resp.sandbox.source.build_status_config.target_url #=> String
+    #   resp.sandbox.source.insecure_ssl #=> Boolean
+    #   resp.sandbox.source.source_identifier #=> String
+    #   resp.sandbox.source_version #=> String
+    #   resp.sandbox.secondary_sources #=> Array
+    #   resp.sandbox.secondary_sources[0].type #=> String, one of "CODECOMMIT", "CODEPIPELINE", "GITHUB", "GITLAB", "GITLAB_SELF_MANAGED", "S3", "BITBUCKET", "GITHUB_ENTERPRISE", "NO_SOURCE"
+    #   resp.sandbox.secondary_sources[0].location #=> String
+    #   resp.sandbox.secondary_sources[0].git_clone_depth #=> Integer
+    #   resp.sandbox.secondary_sources[0].git_submodules_config.fetch_submodules #=> Boolean
+    #   resp.sandbox.secondary_sources[0].buildspec #=> String
+    #   resp.sandbox.secondary_sources[0].auth.type #=> String, one of "OAUTH", "CODECONNECTIONS", "SECRETS_MANAGER"
+    #   resp.sandbox.secondary_sources[0].auth.resource #=> String
+    #   resp.sandbox.secondary_sources[0].report_build_status #=> Boolean
+    #   resp.sandbox.secondary_sources[0].build_status_config.context #=> String
+    #   resp.sandbox.secondary_sources[0].build_status_config.target_url #=> String
+    #   resp.sandbox.secondary_sources[0].insecure_ssl #=> Boolean
+    #   resp.sandbox.secondary_sources[0].source_identifier #=> String
+    #   resp.sandbox.secondary_source_versions #=> Array
+    #   resp.sandbox.secondary_source_versions[0].source_identifier #=> String
+    #   resp.sandbox.secondary_source_versions[0].source_version #=> String
+    #   resp.sandbox.environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
+    #   resp.sandbox.environment.image #=> String
+    #   resp.sandbox.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.sandbox.environment.compute_configuration.v_cpu #=> Integer
+    #   resp.sandbox.environment.compute_configuration.memory #=> Integer
+    #   resp.sandbox.environment.compute_configuration.disk #=> Integer
+    #   resp.sandbox.environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.sandbox.environment.fleet.fleet_arn #=> String
+    #   resp.sandbox.environment.environment_variables #=> Array
+    #   resp.sandbox.environment.environment_variables[0].name #=> String
+    #   resp.sandbox.environment.environment_variables[0].value #=> String
+    #   resp.sandbox.environment.environment_variables[0].type #=> String, one of "PLAINTEXT", "PARAMETER_STORE", "SECRETS_MANAGER"
+    #   resp.sandbox.environment.privileged_mode #=> Boolean
+    #   resp.sandbox.environment.certificate #=> String
+    #   resp.sandbox.environment.registry_credential.credential #=> String
+    #   resp.sandbox.environment.registry_credential.credential_provider #=> String, one of "SECRETS_MANAGER"
+    #   resp.sandbox.environment.image_pull_credentials_type #=> String, one of "CODEBUILD", "SERVICE_ROLE"
+    #   resp.sandbox.file_system_locations #=> Array
+    #   resp.sandbox.file_system_locations[0].type #=> String, one of "EFS"
+    #   resp.sandbox.file_system_locations[0].location #=> String
+    #   resp.sandbox.file_system_locations[0].mount_point #=> String
+    #   resp.sandbox.file_system_locations[0].identifier #=> String
+    #   resp.sandbox.file_system_locations[0].mount_options #=> String
+    #   resp.sandbox.timeout_in_minutes #=> Integer
+    #   resp.sandbox.queued_timeout_in_minutes #=> Integer
+    #   resp.sandbox.vpc_config.vpc_id #=> String
+    #   resp.sandbox.vpc_config.subnets #=> Array
+    #   resp.sandbox.vpc_config.subnets[0] #=> String
+    #   resp.sandbox.vpc_config.security_group_ids #=> Array
+    #   resp.sandbox.vpc_config.security_group_ids[0] #=> String
+    #   resp.sandbox.log_config.cloud_watch_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.sandbox.log_config.cloud_watch_logs.group_name #=> String
+    #   resp.sandbox.log_config.cloud_watch_logs.stream_name #=> String
+    #   resp.sandbox.log_config.s3_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.sandbox.log_config.s3_logs.location #=> String
+    #   resp.sandbox.log_config.s3_logs.encryption_disabled #=> Boolean
+    #   resp.sandbox.log_config.s3_logs.bucket_owner_access #=> String, one of "NONE", "READ_ONLY", "FULL"
+    #   resp.sandbox.encryption_key #=> String
+    #   resp.sandbox.service_role #=> String
+    #   resp.sandbox.current_session.id #=> String
+    #   resp.sandbox.current_session.status #=> String
+    #   resp.sandbox.current_session.start_time #=> Time
+    #   resp.sandbox.current_session.end_time #=> Time
+    #   resp.sandbox.current_session.current_phase #=> String
+    #   resp.sandbox.current_session.phases #=> Array
+    #   resp.sandbox.current_session.phases[0].phase_type #=> String
+    #   resp.sandbox.current_session.phases[0].phase_status #=> String, one of "SUCCEEDED", "FAILED", "FAULT", "TIMED_OUT", "IN_PROGRESS", "STOPPED"
+    #   resp.sandbox.current_session.phases[0].start_time #=> Time
+    #   resp.sandbox.current_session.phases[0].end_time #=> Time
+    #   resp.sandbox.current_session.phases[0].duration_in_seconds #=> Integer
+    #   resp.sandbox.current_session.phases[0].contexts #=> Array
+    #   resp.sandbox.current_session.phases[0].contexts[0].status_code #=> String
+    #   resp.sandbox.current_session.phases[0].contexts[0].message #=> String
+    #   resp.sandbox.current_session.resolved_source_version #=> String
+    #   resp.sandbox.current_session.logs.group_name #=> String
+    #   resp.sandbox.current_session.logs.stream_name #=> String
+    #   resp.sandbox.current_session.logs.deep_link #=> String
+    #   resp.sandbox.current_session.logs.s3_deep_link #=> String
+    #   resp.sandbox.current_session.logs.cloud_watch_logs_arn #=> String
+    #   resp.sandbox.current_session.logs.s3_logs_arn #=> String
+    #   resp.sandbox.current_session.logs.cloud_watch_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.sandbox.current_session.logs.cloud_watch_logs.group_name #=> String
+    #   resp.sandbox.current_session.logs.cloud_watch_logs.stream_name #=> String
+    #   resp.sandbox.current_session.logs.s3_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.sandbox.current_session.logs.s3_logs.location #=> String
+    #   resp.sandbox.current_session.logs.s3_logs.encryption_disabled #=> Boolean
+    #   resp.sandbox.current_session.logs.s3_logs.bucket_owner_access #=> String, one of "NONE", "READ_ONLY", "FULL"
+    #   resp.sandbox.current_session.network_interface.subnet_id #=> String
+    #   resp.sandbox.current_session.network_interface.network_interface_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StartSandbox AWS API Documentation
+    #
+    # @overload start_sandbox(params = {})
+    # @param [Hash] params ({})
+    def start_sandbox(params = {}, options = {})
+      req = build_request(:start_sandbox, params)
+      req.send_request(options)
+    end
+
+    # Starts a sandbox connection.
+    #
+    # @option params [required, String] :sandbox_id
+    #   A `sandboxId` or `sandboxArn`.
+    #
+    # @return [Types::StartSandboxConnectionOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartSandboxConnectionOutput#ssm_session #ssm_session} => Types::SSMSession
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_sandbox_connection({
+    #     sandbox_id: "NonEmptyString", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.ssm_session.session_id #=> String
+    #   resp.ssm_session.token_value #=> String
+    #   resp.ssm_session.stream_url #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StartSandboxConnection AWS API Documentation
+    #
+    # @overload start_sandbox_connection(params = {})
+    # @param [Hash] params ({})
+    def start_sandbox_connection(params = {}, options = {})
+      req = build_request(:start_sandbox_connection, params)
+      req.send_request(options)
+    end
+
     # Attempts to stop running a build.
     #
     # @option params [required, String] :id
@@ -5193,6 +5773,138 @@ module Aws::CodeBuild
     # @param [Hash] params ({})
     def stop_build_batch(params = {}, options = {})
       req = build_request(:stop_build_batch, params)
+      req.send_request(options)
+    end
+
+    # Stops a sandbox.
+    #
+    # @option params [required, String] :id
+    #   Information about the requested sandbox ID.
+    #
+    # @return [Types::StopSandboxOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StopSandboxOutput#sandbox #sandbox} => Types::Sandbox
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.stop_sandbox({
+    #     id: "NonEmptyString", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.sandbox.id #=> String
+    #   resp.sandbox.arn #=> String
+    #   resp.sandbox.project_name #=> String
+    #   resp.sandbox.request_time #=> Time
+    #   resp.sandbox.start_time #=> Time
+    #   resp.sandbox.end_time #=> Time
+    #   resp.sandbox.status #=> String
+    #   resp.sandbox.source.type #=> String, one of "CODECOMMIT", "CODEPIPELINE", "GITHUB", "GITLAB", "GITLAB_SELF_MANAGED", "S3", "BITBUCKET", "GITHUB_ENTERPRISE", "NO_SOURCE"
+    #   resp.sandbox.source.location #=> String
+    #   resp.sandbox.source.git_clone_depth #=> Integer
+    #   resp.sandbox.source.git_submodules_config.fetch_submodules #=> Boolean
+    #   resp.sandbox.source.buildspec #=> String
+    #   resp.sandbox.source.auth.type #=> String, one of "OAUTH", "CODECONNECTIONS", "SECRETS_MANAGER"
+    #   resp.sandbox.source.auth.resource #=> String
+    #   resp.sandbox.source.report_build_status #=> Boolean
+    #   resp.sandbox.source.build_status_config.context #=> String
+    #   resp.sandbox.source.build_status_config.target_url #=> String
+    #   resp.sandbox.source.insecure_ssl #=> Boolean
+    #   resp.sandbox.source.source_identifier #=> String
+    #   resp.sandbox.source_version #=> String
+    #   resp.sandbox.secondary_sources #=> Array
+    #   resp.sandbox.secondary_sources[0].type #=> String, one of "CODECOMMIT", "CODEPIPELINE", "GITHUB", "GITLAB", "GITLAB_SELF_MANAGED", "S3", "BITBUCKET", "GITHUB_ENTERPRISE", "NO_SOURCE"
+    #   resp.sandbox.secondary_sources[0].location #=> String
+    #   resp.sandbox.secondary_sources[0].git_clone_depth #=> Integer
+    #   resp.sandbox.secondary_sources[0].git_submodules_config.fetch_submodules #=> Boolean
+    #   resp.sandbox.secondary_sources[0].buildspec #=> String
+    #   resp.sandbox.secondary_sources[0].auth.type #=> String, one of "OAUTH", "CODECONNECTIONS", "SECRETS_MANAGER"
+    #   resp.sandbox.secondary_sources[0].auth.resource #=> String
+    #   resp.sandbox.secondary_sources[0].report_build_status #=> Boolean
+    #   resp.sandbox.secondary_sources[0].build_status_config.context #=> String
+    #   resp.sandbox.secondary_sources[0].build_status_config.target_url #=> String
+    #   resp.sandbox.secondary_sources[0].insecure_ssl #=> Boolean
+    #   resp.sandbox.secondary_sources[0].source_identifier #=> String
+    #   resp.sandbox.secondary_source_versions #=> Array
+    #   resp.sandbox.secondary_source_versions[0].source_identifier #=> String
+    #   resp.sandbox.secondary_source_versions[0].source_version #=> String
+    #   resp.sandbox.environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
+    #   resp.sandbox.environment.image #=> String
+    #   resp.sandbox.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.sandbox.environment.compute_configuration.v_cpu #=> Integer
+    #   resp.sandbox.environment.compute_configuration.memory #=> Integer
+    #   resp.sandbox.environment.compute_configuration.disk #=> Integer
+    #   resp.sandbox.environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.sandbox.environment.fleet.fleet_arn #=> String
+    #   resp.sandbox.environment.environment_variables #=> Array
+    #   resp.sandbox.environment.environment_variables[0].name #=> String
+    #   resp.sandbox.environment.environment_variables[0].value #=> String
+    #   resp.sandbox.environment.environment_variables[0].type #=> String, one of "PLAINTEXT", "PARAMETER_STORE", "SECRETS_MANAGER"
+    #   resp.sandbox.environment.privileged_mode #=> Boolean
+    #   resp.sandbox.environment.certificate #=> String
+    #   resp.sandbox.environment.registry_credential.credential #=> String
+    #   resp.sandbox.environment.registry_credential.credential_provider #=> String, one of "SECRETS_MANAGER"
+    #   resp.sandbox.environment.image_pull_credentials_type #=> String, one of "CODEBUILD", "SERVICE_ROLE"
+    #   resp.sandbox.file_system_locations #=> Array
+    #   resp.sandbox.file_system_locations[0].type #=> String, one of "EFS"
+    #   resp.sandbox.file_system_locations[0].location #=> String
+    #   resp.sandbox.file_system_locations[0].mount_point #=> String
+    #   resp.sandbox.file_system_locations[0].identifier #=> String
+    #   resp.sandbox.file_system_locations[0].mount_options #=> String
+    #   resp.sandbox.timeout_in_minutes #=> Integer
+    #   resp.sandbox.queued_timeout_in_minutes #=> Integer
+    #   resp.sandbox.vpc_config.vpc_id #=> String
+    #   resp.sandbox.vpc_config.subnets #=> Array
+    #   resp.sandbox.vpc_config.subnets[0] #=> String
+    #   resp.sandbox.vpc_config.security_group_ids #=> Array
+    #   resp.sandbox.vpc_config.security_group_ids[0] #=> String
+    #   resp.sandbox.log_config.cloud_watch_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.sandbox.log_config.cloud_watch_logs.group_name #=> String
+    #   resp.sandbox.log_config.cloud_watch_logs.stream_name #=> String
+    #   resp.sandbox.log_config.s3_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.sandbox.log_config.s3_logs.location #=> String
+    #   resp.sandbox.log_config.s3_logs.encryption_disabled #=> Boolean
+    #   resp.sandbox.log_config.s3_logs.bucket_owner_access #=> String, one of "NONE", "READ_ONLY", "FULL"
+    #   resp.sandbox.encryption_key #=> String
+    #   resp.sandbox.service_role #=> String
+    #   resp.sandbox.current_session.id #=> String
+    #   resp.sandbox.current_session.status #=> String
+    #   resp.sandbox.current_session.start_time #=> Time
+    #   resp.sandbox.current_session.end_time #=> Time
+    #   resp.sandbox.current_session.current_phase #=> String
+    #   resp.sandbox.current_session.phases #=> Array
+    #   resp.sandbox.current_session.phases[0].phase_type #=> String
+    #   resp.sandbox.current_session.phases[0].phase_status #=> String, one of "SUCCEEDED", "FAILED", "FAULT", "TIMED_OUT", "IN_PROGRESS", "STOPPED"
+    #   resp.sandbox.current_session.phases[0].start_time #=> Time
+    #   resp.sandbox.current_session.phases[0].end_time #=> Time
+    #   resp.sandbox.current_session.phases[0].duration_in_seconds #=> Integer
+    #   resp.sandbox.current_session.phases[0].contexts #=> Array
+    #   resp.sandbox.current_session.phases[0].contexts[0].status_code #=> String
+    #   resp.sandbox.current_session.phases[0].contexts[0].message #=> String
+    #   resp.sandbox.current_session.resolved_source_version #=> String
+    #   resp.sandbox.current_session.logs.group_name #=> String
+    #   resp.sandbox.current_session.logs.stream_name #=> String
+    #   resp.sandbox.current_session.logs.deep_link #=> String
+    #   resp.sandbox.current_session.logs.s3_deep_link #=> String
+    #   resp.sandbox.current_session.logs.cloud_watch_logs_arn #=> String
+    #   resp.sandbox.current_session.logs.s3_logs_arn #=> String
+    #   resp.sandbox.current_session.logs.cloud_watch_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.sandbox.current_session.logs.cloud_watch_logs.group_name #=> String
+    #   resp.sandbox.current_session.logs.cloud_watch_logs.stream_name #=> String
+    #   resp.sandbox.current_session.logs.s3_logs.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.sandbox.current_session.logs.s3_logs.location #=> String
+    #   resp.sandbox.current_session.logs.s3_logs.encryption_disabled #=> Boolean
+    #   resp.sandbox.current_session.logs.s3_logs.bucket_owner_access #=> String, one of "NONE", "READ_ONLY", "FULL"
+    #   resp.sandbox.current_session.network_interface.subnet_id #=> String
+    #   resp.sandbox.current_session.network_interface.network_interface_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StopSandbox AWS API Documentation
+    #
+    # @overload stop_sandbox(params = {})
+    # @param [Hash] params ({})
+    def stop_sandbox(params = {}, options = {})
+      req = build_request(:stop_sandbox, params)
       req.send_request(options)
     end
 
@@ -6239,7 +6951,7 @@ module Aws::CodeBuild
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-codebuild'
-      context[:gem_version] = '1.150.0'
+      context[:gem_version] = '1.151.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
