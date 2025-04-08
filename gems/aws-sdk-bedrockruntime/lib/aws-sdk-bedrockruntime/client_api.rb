@@ -954,6 +954,7 @@ module Aws::BedrockRuntime
         "auth" => ["aws.auth#sigv4"],
         "endpointPrefix" => "bedrock-runtime",
         "protocol" => "rest-json",
+        "protocolSettings" => {"h2"=>"optional"},
         "protocols" => ["rest-json"],
         "serviceFullName" => "Amazon Bedrock Runtime",
         "serviceId" => "Bedrock Runtime",

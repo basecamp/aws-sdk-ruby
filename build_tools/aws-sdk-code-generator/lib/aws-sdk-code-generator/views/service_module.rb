@@ -97,13 +97,11 @@ module AwsSdkCodeGenerator
             paths << auto_load(path, resource_name)
           end
         end
-        if @service.api['metadata']['protocolSettings'] &&
-           @service.api['metadata']['protocolSettings']['h2'] == 'eventstream'
+
+        if @service.api['metadata']['protocolSettings'] && @service.api['metadata']['protocolSettings']['h2']
           paths << auto_load("#{@prefix}/async_client", :AsyncClient)
-          paths << auto_load("#{@prefix}/event_streams", :EventStreams)
-        elsif eventstream_shape?
-          paths << auto_load("#{@prefix}/event_streams", :EventStreams)
         end
+        paths << auto_load("#{@prefix}/event_streams", :EventStreams) if eventstream_shape?
 
         paths
       end

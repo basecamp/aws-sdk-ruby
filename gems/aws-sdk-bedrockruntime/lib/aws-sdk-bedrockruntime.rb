@@ -54,6 +54,7 @@ module Aws::BedrockRuntime
   autoload :EndpointParameters, 'aws-sdk-bedrockruntime/endpoint_parameters'
   autoload :EndpointProvider, 'aws-sdk-bedrockruntime/endpoint_provider'
   autoload :Endpoints, 'aws-sdk-bedrockruntime/endpoints'
+  autoload :AsyncClient, 'aws-sdk-bedrockruntime/async_client'
   autoload :EventStreams, 'aws-sdk-bedrockruntime/event_streams'
 
   GEM_VERSION = '1.43.0'

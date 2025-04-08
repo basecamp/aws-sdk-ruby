@@ -129,8 +129,11 @@ module AwsSdkCodeGenerator
     end
 
     def operation_eventstreaming?(operation, api)
-      !!eventstream_input?(operation, api) ||
-        !!eventstream_output?(operation, api)
+      !!eventstream_input?(operation, api) || !!eventstream_output?(operation, api)
+    end
+
+    def operation_bidirectional_eventstreaming?(operation, api)
+      !!eventstream_input?(operation, api) && !!eventstream_output?(operation, api)
     end
 
     def eventstream_output?(operation, api)
@@ -185,8 +188,7 @@ module AwsSdkCodeGenerator
     end
 
     module_function :deep_copy, :operation_streaming?, :downcase_first, :wrap_string, :apig_prefix,
-      :eventstream_output?, :eventstream_input?, :operation_eventstreaming?, :pascal_case,
-      :gem_lib_path
-
+      :eventstream_output?, :eventstream_input?, :operation_eventstreaming?, :operation_bidirectional_eventstreaming?,
+      :pascal_case, :gem_lib_path
   end
 end

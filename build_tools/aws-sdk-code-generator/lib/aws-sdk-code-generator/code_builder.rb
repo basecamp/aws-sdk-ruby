@@ -74,7 +74,7 @@ module AwsSdkCodeGenerator
         codegenerated_plugins.each { |p| y.yield(p.path, p.source) }
 
         y.yield("#{prefix}/client.rb", client_class(codegenerated_plugins))
-        if @service.protocol_settings['h2'] == 'eventstream'
+        if @service.protocol_settings['h2']
           y.yield("#{prefix}/async_client.rb", async_client_class(codegenerated_plugins))
         end
         y.yield("#{prefix}/errors.rb", errors_module)
