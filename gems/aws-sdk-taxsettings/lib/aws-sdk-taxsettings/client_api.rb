@@ -188,10 +188,13 @@ module Aws::TaxSettings
     UkraineTrnType = Shapes::StringShape.new(name: 'UkraineTrnType')
     UniqueIdentificationNumber = Shapes::StringShape.new(name: 'UniqueIdentificationNumber')
     Url = Shapes::StringShape.new(name: 'Url')
+    UzbekistanAdditionalInfo = Shapes::StructureShape.new(name: 'UzbekistanAdditionalInfo')
+    UzbekistanTaxRegistrationNumberType = Shapes::StringShape.new(name: 'UzbekistanTaxRegistrationNumberType')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
     ValidationExceptionErrorCode = Shapes::StringShape.new(name: 'ValidationExceptionErrorCode')
     ValidationExceptionField = Shapes::StructureShape.new(name: 'ValidationExceptionField')
     ValidationExceptionFieldList = Shapes::ListShape.new(name: 'ValidationExceptionFieldList')
+    VatRegistrationNumber = Shapes::StringShape.new(name: 'VatRegistrationNumber')
     VerificationDetails = Shapes::StructureShape.new(name: 'VerificationDetails')
     VietnamAdditionalInfo = Shapes::StructureShape.new(name: 'VietnamAdditionalInfo')
 
@@ -231,6 +234,7 @@ module Aws::TaxSettings
     AdditionalInfoRequest.add_member(:spain_additional_info, Shapes::ShapeRef.new(shape: SpainAdditionalInfo, location_name: "spainAdditionalInfo"))
     AdditionalInfoRequest.add_member(:turkey_additional_info, Shapes::ShapeRef.new(shape: TurkeyAdditionalInfo, location_name: "turkeyAdditionalInfo"))
     AdditionalInfoRequest.add_member(:ukraine_additional_info, Shapes::ShapeRef.new(shape: UkraineAdditionalInfo, location_name: "ukraineAdditionalInfo"))
+    AdditionalInfoRequest.add_member(:uzbekistan_additional_info, Shapes::ShapeRef.new(shape: UzbekistanAdditionalInfo, location_name: "uzbekistanAdditionalInfo"))
     AdditionalInfoRequest.add_member(:vietnam_additional_info, Shapes::ShapeRef.new(shape: VietnamAdditionalInfo, location_name: "vietnamAdditionalInfo"))
     AdditionalInfoRequest.struct_class = Types::AdditionalInfoRequest
 
@@ -252,6 +256,7 @@ module Aws::TaxSettings
     AdditionalInfoResponse.add_member(:spain_additional_info, Shapes::ShapeRef.new(shape: SpainAdditionalInfo, location_name: "spainAdditionalInfo"))
     AdditionalInfoResponse.add_member(:turkey_additional_info, Shapes::ShapeRef.new(shape: TurkeyAdditionalInfo, location_name: "turkeyAdditionalInfo"))
     AdditionalInfoResponse.add_member(:ukraine_additional_info, Shapes::ShapeRef.new(shape: UkraineAdditionalInfo, location_name: "ukraineAdditionalInfo"))
+    AdditionalInfoResponse.add_member(:uzbekistan_additional_info, Shapes::ShapeRef.new(shape: UzbekistanAdditionalInfo, location_name: "uzbekistanAdditionalInfo"))
     AdditionalInfoResponse.add_member(:vietnam_additional_info, Shapes::ShapeRef.new(shape: VietnamAdditionalInfo, location_name: "vietnamAdditionalInfo"))
     AdditionalInfoResponse.struct_class = Types::AdditionalInfoResponse
 
@@ -603,6 +608,10 @@ module Aws::TaxSettings
 
     UkraineAdditionalInfo.add_member(:ukraine_trn_type, Shapes::ShapeRef.new(shape: UkraineTrnType, required: true, location_name: "ukraineTrnType"))
     UkraineAdditionalInfo.struct_class = Types::UkraineAdditionalInfo
+
+    UzbekistanAdditionalInfo.add_member(:tax_registration_number_type, Shapes::ShapeRef.new(shape: UzbekistanTaxRegistrationNumberType, location_name: "taxRegistrationNumberType"))
+    UzbekistanAdditionalInfo.add_member(:vat_registration_number, Shapes::ShapeRef.new(shape: VatRegistrationNumber, location_name: "vatRegistrationNumber"))
+    UzbekistanAdditionalInfo.struct_class = Types::UzbekistanAdditionalInfo
 
     ValidationException.add_member(:error_code, Shapes::ShapeRef.new(shape: ValidationExceptionErrorCode, required: true, location_name: "errorCode"))
     ValidationException.add_member(:field_list, Shapes::ShapeRef.new(shape: ValidationExceptionFieldList, location_name: "fieldList"))

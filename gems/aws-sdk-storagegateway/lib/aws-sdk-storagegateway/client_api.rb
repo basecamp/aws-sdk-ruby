@@ -2361,6 +2361,11 @@ module Aws::StorageGateway
         o.output = Shapes::ShapeRef.new(shape: ListCacheReportsOutput)
         o.errors << Shapes::ShapeRef.new(shape: InvalidGatewayRequestException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o[:pager] = Aws::Pager.new(
+          tokens: {
+            "marker" => "marker"
+          }
+        )
       end)
 
       api.add_operation(:list_file_shares, Seahorse::Model::Operation.new.tap do |o|

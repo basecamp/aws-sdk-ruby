@@ -5174,6 +5174,11 @@ module Aws::IoTFleetWise
     #   Remove state templates from the vehicle.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] state_templates_to_update
+    #   Change the `stateTemplateUpdateStrategy` of state templates already
+    #   associated with the vehicle.
+    #   @return [Array<Types::StateTemplateAssociation>]
+    #
     class UpdateVehicleRequest < Struct.new(
       :vehicle_name,
       :model_manifest_arn,
@@ -5181,12 +5186,22 @@ module Aws::IoTFleetWise
       :attributes,
       :attribute_update_mode,
       :state_templates_to_add,
-      :state_templates_to_remove)
+      :state_templates_to_remove,
+      :state_templates_to_update)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # Information about the vehicle to update.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
     #
     # @!attribute [rw] vehicle_name
     #   The unique ID of the vehicle to update.
@@ -5227,6 +5242,11 @@ module Aws::IoTFleetWise
     #   Remove existing state template associations from the vehicle.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] state_templates_to_update
+    #   Change the `stateTemplateUpdateStrategy` of state templates already
+    #   associated with the vehicle.
+    #   @return [Array<Types::StateTemplateAssociation>]
+    #
     class UpdateVehicleRequestItem < Struct.new(
       :vehicle_name,
       :model_manifest_arn,
@@ -5234,7 +5254,8 @@ module Aws::IoTFleetWise
       :attributes,
       :attribute_update_mode,
       :state_templates_to_add,
-      :state_templates_to_remove)
+      :state_templates_to_remove,
+      :state_templates_to_update)
       SENSITIVE = []
       include Aws::Structure
     end

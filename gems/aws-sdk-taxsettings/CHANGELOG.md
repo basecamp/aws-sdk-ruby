@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.21.0 (2025-04-08)
+------------------
+
+* Feature - Uzbekistan Launch on TaxSettings Page
+
 1.20.0 (2025-03-17)
 ------------------
 

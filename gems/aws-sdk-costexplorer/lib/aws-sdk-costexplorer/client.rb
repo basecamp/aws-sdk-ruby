@@ -1030,6 +1030,8 @@ module Aws::CostExplorer
     #   * {Types::GetAnomaliesResponse#anomalies #anomalies} => Array&lt;Types::Anomaly&gt;
     #   * {Types::GetAnomaliesResponse#next_page_token #next_page_token} => String
     #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.get_anomalies({
@@ -1101,6 +1103,8 @@ module Aws::CostExplorer
     #
     #   * {Types::GetAnomalyMonitorsResponse#anomaly_monitors #anomaly_monitors} => Array&lt;Types::AnomalyMonitor&gt;
     #   * {Types::GetAnomalyMonitorsResponse#next_page_token #next_page_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     # @example Request syntax with placeholder values
     #
@@ -1174,6 +1178,8 @@ module Aws::CostExplorer
     #
     #   * {Types::GetAnomalySubscriptionsResponse#anomaly_subscriptions #anomaly_subscriptions} => Array&lt;Types::AnomalySubscription&gt;
     #   * {Types::GetAnomalySubscriptionsResponse#next_page_token #next_page_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     # @example Request syntax with placeholder values
     #
@@ -1592,10 +1598,6 @@ module Aws::CostExplorer
     #   costs that are associated with that account's usage of that service.
     #   You can nest `Expression` objects to define any combination of
     #   dimension filters. For more information, see [Expression][1].
-    #
-    #   The `GetCostAndUsageWithResources` operation requires that you either
-    #   group by or filter by a `ResourceId`. It requires the [Expression][1]
-    #   `"SERVICE = Amazon Elastic Compute Cloud - Compute"` in the filter.
     #
     #   Valid values for `MatchOptions` for `Dimensions` are `EQUALS` and
     #   `CASE_SENSITIVE`.
@@ -2022,8 +2024,6 @@ module Aws::CostExplorer
     #   * `INSTANCE_TYPE`
     #
     #   * `LINKED_ACCOUNT`
-    #
-    #   * `LINKED_ACCOUNT_NAME`
     #
     #   * `OPERATION`
     #
@@ -5115,7 +5115,7 @@ module Aws::CostExplorer
 
     # Request a cost allocation tag backfill. This will backfill the
     # activation status (either `active` or `inactive`) for all tag keys
-    # from `para:BackfillFrom` up to the when this request is made.
+    # from `para:BackfillFrom` up to the time this request is made.
     #
     # You can request a backfill once every 24 hours.
     #
@@ -5635,7 +5635,7 @@ module Aws::CostExplorer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-costexplorer'
-      context[:gem_version] = '1.122.0'
+      context[:gem_version] = '1.123.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

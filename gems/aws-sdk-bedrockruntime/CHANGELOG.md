@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.44.0 (2025-04-08)
+------------------
+
+* Feature - This release introduces our latest bedrock runtime API, InvokeModelWithBidirectionalStream. The API supports both input and output streams and is supported by only HTTP2.0.
+
 1.43.0 (2025-04-07)
 ------------------
 

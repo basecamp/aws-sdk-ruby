@@ -225,6 +225,38 @@ module Aws::BedrockRuntime
     #
     class AutoToolChoice < Aws::EmptyStructure; end
 
+    # Payload content for the bidirectional input. The input is an audio
+    # stream.
+    #
+    # @!attribute [rw] bytes
+    #   The audio content for the bidirectional input.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/BidirectionalInputPayloadPart AWS API Documentation
+    #
+    class BidirectionalInputPayloadPart < Struct.new(
+      :bytes,
+      :event_type)
+      SENSITIVE = [:bytes]
+      include Aws::Structure
+    end
+
+    # Output from the bidirectional stream. The output is speech and a text
+    # transcription.
+    #
+    # @!attribute [rw] bytes
+    #   The speech output of the bidirectional stream.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/BidirectionalOutputPayloadPart AWS API Documentation
+    #
+    class BidirectionalOutputPayloadPart < Struct.new(
+      :bytes,
+      :event_type)
+      SENSITIVE = [:bytes]
+      include Aws::Structure
+    end
+
     # Defines a section of content to be cached for reuse in subsequent API
     # calls.
     #
@@ -2106,6 +2138,47 @@ module Aws::BedrockRuntime
       include Aws::Structure
     end
 
+    # @!attribute [rw] model_id
+    #   The model ID or ARN of the model ID to use. Currently, only
+    #   `amazon.nova-sonic-v1:0` is supported.
+    #   @return [String]
+    #
+    # @!attribute [rw] body
+    #   The prompt and inference parameters in the format specified in the
+    #   `BidirectionalInputPayloadPart` in the header. You must provide the
+    #   body in JSON format. To see the format and content of the request
+    #   and response bodies for different models, refer to [Inference
+    #   parameters][1]. For more information, see [Run inference][2] in the
+    #   Bedrock User Guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html
+    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/api-methods-run.html
+    #   @return [Types::InvokeModelWithBidirectionalStreamInput]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/InvokeModelWithBidirectionalStreamRequest AWS API Documentation
+    #
+    class InvokeModelWithBidirectionalStreamRequest < Struct.new(
+      :model_id,
+      :body)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] body
+    #   Streaming response from the model in the format specified by the
+    #   `BidirectionalOutputPayloadPart` header.
+    #   @return [Types::InvokeModelWithBidirectionalStreamOutput]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/InvokeModelWithBidirectionalStreamResponse AWS API Documentation
+    #
+    class InvokeModelWithBidirectionalStreamResponse < Struct.new(
+      :body)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] body
     #   The prompt and inference parameters in the format specified in the
     #   `contentType` in the header. You must provide the body in JSON
@@ -3254,6 +3327,48 @@ module Aws::BedrockRuntime
           :model_stream_error_exception,
           :validation_exception,
           :throttling_exception,
+          :service_unavailable_exception
+        ]
+      end
+
+    end
+
+    # Payload content, the speech chunk, for the bidirectional input of the
+    # invocation step.
+    #
+    # EventStream is an Enumerator of Events.
+    #  #event_types #=> Array, returns all modeled event types in the stream
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/InvokeModelWithBidirectionalStreamInput AWS API Documentation
+    #
+    class InvokeModelWithBidirectionalStreamInput < Enumerator
+
+      def event_types
+        [
+          :chunk
+        ]
+      end
+
+    end
+
+    # Output from the bidirectional stream that was used for model
+    # invocation.
+    #
+    # EventStream is an Enumerator of Events.
+    #  #event_types #=> Array, returns all modeled event types in the stream
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/InvokeModelWithBidirectionalStreamOutput AWS API Documentation
+    #
+    class InvokeModelWithBidirectionalStreamOutput < Enumerator
+
+      def event_types
+        [
+          :chunk,
+          :internal_server_exception,
+          :model_stream_error_exception,
+          :validation_exception,
+          :throttling_exception,
+          :model_timeout_exception,
           :service_unavailable_exception
         ]
       end

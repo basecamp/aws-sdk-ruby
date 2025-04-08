@@ -166,6 +166,10 @@ module Aws::TaxSettings
     #   Additional tax information associated with your TRN in Ukraine.
     #   @return [Types::UkraineAdditionalInfo]
     #
+    # @!attribute [rw] uzbekistan_additional_info
+    #   Additional tax information to specify for a TRN in Uzbekistan.
+    #   @return [Types::UzbekistanAdditionalInfo]
+    #
     # @!attribute [rw] vietnam_additional_info
     #   Additional tax information to specify for a TRN in Vietnam.
     #   @return [Types::VietnamAdditionalInfo]
@@ -189,6 +193,7 @@ module Aws::TaxSettings
       :spain_additional_info,
       :turkey_additional_info,
       :ukraine_additional_info,
+      :uzbekistan_additional_info,
       :vietnam_additional_info)
       SENSITIVE = []
       include Aws::Structure
@@ -273,6 +278,10 @@ module Aws::TaxSettings
     #   Additional tax information associated with your TRN in Ukraine.
     #   @return [Types::UkraineAdditionalInfo]
     #
+    # @!attribute [rw] uzbekistan_additional_info
+    #   Additional tax information associated with your TRN in Uzbekistan.
+    #   @return [Types::UzbekistanAdditionalInfo]
+    #
     # @!attribute [rw] vietnam_additional_info
     #   Additional tax information to specify for a TRN in Vietnam.
     #   @return [Types::VietnamAdditionalInfo]
@@ -298,6 +307,7 @@ module Aws::TaxSettings
       :spain_additional_info,
       :turkey_additional_info,
       :ukraine_additional_info,
+      :uzbekistan_additional_info,
       :vietnam_additional_info)
       SENSITIVE = []
       include Aws::Structure
@@ -1934,6 +1944,27 @@ module Aws::TaxSettings
     #
     class UkraineAdditionalInfo < Struct.new(
       :ukraine_trn_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Additional tax information to specify for a TRN in Uzbekistan.
+    #
+    # @!attribute [rw] tax_registration_number_type
+    #   The tax registration number type. The tax registration number type
+    #   valid values are `Business` and `Individual`.
+    #   @return [String]
+    #
+    # @!attribute [rw] vat_registration_number
+    #   The unique 12-digit number issued to identify VAT-registered
+    #   identities in Uzbekistan.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/UzbekistanAdditionalInfo AWS API Documentation
+    #
+    class UzbekistanAdditionalInfo < Struct.new(
+      :tax_registration_number_type,
+      :vat_registration_number)
       SENSITIVE = []
       include Aws::Structure
     end

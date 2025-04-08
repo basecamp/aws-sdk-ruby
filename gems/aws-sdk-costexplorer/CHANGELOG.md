@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.123.0 (2025-04-08)
+------------------
+
+* Feature - This release supports Pagination traits on Cost Anomaly Detection APIs.
+
 1.122.0 (2025-03-10)
 ------------------
 

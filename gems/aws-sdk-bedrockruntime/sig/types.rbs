@@ -69,6 +69,18 @@ module Aws::BedrockRuntime
     class AutoToolChoice < Aws::EmptyStructure
     end
 
+    class BidirectionalInputPayloadPart
+      attr_accessor bytes: ::String
+      attr_accessor event_type: untyped
+      SENSITIVE: [:bytes]
+    end
+
+    class BidirectionalOutputPayloadPart
+      attr_accessor bytes: ::String
+      attr_accessor event_type: untyped
+      SENSITIVE: [:bytes]
+    end
+
     class CachePointBlock
       attr_accessor type: ("default")
       SENSITIVE: []
@@ -569,6 +581,17 @@ module Aws::BedrockRuntime
       SENSITIVE: [:body]
     end
 
+    class InvokeModelWithBidirectionalStreamRequest
+      attr_accessor model_id: ::String
+      attr_accessor body: Types::InvokeModelWithBidirectionalStreamInput
+      SENSITIVE: []
+    end
+
+    class InvokeModelWithBidirectionalStreamResponse
+      attr_accessor body: Types::InvokeModelWithBidirectionalStreamOutput
+      SENSITIVE: []
+    end
+
     class InvokeModelWithResponseStreamRequest
       attr_accessor body: ::String
       attr_accessor content_type: ::String
@@ -924,6 +947,14 @@ module Aws::BedrockRuntime
 
     class ConverseStreamOutput < Enumerator[untyped, untyped]
       def event_types: () -> [:message_start, :content_block_start, :content_block_delta, :content_block_stop, :message_stop, :metadata, :internal_server_exception, :model_stream_error_exception, :validation_exception, :throttling_exception, :service_unavailable_exception]
+    end
+
+    class InvokeModelWithBidirectionalStreamInput < Enumerator[untyped, untyped]
+      def event_types: () -> [:chunk]
+    end
+
+    class InvokeModelWithBidirectionalStreamOutput < Enumerator[untyped, untyped]
+      def event_types: () -> [:chunk, :internal_server_exception, :model_stream_error_exception, :validation_exception, :throttling_exception, :model_timeout_exception, :service_unavailable_exception]
     end
 
     class ResponseStream < Enumerator[untyped, untyped]

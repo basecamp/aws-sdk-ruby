@@ -797,6 +797,10 @@ module Aws::TaxSettings
     #         ukraine_additional_info: {
     #           ukraine_trn_type: "Business", # required, accepts Business, Individual
     #         },
+    #         uzbekistan_additional_info: {
+    #           tax_registration_number_type: "Business", # accepts Business, Individual
+    #           vat_registration_number: "VatRegistrationNumber",
+    #         },
     #         vietnam_additional_info: {
     #           electronic_transaction_code_number: "ElectronicTransactionCodeNumber",
     #           enterprise_identification_number: "EnterpriseIdentificationNumber",
@@ -1008,6 +1012,8 @@ module Aws::TaxSettings
     #   resp.tax_registration.additional_tax_information.turkey_additional_info.secondary_tax_id #=> String
     #   resp.tax_registration.additional_tax_information.turkey_additional_info.tax_office #=> String
     #   resp.tax_registration.additional_tax_information.ukraine_additional_info.ukraine_trn_type #=> String, one of "Business", "Individual"
+    #   resp.tax_registration.additional_tax_information.uzbekistan_additional_info.tax_registration_number_type #=> String, one of "Business", "Individual"
+    #   resp.tax_registration.additional_tax_information.uzbekistan_additional_info.vat_registration_number #=> String
     #   resp.tax_registration.additional_tax_information.vietnam_additional_info.electronic_transaction_code_number #=> String
     #   resp.tax_registration.additional_tax_information.vietnam_additional_info.enterprise_identification_number #=> String
     #   resp.tax_registration.additional_tax_information.vietnam_additional_info.payment_voucher_number #=> String
@@ -1262,6 +1268,8 @@ module Aws::TaxSettings
     #   resp.account_details[0].tax_registration.additional_tax_information.turkey_additional_info.secondary_tax_id #=> String
     #   resp.account_details[0].tax_registration.additional_tax_information.turkey_additional_info.tax_office #=> String
     #   resp.account_details[0].tax_registration.additional_tax_information.ukraine_additional_info.ukraine_trn_type #=> String, one of "Business", "Individual"
+    #   resp.account_details[0].tax_registration.additional_tax_information.uzbekistan_additional_info.tax_registration_number_type #=> String, one of "Business", "Individual"
+    #   resp.account_details[0].tax_registration.additional_tax_information.uzbekistan_additional_info.vat_registration_number #=> String
     #   resp.account_details[0].tax_registration.additional_tax_information.vietnam_additional_info.electronic_transaction_code_number #=> String
     #   resp.account_details[0].tax_registration.additional_tax_information.vietnam_additional_info.enterprise_identification_number #=> String
     #   resp.account_details[0].tax_registration.additional_tax_information.vietnam_additional_info.payment_voucher_number #=> String
@@ -1639,6 +1647,10 @@ module Aws::TaxSettings
     #         ukraine_additional_info: {
     #           ukraine_trn_type: "Business", # required, accepts Business, Individual
     #         },
+    #         uzbekistan_additional_info: {
+    #           tax_registration_number_type: "Business", # accepts Business, Individual
+    #           vat_registration_number: "VatRegistrationNumber",
+    #         },
     #         vietnam_additional_info: {
     #           electronic_transaction_code_number: "ElectronicTransactionCodeNumber",
     #           enterprise_identification_number: "EnterpriseIdentificationNumber",
@@ -1710,7 +1722,7 @@ module Aws::TaxSettings
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-taxsettings'
-      context[:gem_version] = '1.20.0'
+      context[:gem_version] = '1.21.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

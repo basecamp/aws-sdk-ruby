@@ -157,7 +157,22 @@ module Aws
                                           }
                                         },
                                       ]?,
-                                      state_templates_to_remove: Array[::String]?
+                                      state_templates_to_remove: Array[::String]?,
+                                      state_templates_to_update: Array[
+                                        {
+                                          identifier: ::String,
+                                          state_template_update_strategy: {
+                                            periodic: {
+                                              state_template_update_rate: {
+                                                unit: ("MILLISECOND" | "SECOND" | "MINUTE" | "HOUR"),
+                                                value: ::Integer
+                                              }
+                                            }?,
+                                            on_change: {
+                                            }?
+                                          }
+                                        },
+                                      ]?
                                     },
                                   ]
                                 ) -> _BatchUpdateVehicleResponseSuccess
@@ -1526,7 +1541,22 @@ module Aws
                                 }
                               },
                             ],
-                            ?state_templates_to_remove: Array[::String]
+                            ?state_templates_to_remove: Array[::String],
+                            ?state_templates_to_update: Array[
+                              {
+                                identifier: ::String,
+                                state_template_update_strategy: {
+                                  periodic: {
+                                    state_template_update_rate: {
+                                      unit: ("MILLISECOND" | "SECOND" | "MINUTE" | "HOUR"),
+                                      value: ::Integer
+                                    }
+                                  }?,
+                                  on_change: {
+                                  }?
+                                }
+                              },
+                            ]
                           ) -> _UpdateVehicleResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateVehicleResponseSuccess
     end

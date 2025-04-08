@@ -129,7 +129,7 @@ module Aws::CostOptimizationHub
     # The Compute Savings Plans configuration used for recommendations.
     #
     # @!attribute [rw] account_scope
-    #   The account scope that you want your recommendations for. Amazon Web
+    #   The account scope for which you want recommendations. Amazon Web
     #   Services calculates recommendations including the management account
     #   and member accounts if the value is set to `PAYER`. If the value is
     #   `LINKED`, recommendations are calculated for individual member
@@ -169,6 +169,82 @@ module Aws::CostOptimizationHub
     #
     class DbInstanceConfiguration < Struct.new(
       :db_instance_class)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The DynamoDB reserved capacity recommendation details.
+    #
+    # @!attribute [rw] configuration
+    #   The DynamoDB reserved capacity configuration used for
+    #   recommendations.
+    #   @return [Types::DynamoDbReservedCapacityConfiguration]
+    #
+    # @!attribute [rw] cost_calculation
+    #   Cost impact of the purchase recommendation.
+    #   @return [Types::ReservedInstancesCostCalculation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cost-optimization-hub-2022-07-26/DynamoDbReservedCapacity AWS API Documentation
+    #
+    class DynamoDbReservedCapacity < Struct.new(
+      :configuration,
+      :cost_calculation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The DynamoDB reserved capacity configuration used for recommendations.
+    #
+    # @!attribute [rw] account_scope
+    #   The account scope for which you want recommendations.
+    #   @return [String]
+    #
+    # @!attribute [rw] service
+    #   The service for which you want recommendations.
+    #   @return [String]
+    #
+    # @!attribute [rw] term
+    #   The reserved capacity recommendation term in years.
+    #   @return [String]
+    #
+    # @!attribute [rw] payment_option
+    #   The payment option for the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] reserved_instances_region
+    #   The Amazon Web Services Region of the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] upfront_cost
+    #   How much purchasing this reserved capacity costs you upfront.
+    #   @return [String]
+    #
+    # @!attribute [rw] monthly_recurring_cost
+    #   How much purchasing this reserved capacity costs you on a monthly
+    #   basis.
+    #   @return [String]
+    #
+    # @!attribute [rw] number_of_capacity_units_to_purchase
+    #   The number of reserved capacity units that Amazon Web Services
+    #   recommends that you purchase.
+    #   @return [String]
+    #
+    # @!attribute [rw] capacity_units
+    #   The capacity unit of the recommended reservation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cost-optimization-hub-2022-07-26/DynamoDbReservedCapacityConfiguration AWS API Documentation
+    #
+    class DynamoDbReservedCapacityConfiguration < Struct.new(
+      :account_scope,
+      :service,
+      :term,
+      :payment_option,
+      :reserved_instances_region,
+      :upfront_cost,
+      :monthly_recurring_cost,
+      :number_of_capacity_units_to_purchase,
+      :capacity_units)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -328,7 +404,7 @@ module Aws::CostOptimizationHub
     # The EC2 instance Savings Plans configuration used for recommendations.
     #
     # @!attribute [rw] account_scope
-    #   The account scope that you want your recommendations for.
+    #   The account scope for which you want recommendations.
     #   @return [String]
     #
     # @!attribute [rw] term
@@ -386,16 +462,11 @@ module Aws::CostOptimizationHub
     # The EC2 reserved instances configuration used for recommendations.
     #
     # @!attribute [rw] account_scope
-    #   The account scope that you want your recommendations for.
+    #   The account scope for which you want recommendations.
     #   @return [String]
     #
     # @!attribute [rw] service
-    #   The service that you want your recommendations for.
-    #   @return [String]
-    #
-    # @!attribute [rw] normalized_units_to_purchase
-    #   The number of normalized units that Amazon Web Services recommends
-    #   that you purchase.
+    #   The service for which you want recommendations.
     #   @return [String]
     #
     # @!attribute [rw] term
@@ -404,6 +475,24 @@ module Aws::CostOptimizationHub
     #
     # @!attribute [rw] payment_option
     #   The payment option for the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] reserved_instances_region
+    #   The Amazon Web Services Region of the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] upfront_cost
+    #   How much purchasing this instance costs you upfront.
+    #   @return [String]
+    #
+    # @!attribute [rw] monthly_recurring_cost
+    #   How much purchasing these reserved instances costs you on a monthly
+    #   basis.
+    #   @return [String]
+    #
+    # @!attribute [rw] normalized_units_to_purchase
+    #   The number of normalized units that Amazon Web Services recommends
+    #   that you purchase.
     #   @return [String]
     #
     # @!attribute [rw] number_of_instances_to_purchase
@@ -422,10 +511,6 @@ module Aws::CostOptimizationHub
     #
     # @!attribute [rw] instance_type
     #   The type of instance that Amazon Web Services recommends.
-    #   @return [String]
-    #
-    # @!attribute [rw] reserved_instances_region
-    #   The Amazon Web Services Region of the commitment.
     #   @return [String]
     #
     # @!attribute [rw] current_generation
@@ -448,33 +533,25 @@ module Aws::CostOptimizationHub
     #   Determines whether the recommendation is size flexible.
     #   @return [Boolean]
     #
-    # @!attribute [rw] upfront_cost
-    #   How much purchasing this instance costs you upfront.
-    #   @return [String]
-    #
-    # @!attribute [rw] monthly_recurring_cost
-    #   How much purchasing reserved instances costs you on a monthly basis.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cost-optimization-hub-2022-07-26/Ec2ReservedInstancesConfiguration AWS API Documentation
     #
     class Ec2ReservedInstancesConfiguration < Struct.new(
       :account_scope,
       :service,
-      :normalized_units_to_purchase,
       :term,
       :payment_option,
+      :reserved_instances_region,
+      :upfront_cost,
+      :monthly_recurring_cost,
+      :normalized_units_to_purchase,
       :number_of_instances_to_purchase,
       :offering_class,
       :instance_family,
       :instance_type,
-      :reserved_instances_region,
       :current_generation,
       :platform,
       :tenancy,
-      :size_flex_eligible,
-      :upfront_cost,
-      :monthly_recurring_cost)
+      :size_flex_eligible)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -536,16 +613,11 @@ module Aws::CostOptimizationHub
     # recommendations.
     #
     # @!attribute [rw] account_scope
-    #   The account scope that you want your recommendations for.
+    #   The account scope for which you want recommendations.
     #   @return [String]
     #
     # @!attribute [rw] service
-    #   The service that you want your recommendations for.
-    #   @return [String]
-    #
-    # @!attribute [rw] normalized_units_to_purchase
-    #   The number of normalized units that Amazon Web Services recommends
-    #   that you purchase.
+    #   The service for which you want recommendations.
     #   @return [String]
     #
     # @!attribute [rw] term
@@ -554,6 +626,24 @@ module Aws::CostOptimizationHub
     #
     # @!attribute [rw] payment_option
     #   The payment option for the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] reserved_instances_region
+    #   The Amazon Web Services Region of the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] upfront_cost
+    #   How much purchasing this instance costs you upfront.
+    #   @return [String]
+    #
+    # @!attribute [rw] monthly_recurring_cost
+    #   How much purchasing these reserved instances costs you on a monthly
+    #   basis.
+    #   @return [String]
+    #
+    # @!attribute [rw] normalized_units_to_purchase
+    #   The number of normalized units that Amazon Web Services recommends
+    #   that you purchase.
     #   @return [String]
     #
     # @!attribute [rw] number_of_instances_to_purchase
@@ -569,10 +659,6 @@ module Aws::CostOptimizationHub
     #   The type of instance that Amazon Web Services recommends.
     #   @return [String]
     #
-    # @!attribute [rw] reserved_instances_region
-    #   The Amazon Web Services Region of the commitment.
-    #   @return [String]
-    #
     # @!attribute [rw] current_generation
     #   Determines whether the recommendation is for a current generation
     #   instance.
@@ -582,30 +668,22 @@ module Aws::CostOptimizationHub
     #   Determines whether the recommendation is size flexible.
     #   @return [Boolean]
     #
-    # @!attribute [rw] upfront_cost
-    #   How much purchasing this instance costs you upfront.
-    #   @return [String]
-    #
-    # @!attribute [rw] monthly_recurring_cost
-    #   How much purchasing reserved instances costs you on a monthly basis.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cost-optimization-hub-2022-07-26/ElastiCacheReservedInstancesConfiguration AWS API Documentation
     #
     class ElastiCacheReservedInstancesConfiguration < Struct.new(
       :account_scope,
       :service,
-      :normalized_units_to_purchase,
       :term,
       :payment_option,
+      :reserved_instances_region,
+      :upfront_cost,
+      :monthly_recurring_cost,
+      :normalized_units_to_purchase,
       :number_of_instances_to_purchase,
       :instance_family,
       :instance_type,
-      :reserved_instances_region,
       :current_generation,
-      :size_flex_eligible,
-      :upfront_cost,
-      :monthly_recurring_cost)
+      :size_flex_eligible)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -653,7 +731,7 @@ module Aws::CostOptimizationHub
     #   @return [Array<String>]
     #
     # @!attribute [rw] account_ids
-    #   The account that the recommendation is for.
+    #   The account to which the recommendation applies.
     #   @return [Array<String>]
     #
     # @!attribute [rw] regions
@@ -752,7 +830,7 @@ module Aws::CostOptimizationHub
     #   @return [String]
     #
     # @!attribute [rw] account_id
-    #   The account that the recommendation is for.
+    #   The account to which the recommendation applies.
     #   @return [String]
     #
     # @!attribute [rw] currency_code
@@ -1104,6 +1182,115 @@ module Aws::CostOptimizationHub
       include Aws::Structure
     end
 
+    # The MemoryDB reserved instances recommendation details.
+    #
+    # <note markdown="1"> MemoryDB reserved instances are referred to as "MemoryDB reserved
+    # nodes" in customer-facing documentation.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] configuration
+    #   The MemoryDB reserved instances configuration used for
+    #   recommendations.
+    #   @return [Types::MemoryDbReservedInstancesConfiguration]
+    #
+    # @!attribute [rw] cost_calculation
+    #   Cost impact of the purchase recommendation.
+    #   @return [Types::ReservedInstancesCostCalculation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cost-optimization-hub-2022-07-26/MemoryDbReservedInstances AWS API Documentation
+    #
+    class MemoryDbReservedInstances < Struct.new(
+      :configuration,
+      :cost_calculation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The MemoryDB reserved instances configuration used for
+    # recommendations.
+    #
+    # <note markdown="1"> MemoryDB reserved instances are referred to as "MemoryDB reserved
+    # nodes" in customer-facing documentation.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] account_scope
+    #   The account scope for which you want recommendations.
+    #   @return [String]
+    #
+    # @!attribute [rw] service
+    #   The service for which you want recommendations.
+    #   @return [String]
+    #
+    # @!attribute [rw] term
+    #   The reserved instances recommendation term in years.
+    #   @return [String]
+    #
+    # @!attribute [rw] payment_option
+    #   The payment option for the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] reserved_instances_region
+    #   The Amazon Web Services Region of the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] upfront_cost
+    #   How much purchasing these reserved instances costs you upfront.
+    #   @return [String]
+    #
+    # @!attribute [rw] monthly_recurring_cost
+    #   How much purchasing these reserved instances costs you on a monthly
+    #   basis.
+    #   @return [String]
+    #
+    # @!attribute [rw] normalized_units_to_purchase
+    #   The number of normalized units that Amazon Web Services recommends
+    #   that you purchase.
+    #   @return [String]
+    #
+    # @!attribute [rw] number_of_instances_to_purchase
+    #   The number of instances that Amazon Web Services recommends that you
+    #   purchase.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_type
+    #   The type of instance that Amazon Web Services recommends.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_family
+    #   The instance family of the recommended reservation.
+    #   @return [String]
+    #
+    # @!attribute [rw] size_flex_eligible
+    #   Determines whether the recommendation is size flexible.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] current_generation
+    #   Determines whether the recommendation is for a current generation
+    #   instance.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cost-optimization-hub-2022-07-26/MemoryDbReservedInstancesConfiguration AWS API Documentation
+    #
+    class MemoryDbReservedInstancesConfiguration < Struct.new(
+      :account_scope,
+      :service,
+      :term,
+      :payment_option,
+      :reserved_instances_region,
+      :upfront_cost,
+      :monthly_recurring_cost,
+      :normalized_units_to_purchase,
+      :number_of_instances_to_purchase,
+      :instance_type,
+      :instance_family,
+      :size_flex_eligible,
+      :current_generation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The configuration for the EC2 Auto Scaling group with mixed instance
     # types.
     #
@@ -1143,16 +1330,11 @@ module Aws::CostOptimizationHub
     # recommendations.
     #
     # @!attribute [rw] account_scope
-    #   The account scope that you want your recommendations for.
+    #   The account scope for which you want recommendations.
     #   @return [String]
     #
     # @!attribute [rw] service
-    #   The service that you want your recommendations for.
-    #   @return [String]
-    #
-    # @!attribute [rw] normalized_units_to_purchase
-    #   The number of normalized units that Amazon Web Services recommends
-    #   that you purchase.
+    #   The service for which you want recommendations.
     #   @return [String]
     #
     # @!attribute [rw] term
@@ -1161,6 +1343,24 @@ module Aws::CostOptimizationHub
     #
     # @!attribute [rw] payment_option
     #   The payment option for the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] reserved_instances_region
+    #   The Amazon Web Services Region of the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] upfront_cost
+    #   How much purchasing this instance costs you upfront.
+    #   @return [String]
+    #
+    # @!attribute [rw] monthly_recurring_cost
+    #   How much purchasing these reserved instances costs you on a monthly
+    #   basis.
+    #   @return [String]
+    #
+    # @!attribute [rw] normalized_units_to_purchase
+    #   The number of normalized units that Amazon Web Services recommends
+    #   that you purchase.
     #   @return [String]
     #
     # @!attribute [rw] number_of_instances_to_purchase
@@ -1172,10 +1372,6 @@ module Aws::CostOptimizationHub
     #   The type of instance that Amazon Web Services recommends.
     #   @return [String]
     #
-    # @!attribute [rw] reserved_instances_region
-    #   The Amazon Web Services Region of the commitment.
-    #   @return [String]
-    #
     # @!attribute [rw] current_generation
     #   Determines whether the recommendation is for a current generation
     #   instance.
@@ -1185,29 +1381,21 @@ module Aws::CostOptimizationHub
     #   Determines whether the recommendation is size flexible.
     #   @return [Boolean]
     #
-    # @!attribute [rw] upfront_cost
-    #   How much purchasing this instance costs you upfront.
-    #   @return [String]
-    #
-    # @!attribute [rw] monthly_recurring_cost
-    #   How much purchasing reserved instances costs you on a monthly basis.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cost-optimization-hub-2022-07-26/OpenSearchReservedInstancesConfiguration AWS API Documentation
     #
     class OpenSearchReservedInstancesConfiguration < Struct.new(
       :account_scope,
       :service,
-      :normalized_units_to_purchase,
       :term,
       :payment_option,
+      :reserved_instances_region,
+      :upfront_cost,
+      :monthly_recurring_cost,
+      :normalized_units_to_purchase,
       :number_of_instances_to_purchase,
       :instance_type,
-      :reserved_instances_region,
       :current_generation,
-      :size_flex_eligible,
-      :upfront_cost,
-      :monthly_recurring_cost)
+      :size_flex_eligible)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1337,16 +1525,11 @@ module Aws::CostOptimizationHub
     # The RDS reserved instances configuration used for recommendations.
     #
     # @!attribute [rw] account_scope
-    #   The account scope that you want your recommendations for.
+    #   The account scope for which you want recommendations.
     #   @return [String]
     #
     # @!attribute [rw] service
-    #   The service that you want your recommendations for.
-    #   @return [String]
-    #
-    # @!attribute [rw] normalized_units_to_purchase
-    #   The number of normalized units that Amazon Web Services recommends
-    #   that you purchase.
+    #   The service for which you want recommendations.
     #   @return [String]
     #
     # @!attribute [rw] term
@@ -1355,6 +1538,23 @@ module Aws::CostOptimizationHub
     #
     # @!attribute [rw] payment_option
     #   The payment option for the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] reserved_instances_region
+    #   The Amazon Web Services Region of the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] upfront_cost
+    #   How much purchasing this instance costs you upfront.
+    #   @return [String]
+    #
+    # @!attribute [rw] monthly_recurring_cost
+    #   How much purchasing this instance costs you on a monthly basis.
+    #   @return [String]
+    #
+    # @!attribute [rw] normalized_units_to_purchase
+    #   The number of normalized units that Amazon Web Services recommends
+    #   that you purchase.
     #   @return [String]
     #
     # @!attribute [rw] number_of_instances_to_purchase
@@ -1370,10 +1570,6 @@ module Aws::CostOptimizationHub
     #   The type of instance that Amazon Web Services recommends.
     #   @return [String]
     #
-    # @!attribute [rw] reserved_instances_region
-    #   The Amazon Web Services Region of the commitment.
-    #   @return [String]
-    #
     # @!attribute [rw] size_flex_eligible
     #   Determines whether the recommendation is size flexible.
     #   @return [Boolean]
@@ -1381,14 +1577,6 @@ module Aws::CostOptimizationHub
     # @!attribute [rw] current_generation
     #   Determines whether the recommendation is for a current generation
     #   instance.
-    #   @return [String]
-    #
-    # @!attribute [rw] upfront_cost
-    #   How much purchasing this instance costs you upfront.
-    #   @return [String]
-    #
-    # @!attribute [rw] monthly_recurring_cost
-    #   How much purchasing this instance costs you on a monthly basis.
     #   @return [String]
     #
     # @!attribute [rw] license_model
@@ -1414,17 +1602,17 @@ module Aws::CostOptimizationHub
     class RdsReservedInstancesConfiguration < Struct.new(
       :account_scope,
       :service,
-      :normalized_units_to_purchase,
       :term,
       :payment_option,
+      :reserved_instances_region,
+      :upfront_cost,
+      :monthly_recurring_cost,
+      :normalized_units_to_purchase,
       :number_of_instances_to_purchase,
       :instance_family,
       :instance_type,
-      :reserved_instances_region,
       :size_flex_eligible,
       :current_generation,
-      :upfront_cost,
-      :monthly_recurring_cost,
       :license_model,
       :database_edition,
       :database_engine,
@@ -1440,7 +1628,7 @@ module Aws::CostOptimizationHub
     #   @return [String]
     #
     # @!attribute [rw] account_id
-    #   The account that the recommendation is for.
+    #   The account to which the recommendation applies.
     #   @return [String]
     #
     # @!attribute [rw] region
@@ -1600,16 +1788,11 @@ module Aws::CostOptimizationHub
     # recommendations.
     #
     # @!attribute [rw] account_scope
-    #   The account scope that you want your recommendations for.
+    #   The account scope for which you want recommendations.
     #   @return [String]
     #
     # @!attribute [rw] service
-    #   The service that you want your recommendations for.
-    #   @return [String]
-    #
-    # @!attribute [rw] normalized_units_to_purchase
-    #   The number of normalized units that Amazon Web Services recommends
-    #   that you purchase.
+    #   The service for which you want recommendations.
     #   @return [String]
     #
     # @!attribute [rw] term
@@ -1618,6 +1801,24 @@ module Aws::CostOptimizationHub
     #
     # @!attribute [rw] payment_option
     #   The payment option for the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] reserved_instances_region
+    #   The Amazon Web Services Region of the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] upfront_cost
+    #   How much purchasing this instance costs you upfront.
+    #   @return [String]
+    #
+    # @!attribute [rw] monthly_recurring_cost
+    #   How much purchasing these reserved instances costs you on a monthly
+    #   basis.
+    #   @return [String]
+    #
+    # @!attribute [rw] normalized_units_to_purchase
+    #   The number of normalized units that Amazon Web Services recommends
+    #   that you purchase.
     #   @return [String]
     #
     # @!attribute [rw] number_of_instances_to_purchase
@@ -1633,10 +1834,6 @@ module Aws::CostOptimizationHub
     #   The type of instance that Amazon Web Services recommends.
     #   @return [String]
     #
-    # @!attribute [rw] reserved_instances_region
-    #   The Amazon Web Services Region of the commitment.
-    #   @return [String]
-    #
     # @!attribute [rw] size_flex_eligible
     #   Determines whether the recommendation is size flexible.
     #   @return [Boolean]
@@ -1646,30 +1843,22 @@ module Aws::CostOptimizationHub
     #   instance.
     #   @return [String]
     #
-    # @!attribute [rw] upfront_cost
-    #   How much purchasing this instance costs you upfront.
-    #   @return [String]
-    #
-    # @!attribute [rw] monthly_recurring_cost
-    #   How much purchasing reserved instances costs you on a monthly basis.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cost-optimization-hub-2022-07-26/RedshiftReservedInstancesConfiguration AWS API Documentation
     #
     class RedshiftReservedInstancesConfiguration < Struct.new(
       :account_scope,
       :service,
-      :normalized_units_to_purchase,
       :term,
       :payment_option,
+      :reserved_instances_region,
+      :upfront_cost,
+      :monthly_recurring_cost,
+      :normalized_units_to_purchase,
       :number_of_instances_to_purchase,
       :instance_family,
       :instance_type,
-      :reserved_instances_region,
       :size_flex_eligible,
-      :current_generation,
-      :upfront_cost,
-      :monthly_recurring_cost)
+      :current_generation)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1804,6 +1993,14 @@ module Aws::CostOptimizationHub
     #   The DB instance storage recommendation details.
     #   @return [Types::RdsDbInstanceStorage]
     #
+    # @!attribute [rw] dynamo_db_reserved_capacity
+    #   The DynamoDB reserved capacity recommendation details.
+    #   @return [Types::DynamoDbReservedCapacity]
+    #
+    # @!attribute [rw] memory_db_reserved_instances
+    #   The MemoryDB reserved instances recommendation details.
+    #   @return [Types::MemoryDbReservedInstances]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cost-optimization-hub-2022-07-26/ResourceDetails AWS API Documentation
     #
     class ResourceDetails < Struct.new(
@@ -1822,6 +2019,8 @@ module Aws::CostOptimizationHub
       :sage_maker_savings_plans,
       :rds_db_instance,
       :rds_db_instance_storage,
+      :dynamo_db_reserved_capacity,
+      :memory_db_reserved_instances,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
@@ -1842,6 +2041,8 @@ module Aws::CostOptimizationHub
       class SageMakerSavingsPlans < ResourceDetails; end
       class RdsDbInstance < ResourceDetails; end
       class RdsDbInstanceStorage < ResourceDetails; end
+      class DynamoDbReservedCapacity < ResourceDetails; end
+      class MemoryDbReservedInstances < ResourceDetails; end
       class Unknown < ResourceDetails; end
     end
 
@@ -1918,7 +2119,7 @@ module Aws::CostOptimizationHub
     # The SageMaker Savings Plans configuration used for recommendations.
     #
     # @!attribute [rw] account_scope
-    #   The account scope that you want your recommendations for.
+    #   The account scope for which you want recommendations.
     #   @return [String]
     #
     # @!attribute [rw] term

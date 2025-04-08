@@ -1477,7 +1477,7 @@ module Aws::CostExplorer
     #   Not all dimensions are supported in each API. Refer to the
     #   documentation for each specific API to see what is supported.
     #
-    #   `LINK_ACCOUNT_NAME` and `SERVICE_CODE` can only be used in
+    #   `LINKED_ACCOUNT_NAME` and `SERVICE_CODE` can only be used in
     #   [CostCategoryRule][1].
     #
     #   `ANOMALY_TOTAL_IMPACT_ABSOLUTE` and
@@ -2494,11 +2494,6 @@ module Aws::CostExplorer
     #   service. You can nest `Expression` objects to define any combination
     #   of dimension filters. For more information, see [Expression][1].
     #
-    #   The `GetCostAndUsageWithResources` operation requires that you
-    #   either group by or filter by a `ResourceId`. It requires the
-    #   [Expression][1] `"SERVICE = Amazon Elastic Compute Cloud - Compute"`
-    #   in the filter.
-    #
     #   Valid values for `MatchOptions` for `Dimensions` are `EQUALS` and
     #   `CASE_SENSITIVE`.
     #
@@ -2865,8 +2860,6 @@ module Aws::CostExplorer
     #   * `INSTANCE_TYPE`
     #
     #   * `LINKED_ACCOUNT`
-    #
-    #   * `LINKED_ACCOUNT_NAME`
     #
     #   * `OPERATION`
     #

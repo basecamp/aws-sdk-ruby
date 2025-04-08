@@ -1453,6 +1453,7 @@ module Aws::IoTFleetWise
     UpdateVehicleRequest.add_member(:attribute_update_mode, Shapes::ShapeRef.new(shape: UpdateMode, location_name: "attributeUpdateMode"))
     UpdateVehicleRequest.add_member(:state_templates_to_add, Shapes::ShapeRef.new(shape: StateTemplateAssociations, location_name: "stateTemplatesToAdd"))
     UpdateVehicleRequest.add_member(:state_templates_to_remove, Shapes::ShapeRef.new(shape: StateTemplateAssociationIdentifiers, location_name: "stateTemplatesToRemove"))
+    UpdateVehicleRequest.add_member(:state_templates_to_update, Shapes::ShapeRef.new(shape: StateTemplateAssociations, location_name: "stateTemplatesToUpdate"))
     UpdateVehicleRequest.struct_class = Types::UpdateVehicleRequest
 
     UpdateVehicleRequestItem.add_member(:vehicle_name, Shapes::ShapeRef.new(shape: vehicleName, required: true, location_name: "vehicleName"))
@@ -1462,6 +1463,7 @@ module Aws::IoTFleetWise
     UpdateVehicleRequestItem.add_member(:attribute_update_mode, Shapes::ShapeRef.new(shape: UpdateMode, location_name: "attributeUpdateMode"))
     UpdateVehicleRequestItem.add_member(:state_templates_to_add, Shapes::ShapeRef.new(shape: StateTemplateAssociations, location_name: "stateTemplatesToAdd"))
     UpdateVehicleRequestItem.add_member(:state_templates_to_remove, Shapes::ShapeRef.new(shape: StateTemplateAssociationIdentifiers, location_name: "stateTemplatesToRemove"))
+    UpdateVehicleRequestItem.add_member(:state_templates_to_update, Shapes::ShapeRef.new(shape: StateTemplateAssociations, location_name: "stateTemplatesToUpdate"))
     UpdateVehicleRequestItem.struct_class = Types::UpdateVehicleRequestItem
 
     UpdateVehicleResponse.add_member(:vehicle_name, Shapes::ShapeRef.new(shape: vehicleName, location_name: "vehicleName"))

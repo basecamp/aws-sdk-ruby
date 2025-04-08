@@ -29,6 +29,8 @@ module Aws::BedrockRuntime
     AsyncInvokeSummaries = Shapes::ListShape.new(name: 'AsyncInvokeSummaries')
     AsyncInvokeSummary = Shapes::StructureShape.new(name: 'AsyncInvokeSummary')
     AutoToolChoice = Shapes::StructureShape.new(name: 'AutoToolChoice')
+    BidirectionalInputPayloadPart = Shapes::StructureShape.new(name: 'BidirectionalInputPayloadPart')
+    BidirectionalOutputPayloadPart = Shapes::StructureShape.new(name: 'BidirectionalOutputPayloadPart')
     Blob = Shapes::BlobShape.new(name: 'Blob')
     Body = Shapes::BlobShape.new(name: 'Body')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
@@ -163,6 +165,10 @@ module Aws::BedrockRuntime
     InvokeModelIdentifier = Shapes::StringShape.new(name: 'InvokeModelIdentifier')
     InvokeModelRequest = Shapes::StructureShape.new(name: 'InvokeModelRequest')
     InvokeModelResponse = Shapes::StructureShape.new(name: 'InvokeModelResponse')
+    InvokeModelWithBidirectionalStreamInput = Shapes::StructureShape.new(name: 'InvokeModelWithBidirectionalStreamInput')
+    InvokeModelWithBidirectionalStreamOutput = Shapes::StructureShape.new(name: 'InvokeModelWithBidirectionalStreamOutput')
+    InvokeModelWithBidirectionalStreamRequest = Shapes::StructureShape.new(name: 'InvokeModelWithBidirectionalStreamRequest')
+    InvokeModelWithBidirectionalStreamResponse = Shapes::StructureShape.new(name: 'InvokeModelWithBidirectionalStreamResponse')
     InvokeModelWithResponseStreamRequest = Shapes::StructureShape.new(name: 'InvokeModelWithResponseStreamRequest')
     InvokeModelWithResponseStreamResponse = Shapes::StructureShape.new(name: 'InvokeModelWithResponseStreamResponse')
     InvokedModelId = Shapes::StringShape.new(name: 'InvokedModelId')
@@ -296,6 +302,12 @@ module Aws::BedrockRuntime
     AsyncInvokeSummary.struct_class = Types::AsyncInvokeSummary
 
     AutoToolChoice.struct_class = Types::AutoToolChoice
+
+    BidirectionalInputPayloadPart.add_member(:bytes, Shapes::ShapeRef.new(shape: PartBody, location_name: "bytes"))
+    BidirectionalInputPayloadPart.struct_class = Types::BidirectionalInputPayloadPart
+
+    BidirectionalOutputPayloadPart.add_member(:bytes, Shapes::ShapeRef.new(shape: PartBody, location_name: "bytes"))
+    BidirectionalOutputPayloadPart.struct_class = Types::BidirectionalOutputPayloadPart
 
     CachePointBlock.add_member(:type, Shapes::ShapeRef.new(shape: CachePointType, required: true, location_name: "type"))
     CachePointBlock.struct_class = Types::CachePointBlock
@@ -691,6 +703,29 @@ module Aws::BedrockRuntime
     InvokeModelResponse[:payload] = :body
     InvokeModelResponse[:payload_member] = InvokeModelResponse.member(:body)
 
+    InvokeModelWithBidirectionalStreamInput.add_member(:chunk, Shapes::ShapeRef.new(shape: BidirectionalInputPayloadPart, event: true, location_name: "chunk"))
+    InvokeModelWithBidirectionalStreamInput.struct_class = Types::InvokeModelWithBidirectionalStreamInput
+
+    InvokeModelWithBidirectionalStreamOutput.add_member(:chunk, Shapes::ShapeRef.new(shape: BidirectionalOutputPayloadPart, event: true, location_name: "chunk"))
+    InvokeModelWithBidirectionalStreamOutput.add_member(:internal_server_exception, Shapes::ShapeRef.new(shape: InternalServerException, location_name: "internalServerException"))
+    InvokeModelWithBidirectionalStreamOutput.add_member(:model_stream_error_exception, Shapes::ShapeRef.new(shape: ModelStreamErrorException, location_name: "modelStreamErrorException"))
+    InvokeModelWithBidirectionalStreamOutput.add_member(:validation_exception, Shapes::ShapeRef.new(shape: ValidationException, location_name: "validationException"))
+    InvokeModelWithBidirectionalStreamOutput.add_member(:throttling_exception, Shapes::ShapeRef.new(shape: ThrottlingException, location_name: "throttlingException"))
+    InvokeModelWithBidirectionalStreamOutput.add_member(:model_timeout_exception, Shapes::ShapeRef.new(shape: ModelTimeoutException, location_name: "modelTimeoutException"))
+    InvokeModelWithBidirectionalStreamOutput.add_member(:service_unavailable_exception, Shapes::ShapeRef.new(shape: ServiceUnavailableException, location_name: "serviceUnavailableException"))
+    InvokeModelWithBidirectionalStreamOutput.struct_class = Types::InvokeModelWithBidirectionalStreamOutput
+
+    InvokeModelWithBidirectionalStreamRequest.add_member(:model_id, Shapes::ShapeRef.new(shape: InvokeModelIdentifier, required: true, location: "uri", location_name: "modelId"))
+    InvokeModelWithBidirectionalStreamRequest.add_member(:body, Shapes::ShapeRef.new(shape: InvokeModelWithBidirectionalStreamInput, required: true, eventstream: true, location_name: "body"))
+    InvokeModelWithBidirectionalStreamRequest.struct_class = Types::InvokeModelWithBidirectionalStreamRequest
+    InvokeModelWithBidirectionalStreamRequest[:payload] = :body
+    InvokeModelWithBidirectionalStreamRequest[:payload_member] = InvokeModelWithBidirectionalStreamRequest.member(:body)
+
+    InvokeModelWithBidirectionalStreamResponse.add_member(:body, Shapes::ShapeRef.new(shape: InvokeModelWithBidirectionalStreamOutput, required: true, eventstream: true, location_name: "body"))
+    InvokeModelWithBidirectionalStreamResponse.struct_class = Types::InvokeModelWithBidirectionalStreamResponse
+    InvokeModelWithBidirectionalStreamResponse[:payload] = :body
+    InvokeModelWithBidirectionalStreamResponse[:payload_member] = InvokeModelWithBidirectionalStreamResponse.member(:body)
+
     InvokeModelWithResponseStreamRequest.add_member(:body, Shapes::ShapeRef.new(shape: Body, location_name: "body"))
     InvokeModelWithResponseStreamRequest.add_member(:content_type, Shapes::ShapeRef.new(shape: MimeType, location: "header", location_name: "Content-Type"))
     InvokeModelWithResponseStreamRequest.add_member(:accept, Shapes::ShapeRef.new(shape: MimeType, location: "header", location_name: "X-Amzn-Bedrock-Accept"))
@@ -984,8 +1019,8 @@ module Aws::BedrockRuntime
         o.input = Shapes::ShapeRef.new(shape: ConverseRequest)
         o.output = Shapes::ShapeRef.new(shape: ConverseResponse)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ModelTimeoutException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
@@ -1001,8 +1036,8 @@ module Aws::BedrockRuntime
         o.input = Shapes::ShapeRef.new(shape: ConverseStreamRequest)
         o.output = Shapes::ShapeRef.new(shape: ConverseStreamResponse)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ModelTimeoutException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
@@ -1036,9 +1071,29 @@ module Aws::BedrockRuntime
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
-        o.errors << Shapes::ShapeRef.new(shape: ModelNotReadyException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ModelNotReadyException)
         o.errors << Shapes::ShapeRef.new(shape: ModelErrorException)
+      end)
+
+      api.add_operation(:invoke_model_with_bidirectional_stream, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "InvokeModelWithBidirectionalStream"
+        o.http_method = "POST"
+        o.http_request_uri = "/model/{modelId}/invoke-with-bidirectional-stream"
+        o.input = Shapes::ShapeRef.new(shape: InvokeModelWithBidirectionalStreamRequest)
+        o.output = Shapes::ShapeRef.new(shape: InvokeModelWithBidirectionalStreamResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ModelTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: ModelStreamErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ModelNotReadyException)
+        o.errors << Shapes::ShapeRef.new(shape: ModelErrorException)
+        o.async = true
       end)
 
       api.add_operation(:invoke_model_with_response_stream, Seahorse::Model::Operation.new.tap do |o|
@@ -1055,8 +1110,8 @@ module Aws::BedrockRuntime
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: ModelStreamErrorException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
-        o.errors << Shapes::ShapeRef.new(shape: ModelNotReadyException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ModelNotReadyException)
         o.errors << Shapes::ShapeRef.new(shape: ModelErrorException)
       end)
 
@@ -1085,8 +1140,8 @@ module Aws::BedrockRuntime
         o.input = Shapes::ShapeRef.new(shape: StartAsyncInvokeRequest)
         o.output = Shapes::ShapeRef.new(shape: StartAsyncInvokeResponse)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)

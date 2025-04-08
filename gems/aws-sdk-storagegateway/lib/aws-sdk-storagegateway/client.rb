@@ -4063,7 +4063,7 @@ module Aws::StorageGateway
     #
     #   resp.gateway_arn #=> String
     #   resp.domain_name #=> String
-    #   resp.active_directory_status #=> String, one of "ACCESS_DENIED", "DETACHED", "JOINED", "JOINING", "NETWORK_ERROR", "TIMEOUT", "UNKNOWN_ERROR"
+    #   resp.active_directory_status #=> String, one of "ACCESS_DENIED", "DETACHED", "JOINED", "JOINING", "NETWORK_ERROR", "TIMEOUT", "UNKNOWN_ERROR", "INSUFFICIENT_PERMISSIONS"
     #   resp.smb_guest_password_set #=> Boolean
     #   resp.smb_security_strategy #=> String, one of "ClientSpecified", "MandatorySigning", "MandatoryEncryption", "MandatoryEncryptionNoAes128"
     #   resp.file_shares_visible #=> Boolean
@@ -5072,7 +5072,7 @@ module Aws::StorageGateway
     # @example Response structure
     #
     #   resp.gateway_arn #=> String
-    #   resp.active_directory_status #=> String, one of "ACCESS_DENIED", "DETACHED", "JOINED", "JOINING", "NETWORK_ERROR", "TIMEOUT", "UNKNOWN_ERROR"
+    #   resp.active_directory_status #=> String, one of "ACCESS_DENIED", "DETACHED", "JOINED", "JOINING", "NETWORK_ERROR", "TIMEOUT", "UNKNOWN_ERROR", "INSUFFICIENT_PERMISSIONS"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/JoinDomain AWS API Documentation
     #
@@ -5139,6 +5139,8 @@ module Aws::StorageGateway
     #
     #   * {Types::ListCacheReportsOutput#cache_report_list #cache_report_list} => Array&lt;Types::CacheReportInfo&gt;
     #   * {Types::ListCacheReportsOutput#marker #marker} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     # @example Request syntax with placeholder values
     #
@@ -6482,7 +6484,8 @@ module Aws::StorageGateway
     #   S3.
     #
     # @option params [required, String] :location_arn
-    #   The ARN of the Amazon S3 bucket where the cache report will be saved.
+    #   The ARN of the Amazon S3 bucket where you want to save the cache
+    #   report.
     #
     #   <note markdown="1"> We do not recommend saving the cache report to the same Amazon S3
     #   bucket for which you are generating the report.
@@ -6492,8 +6495,8 @@ module Aws::StorageGateway
     #    </note>
     #
     # @option params [required, String] :bucket_region
-    #   The Amazon Web Services Region of the Amazon S3 bucket associated with
-    #   the file share for which you want to generate the cache report.
+    #   The Amazon Web Services Region of the Amazon S3 bucket where you want
+    #   to save the cache report.
     #
     # @option params [String] :vpc_endpoint_dns_name
     #   The DNS name of the VPC endpoint associated with the Amazon S3 where
@@ -7967,7 +7970,7 @@ module Aws::StorageGateway
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-storagegateway'
-      context[:gem_version] = '1.106.0'
+      context[:gem_version] = '1.107.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

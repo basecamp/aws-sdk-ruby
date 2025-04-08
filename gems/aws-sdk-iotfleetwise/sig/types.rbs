@@ -1449,6 +1449,7 @@ module Aws::IoTFleetWise
       attr_accessor attribute_update_mode: ("Overwrite" | "Merge")
       attr_accessor state_templates_to_add: ::Array[Types::StateTemplateAssociation]
       attr_accessor state_templates_to_remove: ::Array[::String]
+      attr_accessor state_templates_to_update: ::Array[Types::StateTemplateAssociation]
       SENSITIVE: []
     end
 
@@ -1460,6 +1461,7 @@ module Aws::IoTFleetWise
       attr_accessor attribute_update_mode: ("Overwrite" | "Merge")
       attr_accessor state_templates_to_add: ::Array[Types::StateTemplateAssociation]
       attr_accessor state_templates_to_remove: ::Array[::String]
+      attr_accessor state_templates_to_update: ::Array[Types::StateTemplateAssociation]
       SENSITIVE: []
     end
 

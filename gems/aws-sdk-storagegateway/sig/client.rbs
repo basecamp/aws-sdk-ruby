@@ -752,7 +752,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeSMBSettingsOutput]
         def gateway_arn: () -> ::String
         def domain_name: () -> ::String
-        def active_directory_status: () -> ("ACCESS_DENIED" | "DETACHED" | "JOINED" | "JOINING" | "NETWORK_ERROR" | "TIMEOUT" | "UNKNOWN_ERROR")
+        def active_directory_status: () -> ("ACCESS_DENIED" | "DETACHED" | "JOINED" | "JOINING" | "NETWORK_ERROR" | "TIMEOUT" | "UNKNOWN_ERROR" | "INSUFFICIENT_PERMISSIONS")
         def smb_guest_password_set: () -> bool
         def smb_security_strategy: () -> ("ClientSpecified" | "MandatorySigning" | "MandatoryEncryption" | "MandatoryEncryptionNoAes128")
         def file_shares_visible: () -> bool
@@ -917,7 +917,7 @@ module Aws
       interface _JoinDomainResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::JoinDomainOutput]
         def gateway_arn: () -> ::String
-        def active_directory_status: () -> ("ACCESS_DENIED" | "DETACHED" | "JOINED" | "JOINING" | "NETWORK_ERROR" | "TIMEOUT" | "UNKNOWN_ERROR")
+        def active_directory_status: () -> ("ACCESS_DENIED" | "DETACHED" | "JOINED" | "JOINING" | "NETWORK_ERROR" | "TIMEOUT" | "UNKNOWN_ERROR" | "INSUFFICIENT_PERMISSIONS")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/StorageGateway/Client.html#join_domain-instance_method
       def join_domain: (

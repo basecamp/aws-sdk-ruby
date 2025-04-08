@@ -172,6 +172,10 @@ module Aws
                                             ukraine_additional_info: {
                                               ukraine_trn_type: ("Business" | "Individual")
                                             }?,
+                                            uzbekistan_additional_info: {
+                                              tax_registration_number_type: ("Business" | "Individual")?,
+                                              vat_registration_number: ::String?
+                                            }?,
                                             vietnam_additional_info: {
                                               electronic_transaction_code_number: ::String?,
                                               enterprise_identification_number: ::String?,
@@ -438,6 +442,10 @@ module Aws
                                       }?,
                                       ukraine_additional_info: {
                                         ukraine_trn_type: ("Business" | "Individual")
+                                      }?,
+                                      uzbekistan_additional_info: {
+                                        tax_registration_number_type: ("Business" | "Individual")?,
+                                        vat_registration_number: ::String?
                                       }?,
                                       vietnam_additional_info: {
                                         electronic_transaction_code_number: ::String?,

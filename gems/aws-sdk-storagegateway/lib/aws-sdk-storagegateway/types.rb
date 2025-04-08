@@ -4627,6 +4627,10 @@ module Aws::StorageGateway
     #
     #   * `JOINING`: Indicates that a `JoinDomain` operation is in progress.
     #
+    #   * `INSUFFICIENT_PERMISSIONS`: Indicates that the `JoinDomain`
+    #     operation failed because the specified user lacks the necessary
+    #     permissions to join the domain.
+    #
     #   * `NETWORK_ERROR`: Indicates that `JoinDomain` operation failed due
     #     to a network or connectivity error.
     #
@@ -6387,8 +6391,8 @@ module Aws::StorageGateway
     #   @return [String]
     #
     # @!attribute [rw] location_arn
-    #   The ARN of the Amazon S3 bucket where the cache report will be
-    #   saved.
+    #   The ARN of the Amazon S3 bucket where you want to save the cache
+    #   report.
     #
     #   <note markdown="1"> We do not recommend saving the cache report to the same Amazon S3
     #   bucket for which you are generating the report.
@@ -6399,8 +6403,8 @@ module Aws::StorageGateway
     #   @return [String]
     #
     # @!attribute [rw] bucket_region
-    #   The Amazon Web Services Region of the Amazon S3 bucket associated
-    #   with the file share for which you want to generate the cache report.
+    #   The Amazon Web Services Region of the Amazon S3 bucket where you
+    #   want to save the cache report.
     #   @return [String]
     #
     # @!attribute [rw] vpc_endpoint_dns_name

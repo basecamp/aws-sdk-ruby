@@ -29198,7 +29198,7 @@ module Aws::SecurityHub
     # Provides information about a specific security standard.
     #
     # @!attribute [rw] standards_arn
-    #   The ARN of a standard.
+    #   The ARN of the standard.
     #   @return [String]
     #
     # @!attribute [rw] name
@@ -29530,7 +29530,8 @@ module Aws::SecurityHub
       include Aws::Structure
     end
 
-    # The reason for the current status of a standard subscription.
+    # The reason for the current status of your subscription to the
+    # standard.
     #
     # @!attribute [rw] status_reason_code
     #   The reason code that represents the reason for the current status of
@@ -29548,12 +29549,12 @@ module Aws::SecurityHub
     # A resource that represents your subscription to a supported standard.
     #
     # @!attribute [rw] standards_subscription_arn
-    #   The ARN of a resource that represents your subscription to a
-    #   supported standard.
+    #   The ARN of the resource that represents your subscription to the
+    #   standard.
     #   @return [String]
     #
     # @!attribute [rw] standards_arn
-    #   The ARN of a standard.
+    #   The ARN of the standard.
     #   @return [String]
     #
     # @!attribute [rw] standards_input
@@ -29561,34 +29562,35 @@ module Aws::SecurityHub
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] standards_status
-    #   The status of the standard subscription.
+    #   The status of your subscription to the standard. Possible values
+    #   are:
     #
-    #   The status values are as follows:
+    #   * `PENDING` - The standard is in the process of being enabled. Or
+    #     the standard is already enabled and Security Hub is adding new
+    #     controls to the standard.
     #
-    #   * `PENDING` - Standard is in the process of being enabled.
+    #   * `READY` - The standard is enabled.
     #
-    #   * `READY` - Standard is enabled.
+    #   * `INCOMPLETE` - The standard could not be enabled completely. One
+    #     or more errors (`StandardsStatusReason`) occurred when Security
+    #     Hub attempted to enable the standard.
     #
-    #   * `INCOMPLETE` - Standard could not be enabled completely. Some
-    #     controls may not be available.
+    #   * `DELETING` - The standard is in the process of being disabled.
     #
-    #   * `DELETING` - Standard is in the process of being disabled.
-    #
-    #   * `FAILED` - Standard could not be disabled.
+    #   * `FAILED` - The standard could not be disabled. One or more errors
+    #     (`StandardsStatusReason`) occurred when Security Hub attempted to
+    #     disable the standard.
     #   @return [String]
     #
     # @!attribute [rw] standards_controls_updatable
-    #   Indicates whether the controls associated with this standards
-    #   subscription can be viewed and updated.
+    #   Specifies whether you can retrieve information about and configure
+    #   individual controls that apply to the standard. Possible values are:
     #
-    #   The values are as follows:
+    #   * `READY_FOR_UPDATES` - Controls in the standard can be retrieved
+    #     and configured.
     #
-    #   * `READY_FOR_UPDATES` - Controls associated with this standards
-    #     subscription can be viewed and updated.
-    #
-    #   * `NOT_READY_FOR_UPDATES` - Controls associated with this standards
-    #     subscription cannot be retrieved or updated yet. Security Hub is
-    #     still processing a request to create the controls.
+    #   * `NOT_READY_FOR_UPDATES` - Controls in the standard cannot be
+    #     retrieved or configured.
     #   @return [String]
     #
     # @!attribute [rw] standards_status_reason

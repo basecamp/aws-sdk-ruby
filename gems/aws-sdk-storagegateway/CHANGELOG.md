@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.107.0 (2025-04-08)
+------------------
+
+* Feature - Added new ActiveDirectoryStatus value, ListCacheReports paginator, and support for longer pagination tokens.
+
 1.106.0 (2025-02-27)
 ------------------
 

@@ -630,6 +630,21 @@ module Aws::IoTFleetWise
     #           },
     #         ],
     #         state_templates_to_remove: ["ResourceIdentifier"],
+    #         state_templates_to_update: [
+    #           {
+    #             identifier: "ResourceIdentifier", # required
+    #             state_template_update_strategy: { # required
+    #               periodic: {
+    #                 state_template_update_rate: { # required
+    #                   unit: "MILLISECOND", # required, accepts MILLISECOND, SECOND, MINUTE, HOUR
+    #                   value: 1, # required
+    #                 },
+    #               },
+    #               on_change: {
+    #               },
+    #             },
+    #           },
+    #         ],
     #       },
     #     ],
     #   })
@@ -4113,6 +4128,15 @@ module Aws::IoTFleetWise
 
     # Updates a vehicle.
     #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
     # @option params [required, String] :vehicle_name
     #   The unique ID of the vehicle to update.
     #
@@ -4141,6 +4165,10 @@ module Aws::IoTFleetWise
     #
     # @option params [Array<String>] :state_templates_to_remove
     #   Remove state templates from the vehicle.
+    #
+    # @option params [Array<Types::StateTemplateAssociation>] :state_templates_to_update
+    #   Change the `stateTemplateUpdateStrategy` of state templates already
+    #   associated with the vehicle.
     #
     # @return [Types::UpdateVehicleResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -4173,6 +4201,21 @@ module Aws::IoTFleetWise
     #       },
     #     ],
     #     state_templates_to_remove: ["ResourceIdentifier"],
+    #     state_templates_to_update: [
+    #       {
+    #         identifier: "ResourceIdentifier", # required
+    #         state_template_update_strategy: { # required
+    #           periodic: {
+    #             state_template_update_rate: { # required
+    #               unit: "MILLISECOND", # required, accepts MILLISECOND, SECOND, MINUTE, HOUR
+    #               value: 1, # required
+    #             },
+    #           },
+    #           on_change: {
+    #           },
+    #         },
+    #       },
+    #     ],
     #   })
     #
     # @example Response structure
@@ -4205,7 +4248,7 @@ module Aws::IoTFleetWise
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-iotfleetwise'
-      context[:gem_version] = '1.43.0'
+      context[:gem_version] = '1.44.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

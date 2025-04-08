@@ -47,6 +47,7 @@ module Aws::TaxSettings
       attr_accessor spain_additional_info: Types::SpainAdditionalInfo
       attr_accessor turkey_additional_info: Types::TurkeyAdditionalInfo
       attr_accessor ukraine_additional_info: Types::UkraineAdditionalInfo
+      attr_accessor uzbekistan_additional_info: Types::UzbekistanAdditionalInfo
       attr_accessor vietnam_additional_info: Types::VietnamAdditionalInfo
       SENSITIVE: []
     end
@@ -70,6 +71,7 @@ module Aws::TaxSettings
       attr_accessor spain_additional_info: Types::SpainAdditionalInfo
       attr_accessor turkey_additional_info: Types::TurkeyAdditionalInfo
       attr_accessor ukraine_additional_info: Types::UkraineAdditionalInfo
+      attr_accessor uzbekistan_additional_info: Types::UzbekistanAdditionalInfo
       attr_accessor vietnam_additional_info: Types::VietnamAdditionalInfo
       SENSITIVE: []
     end
@@ -533,6 +535,12 @@ module Aws::TaxSettings
 
     class UkraineAdditionalInfo
       attr_accessor ukraine_trn_type: ("Business" | "Individual")
+      SENSITIVE: []
+    end
+
+    class UzbekistanAdditionalInfo
+      attr_accessor tax_registration_number_type: ("Business" | "Individual")
+      attr_accessor vat_registration_number: ::String
       SENSITIVE: []
     end
 

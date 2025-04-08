@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.132.0 (2025-04-08)
+------------------
+
+* Feature - Documentation updates for AWS Security Hub.
+
 1.131.0 (2025-03-24)
 ------------------
 
