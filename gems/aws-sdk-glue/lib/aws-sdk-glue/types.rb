@@ -15272,8 +15272,13 @@ module Aws::Glue
     #   The number of files removed by the compaction job run.
     #   @return [Integer]
     #
-    # @!attribute [rw] number_of_dpus
+    # @!attribute [rw] dpu_hours
     #   The number of DPU hours consumed by the job.
+    #   @return [Float]
+    #
+    # @!attribute [rw] number_of_dpus
+    #   The number of DPUs consumed by the job, rounded up to the nearest
+    #   whole number.
     #   @return [Integer]
     #
     # @!attribute [rw] job_duration_in_hour
@@ -15285,6 +15290,7 @@ module Aws::Glue
     class IcebergCompactionMetrics < Struct.new(
       :number_of_bytes_compacted,
       :number_of_files_compacted,
+      :dpu_hours,
       :number_of_dpus,
       :job_duration_in_hour)
       SENSITIVE = []
@@ -15341,8 +15347,13 @@ module Aws::Glue
     #   run.
     #   @return [Integer]
     #
-    # @!attribute [rw] number_of_dpus
+    # @!attribute [rw] dpu_hours
     #   The number of DPU hours consumed by the job.
+    #   @return [Float]
+    #
+    # @!attribute [rw] number_of_dpus
+    #   The number of DPUs consumed by the job, rounded up to the nearest
+    #   whole number.
     #   @return [Integer]
     #
     # @!attribute [rw] job_duration_in_hour
@@ -15353,6 +15364,7 @@ module Aws::Glue
     #
     class IcebergOrphanFileDeletionMetrics < Struct.new(
       :number_of_orphan_files_deleted,
+      :dpu_hours,
       :number_of_dpus,
       :job_duration_in_hour)
       SENSITIVE = []
@@ -15403,8 +15415,13 @@ module Aws::Glue
     #   The number of manifest lists deleted by the retention job run.
     #   @return [Integer]
     #
-    # @!attribute [rw] number_of_dpus
+    # @!attribute [rw] dpu_hours
     #   The number of DPU hours consumed by the job.
+    #   @return [Float]
+    #
+    # @!attribute [rw] number_of_dpus
+    #   The number of DPUs consumed by the job, rounded up to the nearest
+    #   whole number.
     #   @return [Integer]
     #
     # @!attribute [rw] job_duration_in_hour
@@ -15417,6 +15434,7 @@ module Aws::Glue
       :number_of_data_files_deleted,
       :number_of_manifest_files_deleted,
       :number_of_manifest_lists_deleted,
+      :dpu_hours,
       :number_of_dpus,
       :job_duration_in_hour)
       SENSITIVE = []
@@ -21490,7 +21508,8 @@ module Aws::Glue
     #   @return [String]
     #
     # @!attribute [rw] number_of_dpus
-    #   The number of DPU hours consumed by the job.
+    #   The number of DPUs consumed by the job, rounded up to the nearest
+    #   whole number.
     #   @return [String]
     #
     # @!attribute [rw] job_duration_in_hour

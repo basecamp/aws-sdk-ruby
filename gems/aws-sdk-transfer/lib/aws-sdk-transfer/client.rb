@@ -911,6 +911,7 @@ module Aws::Transfer
     #     sftp_config: {
     #       user_secret_id: "SecretId",
     #       trusted_host_keys: ["SftpConnectorTrustedHostKey"],
+    #       max_concurrent_connections: 1,
     #     },
     #     security_policy_name: "ConnectorSecurityPolicyName",
     #   })
@@ -2338,6 +2339,7 @@ module Aws::Transfer
     #   resp.connector.sftp_config.user_secret_id #=> String
     #   resp.connector.sftp_config.trusted_host_keys #=> Array
     #   resp.connector.sftp_config.trusted_host_keys[0] #=> String
+    #   resp.connector.sftp_config.max_concurrent_connections #=> Integer
     #   resp.connector.service_managed_egress_ip_addresses #=> Array
     #   resp.connector.service_managed_egress_ip_addresses[0] #=> String
     #   resp.connector.security_policy_name #=> String
@@ -4177,6 +4179,7 @@ module Aws::Transfer
     #   * {Types::TestConnectionResponse#connector_id #connector_id} => String
     #   * {Types::TestConnectionResponse#status #status} => String
     #   * {Types::TestConnectionResponse#status_message #status_message} => String
+    #   * {Types::TestConnectionResponse#sftp_connection_details #sftp_connection_details} => Types::SftpConnectorConnectionDetails
     #
     # @example Request syntax with placeholder values
     #
@@ -4189,6 +4192,7 @@ module Aws::Transfer
     #   resp.connector_id #=> String
     #   resp.status #=> String
     #   resp.status_message #=> String
+    #   resp.sftp_connection_details.host_key #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/TestConnection AWS API Documentation
     #
@@ -4786,6 +4790,7 @@ module Aws::Transfer
     #     sftp_config: {
     #       user_secret_id: "SecretId",
     #       trusted_host_keys: ["SftpConnectorTrustedHostKey"],
+    #       max_concurrent_connections: 1,
     #     },
     #     security_policy_name: "ConnectorSecurityPolicyName",
     #   })
@@ -5492,7 +5497,7 @@ module Aws::Transfer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-transfer'
-      context[:gem_version] = '1.115.0'
+      context[:gem_version] = '1.116.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -83,9 +83,11 @@ module Aws
         def name: () -> ::String
         def description: () -> ::String
         def behavior: () -> ("PREVENTIVE" | "PROACTIVE" | "DETECTIVE")
+        def severity: () -> ("LOW" | "MEDIUM" | "HIGH" | "CRITICAL")
         def region_configuration: () -> Types::RegionConfiguration
         def implementation: () -> Types::ImplementationDetails
         def parameters: () -> ::Array[Types::ControlParameter]
+        def create_time: () -> ::Time
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ControlCatalog/Client.html#get_control-instance_method
       def get_control: (

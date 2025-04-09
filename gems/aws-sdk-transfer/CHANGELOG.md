@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.116.0 (2025-04-09)
+------------------
+
+* Feature - This launch includes 2 enhancements to SFTP connectors user-experience: 1) Customers can self-serve concurrent connections setting for their connectors, and 2) Customers can discover the public host key of remote servers using their SFTP connectors.
+
 1.115.0 (2025-04-07)
 ------------------
 

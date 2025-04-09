@@ -228,6 +228,7 @@ module Aws::Transfer
     MapEntry = Shapes::StringShape.new(name: 'MapEntry')
     MapTarget = Shapes::StringShape.new(name: 'MapTarget')
     MapType = Shapes::StringShape.new(name: 'MapType')
+    MaxConcurrentConnections = Shapes::IntegerShape.new(name: 'MaxConcurrentConnections')
     MaxItems = Shapes::IntegerShape.new(name: 'MaxItems')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
     MdnResponse = Shapes::StringShape.new(name: 'MdnResponse')
@@ -296,6 +297,8 @@ module Aws::Transfer
     SetStatOption = Shapes::StringShape.new(name: 'SetStatOption')
     SftpAuthenticationMethods = Shapes::StringShape.new(name: 'SftpAuthenticationMethods')
     SftpConnectorConfig = Shapes::StructureShape.new(name: 'SftpConnectorConfig')
+    SftpConnectorConnectionDetails = Shapes::StructureShape.new(name: 'SftpConnectorConnectionDetails')
+    SftpConnectorHostKey = Shapes::StringShape.new(name: 'SftpConnectorHostKey')
     SftpConnectorTrustedHostKey = Shapes::StringShape.new(name: 'SftpConnectorTrustedHostKey')
     SftpConnectorTrustedHostKeyList = Shapes::ListShape.new(name: 'SftpConnectorTrustedHostKeyList')
     SigningAlg = Shapes::StringShape.new(name: 'SigningAlg')
@@ -1248,7 +1251,11 @@ module Aws::Transfer
 
     SftpConnectorConfig.add_member(:user_secret_id, Shapes::ShapeRef.new(shape: SecretId, location_name: "UserSecretId"))
     SftpConnectorConfig.add_member(:trusted_host_keys, Shapes::ShapeRef.new(shape: SftpConnectorTrustedHostKeyList, location_name: "TrustedHostKeys"))
+    SftpConnectorConfig.add_member(:max_concurrent_connections, Shapes::ShapeRef.new(shape: MaxConcurrentConnections, location_name: "MaxConcurrentConnections"))
     SftpConnectorConfig.struct_class = Types::SftpConnectorConfig
+
+    SftpConnectorConnectionDetails.add_member(:host_key, Shapes::ShapeRef.new(shape: SftpConnectorHostKey, location_name: "HostKey"))
+    SftpConnectorConnectionDetails.struct_class = Types::SftpConnectorConnectionDetails
 
     SftpConnectorTrustedHostKeyList.member = Shapes::ShapeRef.new(shape: SftpConnectorTrustedHostKey)
 
@@ -1327,6 +1334,7 @@ module Aws::Transfer
     TestConnectionResponse.add_member(:connector_id, Shapes::ShapeRef.new(shape: ConnectorId, location_name: "ConnectorId"))
     TestConnectionResponse.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "Status"))
     TestConnectionResponse.add_member(:status_message, Shapes::ShapeRef.new(shape: Message, location_name: "StatusMessage"))
+    TestConnectionResponse.add_member(:sftp_connection_details, Shapes::ShapeRef.new(shape: SftpConnectorConnectionDetails, location_name: "SftpConnectionDetails"))
     TestConnectionResponse.struct_class = Types::TestConnectionResponse
 
     TestIdentityProviderRequest.add_member(:server_id, Shapes::ShapeRef.new(shape: ServerId, required: true, location_name: "ServerId"))

@@ -505,9 +505,11 @@ module Aws::ControlCatalog
     #   * {Types::GetControlResponse#name #name} => String
     #   * {Types::GetControlResponse#description #description} => String
     #   * {Types::GetControlResponse#behavior #behavior} => String
+    #   * {Types::GetControlResponse#severity #severity} => String
     #   * {Types::GetControlResponse#region_configuration #region_configuration} => Types::RegionConfiguration
     #   * {Types::GetControlResponse#implementation #implementation} => Types::ImplementationDetails
     #   * {Types::GetControlResponse#parameters #parameters} => Array&lt;Types::ControlParameter&gt;
+    #   * {Types::GetControlResponse#create_time #create_time} => Time
     #
     # @example Request syntax with placeholder values
     #
@@ -521,12 +523,15 @@ module Aws::ControlCatalog
     #   resp.name #=> String
     #   resp.description #=> String
     #   resp.behavior #=> String, one of "PREVENTIVE", "PROACTIVE", "DETECTIVE"
+    #   resp.severity #=> String, one of "LOW", "MEDIUM", "HIGH", "CRITICAL"
     #   resp.region_configuration.scope #=> String, one of "GLOBAL", "REGIONAL"
     #   resp.region_configuration.deployable_regions #=> Array
     #   resp.region_configuration.deployable_regions[0] #=> String
     #   resp.implementation.type #=> String
+    #   resp.implementation.identifier #=> String
     #   resp.parameters #=> Array
     #   resp.parameters[0].name #=> String
+    #   resp.create_time #=> Time
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/controlcatalog-2018-05-10/GetControl AWS API Documentation
     #
@@ -632,6 +637,11 @@ module Aws::ControlCatalog
     #   resp.controls[0].arn #=> String
     #   resp.controls[0].name #=> String
     #   resp.controls[0].description #=> String
+    #   resp.controls[0].behavior #=> String, one of "PREVENTIVE", "PROACTIVE", "DETECTIVE"
+    #   resp.controls[0].severity #=> String, one of "LOW", "MEDIUM", "HIGH", "CRITICAL"
+    #   resp.controls[0].implementation.type #=> String
+    #   resp.controls[0].implementation.identifier #=> String
+    #   resp.controls[0].create_time #=> Time
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/controlcatalog-2018-05-10/ListControls AWS API Documentation
@@ -764,7 +774,7 @@ module Aws::ControlCatalog
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-controlcatalog'
-      context[:gem_version] = '1.21.0'
+      context[:gem_version] = '1.22.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -531,7 +531,7 @@ module Aws::GroundStation
     #             units: "GHz", # required, accepts GHz, MHz, kHz
     #             value: 1.0, # required
     #           },
-    #           polarization: "LEFT_HAND", # accepts LEFT_HAND, NONE, RIGHT_HAND
+    #           polarization: "RIGHT_HAND", # accepts RIGHT_HAND, LEFT_HAND, NONE
     #         },
     #       },
     #       antenna_downlink_demod_decode_config: {
@@ -550,7 +550,7 @@ module Aws::GroundStation
     #             units: "GHz", # required, accepts GHz, MHz, kHz
     #             value: 1.0, # required
     #           },
-    #           polarization: "LEFT_HAND", # accepts LEFT_HAND, NONE, RIGHT_HAND
+    #           polarization: "RIGHT_HAND", # accepts RIGHT_HAND, LEFT_HAND, NONE
     #         },
     #       },
     #       antenna_uplink_config: {
@@ -559,7 +559,7 @@ module Aws::GroundStation
     #             units: "GHz", # required, accepts GHz, MHz, kHz
     #             value: 1.0, # required
     #           },
-    #           polarization: "LEFT_HAND", # accepts LEFT_HAND, NONE, RIGHT_HAND
+    #           polarization: "RIGHT_HAND", # accepts RIGHT_HAND, LEFT_HAND, NONE
     #         },
     #         target_eirp: { # required
     #           units: "dBW", # required, accepts dBW
@@ -577,7 +577,7 @@ module Aws::GroundStation
     #         role_arn: "RoleArn", # required
     #       },
     #       tracking_config: {
-    #         autotrack: "PREFERRED", # required, accepts PREFERRED, REMOVED, REQUIRED
+    #         autotrack: "REQUIRED", # required, accepts REQUIRED, PREFERRED, REMOVED
     #       },
     #       uplink_echo_config: {
     #         antenna_uplink_config_arn: "ConfigArn", # required
@@ -594,7 +594,7 @@ module Aws::GroundStation
     #
     #   resp.config_arn #=> String
     #   resp.config_id #=> String
-    #   resp.config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "antenna-uplink", "dataflow-endpoint", "tracking", "uplink-echo", "s3-recording"
+    #   resp.config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "tracking", "dataflow-endpoint", "antenna-uplink", "uplink-echo", "s3-recording"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/CreateConfig AWS API Documentation
     #
@@ -630,6 +630,14 @@ module Aws::GroundStation
     #
     # @option params [required, Array<Types::EndpointDetails>] :endpoint_details
     #   Endpoint details of each endpoint in the dataflow endpoint group.
+    #   All dataflow endpoints within a single dataflow endpoint group must be
+    #   of the same type. You cannot mix <a
+    #   href="https://docs.aws.amazon.com/ground-station/latest/APIReference/API_AwsGroundStationAgentEndpoint.html">
+    #   AWS Ground Station Agent endpoints</a> with <a
+    #   href="https://docs.aws.amazon.com/ground-station/latest/APIReference/API_DataflowEndpoint.html">Dataflow
+    #   endpoints</a> in the same group. If your use case requires both types
+    #   of endpoints, you must create separate dataflow endpoint groups for
+    #   each type. </p>
     #
     # @option params [Hash<String,String>] :tags
     #   Tags of a dataflow endpoint group.
@@ -677,7 +685,7 @@ module Aws::GroundStation
     #           status: "created", # accepts created, creating, deleted, deleting, failed
     #         },
     #         health_reasons: ["NO_REGISTERED_AGENT"], # accepts NO_REGISTERED_AGENT, INVALID_IP_OWNERSHIP, NOT_AUTHORIZED_TO_CREATE_SLR, UNVERIFIED_IP_OWNERSHIP, INITIALIZING_DATAPLANE, DATAPLANE_FAILURE, HEALTHY
-    #         health_status: "UNHEALTHY", # accepts UNHEALTHY, HEALTHY
+    #         health_status: "HEALTHY", # accepts HEALTHY, UNHEALTHY
     #         security_details: {
     #           role_arn: "RoleArn", # required
     #           security_group_ids: ["String"], # required
@@ -893,14 +901,14 @@ module Aws::GroundStation
     #
     #   resp = client.delete_config({
     #     config_id: "Uuid", # required
-    #     config_type: "antenna-downlink", # required, accepts antenna-downlink, antenna-downlink-demod-decode, antenna-uplink, dataflow-endpoint, tracking, uplink-echo, s3-recording
+    #     config_type: "antenna-downlink", # required, accepts antenna-downlink, antenna-downlink-demod-decode, tracking, dataflow-endpoint, antenna-uplink, uplink-echo, s3-recording
     #   })
     #
     # @example Response structure
     #
     #   resp.config_arn #=> String
     #   resp.config_id #=> String
-    #   resp.config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "antenna-uplink", "dataflow-endpoint", "tracking", "uplink-echo", "s3-recording"
+    #   resp.config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "tracking", "dataflow-endpoint", "antenna-uplink", "uplink-echo", "s3-recording"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/DeleteConfig AWS API Documentation
     #
@@ -1028,7 +1036,7 @@ module Aws::GroundStation
     # @example Response structure
     #
     #   resp.contact_id #=> String
-    #   resp.contact_status #=> String, one of "AVAILABLE", "AWS_CANCELLED", "AWS_FAILED", "CANCELLED", "CANCELLING", "COMPLETED", "FAILED", "FAILED_TO_SCHEDULE", "PASS", "POSTPASS", "PREPASS", "SCHEDULED", "SCHEDULING"
+    #   resp.contact_status #=> String, one of "SCHEDULING", "FAILED_TO_SCHEDULE", "SCHEDULED", "CANCELLED", "AWS_CANCELLED", "PREPASS", "PASS", "POSTPASS", "COMPLETED", "FAILED", "AVAILABLE", "CANCELLING", "AWS_FAILED"
     #   resp.dataflow_list #=> Array
     #   resp.dataflow_list[0].destination.config_details.antenna_demod_decode_details.output_node #=> String
     #   resp.dataflow_list[0].destination.config_details.endpoint_details.aws_ground_station_agent_endpoint.agent_status #=> String, one of "SUCCESS", "FAILED", "ACTIVE", "INACTIVE"
@@ -1048,7 +1056,7 @@ module Aws::GroundStation
     #   resp.dataflow_list[0].destination.config_details.endpoint_details.endpoint.status #=> String, one of "created", "creating", "deleted", "deleting", "failed"
     #   resp.dataflow_list[0].destination.config_details.endpoint_details.health_reasons #=> Array
     #   resp.dataflow_list[0].destination.config_details.endpoint_details.health_reasons[0] #=> String, one of "NO_REGISTERED_AGENT", "INVALID_IP_OWNERSHIP", "NOT_AUTHORIZED_TO_CREATE_SLR", "UNVERIFIED_IP_OWNERSHIP", "INITIALIZING_DATAPLANE", "DATAPLANE_FAILURE", "HEALTHY"
-    #   resp.dataflow_list[0].destination.config_details.endpoint_details.health_status #=> String, one of "UNHEALTHY", "HEALTHY"
+    #   resp.dataflow_list[0].destination.config_details.endpoint_details.health_status #=> String, one of "HEALTHY", "UNHEALTHY"
     #   resp.dataflow_list[0].destination.config_details.endpoint_details.security_details.role_arn #=> String
     #   resp.dataflow_list[0].destination.config_details.endpoint_details.security_details.security_group_ids #=> Array
     #   resp.dataflow_list[0].destination.config_details.endpoint_details.security_details.security_group_ids[0] #=> String
@@ -1057,7 +1065,7 @@ module Aws::GroundStation
     #   resp.dataflow_list[0].destination.config_details.s3_recording_details.bucket_arn #=> String
     #   resp.dataflow_list[0].destination.config_details.s3_recording_details.key_template #=> String
     #   resp.dataflow_list[0].destination.config_id #=> String
-    #   resp.dataflow_list[0].destination.config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "antenna-uplink", "dataflow-endpoint", "tracking", "uplink-echo", "s3-recording"
+    #   resp.dataflow_list[0].destination.config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "tracking", "dataflow-endpoint", "antenna-uplink", "uplink-echo", "s3-recording"
     #   resp.dataflow_list[0].destination.dataflow_destination_region #=> String
     #   resp.dataflow_list[0].error_message #=> String
     #   resp.dataflow_list[0].source.config_details.antenna_demod_decode_details.output_node #=> String
@@ -1078,7 +1086,7 @@ module Aws::GroundStation
     #   resp.dataflow_list[0].source.config_details.endpoint_details.endpoint.status #=> String, one of "created", "creating", "deleted", "deleting", "failed"
     #   resp.dataflow_list[0].source.config_details.endpoint_details.health_reasons #=> Array
     #   resp.dataflow_list[0].source.config_details.endpoint_details.health_reasons[0] #=> String, one of "NO_REGISTERED_AGENT", "INVALID_IP_OWNERSHIP", "NOT_AUTHORIZED_TO_CREATE_SLR", "UNVERIFIED_IP_OWNERSHIP", "INITIALIZING_DATAPLANE", "DATAPLANE_FAILURE", "HEALTHY"
-    #   resp.dataflow_list[0].source.config_details.endpoint_details.health_status #=> String, one of "UNHEALTHY", "HEALTHY"
+    #   resp.dataflow_list[0].source.config_details.endpoint_details.health_status #=> String, one of "HEALTHY", "UNHEALTHY"
     #   resp.dataflow_list[0].source.config_details.endpoint_details.security_details.role_arn #=> String
     #   resp.dataflow_list[0].source.config_details.endpoint_details.security_details.security_group_ids #=> Array
     #   resp.dataflow_list[0].source.config_details.endpoint_details.security_details.security_group_ids[0] #=> String
@@ -1087,7 +1095,7 @@ module Aws::GroundStation
     #   resp.dataflow_list[0].source.config_details.s3_recording_details.bucket_arn #=> String
     #   resp.dataflow_list[0].source.config_details.s3_recording_details.key_template #=> String
     #   resp.dataflow_list[0].source.config_id #=> String
-    #   resp.dataflow_list[0].source.config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "antenna-uplink", "dataflow-endpoint", "tracking", "uplink-echo", "s3-recording"
+    #   resp.dataflow_list[0].source.config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "tracking", "dataflow-endpoint", "antenna-uplink", "uplink-echo", "s3-recording"
     #   resp.dataflow_list[0].source.dataflow_source_region #=> String
     #   resp.end_time #=> Time
     #   resp.error_message #=> String
@@ -1230,7 +1238,7 @@ module Aws::GroundStation
     #
     #   resp = client.get_config({
     #     config_id: "Uuid", # required
-    #     config_type: "antenna-downlink", # required, accepts antenna-downlink, antenna-downlink-demod-decode, antenna-uplink, dataflow-endpoint, tracking, uplink-echo, s3-recording
+    #     config_type: "antenna-downlink", # required, accepts antenna-downlink, antenna-downlink-demod-decode, tracking, dataflow-endpoint, antenna-uplink, uplink-echo, s3-recording
     #   })
     #
     # @example Response structure
@@ -1240,17 +1248,17 @@ module Aws::GroundStation
     #   resp.config_data.antenna_downlink_config.spectrum_config.bandwidth.value #=> Float
     #   resp.config_data.antenna_downlink_config.spectrum_config.center_frequency.units #=> String, one of "GHz", "MHz", "kHz"
     #   resp.config_data.antenna_downlink_config.spectrum_config.center_frequency.value #=> Float
-    #   resp.config_data.antenna_downlink_config.spectrum_config.polarization #=> String, one of "LEFT_HAND", "NONE", "RIGHT_HAND"
+    #   resp.config_data.antenna_downlink_config.spectrum_config.polarization #=> String, one of "RIGHT_HAND", "LEFT_HAND", "NONE"
     #   resp.config_data.antenna_downlink_demod_decode_config.decode_config.unvalidated_json #=> String
     #   resp.config_data.antenna_downlink_demod_decode_config.demodulation_config.unvalidated_json #=> String
     #   resp.config_data.antenna_downlink_demod_decode_config.spectrum_config.bandwidth.units #=> String, one of "GHz", "MHz", "kHz"
     #   resp.config_data.antenna_downlink_demod_decode_config.spectrum_config.bandwidth.value #=> Float
     #   resp.config_data.antenna_downlink_demod_decode_config.spectrum_config.center_frequency.units #=> String, one of "GHz", "MHz", "kHz"
     #   resp.config_data.antenna_downlink_demod_decode_config.spectrum_config.center_frequency.value #=> Float
-    #   resp.config_data.antenna_downlink_demod_decode_config.spectrum_config.polarization #=> String, one of "LEFT_HAND", "NONE", "RIGHT_HAND"
+    #   resp.config_data.antenna_downlink_demod_decode_config.spectrum_config.polarization #=> String, one of "RIGHT_HAND", "LEFT_HAND", "NONE"
     #   resp.config_data.antenna_uplink_config.spectrum_config.center_frequency.units #=> String, one of "GHz", "MHz", "kHz"
     #   resp.config_data.antenna_uplink_config.spectrum_config.center_frequency.value #=> Float
-    #   resp.config_data.antenna_uplink_config.spectrum_config.polarization #=> String, one of "LEFT_HAND", "NONE", "RIGHT_HAND"
+    #   resp.config_data.antenna_uplink_config.spectrum_config.polarization #=> String, one of "RIGHT_HAND", "LEFT_HAND", "NONE"
     #   resp.config_data.antenna_uplink_config.target_eirp.units #=> String, one of "dBW"
     #   resp.config_data.antenna_uplink_config.target_eirp.value #=> Float
     #   resp.config_data.antenna_uplink_config.transmit_disabled #=> Boolean
@@ -1259,11 +1267,11 @@ module Aws::GroundStation
     #   resp.config_data.s3_recording_config.bucket_arn #=> String
     #   resp.config_data.s3_recording_config.prefix #=> String
     #   resp.config_data.s3_recording_config.role_arn #=> String
-    #   resp.config_data.tracking_config.autotrack #=> String, one of "PREFERRED", "REMOVED", "REQUIRED"
+    #   resp.config_data.tracking_config.autotrack #=> String, one of "REQUIRED", "PREFERRED", "REMOVED"
     #   resp.config_data.uplink_echo_config.antenna_uplink_config_arn #=> String
     #   resp.config_data.uplink_echo_config.enabled #=> Boolean
     #   resp.config_id #=> String
-    #   resp.config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "antenna-uplink", "dataflow-endpoint", "tracking", "uplink-echo", "s3-recording"
+    #   resp.config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "tracking", "dataflow-endpoint", "antenna-uplink", "uplink-echo", "s3-recording"
     #   resp.name #=> String
     #   resp.tags #=> Hash
     #   resp.tags["String"] #=> String
@@ -1321,7 +1329,7 @@ module Aws::GroundStation
     #   resp.endpoints_details[0].endpoint.status #=> String, one of "created", "creating", "deleted", "deleting", "failed"
     #   resp.endpoints_details[0].health_reasons #=> Array
     #   resp.endpoints_details[0].health_reasons[0] #=> String, one of "NO_REGISTERED_AGENT", "INVALID_IP_OWNERSHIP", "NOT_AUTHORIZED_TO_CREATE_SLR", "UNVERIFIED_IP_OWNERSHIP", "INITIALIZING_DATAPLANE", "DATAPLANE_FAILURE", "HEALTHY"
-    #   resp.endpoints_details[0].health_status #=> String, one of "UNHEALTHY", "HEALTHY"
+    #   resp.endpoints_details[0].health_status #=> String, one of "HEALTHY", "UNHEALTHY"
     #   resp.endpoints_details[0].security_details.role_arn #=> String
     #   resp.endpoints_details[0].security_details.security_group_ids #=> Array
     #   resp.endpoints_details[0].security_details.security_group_ids[0] #=> String
@@ -1502,7 +1510,7 @@ module Aws::GroundStation
     #   resp.config_list #=> Array
     #   resp.config_list[0].config_arn #=> String
     #   resp.config_list[0].config_id #=> String
-    #   resp.config_list[0].config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "antenna-uplink", "dataflow-endpoint", "tracking", "uplink-echo", "s3-recording"
+    #   resp.config_list[0].config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "tracking", "dataflow-endpoint", "antenna-uplink", "uplink-echo", "s3-recording"
     #   resp.config_list[0].name #=> String
     #   resp.next_token #=> String
     #
@@ -1562,14 +1570,14 @@ module Aws::GroundStation
     #     next_token: "PaginationToken",
     #     satellite_arn: "satelliteArn",
     #     start_time: Time.now, # required
-    #     status_list: ["AVAILABLE"], # required, accepts AVAILABLE, AWS_CANCELLED, AWS_FAILED, CANCELLED, CANCELLING, COMPLETED, FAILED, FAILED_TO_SCHEDULE, PASS, POSTPASS, PREPASS, SCHEDULED, SCHEDULING
+    #     status_list: ["SCHEDULING"], # required, accepts SCHEDULING, FAILED_TO_SCHEDULE, SCHEDULED, CANCELLED, AWS_CANCELLED, PREPASS, PASS, POSTPASS, COMPLETED, FAILED, AVAILABLE, CANCELLING, AWS_FAILED
     #   })
     #
     # @example Response structure
     #
     #   resp.contact_list #=> Array
     #   resp.contact_list[0].contact_id #=> String
-    #   resp.contact_list[0].contact_status #=> String, one of "AVAILABLE", "AWS_CANCELLED", "AWS_FAILED", "CANCELLED", "CANCELLING", "COMPLETED", "FAILED", "FAILED_TO_SCHEDULE", "PASS", "POSTPASS", "PREPASS", "SCHEDULED", "SCHEDULING"
+    #   resp.contact_list[0].contact_status #=> String, one of "SCHEDULING", "FAILED_TO_SCHEDULE", "SCHEDULED", "CANCELLED", "AWS_CANCELLED", "PREPASS", "PASS", "POSTPASS", "COMPLETED", "FAILED", "AVAILABLE", "CANCELLING", "AWS_FAILED"
     #   resp.contact_list[0].end_time #=> Time
     #   resp.contact_list[0].error_message #=> String
     #   resp.contact_list[0].ground_station #=> String
@@ -1873,6 +1881,9 @@ module Aws::GroundStation
     # @option params [required, Types::DiscoveryData] :discovery_data
     #   Data for associating an agent with the capabilities it is managing.
     #
+    # @option params [Hash<String,String>] :tags
+    #   Tags assigned to an `Agent`.
+    #
     # @return [Types::RegisterAgentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::RegisterAgentResponse#agent_id #agent_id} => String
@@ -1897,6 +1908,9 @@ module Aws::GroundStation
     #       capability_arns: ["CapabilityArn"], # required
     #       private_ip_addresses: ["IpV4Address"], # required
     #       public_ip_addresses: ["IpV4Address"], # required
+    #     },
+    #     tags: {
+    #       "String" => "String",
     #     },
     #   })
     #
@@ -2113,7 +2127,7 @@ module Aws::GroundStation
     #             units: "GHz", # required, accepts GHz, MHz, kHz
     #             value: 1.0, # required
     #           },
-    #           polarization: "LEFT_HAND", # accepts LEFT_HAND, NONE, RIGHT_HAND
+    #           polarization: "RIGHT_HAND", # accepts RIGHT_HAND, LEFT_HAND, NONE
     #         },
     #       },
     #       antenna_downlink_demod_decode_config: {
@@ -2132,7 +2146,7 @@ module Aws::GroundStation
     #             units: "GHz", # required, accepts GHz, MHz, kHz
     #             value: 1.0, # required
     #           },
-    #           polarization: "LEFT_HAND", # accepts LEFT_HAND, NONE, RIGHT_HAND
+    #           polarization: "RIGHT_HAND", # accepts RIGHT_HAND, LEFT_HAND, NONE
     #         },
     #       },
     #       antenna_uplink_config: {
@@ -2141,7 +2155,7 @@ module Aws::GroundStation
     #             units: "GHz", # required, accepts GHz, MHz, kHz
     #             value: 1.0, # required
     #           },
-    #           polarization: "LEFT_HAND", # accepts LEFT_HAND, NONE, RIGHT_HAND
+    #           polarization: "RIGHT_HAND", # accepts RIGHT_HAND, LEFT_HAND, NONE
     #         },
     #         target_eirp: { # required
     #           units: "dBW", # required, accepts dBW
@@ -2159,7 +2173,7 @@ module Aws::GroundStation
     #         role_arn: "RoleArn", # required
     #       },
     #       tracking_config: {
-    #         autotrack: "PREFERRED", # required, accepts PREFERRED, REMOVED, REQUIRED
+    #         autotrack: "REQUIRED", # required, accepts REQUIRED, PREFERRED, REMOVED
     #       },
     #       uplink_echo_config: {
     #         antenna_uplink_config_arn: "ConfigArn", # required
@@ -2167,7 +2181,7 @@ module Aws::GroundStation
     #       },
     #     },
     #     config_id: "Uuid", # required
-    #     config_type: "antenna-downlink", # required, accepts antenna-downlink, antenna-downlink-demod-decode, antenna-uplink, dataflow-endpoint, tracking, uplink-echo, s3-recording
+    #     config_type: "antenna-downlink", # required, accepts antenna-downlink, antenna-downlink-demod-decode, tracking, dataflow-endpoint, antenna-uplink, uplink-echo, s3-recording
     #     name: "SafeName", # required
     #   })
     #
@@ -2175,7 +2189,7 @@ module Aws::GroundStation
     #
     #   resp.config_arn #=> String
     #   resp.config_id #=> String
-    #   resp.config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "antenna-uplink", "dataflow-endpoint", "tracking", "uplink-echo", "s3-recording"
+    #   resp.config_type #=> String, one of "antenna-downlink", "antenna-downlink-demod-decode", "tracking", "dataflow-endpoint", "antenna-uplink", "uplink-echo", "s3-recording"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/UpdateConfig AWS API Documentation
     #
@@ -2328,7 +2342,7 @@ module Aws::GroundStation
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-groundstation'
-      context[:gem_version] = '1.63.0'
+      context[:gem_version] = '1.64.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

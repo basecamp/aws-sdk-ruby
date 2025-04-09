@@ -3819,6 +3819,7 @@ module Aws::Glue
     class IcebergCompactionMetrics
       attr_accessor number_of_bytes_compacted: ::Integer
       attr_accessor number_of_files_compacted: ::Integer
+      attr_accessor dpu_hours: ::Float
       attr_accessor number_of_dpus: ::Integer
       attr_accessor job_duration_in_hour: ::Float
       SENSITIVE: []
@@ -3838,6 +3839,7 @@ module Aws::Glue
 
     class IcebergOrphanFileDeletionMetrics
       attr_accessor number_of_orphan_files_deleted: ::Integer
+      attr_accessor dpu_hours: ::Float
       attr_accessor number_of_dpus: ::Integer
       attr_accessor job_duration_in_hour: ::Float
       SENSITIVE: []
@@ -3854,6 +3856,7 @@ module Aws::Glue
       attr_accessor number_of_data_files_deleted: ::Integer
       attr_accessor number_of_manifest_files_deleted: ::Integer
       attr_accessor number_of_manifest_lists_deleted: ::Integer
+      attr_accessor dpu_hours: ::Float
       attr_accessor number_of_dpus: ::Integer
       attr_accessor job_duration_in_hour: ::Float
       SENSITIVE: []

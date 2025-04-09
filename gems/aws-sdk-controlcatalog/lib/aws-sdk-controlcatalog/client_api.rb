@@ -26,6 +26,7 @@ module Aws::ControlCatalog
     ControlParameter = Shapes::StructureShape.new(name: 'ControlParameter')
     ControlParameters = Shapes::ListShape.new(name: 'ControlParameters')
     ControlScope = Shapes::StringShape.new(name: 'ControlScope')
+    ControlSeverity = Shapes::StringShape.new(name: 'ControlSeverity')
     ControlSummary = Shapes::StructureShape.new(name: 'ControlSummary')
     Controls = Shapes::ListShape.new(name: 'Controls')
     DeployableRegions = Shapes::ListShape.new(name: 'DeployableRegions')
@@ -37,6 +38,8 @@ module Aws::ControlCatalog
     GetControlRequest = Shapes::StructureShape.new(name: 'GetControlRequest')
     GetControlResponse = Shapes::StructureShape.new(name: 'GetControlResponse')
     ImplementationDetails = Shapes::StructureShape.new(name: 'ImplementationDetails')
+    ImplementationIdentifier = Shapes::StringShape.new(name: 'ImplementationIdentifier')
+    ImplementationSummary = Shapes::StructureShape.new(name: 'ImplementationSummary')
     ImplementationType = Shapes::StringShape.new(name: 'ImplementationType')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
     ListCommonControlsRequest = Shapes::StructureShape.new(name: 'ListCommonControlsRequest')
@@ -99,6 +102,10 @@ module Aws::ControlCatalog
     ControlSummary.add_member(:arn, Shapes::ShapeRef.new(shape: ControlArn, required: true, location_name: "Arn"))
     ControlSummary.add_member(:name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Name"))
     ControlSummary.add_member(:description, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Description"))
+    ControlSummary.add_member(:behavior, Shapes::ShapeRef.new(shape: ControlBehavior, location_name: "Behavior"))
+    ControlSummary.add_member(:severity, Shapes::ShapeRef.new(shape: ControlSeverity, location_name: "Severity"))
+    ControlSummary.add_member(:implementation, Shapes::ShapeRef.new(shape: ImplementationSummary, location_name: "Implementation"))
+    ControlSummary.add_member(:create_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "CreateTime"))
     ControlSummary.struct_class = Types::ControlSummary
 
     Controls.member = Shapes::ShapeRef.new(shape: ControlSummary)
@@ -126,13 +133,20 @@ module Aws::ControlCatalog
     GetControlResponse.add_member(:name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Name"))
     GetControlResponse.add_member(:description, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Description"))
     GetControlResponse.add_member(:behavior, Shapes::ShapeRef.new(shape: ControlBehavior, required: true, location_name: "Behavior"))
+    GetControlResponse.add_member(:severity, Shapes::ShapeRef.new(shape: ControlSeverity, location_name: "Severity"))
     GetControlResponse.add_member(:region_configuration, Shapes::ShapeRef.new(shape: RegionConfiguration, required: true, location_name: "RegionConfiguration"))
     GetControlResponse.add_member(:implementation, Shapes::ShapeRef.new(shape: ImplementationDetails, location_name: "Implementation"))
     GetControlResponse.add_member(:parameters, Shapes::ShapeRef.new(shape: ControlParameters, location_name: "Parameters"))
+    GetControlResponse.add_member(:create_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "CreateTime"))
     GetControlResponse.struct_class = Types::GetControlResponse
 
     ImplementationDetails.add_member(:type, Shapes::ShapeRef.new(shape: ImplementationType, required: true, location_name: "Type"))
+    ImplementationDetails.add_member(:identifier, Shapes::ShapeRef.new(shape: ImplementationIdentifier, location_name: "Identifier"))
     ImplementationDetails.struct_class = Types::ImplementationDetails
+
+    ImplementationSummary.add_member(:type, Shapes::ShapeRef.new(shape: ImplementationType, required: true, location_name: "Type"))
+    ImplementationSummary.add_member(:identifier, Shapes::ShapeRef.new(shape: ImplementationIdentifier, location_name: "Identifier"))
+    ImplementationSummary.struct_class = Types::ImplementationSummary
 
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
     InternalServerException.struct_class = Types::InternalServerException

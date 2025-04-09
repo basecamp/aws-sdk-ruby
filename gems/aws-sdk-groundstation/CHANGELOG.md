@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.64.0 (2025-04-09)
+------------------
+
+* Feature - Support tagging Agents and adjust input field validations
+
 1.63.0 (2025-02-18)
 ------------------
 

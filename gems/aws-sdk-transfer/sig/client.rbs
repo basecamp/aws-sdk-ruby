@@ -166,7 +166,8 @@ module Aws
                               ],
                               ?sftp_config: {
                                 user_secret_id: ::String?,
-                                trusted_host_keys: Array[::String]?
+                                trusted_host_keys: Array[::String]?,
+                                max_concurrent_connections: ::Integer?
                               },
                               ?security_policy_name: ::String
                             ) -> _CreateConnectorResponseSuccess
@@ -987,6 +988,7 @@ module Aws
         def connector_id: () -> ::String
         def status: () -> ::String
         def status_message: () -> ::String
+        def sftp_connection_details: () -> Types::SftpConnectorConnectionDetails
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#test_connection-instance_method
       def test_connection: (
@@ -1109,7 +1111,8 @@ module Aws
                               ?logging_role: ::String,
                               ?sftp_config: {
                                 user_secret_id: ::String?,
-                                trusted_host_keys: Array[::String]?
+                                trusted_host_keys: Array[::String]?,
+                                max_concurrent_connections: ::Integer?
                               },
                               ?security_policy_name: ::String
                             ) -> _UpdateConnectorResponseSuccess

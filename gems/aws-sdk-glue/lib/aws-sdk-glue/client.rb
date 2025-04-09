@@ -2198,14 +2198,17 @@ module Aws::Glue
     #   resp.table_optimizers[0].table_optimizer.last_run.error #=> String
     #   resp.table_optimizers[0].table_optimizer.last_run.compaction_metrics.iceberg_metrics.number_of_bytes_compacted #=> Integer
     #   resp.table_optimizers[0].table_optimizer.last_run.compaction_metrics.iceberg_metrics.number_of_files_compacted #=> Integer
+    #   resp.table_optimizers[0].table_optimizer.last_run.compaction_metrics.iceberg_metrics.dpu_hours #=> Float
     #   resp.table_optimizers[0].table_optimizer.last_run.compaction_metrics.iceberg_metrics.number_of_dpus #=> Integer
     #   resp.table_optimizers[0].table_optimizer.last_run.compaction_metrics.iceberg_metrics.job_duration_in_hour #=> Float
     #   resp.table_optimizers[0].table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_data_files_deleted #=> Integer
     #   resp.table_optimizers[0].table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_manifest_files_deleted #=> Integer
     #   resp.table_optimizers[0].table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_manifest_lists_deleted #=> Integer
+    #   resp.table_optimizers[0].table_optimizer.last_run.retention_metrics.iceberg_metrics.dpu_hours #=> Float
     #   resp.table_optimizers[0].table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_dpus #=> Integer
     #   resp.table_optimizers[0].table_optimizer.last_run.retention_metrics.iceberg_metrics.job_duration_in_hour #=> Float
     #   resp.table_optimizers[0].table_optimizer.last_run.orphan_file_deletion_metrics.iceberg_metrics.number_of_orphan_files_deleted #=> Integer
+    #   resp.table_optimizers[0].table_optimizer.last_run.orphan_file_deletion_metrics.iceberg_metrics.dpu_hours #=> Float
     #   resp.table_optimizers[0].table_optimizer.last_run.orphan_file_deletion_metrics.iceberg_metrics.number_of_dpus #=> Integer
     #   resp.table_optimizers[0].table_optimizer.last_run.orphan_file_deletion_metrics.iceberg_metrics.job_duration_in_hour #=> Float
     #   resp.failures #=> Array
@@ -12748,14 +12751,17 @@ module Aws::Glue
     #   resp.table_optimizer.last_run.error #=> String
     #   resp.table_optimizer.last_run.compaction_metrics.iceberg_metrics.number_of_bytes_compacted #=> Integer
     #   resp.table_optimizer.last_run.compaction_metrics.iceberg_metrics.number_of_files_compacted #=> Integer
+    #   resp.table_optimizer.last_run.compaction_metrics.iceberg_metrics.dpu_hours #=> Float
     #   resp.table_optimizer.last_run.compaction_metrics.iceberg_metrics.number_of_dpus #=> Integer
     #   resp.table_optimizer.last_run.compaction_metrics.iceberg_metrics.job_duration_in_hour #=> Float
     #   resp.table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_data_files_deleted #=> Integer
     #   resp.table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_manifest_files_deleted #=> Integer
     #   resp.table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_manifest_lists_deleted #=> Integer
+    #   resp.table_optimizer.last_run.retention_metrics.iceberg_metrics.dpu_hours #=> Float
     #   resp.table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_dpus #=> Integer
     #   resp.table_optimizer.last_run.retention_metrics.iceberg_metrics.job_duration_in_hour #=> Float
     #   resp.table_optimizer.last_run.orphan_file_deletion_metrics.iceberg_metrics.number_of_orphan_files_deleted #=> Integer
+    #   resp.table_optimizer.last_run.orphan_file_deletion_metrics.iceberg_metrics.dpu_hours #=> Float
     #   resp.table_optimizer.last_run.orphan_file_deletion_metrics.iceberg_metrics.number_of_dpus #=> Integer
     #   resp.table_optimizer.last_run.orphan_file_deletion_metrics.iceberg_metrics.job_duration_in_hour #=> Float
     #
@@ -15920,14 +15926,17 @@ module Aws::Glue
     #   resp.table_optimizer_runs[0].error #=> String
     #   resp.table_optimizer_runs[0].compaction_metrics.iceberg_metrics.number_of_bytes_compacted #=> Integer
     #   resp.table_optimizer_runs[0].compaction_metrics.iceberg_metrics.number_of_files_compacted #=> Integer
+    #   resp.table_optimizer_runs[0].compaction_metrics.iceberg_metrics.dpu_hours #=> Float
     #   resp.table_optimizer_runs[0].compaction_metrics.iceberg_metrics.number_of_dpus #=> Integer
     #   resp.table_optimizer_runs[0].compaction_metrics.iceberg_metrics.job_duration_in_hour #=> Float
     #   resp.table_optimizer_runs[0].retention_metrics.iceberg_metrics.number_of_data_files_deleted #=> Integer
     #   resp.table_optimizer_runs[0].retention_metrics.iceberg_metrics.number_of_manifest_files_deleted #=> Integer
     #   resp.table_optimizer_runs[0].retention_metrics.iceberg_metrics.number_of_manifest_lists_deleted #=> Integer
+    #   resp.table_optimizer_runs[0].retention_metrics.iceberg_metrics.dpu_hours #=> Float
     #   resp.table_optimizer_runs[0].retention_metrics.iceberg_metrics.number_of_dpus #=> Integer
     #   resp.table_optimizer_runs[0].retention_metrics.iceberg_metrics.job_duration_in_hour #=> Float
     #   resp.table_optimizer_runs[0].orphan_file_deletion_metrics.iceberg_metrics.number_of_orphan_files_deleted #=> Integer
+    #   resp.table_optimizer_runs[0].orphan_file_deletion_metrics.iceberg_metrics.dpu_hours #=> Float
     #   resp.table_optimizer_runs[0].orphan_file_deletion_metrics.iceberg_metrics.number_of_dpus #=> Integer
     #   resp.table_optimizer_runs[0].orphan_file_deletion_metrics.iceberg_metrics.job_duration_in_hour #=> Float
     #
@@ -20085,7 +20094,7 @@ module Aws::Glue
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-glue'
-      context[:gem_version] = '1.212.0'
+      context[:gem_version] = '1.213.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

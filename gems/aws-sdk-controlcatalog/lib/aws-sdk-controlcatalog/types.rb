@@ -205,12 +205,34 @@ module Aws::ControlCatalog
     #   Describes the functionality of the control.
     #   @return [String]
     #
+    # @!attribute [rw] behavior
+    #   An enumerated type, with the following possible values:
+    #   @return [String]
+    #
+    # @!attribute [rw] severity
+    #   An enumerated type, with the following possible values:
+    #   @return [String]
+    #
+    # @!attribute [rw] implementation
+    #   An object of type `ImplementationSummary` that describes how the
+    #   control is implemented.
+    #   @return [Types::ImplementationSummary]
+    #
+    # @!attribute [rw] create_time
+    #   A timestamp that notes the time when the control was released (start
+    #   of its life) as a governance capability in Amazon Web Services.
+    #   @return [Time]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/controlcatalog-2018-05-10/ControlSummary AWS API Documentation
     #
     class ControlSummary < Struct.new(
       :arn,
       :name,
-      :description)
+      :description,
+      :behavior,
+      :severity,
+      :implementation,
+      :create_time)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -306,6 +328,10 @@ module Aws::ControlCatalog
     #   `Preventive`, `Detective`, `Proactive`
     #   @return [String]
     #
+    # @!attribute [rw] severity
+    #   An enumerated type, with the following possible values:
+    #   @return [String]
+    #
     # @!attribute [rw] region_configuration
     #   Returns information about the control, including the scope of the
     #   control, if enabled, and the Regions in which the control currently
@@ -339,6 +365,11 @@ module Aws::ControlCatalog
     #   controls that don’t support parameters.
     #   @return [Array<Types::ControlParameter>]
     #
+    # @!attribute [rw] create_time
+    #   A timestamp that notes the time when the control was released (start
+    #   of its life) as a governance capability in Amazon Web Services.
+    #   @return [Time]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/controlcatalog-2018-05-10/GetControlResponse AWS API Documentation
     #
     class GetControlResponse < Struct.new(
@@ -346,9 +377,11 @@ module Aws::ControlCatalog
       :name,
       :description,
       :behavior,
+      :severity,
       :region_configuration,
       :implementation,
-      :parameters)
+      :parameters,
+      :create_time)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -384,10 +417,48 @@ module Aws::ControlCatalog
     #   A string that describes a control's implementation type.
     #   @return [String]
     #
+    # @!attribute [rw] identifier
+    #   A service-specific identifier for the control, assigned by the
+    #   service that implemented the control. For example, this identifier
+    #   could be an Amazon Web Services Config Rule ID or a Security Hub
+    #   Control ID.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/controlcatalog-2018-05-10/ImplementationDetails AWS API Documentation
     #
     class ImplementationDetails < Struct.new(
-      :type)
+      :type,
+      :identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A summary of how the control is implemented, including the Amazon Web
+    # Services service that enforces the control and its service-specific
+    # identifier. For example, the value of this field could indicate that
+    # the control is implemented as an Amazon Web Services Config Rule or an
+    # Amazon Web Services Security Hub control.
+    #
+    # @!attribute [rw] type
+    #   A string that represents the Amazon Web Services service that
+    #   implements this control. For example, a value of
+    #   `AWS::Config::ConfigRule` indicates that the control is implemented
+    #   by Amazon Web Services Config, and
+    #   `AWS::SecurityHub::SecurityControl` indicates implementation by
+    #   Amazon Web Services Security Hub.
+    #   @return [String]
+    #
+    # @!attribute [rw] identifier
+    #   The identifier originally assigned by the Amazon Web Services
+    #   service that implements the control. For example,
+    #   `CODEPIPELINE_DEPLOYMENT_COUNT_CHECK`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/controlcatalog-2018-05-10/ImplementationSummary AWS API Documentation
+    #
+    class ImplementationSummary < Struct.new(
+      :type,
+      :identifier)
       SENSITIVE = []
       include Aws::Structure
     end

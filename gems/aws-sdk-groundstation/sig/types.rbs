@@ -99,14 +99,14 @@ module Aws::GroundStation
     class ConfigIdResponse
       attr_accessor config_arn: ::String
       attr_accessor config_id: ::String
-      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
       SENSITIVE: []
     end
 
     class ConfigListItem
       attr_accessor config_arn: ::String
       attr_accessor config_id: ::String
-      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
       attr_accessor name: ::String
       SENSITIVE: []
     end
@@ -148,7 +148,7 @@ module Aws::GroundStation
 
     class ContactData
       attr_accessor contact_id: ::String
-      attr_accessor contact_status: ("AVAILABLE" | "AWS_CANCELLED" | "AWS_FAILED" | "CANCELLED" | "CANCELLING" | "COMPLETED" | "FAILED" | "FAILED_TO_SCHEDULE" | "PASS" | "POSTPASS" | "PREPASS" | "SCHEDULED" | "SCHEDULING")
+      attr_accessor contact_status: ("SCHEDULING" | "FAILED_TO_SCHEDULE" | "SCHEDULED" | "CANCELLED" | "AWS_CANCELLED" | "PREPASS" | "PASS" | "POSTPASS" | "COMPLETED" | "FAILED" | "AVAILABLE" | "CANCELLING" | "AWS_FAILED")
       attr_accessor end_time: ::Time
       attr_accessor error_message: ::String
       attr_accessor ground_station: ::String
@@ -249,7 +249,7 @@ module Aws::GroundStation
 
     class DeleteConfigRequest
       attr_accessor config_id: ::String
-      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
       SENSITIVE: []
     end
 
@@ -286,7 +286,7 @@ module Aws::GroundStation
 
     class DescribeContactResponse
       attr_accessor contact_id: ::String
-      attr_accessor contact_status: ("AVAILABLE" | "AWS_CANCELLED" | "AWS_FAILED" | "CANCELLED" | "CANCELLING" | "COMPLETED" | "FAILED" | "FAILED_TO_SCHEDULE" | "PASS" | "POSTPASS" | "PREPASS" | "SCHEDULED" | "SCHEDULING")
+      attr_accessor contact_status: ("SCHEDULING" | "FAILED_TO_SCHEDULE" | "SCHEDULED" | "CANCELLED" | "AWS_CANCELLED" | "PREPASS" | "PASS" | "POSTPASS" | "COMPLETED" | "FAILED" | "AVAILABLE" | "CANCELLING" | "AWS_FAILED")
       attr_accessor dataflow_list: ::Array[Types::DataflowDetail]
       attr_accessor end_time: ::Time
       attr_accessor error_message: ::String
@@ -326,7 +326,7 @@ module Aws::GroundStation
     class Destination
       attr_accessor config_details: Types::ConfigDetails
       attr_accessor config_id: ::String
-      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
       attr_accessor dataflow_destination_region: ::String
       SENSITIVE: []
     end
@@ -354,7 +354,7 @@ module Aws::GroundStation
       attr_accessor aws_ground_station_agent_endpoint: Types::AwsGroundStationAgentEndpoint
       attr_accessor endpoint: Types::DataflowEndpoint
       attr_accessor health_reasons: ::Array[("NO_REGISTERED_AGENT" | "INVALID_IP_OWNERSHIP" | "NOT_AUTHORIZED_TO_CREATE_SLR" | "UNVERIFIED_IP_OWNERSHIP" | "INITIALIZING_DATAPLANE" | "DATAPLANE_FAILURE" | "HEALTHY")]
-      attr_accessor health_status: ("UNHEALTHY" | "HEALTHY")
+      attr_accessor health_status: ("HEALTHY" | "UNHEALTHY")
       attr_accessor security_details: Types::SecurityDetails
       SENSITIVE: []
     end
@@ -442,7 +442,7 @@ module Aws::GroundStation
 
     class GetConfigRequest
       attr_accessor config_id: ::String
-      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
       SENSITIVE: []
     end
 
@@ -450,7 +450,7 @@ module Aws::GroundStation
       attr_accessor config_arn: ::String
       attr_accessor config_data: Types::ConfigTypeData
       attr_accessor config_id: ::String
-      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
       attr_accessor name: ::String
       attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: []
@@ -577,7 +577,7 @@ module Aws::GroundStation
       attr_accessor next_token: ::String
       attr_accessor satellite_arn: ::String
       attr_accessor start_time: ::Time
-      attr_accessor status_list: ::Array[("AVAILABLE" | "AWS_CANCELLED" | "AWS_FAILED" | "CANCELLED" | "CANCELLING" | "COMPLETED" | "FAILED" | "FAILED_TO_SCHEDULE" | "PASS" | "POSTPASS" | "PREPASS" | "SCHEDULED" | "SCHEDULING")]
+      attr_accessor status_list: ::Array[("SCHEDULING" | "FAILED_TO_SCHEDULE" | "SCHEDULED" | "CANCELLED" | "AWS_CANCELLED" | "PREPASS" | "PASS" | "POSTPASS" | "COMPLETED" | "FAILED" | "AVAILABLE" | "CANCELLING" | "AWS_FAILED")]
       SENSITIVE: []
     end
 
@@ -696,6 +696,7 @@ module Aws::GroundStation
     class RegisterAgentRequest
       attr_accessor agent_details: Types::AgentDetails
       attr_accessor discovery_data: Types::DiscoveryData
+      attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: []
     end
 
@@ -770,7 +771,7 @@ module Aws::GroundStation
     class Source
       attr_accessor config_details: Types::ConfigDetails
       attr_accessor config_id: ::String
-      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
       attr_accessor dataflow_source_region: ::String
       SENSITIVE: []
     end
@@ -778,7 +779,7 @@ module Aws::GroundStation
     class SpectrumConfig
       attr_accessor bandwidth: Types::FrequencyBandwidth
       attr_accessor center_frequency: Types::Frequency
-      attr_accessor polarization: ("LEFT_HAND" | "NONE" | "RIGHT_HAND")
+      attr_accessor polarization: ("RIGHT_HAND" | "LEFT_HAND" | "NONE")
       SENSITIVE: []
     end
 
@@ -811,7 +812,7 @@ module Aws::GroundStation
     end
 
     class TrackingConfig
-      attr_accessor autotrack: ("PREFERRED" | "REMOVED" | "REQUIRED")
+      attr_accessor autotrack: ("REQUIRED" | "PREFERRED" | "REMOVED")
       SENSITIVE: []
     end
 
@@ -840,7 +841,7 @@ module Aws::GroundStation
     class UpdateConfigRequest
       attr_accessor config_data: Types::ConfigTypeData
       attr_accessor config_id: ::String
-      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+      attr_accessor config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
       attr_accessor name: ::String
       SENSITIVE: []
     end
@@ -874,7 +875,7 @@ module Aws::GroundStation
 
     class UplinkSpectrumConfig
       attr_accessor center_frequency: Types::Frequency
-      attr_accessor polarization: ("LEFT_HAND" | "NONE" | "RIGHT_HAND")
+      attr_accessor polarization: ("RIGHT_HAND" | "LEFT_HAND" | "NONE")
       SENSITIVE: []
     end
   end

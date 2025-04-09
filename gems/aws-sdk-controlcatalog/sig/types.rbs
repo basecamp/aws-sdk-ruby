@@ -50,6 +50,10 @@ module Aws::ControlCatalog
       attr_accessor arn: ::String
       attr_accessor name: ::String
       attr_accessor description: ::String
+      attr_accessor behavior: ("PREVENTIVE" | "PROACTIVE" | "DETECTIVE")
+      attr_accessor severity: ("LOW" | "MEDIUM" | "HIGH" | "CRITICAL")
+      attr_accessor implementation: Types::ImplementationSummary
+      attr_accessor create_time: ::Time
       SENSITIVE: []
     end
 
@@ -77,14 +81,23 @@ module Aws::ControlCatalog
       attr_accessor name: ::String
       attr_accessor description: ::String
       attr_accessor behavior: ("PREVENTIVE" | "PROACTIVE" | "DETECTIVE")
+      attr_accessor severity: ("LOW" | "MEDIUM" | "HIGH" | "CRITICAL")
       attr_accessor region_configuration: Types::RegionConfiguration
       attr_accessor implementation: Types::ImplementationDetails
       attr_accessor parameters: ::Array[Types::ControlParameter]
+      attr_accessor create_time: ::Time
       SENSITIVE: []
     end
 
     class ImplementationDetails
       attr_accessor type: ::String
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class ImplementationSummary
+      attr_accessor type: ::String
+      attr_accessor identifier: ::String
       SENSITIVE: []
     end
 

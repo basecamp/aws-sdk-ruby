@@ -588,6 +588,14 @@ module Aws::GroundStation
     #
     # @!attribute [rw] endpoint_details
     #   Endpoint details of each endpoint in the dataflow endpoint group.
+    #   All dataflow endpoints within a single dataflow endpoint group must
+    #   be of the same type. You cannot mix <a
+    #   href="https://docs.aws.amazon.com/ground-station/latest/APIReference/API_AwsGroundStationAgentEndpoint.html">
+    #   AWS Ground Station Agent endpoints</a> with <a
+    #   href="https://docs.aws.amazon.com/ground-station/latest/APIReference/API_DataflowEndpoint.html">Dataflow
+    #   endpoints</a> in the same group. If your use case requires both
+    #   types of endpoints, you must create separate dataflow endpoint
+    #   groups for each type. </p>
     #   @return [Array<Types::EndpointDetails>]
     #
     # @!attribute [rw] tags
@@ -1861,7 +1869,7 @@ module Aws::GroundStation
       include Aws::Structure
     end
 
-    # AWS Key Management Service (KMS) Key.
+    # KMS key info.
     #
     # @note KmsKey is a union - when making an API calls you must set exactly one of the members.
     #
@@ -2351,11 +2359,16 @@ module Aws::GroundStation
     #   Data for associating an agent with the capabilities it is managing.
     #   @return [Types::DiscoveryData]
     #
+    # @!attribute [rw] tags
+    #   Tags assigned to an `Agent`.
+    #   @return [Hash<String,String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/RegisterAgentRequest AWS API Documentation
     #
     class RegisterAgentRequest < Struct.new(
       :agent_details,
-      :discovery_data)
+      :discovery_data,
+      :tags)
       SENSITIVE = []
       include Aws::Structure
     end

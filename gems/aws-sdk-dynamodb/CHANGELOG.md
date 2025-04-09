@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.139.0 (2025-04-09)
+------------------
+
+* Feature - Documentation update for secondary indexes and Create_Table.
+
 1.138.0 (2025-03-13)
 ------------------
 

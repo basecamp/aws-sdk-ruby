@@ -1544,6 +1544,7 @@ module Aws::Glue
     double = Shapes::FloatShape.new(name: 'double')
     dpuCounts = Shapes::IntegerShape.new(name: 'dpuCounts')
     dpuDurationInHour = Shapes::FloatShape.new(name: 'dpuDurationInHour')
+    dpuHours = Shapes::FloatShape.new(name: 'dpuHours')
     glueConnectionNameString = Shapes::StringShape.new(name: 'glueConnectionNameString')
     metricCounts = Shapes::IntegerShape.new(name: 'metricCounts')
     tableNameString = Shapes::StringShape.new(name: 'tableNameString')
@@ -4632,6 +4633,7 @@ module Aws::Glue
 
     IcebergCompactionMetrics.add_member(:number_of_bytes_compacted, Shapes::ShapeRef.new(shape: metricCounts, location_name: "NumberOfBytesCompacted"))
     IcebergCompactionMetrics.add_member(:number_of_files_compacted, Shapes::ShapeRef.new(shape: metricCounts, location_name: "NumberOfFilesCompacted"))
+    IcebergCompactionMetrics.add_member(:dpu_hours, Shapes::ShapeRef.new(shape: dpuHours, location_name: "DpuHours"))
     IcebergCompactionMetrics.add_member(:number_of_dpus, Shapes::ShapeRef.new(shape: dpuCounts, location_name: "NumberOfDpus"))
     IcebergCompactionMetrics.add_member(:job_duration_in_hour, Shapes::ShapeRef.new(shape: dpuDurationInHour, location_name: "JobDurationInHour"))
     IcebergCompactionMetrics.struct_class = Types::IcebergCompactionMetrics
@@ -4645,6 +4647,7 @@ module Aws::Glue
     IcebergOrphanFileDeletionConfiguration.struct_class = Types::IcebergOrphanFileDeletionConfiguration
 
     IcebergOrphanFileDeletionMetrics.add_member(:number_of_orphan_files_deleted, Shapes::ShapeRef.new(shape: metricCounts, location_name: "NumberOfOrphanFilesDeleted"))
+    IcebergOrphanFileDeletionMetrics.add_member(:dpu_hours, Shapes::ShapeRef.new(shape: dpuHours, location_name: "DpuHours"))
     IcebergOrphanFileDeletionMetrics.add_member(:number_of_dpus, Shapes::ShapeRef.new(shape: dpuCounts, location_name: "NumberOfDpus"))
     IcebergOrphanFileDeletionMetrics.add_member(:job_duration_in_hour, Shapes::ShapeRef.new(shape: dpuDurationInHour, location_name: "JobDurationInHour"))
     IcebergOrphanFileDeletionMetrics.struct_class = Types::IcebergOrphanFileDeletionMetrics
@@ -4657,6 +4660,7 @@ module Aws::Glue
     IcebergRetentionMetrics.add_member(:number_of_data_files_deleted, Shapes::ShapeRef.new(shape: metricCounts, location_name: "NumberOfDataFilesDeleted"))
     IcebergRetentionMetrics.add_member(:number_of_manifest_files_deleted, Shapes::ShapeRef.new(shape: metricCounts, location_name: "NumberOfManifestFilesDeleted"))
     IcebergRetentionMetrics.add_member(:number_of_manifest_lists_deleted, Shapes::ShapeRef.new(shape: metricCounts, location_name: "NumberOfManifestListsDeleted"))
+    IcebergRetentionMetrics.add_member(:dpu_hours, Shapes::ShapeRef.new(shape: dpuHours, location_name: "DpuHours"))
     IcebergRetentionMetrics.add_member(:number_of_dpus, Shapes::ShapeRef.new(shape: dpuCounts, location_name: "NumberOfDpus"))
     IcebergRetentionMetrics.add_member(:job_duration_in_hour, Shapes::ShapeRef.new(shape: dpuDurationInHour, location_name: "JobDurationInHour"))
     IcebergRetentionMetrics.struct_class = Types::IcebergRetentionMetrics

@@ -741,6 +741,7 @@ module Aws::GroundStation
 
     RegisterAgentRequest.add_member(:agent_details, Shapes::ShapeRef.new(shape: AgentDetails, required: true, location_name: "agentDetails"))
     RegisterAgentRequest.add_member(:discovery_data, Shapes::ShapeRef.new(shape: DiscoveryData, required: true, location_name: "discoveryData"))
+    RegisterAgentRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagsMap, location_name: "tags"))
     RegisterAgentRequest.struct_class = Types::RegisterAgentRequest
 
     RegisterAgentResponse.add_member(:agent_id, Shapes::ShapeRef.new(shape: Uuid, location_name: "agentId"))

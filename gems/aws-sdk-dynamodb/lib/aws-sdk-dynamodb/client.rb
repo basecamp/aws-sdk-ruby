@@ -1447,7 +1447,11 @@ module Aws::DynamoDB
     #       attributes provided in `NonKeyAttributes`, summed across all of
     #       the secondary indexes, must not exceed 100. If you project the
     #       same attribute into two different indexes, this counts as two
-    #       distinct attributes when determining the total.
+    #       distinct attributes when determining the total. This limit only
+    #       applies when you specify the ProjectionType of `INCLUDE`. You
+    #       still can specify the ProjectionType of `ALL` to project all
+    #       attributes from the source table, even if the table has more than
+    #       100 attributes.
     #
     # @option params [Array<Types::GlobalSecondaryIndex>] :global_secondary_indexes
     #   One or more global secondary indexes (the maximum is 20) to be created
@@ -1483,7 +1487,11 @@ module Aws::DynamoDB
     #       attributes provided in `NonKeyAttributes`, summed across all of
     #       the secondary indexes, must not exceed 100. If you project the
     #       same attribute into two different indexes, this counts as two
-    #       distinct attributes when determining the total.
+    #       distinct attributes when determining the total. This limit only
+    #       applies when you specify the ProjectionType of `INCLUDE`. You
+    #       still can specify the ProjectionType of `ALL` to project all
+    #       attributes from the source table, even if the table has more than
+    #       100 attributes.
     #   * `ProvisionedThroughput` - The provisioned throughput settings for
     #     the global secondary index, consisting of read and write capacity
     #     units.
@@ -1492,18 +1500,19 @@ module Aws::DynamoDB
     #   Controls how you are charged for read and write throughput and how you
     #   manage capacity. This setting can be changed later.
     #
-    #   * `PROVISIONED` - We recommend using `PROVISIONED` for predictable
-    #     workloads. `PROVISIONED` sets the billing mode to [Provisioned
-    #     capacity mode][1].
+    #   * `PAY_PER_REQUEST` - We recommend using `PAY_PER_REQUEST` for most
+    #     DynamoDB workloads. `PAY_PER_REQUEST` sets the billing mode to
+    #     [On-demand capacity mode][1].
     #
-    #   * `PAY_PER_REQUEST` - We recommend using `PAY_PER_REQUEST` for
-    #     unpredictable workloads. `PAY_PER_REQUEST` sets the billing mode to
-    #     [On-demand capacity mode][2].
+    #   * `PROVISIONED` - We recommend using `PROVISIONED` for steady
+    #     workloads with predictable growth where capacity requirements can be
+    #     reliably forecasted. `PROVISIONED` sets the billing mode to
+    #     [Provisioned capacity mode][2].
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html
-    #   [2]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html
+    #   [1]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html
+    #   [2]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html
     #
     # @option params [Types::ProvisionedThroughput] :provisioned_throughput
     #   Represents the provisioned throughput settings for a specified table
@@ -7065,8 +7074,8 @@ module Aws::DynamoDB
     #
     # `LatestRestorableDateTime` is typically 5 minutes before the current
     # time. You can restore your table to any point in time in the last 35
-    # days. You can set the recovery period to any value between 1 and 35
-    # days.
+    # days. You can set the `RecoveryPeriodInDays` to any value between 1
+    # and 35 days.
     #
     # @option params [required, String] :table_name
     #   The name of the table. You can also provide the Amazon Resource Name
@@ -7964,18 +7973,19 @@ module Aws::DynamoDB
     #   and write capacity of your table and global secondary indexes over the
     #   past 30 minutes.
     #
-    #   * `PROVISIONED` - We recommend using `PROVISIONED` for predictable
-    #     workloads. `PROVISIONED` sets the billing mode to [Provisioned
-    #     capacity mode][1].
+    #   * `PAY_PER_REQUEST` - We recommend using `PAY_PER_REQUEST` for most
+    #     DynamoDB workloads. `PAY_PER_REQUEST` sets the billing mode to
+    #     [On-demand capacity mode][1].
     #
-    #   * `PAY_PER_REQUEST` - We recommend using `PAY_PER_REQUEST` for
-    #     unpredictable workloads. `PAY_PER_REQUEST` sets the billing mode to
-    #     [On-demand capacity mode][2].
+    #   * `PROVISIONED` - We recommend using `PROVISIONED` for steady
+    #     workloads with predictable growth where capacity requirements can be
+    #     reliably forecasted. `PROVISIONED` sets the billing mode to
+    #     [Provisioned capacity mode][2].
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html
-    #   [2]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html
+    #   [1]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html
+    #   [2]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html
     #
     # @option params [Types::ProvisionedThroughput] :provisioned_throughput
     #   The new provisioned throughput settings for the specified table or
@@ -8056,7 +8066,7 @@ module Aws::DynamoDB
     #
     #
     #   [1]: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ReplicationGroupUpdate.html#DDB-Type-ReplicationGroupUpdate-Create
-    #   [2]: https://docs.aws.amazon.com/https:/docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html#DDB-UpdateTable-request-ReplicaUpdates
+    #   [2]: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html#DDB-UpdateTable-request-ReplicaUpdates
     #   [3]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PreviewFeatures.html#multi-region-strong-consistency-gt
     #
     # @option params [Types::OnDemandThroughput] :on_demand_throughput
@@ -8626,7 +8636,7 @@ module Aws::DynamoDB
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-dynamodb'
-      context[:gem_version] = '1.138.0'
+      context[:gem_version] = '1.139.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

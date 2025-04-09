@@ -91,7 +91,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::ConfigIdResponse]
         def config_arn: () -> ::String
         def config_id: () -> ::String
-        def config_type: () -> ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+        def config_type: () -> ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/GroundStation/Client.html#create_config-instance_method
       def create_config: (
@@ -106,7 +106,7 @@ module Aws
                                    units: ("GHz" | "MHz" | "kHz"),
                                    value: ::Float
                                  },
-                                 polarization: ("LEFT_HAND" | "NONE" | "RIGHT_HAND")?
+                                 polarization: ("RIGHT_HAND" | "LEFT_HAND" | "NONE")?
                                }
                              }?,
                              antenna_downlink_demod_decode_config: {
@@ -125,7 +125,7 @@ module Aws
                                    units: ("GHz" | "MHz" | "kHz"),
                                    value: ::Float
                                  },
-                                 polarization: ("LEFT_HAND" | "NONE" | "RIGHT_HAND")?
+                                 polarization: ("RIGHT_HAND" | "LEFT_HAND" | "NONE")?
                                }
                              }?,
                              antenna_uplink_config: {
@@ -134,7 +134,7 @@ module Aws
                                    units: ("GHz" | "MHz" | "kHz"),
                                    value: ::Float
                                  },
-                                 polarization: ("LEFT_HAND" | "NONE" | "RIGHT_HAND")?
+                                 polarization: ("RIGHT_HAND" | "LEFT_HAND" | "NONE")?
                                },
                                target_eirp: {
                                  units: ("dBW"),
@@ -152,7 +152,7 @@ module Aws
                                role_arn: ::String
                              }?,
                              tracking_config: {
-                               autotrack: ("PREFERRED" | "REMOVED" | "REQUIRED")
+                               autotrack: ("REQUIRED" | "PREFERRED" | "REMOVED")
                              }?,
                              uplink_echo_config: {
                                antenna_uplink_config_arn: ::String,
@@ -206,7 +206,7 @@ module Aws
                                                   status: ("created" | "creating" | "deleted" | "deleting" | "failed")?
                                                 }?,
                                                 health_reasons: Array[("NO_REGISTERED_AGENT" | "INVALID_IP_OWNERSHIP" | "NOT_AUTHORIZED_TO_CREATE_SLR" | "UNVERIFIED_IP_OWNERSHIP" | "INITIALIZING_DATAPLANE" | "DATAPLANE_FAILURE" | "HEALTHY")]?,
-                                                health_status: ("UNHEALTHY" | "HEALTHY")?,
+                                                health_status: ("HEALTHY" | "UNHEALTHY")?,
                                                 security_details: {
                                                   role_arn: ::String,
                                                   security_group_ids: Array[::String],
@@ -289,12 +289,12 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::ConfigIdResponse]
         def config_arn: () -> ::String
         def config_id: () -> ::String
-        def config_type: () -> ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+        def config_type: () -> ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/GroundStation/Client.html#delete_config-instance_method
       def delete_config: (
                            config_id: ::String,
-                           config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+                           config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
                          ) -> _DeleteConfigResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteConfigResponseSuccess
 
@@ -331,7 +331,7 @@ module Aws
       interface _DescribeContactResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeContactResponse]
         def contact_id: () -> ::String
-        def contact_status: () -> ("AVAILABLE" | "AWS_CANCELLED" | "AWS_FAILED" | "CANCELLED" | "CANCELLING" | "COMPLETED" | "FAILED" | "FAILED_TO_SCHEDULE" | "PASS" | "POSTPASS" | "PREPASS" | "SCHEDULED" | "SCHEDULING")
+        def contact_status: () -> ("SCHEDULING" | "FAILED_TO_SCHEDULE" | "SCHEDULED" | "CANCELLED" | "AWS_CANCELLED" | "PREPASS" | "PASS" | "POSTPASS" | "COMPLETED" | "FAILED" | "AVAILABLE" | "CANCELLING" | "AWS_FAILED")
         def dataflow_list: () -> ::Array[Types::DataflowDetail]
         def end_time: () -> ::Time
         def error_message: () -> ::String
@@ -388,14 +388,14 @@ module Aws
         def config_arn: () -> ::String
         def config_data: () -> Types::ConfigTypeData
         def config_id: () -> ::String
-        def config_type: () -> ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+        def config_type: () -> ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
         def name: () -> ::String
         def tags: () -> ::Hash[::String, ::String]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/GroundStation/Client.html#get_config-instance_method
       def get_config: (
                         config_id: ::String,
-                        config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+                        config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
                       ) -> _GetConfigResponseSuccess
                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetConfigResponseSuccess
 
@@ -490,7 +490,7 @@ module Aws
                            ?next_token: ::String,
                            ?satellite_arn: ::String,
                            start_time: ::Time,
-                           status_list: Array[("AVAILABLE" | "AWS_CANCELLED" | "AWS_FAILED" | "CANCELLED" | "CANCELLING" | "COMPLETED" | "FAILED" | "FAILED_TO_SCHEDULE" | "PASS" | "POSTPASS" | "PREPASS" | "SCHEDULED" | "SCHEDULING")]
+                           status_list: Array[("SCHEDULING" | "FAILED_TO_SCHEDULE" | "SCHEDULED" | "CANCELLED" | "AWS_CANCELLED" | "PREPASS" | "PASS" | "POSTPASS" | "COMPLETED" | "FAILED" | "AVAILABLE" | "CANCELLING" | "AWS_FAILED")]
                          ) -> _ListContactsResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListContactsResponseSuccess
 
@@ -592,7 +592,8 @@ module Aws
                               capability_arns: Array[::String],
                               private_ip_addresses: Array[::String],
                               public_ip_addresses: Array[::String]
-                            }
+                            },
+                            ?tags: Hash[::String, ::String]
                           ) -> _RegisterAgentResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RegisterAgentResponseSuccess
 
@@ -661,7 +662,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::ConfigIdResponse]
         def config_arn: () -> ::String
         def config_id: () -> ::String
-        def config_type: () -> ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording")
+        def config_type: () -> ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/GroundStation/Client.html#update_config-instance_method
       def update_config: (
@@ -676,7 +677,7 @@ module Aws
                                    units: ("GHz" | "MHz" | "kHz"),
                                    value: ::Float
                                  },
-                                 polarization: ("LEFT_HAND" | "NONE" | "RIGHT_HAND")?
+                                 polarization: ("RIGHT_HAND" | "LEFT_HAND" | "NONE")?
                                }
                              }?,
                              antenna_downlink_demod_decode_config: {
@@ -695,7 +696,7 @@ module Aws
                                    units: ("GHz" | "MHz" | "kHz"),
                                    value: ::Float
                                  },
-                                 polarization: ("LEFT_HAND" | "NONE" | "RIGHT_HAND")?
+                                 polarization: ("RIGHT_HAND" | "LEFT_HAND" | "NONE")?
                                }
                              }?,
                              antenna_uplink_config: {
@@ -704,7 +705,7 @@ module Aws
                                    units: ("GHz" | "MHz" | "kHz"),
                                    value: ::Float
                                  },
-                                 polarization: ("LEFT_HAND" | "NONE" | "RIGHT_HAND")?
+                                 polarization: ("RIGHT_HAND" | "LEFT_HAND" | "NONE")?
                                },
                                target_eirp: {
                                  units: ("dBW"),
@@ -722,7 +723,7 @@ module Aws
                                role_arn: ::String
                              }?,
                              tracking_config: {
-                               autotrack: ("PREFERRED" | "REMOVED" | "REQUIRED")
+                               autotrack: ("REQUIRED" | "PREFERRED" | "REMOVED")
                              }?,
                              uplink_echo_config: {
                                antenna_uplink_config_arn: ::String,
@@ -730,7 +731,7 @@ module Aws
                              }?
                            },
                            config_id: ::String,
-                           config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "antenna-uplink" | "dataflow-endpoint" | "tracking" | "uplink-echo" | "s3-recording"),
+                           config_type: ("antenna-downlink" | "antenna-downlink-demod-decode" | "tracking" | "dataflow-endpoint" | "antenna-uplink" | "uplink-echo" | "s3-recording"),
                            name: ::String
                          ) -> _UpdateConfigResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateConfigResponseSuccess
