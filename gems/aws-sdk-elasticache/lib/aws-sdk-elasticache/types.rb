@@ -6015,8 +6015,8 @@ module Aws::ElastiCache
     #   @return [Boolean]
     #
     # @!attribute [rw] engine
-    #   Modifies the engine listed in a cluster message. The options are
-    #   redis, memcached or valkey.
+    #   The engine type used by the cache cluster. The options are valkey,
+    #   memcached or redis.
     #   @return [String]
     #
     # @!attribute [rw] engine_version
@@ -6116,6 +6116,11 @@ module Aws::ElastiCache
     #   [1]: http://aws.amazon.com/ec2/nitro/
     #   @return [String]
     #
+    # @!attribute [rw] scale_config
+    #   Configures horizontal or vertical scaling for Memcached clusters,
+    #   specifying the scaling percentage and interval.
+    #   @return [Types::ScaleConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/ModifyCacheClusterMessage AWS API Documentation
     #
     class ModifyCacheClusterMessage < Struct.new(
@@ -6140,7 +6145,8 @@ module Aws::ElastiCache
       :auth_token,
       :auth_token_update_strategy,
       :log_delivery_configurations,
-      :ip_discovery)
+      :ip_discovery,
+      :scale_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7354,6 +7360,11 @@ module Aws::ElastiCache
     #   encryption, with no downtime.
     #   @return [String]
     #
+    # @!attribute [rw] scale_config
+    #   The scaling configuration changes that are pending for the Memcached
+    #   cluster.
+    #   @return [Types::ScaleConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/PendingModifiedValues AWS API Documentation
     #
     class PendingModifiedValues < Struct.new(
@@ -7364,7 +7375,8 @@ module Aws::ElastiCache
       :auth_token_status,
       :log_delivery_configurations,
       :transit_encryption_enabled,
-      :transit_encryption_mode)
+      :transit_encryption_mode,
+      :scale_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -8496,6 +8508,28 @@ module Aws::ElastiCache
     #
     class RevokeCacheSecurityGroupIngressResult < Struct.new(
       :cache_security_group)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Configuration settings for horizontal or vertical scaling operations
+    # on Memcached clusters.
+    #
+    # @!attribute [rw] scale_percentage
+    #   The percentage by which to scale the Memcached cluster, either
+    #   horizontally by adding nodes or vertically by increasing resources.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] scale_interval_minutes
+    #   The time interval in seconds between scaling operations when
+    #   performing gradual scaling for a Memcached cluster.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/ScaleConfig AWS API Documentation
+    #
+    class ScaleConfig < Struct.new(
+      :scale_percentage,
+      :scale_interval_minutes)
       SENSITIVE = []
       include Aws::Structure
     end

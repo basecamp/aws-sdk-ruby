@@ -1392,6 +1392,12 @@ module Aws::MediaLive
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_behavior #=> String, one of "DISABLED", "ENABLED"
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_name_modifier #=> String
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings #=> Array
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].caption_channel #=> Integer
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].language_code #=> String
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_frame #=> String, one of "NONE", "PRIV", "TDRL"
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_period #=> Integer
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_passthrough #=> String, one of "DISABLED", "ENABLED"
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.channel.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.channel.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -2773,6 +2779,12 @@ module Aws::MediaLive
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_behavior #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings #=> Array
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].caption_channel #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].language_code #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_frame #=> String, one of "NONE", "PRIV", "TDRL"
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_period #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_passthrough #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -3918,6 +3930,12 @@ module Aws::MediaLive
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_behavior #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings #=> Array
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].caption_channel #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].language_code #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_frame #=> String, one of "NONE", "PRIV", "TDRL"
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_period #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_passthrough #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -4598,6 +4616,7 @@ module Aws::MediaLive
     #   resp.uhd_device_settings.audio_channel_pairs #=> Array
     #   resp.uhd_device_settings.audio_channel_pairs[0].id #=> Integer
     #   resp.uhd_device_settings.audio_channel_pairs[0].profile #=> String, one of "DISABLED", "VBR-AAC_HHE-16000", "VBR-AAC_HE-64000", "VBR-AAC_LC-128000", "CBR-AAC_HQ-192000", "CBR-AAC_HQ-256000", "CBR-AAC_HQ-384000", "CBR-AAC_HQ-512000"
+    #   resp.uhd_device_settings.input_resolution #=> String
     #   resp.tags #=> Hash
     #   resp.tags["__string"] #=> String
     #   resp.availability_zone #=> String
@@ -5360,6 +5379,7 @@ module Aws::MediaLive
     #   resp.input_devices[0].uhd_device_settings.audio_channel_pairs #=> Array
     #   resp.input_devices[0].uhd_device_settings.audio_channel_pairs[0].id #=> Integer
     #   resp.input_devices[0].uhd_device_settings.audio_channel_pairs[0].profile #=> String, one of "DISABLED", "VBR-AAC_HHE-16000", "VBR-AAC_HE-64000", "VBR-AAC_LC-128000", "CBR-AAC_HQ-192000", "CBR-AAC_HQ-256000", "CBR-AAC_HQ-384000", "CBR-AAC_HQ-512000"
+    #   resp.input_devices[0].uhd_device_settings.input_resolution #=> String
     #   resp.input_devices[0].tags #=> Hash
     #   resp.input_devices[0].tags["__string"] #=> String
     #   resp.input_devices[0].availability_zone #=> String
@@ -6276,6 +6296,12 @@ module Aws::MediaLive
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_behavior #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings #=> Array
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].caption_channel #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].language_code #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_frame #=> String, one of "NONE", "PRIV", "TDRL"
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_period #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_passthrough #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -7228,6 +7254,12 @@ module Aws::MediaLive
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_behavior #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings #=> Array
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].caption_channel #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].language_code #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_frame #=> String, one of "NONE", "PRIV", "TDRL"
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_period #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_passthrough #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -8210,6 +8242,12 @@ module Aws::MediaLive
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_behavior #=> String, one of "DISABLED", "ENABLED"
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_name_modifier #=> String
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings #=> Array
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].caption_channel #=> Integer
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].language_code #=> String
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_frame #=> String, one of "NONE", "PRIV", "TDRL"
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_period #=> Integer
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_passthrough #=> String, one of "DISABLED", "ENABLED"
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.channel.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.channel.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -9077,6 +9115,12 @@ module Aws::MediaLive
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_behavior #=> String, one of "DISABLED", "ENABLED"
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_name_modifier #=> String
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings #=> Array
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].caption_channel #=> Integer
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].language_code #=> String
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_frame #=> String, one of "NONE", "PRIV", "TDRL"
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_period #=> Integer
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_passthrough #=> String, one of "DISABLED", "ENABLED"
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.channel.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.channel.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -9812,6 +9856,7 @@ module Aws::MediaLive
     #           profile: "DISABLED", # accepts DISABLED, VBR-AAC_HHE-16000, VBR-AAC_HE-64000, VBR-AAC_LC-128000, CBR-AAC_HQ-192000, CBR-AAC_HQ-256000, CBR-AAC_HQ-384000, CBR-AAC_HQ-512000
     #         },
     #       ],
+    #       input_resolution: "__string",
     #     },
     #     input_device_id: "__string", # required
     #     name: "__string",
@@ -9832,6 +9877,7 @@ module Aws::MediaLive
     #           profile: "DISABLED", # accepts DISABLED, VBR-AAC_HHE-16000, VBR-AAC_HE-64000, VBR-AAC_LC-128000, CBR-AAC_HQ-192000, CBR-AAC_HQ-256000, CBR-AAC_HQ-384000, CBR-AAC_HQ-512000
     #         },
     #       ],
+    #       input_resolution: "__string",
     #     },
     #     availability_zone: "__string",
     #   })
@@ -9879,6 +9925,7 @@ module Aws::MediaLive
     #   resp.uhd_device_settings.audio_channel_pairs #=> Array
     #   resp.uhd_device_settings.audio_channel_pairs[0].id #=> Integer
     #   resp.uhd_device_settings.audio_channel_pairs[0].profile #=> String, one of "DISABLED", "VBR-AAC_HHE-16000", "VBR-AAC_HE-64000", "VBR-AAC_LC-128000", "CBR-AAC_HQ-192000", "CBR-AAC_HQ-256000", "CBR-AAC_HQ-384000", "CBR-AAC_HQ-512000"
+    #   resp.uhd_device_settings.input_resolution #=> String
     #   resp.tags #=> Hash
     #   resp.tags["__string"] #=> String
     #   resp.availability_zone #=> String
@@ -10529,6 +10576,12 @@ module Aws::MediaLive
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_behavior #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.id_3_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings #=> Array
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].caption_channel #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.caption_language_mappings[0].language_code #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_frame #=> String, one of "NONE", "PRIV", "TDRL"
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_id_3_period #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.timed_metadata_passthrough #=> String, one of "DISABLED", "ENABLED"
     #   resp.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -14193,7 +14246,7 @@ module Aws::MediaLive
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-medialive'
-      context[:gem_version] = '1.150.0'
+      context[:gem_version] = '1.151.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -437,6 +437,56 @@ module Aws::MainframeModernization
 
     # @!attribute [rw] application_id
     #   The unique identifier of the application for which you want to
+    #   export data sets.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   Unique, case-sensitive identifier you provide to ensure the
+    #   idempotency of the request to create a data set export. The service
+    #   generates the clientToken when the API call is triggered. The token
+    #   expires after one hour, so if you retry the API within this
+    #   timeframe with the same clientToken, you will get the same response.
+    #   The service also handles deleting the clientToken after it expires.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] export_config
+    #   The data set export task configuration.
+    #   @return [Types::DataSetExportConfig]
+    #
+    # @!attribute [rw] kms_key_id
+    #   The identifier of a customer managed key.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/CreateDataSetExportTaskRequest AWS API Documentation
+    #
+    class CreateDataSetExportTaskRequest < Struct.new(
+      :application_id,
+      :client_token,
+      :export_config,
+      :kms_key_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] task_id
+    #   The task identifier. This operation is asynchronous. Use this
+    #   identifier with the GetDataSetExportTask operation to obtain the
+    #   status of this task.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/CreateDataSetExportTaskResponse AWS API Documentation
+    #
+    class CreateDataSetExportTaskResponse < Struct.new(
+      :task_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
+    #   The unique identifier of the application for which you want to
     #   import data sets.
     #   @return [String]
     #
@@ -676,6 +726,116 @@ module Aws::MainframeModernization
       :record_length,
       :relative_path,
       :storage_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Identifies one or more data sets you want to import with the
+    # CreateDataSetExportTask operation.
+    #
+    # @note DataSetExportConfig is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] data_sets
+    #   The data sets.
+    #   @return [Array<Types::DataSetExportItem>]
+    #
+    # @!attribute [rw] s3_location
+    #   The Amazon S3 location of the data sets.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/DataSetExportConfig AWS API Documentation
+    #
+    class DataSetExportConfig < Struct.new(
+      :data_sets,
+      :s3_location,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class DataSets < DataSetExportConfig; end
+      class S3Location < DataSetExportConfig; end
+      class Unknown < DataSetExportConfig; end
+    end
+
+    # Identifies a specific data set to export from an external location.
+    #
+    # @!attribute [rw] dataset_name
+    #   The data set.
+    #   @return [String]
+    #
+    # @!attribute [rw] external_location
+    #   The location of the data set.
+    #   @return [Types::ExternalLocation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/DataSetExportItem AWS API Documentation
+    #
+    class DataSetExportItem < Struct.new(
+      :dataset_name,
+      :external_location)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents a summary of data set exports.
+    #
+    # @!attribute [rw] failed
+    #   The number of data set exports that have failed.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] in_progress
+    #   The number of data set exports that are in progress.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] pending
+    #   The number of data set exports that are pending.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] succeeded
+    #   The number of data set exports that have succeeded.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] total
+    #   The total number of data set exports.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/DataSetExportSummary AWS API Documentation
+    #
+    class DataSetExportSummary < Struct.new(
+      :failed,
+      :in_progress,
+      :pending,
+      :succeeded,
+      :total)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about a data set export task.
+    #
+    # @!attribute [rw] status
+    #   The status of the data set export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_reason
+    #   If dataset exports failed, the failure reason will show here.
+    #   @return [String]
+    #
+    # @!attribute [rw] summary
+    #   A summary of the data set export task.
+    #   @return [Types::DataSetExportSummary]
+    #
+    # @!attribute [rw] task_id
+    #   The identifier of the data set export task.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/DataSetExportTask AWS API Documentation
+    #
+    class DataSetExportTask < Struct.new(
+      :status,
+      :status_reason,
+      :summary,
+      :task_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1666,6 +1826,57 @@ module Aws::MainframeModernization
     #   @return [String]
     #
     # @!attribute [rw] task_id
+    #   The task identifier returned by the CreateDataSetExportTask
+    #   operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/GetDataSetExportTaskRequest AWS API Documentation
+    #
+    class GetDataSetExportTaskRequest < Struct.new(
+      :application_id,
+      :task_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] kms_key_arn
+    #   The identifier of a customer managed key used for exported data set
+    #   encryption.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the task.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_reason
+    #   If dataset export failed, the failure reason will show here.
+    #   @return [String]
+    #
+    # @!attribute [rw] summary
+    #   A summary of the status of the task.
+    #   @return [Types::DataSetExportSummary]
+    #
+    # @!attribute [rw] task_id
+    #   The task identifier.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/GetDataSetExportTaskResponse AWS API Documentation
+    #
+    class GetDataSetExportTaskResponse < Struct.new(
+      :kms_key_arn,
+      :status,
+      :status_reason,
+      :summary,
+      :task_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
+    #   The application identifier.
+    #   @return [String]
+    #
+    # @!attribute [rw] task_id
     #   The task identifier returned by the CreateDataSetImportTask
     #   operation.
     #   @return [String]
@@ -1992,6 +2203,21 @@ module Aws::MainframeModernization
     #   The number of a procedure step.
     #   @return [Integer]
     #
+    # @!attribute [rw] step_checkpoint
+    #   A registered step-level checkpoint identifier that can be used for
+    #   restarting an Amazon Web Services Blu Age application batch job.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] step_checkpoint_status
+    #   The step-level checkpoint status for an Amazon Web Services Blu Age
+    #   application batch job.
+    #   @return [String]
+    #
+    # @!attribute [rw] step_checkpoint_time
+    #   The step-level checkpoint status for an Amazon Web Services Blu Age
+    #   application batch job.
+    #   @return [Time]
+    #
     # @!attribute [rw] step_cond_code
     #   The condition code of a step.
     #   @return [String]
@@ -2013,6 +2239,9 @@ module Aws::MainframeModernization
     class JobStep < Struct.new(
       :proc_step_name,
       :proc_step_number,
+      :step_checkpoint,
+      :step_checkpoint_status,
+      :step_checkpoint_time,
       :step_cond_code,
       :step_name,
       :step_number,
@@ -2032,6 +2261,16 @@ module Aws::MainframeModernization
     #   The step name that a batch job was restarted from.
     #   @return [String]
     #
+    # @!attribute [rw] skip
+    #   The step-level checkpoint timestamp (creation or last modification)
+    #   for an Amazon Web Services Blu Age application batch job.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] step_checkpoint
+    #   Skip selected step and issue a restart from immediate successor step
+    #   for an Amazon Web Services Blu Age application batch job.
+    #   @return [Integer]
+    #
     # @!attribute [rw] to_proc_step
     #   The procedure step name that a batch job was restarted to.
     #   @return [String]
@@ -2045,6 +2284,8 @@ module Aws::MainframeModernization
     class JobStepRestartMarker < Struct.new(
       :from_proc_step,
       :from_step,
+      :skip,
+      :step_checkpoint,
       :to_proc_step,
       :to_step)
       SENSITIVE = []
@@ -2290,6 +2531,49 @@ module Aws::MainframeModernization
     #
     class ListBatchJobRestartPointsResponse < Struct.new(
       :batch_job_steps)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
+    #   The unique identifier of the application.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of objects to return.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   A pagination token returned from a previous call to this operation.
+    #   This specifies the next item to return. To return to the beginning
+    #   of the list, exclude this parameter.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/ListDataSetExportHistoryRequest AWS API Documentation
+    #
+    class ListDataSetExportHistoryRequest < Struct.new(
+      :application_id,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_set_export_tasks
+    #   The data set export tasks.
+    #   @return [Array<Types::DataSetExportTask>]
+    #
+    # @!attribute [rw] next_token
+    #   If there are more items to return, this contains a token that is
+    #   passed to a subsequent call to this operation to retrieve the next
+    #   set of items.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/ListDataSetExportHistoryResponse AWS API Documentation
+    #
+    class ListDataSetExportHistoryResponse < Struct.new(
+      :data_set_export_tasks,
+      :next_token)
       SENSITIVE = []
       include Aws::Structure
     end

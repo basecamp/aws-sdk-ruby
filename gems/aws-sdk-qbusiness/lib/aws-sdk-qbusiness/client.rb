@@ -2614,6 +2614,7 @@ module Aws::QBusiness
     #   * {Types::GetChatControlsConfigurationResponse#topic_configurations #topic_configurations} => Array&lt;Types::TopicConfiguration&gt;
     #   * {Types::GetChatControlsConfigurationResponse#creator_mode_configuration #creator_mode_configuration} => Types::AppliedCreatorModeConfiguration
     #   * {Types::GetChatControlsConfigurationResponse#next_token #next_token} => String
+    #   * {Types::GetChatControlsConfigurationResponse#hallucination_reduction_configuration #hallucination_reduction_configuration} => Types::HallucinationReductionConfiguration
     #
     # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
@@ -2653,6 +2654,7 @@ module Aws::QBusiness
     #   resp.topic_configurations[0].rules[0].rule_configuration.content_retrieval_rule.eligible_data_sources[0].data_source_id #=> String
     #   resp.creator_mode_configuration.creator_mode_control #=> String, one of "ENABLED", "DISABLED"
     #   resp.next_token #=> String
+    #   resp.hallucination_reduction_configuration.hallucination_reduction_control #=> String, one of "ENABLED", "DISABLED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetChatControlsConfiguration AWS API Documentation
     #
@@ -4873,6 +4875,9 @@ module Aws::QBusiness
     # @option params [Types::CreatorModeConfiguration] :creator_mode_configuration
     #   The configuration details for `CREATOR_MODE`.
     #
+    # @option params [Types::HallucinationReductionConfiguration] :hallucination_reduction_configuration
+    #   The hallucination reduction settings for your application.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -4957,6 +4962,9 @@ module Aws::QBusiness
     #     ],
     #     creator_mode_configuration: {
     #       creator_mode_control: "ENABLED", # required, accepts ENABLED, DISABLED
+    #     },
+    #     hallucination_reduction_configuration: {
+    #       hallucination_reduction_control: "ENABLED", # accepts ENABLED, DISABLED
     #     },
     #   })
     #
@@ -5690,7 +5698,7 @@ module Aws::QBusiness
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qbusiness'
-      context[:gem_version] = '1.33.0'
+      context[:gem_version] = '1.34.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

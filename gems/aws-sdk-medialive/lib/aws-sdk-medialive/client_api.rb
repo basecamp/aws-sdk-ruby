@@ -153,11 +153,14 @@ module Aws::MediaLive
     ClusterState = Shapes::StringShape.new(name: 'ClusterState')
     ClusterType = Shapes::StringShape.new(name: 'ClusterType')
     CmafId3Behavior = Shapes::StringShape.new(name: 'CmafId3Behavior')
+    CmafIngestCaptionLanguageMapping = Shapes::StructureShape.new(name: 'CmafIngestCaptionLanguageMapping')
     CmafIngestGroupSettings = Shapes::StructureShape.new(name: 'CmafIngestGroupSettings')
     CmafIngestOutputSettings = Shapes::StructureShape.new(name: 'CmafIngestOutputSettings')
     CmafIngestSegmentLengthUnits = Shapes::StringShape.new(name: 'CmafIngestSegmentLengthUnits')
     CmafKLVBehavior = Shapes::StringShape.new(name: 'CmafKLVBehavior')
     CmafNielsenId3Behavior = Shapes::StringShape.new(name: 'CmafNielsenId3Behavior')
+    CmafTimedMetadataId3Frame = Shapes::StringShape.new(name: 'CmafTimedMetadataId3Frame')
+    CmafTimedMetadataPassthrough = Shapes::StringShape.new(name: 'CmafTimedMetadataPassthrough')
     ColorCorrection = Shapes::StructureShape.new(name: 'ColorCorrection')
     ColorCorrectionSettings = Shapes::StructureShape.new(name: 'ColorCorrectionSettings')
     ColorSpace = Shapes::StringShape.new(name: 'ColorSpace')
@@ -1111,6 +1114,7 @@ module Aws::MediaLive
     __listOfChannelSummary = Shapes::ListShape.new(name: '__listOfChannelSummary')
     __listOfCloudWatchAlarmTemplateGroupSummary = Shapes::ListShape.new(name: '__listOfCloudWatchAlarmTemplateGroupSummary')
     __listOfCloudWatchAlarmTemplateSummary = Shapes::ListShape.new(name: '__listOfCloudWatchAlarmTemplateSummary')
+    __listOfCmafIngestCaptionLanguageMapping = Shapes::ListShape.new(name: '__listOfCmafIngestCaptionLanguageMapping')
     __listOfColorCorrection = Shapes::ListShape.new(name: '__listOfColorCorrection')
     __listOfDashRoleAudio = Shapes::ListShape.new(name: '__listOfDashRoleAudio')
     __listOfDashRoleCaption = Shapes::ListShape.new(name: '__listOfDashRoleCaption')
@@ -1701,6 +1705,10 @@ module Aws::MediaLive
     ClusterNetworkSettingsUpdateRequest.add_member(:interface_mappings, Shapes::ShapeRef.new(shape: __listOfInterfaceMappingUpdateRequest, location_name: "interfaceMappings"))
     ClusterNetworkSettingsUpdateRequest.struct_class = Types::ClusterNetworkSettingsUpdateRequest
 
+    CmafIngestCaptionLanguageMapping.add_member(:caption_channel, Shapes::ShapeRef.new(shape: __integerMin1Max4, required: true, location_name: "captionChannel"))
+    CmafIngestCaptionLanguageMapping.add_member(:language_code, Shapes::ShapeRef.new(shape: __stringMin3Max3, required: true, location_name: "languageCode"))
+    CmafIngestCaptionLanguageMapping.struct_class = Types::CmafIngestCaptionLanguageMapping
+
     CmafIngestGroupSettings.add_member(:destination, Shapes::ShapeRef.new(shape: OutputLocationRef, required: true, location_name: "destination"))
     CmafIngestGroupSettings.add_member(:nielsen_id_3_behavior, Shapes::ShapeRef.new(shape: CmafNielsenId3Behavior, location_name: "nielsenId3Behavior"))
     CmafIngestGroupSettings.add_member(:scte_35_type, Shapes::ShapeRef.new(shape: Scte35Type, location_name: "scte35Type"))
@@ -1713,6 +1721,10 @@ module Aws::MediaLive
     CmafIngestGroupSettings.add_member(:scte_35_name_modifier, Shapes::ShapeRef.new(shape: __stringMax100, location_name: "scte35NameModifier"))
     CmafIngestGroupSettings.add_member(:id_3_behavior, Shapes::ShapeRef.new(shape: CmafId3Behavior, location_name: "id3Behavior"))
     CmafIngestGroupSettings.add_member(:id_3_name_modifier, Shapes::ShapeRef.new(shape: __stringMax100, location_name: "id3NameModifier"))
+    CmafIngestGroupSettings.add_member(:caption_language_mappings, Shapes::ShapeRef.new(shape: __listOfCmafIngestCaptionLanguageMapping, location_name: "captionLanguageMappings"))
+    CmafIngestGroupSettings.add_member(:timed_metadata_id_3_frame, Shapes::ShapeRef.new(shape: CmafTimedMetadataId3Frame, location_name: "timedMetadataId3Frame"))
+    CmafIngestGroupSettings.add_member(:timed_metadata_id_3_period, Shapes::ShapeRef.new(shape: __integerMin0Max10000, location_name: "timedMetadataId3Period"))
+    CmafIngestGroupSettings.add_member(:timed_metadata_passthrough, Shapes::ShapeRef.new(shape: CmafTimedMetadataPassthrough, location_name: "timedMetadataPassthrough"))
     CmafIngestGroupSettings.struct_class = Types::CmafIngestGroupSettings
 
     CmafIngestOutputSettings.add_member(:name_modifier, Shapes::ShapeRef.new(shape: __string, location_name: "nameModifier"))
@@ -3401,6 +3413,7 @@ module Aws::MediaLive
     InputDeviceConfigurableSettings.add_member(:codec, Shapes::ShapeRef.new(shape: InputDeviceCodec, location_name: "codec"))
     InputDeviceConfigurableSettings.add_member(:mediaconnect_settings, Shapes::ShapeRef.new(shape: InputDeviceMediaConnectConfigurableSettings, location_name: "mediaconnectSettings"))
     InputDeviceConfigurableSettings.add_member(:audio_channel_pairs, Shapes::ShapeRef.new(shape: __listOfInputDeviceConfigurableAudioChannelPairConfig, location_name: "audioChannelPairs"))
+    InputDeviceConfigurableSettings.add_member(:input_resolution, Shapes::ShapeRef.new(shape: __string, location_name: "inputResolution"))
     InputDeviceConfigurableSettings.struct_class = Types::InputDeviceConfigurableSettings
 
     InputDeviceConfigurationValidationError.add_member(:message, Shapes::ShapeRef.new(shape: __string, location_name: "message"))
@@ -3477,6 +3490,7 @@ module Aws::MediaLive
     InputDeviceUhdSettings.add_member(:codec, Shapes::ShapeRef.new(shape: InputDeviceCodec, location_name: "codec"))
     InputDeviceUhdSettings.add_member(:mediaconnect_settings, Shapes::ShapeRef.new(shape: InputDeviceMediaConnectSettings, location_name: "mediaconnectSettings"))
     InputDeviceUhdSettings.add_member(:audio_channel_pairs, Shapes::ShapeRef.new(shape: __listOfInputDeviceUhdAudioChannelPairConfig, location_name: "audioChannelPairs"))
+    InputDeviceUhdSettings.add_member(:input_resolution, Shapes::ShapeRef.new(shape: __string, location_name: "inputResolution"))
     InputDeviceUhdSettings.struct_class = Types::InputDeviceUhdSettings
 
     InputLocation.add_member(:password_param, Shapes::ShapeRef.new(shape: __string, location_name: "passwordParam"))
@@ -5603,6 +5617,8 @@ module Aws::MediaLive
     __listOfCloudWatchAlarmTemplateGroupSummary.member = Shapes::ShapeRef.new(shape: CloudWatchAlarmTemplateGroupSummary)
 
     __listOfCloudWatchAlarmTemplateSummary.member = Shapes::ShapeRef.new(shape: CloudWatchAlarmTemplateSummary)
+
+    __listOfCmafIngestCaptionLanguageMapping.member = Shapes::ShapeRef.new(shape: CmafIngestCaptionLanguageMapping)
 
     __listOfColorCorrection.member = Shapes::ShapeRef.new(shape: ColorCorrection)
 

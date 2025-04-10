@@ -1707,6 +1707,8 @@ module Aws::ElastiCache
     #   resp.cache_cluster.pending_modified_values.log_delivery_configurations[0].log_format #=> String, one of "text", "json"
     #   resp.cache_cluster.pending_modified_values.transit_encryption_enabled #=> Boolean
     #   resp.cache_cluster.pending_modified_values.transit_encryption_mode #=> String, one of "preferred", "required"
+    #   resp.cache_cluster.pending_modified_values.scale_config.scale_percentage #=> Integer
+    #   resp.cache_cluster.pending_modified_values.scale_config.scale_interval_minutes #=> Integer
     #   resp.cache_cluster.notification_configuration.topic_arn #=> String
     #   resp.cache_cluster.notification_configuration.topic_status #=> String
     #   resp.cache_cluster.cache_security_groups #=> Array
@@ -3852,6 +3854,8 @@ module Aws::ElastiCache
     #   resp.cache_cluster.pending_modified_values.log_delivery_configurations[0].log_format #=> String, one of "text", "json"
     #   resp.cache_cluster.pending_modified_values.transit_encryption_enabled #=> Boolean
     #   resp.cache_cluster.pending_modified_values.transit_encryption_mode #=> String, one of "preferred", "required"
+    #   resp.cache_cluster.pending_modified_values.scale_config.scale_percentage #=> Integer
+    #   resp.cache_cluster.pending_modified_values.scale_config.scale_interval_minutes #=> Integer
     #   resp.cache_cluster.notification_configuration.topic_arn #=> String
     #   resp.cache_cluster.notification_configuration.topic_status #=> String
     #   resp.cache_cluster.cache_security_groups #=> Array
@@ -4791,6 +4795,8 @@ module Aws::ElastiCache
     #   resp.cache_clusters[0].pending_modified_values.log_delivery_configurations[0].log_format #=> String, one of "text", "json"
     #   resp.cache_clusters[0].pending_modified_values.transit_encryption_enabled #=> Boolean
     #   resp.cache_clusters[0].pending_modified_values.transit_encryption_mode #=> String, one of "preferred", "required"
+    #   resp.cache_clusters[0].pending_modified_values.scale_config.scale_percentage #=> Integer
+    #   resp.cache_clusters[0].pending_modified_values.scale_config.scale_interval_minutes #=> Integer
     #   resp.cache_clusters[0].notification_configuration.topic_arn #=> String
     #   resp.cache_clusters[0].notification_configuration.topic_status #=> String
     #   resp.cache_clusters[0].cache_security_groups #=> Array
@@ -9131,8 +9137,8 @@ module Aws::ElastiCache
     #   Default: `false`
     #
     # @option params [String] :engine
-    #   Modifies the engine listed in a cluster message. The options are
-    #   redis, memcached or valkey.
+    #   The engine type used by the cache cluster. The options are valkey,
+    #   memcached or redis.
     #
     # @option params [String] :engine_version
     #   The upgraded version of the cache engine to be run on the cache nodes.
@@ -9219,6 +9225,10 @@ module Aws::ElastiCache
     #
     #   [1]: http://aws.amazon.com/ec2/nitro/
     #
+    # @option params [Types::ScaleConfig] :scale_config
+    #   Configures horizontal or vertical scaling for Memcached clusters,
+    #   specifying the scaling percentage and interval.
+    #
     # @return [Types::ModifyCacheClusterResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ModifyCacheClusterResult#cache_cluster #cache_cluster} => Types::CacheCluster
@@ -9304,6 +9314,10 @@ module Aws::ElastiCache
     #       },
     #     ],
     #     ip_discovery: "ipv4", # accepts ipv4, ipv6
+    #     scale_config: {
+    #       scale_percentage: 1,
+    #       scale_interval_minutes: 1,
+    #     },
     #   })
     #
     # @example Response structure
@@ -9335,6 +9349,8 @@ module Aws::ElastiCache
     #   resp.cache_cluster.pending_modified_values.log_delivery_configurations[0].log_format #=> String, one of "text", "json"
     #   resp.cache_cluster.pending_modified_values.transit_encryption_enabled #=> Boolean
     #   resp.cache_cluster.pending_modified_values.transit_encryption_mode #=> String, one of "preferred", "required"
+    #   resp.cache_cluster.pending_modified_values.scale_config.scale_percentage #=> Integer
+    #   resp.cache_cluster.pending_modified_values.scale_config.scale_interval_minutes #=> Integer
     #   resp.cache_cluster.notification_configuration.topic_arn #=> String
     #   resp.cache_cluster.notification_configuration.topic_status #=> String
     #   resp.cache_cluster.cache_security_groups #=> Array
@@ -10783,6 +10799,8 @@ module Aws::ElastiCache
     #   resp.cache_cluster.pending_modified_values.log_delivery_configurations[0].log_format #=> String, one of "text", "json"
     #   resp.cache_cluster.pending_modified_values.transit_encryption_enabled #=> Boolean
     #   resp.cache_cluster.pending_modified_values.transit_encryption_mode #=> String, one of "preferred", "required"
+    #   resp.cache_cluster.pending_modified_values.scale_config.scale_percentage #=> Integer
+    #   resp.cache_cluster.pending_modified_values.scale_config.scale_interval_minutes #=> Integer
     #   resp.cache_cluster.notification_configuration.topic_arn #=> String
     #   resp.cache_cluster.notification_configuration.topic_status #=> String
     #   resp.cache_cluster.cache_security_groups #=> Array
@@ -11469,7 +11487,7 @@ module Aws::ElastiCache
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-elasticache'
-      context[:gem_version] = '1.124.0'
+      context[:gem_version] = '1.125.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

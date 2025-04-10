@@ -46,6 +46,8 @@ module Aws::MainframeModernization
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     CreateApplicationRequest = Shapes::StructureShape.new(name: 'CreateApplicationRequest')
     CreateApplicationResponse = Shapes::StructureShape.new(name: 'CreateApplicationResponse')
+    CreateDataSetExportTaskRequest = Shapes::StructureShape.new(name: 'CreateDataSetExportTaskRequest')
+    CreateDataSetExportTaskResponse = Shapes::StructureShape.new(name: 'CreateDataSetExportTaskResponse')
     CreateDataSetImportTaskRequest = Shapes::StructureShape.new(name: 'CreateDataSetImportTaskRequest')
     CreateDataSetImportTaskResponse = Shapes::StructureShape.new(name: 'CreateDataSetImportTaskResponse')
     CreateDeploymentRequest = Shapes::StructureShape.new(name: 'CreateDeploymentRequest')
@@ -53,6 +55,12 @@ module Aws::MainframeModernization
     CreateEnvironmentRequest = Shapes::StructureShape.new(name: 'CreateEnvironmentRequest')
     CreateEnvironmentResponse = Shapes::StructureShape.new(name: 'CreateEnvironmentResponse')
     DataSet = Shapes::StructureShape.new(name: 'DataSet')
+    DataSetExportConfig = Shapes::UnionShape.new(name: 'DataSetExportConfig')
+    DataSetExportItem = Shapes::StructureShape.new(name: 'DataSetExportItem')
+    DataSetExportList = Shapes::ListShape.new(name: 'DataSetExportList')
+    DataSetExportSummary = Shapes::StructureShape.new(name: 'DataSetExportSummary')
+    DataSetExportTask = Shapes::StructureShape.new(name: 'DataSetExportTask')
+    DataSetExportTaskList = Shapes::ListShape.new(name: 'DataSetExportTaskList')
     DataSetImportConfig = Shapes::UnionShape.new(name: 'DataSetImportConfig')
     DataSetImportItem = Shapes::StructureShape.new(name: 'DataSetImportItem')
     DataSetImportList = Shapes::ListShape.new(name: 'DataSetImportList')
@@ -101,6 +109,8 @@ module Aws::MainframeModernization
     GetBatchJobExecutionResponse = Shapes::StructureShape.new(name: 'GetBatchJobExecutionResponse')
     GetDataSetDetailsRequest = Shapes::StructureShape.new(name: 'GetDataSetDetailsRequest')
     GetDataSetDetailsResponse = Shapes::StructureShape.new(name: 'GetDataSetDetailsResponse')
+    GetDataSetExportTaskRequest = Shapes::StructureShape.new(name: 'GetDataSetExportTaskRequest')
+    GetDataSetExportTaskResponse = Shapes::StructureShape.new(name: 'GetDataSetExportTaskResponse')
     GetDataSetImportTaskRequest = Shapes::StructureShape.new(name: 'GetDataSetImportTaskRequest')
     GetDataSetImportTaskResponse = Shapes::StructureShape.new(name: 'GetDataSetImportTaskResponse')
     GetDeploymentRequest = Shapes::StructureShape.new(name: 'GetDeploymentRequest')
@@ -116,6 +126,7 @@ module Aws::MainframeModernization
     JobIdentifier = Shapes::UnionShape.new(name: 'JobIdentifier')
     JobStep = Shapes::StructureShape.new(name: 'JobStep')
     JobStepRestartMarker = Shapes::StructureShape.new(name: 'JobStepRestartMarker')
+    KMSKeyId = Shapes::StringShape.new(name: 'KMSKeyId')
     ListApplicationVersionsRequest = Shapes::StructureShape.new(name: 'ListApplicationVersionsRequest')
     ListApplicationVersionsResponse = Shapes::StructureShape.new(name: 'ListApplicationVersionsResponse')
     ListApplicationsRequest = Shapes::StructureShape.new(name: 'ListApplicationsRequest')
@@ -126,6 +137,8 @@ module Aws::MainframeModernization
     ListBatchJobExecutionsResponse = Shapes::StructureShape.new(name: 'ListBatchJobExecutionsResponse')
     ListBatchJobRestartPointsRequest = Shapes::StructureShape.new(name: 'ListBatchJobRestartPointsRequest')
     ListBatchJobRestartPointsResponse = Shapes::StructureShape.new(name: 'ListBatchJobRestartPointsResponse')
+    ListDataSetExportHistoryRequest = Shapes::StructureShape.new(name: 'ListDataSetExportHistoryRequest')
+    ListDataSetExportHistoryResponse = Shapes::StructureShape.new(name: 'ListDataSetExportHistoryResponse')
     ListDataSetImportHistoryRequest = Shapes::StructureShape.new(name: 'ListDataSetImportHistoryRequest')
     ListDataSetImportHistoryResponse = Shapes::StructureShape.new(name: 'ListDataSetImportHistoryResponse')
     ListDataSetsRequest = Shapes::StructureShape.new(name: 'ListDataSetsRequest')
@@ -306,6 +319,15 @@ module Aws::MainframeModernization
     CreateApplicationResponse.add_member(:application_version, Shapes::ShapeRef.new(shape: Version, required: true, location_name: "applicationVersion"))
     CreateApplicationResponse.struct_class = Types::CreateApplicationResponse
 
+    CreateDataSetExportTaskRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: Identifier, required: true, location: "uri", location_name: "applicationId"))
+    CreateDataSetExportTaskRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    CreateDataSetExportTaskRequest.add_member(:export_config, Shapes::ShapeRef.new(shape: DataSetExportConfig, required: true, location_name: "exportConfig"))
+    CreateDataSetExportTaskRequest.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: KMSKeyId, location_name: "kmsKeyId"))
+    CreateDataSetExportTaskRequest.struct_class = Types::CreateDataSetExportTaskRequest
+
+    CreateDataSetExportTaskResponse.add_member(:task_id, Shapes::ShapeRef.new(shape: Identifier, required: true, location_name: "taskId"))
+    CreateDataSetExportTaskResponse.struct_class = Types::CreateDataSetExportTaskResponse
+
     CreateDataSetImportTaskRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: Identifier, required: true, location: "uri", location_name: "applicationId"))
     CreateDataSetImportTaskRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     CreateDataSetImportTaskRequest.add_member(:import_config, Shapes::ShapeRef.new(shape: DataSetImportConfig, required: true, location_name: "importConfig"))
@@ -349,6 +371,35 @@ module Aws::MainframeModernization
     DataSet.add_member(:relative_path, Shapes::ShapeRef.new(shape: String, location_name: "relativePath"))
     DataSet.add_member(:storage_type, Shapes::ShapeRef.new(shape: String, location_name: "storageType"))
     DataSet.struct_class = Types::DataSet
+
+    DataSetExportConfig.add_member(:data_sets, Shapes::ShapeRef.new(shape: DataSetExportList, location_name: "dataSets"))
+    DataSetExportConfig.add_member(:s3_location, Shapes::ShapeRef.new(shape: String, location_name: "s3Location"))
+    DataSetExportConfig.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    DataSetExportConfig.add_member_subclass(:data_sets, Types::DataSetExportConfig::DataSets)
+    DataSetExportConfig.add_member_subclass(:s3_location, Types::DataSetExportConfig::S3Location)
+    DataSetExportConfig.add_member_subclass(:unknown, Types::DataSetExportConfig::Unknown)
+    DataSetExportConfig.struct_class = Types::DataSetExportConfig
+
+    DataSetExportItem.add_member(:dataset_name, Shapes::ShapeRef.new(shape: String200, required: true, location_name: "datasetName"))
+    DataSetExportItem.add_member(:external_location, Shapes::ShapeRef.new(shape: ExternalLocation, required: true, location_name: "externalLocation"))
+    DataSetExportItem.struct_class = Types::DataSetExportItem
+
+    DataSetExportList.member = Shapes::ShapeRef.new(shape: DataSetExportItem)
+
+    DataSetExportSummary.add_member(:failed, Shapes::ShapeRef.new(shape: Integer, required: true, location_name: "failed"))
+    DataSetExportSummary.add_member(:in_progress, Shapes::ShapeRef.new(shape: Integer, required: true, location_name: "inProgress"))
+    DataSetExportSummary.add_member(:pending, Shapes::ShapeRef.new(shape: Integer, required: true, location_name: "pending"))
+    DataSetExportSummary.add_member(:succeeded, Shapes::ShapeRef.new(shape: Integer, required: true, location_name: "succeeded"))
+    DataSetExportSummary.add_member(:total, Shapes::ShapeRef.new(shape: Integer, required: true, location_name: "total"))
+    DataSetExportSummary.struct_class = Types::DataSetExportSummary
+
+    DataSetExportTask.add_member(:status, Shapes::ShapeRef.new(shape: DataSetTaskLifecycle, required: true, location_name: "status"))
+    DataSetExportTask.add_member(:status_reason, Shapes::ShapeRef.new(shape: String, location_name: "statusReason"))
+    DataSetExportTask.add_member(:summary, Shapes::ShapeRef.new(shape: DataSetExportSummary, required: true, location_name: "summary"))
+    DataSetExportTask.add_member(:task_id, Shapes::ShapeRef.new(shape: Identifier, required: true, location_name: "taskId"))
+    DataSetExportTask.struct_class = Types::DataSetExportTask
+
+    DataSetExportTaskList.member = Shapes::ShapeRef.new(shape: DataSetExportTask)
 
     DataSetImportConfig.add_member(:data_sets, Shapes::ShapeRef.new(shape: DataSetImportList, location_name: "dataSets"))
     DataSetImportConfig.add_member(:s3_location, Shapes::ShapeRef.new(shape: String2000, location_name: "s3Location"))
@@ -579,6 +630,17 @@ module Aws::MainframeModernization
     GetDataSetDetailsResponse.add_member(:record_length, Shapes::ShapeRef.new(shape: Integer, location_name: "recordLength", metadata: {"box"=>true}))
     GetDataSetDetailsResponse.struct_class = Types::GetDataSetDetailsResponse
 
+    GetDataSetExportTaskRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: Identifier, required: true, location: "uri", location_name: "applicationId"))
+    GetDataSetExportTaskRequest.add_member(:task_id, Shapes::ShapeRef.new(shape: Identifier, required: true, location: "uri", location_name: "taskId"))
+    GetDataSetExportTaskRequest.struct_class = Types::GetDataSetExportTaskRequest
+
+    GetDataSetExportTaskResponse.add_member(:kms_key_arn, Shapes::ShapeRef.new(shape: String, location_name: "kmsKeyArn"))
+    GetDataSetExportTaskResponse.add_member(:status, Shapes::ShapeRef.new(shape: DataSetTaskLifecycle, required: true, location_name: "status"))
+    GetDataSetExportTaskResponse.add_member(:status_reason, Shapes::ShapeRef.new(shape: String, location_name: "statusReason"))
+    GetDataSetExportTaskResponse.add_member(:summary, Shapes::ShapeRef.new(shape: DataSetExportSummary, location_name: "summary"))
+    GetDataSetExportTaskResponse.add_member(:task_id, Shapes::ShapeRef.new(shape: Identifier, required: true, location_name: "taskId"))
+    GetDataSetExportTaskResponse.struct_class = Types::GetDataSetExportTaskResponse
+
     GetDataSetImportTaskRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: Identifier, required: true, location: "uri", location_name: "applicationId"))
     GetDataSetImportTaskRequest.add_member(:task_id, Shapes::ShapeRef.new(shape: Identifier, required: true, location: "uri", location_name: "taskId"))
     GetDataSetImportTaskRequest.struct_class = Types::GetDataSetImportTaskRequest
@@ -651,6 +713,9 @@ module Aws::MainframeModernization
 
     JobStep.add_member(:proc_step_name, Shapes::ShapeRef.new(shape: String, location_name: "procStepName"))
     JobStep.add_member(:proc_step_number, Shapes::ShapeRef.new(shape: Integer, location_name: "procStepNumber"))
+    JobStep.add_member(:step_checkpoint, Shapes::ShapeRef.new(shape: Integer, location_name: "stepCheckpoint", metadata: {"box"=>true}))
+    JobStep.add_member(:step_checkpoint_status, Shapes::ShapeRef.new(shape: String, location_name: "stepCheckpointStatus"))
+    JobStep.add_member(:step_checkpoint_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "stepCheckpointTime"))
     JobStep.add_member(:step_cond_code, Shapes::ShapeRef.new(shape: String, location_name: "stepCondCode"))
     JobStep.add_member(:step_name, Shapes::ShapeRef.new(shape: String, location_name: "stepName"))
     JobStep.add_member(:step_number, Shapes::ShapeRef.new(shape: Integer, location_name: "stepNumber"))
@@ -659,6 +724,8 @@ module Aws::MainframeModernization
 
     JobStepRestartMarker.add_member(:from_proc_step, Shapes::ShapeRef.new(shape: String, location_name: "fromProcStep"))
     JobStepRestartMarker.add_member(:from_step, Shapes::ShapeRef.new(shape: String, required: true, location_name: "fromStep"))
+    JobStepRestartMarker.add_member(:skip, Shapes::ShapeRef.new(shape: Boolean, location_name: "skip", metadata: {"box"=>true}))
+    JobStepRestartMarker.add_member(:step_checkpoint, Shapes::ShapeRef.new(shape: Integer, location_name: "stepCheckpoint", metadata: {"box"=>true}))
     JobStepRestartMarker.add_member(:to_proc_step, Shapes::ShapeRef.new(shape: String, location_name: "toProcStep"))
     JobStepRestartMarker.add_member(:to_step, Shapes::ShapeRef.new(shape: String, location_name: "toStep"))
     JobStepRestartMarker.struct_class = Types::JobStepRestartMarker
@@ -713,6 +780,15 @@ module Aws::MainframeModernization
 
     ListBatchJobRestartPointsResponse.add_member(:batch_job_steps, Shapes::ShapeRef.new(shape: BatchJobStepList, location_name: "batchJobSteps"))
     ListBatchJobRestartPointsResponse.struct_class = Types::ListBatchJobRestartPointsResponse
+
+    ListDataSetExportHistoryRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: Identifier, required: true, location: "uri", location_name: "applicationId"))
+    ListDataSetExportHistoryRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListDataSetExportHistoryRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListDataSetExportHistoryRequest.struct_class = Types::ListDataSetExportHistoryRequest
+
+    ListDataSetExportHistoryResponse.add_member(:data_set_export_tasks, Shapes::ShapeRef.new(shape: DataSetExportTaskList, required: true, location_name: "dataSetExportTasks"))
+    ListDataSetExportHistoryResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListDataSetExportHistoryResponse.struct_class = Types::ListDataSetExportHistoryResponse
 
     ListDataSetImportHistoryRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: Identifier, required: true, location: "uri", location_name: "applicationId"))
     ListDataSetImportHistoryRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
@@ -992,6 +1068,21 @@ module Aws::MainframeModernization
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
+      api.add_operation(:create_data_set_export_task, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateDataSetExportTask"
+        o.http_method = "POST"
+        o.http_request_uri = "/applications/{applicationId}/dataset-export-task"
+        o.input = Shapes::ShapeRef.new(shape: CreateDataSetExportTaskRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateDataSetExportTaskResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
       api.add_operation(:create_data_set_import_task, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateDataSetImportTask"
         o.http_method = "POST"
@@ -1127,6 +1218,19 @@ module Aws::MainframeModernization
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:get_data_set_export_task, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetDataSetExportTask"
+        o.http_method = "GET"
+        o.http_request_uri = "/applications/{applicationId}/dataset-export-tasks/{taskId}"
+        o.input = Shapes::ShapeRef.new(shape: GetDataSetExportTaskRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetDataSetExportTaskResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
@@ -1268,6 +1372,25 @@ module Aws::MainframeModernization
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:list_data_set_export_history, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListDataSetExportHistory"
+        o.http_method = "GET"
+        o.http_request_uri = "/applications/{applicationId}/dataset-export-tasks"
+        o.input = Shapes::ShapeRef.new(shape: ListDataSetExportHistoryRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListDataSetExportHistoryResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
       end)
 
       api.add_operation(:list_data_set_import_history, Seahorse::Model::Operation.new.tap do |o|

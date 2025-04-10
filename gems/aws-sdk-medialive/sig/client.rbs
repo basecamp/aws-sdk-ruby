@@ -823,7 +823,16 @@ module Aws
                                       nielsen_id_3_name_modifier: ::String?,
                                       scte_35_name_modifier: ::String?,
                                       id_3_behavior: ("DISABLED" | "ENABLED")?,
-                                      id_3_name_modifier: ::String?
+                                      id_3_name_modifier: ::String?,
+                                      caption_language_mappings: Array[
+                                        {
+                                          caption_channel: ::Integer,
+                                          language_code: ::String
+                                        },
+                                      ]?,
+                                      timed_metadata_id_3_frame: ("NONE" | "PRIV" | "TDRL")?,
+                                      timed_metadata_id_3_period: ::Integer?,
+                                      timed_metadata_passthrough: ("DISABLED" | "ENABLED")?
                                     }?,
                                     srt_group_settings: {
                                       input_loss_action: ("DROP_PROGRAM" | "DROP_TS" | "EMIT_PROGRAM")?
@@ -2912,7 +2921,16 @@ module Aws
                                       nielsen_id_3_name_modifier: ::String?,
                                       scte_35_name_modifier: ::String?,
                                       id_3_behavior: ("DISABLED" | "ENABLED")?,
-                                      id_3_name_modifier: ::String?
+                                      id_3_name_modifier: ::String?,
+                                      caption_language_mappings: Array[
+                                        {
+                                          caption_channel: ::Integer,
+                                          language_code: ::String
+                                        },
+                                      ]?,
+                                      timed_metadata_id_3_frame: ("NONE" | "PRIV" | "TDRL")?,
+                                      timed_metadata_id_3_period: ::Integer?,
+                                      timed_metadata_passthrough: ("DISABLED" | "ENABLED")?
                                     }?,
                                     srt_group_settings: {
                                       input_loss_action: ("DROP_PROGRAM" | "DROP_TS" | "EMIT_PROGRAM")?
@@ -3792,7 +3810,8 @@ module Aws
                                        id: ::Integer?,
                                        profile: ("DISABLED" | "VBR-AAC_HHE-16000" | "VBR-AAC_HE-64000" | "VBR-AAC_LC-128000" | "CBR-AAC_HQ-192000" | "CBR-AAC_HQ-256000" | "CBR-AAC_HQ-384000" | "CBR-AAC_HQ-512000")?
                                      },
-                                   ]?
+                                   ]?,
+                                   input_resolution: ::String?
                                  },
                                  input_device_id: ::String,
                                  ?name: ::String,
@@ -3812,7 +3831,8 @@ module Aws
                                        id: ::Integer?,
                                        profile: ("DISABLED" | "VBR-AAC_HHE-16000" | "VBR-AAC_HE-64000" | "VBR-AAC_LC-128000" | "CBR-AAC_HQ-192000" | "CBR-AAC_HQ-256000" | "CBR-AAC_HQ-384000" | "CBR-AAC_HQ-512000")?
                                      },
-                                   ]?
+                                   ]?,
+                                   input_resolution: ::String?
                                  },
                                  ?availability_zone: ::String
                                ) -> _UpdateInputDeviceResponseSuccess

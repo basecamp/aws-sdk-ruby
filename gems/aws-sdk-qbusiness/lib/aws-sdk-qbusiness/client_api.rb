@@ -267,6 +267,8 @@ module Aws::QBusiness
     GroupStatusDetails = Shapes::ListShape.new(name: 'GroupStatusDetails')
     GroupSummary = Shapes::StructureShape.new(name: 'GroupSummary')
     GroupSummaryList = Shapes::ListShape.new(name: 'GroupSummaryList')
+    HallucinationReductionConfiguration = Shapes::StructureShape.new(name: 'HallucinationReductionConfiguration')
+    HallucinationReductionControl = Shapes::StringShape.new(name: 'HallucinationReductionControl')
     HookConfiguration = Shapes::StructureShape.new(name: 'HookConfiguration')
     IAMIdentityProviderArn = Shapes::StringShape.new(name: 'IAMIdentityProviderArn')
     IdcApplicationArn = Shapes::StringShape.new(name: 'IdcApplicationArn')
@@ -481,6 +483,7 @@ module Aws::QBusiness
     SyncSchedule = Shapes::StringShape.new(name: 'SyncSchedule')
     SystemMessageId = Shapes::StringShape.new(name: 'SystemMessageId')
     SystemMessageOverride = Shapes::StringShape.new(name: 'SystemMessageOverride')
+    SystemMessageType = Shapes::StringShape.new(name: 'SystemMessageType')
     Tag = Shapes::StructureShape.new(name: 'Tag')
     TagKey = Shapes::StringShape.new(name: 'TagKey')
     TagKeys = Shapes::ListShape.new(name: 'TagKeys')
@@ -1335,6 +1338,7 @@ module Aws::QBusiness
     GetChatControlsConfigurationResponse.add_member(:topic_configurations, Shapes::ShapeRef.new(shape: TopicConfigurations, location_name: "topicConfigurations"))
     GetChatControlsConfigurationResponse.add_member(:creator_mode_configuration, Shapes::ShapeRef.new(shape: AppliedCreatorModeConfiguration, location_name: "creatorModeConfiguration"))
     GetChatControlsConfigurationResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    GetChatControlsConfigurationResponse.add_member(:hallucination_reduction_configuration, Shapes::ShapeRef.new(shape: HallucinationReductionConfiguration, location_name: "hallucinationReductionConfiguration"))
     GetChatControlsConfigurationResponse.struct_class = Types::GetChatControlsConfigurationResponse
 
     GetDataAccessorRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
@@ -1502,6 +1506,9 @@ module Aws::QBusiness
     GroupSummary.struct_class = Types::GroupSummary
 
     GroupSummaryList.member = Shapes::ShapeRef.new(shape: GroupSummary)
+
+    HallucinationReductionConfiguration.add_member(:hallucination_reduction_control, Shapes::ShapeRef.new(shape: HallucinationReductionControl, location_name: "hallucinationReductionControl"))
+    HallucinationReductionConfiguration.struct_class = Types::HallucinationReductionConfiguration
 
     HookConfiguration.add_member(:invocation_condition, Shapes::ShapeRef.new(shape: DocumentAttributeCondition, location_name: "invocationCondition"))
     HookConfiguration.add_member(:lambda_arn, Shapes::ShapeRef.new(shape: LambdaArn, location_name: "lambdaArn"))
@@ -2062,6 +2069,7 @@ module Aws::QBusiness
     TextInputEvent.add_member(:user_message, Shapes::ShapeRef.new(shape: UserMessage, required: true, location_name: "userMessage"))
     TextInputEvent.struct_class = Types::TextInputEvent
 
+    TextOutputEvent.add_member(:system_message_type, Shapes::ShapeRef.new(shape: SystemMessageType, location_name: "systemMessageType"))
     TextOutputEvent.add_member(:conversation_id, Shapes::ShapeRef.new(shape: ConversationId, location_name: "conversationId"))
     TextOutputEvent.add_member(:user_message_id, Shapes::ShapeRef.new(shape: MessageId, location_name: "userMessageId"))
     TextOutputEvent.add_member(:system_message_id, Shapes::ShapeRef.new(shape: MessageId, location_name: "systemMessageId"))
@@ -2116,6 +2124,7 @@ module Aws::QBusiness
     UpdateChatControlsConfigurationRequest.add_member(:topic_configurations_to_create_or_update, Shapes::ShapeRef.new(shape: TopicConfigurations, location_name: "topicConfigurationsToCreateOrUpdate"))
     UpdateChatControlsConfigurationRequest.add_member(:topic_configurations_to_delete, Shapes::ShapeRef.new(shape: TopicConfigurations, location_name: "topicConfigurationsToDelete"))
     UpdateChatControlsConfigurationRequest.add_member(:creator_mode_configuration, Shapes::ShapeRef.new(shape: CreatorModeConfiguration, location_name: "creatorModeConfiguration"))
+    UpdateChatControlsConfigurationRequest.add_member(:hallucination_reduction_configuration, Shapes::ShapeRef.new(shape: HallucinationReductionConfiguration, location_name: "hallucinationReductionConfiguration"))
     UpdateChatControlsConfigurationRequest.struct_class = Types::UpdateChatControlsConfigurationRequest
 
     UpdateChatControlsConfigurationResponse.struct_class = Types::UpdateChatControlsConfigurationResponse
@@ -3421,6 +3430,7 @@ module Aws::QBusiness
         o.output = Shapes::ShapeRef.new(shape: UpdateUserResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)

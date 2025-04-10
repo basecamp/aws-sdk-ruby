@@ -1102,7 +1102,11 @@ module Aws
                                       enabled: bool?
                                     },
                                   ],
-                                  ?ip_discovery: ("ipv4" | "ipv6")
+                                  ?ip_discovery: ("ipv4" | "ipv6"),
+                                  ?scale_config: {
+                                    scale_percentage: ::Integer?,
+                                    scale_interval_minutes: ::Integer?
+                                  }
                                 ) -> _ModifyCacheClusterResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyCacheClusterResponseSuccess
 

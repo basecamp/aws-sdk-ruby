@@ -130,6 +130,19 @@ module Aws::MainframeModernization
       SENSITIVE: []
     end
 
+    class CreateDataSetExportTaskRequest
+      attr_accessor application_id: ::String
+      attr_accessor client_token: ::String
+      attr_accessor export_config: Types::DataSetExportConfig
+      attr_accessor kms_key_id: ::String
+      SENSITIVE: []
+    end
+
+    class CreateDataSetExportTaskResponse
+      attr_accessor task_id: ::String
+      SENSITIVE: []
+    end
+
     class CreateDataSetImportTaskRequest
       attr_accessor application_id: ::String
       attr_accessor client_token: ::String
@@ -185,6 +198,43 @@ module Aws::MainframeModernization
       attr_accessor record_length: Types::RecordLength
       attr_accessor relative_path: ::String
       attr_accessor storage_type: ::String
+      SENSITIVE: []
+    end
+
+    class DataSetExportConfig
+      attr_accessor data_sets: ::Array[Types::DataSetExportItem]
+      attr_accessor s3_location: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class DataSets < DataSetExportConfig
+      end
+      class S3Location < DataSetExportConfig
+      end
+      class Unknown < DataSetExportConfig
+      end
+    end
+
+    class DataSetExportItem
+      attr_accessor dataset_name: ::String
+      attr_accessor external_location: Types::ExternalLocation
+      SENSITIVE: []
+    end
+
+    class DataSetExportSummary
+      attr_accessor failed: ::Integer
+      attr_accessor in_progress: ::Integer
+      attr_accessor pending: ::Integer
+      attr_accessor succeeded: ::Integer
+      attr_accessor total: ::Integer
+      SENSITIVE: []
+    end
+
+    class DataSetExportTask
+      attr_accessor status: ("Creating" | "Running" | "Completed" | "Failed")
+      attr_accessor status_reason: ::String
+      attr_accessor summary: Types::DataSetExportSummary
+      attr_accessor task_id: ::String
       SENSITIVE: []
     end
 
@@ -491,6 +541,21 @@ module Aws::MainframeModernization
       SENSITIVE: []
     end
 
+    class GetDataSetExportTaskRequest
+      attr_accessor application_id: ::String
+      attr_accessor task_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetDataSetExportTaskResponse
+      attr_accessor kms_key_arn: ::String
+      attr_accessor status: ("Creating" | "Running" | "Completed" | "Failed")
+      attr_accessor status_reason: ::String
+      attr_accessor summary: Types::DataSetExportSummary
+      attr_accessor task_id: ::String
+      SENSITIVE: []
+    end
+
     class GetDataSetImportTaskRequest
       attr_accessor application_id: ::String
       attr_accessor task_id: ::String
@@ -586,6 +651,9 @@ module Aws::MainframeModernization
     class JobStep
       attr_accessor proc_step_name: ::String
       attr_accessor proc_step_number: ::Integer
+      attr_accessor step_checkpoint: ::Integer
+      attr_accessor step_checkpoint_status: ::String
+      attr_accessor step_checkpoint_time: ::Time
       attr_accessor step_cond_code: ::String
       attr_accessor step_name: ::String
       attr_accessor step_number: ::Integer
@@ -596,6 +664,8 @@ module Aws::MainframeModernization
     class JobStepRestartMarker
       attr_accessor from_proc_step: ::String
       attr_accessor from_step: ::String
+      attr_accessor skip: bool
+      attr_accessor step_checkpoint: ::Integer
       attr_accessor to_proc_step: ::String
       attr_accessor to_step: ::String
       SENSITIVE: []
@@ -669,6 +739,19 @@ module Aws::MainframeModernization
 
     class ListBatchJobRestartPointsResponse
       attr_accessor batch_job_steps: ::Array[Types::JobStep]
+      SENSITIVE: []
+    end
+
+    class ListDataSetExportHistoryRequest
+      attr_accessor application_id: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListDataSetExportHistoryResponse
+      attr_accessor data_set_export_tasks: ::Array[Types::DataSetExportTask]
+      attr_accessor next_token: ::String
       SENSITIVE: []
     end
 

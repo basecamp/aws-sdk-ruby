@@ -6960,6 +6960,13 @@ module Aws::MediaLive
     #   channel configuration.
     #   @return [Array<Types::InputDeviceConfigurableAudioChannelPairConfig>]
     #
+    # @!attribute [rw] input_resolution
+    #   Choose the resolution of the Link device's source (HD or UHD). Make
+    #   sure the resolution matches the current source from the device. This
+    #   value determines MediaLive resource allocation and billing for this
+    #   input. Only UHD devices can specify this parameter.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/InputDeviceConfigurableSettings AWS API Documentation
     #
     class InputDeviceConfigurableSettings < Struct.new(
@@ -6968,7 +6975,8 @@ module Aws::MediaLive
       :latency_ms,
       :codec,
       :mediaconnect_settings,
-      :audio_channel_pairs)
+      :audio_channel_pairs,
+      :input_resolution)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7333,6 +7341,11 @@ module Aws::MediaLive
     #   a MediaConnect flow.
     #   @return [Array<Types::InputDeviceUhdAudioChannelPairConfig>]
     #
+    # @!attribute [rw] input_resolution
+    #   The resolution of the Link device's source (HD or UHD). This value
+    #   determines MediaLive resource allocation and billing for this input.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/InputDeviceUhdSettings AWS API Documentation
     #
     class InputDeviceUhdSettings < Struct.new(
@@ -7347,7 +7360,8 @@ module Aws::MediaLive
       :latency_ms,
       :codec,
       :mediaconnect_settings,
-      :audio_channel_pairs)
+      :audio_channel_pairs,
+      :input_resolution)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -14005,6 +14019,25 @@ module Aws::MediaLive
     #   and period (.) and has a maximum length of 100 characters.
     #   @return [String]
     #
+    # @!attribute [rw] caption_language_mappings
+    #   An array that identifies the languages in the four caption channels
+    #   in the embedded captions.
+    #   @return [Array<Types::CmafIngestCaptionLanguageMapping>]
+    #
+    # @!attribute [rw] timed_metadata_id_3_frame
+    #   Set to none if you don't want to insert a timecode in the output.
+    #   Otherwise choose the frame type for the timecode.
+    #   @return [String]
+    #
+    # @!attribute [rw] timed_metadata_id_3_period
+    #   If you set up to insert a timecode in the output, specify the
+    #   frequency for the frame, in seconds.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] timed_metadata_passthrough
+    #   Set to enabled to pass through ID3 metadata from the input sources.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CmafIngestGroupSettings AWS API Documentation
     #
     class CmafIngestGroupSettings < Struct.new(
@@ -14019,7 +14052,11 @@ module Aws::MediaLive
       :nielsen_id_3_name_modifier,
       :scte_35_name_modifier,
       :id_3_behavior,
-      :id_3_name_modifier)
+      :id_3_name_modifier,
+      :caption_language_mappings,
+      :timed_metadata_id_3_frame,
+      :timed_metadata_id_3_period,
+      :timed_metadata_passthrough)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -21615,6 +21652,29 @@ module Aws::MediaLive
     #
     class UpdateSdiSourceResponse < Struct.new(
       :sdi_source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Add an array item for each language. Follow the order of the caption
+    # descriptions. For example, if the first caption description is for
+    # German, then the first array item must be for German, and its caption
+    # channel must be set to 1. The second array item must be 2, and so on.
+    #
+    # @!attribute [rw] caption_channel
+    #   A number for the channel for this caption, 1 to 4.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] language_code
+    #   Language code for the language of the caption in this channel. For
+    #   example, ger/deu. See http://www.loc.gov/standards/iso639-2
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CmafIngestCaptionLanguageMapping AWS API Documentation
+    #
+    class CmafIngestCaptionLanguageMapping < Struct.new(
+      :caption_channel,
+      :language_code)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -1719,6 +1719,7 @@ module Aws::MediaLive
       attr_accessor codec: ("HEVC" | "AVC")
       attr_accessor mediaconnect_settings: Types::InputDeviceMediaConnectConfigurableSettings
       attr_accessor audio_channel_pairs: ::Array[Types::InputDeviceConfigurableAudioChannelPairConfig]
+      attr_accessor input_resolution: ::String
       SENSITIVE: []
     end
 
@@ -1809,6 +1810,7 @@ module Aws::MediaLive
       attr_accessor codec: ("HEVC" | "AVC")
       attr_accessor mediaconnect_settings: Types::InputDeviceMediaConnectSettings
       attr_accessor audio_channel_pairs: ::Array[Types::InputDeviceUhdAudioChannelPairConfig]
+      attr_accessor input_resolution: ::String
       SENSITIVE: []
     end
 
@@ -3601,6 +3603,10 @@ module Aws::MediaLive
       attr_accessor scte_35_name_modifier: ::String
       attr_accessor id_3_behavior: ("DISABLED" | "ENABLED")
       attr_accessor id_3_name_modifier: ::String
+      attr_accessor caption_language_mappings: ::Array[Types::CmafIngestCaptionLanguageMapping]
+      attr_accessor timed_metadata_id_3_frame: ("NONE" | "PRIV" | "TDRL")
+      attr_accessor timed_metadata_id_3_period: ::Integer
+      attr_accessor timed_metadata_passthrough: ("DISABLED" | "ENABLED")
       SENSITIVE: []
     end
 
@@ -5638,6 +5644,12 @@ module Aws::MediaLive
 
     class UpdateSdiSourceResponse
       attr_accessor sdi_source: Types::SdiSource
+      SENSITIVE: []
+    end
+
+    class CmafIngestCaptionLanguageMapping
+      attr_accessor caption_channel: ::Integer
+      attr_accessor language_code: ::String
       SENSITIVE: []
     end
   end

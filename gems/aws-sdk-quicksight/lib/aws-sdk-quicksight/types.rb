@@ -2364,13 +2364,18 @@ module Aws::QuickSight
     #   A list of dataset ARNS to exclude from Dashboard Q&amp;A.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] custom_action_defaults
+    #   A list of visual custom actions for the analysis.
+    #   @return [Types::VisualCustomActionDefaults]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/AssetOptions AWS API Documentation
     #
     class AssetOptions < Struct.new(
       :timezone,
       :week_start,
       :q_business_insights_status,
-      :excluded_data_set_arns)
+      :excluded_data_set_arns,
+      :custom_action_defaults)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -30131,6 +30136,10 @@ module Aws::QuickSight
     #   * `INTERACTIVE`: Creates a sheet for an interactive dashboard.
     #   @return [String]
     #
+    # @!attribute [rw] custom_action_defaults
+    #   A list of visual custom actions for the sheet.
+    #   @return [Types::VisualCustomActionDefaults]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SheetDefinition AWS API Documentation
     #
     class SheetDefinition < Struct.new(
@@ -30145,7 +30154,8 @@ module Aws::QuickSight
       :images,
       :layouts,
       :sheet_control_layouts,
-      :content_type)
+      :content_type,
+      :custom_action_defaults)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -39046,6 +39056,21 @@ module Aws::QuickSight
       include Aws::Structure
     end
 
+    # A list of custom actions applied to visuals in an analysis or sheet.
+    #
+    # @!attribute [rw] highlight_operation
+    #   A list of highlight operations available for visuals in an analysis
+    #   or sheet.
+    #   @return [Types::VisualHighlightOperation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/VisualCustomActionDefaults AWS API Documentation
+    #
+    class VisualCustomActionDefaults < Struct.new(
+      :highlight_operation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The operation that is defined by the custom action.
     #
     # This is a union type structure. For this structure to be valid, only
@@ -39076,6 +39101,22 @@ module Aws::QuickSight
       :navigation_operation,
       :url_operation,
       :set_parameters_operation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Defines what initiates a highlight operation on a visual, such as a
+    # click or hover.
+    #
+    # @!attribute [rw] trigger
+    #   Specifies whether a highlight operation is initiated by a click or
+    #   hover, or whether it's disabled.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/VisualHighlightOperation AWS API Documentation
+    #
+    class VisualHighlightOperation < Struct.new(
+      :trigger)
       SENSITIVE = []
       include Aws::Structure
     end

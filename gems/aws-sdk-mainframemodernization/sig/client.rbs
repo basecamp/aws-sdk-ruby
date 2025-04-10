@@ -110,6 +110,29 @@ module Aws
                               ) -> _CreateApplicationResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateApplicationResponseSuccess
 
+      interface _CreateDataSetExportTaskResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateDataSetExportTaskResponse]
+        def task_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MainframeModernization/Client.html#create_data_set_export_task-instance_method
+      def create_data_set_export_task: (
+                                         application_id: ::String,
+                                         ?client_token: ::String,
+                                         export_config: {
+                                           data_sets: Array[
+                                             {
+                                               dataset_name: ::String,
+                                               external_location: {
+                                                 s3_location: ::String?
+                                               }
+                                             },
+                                           ]?,
+                                           s3_location: ::String?
+                                         },
+                                         ?kms_key_id: ::String
+                                       ) -> _CreateDataSetExportTaskResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDataSetExportTaskResponseSuccess
+
       interface _CreateDataSetImportTaskResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateDataSetImportTaskResponse]
         def task_id: () -> ::String
@@ -339,6 +362,21 @@ module Aws
                                 ) -> _GetDataSetDetailsResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDataSetDetailsResponseSuccess
 
+      interface _GetDataSetExportTaskResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetDataSetExportTaskResponse]
+        def kms_key_arn: () -> ::String
+        def status: () -> ("Creating" | "Running" | "Completed" | "Failed")
+        def status_reason: () -> ::String
+        def summary: () -> Types::DataSetExportSummary
+        def task_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MainframeModernization/Client.html#get_data_set_export_task-instance_method
+      def get_data_set_export_task: (
+                                      application_id: ::String,
+                                      task_id: ::String
+                                    ) -> _GetDataSetExportTaskResponseSuccess
+                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDataSetExportTaskResponseSuccess
+
       interface _GetDataSetImportTaskResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetDataSetImportTaskResponse]
         def status: () -> ("Creating" | "Running" | "Completed" | "Failed")
@@ -480,6 +518,19 @@ module Aws
                                          ) -> _ListBatchJobRestartPointsResponseSuccess
                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBatchJobRestartPointsResponseSuccess
 
+      interface _ListDataSetExportHistoryResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListDataSetExportHistoryResponse]
+        def data_set_export_tasks: () -> ::Array[Types::DataSetExportTask]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MainframeModernization/Client.html#list_data_set_export_history-instance_method
+      def list_data_set_export_history: (
+                                          application_id: ::String,
+                                          ?max_results: ::Integer,
+                                          ?next_token: ::String
+                                        ) -> _ListDataSetExportHistoryResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDataSetExportHistoryResponseSuccess
+
       interface _ListDataSetImportHistoryResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListDataSetImportHistoryResponse]
         def data_set_import_tasks: () -> ::Array[Types::DataSetImportTask]
@@ -585,6 +636,8 @@ module Aws
                                  job_step_restart_marker: {
                                    from_proc_step: ::String?,
                                    from_step: ::String,
+                                   skip: bool?,
+                                   step_checkpoint: ::Integer?,
                                    to_proc_step: ::String?,
                                    to_step: ::String?
                                  }

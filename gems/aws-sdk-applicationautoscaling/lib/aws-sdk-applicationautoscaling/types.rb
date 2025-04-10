@@ -227,6 +227,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -303,6 +307,9 @@ module Aws::ApplicationAutoScaling
     #
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
+    #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
     #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.
@@ -414,6 +421,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -490,6 +501,9 @@ module Aws::ApplicationAutoScaling
     #
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
+    #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
     #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.
@@ -597,6 +611,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -674,6 +692,9 @@ module Aws::ApplicationAutoScaling
     #
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
+    #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
     #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.
@@ -780,6 +801,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -858,6 +883,9 @@ module Aws::ApplicationAutoScaling
     #
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
+    #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
     #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.
@@ -995,6 +1023,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -1072,6 +1104,9 @@ module Aws::ApplicationAutoScaling
     #
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
+    #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
     #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.
@@ -1227,6 +1262,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -1304,6 +1343,9 @@ module Aws::ApplicationAutoScaling
     #
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
+    #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
     #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.
@@ -1446,6 +1488,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -1523,6 +1569,9 @@ module Aws::ApplicationAutoScaling
     #
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
+    #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
     #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.
@@ -2344,6 +2393,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -2421,6 +2474,9 @@ module Aws::ApplicationAutoScaling
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
     #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
+    #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.
     #
@@ -2451,14 +2507,17 @@ module Aws::ApplicationAutoScaling
     #   `StepScaling`—Not supported for DynamoDB, Amazon Comprehend, Lambda,
     #   Amazon Keyspaces, Amazon MSK, Amazon ElastiCache, or Neptune.
     #
-    #   For more information, see [Target tracking scaling policies][1] and
-    #   [Step scaling policies][2] in the *Application Auto Scaling User
-    #   Guide*.
+    #   `PredictiveScaling`—Only supported for Amazon ECS.
+    #
+    #   For more information, see [Target tracking scaling policies][1],
+    #   [Step scaling policies][2], and [Predictive scaling policies][3] in
+    #   the *Application Auto Scaling User Guide*.
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-target-tracking.html
     #   [2]: https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-step-scaling-policies.html
+    #   [3]: https://docs.aws.amazon.com/autoscaling/application/userguide/aas-create-predictive-scaling-policy.html
     #   @return [String]
     #
     # @!attribute [rw] step_scaling_policy_configuration
@@ -2637,6 +2696,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -2713,6 +2776,9 @@ module Aws::ApplicationAutoScaling
     #
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
+    #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
     #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.
@@ -2843,6 +2909,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -2920,6 +2990,9 @@ module Aws::ApplicationAutoScaling
     #
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
+    #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
     #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.
@@ -3184,6 +3257,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -3261,6 +3338,9 @@ module Aws::ApplicationAutoScaling
     #
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
+    #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
     #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.
@@ -3442,6 +3522,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -3518,6 +3602,9 @@ module Aws::ApplicationAutoScaling
     #
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
+    #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
     #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.
@@ -3686,6 +3773,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -3763,6 +3854,9 @@ module Aws::ApplicationAutoScaling
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
     #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
+    #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.
     #
@@ -3791,6 +3885,8 @@ module Aws::ApplicationAutoScaling
     #
     #   `StepScaling`—Not supported for DynamoDB, Amazon Comprehend, Lambda,
     #   Amazon Keyspaces, Amazon MSK, Amazon ElastiCache, or Neptune.
+    #
+    #   `PredictiveScaling`—Only supported for Amazon ECS
     #   @return [String]
     #
     # @!attribute [rw] step_scaling_policy_configuration
@@ -3950,6 +4046,10 @@ module Aws::ApplicationAutoScaling
     #     `replication-group` and the unique identifier is the replication
     #     group name. Example: `replication-group/mycluster`.
     #
+    #   * Amazon ElastiCache cache cluster - The resource type is
+    #     `cache-cluster` and the unique identifier is the cache cluster
+    #     name. Example: `cache-cluster/mycluster`.
+    #
     #   * Neptune cluster - The resource type is `cluster` and the unique
     #     identifier is the cluster name. Example: `cluster:mycluster`.
     #
@@ -4026,6 +4126,9 @@ module Aws::ApplicationAutoScaling
     #
     #   * `kafka:broker-storage:VolumeSize` - The provisioned volume size
     #     (in GiB) for brokers in an Amazon MSK cluster.
+    #
+    #   * `elasticache:cache-cluster:Nodes` - The number of nodes for an
+    #     Amazon ElastiCache cache cluster.
     #
     #   * `elasticache:replication-group:NodeGroups` - The number of node
     #     groups for an Amazon ElastiCache replication group.

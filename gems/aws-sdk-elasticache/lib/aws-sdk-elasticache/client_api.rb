@@ -334,6 +334,7 @@ module Aws::ElastiCache
     ReshardingStatus = Shapes::StructureShape.new(name: 'ReshardingStatus')
     RevokeCacheSecurityGroupIngressMessage = Shapes::StructureShape.new(name: 'RevokeCacheSecurityGroupIngressMessage')
     RevokeCacheSecurityGroupIngressResult = Shapes::StructureShape.new(name: 'RevokeCacheSecurityGroupIngressResult')
+    ScaleConfig = Shapes::StructureShape.new(name: 'ScaleConfig')
     SecurityGroupIdsList = Shapes::ListShape.new(name: 'SecurityGroupIdsList')
     SecurityGroupMembership = Shapes::StructureShape.new(name: 'SecurityGroupMembership')
     SecurityGroupMembershipList = Shapes::ListShape.new(name: 'SecurityGroupMembershipList')
@@ -1332,6 +1333,7 @@ module Aws::ElastiCache
     ModifyCacheClusterMessage.add_member(:auth_token_update_strategy, Shapes::ShapeRef.new(shape: AuthTokenUpdateStrategyType, location_name: "AuthTokenUpdateStrategy"))
     ModifyCacheClusterMessage.add_member(:log_delivery_configurations, Shapes::ShapeRef.new(shape: LogDeliveryConfigurationRequestList, location_name: "LogDeliveryConfigurations"))
     ModifyCacheClusterMessage.add_member(:ip_discovery, Shapes::ShapeRef.new(shape: IpDiscovery, location_name: "IpDiscovery"))
+    ModifyCacheClusterMessage.add_member(:scale_config, Shapes::ShapeRef.new(shape: ScaleConfig, location_name: "ScaleConfig"))
     ModifyCacheClusterMessage.struct_class = Types::ModifyCacheClusterMessage
 
     ModifyCacheClusterResult.add_member(:cache_cluster, Shapes::ShapeRef.new(shape: CacheCluster, location_name: "CacheCluster"))
@@ -1560,6 +1562,7 @@ module Aws::ElastiCache
     PendingModifiedValues.add_member(:log_delivery_configurations, Shapes::ShapeRef.new(shape: PendingLogDeliveryConfigurationList, location_name: "LogDeliveryConfigurations"))
     PendingModifiedValues.add_member(:transit_encryption_enabled, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "TransitEncryptionEnabled"))
     PendingModifiedValues.add_member(:transit_encryption_mode, Shapes::ShapeRef.new(shape: TransitEncryptionMode, location_name: "TransitEncryptionMode"))
+    PendingModifiedValues.add_member(:scale_config, Shapes::ShapeRef.new(shape: ScaleConfig, location_name: "ScaleConfig"))
     PendingModifiedValues.struct_class = Types::PendingModifiedValues
 
     PreferredAvailabilityZoneList.member = Shapes::ShapeRef.new(shape: String, location_name: "PreferredAvailabilityZone")
@@ -1747,6 +1750,10 @@ module Aws::ElastiCache
 
     RevokeCacheSecurityGroupIngressResult.add_member(:cache_security_group, Shapes::ShapeRef.new(shape: CacheSecurityGroup, location_name: "CacheSecurityGroup"))
     RevokeCacheSecurityGroupIngressResult.struct_class = Types::RevokeCacheSecurityGroupIngressResult
+
+    ScaleConfig.add_member(:scale_percentage, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "ScalePercentage"))
+    ScaleConfig.add_member(:scale_interval_minutes, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "ScaleIntervalMinutes"))
+    ScaleConfig.struct_class = Types::ScaleConfig
 
     SecurityGroupIdsList.member = Shapes::ShapeRef.new(shape: String, location_name: "SecurityGroupId")
 

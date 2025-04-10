@@ -3905,6 +3905,10 @@ module Aws::QBusiness
     #   set of Amazon Q Business chat controls configured.
     #   @return [String]
     #
+    # @!attribute [rw] hallucination_reduction_configuration
+    #   The hallucination reduction settings for your application.
+    #   @return [Types::HallucinationReductionConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetChatControlsConfigurationResponse AWS API Documentation
     #
     class GetChatControlsConfigurationResponse < Struct.new(
@@ -3913,7 +3917,8 @@ module Aws::QBusiness
       :blocked_phrases,
       :topic_configurations,
       :creator_mode_configuration,
-      :next_token)
+      :next_token,
+      :hallucination_reduction_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4732,6 +4737,28 @@ module Aws::QBusiness
     #
     class GroupSummary < Struct.new(
       :group_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Configuration information required to setup hallucination reduction.
+    # For more information, see [hallucination
+    # reduction](amazonq/latest/qbusiness-ug/hallucination-reduction.html).
+    #
+    # <note markdown="1"> The hallucination reduction feature won't work if chat orchestration
+    # controls are enabled for your application.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] hallucination_reduction_control
+    #   Controls whether hallucination reduction has been enabled or
+    #   disabled for your application. The default status is `DISABLED`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/HallucinationReductionConfiguration AWS API Documentation
+    #
+    class HallucinationReductionConfiguration < Struct.new(
+      :hallucination_reduction_control)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7470,6 +7497,19 @@ module Aws::QBusiness
     # An output event for an AI-generated response in an Amazon Q Business
     # web experience.
     #
+    # @!attribute [rw] system_message_type
+    #   The type of AI-generated message in a `TextOutputEvent`. Amazon Q
+    #   Business currently supports two types of messages:
+    #
+    #   * `RESPONSE` - The Amazon Q Business system response.
+    #
+    #   * `GROUNDED_RESPONSE` - The corrected, hallucination-reduced,
+    #     response returned by Amazon Q Business. Available only if
+    #     hallucination reduction is supported and configured for the
+    #     application and detected in the end user chat query by Amazon Q
+    #     Business.
+    #   @return [String]
+    #
     # @!attribute [rw] conversation_id
     #   The identifier of the conversation with which the text output event
     #   is associated.
@@ -7490,6 +7530,7 @@ module Aws::QBusiness
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/TextOutputEvent AWS API Documentation
     #
     class TextOutputEvent < Struct.new(
+      :system_message_type,
       :conversation_id,
       :user_message_id,
       :system_message_id,
@@ -7725,6 +7766,10 @@ module Aws::QBusiness
     #   The configuration details for `CREATOR_MODE`.
     #   @return [Types::CreatorModeConfiguration]
     #
+    # @!attribute [rw] hallucination_reduction_configuration
+    #   The hallucination reduction settings for your application.
+    #   @return [Types::HallucinationReductionConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateChatControlsConfigurationRequest AWS API Documentation
     #
     class UpdateChatControlsConfigurationRequest < Struct.new(
@@ -7735,7 +7780,8 @@ module Aws::QBusiness
       :blocked_phrases_configuration_update,
       :topic_configurations_to_create_or_update,
       :topic_configurations_to_delete,
-      :creator_mode_configuration)
+      :creator_mode_configuration,
+      :hallucination_reduction_configuration)
       SENSITIVE = []
       include Aws::Structure
     end

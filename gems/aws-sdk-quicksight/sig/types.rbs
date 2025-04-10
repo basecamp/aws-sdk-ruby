@@ -597,6 +597,7 @@ module Aws::QuickSight
       attr_accessor week_start: ("SUNDAY" | "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY")
       attr_accessor q_business_insights_status: ("ENABLED" | "DISABLED")
       attr_accessor excluded_data_set_arns: ::Array[::String]
+      attr_accessor custom_action_defaults: Types::VisualCustomActionDefaults
       SENSITIVE: []
     end
 
@@ -7775,6 +7776,7 @@ module Aws::QuickSight
       attr_accessor layouts: ::Array[Types::Layout]
       attr_accessor sheet_control_layouts: ::Array[Types::SheetControlLayout]
       attr_accessor content_type: ("PAGINATED" | "INTERACTIVE")
+      attr_accessor custom_action_defaults: Types::VisualCustomActionDefaults
       SENSITIVE: []
     end
 
@@ -10013,11 +10015,21 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class VisualCustomActionDefaults
+      attr_accessor highlight_operation: Types::VisualHighlightOperation
+      SENSITIVE: []
+    end
+
     class VisualCustomActionOperation
       attr_accessor filter_operation: Types::CustomActionFilterOperation
       attr_accessor navigation_operation: Types::CustomActionNavigationOperation
       attr_accessor url_operation: Types::CustomActionURLOperation
       attr_accessor set_parameters_operation: Types::CustomActionSetParametersOperation
+      SENSITIVE: []
+    end
+
+    class VisualHighlightOperation
+      attr_accessor trigger: ("DATA_POINT_CLICK" | "DATA_POINT_HOVER" | "NONE")
       SENSITIVE: []
     end
 

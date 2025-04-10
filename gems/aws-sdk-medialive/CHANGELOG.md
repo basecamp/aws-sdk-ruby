@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.151.0 (2025-04-10)
+------------------
+
+* Feature - AWS Elemental MediaLive / Features : Add support for CMAF Ingest CaptionLanguageMappings, TimedMetadataId3 settings, and Link InputResolution.
+
 1.150.0 (2025-04-07)
 ------------------
 

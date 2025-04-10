@@ -996,6 +996,7 @@ module Aws
         def topic_configurations: () -> ::Array[Types::TopicConfiguration]
         def creator_mode_configuration: () -> Types::AppliedCreatorModeConfiguration
         def next_token: () -> ::String
+        def hallucination_reduction_configuration: () -> Types::HallucinationReductionConfiguration
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#get_chat_controls_configuration-instance_method
       def get_chat_controls_configuration: (
@@ -1734,6 +1735,9 @@ module Aws
                                                 ],
                                                 ?creator_mode_configuration: {
                                                   creator_mode_control: ("ENABLED" | "DISABLED")
+                                                },
+                                                ?hallucination_reduction_configuration: {
+                                                  hallucination_reduction_control: ("ENABLED" | "DISABLED")?
                                                 }
                                               ) -> _UpdateChatControlsConfigurationResponseSuccess
                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateChatControlsConfigurationResponseSuccess

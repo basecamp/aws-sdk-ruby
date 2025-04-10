@@ -529,6 +529,7 @@ module Aws::QBusiness
     #   resp.output_stream.event_types #=> [:text_event, :metadata_event, :action_review_event, :failed_attachment_event, :auth_challenge_request_event]
     #
     #   For :text_event event available at #on_text_event_event callback and response eventstream enumerator:
+    #   event.system_message_type #=> String, one of "RESPONSE", "GROUNDED_RESPONSE"
     #   event.conversation_id #=> String
     #   event.user_message_id #=> String
     #   event.system_message_id #=> String
@@ -642,7 +643,7 @@ module Aws::QBusiness
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qbusiness'
-      context[:gem_version] = '1.33.0'
+      context[:gem_version] = '1.34.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

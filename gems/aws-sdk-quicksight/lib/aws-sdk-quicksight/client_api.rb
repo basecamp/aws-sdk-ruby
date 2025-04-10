@@ -2102,11 +2102,14 @@ module Aws::QuickSight
     Visual = Shapes::StructureShape.new(name: 'Visual')
     VisualAxisSortOption = Shapes::StructureShape.new(name: 'VisualAxisSortOption')
     VisualCustomAction = Shapes::StructureShape.new(name: 'VisualCustomAction')
+    VisualCustomActionDefaults = Shapes::StructureShape.new(name: 'VisualCustomActionDefaults')
     VisualCustomActionList = Shapes::ListShape.new(name: 'VisualCustomActionList')
     VisualCustomActionName = Shapes::StringShape.new(name: 'VisualCustomActionName')
     VisualCustomActionOperation = Shapes::StructureShape.new(name: 'VisualCustomActionOperation')
     VisualCustomActionOperationList = Shapes::ListShape.new(name: 'VisualCustomActionOperationList')
     VisualCustomActionTrigger = Shapes::StringShape.new(name: 'VisualCustomActionTrigger')
+    VisualHighlightOperation = Shapes::StructureShape.new(name: 'VisualHighlightOperation')
+    VisualHighlightTrigger = Shapes::StringShape.new(name: 'VisualHighlightTrigger')
     VisualInteractionOptions = Shapes::StructureShape.new(name: 'VisualInteractionOptions')
     VisualList = Shapes::ListShape.new(name: 'VisualList')
     VisualMenuOption = Shapes::StructureShape.new(name: 'VisualMenuOption')
@@ -2695,6 +2698,7 @@ module Aws::QuickSight
     AssetOptions.add_member(:week_start, Shapes::ShapeRef.new(shape: DayOfTheWeek, location_name: "WeekStart"))
     AssetOptions.add_member(:q_business_insights_status, Shapes::ShapeRef.new(shape: QBusinessInsightsStatus, location_name: "QBusinessInsightsStatus"))
     AssetOptions.add_member(:excluded_data_set_arns, Shapes::ShapeRef.new(shape: DataSetArnsList, location_name: "ExcludedDataSetArns"))
+    AssetOptions.add_member(:custom_action_defaults, Shapes::ShapeRef.new(shape: VisualCustomActionDefaults, location_name: "CustomActionDefaults"))
     AssetOptions.struct_class = Types::AssetOptions
 
     AthenaParameters.add_member(:work_group, Shapes::ShapeRef.new(shape: WorkGroup, location_name: "WorkGroup"))
@@ -8325,6 +8329,7 @@ module Aws::QuickSight
     SheetDefinition.add_member(:layouts, Shapes::ShapeRef.new(shape: LayoutList, location_name: "Layouts"))
     SheetDefinition.add_member(:sheet_control_layouts, Shapes::ShapeRef.new(shape: SheetControlLayoutList, location_name: "SheetControlLayouts"))
     SheetDefinition.add_member(:content_type, Shapes::ShapeRef.new(shape: SheetContentType, location_name: "ContentType"))
+    SheetDefinition.add_member(:custom_action_defaults, Shapes::ShapeRef.new(shape: VisualCustomActionDefaults, location_name: "CustomActionDefaults"))
     SheetDefinition.struct_class = Types::SheetDefinition
 
     SheetDefinitionList.member = Shapes::ShapeRef.new(shape: SheetDefinition)
@@ -10137,6 +10142,9 @@ module Aws::QuickSight
     VisualCustomAction.add_member(:action_operations, Shapes::ShapeRef.new(shape: VisualCustomActionOperationList, required: true, location_name: "ActionOperations"))
     VisualCustomAction.struct_class = Types::VisualCustomAction
 
+    VisualCustomActionDefaults.add_member(:highlight_operation, Shapes::ShapeRef.new(shape: VisualHighlightOperation, location_name: "highlightOperation"))
+    VisualCustomActionDefaults.struct_class = Types::VisualCustomActionDefaults
+
     VisualCustomActionList.member = Shapes::ShapeRef.new(shape: VisualCustomAction)
 
     VisualCustomActionOperation.add_member(:filter_operation, Shapes::ShapeRef.new(shape: CustomActionFilterOperation, location_name: "FilterOperation"))
@@ -10146,6 +10154,9 @@ module Aws::QuickSight
     VisualCustomActionOperation.struct_class = Types::VisualCustomActionOperation
 
     VisualCustomActionOperationList.member = Shapes::ShapeRef.new(shape: VisualCustomActionOperation)
+
+    VisualHighlightOperation.add_member(:trigger, Shapes::ShapeRef.new(shape: VisualHighlightTrigger, required: true, location_name: "Trigger"))
+    VisualHighlightOperation.struct_class = Types::VisualHighlightOperation
 
     VisualInteractionOptions.add_member(:visual_menu_option, Shapes::ShapeRef.new(shape: VisualMenuOption, location_name: "VisualMenuOption"))
     VisualInteractionOptions.add_member(:context_menu_option, Shapes::ShapeRef.new(shape: ContextMenuOption, location_name: "ContextMenuOption"))
@@ -10395,8 +10406,8 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
-        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
@@ -10780,8 +10791,8 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
-        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
@@ -10794,8 +10805,8 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
-        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
@@ -11295,8 +11306,8 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
-        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
@@ -11309,8 +11320,8 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
-        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
@@ -11323,8 +11334,8 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
-        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
@@ -13019,8 +13030,8 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
-        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
@@ -13033,8 +13044,8 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
-        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
@@ -13047,8 +13058,8 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
-        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 

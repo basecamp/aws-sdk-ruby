@@ -1173,6 +1173,7 @@ module Aws::ElastiCache
       attr_accessor auth_token_update_strategy: ("SET" | "ROTATE" | "DELETE")
       attr_accessor log_delivery_configurations: ::Array[Types::LogDeliveryConfigurationRequest]
       attr_accessor ip_discovery: ("ipv4" | "ipv6")
+      attr_accessor scale_config: Types::ScaleConfig
       SENSITIVE: []
     end
 
@@ -1426,6 +1427,7 @@ module Aws::ElastiCache
       attr_accessor log_delivery_configurations: ::Array[Types::PendingLogDeliveryConfiguration]
       attr_accessor transit_encryption_enabled: bool
       attr_accessor transit_encryption_mode: ("preferred" | "required")
+      attr_accessor scale_config: Types::ScaleConfig
       SENSITIVE: []
     end
 
@@ -1638,6 +1640,12 @@ module Aws::ElastiCache
 
     class RevokeCacheSecurityGroupIngressResult
       attr_accessor cache_security_group: Types::CacheSecurityGroup
+      SENSITIVE: []
+    end
+
+    class ScaleConfig
+      attr_accessor scale_percentage: ::Integer
+      attr_accessor scale_interval_minutes: ::Integer
       SENSITIVE: []
     end
 

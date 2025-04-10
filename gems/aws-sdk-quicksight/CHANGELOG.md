@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.146.0 (2025-04-10)
+------------------
+
+* Feature - Add support to analysis and sheet level highlighting in QuickSight.
+
 1.145.0 (2025-03-28)
 ------------------
 

@@ -991,6 +991,7 @@ module Aws::QBusiness
       attr_accessor topic_configurations: ::Array[Types::TopicConfiguration]
       attr_accessor creator_mode_configuration: Types::AppliedCreatorModeConfiguration
       attr_accessor next_token: ::String
+      attr_accessor hallucination_reduction_configuration: Types::HallucinationReductionConfiguration
       SENSITIVE: []
     end
 
@@ -1199,6 +1200,11 @@ module Aws::QBusiness
 
     class GroupSummary
       attr_accessor group_name: ::String
+      SENSITIVE: []
+    end
+
+    class HallucinationReductionConfiguration
+      attr_accessor hallucination_reduction_control: ("ENABLED" | "DISABLED")
       SENSITIVE: []
     end
 
@@ -1962,6 +1968,7 @@ module Aws::QBusiness
     end
 
     class TextOutputEvent
+      attr_accessor system_message_type: ("RESPONSE" | "GROUNDED_RESPONSE")
       attr_accessor conversation_id: ::String
       attr_accessor user_message_id: ::String
       attr_accessor system_message_id: ::String
@@ -2027,6 +2034,7 @@ module Aws::QBusiness
       attr_accessor topic_configurations_to_create_or_update: ::Array[Types::TopicConfiguration]
       attr_accessor topic_configurations_to_delete: ::Array[Types::TopicConfiguration]
       attr_accessor creator_mode_configuration: Types::CreatorModeConfiguration
+      attr_accessor hallucination_reduction_configuration: Types::HallucinationReductionConfiguration
       SENSITIVE: []
     end
 
