@@ -1,12 +1,6 @@
 {
-  "rest-xml" : {
-    "input" : {
-      "NestedXmlMapWithXmlNameSerializes": {
-        "description": "Smithy 1.52.0 did not include a fix to this test.",
-        "engines": ["ox", "nokogiri", "rexml", "libxml", "oga"]
-      }
-    },
-    "output" : {
+  "rest-xml": {
+    "output": {
       "SimpleScalarPropertiesComplexEscapes": {
         "description": "OxEngine does not handle all escape cases but other engines supports it",
         "engines": ["ox"]
@@ -14,6 +8,14 @@
       "SimpleScalarPropertiesWithXMLPreamble": {
         "description": "Nokogiri doesn't support XML preamble?",
         "engines": ["nokogiri"]
+      }
+    }
+  },
+  "rest-xmlns": {
+    "input" : {
+      "XmlNamespaceSimpleScalarProperties": {
+        "description": "Smithy 1.56.0 added a broken test case for XML namespaces",
+        "engines": ["ox", "nokogiri", "rexml", "libxml", "oga"]
       }
     }
   }
