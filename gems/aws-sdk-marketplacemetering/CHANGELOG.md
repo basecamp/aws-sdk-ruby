@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.78.0 (2025-04-11)
+------------------
+
+* Feature - Add support for Marketplace Metering Service dual-stack endpoints for CN regions
+
 1.77.0 (2025-03-28)
 ------------------
 

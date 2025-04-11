@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.43.0 (2025-04-11)
+------------------
+
+* Feature - Adds deletion protection support to policy stores. Deletion protection is disabled by default, can be enabled via the CreatePolicyStore or UpdatePolicyStore APIs, and is visible in GetPolicyStore.
+
 1.42.0 (2025-02-18)
 ------------------
 

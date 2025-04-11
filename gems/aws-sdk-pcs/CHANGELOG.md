@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.15.0 (2025-04-11)
+------------------
+
+* Feature - Changed the minimum length of clusterIdentifier, computeNodeGroupIdentifier, and queueIdentifier to 3.
+
 1.14.0 (2025-03-24)
 ------------------
 

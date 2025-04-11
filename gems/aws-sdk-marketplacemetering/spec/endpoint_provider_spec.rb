@@ -140,7 +140,7 @@ module Aws::MarketplaceMetering
 
     context "For region cn-northwest-1 with FIPS disabled and DualStack enabled" do
       let(:expected) do
-        {"endpoint"=>{"url"=>"https://metering.marketplace.cn-northwest-1.api.amazonwebservices.com.cn"}}
+        {"endpoint"=>{"url"=>"https://metering-marketplace.cn-northwest-1.api.amazonwebservices.com.cn"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
@@ -196,7 +196,7 @@ module Aws::MarketplaceMetering
 
     context "For region us-gov-west-1 with FIPS disabled and DualStack enabled" do
       let(:expected) do
-        {"endpoint"=>{"url"=>"https://metering.marketplace.us-gov-west-1.api.aws"}}
+        {"endpoint"=>{"url"=>"https://metering-marketplace.us-gov-west-1.api.aws"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.36.0 (2025-04-11)
+------------------
+
+* Feature - Raise hard limit of authorized principals per SubscriptionTarget from 10 to 20.
+
 1.35.0 (2025-03-27)
 ------------------
 

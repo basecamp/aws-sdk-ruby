@@ -663,6 +663,11 @@ module Aws::DynamoDB
     # according to the type of read. For more information, see [Working with
     # Tables][2] in the *Amazon DynamoDB Developer Guide*.
     #
+    # <note markdown="1"> `BatchGetItem` will result in a `ValidationException` if the same key
+    # is specified multiple times.
+    #
+    #  </note>
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#BatchOperations
@@ -8636,7 +8641,7 @@ module Aws::DynamoDB
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-dynamodb'
-      context[:gem_version] = '1.139.0'
+      context[:gem_version] = '1.140.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

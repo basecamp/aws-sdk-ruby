@@ -1649,6 +1649,12 @@ module Aws::VerifiedPermissions
     #   Descriptive text that you can provide to help with identification of
     #   the current policy store.
     #
+    # @option params [String] :deletion_protection
+    #   Specifies whether the policy store can be deleted. If enabled, the
+    #   policy store can't be deleted.
+    #
+    #   The default state is `DISABLED`.
+    #
     # @return [Types::CreatePolicyStoreOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreatePolicyStoreOutput#policy_store_id #policy_store_id} => String
@@ -1684,6 +1690,7 @@ module Aws::VerifiedPermissions
     #       mode: "OFF", # required, accepts OFF, STRICT
     #     },
     #     description: "PolicyStoreDescription",
+    #     deletion_protection: "ENABLED", # accepts ENABLED, DISABLED
     #   })
     #
     # @example Response structure
@@ -2182,6 +2189,7 @@ module Aws::VerifiedPermissions
     #   * {Types::GetPolicyStoreOutput#created_date #created_date} => Time
     #   * {Types::GetPolicyStoreOutput#last_updated_date #last_updated_date} => Time
     #   * {Types::GetPolicyStoreOutput#description #description} => String
+    #   * {Types::GetPolicyStoreOutput#deletion_protection #deletion_protection} => String
     #
     #
     # @example Example: GetPolicyStore
@@ -2217,6 +2225,7 @@ module Aws::VerifiedPermissions
     #   resp.created_date #=> Time
     #   resp.last_updated_date #=> Time
     #   resp.description #=> String
+    #   resp.deletion_protection #=> String, one of "ENABLED", "DISABLED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/verifiedpermissions-2021-12-01/GetPolicyStore AWS API Documentation
     #
@@ -3621,6 +3630,13 @@ module Aws::VerifiedPermissions
     #   A structure that defines the validation settings that want to enable
     #   for the policy store.
     #
+    # @option params [String] :deletion_protection
+    #   Specifies whether the policy store can be deleted. If enabled, the
+    #   policy store can't be deleted.
+    #
+    #   When you call `UpdatePolicyStore`, this parameter is unchanged unless
+    #   explicitly included in the call.
+    #
     # @option params [String] :description
     #   Descriptive text that you can provide to help with identification of
     #   the current policy store.
@@ -3659,6 +3675,7 @@ module Aws::VerifiedPermissions
     #     validation_settings: { # required
     #       mode: "OFF", # required, accepts OFF, STRICT
     #     },
+    #     deletion_protection: "ENABLED", # accepts ENABLED, DISABLED
     #     description: "PolicyStoreDescription",
     #   })
     #
@@ -3804,7 +3821,7 @@ module Aws::VerifiedPermissions
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-verifiedpermissions'
-      context[:gem_version] = '1.42.0'
+      context[:gem_version] = '1.43.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

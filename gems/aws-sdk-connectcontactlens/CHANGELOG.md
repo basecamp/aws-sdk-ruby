@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.42.0 (2025-04-11)
+------------------
+
+* Feature - Making sentiment optional for ListRealtimeContactAnalysisSegments Response depending on conversational analytics configuration
+
 1.41.0 (2025-02-18)
 ------------------
 

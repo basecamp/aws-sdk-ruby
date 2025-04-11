@@ -1722,7 +1722,9 @@ module Aws::DynamoDB
     # @!attribute [rw] on_demand_throughput
     #   The maximum number of read and write units for the global secondary
     #   index being created. If you use this parameter, you must specify
-    #   `MaxReadRequestUnits`, `MaxWriteRequestUnits`, or both.
+    #   `MaxReadRequestUnits`, `MaxWriteRequestUnits`, or both. You must use
+    #   either `OnDemand Throughput` or `ProvisionedThroughput` based on
+    #   your table's capacity mode.
     #   @return [Types::OnDemandThroughput]
     #
     # @!attribute [rw] warm_throughput
@@ -5987,9 +5989,9 @@ module Aws::DynamoDB
       include Aws::Structure
     end
 
-    # Represents the provisioned throughput settings for a specified table
-    # or index. The settings can be modified using the `UpdateTable`
-    # operation.
+    # Represents the provisioned throughput settings for the specified
+    # global secondary index. You must use `ProvisionedThroughput` or
+    # `OnDemandThroughput` based on your table’s capacity mode.
     #
     # For current minimum and maximum provisioned throughput values, see
     # [Service, Account, and Table Quotas][1] in the *Amazon DynamoDB
@@ -8675,9 +8677,9 @@ module Aws::DynamoDB
     #   @return [String]
     #
     # @!attribute [rw] provisioned_throughput
-    #   Represents the provisioned throughput settings for a specified table
-    #   or index. The settings can be modified using the `UpdateTable`
-    #   operation.
+    #   Represents the provisioned throughput settings for the specified
+    #   global secondary index. You must use `ProvisionedThroughput` or
+    #   `OnDemandThroughput` based on your table’s capacity mode.
     #
     #   For current minimum and maximum provisioned throughput values, see
     #   [Service, Account, and Table Quotas][1] in the *Amazon DynamoDB
@@ -9116,7 +9118,9 @@ module Aws::DynamoDB
     end
 
     # Represents the warm throughput value (in read units per second and
-    # write units per second) of the base table.
+    # write units per second) of the table. Warm throughput is applicable
+    # for DynamoDB Standard-IA tables and specifies the minimum provisioned
+    # capacity maintained for immediate data access.
     #
     # @!attribute [rw] read_units_per_second
     #   Represents the base table's warm throughput value in read units per
@@ -9129,7 +9133,7 @@ module Aws::DynamoDB
     #   @return [Integer]
     #
     # @!attribute [rw] status
-    #   Represents warm throughput value of the base table..
+    #   Represents warm throughput value of the base table.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/TableWarmThroughputDescription AWS API Documentation

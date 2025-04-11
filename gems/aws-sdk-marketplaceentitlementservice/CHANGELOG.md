@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.69.0 (2025-04-11)
+------------------
+
+* Feature - Add support for Marketplace Entitlement Service dual-stack endpoints for CN and GOV regions
+
 1.68.0 (2025-03-31)
 ------------------
 

@@ -284,6 +284,7 @@ module Aws::VerifiedPermissions
       attr_accessor client_token: ::String
       attr_accessor validation_settings: Types::ValidationSettings
       attr_accessor description: ::String
+      attr_accessor deletion_protection: ("ENABLED" | "DISABLED")
       SENSITIVE: [:description]
     end
 
@@ -446,6 +447,7 @@ module Aws::VerifiedPermissions
       attr_accessor created_date: ::Time
       attr_accessor last_updated_date: ::Time
       attr_accessor description: ::String
+      attr_accessor deletion_protection: ("ENABLED" | "DISABLED")
       SENSITIVE: [:description]
     end
 
@@ -512,6 +514,11 @@ module Aws::VerifiedPermissions
     end
 
     class InternalServerException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class InvalidStateException
       attr_accessor message: ::String
       SENSITIVE: []
     end
@@ -1015,6 +1022,7 @@ module Aws::VerifiedPermissions
     class UpdatePolicyStoreInput
       attr_accessor policy_store_id: ::String
       attr_accessor validation_settings: Types::ValidationSettings
+      attr_accessor deletion_protection: ("ENABLED" | "DISABLED")
       attr_accessor description: ::String
       SENSITIVE: [:description]
     end

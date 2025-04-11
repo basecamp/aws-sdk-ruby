@@ -79,6 +79,7 @@ module Aws::VerifiedPermissions
     DeletePolicyStoreOutput = Shapes::StructureShape.new(name: 'DeletePolicyStoreOutput')
     DeletePolicyTemplateInput = Shapes::StructureShape.new(name: 'DeletePolicyTemplateInput')
     DeletePolicyTemplateOutput = Shapes::StructureShape.new(name: 'DeletePolicyTemplateOutput')
+    DeletionProtection = Shapes::StringShape.new(name: 'DeletionProtection')
     DeterminingPolicyItem = Shapes::StructureShape.new(name: 'DeterminingPolicyItem')
     DeterminingPolicyList = Shapes::ListShape.new(name: 'DeterminingPolicyList')
     DiscoveryUrl = Shapes::StringShape.new(name: 'DiscoveryUrl')
@@ -113,6 +114,7 @@ module Aws::VerifiedPermissions
     IdentitySourceItemDetails = Shapes::StructureShape.new(name: 'IdentitySourceItemDetails')
     IdentitySources = Shapes::ListShape.new(name: 'IdentitySources')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
+    InvalidStateException = Shapes::StructureShape.new(name: 'InvalidStateException')
     IpAddr = Shapes::StringShape.new(name: 'IpAddr')
     IsAuthorizedInput = Shapes::StructureShape.new(name: 'IsAuthorizedInput')
     IsAuthorizedOutput = Shapes::StructureShape.new(name: 'IsAuthorizedOutput')
@@ -428,6 +430,7 @@ module Aws::VerifiedPermissions
     CreatePolicyStoreInput.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     CreatePolicyStoreInput.add_member(:validation_settings, Shapes::ShapeRef.new(shape: ValidationSettings, required: true, location_name: "validationSettings"))
     CreatePolicyStoreInput.add_member(:description, Shapes::ShapeRef.new(shape: PolicyStoreDescription, location_name: "description"))
+    CreatePolicyStoreInput.add_member(:deletion_protection, Shapes::ShapeRef.new(shape: DeletionProtection, location_name: "deletionProtection"))
     CreatePolicyStoreInput.struct_class = Types::CreatePolicyStoreInput
 
     CreatePolicyStoreOutput.add_member(:policy_store_id, Shapes::ShapeRef.new(shape: PolicyStoreId, required: true, location_name: "policyStoreId"))
@@ -549,6 +552,7 @@ module Aws::VerifiedPermissions
     GetPolicyStoreOutput.add_member(:created_date, Shapes::ShapeRef.new(shape: TimestampFormat, required: true, location_name: "createdDate"))
     GetPolicyStoreOutput.add_member(:last_updated_date, Shapes::ShapeRef.new(shape: TimestampFormat, required: true, location_name: "lastUpdatedDate"))
     GetPolicyStoreOutput.add_member(:description, Shapes::ShapeRef.new(shape: PolicyStoreDescription, location_name: "description"))
+    GetPolicyStoreOutput.add_member(:deletion_protection, Shapes::ShapeRef.new(shape: DeletionProtection, location_name: "deletionProtection"))
     GetPolicyStoreOutput.struct_class = Types::GetPolicyStoreOutput
 
     GetPolicyTemplateInput.add_member(:policy_store_id, Shapes::ShapeRef.new(shape: PolicyStoreId, required: true, location_name: "policyStoreId"))
@@ -603,6 +607,9 @@ module Aws::VerifiedPermissions
 
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     InternalServerException.struct_class = Types::InternalServerException
+
+    InvalidStateException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
+    InvalidStateException.struct_class = Types::InvalidStateException
 
     IsAuthorizedInput.add_member(:policy_store_id, Shapes::ShapeRef.new(shape: PolicyStoreId, required: true, location_name: "policyStoreId"))
     IsAuthorizedInput.add_member(:principal, Shapes::ShapeRef.new(shape: EntityIdentifier, location_name: "principal"))
@@ -961,6 +968,7 @@ module Aws::VerifiedPermissions
 
     UpdatePolicyStoreInput.add_member(:policy_store_id, Shapes::ShapeRef.new(shape: PolicyStoreId, required: true, location_name: "policyStoreId"))
     UpdatePolicyStoreInput.add_member(:validation_settings, Shapes::ShapeRef.new(shape: ValidationSettings, required: true, location_name: "validationSettings"))
+    UpdatePolicyStoreInput.add_member(:deletion_protection, Shapes::ShapeRef.new(shape: DeletionProtection, location_name: "deletionProtection"))
     UpdatePolicyStoreInput.add_member(:description, Shapes::ShapeRef.new(shape: PolicyStoreDescription, location_name: "description"))
     UpdatePolicyStoreInput.struct_class = Types::UpdatePolicyStoreInput
 
@@ -1152,6 +1160,7 @@ module Aws::VerifiedPermissions
         o.input = Shapes::ShapeRef.new(shape: DeletePolicyStoreInput)
         o.output = Shapes::ShapeRef.new(shape: DeletePolicyStoreOutput)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidStateException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)

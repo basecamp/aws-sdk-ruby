@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.65.0 (2025-04-11)
+------------------
+
+* Feature - Add support for Detective DualStack endpoints
+
 1.64.0 (2025-02-18)
 ------------------
 

@@ -280,7 +280,8 @@ module Aws
                                  validation_settings: {
                                    mode: ("OFF" | "STRICT")
                                  },
-                                 ?description: ::String
+                                 ?description: ::String,
+                                 ?deletion_protection: ("ENABLED" | "DISABLED")
                                ) -> _CreatePolicyStoreResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreatePolicyStoreResponseSuccess
 
@@ -384,6 +385,7 @@ module Aws
         def created_date: () -> ::Time
         def last_updated_date: () -> ::Time
         def description: () -> ::String
+        def deletion_protection: () -> ("ENABLED" | "DISABLED")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VerifiedPermissions/Client.html#get_policy_store-instance_method
       def get_policy_store: (
@@ -682,6 +684,7 @@ module Aws
                                  validation_settings: {
                                    mode: ("OFF" | "STRICT")
                                  },
+                                 ?deletion_protection: ("ENABLED" | "DISABLED"),
                                  ?description: ::String
                                ) -> _UpdatePolicyStoreResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdatePolicyStoreResponseSuccess

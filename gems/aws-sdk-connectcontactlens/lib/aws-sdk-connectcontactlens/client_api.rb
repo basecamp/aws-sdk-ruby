@@ -121,7 +121,7 @@ module Aws::ConnectContactLens
     Transcript.add_member(:content, Shapes::ShapeRef.new(shape: TranscriptContent, required: true, location_name: "Content"))
     Transcript.add_member(:begin_offset_millis, Shapes::ShapeRef.new(shape: OffsetMillis, required: true, location_name: "BeginOffsetMillis"))
     Transcript.add_member(:end_offset_millis, Shapes::ShapeRef.new(shape: OffsetMillis, required: true, location_name: "EndOffsetMillis"))
-    Transcript.add_member(:sentiment, Shapes::ShapeRef.new(shape: SentimentValue, required: true, location_name: "Sentiment"))
+    Transcript.add_member(:sentiment, Shapes::ShapeRef.new(shape: SentimentValue, location_name: "Sentiment"))
     Transcript.add_member(:issues_detected, Shapes::ShapeRef.new(shape: IssuesDetected, location_name: "IssuesDetected"))
     Transcript.struct_class = Types::Transcript
 

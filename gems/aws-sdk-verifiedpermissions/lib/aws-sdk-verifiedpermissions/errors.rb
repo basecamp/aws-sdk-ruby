@@ -30,6 +30,7 @@ module Aws::VerifiedPermissions
   # * {AccessDeniedException}
   # * {ConflictException}
   # * {InternalServerException}
+  # * {InvalidStateException}
   # * {ResourceNotFoundException}
   # * {ServiceQuotaExceededException}
   # * {ThrottlingException}
@@ -92,6 +93,21 @@ module Aws::VerifiedPermissions
 
       def retryable?
         true
+      end
+    end
+
+    class InvalidStateException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::VerifiedPermissions::Types::InvalidStateException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
       end
     end
 

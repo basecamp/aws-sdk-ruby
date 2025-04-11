@@ -1300,12 +1300,20 @@ module Aws::VerifiedPermissions
     #   the current policy store.
     #   @return [String]
     #
+    # @!attribute [rw] deletion_protection
+    #   Specifies whether the policy store can be deleted. If enabled, the
+    #   policy store can't be deleted.
+    #
+    #   The default state is `DISABLED`.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/verifiedpermissions-2021-12-01/CreatePolicyStoreInput AWS API Documentation
     #
     class CreatePolicyStoreInput < Struct.new(
       :client_token,
       :validation_settings,
-      :description)
+      :description,
+      :deletion_protection)
       SENSITIVE = [:description]
       include Aws::Structure
     end
@@ -1903,6 +1911,13 @@ module Aws::VerifiedPermissions
     #   the current policy store.
     #   @return [String]
     #
+    # @!attribute [rw] deletion_protection
+    #   Specifies whether the policy store can be deleted. If enabled, the
+    #   policy store can't be deleted.
+    #
+    #   The default state is `DISABLED`.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/verifiedpermissions-2021-12-01/GetPolicyStoreOutput AWS API Documentation
     #
     class GetPolicyStoreOutput < Struct.new(
@@ -1911,7 +1926,8 @@ module Aws::VerifiedPermissions
       :validation_settings,
       :created_date,
       :last_updated_date,
-      :description)
+      :description,
+      :deletion_protection)
       SENSITIVE = [:description]
       include Aws::Structure
     end
@@ -2206,6 +2222,20 @@ module Aws::VerifiedPermissions
     # @see http://docs.aws.amazon.com/goto/WebAPI/verifiedpermissions-2021-12-01/InternalServerException AWS API Documentation
     #
     class InternalServerException < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The policy store can't be deleted because deletion protection is
+    # enabled. To delete this policy store, disable deletion protection.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/verifiedpermissions-2021-12-01/InvalidStateException AWS API Documentation
+    #
+    class InvalidStateException < Struct.new(
       :message)
       SENSITIVE = []
       include Aws::Structure
@@ -4383,6 +4413,14 @@ module Aws::VerifiedPermissions
     #   for the policy store.
     #   @return [Types::ValidationSettings]
     #
+    # @!attribute [rw] deletion_protection
+    #   Specifies whether the policy store can be deleted. If enabled, the
+    #   policy store can't be deleted.
+    #
+    #   When you call `UpdatePolicyStore`, this parameter is unchanged
+    #   unless explicitly included in the call.
+    #   @return [String]
+    #
     # @!attribute [rw] description
     #   Descriptive text that you can provide to help with identification of
     #   the current policy store.
@@ -4393,6 +4431,7 @@ module Aws::VerifiedPermissions
     class UpdatePolicyStoreInput < Struct.new(
       :policy_store_id,
       :validation_settings,
+      :deletion_protection,
       :description)
       SENSITIVE = [:description]
       include Aws::Structure
