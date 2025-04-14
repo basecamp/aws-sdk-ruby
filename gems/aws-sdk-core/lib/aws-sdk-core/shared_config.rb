@@ -138,7 +138,11 @@ module Aws
             role_session_name: entry['role_session_name']
           }
           cfg[:region] = opts[:region] if opts[:region]
-          AssumeRoleWebIdentityCredentials.new(cfg)
+          with_metrics('CREDENTIALS_PROFILE_STS_WEB_ID_TOKEN') do
+            creds = AssumeRoleWebIdentityCredentials.new(cfg)
+            creds.metrics << 'CREDENTIALS_PROFILE_STS_WEB_ID_TOKEN'
+            creds
+          end
         end
       end
     end
@@ -255,8 +259,8 @@ module Aws
             'provide only source_profile or credential_source, not both.'
         elsif opts[:source_profile]
           opts[:visited_profiles] ||= Set.new
-          opts[:credentials] = resolve_source_profile(opts[:source_profile], opts)
-          if opts[:credentials]
+          provider = resolve_source_profile(opts[:source_profile], opts)
+          if provider && (opts[:credentials] = provider.credentials)
             opts[:role_session_name] ||= prof_cfg['role_session_name']
             opts[:role_session_name] ||= 'default_session'
             opts[:role_arn] ||= prof_cfg['role_arn']
@@ -265,17 +269,28 @@ module Aws
             opts[:serial_number] ||= prof_cfg['mfa_serial']
             opts[:profile] = opts.delete(:source_profile)
             opts.delete(:visited_profiles)
-            AssumeRoleCredentials.new(opts)
+
+            metrics = provider.metrics
+            if provider.is_a?(AssumeRoleCredentials)
+              opts[:credentials] = provider
+              metrics.delete('CREDENTIALS_STS_ASSUME_ROLE')
+            else
+              metrics << 'CREDENTIALS_PROFILE_SOURCE_PROFILE'
+            end
+            # Set the original credentials metrics to [] to prevent duplicate metrics during sign plugin
+            opts[:credentials].metrics = []
+            with_metrics(metrics) do
+              creds = AssumeRoleCredentials.new(opts)
+              creds.metrics.push(*metrics)
+              creds
+            end
           else
             raise Errors::NoSourceProfileError,
               "Profile #{profile} has a role_arn, and source_profile, but the"\
               ' source_profile does not have credentials.'
           end
         elsif credential_source
-          opts[:credentials] = credentials_from_source(
-            credential_source,
-            chain_config
-          )
+          opts[:credentials] = credentials_from_source(credential_source, chain_config)
           if opts[:credentials]
             opts[:role_session_name] ||= prof_cfg['role_session_name']
             opts[:role_session_name] ||= 'default_session'
@@ -284,7 +299,16 @@ module Aws
             opts[:external_id] ||= prof_cfg['external_id']
             opts[:serial_number] ||= prof_cfg['mfa_serial']
             opts.delete(:source_profile) # Cleanup
-            AssumeRoleCredentials.new(opts)
+
+            metrics = opts[:credentials].metrics
+            metrics << 'CREDENTIALS_PROFILE_NAMED_PROVIDER'
+            # Set the original credentials metrics to [] to prevent duplicate metrics during sign plugin
+            opts[:credentials].metrics = []
+            with_metrics(metrics) do
+              creds = AssumeRoleCredentials.new(opts)
+              creds.metrics.push(*metrics)
+              creds
+            end
           else
             raise Errors::NoSourceCredentials,
               "Profile #{profile} could not get source credentials from"\
@@ -312,12 +336,24 @@ module Aws
       elsif profile_config && profile_config['source_profile']
         opts.delete(:source_profile)
         assume_role_credentials_from_config(opts.merge(profile: profile))
-      elsif (provider = assume_role_web_identity_credentials_from_config(opts.merge(profile: profile)))
-        provider.credentials if provider.credentials.set?
+      elsif (provider = assume_role_web_identity_credentials_from_config_with_metrics(opts.merge(profile: profile)))
+        provider if provider.credentials.set?
       elsif (provider = assume_role_process_credentials_from_config(profile))
-        provider.credentials if provider.credentials.set?
-      elsif (provider = sso_credentials_from_config(profile: profile))
-        provider.credentials if provider.credentials.set?
+        provider if provider.credentials.set?
+      elsif (provider = sso_credentials_from_config_with_metrics(profile))
+        provider if provider.credentials.set?
+      end
+    end
+
+    def assume_role_web_identity_credentials_from_config_with_metrics(opts)
+      with_metrics('CREDENTIALS_PROFILE_SOURCE_PROFILE') do
+        assume_role_web_identity_credentials_from_config(opts)
+      end
+    end
+
+    def sso_credentials_from_config_with_metrics(profile)
+      with_metrics('CREDENTIALS_PROFILE_SOURCE_PROFILE') do
+        sso_credentials_from_config(profile: profile)
       end
     end
 
@@ -342,7 +378,11 @@ module Aws
       if @parsed_config
         credential_process ||= @parsed_config.fetch(profile, {})['credential_process']
       end
-      ProcessCredentials.new([credential_process]) if credential_process
+      if credential_process
+        creds = ProcessCredentials.new([credential_process])
+        creds.metrics << 'CREDENTIALS_PROFILE_PROCESS'
+        creds
+      end
     end
 
     def credentials_from_shared(profile, _opts)
@@ -386,13 +426,18 @@ module Aws
           sso_start_url = prof_config['sso_start_url']
         end
 
-        SSOCredentials.new(
-          sso_account_id: prof_config['sso_account_id'],
-          sso_role_name: prof_config['sso_role_name'],
-          sso_session: prof_config['sso_session'],
-          sso_region: sso_region,
-          sso_start_url: sso_start_url
+        metric = prof_config['sso_session'] ? 'CREDENTIALS_PROFILE_SSO' : 'CREDENTIALS_PROFILE_SSO_LEGACY'
+        with_metrics(metric) do
+          creds = SSOCredentials.new(
+            sso_account_id: prof_config['sso_account_id'],
+            sso_role_name: prof_config['sso_role_name'],
+            sso_session: prof_config['sso_session'],
+            sso_region: sso_region,
+            sso_start_url: sso_start_url
           )
+          creds.metrics << metric
+          creds
+        end
       end
     end
 
@@ -420,6 +465,7 @@ module Aws
         prof_config['aws_session_token'],
         account_id: prof_config['aws_account_id']
       )
+      creds.metrics = ['CREDENTIALS_PROFILE']
       creds if creds.set?
     end
 
@@ -479,6 +525,10 @@ module Aws
       end
 
       sso_session
+    end
+
+    def with_metrics(metrics, &block)
+      Aws::Plugins::UserAgent.metric(*metrics, &block)
     end
   end
 end

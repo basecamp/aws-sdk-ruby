@@ -90,6 +90,7 @@ module Aws
       @token = nil
       @no_refresh_until = nil
       @async_refresh = false
+      @metrics = ['CREDENTIALS_IMDS']
       super
     end
 

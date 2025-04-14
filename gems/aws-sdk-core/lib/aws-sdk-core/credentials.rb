@@ -14,6 +14,7 @@ module Aws
       @secret_access_key = secret_access_key
       @session_token = session_token
       @account_id = kwargs[:account_id]
+      @metrics = ['CREDENTIALS_CODE']
     end
 
     # @return [String]
@@ -27,6 +28,11 @@ module Aws
 
     # @return [String, nil]
     attr_reader :account_id
+
+    # @api private
+    # Returns the credentials source. Used for tracking credentials
+    # related UserAgent metrics.
+    attr_accessor :metrics
 
     # @return [Credentials]
     def credentials

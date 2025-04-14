@@ -99,7 +99,7 @@ module Aws
         end
 
         it 'raises an error when attempting to sign a request w/out credentials' do
-          client = TestClient.new(client_options.merge(credentials: nil) )
+          client = TestClient.new(client_options.merge(credentials: nil))
           expect {
             client.operation
           }.to raise_error(Errors::MissingCredentialsError)
@@ -201,6 +201,13 @@ module Aws
             expect(resp.context.http_request.headers['X-Amz-Date']).
               to eq (now.utc + 1000).strftime("%Y%m%dT%H%M%SZ")
           end
+        end
+
+        it 'retrieves the credential provider metrics' do
+          creds = Aws::Credentials.new('akid', 'secret')
+          client = TestClient.new(client_options.merge(credentials: creds))
+          expect(creds).to receive(:metrics)
+          client.operation
         end
       end
 

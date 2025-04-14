@@ -61,6 +61,7 @@ module Aws
         @assume_role_web_identity_params[:role_session_name] = _session_name
       end
       @client = client_opts[:client] || STS::Client.new(client_opts.merge(credentials: nil))
+      @metrics = ['CREDENTIALS_STS_ASSUME_ROLE_WEB_ID']
       super
     end
 

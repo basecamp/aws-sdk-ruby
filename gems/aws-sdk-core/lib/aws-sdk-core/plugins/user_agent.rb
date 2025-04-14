@@ -34,7 +34,27 @@ module Aws
           "FLEXIBLE_CHECKSUMS_REQ_WHEN_SUPPORTED" : "Z",
           "FLEXIBLE_CHECKSUMS_REQ_WHEN_REQUIRED" : "a",
           "FLEXIBLE_CHECKSUMS_RES_WHEN_SUPPORTED" : "b",
-          "FLEXIBLE_CHECKSUMS_RES_WHEN_REQUIRED" : "c"
+          "FLEXIBLE_CHECKSUMS_RES_WHEN_REQUIRED" : "c",
+          "DDB_MAPPER": "d",
+          "CREDENTIALS_CODE" : "e",
+          "CREDENTIALS_ENV_VARS" : "g",
+          "CREDENTIALS_ENV_VARS_STS_WEB_ID_TOKEN" : "h",
+          "CREDENTIALS_STS_ASSUME_ROLE" : "i",
+          "CREDENTIALS_STS_ASSUME_ROLE_WEB_ID" : "k",
+          "CREDENTIALS_PROFILE" : "n",
+          "CREDENTIALS_PROFILE_SOURCE_PROFILE" : "o",
+          "CREDENTIALS_PROFILE_NAMED_PROVIDER" : "p",
+          "CREDENTIALS_PROFILE_STS_WEB_ID_TOKEN" : "q",
+          "CREDENTIALS_PROFILE_SSO" : "r",
+          "CREDENTIALS_SSO" : "s",
+          "CREDENTIALS_PROFILE_SSO_LEGACY" : "t",
+          "CREDENTIALS_SSO_LEGACY" : "u",
+          "CREDENTIALS_PROFILE_PROCESS" : "v",
+          "CREDENTIALS_PROCESS" : "w",
+          "CREDENTIALS_HTTP" : "z",
+          "CREDENTIALS_IMDS" : "0",
+          "SSO_LOGIN_DEVICE" : "1",
+          "SSO_LOGIN_AUTH" : "2"
         }
       METRICS
 
@@ -196,7 +216,8 @@ variable AWS_SDK_UA_APP_ID or the shared config profile attribute sdk_ua_app_id.
         end
       end
 
-      handler(Handler, step: :sign, priority: 97)
+      # Priority set to 5 in order to add user agent as late as possible after signing
+      handler(Handler, step: :sign, priority: 5)
     end
   end
 end

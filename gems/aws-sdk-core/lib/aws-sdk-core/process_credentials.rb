@@ -36,7 +36,7 @@ module Aws
       @process = process
       @credentials = credentials_from_process
       @async_refresh = false
-
+      @metrics = ['CREDENTIALS_PROCESS']
       super
     end
 

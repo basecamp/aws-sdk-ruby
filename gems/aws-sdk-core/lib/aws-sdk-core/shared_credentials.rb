@@ -40,6 +40,7 @@ module Aws
         )
         @credentials = config.credentials(profile: @profile_name)
       end
+      @metrics = ['CREDENTIALS_CODE']
     end
 
     # @return [String]

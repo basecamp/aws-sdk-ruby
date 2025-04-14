@@ -50,6 +50,7 @@ module Aws
       end
       @client = client_opts[:client] || STS::Client.new(client_opts)
       @async_refresh = true
+      @metrics = ['CREDENTIALS_STS_ASSUME_ROLE']
       super
     end
 

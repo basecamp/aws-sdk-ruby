@@ -91,6 +91,7 @@ module Aws
           client_opts[:credentials] = nil
           @client = Aws::SSO::Client.new(client_opts)
         end
+        @metrics = ['CREDENTIALS_SSO']
       else # legacy behavior
         missing_keys = LEGACY_REQUIRED_OPTS.select { |k| options[k].nil? }
         unless missing_keys.empty?
@@ -111,6 +112,7 @@ module Aws
         client_opts[:credentials] = nil
 
         @client = options[:client] || Aws::SSO::Client.new(client_opts)
+        @metrics = ['CREDENTIALS_SSO_LEGACY']
       end
 
       @async_refresh = true

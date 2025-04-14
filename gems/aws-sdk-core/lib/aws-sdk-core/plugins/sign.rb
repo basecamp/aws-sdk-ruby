@@ -41,6 +41,7 @@ module Aws
       class Handler < Seahorse::Client::Handler
         def call(context)
           # Skip signing if using sigv2 signing from s3_signer in S3
+          credentials = nil
           unless v2_signing?(context.config)
             signer = Sign.signer_for(
               context[:auth_scheme],
@@ -48,12 +49,19 @@ module Aws
               context[:sigv4_region],
               context[:sigv4_credentials]
             )
+            credentials = signer.credentials if signer.is_a?(SignatureV4)
             signer.sign(context)
           end
-          @handler.call(context)
+          with_metrics(credentials) { @handler.call(context) }
         end
 
         private
+
+        def with_metrics(credentials, &block)
+          return block.call unless credentials&.respond_to?(:metrics)
+
+          Aws::Plugins::UserAgent.metric(*credentials.metrics, &block)
+        end
 
         def v2_signing?(config)
           # 's3' is legacy signing, 'v4' is default
@@ -92,6 +100,8 @@ module Aws
 
       # @api private
       class SignatureV4
+        attr_reader :signer
+
         def initialize(auth_scheme, config, sigv4_overrides = {})
           scheme_name = auth_scheme['name']
 
@@ -153,6 +163,10 @@ module Aws
 
         def sign_event(*args)
           @signer.sign_event(*args)
+        end
+
+        def credentials
+          @signer.credentials_provider
         end
 
         private
