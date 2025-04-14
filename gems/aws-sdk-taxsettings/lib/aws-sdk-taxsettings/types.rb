@@ -122,6 +122,9 @@ module Aws::TaxSettings
     #   Additional tax information to specify for a TRN in Greece.
     #   @return [Types::GreeceAdditionalInfo]
     #
+    # @!attribute [rw] indonesia_additional_info
+    #   @return [Types::IndonesiaAdditionalInfo]
+    #
     # @!attribute [rw] israel_additional_info
     #   Additional tax information to specify for a TRN in Israel.
     #   @return [Types::IsraelAdditionalInfo]
@@ -182,6 +185,7 @@ module Aws::TaxSettings
       :estonia_additional_info,
       :georgia_additional_info,
       :greece_additional_info,
+      :indonesia_additional_info,
       :israel_additional_info,
       :italy_additional_info,
       :kenya_additional_info,
@@ -233,6 +237,10 @@ module Aws::TaxSettings
     # @!attribute [rw] india_additional_info
     #   Additional tax information in India.
     #   @return [Types::IndiaAdditionalInfo]
+    #
+    # @!attribute [rw] indonesia_additional_info
+    #   Additional tax information associated with your TRN in Indonesia.
+    #   @return [Types::IndonesiaAdditionalInfo]
     #
     # @!attribute [rw] israel_additional_info
     #   Additional tax information associated with your TRN in Israel.
@@ -296,6 +304,7 @@ module Aws::TaxSettings
       :georgia_additional_info,
       :greece_additional_info,
       :india_additional_info,
+      :indonesia_additional_info,
       :israel_additional_info,
       :italy_additional_info,
       :kenya_additional_info,
@@ -915,6 +924,35 @@ module Aws::TaxSettings
     #
     class IndiaAdditionalInfo < Struct.new(
       :pan)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Additional tax information associated with your TRN in Indonesia.
+    #
+    # @!attribute [rw] decision_number
+    #   VAT-exempt customers have a Directorate General of Taxation (DGT)
+    #   exemption letter or certificate (Surat Keterangan Bebas) decision
+    #   number. Non-collected VAT have a DGT letter or certificate (Surat
+    #   Keterangan Tidak Dipungut).
+    #   @return [String]
+    #
+    # @!attribute [rw] ppn_exception_designation_code
+    #   Exception code if you are designated by Directorate General of
+    #   Taxation (DGT) as a VAT collector, non-collected VAT, or VAT-exempt
+    #   customer.
+    #   @return [String]
+    #
+    # @!attribute [rw] tax_registration_number_type
+    #   The tax registration number type.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/IndonesiaAdditionalInfo AWS API Documentation
+    #
+    class IndonesiaAdditionalInfo < Struct.new(
+      :decision_number,
+      :ppn_exception_designation_code,
+      :tax_registration_number_type)
       SENSITIVE = []
       include Aws::Structure
     end

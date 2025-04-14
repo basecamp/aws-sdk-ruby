@@ -36,6 +36,7 @@ module Aws::TaxSettings
       attr_accessor estonia_additional_info: Types::EstoniaAdditionalInfo
       attr_accessor georgia_additional_info: Types::GeorgiaAdditionalInfo
       attr_accessor greece_additional_info: Types::GreeceAdditionalInfo
+      attr_accessor indonesia_additional_info: Types::IndonesiaAdditionalInfo
       attr_accessor israel_additional_info: Types::IsraelAdditionalInfo
       attr_accessor italy_additional_info: Types::ItalyAdditionalInfo
       attr_accessor kenya_additional_info: Types::KenyaAdditionalInfo
@@ -60,6 +61,7 @@ module Aws::TaxSettings
       attr_accessor georgia_additional_info: Types::GeorgiaAdditionalInfo
       attr_accessor greece_additional_info: Types::GreeceAdditionalInfo
       attr_accessor india_additional_info: Types::IndiaAdditionalInfo
+      attr_accessor indonesia_additional_info: Types::IndonesiaAdditionalInfo
       attr_accessor israel_additional_info: Types::IsraelAdditionalInfo
       attr_accessor italy_additional_info: Types::ItalyAdditionalInfo
       attr_accessor kenya_additional_info: Types::KenyaAdditionalInfo
@@ -260,6 +262,13 @@ module Aws::TaxSettings
 
     class IndiaAdditionalInfo
       attr_accessor pan: ::String
+      SENSITIVE: []
+    end
+
+    class IndonesiaAdditionalInfo
+      attr_accessor decision_number: ::String
+      attr_accessor ppn_exception_designation_code: ::String
+      attr_accessor tax_registration_number_type: ("NIK" | "PassportNumber" | "NPWP" | "NITKU")
       SENSITIVE: []
     end
 

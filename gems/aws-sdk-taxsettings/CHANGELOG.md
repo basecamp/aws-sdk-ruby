@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.22.0 (2025-04-14)
+------------------
+
+* Feature - Indonesia SOR Tax Registration Launch
+
 1.21.0 (2025-04-08)
 ------------------
 

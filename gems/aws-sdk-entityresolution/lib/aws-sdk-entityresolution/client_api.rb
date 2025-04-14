@@ -77,6 +77,7 @@ module Aws::EntityResolution
     GetProviderServiceOutput = Shapes::StructureShape.new(name: 'GetProviderServiceOutput')
     GetSchemaMappingInput = Shapes::StructureShape.new(name: 'GetSchemaMappingInput')
     GetSchemaMappingOutput = Shapes::StructureShape.new(name: 'GetSchemaMappingOutput')
+    HeaderSafeUniqueId = Shapes::StringShape.new(name: 'HeaderSafeUniqueId')
     IdMappingJobMetrics = Shapes::StructureShape.new(name: 'IdMappingJobMetrics')
     IdMappingJobOutputSource = Shapes::StructureShape.new(name: 'IdMappingJobOutputSource')
     IdMappingJobOutputSourceConfig = Shapes::ListShape.new(name: 'IdMappingJobOutputSourceConfig')
@@ -218,7 +219,6 @@ module Aws::EntityResolution
     TagValue = Shapes::StringShape.new(name: 'TagValue')
     ThrottlingException = Shapes::StructureShape.new(name: 'ThrottlingException')
     Timestamp = Shapes::TimestampShape.new(name: 'Timestamp')
-    UniqueId = Shapes::StringShape.new(name: 'UniqueId')
     UniqueIdList = Shapes::ListShape.new(name: 'UniqueIdList')
     UntagResourceInput = Shapes::StructureShape.new(name: 'UntagResourceInput')
     UntagResourceOutput = Shapes::StructureShape.new(name: 'UntagResourceOutput')
@@ -236,104 +236,104 @@ module Aws::EntityResolution
     AccessDeniedException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
     AccessDeniedException.struct_class = Types::AccessDeniedException
 
-    AddPolicyStatementInput.add_member(:action, Shapes::ShapeRef.new(shape: StatementActionList, required: true, location_name: "action"))
     AddPolicyStatementInput.add_member(:arn, Shapes::ShapeRef.new(shape: VeniceGlobalArn, required: true, location: "uri", location_name: "arn"))
-    AddPolicyStatementInput.add_member(:condition, Shapes::ShapeRef.new(shape: StatementCondition, location_name: "condition"))
-    AddPolicyStatementInput.add_member(:effect, Shapes::ShapeRef.new(shape: StatementEffect, required: true, location_name: "effect"))
-    AddPolicyStatementInput.add_member(:principal, Shapes::ShapeRef.new(shape: StatementPrincipalList, required: true, location_name: "principal"))
     AddPolicyStatementInput.add_member(:statement_id, Shapes::ShapeRef.new(shape: StatementId, required: true, location: "uri", location_name: "statementId"))
+    AddPolicyStatementInput.add_member(:effect, Shapes::ShapeRef.new(shape: StatementEffect, required: true, location_name: "effect"))
+    AddPolicyStatementInput.add_member(:action, Shapes::ShapeRef.new(shape: StatementActionList, required: true, location_name: "action"))
+    AddPolicyStatementInput.add_member(:principal, Shapes::ShapeRef.new(shape: StatementPrincipalList, required: true, location_name: "principal"))
+    AddPolicyStatementInput.add_member(:condition, Shapes::ShapeRef.new(shape: StatementCondition, location_name: "condition"))
     AddPolicyStatementInput.struct_class = Types::AddPolicyStatementInput
 
     AddPolicyStatementOutput.add_member(:arn, Shapes::ShapeRef.new(shape: VeniceGlobalArn, required: true, location_name: "arn"))
-    AddPolicyStatementOutput.add_member(:policy, Shapes::ShapeRef.new(shape: PolicyDocument, location_name: "policy"))
     AddPolicyStatementOutput.add_member(:token, Shapes::ShapeRef.new(shape: PolicyToken, required: true, location_name: "token"))
+    AddPolicyStatementOutput.add_member(:policy, Shapes::ShapeRef.new(shape: PolicyDocument, location_name: "policy"))
     AddPolicyStatementOutput.struct_class = Types::AddPolicyStatementOutput
 
     AwsAccountIdList.member = Shapes::ShapeRef.new(shape: AwsAccountId)
 
+    BatchDeleteUniqueIdInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "workflowName"))
     BatchDeleteUniqueIdInput.add_member(:input_source, Shapes::ShapeRef.new(shape: BatchDeleteUniqueIdInputInputSourceString, location: "header", location_name: "inputSource"))
     BatchDeleteUniqueIdInput.add_member(:unique_ids, Shapes::ShapeRef.new(shape: UniqueIdList, required: true, location: "header", location_name: "uniqueIds"))
-    BatchDeleteUniqueIdInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "workflowName"))
     BatchDeleteUniqueIdInput.struct_class = Types::BatchDeleteUniqueIdInput
 
+    BatchDeleteUniqueIdOutput.add_member(:status, Shapes::ShapeRef.new(shape: DeleteUniqueIdStatus, required: true, location_name: "status"))
+    BatchDeleteUniqueIdOutput.add_member(:errors, Shapes::ShapeRef.new(shape: DeleteUniqueIdErrorsList, required: true, location_name: "errors"))
     BatchDeleteUniqueIdOutput.add_member(:deleted, Shapes::ShapeRef.new(shape: DeletedUniqueIdList, required: true, location_name: "deleted"))
     BatchDeleteUniqueIdOutput.add_member(:disconnected_unique_ids, Shapes::ShapeRef.new(shape: DisconnectedUniqueIdsList, required: true, location_name: "disconnectedUniqueIds"))
-    BatchDeleteUniqueIdOutput.add_member(:errors, Shapes::ShapeRef.new(shape: DeleteUniqueIdErrorsList, required: true, location_name: "errors"))
-    BatchDeleteUniqueIdOutput.add_member(:status, Shapes::ShapeRef.new(shape: DeleteUniqueIdStatus, required: true, location_name: "status"))
     BatchDeleteUniqueIdOutput.struct_class = Types::BatchDeleteUniqueIdOutput
 
     ConflictException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
     ConflictException.struct_class = Types::ConflictException
 
+    CreateIdMappingWorkflowInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
     CreateIdMappingWorkflowInput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    CreateIdMappingWorkflowInput.add_member(:id_mapping_techniques, Shapes::ShapeRef.new(shape: IdMappingTechniques, required: true, location_name: "idMappingTechniques"))
     CreateIdMappingWorkflowInput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: IdMappingWorkflowInputSourceConfig, required: true, location_name: "inputSourceConfig"))
     CreateIdMappingWorkflowInput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: IdMappingWorkflowOutputSourceConfig, location_name: "outputSourceConfig"))
+    CreateIdMappingWorkflowInput.add_member(:id_mapping_techniques, Shapes::ShapeRef.new(shape: IdMappingTechniques, required: true, location_name: "idMappingTechniques"))
     CreateIdMappingWorkflowInput.add_member(:role_arn, Shapes::ShapeRef.new(shape: IdMappingRoleArn, location_name: "roleArn"))
     CreateIdMappingWorkflowInput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
-    CreateIdMappingWorkflowInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
     CreateIdMappingWorkflowInput.struct_class = Types::CreateIdMappingWorkflowInput
 
+    CreateIdMappingWorkflowOutput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
+    CreateIdMappingWorkflowOutput.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: IdMappingWorkflowArn, required: true, location_name: "workflowArn"))
     CreateIdMappingWorkflowOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    CreateIdMappingWorkflowOutput.add_member(:id_mapping_techniques, Shapes::ShapeRef.new(shape: IdMappingTechniques, required: true, location_name: "idMappingTechniques"))
     CreateIdMappingWorkflowOutput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: IdMappingWorkflowInputSourceConfig, required: true, location_name: "inputSourceConfig"))
     CreateIdMappingWorkflowOutput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: IdMappingWorkflowOutputSourceConfig, location_name: "outputSourceConfig"))
+    CreateIdMappingWorkflowOutput.add_member(:id_mapping_techniques, Shapes::ShapeRef.new(shape: IdMappingTechniques, required: true, location_name: "idMappingTechniques"))
     CreateIdMappingWorkflowOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: IdMappingRoleArn, location_name: "roleArn"))
-    CreateIdMappingWorkflowOutput.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: IdMappingWorkflowArn, required: true, location_name: "workflowArn"))
-    CreateIdMappingWorkflowOutput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
     CreateIdMappingWorkflowOutput.struct_class = Types::CreateIdMappingWorkflowOutput
 
-    CreateIdNamespaceInput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    CreateIdNamespaceInput.add_member(:id_mapping_workflow_properties, Shapes::ShapeRef.new(shape: IdNamespaceIdMappingWorkflowPropertiesList, location_name: "idMappingWorkflowProperties"))
     CreateIdNamespaceInput.add_member(:id_namespace_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "idNamespaceName"))
+    CreateIdNamespaceInput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     CreateIdNamespaceInput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: IdNamespaceInputSourceConfig, location_name: "inputSourceConfig"))
+    CreateIdNamespaceInput.add_member(:id_mapping_workflow_properties, Shapes::ShapeRef.new(shape: IdNamespaceIdMappingWorkflowPropertiesList, location_name: "idMappingWorkflowProperties"))
+    CreateIdNamespaceInput.add_member(:type, Shapes::ShapeRef.new(shape: IdNamespaceType, required: true, location_name: "type"))
     CreateIdNamespaceInput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
     CreateIdNamespaceInput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
-    CreateIdNamespaceInput.add_member(:type, Shapes::ShapeRef.new(shape: IdNamespaceType, required: true, location_name: "type"))
     CreateIdNamespaceInput.struct_class = Types::CreateIdNamespaceInput
 
-    CreateIdNamespaceOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
-    CreateIdNamespaceOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    CreateIdNamespaceOutput.add_member(:id_mapping_workflow_properties, Shapes::ShapeRef.new(shape: IdNamespaceIdMappingWorkflowPropertiesList, location_name: "idMappingWorkflowProperties"))
-    CreateIdNamespaceOutput.add_member(:id_namespace_arn, Shapes::ShapeRef.new(shape: IdNamespaceArn, required: true, location_name: "idNamespaceArn"))
     CreateIdNamespaceOutput.add_member(:id_namespace_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "idNamespaceName"))
+    CreateIdNamespaceOutput.add_member(:id_namespace_arn, Shapes::ShapeRef.new(shape: IdNamespaceArn, required: true, location_name: "idNamespaceArn"))
+    CreateIdNamespaceOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     CreateIdNamespaceOutput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: IdNamespaceInputSourceConfig, location_name: "inputSourceConfig"))
-    CreateIdNamespaceOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
-    CreateIdNamespaceOutput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
+    CreateIdNamespaceOutput.add_member(:id_mapping_workflow_properties, Shapes::ShapeRef.new(shape: IdNamespaceIdMappingWorkflowPropertiesList, location_name: "idMappingWorkflowProperties"))
     CreateIdNamespaceOutput.add_member(:type, Shapes::ShapeRef.new(shape: IdNamespaceType, required: true, location_name: "type"))
+    CreateIdNamespaceOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
+    CreateIdNamespaceOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
     CreateIdNamespaceOutput.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
+    CreateIdNamespaceOutput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
     CreateIdNamespaceOutput.struct_class = Types::CreateIdNamespaceOutput
 
+    CreateMatchingWorkflowInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
     CreateMatchingWorkflowInput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    CreateMatchingWorkflowInput.add_member(:incremental_run_config, Shapes::ShapeRef.new(shape: IncrementalRunConfig, location_name: "incrementalRunConfig"))
     CreateMatchingWorkflowInput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: InputSourceConfig, required: true, location_name: "inputSourceConfig"))
     CreateMatchingWorkflowInput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: OutputSourceConfig, required: true, location_name: "outputSourceConfig"))
     CreateMatchingWorkflowInput.add_member(:resolution_techniques, Shapes::ShapeRef.new(shape: ResolutionTechniques, required: true, location_name: "resolutionTechniques"))
+    CreateMatchingWorkflowInput.add_member(:incremental_run_config, Shapes::ShapeRef.new(shape: IncrementalRunConfig, location_name: "incrementalRunConfig"))
     CreateMatchingWorkflowInput.add_member(:role_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "roleArn"))
     CreateMatchingWorkflowInput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
-    CreateMatchingWorkflowInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
     CreateMatchingWorkflowInput.struct_class = Types::CreateMatchingWorkflowInput
 
+    CreateMatchingWorkflowOutput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
+    CreateMatchingWorkflowOutput.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: MatchingWorkflowArn, required: true, location_name: "workflowArn"))
     CreateMatchingWorkflowOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    CreateMatchingWorkflowOutput.add_member(:incremental_run_config, Shapes::ShapeRef.new(shape: IncrementalRunConfig, location_name: "incrementalRunConfig"))
     CreateMatchingWorkflowOutput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: InputSourceConfig, required: true, location_name: "inputSourceConfig"))
     CreateMatchingWorkflowOutput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: OutputSourceConfig, required: true, location_name: "outputSourceConfig"))
     CreateMatchingWorkflowOutput.add_member(:resolution_techniques, Shapes::ShapeRef.new(shape: ResolutionTechniques, required: true, location_name: "resolutionTechniques"))
+    CreateMatchingWorkflowOutput.add_member(:incremental_run_config, Shapes::ShapeRef.new(shape: IncrementalRunConfig, location_name: "incrementalRunConfig"))
     CreateMatchingWorkflowOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "roleArn"))
-    CreateMatchingWorkflowOutput.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: MatchingWorkflowArn, required: true, location_name: "workflowArn"))
-    CreateMatchingWorkflowOutput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
     CreateMatchingWorkflowOutput.struct_class = Types::CreateMatchingWorkflowOutput
 
+    CreateSchemaMappingInput.add_member(:schema_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "schemaName"))
     CreateSchemaMappingInput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     CreateSchemaMappingInput.add_member(:mapped_input_fields, Shapes::ShapeRef.new(shape: SchemaInputAttributes, required: true, location_name: "mappedInputFields"))
-    CreateSchemaMappingInput.add_member(:schema_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "schemaName"))
     CreateSchemaMappingInput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
     CreateSchemaMappingInput.struct_class = Types::CreateSchemaMappingInput
 
+    CreateSchemaMappingOutput.add_member(:schema_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "schemaName"))
+    CreateSchemaMappingOutput.add_member(:schema_arn, Shapes::ShapeRef.new(shape: SchemaMappingArn, required: true, location_name: "schemaArn"))
     CreateSchemaMappingOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, required: true, location_name: "description"))
     CreateSchemaMappingOutput.add_member(:mapped_input_fields, Shapes::ShapeRef.new(shape: SchemaInputAttributes, required: true, location_name: "mappedInputFields"))
-    CreateSchemaMappingOutput.add_member(:schema_arn, Shapes::ShapeRef.new(shape: SchemaMappingArn, required: true, location_name: "schemaArn"))
-    CreateSchemaMappingOutput.add_member(:schema_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "schemaName"))
     CreateSchemaMappingOutput.struct_class = Types::CreateSchemaMappingOutput
 
     DeleteIdMappingWorkflowInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "workflowName"))
@@ -359,8 +359,8 @@ module Aws::EntityResolution
     DeletePolicyStatementInput.struct_class = Types::DeletePolicyStatementInput
 
     DeletePolicyStatementOutput.add_member(:arn, Shapes::ShapeRef.new(shape: VeniceGlobalArn, required: true, location_name: "arn"))
-    DeletePolicyStatementOutput.add_member(:policy, Shapes::ShapeRef.new(shape: PolicyDocument, location_name: "policy"))
     DeletePolicyStatementOutput.add_member(:token, Shapes::ShapeRef.new(shape: PolicyToken, required: true, location_name: "token"))
+    DeletePolicyStatementOutput.add_member(:policy, Shapes::ShapeRef.new(shape: PolicyDocument, location_name: "policy"))
     DeletePolicyStatementOutput.struct_class = Types::DeletePolicyStatementOutput
 
     DeleteSchemaMappingInput.add_member(:schema_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "schemaName"))
@@ -369,18 +369,18 @@ module Aws::EntityResolution
     DeleteSchemaMappingOutput.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     DeleteSchemaMappingOutput.struct_class = Types::DeleteSchemaMappingOutput
 
+    DeleteUniqueIdError.add_member(:unique_id, Shapes::ShapeRef.new(shape: HeaderSafeUniqueId, required: true, location_name: "uniqueId"))
     DeleteUniqueIdError.add_member(:error_type, Shapes::ShapeRef.new(shape: DeleteUniqueIdErrorType, required: true, location_name: "errorType"))
-    DeleteUniqueIdError.add_member(:unique_id, Shapes::ShapeRef.new(shape: UniqueId, required: true, location_name: "uniqueId"))
     DeleteUniqueIdError.struct_class = Types::DeleteUniqueIdError
 
     DeleteUniqueIdErrorsList.member = Shapes::ShapeRef.new(shape: DeleteUniqueIdError)
 
-    DeletedUniqueId.add_member(:unique_id, Shapes::ShapeRef.new(shape: UniqueId, required: true, location_name: "uniqueId"))
+    DeletedUniqueId.add_member(:unique_id, Shapes::ShapeRef.new(shape: HeaderSafeUniqueId, required: true, location_name: "uniqueId"))
     DeletedUniqueId.struct_class = Types::DeletedUniqueId
 
     DeletedUniqueIdList.member = Shapes::ShapeRef.new(shape: DeletedUniqueId)
 
-    DisconnectedUniqueIdsList.member = Shapes::ShapeRef.new(shape: UniqueId)
+    DisconnectedUniqueIdsList.member = Shapes::ShapeRef.new(shape: HeaderSafeUniqueId)
 
     ErrorDetails.add_member(:error_message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "errorMessage"))
     ErrorDetails.struct_class = Types::ErrorDetails
@@ -390,153 +390,154 @@ module Aws::EntityResolution
     ExceedsLimitException.add_member(:quota_value, Shapes::ShapeRef.new(shape: Integer, location_name: "quotaValue"))
     ExceedsLimitException.struct_class = Types::ExceedsLimitException
 
-    GetIdMappingJobInput.add_member(:job_id, Shapes::ShapeRef.new(shape: JobId, required: true, location: "uri", location_name: "jobId"))
     GetIdMappingJobInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityNameOrIdMappingWorkflowArn, required: true, location: "uri", location_name: "workflowName"))
+    GetIdMappingJobInput.add_member(:job_id, Shapes::ShapeRef.new(shape: JobId, required: true, location: "uri", location_name: "jobId"))
     GetIdMappingJobInput.struct_class = Types::GetIdMappingJobInput
 
-    GetIdMappingJobOutput.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
-    GetIdMappingJobOutput.add_member(:error_details, Shapes::ShapeRef.new(shape: ErrorDetails, location_name: "errorDetails"))
     GetIdMappingJobOutput.add_member(:job_id, Shapes::ShapeRef.new(shape: JobId, required: true, location_name: "jobId"))
-    GetIdMappingJobOutput.add_member(:metrics, Shapes::ShapeRef.new(shape: IdMappingJobMetrics, location_name: "metrics"))
-    GetIdMappingJobOutput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: IdMappingJobOutputSourceConfig, location_name: "outputSourceConfig"))
-    GetIdMappingJobOutput.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "startTime"))
     GetIdMappingJobOutput.add_member(:status, Shapes::ShapeRef.new(shape: JobStatus, required: true, location_name: "status"))
+    GetIdMappingJobOutput.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "startTime"))
+    GetIdMappingJobOutput.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
+    GetIdMappingJobOutput.add_member(:metrics, Shapes::ShapeRef.new(shape: IdMappingJobMetrics, location_name: "metrics"))
+    GetIdMappingJobOutput.add_member(:error_details, Shapes::ShapeRef.new(shape: ErrorDetails, location_name: "errorDetails"))
+    GetIdMappingJobOutput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: IdMappingJobOutputSourceConfig, location_name: "outputSourceConfig"))
     GetIdMappingJobOutput.struct_class = Types::GetIdMappingJobOutput
 
     GetIdMappingWorkflowInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "workflowName"))
     GetIdMappingWorkflowInput.struct_class = Types::GetIdMappingWorkflowInput
 
-    GetIdMappingWorkflowOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
+    GetIdMappingWorkflowOutput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
+    GetIdMappingWorkflowOutput.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: IdMappingWorkflowArn, required: true, location_name: "workflowArn"))
     GetIdMappingWorkflowOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    GetIdMappingWorkflowOutput.add_member(:id_mapping_techniques, Shapes::ShapeRef.new(shape: IdMappingTechniques, required: true, location_name: "idMappingTechniques"))
     GetIdMappingWorkflowOutput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: IdMappingWorkflowInputSourceConfig, required: true, location_name: "inputSourceConfig"))
     GetIdMappingWorkflowOutput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: IdMappingWorkflowOutputSourceConfig, location_name: "outputSourceConfig"))
+    GetIdMappingWorkflowOutput.add_member(:id_mapping_techniques, Shapes::ShapeRef.new(shape: IdMappingTechniques, required: true, location_name: "idMappingTechniques"))
+    GetIdMappingWorkflowOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
+    GetIdMappingWorkflowOutput.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
     GetIdMappingWorkflowOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: IdMappingRoleArn, location_name: "roleArn"))
     GetIdMappingWorkflowOutput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
-    GetIdMappingWorkflowOutput.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
-    GetIdMappingWorkflowOutput.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: IdMappingWorkflowArn, required: true, location_name: "workflowArn"))
-    GetIdMappingWorkflowOutput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
     GetIdMappingWorkflowOutput.struct_class = Types::GetIdMappingWorkflowOutput
 
     GetIdNamespaceInput.add_member(:id_namespace_name, Shapes::ShapeRef.new(shape: EntityNameOrIdNamespaceArn, required: true, location: "uri", location_name: "idNamespaceName"))
     GetIdNamespaceInput.struct_class = Types::GetIdNamespaceInput
 
-    GetIdNamespaceOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
-    GetIdNamespaceOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    GetIdNamespaceOutput.add_member(:id_mapping_workflow_properties, Shapes::ShapeRef.new(shape: IdNamespaceIdMappingWorkflowPropertiesList, location_name: "idMappingWorkflowProperties"))
-    GetIdNamespaceOutput.add_member(:id_namespace_arn, Shapes::ShapeRef.new(shape: IdNamespaceArn, required: true, location_name: "idNamespaceArn"))
     GetIdNamespaceOutput.add_member(:id_namespace_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "idNamespaceName"))
+    GetIdNamespaceOutput.add_member(:id_namespace_arn, Shapes::ShapeRef.new(shape: IdNamespaceArn, required: true, location_name: "idNamespaceArn"))
+    GetIdNamespaceOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     GetIdNamespaceOutput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: IdNamespaceInputSourceConfig, location_name: "inputSourceConfig"))
-    GetIdNamespaceOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
-    GetIdNamespaceOutput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
+    GetIdNamespaceOutput.add_member(:id_mapping_workflow_properties, Shapes::ShapeRef.new(shape: IdNamespaceIdMappingWorkflowPropertiesList, location_name: "idMappingWorkflowProperties"))
     GetIdNamespaceOutput.add_member(:type, Shapes::ShapeRef.new(shape: IdNamespaceType, required: true, location_name: "type"))
+    GetIdNamespaceOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
+    GetIdNamespaceOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
     GetIdNamespaceOutput.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
+    GetIdNamespaceOutput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
     GetIdNamespaceOutput.struct_class = Types::GetIdNamespaceOutput
 
-    GetMatchIdInput.add_member(:apply_normalization, Shapes::ShapeRef.new(shape: Boolean, location_name: "applyNormalization"))
-    GetMatchIdInput.add_member(:record, Shapes::ShapeRef.new(shape: RecordAttributeMap, required: true, location_name: "record"))
     GetMatchIdInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "workflowName"))
+    GetMatchIdInput.add_member(:record, Shapes::ShapeRef.new(shape: RecordAttributeMap, required: true, location_name: "record"))
+    GetMatchIdInput.add_member(:apply_normalization, Shapes::ShapeRef.new(shape: Boolean, location_name: "applyNormalization"))
     GetMatchIdInput.struct_class = Types::GetMatchIdInput
 
     GetMatchIdOutput.add_member(:match_id, Shapes::ShapeRef.new(shape: String, location_name: "matchId"))
     GetMatchIdOutput.add_member(:match_rule, Shapes::ShapeRef.new(shape: String, location_name: "matchRule"))
     GetMatchIdOutput.struct_class = Types::GetMatchIdOutput
 
-    GetMatchingJobInput.add_member(:job_id, Shapes::ShapeRef.new(shape: JobId, required: true, location: "uri", location_name: "jobId"))
     GetMatchingJobInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "workflowName"))
+    GetMatchingJobInput.add_member(:job_id, Shapes::ShapeRef.new(shape: JobId, required: true, location: "uri", location_name: "jobId"))
     GetMatchingJobInput.struct_class = Types::GetMatchingJobInput
 
-    GetMatchingJobOutput.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
-    GetMatchingJobOutput.add_member(:error_details, Shapes::ShapeRef.new(shape: ErrorDetails, location_name: "errorDetails"))
     GetMatchingJobOutput.add_member(:job_id, Shapes::ShapeRef.new(shape: JobId, required: true, location_name: "jobId"))
-    GetMatchingJobOutput.add_member(:metrics, Shapes::ShapeRef.new(shape: JobMetrics, location_name: "metrics"))
-    GetMatchingJobOutput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: JobOutputSourceConfig, location_name: "outputSourceConfig"))
-    GetMatchingJobOutput.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "startTime"))
     GetMatchingJobOutput.add_member(:status, Shapes::ShapeRef.new(shape: JobStatus, required: true, location_name: "status"))
+    GetMatchingJobOutput.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "startTime"))
+    GetMatchingJobOutput.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
+    GetMatchingJobOutput.add_member(:metrics, Shapes::ShapeRef.new(shape: JobMetrics, location_name: "metrics"))
+    GetMatchingJobOutput.add_member(:error_details, Shapes::ShapeRef.new(shape: ErrorDetails, location_name: "errorDetails"))
+    GetMatchingJobOutput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: JobOutputSourceConfig, location_name: "outputSourceConfig"))
     GetMatchingJobOutput.struct_class = Types::GetMatchingJobOutput
 
     GetMatchingWorkflowInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "workflowName"))
     GetMatchingWorkflowInput.struct_class = Types::GetMatchingWorkflowInput
 
-    GetMatchingWorkflowOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
+    GetMatchingWorkflowOutput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
+    GetMatchingWorkflowOutput.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: MatchingWorkflowArn, required: true, location_name: "workflowArn"))
     GetMatchingWorkflowOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    GetMatchingWorkflowOutput.add_member(:incremental_run_config, Shapes::ShapeRef.new(shape: IncrementalRunConfig, location_name: "incrementalRunConfig"))
     GetMatchingWorkflowOutput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: InputSourceConfig, required: true, location_name: "inputSourceConfig"))
     GetMatchingWorkflowOutput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: OutputSourceConfig, required: true, location_name: "outputSourceConfig"))
     GetMatchingWorkflowOutput.add_member(:resolution_techniques, Shapes::ShapeRef.new(shape: ResolutionTechniques, required: true, location_name: "resolutionTechniques"))
+    GetMatchingWorkflowOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
+    GetMatchingWorkflowOutput.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
+    GetMatchingWorkflowOutput.add_member(:incremental_run_config, Shapes::ShapeRef.new(shape: IncrementalRunConfig, location_name: "incrementalRunConfig"))
     GetMatchingWorkflowOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "roleArn"))
     GetMatchingWorkflowOutput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
-    GetMatchingWorkflowOutput.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
-    GetMatchingWorkflowOutput.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: MatchingWorkflowArn, required: true, location_name: "workflowArn"))
-    GetMatchingWorkflowOutput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
     GetMatchingWorkflowOutput.struct_class = Types::GetMatchingWorkflowOutput
 
     GetPolicyInput.add_member(:arn, Shapes::ShapeRef.new(shape: VeniceGlobalArn, required: true, location: "uri", location_name: "arn"))
     GetPolicyInput.struct_class = Types::GetPolicyInput
 
     GetPolicyOutput.add_member(:arn, Shapes::ShapeRef.new(shape: VeniceGlobalArn, required: true, location_name: "arn"))
-    GetPolicyOutput.add_member(:policy, Shapes::ShapeRef.new(shape: PolicyDocument, location_name: "policy"))
     GetPolicyOutput.add_member(:token, Shapes::ShapeRef.new(shape: PolicyToken, required: true, location_name: "token"))
+    GetPolicyOutput.add_member(:policy, Shapes::ShapeRef.new(shape: PolicyDocument, location_name: "policy"))
     GetPolicyOutput.struct_class = Types::GetPolicyOutput
 
     GetProviderServiceInput.add_member(:provider_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "providerName"))
     GetProviderServiceInput.add_member(:provider_service_name, Shapes::ShapeRef.new(shape: ProviderServiceArn, required: true, location: "uri", location_name: "providerServiceName"))
     GetProviderServiceInput.struct_class = Types::GetProviderServiceInput
 
-    GetProviderServiceOutput.add_member(:anonymized_output, Shapes::ShapeRef.new(shape: Boolean, required: true, location_name: "anonymizedOutput"))
-    GetProviderServiceOutput.add_member(:provider_component_schema, Shapes::ShapeRef.new(shape: ProviderComponentSchema, location_name: "providerComponentSchema"))
-    GetProviderServiceOutput.add_member(:provider_configuration_definition, Shapes::ShapeRef.new(shape: Document, location_name: "providerConfigurationDefinition"))
-    GetProviderServiceOutput.add_member(:provider_endpoint_configuration, Shapes::ShapeRef.new(shape: ProviderEndpointConfiguration, required: true, location_name: "providerEndpointConfiguration"))
-    GetProviderServiceOutput.add_member(:provider_entity_output_definition, Shapes::ShapeRef.new(shape: Document, required: true, location_name: "providerEntityOutputDefinition"))
-    GetProviderServiceOutput.add_member(:provider_id_name_space_configuration, Shapes::ShapeRef.new(shape: ProviderIdNameSpaceConfiguration, location_name: "providerIdNameSpaceConfiguration"))
-    GetProviderServiceOutput.add_member(:provider_intermediate_data_access_configuration, Shapes::ShapeRef.new(shape: ProviderIntermediateDataAccessConfiguration, location_name: "providerIntermediateDataAccessConfiguration"))
-    GetProviderServiceOutput.add_member(:provider_job_configuration, Shapes::ShapeRef.new(shape: Document, location_name: "providerJobConfiguration"))
     GetProviderServiceOutput.add_member(:provider_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "providerName"))
-    GetProviderServiceOutput.add_member(:provider_service_arn, Shapes::ShapeRef.new(shape: ProviderServiceArn, required: true, location_name: "providerServiceArn"))
-    GetProviderServiceOutput.add_member(:provider_service_display_name, Shapes::ShapeRef.new(shape: ProviderServiceDisplayName, required: true, location_name: "providerServiceDisplayName"))
     GetProviderServiceOutput.add_member(:provider_service_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "providerServiceName"))
+    GetProviderServiceOutput.add_member(:provider_service_display_name, Shapes::ShapeRef.new(shape: ProviderServiceDisplayName, required: true, location_name: "providerServiceDisplayName"))
     GetProviderServiceOutput.add_member(:provider_service_type, Shapes::ShapeRef.new(shape: ServiceType, required: true, location_name: "providerServiceType"))
+    GetProviderServiceOutput.add_member(:provider_service_arn, Shapes::ShapeRef.new(shape: ProviderServiceArn, required: true, location_name: "providerServiceArn"))
+    GetProviderServiceOutput.add_member(:provider_configuration_definition, Shapes::ShapeRef.new(shape: Document, location_name: "providerConfigurationDefinition"))
+    GetProviderServiceOutput.add_member(:provider_id_name_space_configuration, Shapes::ShapeRef.new(shape: ProviderIdNameSpaceConfiguration, location_name: "providerIdNameSpaceConfiguration"))
+    GetProviderServiceOutput.add_member(:provider_job_configuration, Shapes::ShapeRef.new(shape: Document, location_name: "providerJobConfiguration"))
+    GetProviderServiceOutput.add_member(:provider_endpoint_configuration, Shapes::ShapeRef.new(shape: ProviderEndpointConfiguration, required: true, location_name: "providerEndpointConfiguration"))
+    GetProviderServiceOutput.add_member(:anonymized_output, Shapes::ShapeRef.new(shape: Boolean, required: true, location_name: "anonymizedOutput"))
+    GetProviderServiceOutput.add_member(:provider_entity_output_definition, Shapes::ShapeRef.new(shape: Document, required: true, location_name: "providerEntityOutputDefinition"))
+    GetProviderServiceOutput.add_member(:provider_intermediate_data_access_configuration, Shapes::ShapeRef.new(shape: ProviderIntermediateDataAccessConfiguration, location_name: "providerIntermediateDataAccessConfiguration"))
+    GetProviderServiceOutput.add_member(:provider_component_schema, Shapes::ShapeRef.new(shape: ProviderComponentSchema, location_name: "providerComponentSchema"))
     GetProviderServiceOutput.struct_class = Types::GetProviderServiceOutput
 
     GetSchemaMappingInput.add_member(:schema_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "schemaName"))
     GetSchemaMappingInput.struct_class = Types::GetSchemaMappingInput
 
-    GetSchemaMappingOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
-    GetSchemaMappingOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    GetSchemaMappingOutput.add_member(:has_workflows, Shapes::ShapeRef.new(shape: Boolean, required: true, location_name: "hasWorkflows"))
-    GetSchemaMappingOutput.add_member(:mapped_input_fields, Shapes::ShapeRef.new(shape: SchemaInputAttributes, required: true, location_name: "mappedInputFields"))
-    GetSchemaMappingOutput.add_member(:schema_arn, Shapes::ShapeRef.new(shape: SchemaMappingArn, required: true, location_name: "schemaArn"))
     GetSchemaMappingOutput.add_member(:schema_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "schemaName"))
-    GetSchemaMappingOutput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
+    GetSchemaMappingOutput.add_member(:schema_arn, Shapes::ShapeRef.new(shape: SchemaMappingArn, required: true, location_name: "schemaArn"))
+    GetSchemaMappingOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
+    GetSchemaMappingOutput.add_member(:mapped_input_fields, Shapes::ShapeRef.new(shape: SchemaInputAttributes, required: true, location_name: "mappedInputFields"))
+    GetSchemaMappingOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
     GetSchemaMappingOutput.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
+    GetSchemaMappingOutput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
+    GetSchemaMappingOutput.add_member(:has_workflows, Shapes::ShapeRef.new(shape: Boolean, required: true, location_name: "hasWorkflows"))
     GetSchemaMappingOutput.struct_class = Types::GetSchemaMappingOutput
 
     IdMappingJobMetrics.add_member(:input_records, Shapes::ShapeRef.new(shape: Integer, location_name: "inputRecords"))
+    IdMappingJobMetrics.add_member(:total_records_processed, Shapes::ShapeRef.new(shape: Integer, location_name: "totalRecordsProcessed"))
     IdMappingJobMetrics.add_member(:records_not_processed, Shapes::ShapeRef.new(shape: Integer, location_name: "recordsNotProcessed"))
     IdMappingJobMetrics.add_member(:total_mapped_records, Shapes::ShapeRef.new(shape: Integer, location_name: "totalMappedRecords"))
     IdMappingJobMetrics.add_member(:total_mapped_source_records, Shapes::ShapeRef.new(shape: Integer, location_name: "totalMappedSourceRecords"))
     IdMappingJobMetrics.add_member(:total_mapped_target_records, Shapes::ShapeRef.new(shape: Integer, location_name: "totalMappedTargetRecords"))
-    IdMappingJobMetrics.add_member(:total_records_processed, Shapes::ShapeRef.new(shape: Integer, location_name: "totalRecordsProcessed"))
+    IdMappingJobMetrics.add_member(:unique_records_loaded, Shapes::ShapeRef.new(shape: Integer, location_name: "uniqueRecordsLoaded"))
     IdMappingJobMetrics.struct_class = Types::IdMappingJobMetrics
 
-    IdMappingJobOutputSource.add_member(:kms_arn, Shapes::ShapeRef.new(shape: KMSArn, location_name: "KMSArn"))
-    IdMappingJobOutputSource.add_member(:output_s3_path, Shapes::ShapeRef.new(shape: S3Path, required: true, location_name: "outputS3Path"))
     IdMappingJobOutputSource.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
+    IdMappingJobOutputSource.add_member(:output_s3_path, Shapes::ShapeRef.new(shape: S3Path, required: true, location_name: "outputS3Path"))
+    IdMappingJobOutputSource.add_member(:kms_arn, Shapes::ShapeRef.new(shape: KMSArn, location_name: "KMSArn"))
     IdMappingJobOutputSource.struct_class = Types::IdMappingJobOutputSource
 
     IdMappingJobOutputSourceConfig.member = Shapes::ShapeRef.new(shape: IdMappingJobOutputSource)
 
+    IdMappingRuleBasedProperties.add_member(:rules, Shapes::ShapeRef.new(shape: IdMappingRuleBasedPropertiesRulesList, location_name: "rules"))
+    IdMappingRuleBasedProperties.add_member(:rule_definition_type, Shapes::ShapeRef.new(shape: IdMappingWorkflowRuleDefinitionType, required: true, location_name: "ruleDefinitionType"))
     IdMappingRuleBasedProperties.add_member(:attribute_matching_model, Shapes::ShapeRef.new(shape: AttributeMatchingModel, required: true, location_name: "attributeMatchingModel"))
     IdMappingRuleBasedProperties.add_member(:record_matching_model, Shapes::ShapeRef.new(shape: RecordMatchingModel, required: true, location_name: "recordMatchingModel"))
-    IdMappingRuleBasedProperties.add_member(:rule_definition_type, Shapes::ShapeRef.new(shape: IdMappingWorkflowRuleDefinitionType, required: true, location_name: "ruleDefinitionType"))
-    IdMappingRuleBasedProperties.add_member(:rules, Shapes::ShapeRef.new(shape: IdMappingRuleBasedPropertiesRulesList, location_name: "rules"))
     IdMappingRuleBasedProperties.struct_class = Types::IdMappingRuleBasedProperties
 
     IdMappingRuleBasedPropertiesRulesList.member = Shapes::ShapeRef.new(shape: Rule)
 
     IdMappingTechniques.add_member(:id_mapping_type, Shapes::ShapeRef.new(shape: IdMappingType, required: true, location_name: "idMappingType"))
-    IdMappingTechniques.add_member(:provider_properties, Shapes::ShapeRef.new(shape: ProviderProperties, location_name: "providerProperties"))
     IdMappingTechniques.add_member(:rule_based_properties, Shapes::ShapeRef.new(shape: IdMappingRuleBasedProperties, location_name: "ruleBasedProperties"))
+    IdMappingTechniques.add_member(:provider_properties, Shapes::ShapeRef.new(shape: ProviderProperties, location_name: "providerProperties"))
     IdMappingTechniques.struct_class = Types::IdMappingTechniques
 
     IdMappingWorkflowInputSource.add_member(:input_source_arn, Shapes::ShapeRef.new(shape: IdMappingWorkflowInputSourceInputSourceARNString, required: true, location_name: "inputSourceARN"))
@@ -548,18 +549,18 @@ module Aws::EntityResolution
 
     IdMappingWorkflowList.member = Shapes::ShapeRef.new(shape: IdMappingWorkflowSummary)
 
-    IdMappingWorkflowOutputSource.add_member(:kms_arn, Shapes::ShapeRef.new(shape: KMSArn, location_name: "KMSArn"))
     IdMappingWorkflowOutputSource.add_member(:output_s3_path, Shapes::ShapeRef.new(shape: S3Path, required: true, location_name: "outputS3Path"))
+    IdMappingWorkflowOutputSource.add_member(:kms_arn, Shapes::ShapeRef.new(shape: KMSArn, location_name: "KMSArn"))
     IdMappingWorkflowOutputSource.struct_class = Types::IdMappingWorkflowOutputSource
 
     IdMappingWorkflowOutputSourceConfig.member = Shapes::ShapeRef.new(shape: IdMappingWorkflowOutputSource)
 
     IdMappingWorkflowRuleDefinitionTypeList.member = Shapes::ShapeRef.new(shape: IdMappingWorkflowRuleDefinitionType)
 
+    IdMappingWorkflowSummary.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
+    IdMappingWorkflowSummary.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: IdMappingWorkflowArn, required: true, location_name: "workflowArn"))
     IdMappingWorkflowSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
     IdMappingWorkflowSummary.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
-    IdMappingWorkflowSummary.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: IdMappingWorkflowArn, required: true, location_name: "workflowArn"))
-    IdMappingWorkflowSummary.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
     IdMappingWorkflowSummary.struct_class = Types::IdMappingWorkflowSummary
 
     IdNamespaceIdMappingWorkflowMetadata.add_member(:id_mapping_type, Shapes::ShapeRef.new(shape: IdMappingType, required: true, location_name: "idMappingType"))
@@ -568,8 +569,8 @@ module Aws::EntityResolution
     IdNamespaceIdMappingWorkflowMetadataList.member = Shapes::ShapeRef.new(shape: IdNamespaceIdMappingWorkflowMetadata)
 
     IdNamespaceIdMappingWorkflowProperties.add_member(:id_mapping_type, Shapes::ShapeRef.new(shape: IdMappingType, required: true, location_name: "idMappingType"))
-    IdNamespaceIdMappingWorkflowProperties.add_member(:provider_properties, Shapes::ShapeRef.new(shape: NamespaceProviderProperties, location_name: "providerProperties"))
     IdNamespaceIdMappingWorkflowProperties.add_member(:rule_based_properties, Shapes::ShapeRef.new(shape: NamespaceRuleBasedProperties, location_name: "ruleBasedProperties"))
+    IdNamespaceIdMappingWorkflowProperties.add_member(:provider_properties, Shapes::ShapeRef.new(shape: NamespaceProviderProperties, location_name: "providerProperties"))
     IdNamespaceIdMappingWorkflowProperties.struct_class = Types::IdNamespaceIdMappingWorkflowProperties
 
     IdNamespaceIdMappingWorkflowPropertiesList.member = Shapes::ShapeRef.new(shape: IdNamespaceIdMappingWorkflowProperties)
@@ -582,21 +583,21 @@ module Aws::EntityResolution
 
     IdNamespaceList.member = Shapes::ShapeRef.new(shape: IdNamespaceSummary)
 
-    IdNamespaceSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
+    IdNamespaceSummary.add_member(:id_namespace_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "idNamespaceName"))
+    IdNamespaceSummary.add_member(:id_namespace_arn, Shapes::ShapeRef.new(shape: IdNamespaceArn, required: true, location_name: "idNamespaceArn"))
     IdNamespaceSummary.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     IdNamespaceSummary.add_member(:id_mapping_workflow_properties, Shapes::ShapeRef.new(shape: IdNamespaceIdMappingWorkflowMetadataList, location_name: "idMappingWorkflowProperties"))
-    IdNamespaceSummary.add_member(:id_namespace_arn, Shapes::ShapeRef.new(shape: IdNamespaceArn, required: true, location_name: "idNamespaceArn"))
-    IdNamespaceSummary.add_member(:id_namespace_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "idNamespaceName"))
     IdNamespaceSummary.add_member(:type, Shapes::ShapeRef.new(shape: IdNamespaceType, required: true, location_name: "type"))
+    IdNamespaceSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
     IdNamespaceSummary.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
     IdNamespaceSummary.struct_class = Types::IdNamespaceSummary
 
     IncrementalRunConfig.add_member(:incremental_run_type, Shapes::ShapeRef.new(shape: IncrementalRunType, location_name: "incrementalRunType"))
     IncrementalRunConfig.struct_class = Types::IncrementalRunConfig
 
-    InputSource.add_member(:apply_normalization, Shapes::ShapeRef.new(shape: Boolean, location_name: "applyNormalization"))
     InputSource.add_member(:input_source_arn, Shapes::ShapeRef.new(shape: InputSourceInputSourceARNString, required: true, location_name: "inputSourceARN"))
     InputSource.add_member(:schema_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "schemaName"))
+    InputSource.add_member(:apply_normalization, Shapes::ShapeRef.new(shape: Boolean, location_name: "applyNormalization"))
     InputSource.struct_class = Types::InputSource
 
     InputSourceConfig.member = Shapes::ShapeRef.new(shape: InputSource)
@@ -610,81 +611,81 @@ module Aws::EntityResolution
     JobList.member = Shapes::ShapeRef.new(shape: JobSummary)
 
     JobMetrics.add_member(:input_records, Shapes::ShapeRef.new(shape: Integer, location_name: "inputRecords"))
-    JobMetrics.add_member(:match_i_ds, Shapes::ShapeRef.new(shape: Integer, location_name: "matchIDs"))
-    JobMetrics.add_member(:records_not_processed, Shapes::ShapeRef.new(shape: Integer, location_name: "recordsNotProcessed"))
     JobMetrics.add_member(:total_records_processed, Shapes::ShapeRef.new(shape: Integer, location_name: "totalRecordsProcessed"))
+    JobMetrics.add_member(:records_not_processed, Shapes::ShapeRef.new(shape: Integer, location_name: "recordsNotProcessed"))
+    JobMetrics.add_member(:match_i_ds, Shapes::ShapeRef.new(shape: Integer, location_name: "matchIDs"))
     JobMetrics.struct_class = Types::JobMetrics
 
-    JobOutputSource.add_member(:kms_arn, Shapes::ShapeRef.new(shape: KMSArn, location_name: "KMSArn"))
-    JobOutputSource.add_member(:output_s3_path, Shapes::ShapeRef.new(shape: S3Path, required: true, location_name: "outputS3Path"))
     JobOutputSource.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
+    JobOutputSource.add_member(:output_s3_path, Shapes::ShapeRef.new(shape: S3Path, required: true, location_name: "outputS3Path"))
+    JobOutputSource.add_member(:kms_arn, Shapes::ShapeRef.new(shape: KMSArn, location_name: "KMSArn"))
     JobOutputSource.struct_class = Types::JobOutputSource
 
     JobOutputSourceConfig.member = Shapes::ShapeRef.new(shape: JobOutputSource)
 
-    JobSummary.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
     JobSummary.add_member(:job_id, Shapes::ShapeRef.new(shape: JobId, required: true, location_name: "jobId"))
-    JobSummary.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "startTime"))
     JobSummary.add_member(:status, Shapes::ShapeRef.new(shape: JobStatus, required: true, location_name: "status"))
+    JobSummary.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "startTime"))
+    JobSummary.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
     JobSummary.struct_class = Types::JobSummary
 
-    ListIdMappingJobsInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListIdMappingJobsInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
-    ListIdMappingJobsInput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
     ListIdMappingJobsInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityNameOrIdMappingWorkflowArn, required: true, location: "uri", location_name: "workflowName"))
+    ListIdMappingJobsInput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListIdMappingJobsInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListIdMappingJobsInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
     ListIdMappingJobsInput.struct_class = Types::ListIdMappingJobsInput
 
     ListIdMappingJobsOutput.add_member(:jobs, Shapes::ShapeRef.new(shape: JobList, location_name: "jobs"))
     ListIdMappingJobsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListIdMappingJobsOutput.struct_class = Types::ListIdMappingJobsOutput
 
-    ListIdMappingWorkflowsInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListIdMappingWorkflowsInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
     ListIdMappingWorkflowsInput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListIdMappingWorkflowsInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListIdMappingWorkflowsInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
     ListIdMappingWorkflowsInput.struct_class = Types::ListIdMappingWorkflowsInput
 
-    ListIdMappingWorkflowsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListIdMappingWorkflowsOutput.add_member(:workflow_summaries, Shapes::ShapeRef.new(shape: IdMappingWorkflowList, location_name: "workflowSummaries"))
+    ListIdMappingWorkflowsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListIdMappingWorkflowsOutput.struct_class = Types::ListIdMappingWorkflowsOutput
 
-    ListIdNamespacesInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListIdNamespacesInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
     ListIdNamespacesInput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListIdNamespacesInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListIdNamespacesInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
     ListIdNamespacesInput.struct_class = Types::ListIdNamespacesInput
 
     ListIdNamespacesOutput.add_member(:id_namespace_summaries, Shapes::ShapeRef.new(shape: IdNamespaceList, location_name: "idNamespaceSummaries"))
     ListIdNamespacesOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListIdNamespacesOutput.struct_class = Types::ListIdNamespacesOutput
 
-    ListMatchingJobsInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListMatchingJobsInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
-    ListMatchingJobsInput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
     ListMatchingJobsInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "workflowName"))
+    ListMatchingJobsInput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListMatchingJobsInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListMatchingJobsInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
     ListMatchingJobsInput.struct_class = Types::ListMatchingJobsInput
 
     ListMatchingJobsOutput.add_member(:jobs, Shapes::ShapeRef.new(shape: JobList, location_name: "jobs"))
     ListMatchingJobsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListMatchingJobsOutput.struct_class = Types::ListMatchingJobsOutput
 
-    ListMatchingWorkflowsInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListMatchingWorkflowsInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
     ListMatchingWorkflowsInput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListMatchingWorkflowsInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListMatchingWorkflowsInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
     ListMatchingWorkflowsInput.struct_class = Types::ListMatchingWorkflowsInput
 
-    ListMatchingWorkflowsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListMatchingWorkflowsOutput.add_member(:workflow_summaries, Shapes::ShapeRef.new(shape: MatchingWorkflowList, location_name: "workflowSummaries"))
+    ListMatchingWorkflowsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListMatchingWorkflowsOutput.struct_class = Types::ListMatchingWorkflowsOutput
 
-    ListProviderServicesInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListProviderServicesInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
     ListProviderServicesInput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListProviderServicesInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListProviderServicesInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
     ListProviderServicesInput.add_member(:provider_name, Shapes::ShapeRef.new(shape: EntityName, location: "querystring", location_name: "providerName"))
     ListProviderServicesInput.struct_class = Types::ListProviderServicesInput
 
-    ListProviderServicesOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListProviderServicesOutput.add_member(:provider_service_summaries, Shapes::ShapeRef.new(shape: ProviderServiceList, location_name: "providerServiceSummaries"))
+    ListProviderServicesOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListProviderServicesOutput.struct_class = Types::ListProviderServicesOutput
 
-    ListSchemaMappingsInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListSchemaMappingsInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
     ListSchemaMappingsInput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListSchemaMappingsInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListSchemaMappingsInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
     ListSchemaMappingsInput.struct_class = Types::ListSchemaMappingsInput
 
-    ListSchemaMappingsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListSchemaMappingsOutput.add_member(:schema_list, Shapes::ShapeRef.new(shape: SchemaMappingList, location_name: "schemaList"))
+    ListSchemaMappingsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListSchemaMappingsOutput.struct_class = Types::ListSchemaMappingsOutput
 
     ListTagsForResourceInput.add_member(:resource_arn, Shapes::ShapeRef.new(shape: VeniceGlobalArn, required: true, location: "uri", location_name: "resourceArn"))
@@ -695,41 +696,41 @@ module Aws::EntityResolution
 
     MatchingWorkflowList.member = Shapes::ShapeRef.new(shape: MatchingWorkflowSummary)
 
-    MatchingWorkflowSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
-    MatchingWorkflowSummary.add_member(:resolution_type, Shapes::ShapeRef.new(shape: ResolutionType, required: true, location_name: "resolutionType"))
-    MatchingWorkflowSummary.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
-    MatchingWorkflowSummary.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: MatchingWorkflowArn, required: true, location_name: "workflowArn"))
     MatchingWorkflowSummary.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
+    MatchingWorkflowSummary.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: MatchingWorkflowArn, required: true, location_name: "workflowArn"))
+    MatchingWorkflowSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
+    MatchingWorkflowSummary.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
+    MatchingWorkflowSummary.add_member(:resolution_type, Shapes::ShapeRef.new(shape: ResolutionType, required: true, location_name: "resolutionType"))
     MatchingWorkflowSummary.struct_class = Types::MatchingWorkflowSummary
 
-    NamespaceProviderProperties.add_member(:provider_configuration, Shapes::ShapeRef.new(shape: Document, location_name: "providerConfiguration"))
     NamespaceProviderProperties.add_member(:provider_service_arn, Shapes::ShapeRef.new(shape: ProviderServiceArn, required: true, location_name: "providerServiceArn"))
+    NamespaceProviderProperties.add_member(:provider_configuration, Shapes::ShapeRef.new(shape: Document, location_name: "providerConfiguration"))
     NamespaceProviderProperties.struct_class = Types::NamespaceProviderProperties
 
+    NamespaceRuleBasedProperties.add_member(:rules, Shapes::ShapeRef.new(shape: NamespaceRuleBasedPropertiesRulesList, location_name: "rules"))
+    NamespaceRuleBasedProperties.add_member(:rule_definition_types, Shapes::ShapeRef.new(shape: IdMappingWorkflowRuleDefinitionTypeList, location_name: "ruleDefinitionTypes"))
     NamespaceRuleBasedProperties.add_member(:attribute_matching_model, Shapes::ShapeRef.new(shape: AttributeMatchingModel, location_name: "attributeMatchingModel"))
     NamespaceRuleBasedProperties.add_member(:record_matching_models, Shapes::ShapeRef.new(shape: RecordMatchingModelList, location_name: "recordMatchingModels"))
-    NamespaceRuleBasedProperties.add_member(:rule_definition_types, Shapes::ShapeRef.new(shape: IdMappingWorkflowRuleDefinitionTypeList, location_name: "ruleDefinitionTypes"))
-    NamespaceRuleBasedProperties.add_member(:rules, Shapes::ShapeRef.new(shape: NamespaceRuleBasedPropertiesRulesList, location_name: "rules"))
     NamespaceRuleBasedProperties.struct_class = Types::NamespaceRuleBasedProperties
 
     NamespaceRuleBasedPropertiesRulesList.member = Shapes::ShapeRef.new(shape: Rule)
 
-    OutputAttribute.add_member(:hashed, Shapes::ShapeRef.new(shape: Boolean, location_name: "hashed"))
     OutputAttribute.add_member(:name, Shapes::ShapeRef.new(shape: AttributeName, required: true, location_name: "name"))
+    OutputAttribute.add_member(:hashed, Shapes::ShapeRef.new(shape: Boolean, location_name: "hashed"))
     OutputAttribute.struct_class = Types::OutputAttribute
 
-    OutputSource.add_member(:kms_arn, Shapes::ShapeRef.new(shape: KMSArn, location_name: "KMSArn"))
-    OutputSource.add_member(:apply_normalization, Shapes::ShapeRef.new(shape: Boolean, location_name: "applyNormalization"))
-    OutputSource.add_member(:output, Shapes::ShapeRef.new(shape: OutputSourceOutputList, required: true, location_name: "output"))
     OutputSource.add_member(:output_s3_path, Shapes::ShapeRef.new(shape: S3Path, required: true, location_name: "outputS3Path"))
+    OutputSource.add_member(:kms_arn, Shapes::ShapeRef.new(shape: KMSArn, location_name: "KMSArn"))
+    OutputSource.add_member(:output, Shapes::ShapeRef.new(shape: OutputSourceOutputList, required: true, location_name: "output"))
+    OutputSource.add_member(:apply_normalization, Shapes::ShapeRef.new(shape: Boolean, location_name: "applyNormalization"))
     OutputSource.struct_class = Types::OutputSource
 
     OutputSourceConfig.member = Shapes::ShapeRef.new(shape: OutputSource)
 
     OutputSourceOutputList.member = Shapes::ShapeRef.new(shape: OutputAttribute)
 
-    ProviderComponentSchema.add_member(:provider_schema_attributes, Shapes::ShapeRef.new(shape: ProviderSchemaAttributes, location_name: "providerSchemaAttributes"))
     ProviderComponentSchema.add_member(:schemas, Shapes::ShapeRef.new(shape: Schemas, location_name: "schemas"))
+    ProviderComponentSchema.add_member(:provider_schema_attributes, Shapes::ShapeRef.new(shape: ProviderSchemaAttributes, location_name: "providerSchemaAttributes"))
     ProviderComponentSchema.struct_class = Types::ProviderComponentSchema
 
     ProviderEndpointConfiguration.add_member(:marketplace_configuration, Shapes::ShapeRef.new(shape: ProviderMarketplaceConfiguration, location_name: "marketplaceConfiguration"))
@@ -739,50 +740,50 @@ module Aws::EntityResolution
     ProviderEndpointConfiguration.struct_class = Types::ProviderEndpointConfiguration
 
     ProviderIdNameSpaceConfiguration.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "description"))
-    ProviderIdNameSpaceConfiguration.add_member(:provider_source_configuration_definition, Shapes::ShapeRef.new(shape: Document, location_name: "providerSourceConfigurationDefinition"))
     ProviderIdNameSpaceConfiguration.add_member(:provider_target_configuration_definition, Shapes::ShapeRef.new(shape: Document, location_name: "providerTargetConfigurationDefinition"))
+    ProviderIdNameSpaceConfiguration.add_member(:provider_source_configuration_definition, Shapes::ShapeRef.new(shape: Document, location_name: "providerSourceConfigurationDefinition"))
     ProviderIdNameSpaceConfiguration.struct_class = Types::ProviderIdNameSpaceConfiguration
 
     ProviderIntermediateDataAccessConfiguration.add_member(:aws_account_ids, Shapes::ShapeRef.new(shape: AwsAccountIdList, location_name: "awsAccountIds"))
     ProviderIntermediateDataAccessConfiguration.add_member(:required_bucket_actions, Shapes::ShapeRef.new(shape: RequiredBucketActionsList, location_name: "requiredBucketActions"))
     ProviderIntermediateDataAccessConfiguration.struct_class = Types::ProviderIntermediateDataAccessConfiguration
 
-    ProviderMarketplaceConfiguration.add_member(:asset_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "assetId"))
     ProviderMarketplaceConfiguration.add_member(:data_set_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "dataSetId"))
-    ProviderMarketplaceConfiguration.add_member(:listing_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "listingId"))
     ProviderMarketplaceConfiguration.add_member(:revision_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "revisionId"))
+    ProviderMarketplaceConfiguration.add_member(:asset_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "assetId"))
+    ProviderMarketplaceConfiguration.add_member(:listing_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "listingId"))
     ProviderMarketplaceConfiguration.struct_class = Types::ProviderMarketplaceConfiguration
 
-    ProviderProperties.add_member(:intermediate_source_configuration, Shapes::ShapeRef.new(shape: IntermediateSourceConfiguration, location_name: "intermediateSourceConfiguration"))
-    ProviderProperties.add_member(:provider_configuration, Shapes::ShapeRef.new(shape: Document, location_name: "providerConfiguration"))
     ProviderProperties.add_member(:provider_service_arn, Shapes::ShapeRef.new(shape: ProviderServiceArn, required: true, location_name: "providerServiceArn"))
+    ProviderProperties.add_member(:provider_configuration, Shapes::ShapeRef.new(shape: Document, location_name: "providerConfiguration"))
+    ProviderProperties.add_member(:intermediate_source_configuration, Shapes::ShapeRef.new(shape: IntermediateSourceConfiguration, location_name: "intermediateSourceConfiguration"))
     ProviderProperties.struct_class = Types::ProviderProperties
 
     ProviderSchemaAttribute.add_member(:field_name, Shapes::ShapeRef.new(shape: AttributeName, required: true, location_name: "fieldName"))
-    ProviderSchemaAttribute.add_member(:hashing, Shapes::ShapeRef.new(shape: Boolean, location_name: "hashing"))
-    ProviderSchemaAttribute.add_member(:sub_type, Shapes::ShapeRef.new(shape: AttributeName, location_name: "subType"))
     ProviderSchemaAttribute.add_member(:type, Shapes::ShapeRef.new(shape: SchemaAttributeType, required: true, location_name: "type"))
+    ProviderSchemaAttribute.add_member(:sub_type, Shapes::ShapeRef.new(shape: AttributeName, location_name: "subType"))
+    ProviderSchemaAttribute.add_member(:hashing, Shapes::ShapeRef.new(shape: Boolean, location_name: "hashing"))
     ProviderSchemaAttribute.struct_class = Types::ProviderSchemaAttribute
 
     ProviderSchemaAttributes.member = Shapes::ShapeRef.new(shape: ProviderSchemaAttribute)
 
     ProviderServiceList.member = Shapes::ShapeRef.new(shape: ProviderServiceSummary)
 
-    ProviderServiceSummary.add_member(:provider_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "providerName"))
     ProviderServiceSummary.add_member(:provider_service_arn, Shapes::ShapeRef.new(shape: ProviderServiceArn, required: true, location_name: "providerServiceArn"))
+    ProviderServiceSummary.add_member(:provider_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "providerName"))
     ProviderServiceSummary.add_member(:provider_service_display_name, Shapes::ShapeRef.new(shape: ProviderServiceDisplayName, required: true, location_name: "providerServiceDisplayName"))
     ProviderServiceSummary.add_member(:provider_service_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "providerServiceName"))
     ProviderServiceSummary.add_member(:provider_service_type, Shapes::ShapeRef.new(shape: ServiceType, required: true, location_name: "providerServiceType"))
     ProviderServiceSummary.struct_class = Types::ProviderServiceSummary
 
     PutPolicyInput.add_member(:arn, Shapes::ShapeRef.new(shape: VeniceGlobalArn, required: true, location: "uri", location_name: "arn"))
-    PutPolicyInput.add_member(:policy, Shapes::ShapeRef.new(shape: PolicyDocument, required: true, location_name: "policy"))
     PutPolicyInput.add_member(:token, Shapes::ShapeRef.new(shape: PolicyToken, location_name: "token"))
+    PutPolicyInput.add_member(:policy, Shapes::ShapeRef.new(shape: PolicyDocument, required: true, location_name: "policy"))
     PutPolicyInput.struct_class = Types::PutPolicyInput
 
     PutPolicyOutput.add_member(:arn, Shapes::ShapeRef.new(shape: VeniceGlobalArn, required: true, location_name: "arn"))
-    PutPolicyOutput.add_member(:policy, Shapes::ShapeRef.new(shape: PolicyDocument, location_name: "policy"))
     PutPolicyOutput.add_member(:token, Shapes::ShapeRef.new(shape: PolicyToken, required: true, location_name: "token"))
+    PutPolicyOutput.add_member(:policy, Shapes::ShapeRef.new(shape: PolicyDocument, location_name: "policy"))
     PutPolicyOutput.struct_class = Types::PutPolicyOutput
 
     RecordAttributeMap.key = Shapes::ShapeRef.new(shape: RecordAttributeMapKeyString)
@@ -792,21 +793,21 @@ module Aws::EntityResolution
 
     RequiredBucketActionsList.member = Shapes::ShapeRef.new(shape: String)
 
-    ResolutionTechniques.add_member(:provider_properties, Shapes::ShapeRef.new(shape: ProviderProperties, location_name: "providerProperties"))
     ResolutionTechniques.add_member(:resolution_type, Shapes::ShapeRef.new(shape: ResolutionType, required: true, location_name: "resolutionType"))
     ResolutionTechniques.add_member(:rule_based_properties, Shapes::ShapeRef.new(shape: RuleBasedProperties, location_name: "ruleBasedProperties"))
+    ResolutionTechniques.add_member(:provider_properties, Shapes::ShapeRef.new(shape: ProviderProperties, location_name: "providerProperties"))
     ResolutionTechniques.struct_class = Types::ResolutionTechniques
 
     ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
     ResourceNotFoundException.struct_class = Types::ResourceNotFoundException
 
-    Rule.add_member(:matching_keys, Shapes::ShapeRef.new(shape: RuleMatchingKeysList, required: true, location_name: "matchingKeys"))
     Rule.add_member(:rule_name, Shapes::ShapeRef.new(shape: RuleRuleNameString, required: true, location_name: "ruleName"))
+    Rule.add_member(:matching_keys, Shapes::ShapeRef.new(shape: RuleMatchingKeysList, required: true, location_name: "matchingKeys"))
     Rule.struct_class = Types::Rule
 
+    RuleBasedProperties.add_member(:rules, Shapes::ShapeRef.new(shape: RuleBasedPropertiesRulesList, required: true, location_name: "rules"))
     RuleBasedProperties.add_member(:attribute_matching_model, Shapes::ShapeRef.new(shape: AttributeMatchingModel, required: true, location_name: "attributeMatchingModel"))
     RuleBasedProperties.add_member(:match_purpose, Shapes::ShapeRef.new(shape: MatchPurpose, location_name: "matchPurpose"))
-    RuleBasedProperties.add_member(:rules, Shapes::ShapeRef.new(shape: RuleBasedPropertiesRulesList, required: true, location_name: "rules"))
     RuleBasedProperties.struct_class = Types::RuleBasedProperties
 
     RuleBasedPropertiesRulesList.member = Shapes::ShapeRef.new(shape: Rule)
@@ -814,11 +815,11 @@ module Aws::EntityResolution
     RuleMatchingKeysList.member = Shapes::ShapeRef.new(shape: AttributeName)
 
     SchemaInputAttribute.add_member(:field_name, Shapes::ShapeRef.new(shape: AttributeName, required: true, location_name: "fieldName"))
+    SchemaInputAttribute.add_member(:type, Shapes::ShapeRef.new(shape: SchemaAttributeType, required: true, location_name: "type"))
     SchemaInputAttribute.add_member(:group_name, Shapes::ShapeRef.new(shape: AttributeName, location_name: "groupName"))
-    SchemaInputAttribute.add_member(:hashed, Shapes::ShapeRef.new(shape: Boolean, location_name: "hashed"))
     SchemaInputAttribute.add_member(:match_key, Shapes::ShapeRef.new(shape: AttributeName, location_name: "matchKey"))
     SchemaInputAttribute.add_member(:sub_type, Shapes::ShapeRef.new(shape: AttributeName, location_name: "subType"))
-    SchemaInputAttribute.add_member(:type, Shapes::ShapeRef.new(shape: SchemaAttributeType, required: true, location_name: "type"))
+    SchemaInputAttribute.add_member(:hashed, Shapes::ShapeRef.new(shape: Boolean, location_name: "hashed"))
     SchemaInputAttribute.struct_class = Types::SchemaInputAttribute
 
     SchemaInputAttributes.member = Shapes::ShapeRef.new(shape: SchemaInputAttribute)
@@ -827,17 +828,17 @@ module Aws::EntityResolution
 
     SchemaMappingList.member = Shapes::ShapeRef.new(shape: SchemaMappingSummary)
 
-    SchemaMappingSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
-    SchemaMappingSummary.add_member(:has_workflows, Shapes::ShapeRef.new(shape: Boolean, required: true, location_name: "hasWorkflows"))
-    SchemaMappingSummary.add_member(:schema_arn, Shapes::ShapeRef.new(shape: SchemaMappingArn, required: true, location_name: "schemaArn"))
     SchemaMappingSummary.add_member(:schema_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "schemaName"))
+    SchemaMappingSummary.add_member(:schema_arn, Shapes::ShapeRef.new(shape: SchemaMappingArn, required: true, location_name: "schemaArn"))
+    SchemaMappingSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
     SchemaMappingSummary.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
+    SchemaMappingSummary.add_member(:has_workflows, Shapes::ShapeRef.new(shape: Boolean, required: true, location_name: "hasWorkflows"))
     SchemaMappingSummary.struct_class = Types::SchemaMappingSummary
 
     Schemas.member = Shapes::ShapeRef.new(shape: SchemaList)
 
-    StartIdMappingJobInput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: IdMappingJobOutputSourceConfig, location_name: "outputSourceConfig"))
     StartIdMappingJobInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityNameOrIdMappingWorkflowArn, required: true, location: "uri", location_name: "workflowName"))
+    StartIdMappingJobInput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: IdMappingJobOutputSourceConfig, location_name: "outputSourceConfig"))
     StartIdMappingJobInput.struct_class = Types::StartIdMappingJobInput
 
     StartIdMappingJobOutput.add_member(:job_id, Shapes::ShapeRef.new(shape: JobId, required: true, location_name: "jobId"))
@@ -868,7 +869,7 @@ module Aws::EntityResolution
     ThrottlingException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
     ThrottlingException.struct_class = Types::ThrottlingException
 
-    UniqueIdList.member = Shapes::ShapeRef.new(shape: UniqueId)
+    UniqueIdList.member = Shapes::ShapeRef.new(shape: HeaderSafeUniqueId)
 
     UntagResourceInput.add_member(:resource_arn, Shapes::ShapeRef.new(shape: VeniceGlobalArn, required: true, location: "uri", location_name: "resourceArn"))
     UntagResourceInput.add_member(:tag_keys, Shapes::ShapeRef.new(shape: TagKeyList, required: true, location: "querystring", location_name: "tagKeys"))
@@ -876,68 +877,68 @@ module Aws::EntityResolution
 
     UntagResourceOutput.struct_class = Types::UntagResourceOutput
 
+    UpdateIdMappingWorkflowInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "workflowName"))
     UpdateIdMappingWorkflowInput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    UpdateIdMappingWorkflowInput.add_member(:id_mapping_techniques, Shapes::ShapeRef.new(shape: IdMappingTechniques, required: true, location_name: "idMappingTechniques"))
     UpdateIdMappingWorkflowInput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: IdMappingWorkflowInputSourceConfig, required: true, location_name: "inputSourceConfig"))
     UpdateIdMappingWorkflowInput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: IdMappingWorkflowOutputSourceConfig, location_name: "outputSourceConfig"))
+    UpdateIdMappingWorkflowInput.add_member(:id_mapping_techniques, Shapes::ShapeRef.new(shape: IdMappingTechniques, required: true, location_name: "idMappingTechniques"))
     UpdateIdMappingWorkflowInput.add_member(:role_arn, Shapes::ShapeRef.new(shape: IdMappingRoleArn, location_name: "roleArn"))
-    UpdateIdMappingWorkflowInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "workflowName"))
     UpdateIdMappingWorkflowInput.struct_class = Types::UpdateIdMappingWorkflowInput
 
+    UpdateIdMappingWorkflowOutput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
+    UpdateIdMappingWorkflowOutput.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: IdMappingWorkflowArn, required: true, location_name: "workflowArn"))
     UpdateIdMappingWorkflowOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    UpdateIdMappingWorkflowOutput.add_member(:id_mapping_techniques, Shapes::ShapeRef.new(shape: IdMappingTechniques, required: true, location_name: "idMappingTechniques"))
     UpdateIdMappingWorkflowOutput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: IdMappingWorkflowInputSourceConfig, required: true, location_name: "inputSourceConfig"))
     UpdateIdMappingWorkflowOutput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: IdMappingWorkflowOutputSourceConfig, location_name: "outputSourceConfig"))
+    UpdateIdMappingWorkflowOutput.add_member(:id_mapping_techniques, Shapes::ShapeRef.new(shape: IdMappingTechniques, required: true, location_name: "idMappingTechniques"))
     UpdateIdMappingWorkflowOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: IdMappingRoleArn, location_name: "roleArn"))
-    UpdateIdMappingWorkflowOutput.add_member(:workflow_arn, Shapes::ShapeRef.new(shape: IdMappingWorkflowArn, required: true, location_name: "workflowArn"))
-    UpdateIdMappingWorkflowOutput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
     UpdateIdMappingWorkflowOutput.struct_class = Types::UpdateIdMappingWorkflowOutput
 
-    UpdateIdNamespaceInput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    UpdateIdNamespaceInput.add_member(:id_mapping_workflow_properties, Shapes::ShapeRef.new(shape: IdNamespaceIdMappingWorkflowPropertiesList, location_name: "idMappingWorkflowProperties"))
     UpdateIdNamespaceInput.add_member(:id_namespace_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "idNamespaceName"))
+    UpdateIdNamespaceInput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     UpdateIdNamespaceInput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: IdNamespaceInputSourceConfig, location_name: "inputSourceConfig"))
+    UpdateIdNamespaceInput.add_member(:id_mapping_workflow_properties, Shapes::ShapeRef.new(shape: IdNamespaceIdMappingWorkflowPropertiesList, location_name: "idMappingWorkflowProperties"))
     UpdateIdNamespaceInput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
     UpdateIdNamespaceInput.struct_class = Types::UpdateIdNamespaceInput
 
-    UpdateIdNamespaceOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
-    UpdateIdNamespaceOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    UpdateIdNamespaceOutput.add_member(:id_mapping_workflow_properties, Shapes::ShapeRef.new(shape: IdNamespaceIdMappingWorkflowPropertiesList, location_name: "idMappingWorkflowProperties"))
-    UpdateIdNamespaceOutput.add_member(:id_namespace_arn, Shapes::ShapeRef.new(shape: IdNamespaceArn, required: true, location_name: "idNamespaceArn"))
     UpdateIdNamespaceOutput.add_member(:id_namespace_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "idNamespaceName"))
+    UpdateIdNamespaceOutput.add_member(:id_namespace_arn, Shapes::ShapeRef.new(shape: IdNamespaceArn, required: true, location_name: "idNamespaceArn"))
+    UpdateIdNamespaceOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     UpdateIdNamespaceOutput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: IdNamespaceInputSourceConfig, location_name: "inputSourceConfig"))
-    UpdateIdNamespaceOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
+    UpdateIdNamespaceOutput.add_member(:id_mapping_workflow_properties, Shapes::ShapeRef.new(shape: IdNamespaceIdMappingWorkflowPropertiesList, location_name: "idMappingWorkflowProperties"))
     UpdateIdNamespaceOutput.add_member(:type, Shapes::ShapeRef.new(shape: IdNamespaceType, required: true, location_name: "type"))
+    UpdateIdNamespaceOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
+    UpdateIdNamespaceOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
     UpdateIdNamespaceOutput.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
     UpdateIdNamespaceOutput.struct_class = Types::UpdateIdNamespaceOutput
 
+    UpdateMatchingWorkflowInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "workflowName"))
     UpdateMatchingWorkflowInput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    UpdateMatchingWorkflowInput.add_member(:incremental_run_config, Shapes::ShapeRef.new(shape: IncrementalRunConfig, location_name: "incrementalRunConfig"))
     UpdateMatchingWorkflowInput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: InputSourceConfig, required: true, location_name: "inputSourceConfig"))
     UpdateMatchingWorkflowInput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: OutputSourceConfig, required: true, location_name: "outputSourceConfig"))
     UpdateMatchingWorkflowInput.add_member(:resolution_techniques, Shapes::ShapeRef.new(shape: ResolutionTechniques, required: true, location_name: "resolutionTechniques"))
+    UpdateMatchingWorkflowInput.add_member(:incremental_run_config, Shapes::ShapeRef.new(shape: IncrementalRunConfig, location_name: "incrementalRunConfig"))
     UpdateMatchingWorkflowInput.add_member(:role_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "roleArn"))
-    UpdateMatchingWorkflowInput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "workflowName"))
     UpdateMatchingWorkflowInput.struct_class = Types::UpdateMatchingWorkflowInput
 
+    UpdateMatchingWorkflowOutput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
     UpdateMatchingWorkflowOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
-    UpdateMatchingWorkflowOutput.add_member(:incremental_run_config, Shapes::ShapeRef.new(shape: IncrementalRunConfig, location_name: "incrementalRunConfig"))
     UpdateMatchingWorkflowOutput.add_member(:input_source_config, Shapes::ShapeRef.new(shape: InputSourceConfig, required: true, location_name: "inputSourceConfig"))
     UpdateMatchingWorkflowOutput.add_member(:output_source_config, Shapes::ShapeRef.new(shape: OutputSourceConfig, required: true, location_name: "outputSourceConfig"))
     UpdateMatchingWorkflowOutput.add_member(:resolution_techniques, Shapes::ShapeRef.new(shape: ResolutionTechniques, required: true, location_name: "resolutionTechniques"))
+    UpdateMatchingWorkflowOutput.add_member(:incremental_run_config, Shapes::ShapeRef.new(shape: IncrementalRunConfig, location_name: "incrementalRunConfig"))
     UpdateMatchingWorkflowOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "roleArn"))
-    UpdateMatchingWorkflowOutput.add_member(:workflow_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "workflowName"))
     UpdateMatchingWorkflowOutput.struct_class = Types::UpdateMatchingWorkflowOutput
 
+    UpdateSchemaMappingInput.add_member(:schema_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "schemaName"))
     UpdateSchemaMappingInput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     UpdateSchemaMappingInput.add_member(:mapped_input_fields, Shapes::ShapeRef.new(shape: SchemaInputAttributes, required: true, location_name: "mappedInputFields"))
-    UpdateSchemaMappingInput.add_member(:schema_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location: "uri", location_name: "schemaName"))
     UpdateSchemaMappingInput.struct_class = Types::UpdateSchemaMappingInput
 
+    UpdateSchemaMappingOutput.add_member(:schema_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "schemaName"))
+    UpdateSchemaMappingOutput.add_member(:schema_arn, Shapes::ShapeRef.new(shape: SchemaMappingArn, required: true, location_name: "schemaArn"))
     UpdateSchemaMappingOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     UpdateSchemaMappingOutput.add_member(:mapped_input_fields, Shapes::ShapeRef.new(shape: SchemaInputAttributes, required: true, location_name: "mappedInputFields"))
-    UpdateSchemaMappingOutput.add_member(:schema_arn, Shapes::ShapeRef.new(shape: SchemaMappingArn, required: true, location_name: "schemaArn"))
-    UpdateSchemaMappingOutput.add_member(:schema_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "schemaName"))
     UpdateSchemaMappingOutput.struct_class = Types::UpdateSchemaMappingOutput
 
     ValidationException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))

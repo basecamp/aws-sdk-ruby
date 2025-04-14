@@ -23,20 +23,14 @@ module Aws::EntityResolution
       include Aws::Structure
     end
 
-    # @!attribute [rw] action
-    #   The action that the principal can use on the resource.
-    #
-    #   For example, `entityresolution:GetIdMappingJob`,
-    #   `entityresolution:GetMatchingJob`.
-    #   @return [Array<String>]
-    #
     # @!attribute [rw] arn
     #   The Amazon Resource Name (ARN) of the resource that will be accessed
     #   by the principal.
     #   @return [String]
     #
-    # @!attribute [rw] condition
-    #   A set of condition keys that you can use in key policies.
+    # @!attribute [rw] statement_id
+    #   A statement identifier that differentiates the statement from others
+    #   in the same policy.
     #   @return [String]
     #
     # @!attribute [rw] effect
@@ -49,25 +43,31 @@ module Aws::EntityResolution
     #   operation.
     #   @return [String]
     #
+    # @!attribute [rw] action
+    #   The action that the principal can use on the resource.
+    #
+    #   For example, `entityresolution:GetIdMappingJob`,
+    #   `entityresolution:GetMatchingJob`.
+    #   @return [Array<String>]
+    #
     # @!attribute [rw] principal
     #   The Amazon Web Services service or Amazon Web Services account that
     #   can access the resource defined as ARN.
     #   @return [Array<String>]
     #
-    # @!attribute [rw] statement_id
-    #   A statement identifier that differentiates the statement from others
-    #   in the same policy.
+    # @!attribute [rw] condition
+    #   A set of condition keys that you can use in key policies.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/AddPolicyStatementInput AWS API Documentation
     #
     class AddPolicyStatementInput < Struct.new(
-      :action,
       :arn,
-      :condition,
+      :statement_id,
       :effect,
+      :action,
       :principal,
-      :statement_id)
+      :condition)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -77,24 +77,28 @@ module Aws::EntityResolution
     #   by the principal.
     #   @return [String]
     #
-    # @!attribute [rw] policy
-    #   The resource-based policy.
-    #   @return [String]
-    #
     # @!attribute [rw] token
     #   A unique identifier for the current revision of the policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] policy
+    #   The resource-based policy.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/AddPolicyStatementOutput AWS API Documentation
     #
     class AddPolicyStatementOutput < Struct.new(
       :arn,
-      :policy,
-      :token)
+      :token,
+      :policy)
       SENSITIVE = []
       include Aws::Structure
     end
 
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow.
+    #   @return [String]
+    #
     # @!attribute [rw] input_source
     #   The input source for the batch delete unique ID operation.
     #   @return [String]
@@ -103,20 +107,24 @@ module Aws::EntityResolution
     #   The unique IDs to delete.
     #   @return [Array<String>]
     #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/BatchDeleteUniqueIdInput AWS API Documentation
     #
     class BatchDeleteUniqueIdInput < Struct.new(
+      :workflow_name,
       :input_source,
-      :unique_ids,
-      :workflow_name)
+      :unique_ids)
       SENSITIVE = []
       include Aws::Structure
     end
 
+    # @!attribute [rw] status
+    #   The status of the batch delete unique ID operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] errors
+    #   The errors from deleting multiple unique IDs.
+    #   @return [Array<Types::DeleteUniqueIdError>]
+    #
     # @!attribute [rw] deleted
     #   The unique IDs that were deleted.
     #   @return [Array<Types::DeletedUniqueId>]
@@ -125,21 +133,13 @@ module Aws::EntityResolution
     #   The unique IDs that were disconnected.
     #   @return [Array<String>]
     #
-    # @!attribute [rw] errors
-    #   The errors from deleting multiple unique IDs.
-    #   @return [Array<Types::DeleteUniqueIdError>]
-    #
-    # @!attribute [rw] status
-    #   The status of the batch delete unique ID operation.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/BatchDeleteUniqueIdOutput AWS API Documentation
     #
     class BatchDeleteUniqueIdOutput < Struct.new(
-      :deleted,
-      :disconnected_unique_ids,
+      :status,
       :errors,
-      :status)
+      :deleted,
+      :disconnected_unique_ids)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -159,14 +159,14 @@ module Aws::EntityResolution
       include Aws::Structure
     end
 
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow. There can't be multiple
+    #   `IdMappingWorkflows` with the same name.
+    #   @return [String]
+    #
     # @!attribute [rw] description
     #   A description of the workflow.
     #   @return [String]
-    #
-    # @!attribute [rw] id_mapping_techniques
-    #   An object which defines the ID mapping technique and any additional
-    #   configurations.
-    #   @return [Types::IdMappingTechniques]
     #
     # @!attribute [rw] input_source_config
     #   A list of `InputSource` objects, which have the fields
@@ -177,6 +177,11 @@ module Aws::EntityResolution
     #   A list of `IdMappingWorkflowOutputSource` objects, each of which
     #   contains fields `OutputS3Path` and `Output`.
     #   @return [Array<Types::IdMappingWorkflowOutputSource>]
+    #
+    # @!attribute [rw] id_mapping_techniques
+    #   An object which defines the ID mapping technique and any additional
+    #   configurations.
+    #   @return [Types::IdMappingTechniques]
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
@@ -189,33 +194,32 @@ module Aws::EntityResolution
     #   resource.
     #   @return [Hash<String,String>]
     #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow. There can't be multiple
-    #   `IdMappingWorkflows` with the same name.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/CreateIdMappingWorkflowInput AWS API Documentation
     #
     class CreateIdMappingWorkflowInput < Struct.new(
+      :workflow_name,
       :description,
-      :id_mapping_techniques,
       :input_source_config,
       :output_source_config,
+      :id_mapping_techniques,
       :role_arn,
-      :tags,
-      :workflow_name)
+      :tags)
       SENSITIVE = []
       include Aws::Structure
     end
 
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] workflow_arn
+    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
+    #   the `IDMappingWorkflow`.
+    #   @return [String]
+    #
     # @!attribute [rw] description
     #   A description of the workflow.
     #   @return [String]
-    #
-    # @!attribute [rw] id_mapping_techniques
-    #   An object which defines the ID mapping technique and any additional
-    #   configurations.
-    #   @return [Types::IdMappingTechniques]
     #
     # @!attribute [rw] input_source_config
     #   A list of `InputSource` objects, which have the fields
@@ -227,52 +231,59 @@ module Aws::EntityResolution
     #   contains fields `OutputS3Path` and `Output`.
     #   @return [Array<Types::IdMappingWorkflowOutputSource>]
     #
+    # @!attribute [rw] id_mapping_techniques
+    #   An object which defines the ID mapping technique and any additional
+    #   configurations.
+    #   @return [Types::IdMappingTechniques]
+    #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
     #   assumes this role to create resources on your behalf as part of
     #   workflow execution.
     #   @return [String]
     #
-    # @!attribute [rw] workflow_arn
-    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
-    #   the `IDMappingWorkflow`.
-    #   @return [String]
-    #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/CreateIdMappingWorkflowOutput AWS API Documentation
     #
     class CreateIdMappingWorkflowOutput < Struct.new(
+      :workflow_name,
+      :workflow_arn,
       :description,
-      :id_mapping_techniques,
       :input_source_config,
       :output_source_config,
-      :role_arn,
-      :workflow_arn,
-      :workflow_name)
+      :id_mapping_techniques,
+      :role_arn)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # @!attribute [rw] description
-    #   The description of the ID namespace.
-    #   @return [String]
-    #
-    # @!attribute [rw] id_mapping_workflow_properties
-    #   Determines the properties of `IdMappingWorflow` where this
-    #   `IdNamespace` can be used as a `Source` or a `Target`.
-    #   @return [Array<Types::IdNamespaceIdMappingWorkflowProperties>]
-    #
     # @!attribute [rw] id_namespace_name
     #   The name of the ID namespace.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the ID namespace.
     #   @return [String]
     #
     # @!attribute [rw] input_source_config
     #   A list of `InputSource` objects, which have the fields
     #   `InputSourceARN` and `SchemaName`.
     #   @return [Array<Types::IdNamespaceInputSource>]
+    #
+    # @!attribute [rw] id_mapping_workflow_properties
+    #   Determines the properties of `IdMappingWorflow` where this
+    #   `IdNamespace` can be used as a `Source` or a `Target`.
+    #   @return [Array<Types::IdNamespaceIdMappingWorkflowProperties>]
+    #
+    # @!attribute [rw] type
+    #   The type of ID namespace. There are two types: `SOURCE` and
+    #   `TARGET`.
+    #
+    #   The `SOURCE` contains configurations for `sourceId` data that will
+    #   be processed in an ID mapping workflow.
+    #
+    #   The `TARGET` contains a configuration of `targetId` to which all
+    #   `sourceIds` will resolve to.
+    #   @return [String]
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
@@ -285,50 +296,30 @@ module Aws::EntityResolution
     #   resource.
     #   @return [Hash<String,String>]
     #
-    # @!attribute [rw] type
-    #   The type of ID namespace. There are two types: `SOURCE` and
-    #   `TARGET`.
-    #
-    #   The `SOURCE` contains configurations for `sourceId` data that will
-    #   be processed in an ID mapping workflow.
-    #
-    #   The `TARGET` contains a configuration of `targetId` to which all
-    #   `sourceIds` will resolve to.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/CreateIdNamespaceInput AWS API Documentation
     #
     class CreateIdNamespaceInput < Struct.new(
-      :description,
-      :id_mapping_workflow_properties,
       :id_namespace_name,
+      :description,
       :input_source_config,
+      :id_mapping_workflow_properties,
+      :type,
       :role_arn,
-      :tags,
-      :type)
+      :tags)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # @!attribute [rw] created_at
-    #   The timestamp of when the ID namespace was created.
-    #   @return [Time]
-    #
-    # @!attribute [rw] description
-    #   The description of the ID namespace.
+    # @!attribute [rw] id_namespace_name
+    #   The name of the ID namespace.
     #   @return [String]
-    #
-    # @!attribute [rw] id_mapping_workflow_properties
-    #   Determines the properties of `IdMappingWorkflow` where this
-    #   `IdNamespace` can be used as a `Source` or a `Target`.
-    #   @return [Array<Types::IdNamespaceIdMappingWorkflowProperties>]
     #
     # @!attribute [rw] id_namespace_arn
     #   The Amazon Resource Name (ARN) of the ID namespace.
     #   @return [String]
     #
-    # @!attribute [rw] id_namespace_name
-    #   The name of the ID namespace.
+    # @!attribute [rw] description
+    #   The description of the ID namespace.
     #   @return [String]
     #
     # @!attribute [rw] input_source_config
@@ -336,16 +327,10 @@ module Aws::EntityResolution
     #   `InputSourceARN` and `SchemaName`.
     #   @return [Array<Types::IdNamespaceInputSource>]
     #
-    # @!attribute [rw] role_arn
-    #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
-    #   assumes this role to access the resources defined in
-    #   `inputSourceConfig` on your behalf as part of the workflow run.
-    #   @return [String]
-    #
-    # @!attribute [rw] tags
-    #   The tags used to organize, track, or control access for this
-    #   resource.
-    #   @return [Hash<String,String>]
+    # @!attribute [rw] id_mapping_workflow_properties
+    #   Determines the properties of `IdMappingWorkflow` where this
+    #   `IdNamespace` can be used as a `Source` or a `Target`.
+    #   @return [Array<Types::IdNamespaceIdMappingWorkflowProperties>]
     #
     # @!attribute [rw] type
     #   The type of ID namespace. There are two types: `SOURCE` and
@@ -358,35 +343,50 @@ module Aws::EntityResolution
     #   `sourceIds` will resolve to.
     #   @return [String]
     #
+    # @!attribute [rw] role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
+    #   assumes this role to access the resources defined in
+    #   `inputSourceConfig` on your behalf as part of the workflow run.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp of when the ID namespace was created.
+    #   @return [Time]
+    #
     # @!attribute [rw] updated_at
     #   The timestamp of when the ID namespace was last updated.
     #   @return [Time]
     #
+    # @!attribute [rw] tags
+    #   The tags used to organize, track, or control access for this
+    #   resource.
+    #   @return [Hash<String,String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/CreateIdNamespaceOutput AWS API Documentation
     #
     class CreateIdNamespaceOutput < Struct.new(
-      :created_at,
-      :description,
-      :id_mapping_workflow_properties,
-      :id_namespace_arn,
       :id_namespace_name,
+      :id_namespace_arn,
+      :description,
       :input_source_config,
-      :role_arn,
-      :tags,
+      :id_mapping_workflow_properties,
       :type,
-      :updated_at)
+      :role_arn,
+      :created_at,
+      :updated_at,
+      :tags)
       SENSITIVE = []
       include Aws::Structure
     end
 
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow. There can't be multiple
+    #   `MatchingWorkflows` with the same name.
+    #   @return [String]
+    #
     # @!attribute [rw] description
     #   A description of the workflow.
     #   @return [String]
-    #
-    # @!attribute [rw] incremental_run_config
-    #   An object which defines an incremental run type and has only
-    #   `incrementalRunType` as a field.
-    #   @return [Types::IncrementalRunConfig]
     #
     # @!attribute [rw] input_source_config
     #   A list of `InputSource` objects, which have the fields
@@ -402,6 +402,11 @@ module Aws::EntityResolution
     #   An object which defines the `resolutionType` and the
     #   `ruleBasedProperties`.
     #   @return [Types::ResolutionTechniques]
+    #
+    # @!attribute [rw] incremental_run_config
+    #   An object which defines an incremental run type and has only
+    #   `incrementalRunType` as a field.
+    #   @return [Types::IncrementalRunConfig]
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
@@ -414,34 +419,33 @@ module Aws::EntityResolution
     #   resource.
     #   @return [Hash<String,String>]
     #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow. There can't be multiple
-    #   `MatchingWorkflows` with the same name.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/CreateMatchingWorkflowInput AWS API Documentation
     #
     class CreateMatchingWorkflowInput < Struct.new(
+      :workflow_name,
       :description,
-      :incremental_run_config,
       :input_source_config,
       :output_source_config,
       :resolution_techniques,
+      :incremental_run_config,
       :role_arn,
-      :tags,
-      :workflow_name)
+      :tags)
       SENSITIVE = []
       include Aws::Structure
     end
 
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] workflow_arn
+    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
+    #   the `MatchingWorkflow`.
+    #   @return [String]
+    #
     # @!attribute [rw] description
     #   A description of the workflow.
     #   @return [String]
-    #
-    # @!attribute [rw] incremental_run_config
-    #   An object which defines an incremental run type and has only
-    #   `incrementalRunType` as a field.
-    #   @return [Types::IncrementalRunConfig]
     #
     # @!attribute [rw] input_source_config
     #   A list of `InputSource` objects, which have the fields
@@ -458,36 +462,37 @@ module Aws::EntityResolution
     #   `ruleBasedProperties`.
     #   @return [Types::ResolutionTechniques]
     #
+    # @!attribute [rw] incremental_run_config
+    #   An object which defines an incremental run type and has only
+    #   `incrementalRunType` as a field.
+    #   @return [Types::IncrementalRunConfig]
+    #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
     #   assumes this role to create resources on your behalf as part of
     #   workflow execution.
     #   @return [String]
     #
-    # @!attribute [rw] workflow_arn
-    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
-    #   the `MatchingWorkflow`.
-    #   @return [String]
-    #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/CreateMatchingWorkflowOutput AWS API Documentation
     #
     class CreateMatchingWorkflowOutput < Struct.new(
+      :workflow_name,
+      :workflow_arn,
       :description,
-      :incremental_run_config,
       :input_source_config,
       :output_source_config,
       :resolution_techniques,
-      :role_arn,
-      :workflow_arn,
-      :workflow_name)
+      :incremental_run_config,
+      :role_arn)
       SENSITIVE = []
       include Aws::Structure
     end
 
+    # @!attribute [rw] schema_name
+    #   The name of the schema. There can't be multiple `SchemaMappings`
+    #   with the same name.
+    #   @return [String]
+    #
     # @!attribute [rw] description
     #   A description of the schema.
     #   @return [String]
@@ -497,11 +502,6 @@ module Aws::EntityResolution
     #   to a column the source data table, and contains column name plus
     #   additional information that Entity Resolution uses for matching.
     #   @return [Array<Types::SchemaInputAttribute>]
-    #
-    # @!attribute [rw] schema_name
-    #   The name of the schema. There can't be multiple `SchemaMappings`
-    #   with the same name.
-    #   @return [String]
     #
     # @!attribute [rw] tags
     #   The tags used to organize, track, or control access for this
@@ -511,14 +511,23 @@ module Aws::EntityResolution
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/CreateSchemaMappingInput AWS API Documentation
     #
     class CreateSchemaMappingInput < Struct.new(
+      :schema_name,
       :description,
       :mapped_input_fields,
-      :schema_name,
       :tags)
       SENSITIVE = []
       include Aws::Structure
     end
 
+    # @!attribute [rw] schema_name
+    #   The name of the schema.
+    #   @return [String]
+    #
+    # @!attribute [rw] schema_arn
+    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
+    #   the `SchemaMapping`.
+    #   @return [String]
+    #
     # @!attribute [rw] description
     #   A description of the schema.
     #   @return [String]
@@ -529,22 +538,13 @@ module Aws::EntityResolution
     #   additional information that Entity Resolution uses for matching.
     #   @return [Array<Types::SchemaInputAttribute>]
     #
-    # @!attribute [rw] schema_arn
-    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
-    #   the `SchemaMapping`.
-    #   @return [String]
-    #
-    # @!attribute [rw] schema_name
-    #   The name of the schema.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/CreateSchemaMappingOutput AWS API Documentation
     #
     class CreateSchemaMappingOutput < Struct.new(
-      :description,
-      :mapped_input_fields,
+      :schema_name,
       :schema_arn,
-      :schema_name)
+      :description,
+      :mapped_input_fields)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -643,20 +643,20 @@ module Aws::EntityResolution
     #   The ARN of the resource for which the policy need to be deleted.
     #   @return [String]
     #
-    # @!attribute [rw] policy
-    #   The resource-based policy.
-    #   @return [String]
-    #
     # @!attribute [rw] token
     #   A unique identifier for the deleted policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] policy
+    #   The resource-based policy.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/DeletePolicyStatementOutput AWS API Documentation
     #
     class DeletePolicyStatementOutput < Struct.new(
       :arn,
-      :policy,
-      :token)
+      :token,
+      :policy)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -687,19 +687,19 @@ module Aws::EntityResolution
 
     # The Delete Unique Id error.
     #
-    # @!attribute [rw] error_type
-    #   The error type for the batch delete unique ID operation.
-    #   @return [String]
-    #
     # @!attribute [rw] unique_id
     #   The unique ID that could not be deleted.
+    #   @return [String]
+    #
+    # @!attribute [rw] error_type
+    #   The error type for the batch delete unique ID operation.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/DeleteUniqueIdError AWS API Documentation
     #
     class DeleteUniqueIdError < Struct.new(
-      :error_type,
-      :unique_id)
+      :unique_id,
+      :error_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -757,62 +757,62 @@ module Aws::EntityResolution
       include Aws::Structure
     end
 
-    # @!attribute [rw] job_id
-    #   The ID of the job.
-    #   @return [String]
-    #
     # @!attribute [rw] workflow_name
     #   The name of the workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] job_id
+    #   The ID of the job.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/GetIdMappingJobInput AWS API Documentation
     #
     class GetIdMappingJobInput < Struct.new(
-      :job_id,
-      :workflow_name)
+      :workflow_name,
+      :job_id)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # @!attribute [rw] end_time
-    #   The time at which the job has finished.
-    #   @return [Time]
-    #
-    # @!attribute [rw] error_details
-    #   An object containing an error message, if there was an error.
-    #   @return [Types::ErrorDetails]
-    #
     # @!attribute [rw] job_id
     #   The ID of the job.
     #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The current status of the job.
+    #   @return [String]
+    #
+    # @!attribute [rw] start_time
+    #   The time at which the job was started.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The time at which the job has finished.
+    #   @return [Time]
     #
     # @!attribute [rw] metrics
     #   Metrics associated with the execution, specifically total records
     #   processed, unique IDs generated, and records the execution skipped.
     #   @return [Types::IdMappingJobMetrics]
     #
+    # @!attribute [rw] error_details
+    #   An object containing an error message, if there was an error.
+    #   @return [Types::ErrorDetails]
+    #
     # @!attribute [rw] output_source_config
     #   A list of `OutputSource` objects.
     #   @return [Array<Types::IdMappingJobOutputSource>]
     #
-    # @!attribute [rw] start_time
-    #   The time at which the job was started.
-    #   @return [Time]
-    #
-    # @!attribute [rw] status
-    #   The current status of the job.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/GetIdMappingJobOutput AWS API Documentation
     #
     class GetIdMappingJobOutput < Struct.new(
-      :end_time,
-      :error_details,
       :job_id,
-      :metrics,
-      :output_source_config,
+      :status,
       :start_time,
-      :status)
+      :end_time,
+      :metrics,
+      :error_details,
+      :output_source_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -829,18 +829,18 @@ module Aws::EntityResolution
       include Aws::Structure
     end
 
-    # @!attribute [rw] created_at
-    #   The timestamp of when the workflow was created.
-    #   @return [Time]
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] workflow_arn
+    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
+    #   the `IdMappingWorkflow` .
+    #   @return [String]
     #
     # @!attribute [rw] description
     #   A description of the workflow.
     #   @return [String]
-    #
-    # @!attribute [rw] id_mapping_techniques
-    #   An object which defines the ID mapping technique and any additional
-    #   configurations.
-    #   @return [Types::IdMappingTechniques]
     #
     # @!attribute [rw] input_source_config
     #   A list of `InputSource` objects, which have the fields
@@ -851,6 +851,19 @@ module Aws::EntityResolution
     #   A list of `OutputSource` objects, each of which contains fields
     #   `OutputS3Path` and `KMSArn`.
     #   @return [Array<Types::IdMappingWorkflowOutputSource>]
+    #
+    # @!attribute [rw] id_mapping_techniques
+    #   An object which defines the ID mapping technique and any additional
+    #   configurations.
+    #   @return [Types::IdMappingTechniques]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp of when the workflow was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] updated_at
+    #   The timestamp of when the workflow was last updated.
+    #   @return [Time]
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
@@ -863,32 +876,19 @@ module Aws::EntityResolution
     #   resource.
     #   @return [Hash<String,String>]
     #
-    # @!attribute [rw] updated_at
-    #   The timestamp of when the workflow was last updated.
-    #   @return [Time]
-    #
-    # @!attribute [rw] workflow_arn
-    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
-    #   the `IdMappingWorkflow` .
-    #   @return [String]
-    #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/GetIdMappingWorkflowOutput AWS API Documentation
     #
     class GetIdMappingWorkflowOutput < Struct.new(
-      :created_at,
+      :workflow_name,
+      :workflow_arn,
       :description,
-      :id_mapping_techniques,
       :input_source_config,
       :output_source_config,
-      :role_arn,
-      :tags,
+      :id_mapping_techniques,
+      :created_at,
       :updated_at,
-      :workflow_arn,
-      :workflow_name)
+      :role_arn,
+      :tags)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -905,25 +905,16 @@ module Aws::EntityResolution
       include Aws::Structure
     end
 
-    # @!attribute [rw] created_at
-    #   The timestamp of when the ID namespace was created.
-    #   @return [Time]
-    #
-    # @!attribute [rw] description
-    #   The description of the ID namespace.
+    # @!attribute [rw] id_namespace_name
+    #   The name of the ID namespace.
     #   @return [String]
-    #
-    # @!attribute [rw] id_mapping_workflow_properties
-    #   Determines the properties of `IdMappingWorkflow` where this
-    #   `IdNamespace` can be used as a `Source` or a `Target`.
-    #   @return [Array<Types::IdNamespaceIdMappingWorkflowProperties>]
     #
     # @!attribute [rw] id_namespace_arn
     #   The Amazon Resource Name (ARN) of the ID namespace.
     #   @return [String]
     #
-    # @!attribute [rw] id_namespace_name
-    #   The name of the ID namespace.
+    # @!attribute [rw] description
+    #   The description of the ID namespace.
     #   @return [String]
     #
     # @!attribute [rw] input_source_config
@@ -931,16 +922,10 @@ module Aws::EntityResolution
     #   `InputSourceARN` and `SchemaName`.
     #   @return [Array<Types::IdNamespaceInputSource>]
     #
-    # @!attribute [rw] role_arn
-    #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
-    #   assumes this role to access the resources defined in this
-    #   `IdNamespace` on your behalf as part of a workflow run.
-    #   @return [String]
-    #
-    # @!attribute [rw] tags
-    #   The tags used to organize, track, or control access for this
-    #   resource.
-    #   @return [Hash<String,String>]
+    # @!attribute [rw] id_mapping_workflow_properties
+    #   Determines the properties of `IdMappingWorkflow` where this
+    #   `IdNamespace` can be used as a `Source` or a `Target`.
+    #   @return [Array<Types::IdNamespaceIdMappingWorkflowProperties>]
     #
     # @!attribute [rw] type
     #   The type of ID namespace. There are two types: `SOURCE` and
@@ -953,27 +938,50 @@ module Aws::EntityResolution
     #   `sourceIds` will resolve to.
     #   @return [String]
     #
+    # @!attribute [rw] role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
+    #   assumes this role to access the resources defined in this
+    #   `IdNamespace` on your behalf as part of a workflow run.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp of when the ID namespace was created.
+    #   @return [Time]
+    #
     # @!attribute [rw] updated_at
     #   The timestamp of when the ID namespace was last updated.
     #   @return [Time]
     #
+    # @!attribute [rw] tags
+    #   The tags used to organize, track, or control access for this
+    #   resource.
+    #   @return [Hash<String,String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/GetIdNamespaceOutput AWS API Documentation
     #
     class GetIdNamespaceOutput < Struct.new(
-      :created_at,
-      :description,
-      :id_mapping_workflow_properties,
-      :id_namespace_arn,
       :id_namespace_name,
+      :id_namespace_arn,
+      :description,
       :input_source_config,
-      :role_arn,
-      :tags,
+      :id_mapping_workflow_properties,
       :type,
-      :updated_at)
+      :role_arn,
+      :created_at,
+      :updated_at,
+      :tags)
       SENSITIVE = []
       include Aws::Structure
     end
 
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] record
+    #   The record to fetch the Match ID for.
+    #   @return [Hash<String,String>]
+    #
     # @!attribute [rw] apply_normalization
     #   Normalizes the attributes defined in the schema in the input data.
     #   For example, if an attribute has an `AttributeType` of
@@ -982,20 +990,12 @@ module Aws::EntityResolution
     #   output to (123)-456-7890.
     #   @return [Boolean]
     #
-    # @!attribute [rw] record
-    #   The record to fetch the Match ID for.
-    #   @return [Hash<String,String>]
-    #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/GetMatchIdInput AWS API Documentation
     #
     class GetMatchIdInput < Struct.new(
-      :apply_normalization,
+      :workflow_name,
       :record,
-      :workflow_name)
+      :apply_normalization)
       SENSITIVE = [:record]
       include Aws::Structure
     end
@@ -1017,62 +1017,62 @@ module Aws::EntityResolution
       include Aws::Structure
     end
 
-    # @!attribute [rw] job_id
-    #   The ID of the job.
-    #   @return [String]
-    #
     # @!attribute [rw] workflow_name
     #   The name of the workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] job_id
+    #   The ID of the job.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/GetMatchingJobInput AWS API Documentation
     #
     class GetMatchingJobInput < Struct.new(
-      :job_id,
-      :workflow_name)
+      :workflow_name,
+      :job_id)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # @!attribute [rw] end_time
-    #   The time at which the job has finished.
-    #   @return [Time]
-    #
-    # @!attribute [rw] error_details
-    #   An object containing an error message, if there was an error.
-    #   @return [Types::ErrorDetails]
-    #
     # @!attribute [rw] job_id
     #   The ID of the job.
     #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The current status of the job.
+    #   @return [String]
+    #
+    # @!attribute [rw] start_time
+    #   The time at which the job was started.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The time at which the job has finished.
+    #   @return [Time]
     #
     # @!attribute [rw] metrics
     #   Metrics associated with the execution, specifically total records
     #   processed, unique IDs generated, and records the execution skipped.
     #   @return [Types::JobMetrics]
     #
+    # @!attribute [rw] error_details
+    #   An object containing an error message, if there was an error.
+    #   @return [Types::ErrorDetails]
+    #
     # @!attribute [rw] output_source_config
     #   A list of `OutputSource` objects.
     #   @return [Array<Types::JobOutputSource>]
     #
-    # @!attribute [rw] start_time
-    #   The time at which the job was started.
-    #   @return [Time]
-    #
-    # @!attribute [rw] status
-    #   The current status of the job.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/GetMatchingJobOutput AWS API Documentation
     #
     class GetMatchingJobOutput < Struct.new(
-      :end_time,
-      :error_details,
       :job_id,
-      :metrics,
-      :output_source_config,
+      :status,
       :start_time,
-      :status)
+      :end_time,
+      :metrics,
+      :error_details,
+      :output_source_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1089,18 +1089,18 @@ module Aws::EntityResolution
       include Aws::Structure
     end
 
-    # @!attribute [rw] created_at
-    #   The timestamp of when the workflow was created.
-    #   @return [Time]
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] workflow_arn
+    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
+    #   the `MatchingWorkflow`.
+    #   @return [String]
     #
     # @!attribute [rw] description
     #   A description of the workflow.
     #   @return [String]
-    #
-    # @!attribute [rw] incremental_run_config
-    #   An object which defines an incremental run type and has only
-    #   `incrementalRunType` as a field.
-    #   @return [Types::IncrementalRunConfig]
     #
     # @!attribute [rw] input_source_config
     #   A list of `InputSource` objects, which have the fields
@@ -1117,6 +1117,19 @@ module Aws::EntityResolution
     #   `ruleBasedProperties`.
     #   @return [Types::ResolutionTechniques]
     #
+    # @!attribute [rw] created_at
+    #   The timestamp of when the workflow was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] updated_at
+    #   The timestamp of when the workflow was last updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] incremental_run_config
+    #   An object which defines an incremental run type and has only
+    #   `incrementalRunType` as a field.
+    #   @return [Types::IncrementalRunConfig]
+    #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
     #   assumes this role to access Amazon Web Services resources on your
@@ -1128,33 +1141,20 @@ module Aws::EntityResolution
     #   resource.
     #   @return [Hash<String,String>]
     #
-    # @!attribute [rw] updated_at
-    #   The timestamp of when the workflow was last updated.
-    #   @return [Time]
-    #
-    # @!attribute [rw] workflow_arn
-    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
-    #   the `MatchingWorkflow`.
-    #   @return [String]
-    #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/GetMatchingWorkflowOutput AWS API Documentation
     #
     class GetMatchingWorkflowOutput < Struct.new(
-      :created_at,
+      :workflow_name,
+      :workflow_arn,
       :description,
-      :incremental_run_config,
       :input_source_config,
       :output_source_config,
       :resolution_techniques,
-      :role_arn,
-      :tags,
+      :created_at,
       :updated_at,
-      :workflow_arn,
-      :workflow_name)
+      :incremental_run_config,
+      :role_arn,
+      :tags)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1176,20 +1176,20 @@ module Aws::EntityResolution
     #   The Entity Resolution resource ARN.
     #   @return [String]
     #
-    # @!attribute [rw] policy
-    #   The resource-based policy.
-    #   @return [String]
-    #
     # @!attribute [rw] token
     #   A unique identifier for the current revision of the policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] policy
+    #   The resource-based policy.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/GetPolicyOutput AWS API Documentation
     #
     class GetPolicyOutput < Struct.new(
       :arn,
-      :policy,
-      :token)
+      :token,
+      :policy)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1212,6 +1212,44 @@ module Aws::EntityResolution
       include Aws::Structure
     end
 
+    # @!attribute [rw] provider_name
+    #   The name of the provider. This name is typically the company name.
+    #   @return [String]
+    #
+    # @!attribute [rw] provider_service_name
+    #   The name of the product that the provider service provides.
+    #   @return [String]
+    #
+    # @!attribute [rw] provider_service_display_name
+    #   The display name of the provider service.
+    #   @return [String]
+    #
+    # @!attribute [rw] provider_service_type
+    #   The type of provider service.
+    #   @return [String]
+    #
+    # @!attribute [rw] provider_service_arn
+    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
+    #   the provider service.
+    #   @return [String]
+    #
+    # @!attribute [rw] provider_configuration_definition
+    #   The definition of the provider configuration.
+    #   @return [Hash,Array,String,Numeric,Boolean]
+    #
+    # @!attribute [rw] provider_id_name_space_configuration
+    #   The provider configuration required for different ID namespace
+    #   types.
+    #   @return [Types::ProviderIdNameSpaceConfiguration]
+    #
+    # @!attribute [rw] provider_job_configuration
+    #   Provider service job configurations.
+    #   @return [Hash,Array,String,Numeric,Boolean]
+    #
+    # @!attribute [rw] provider_endpoint_configuration
+    #   The required configuration fields to use with the provider service.
+    #   @return [Types::ProviderEndpointConfiguration]
+    #
     # @!attribute [rw] anonymized_output
     #   Specifies whether output data from the provider is anonymized. A
     #   value of `TRUE` means the output will be anonymized and you can't
@@ -1221,26 +1259,9 @@ module Aws::EntityResolution
     #   source data.
     #   @return [Boolean]
     #
-    # @!attribute [rw] provider_component_schema
-    #   Input schema for the provider service.
-    #   @return [Types::ProviderComponentSchema]
-    #
-    # @!attribute [rw] provider_configuration_definition
-    #   The definition of the provider configuration.
-    #   @return [Hash,Array,String,Numeric,Boolean]
-    #
-    # @!attribute [rw] provider_endpoint_configuration
-    #   The required configuration fields to use with the provider service.
-    #   @return [Types::ProviderEndpointConfiguration]
-    #
     # @!attribute [rw] provider_entity_output_definition
     #   The definition of the provider entity output.
     #   @return [Hash,Array,String,Numeric,Boolean]
-    #
-    # @!attribute [rw] provider_id_name_space_configuration
-    #   The provider configuration required for different ID namespace
-    #   types.
-    #   @return [Types::ProviderIdNameSpaceConfiguration]
     #
     # @!attribute [rw] provider_intermediate_data_access_configuration
     #   The Amazon Web Services accounts and the S3 permissions that are
@@ -1248,47 +1269,26 @@ module Aws::EntityResolution
     #   data storage.
     #   @return [Types::ProviderIntermediateDataAccessConfiguration]
     #
-    # @!attribute [rw] provider_job_configuration
-    #   Provider service job configurations.
-    #   @return [Hash,Array,String,Numeric,Boolean]
-    #
-    # @!attribute [rw] provider_name
-    #   The name of the provider. This name is typically the company name.
-    #   @return [String]
-    #
-    # @!attribute [rw] provider_service_arn
-    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
-    #   the provider service.
-    #   @return [String]
-    #
-    # @!attribute [rw] provider_service_display_name
-    #   The display name of the provider service.
-    #   @return [String]
-    #
-    # @!attribute [rw] provider_service_name
-    #   The name of the product that the provider service provides.
-    #   @return [String]
-    #
-    # @!attribute [rw] provider_service_type
-    #   The type of provider service.
-    #   @return [String]
+    # @!attribute [rw] provider_component_schema
+    #   Input schema for the provider service.
+    #   @return [Types::ProviderComponentSchema]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/GetProviderServiceOutput AWS API Documentation
     #
     class GetProviderServiceOutput < Struct.new(
-      :anonymized_output,
-      :provider_component_schema,
-      :provider_configuration_definition,
-      :provider_endpoint_configuration,
-      :provider_entity_output_definition,
-      :provider_id_name_space_configuration,
-      :provider_intermediate_data_access_configuration,
-      :provider_job_configuration,
       :provider_name,
-      :provider_service_arn,
-      :provider_service_display_name,
       :provider_service_name,
-      :provider_service_type)
+      :provider_service_display_name,
+      :provider_service_type,
+      :provider_service_arn,
+      :provider_configuration_definition,
+      :provider_id_name_space_configuration,
+      :provider_job_configuration,
+      :provider_endpoint_configuration,
+      :anonymized_output,
+      :provider_entity_output_definition,
+      :provider_intermediate_data_access_configuration,
+      :provider_component_schema)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1305,17 +1305,18 @@ module Aws::EntityResolution
       include Aws::Structure
     end
 
-    # @!attribute [rw] created_at
-    #   The timestamp of when the `SchemaMapping` was created.
-    #   @return [Time]
+    # @!attribute [rw] schema_name
+    #   The name of the schema.
+    #   @return [String]
+    #
+    # @!attribute [rw] schema_arn
+    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
+    #   the SchemaMapping.
+    #   @return [String]
     #
     # @!attribute [rw] description
     #   A description of the schema.
     #   @return [String]
-    #
-    # @!attribute [rw] has_workflows
-    #   Specifies whether the schema mapping has been applied to a workflow.
-    #   @return [Boolean]
     #
     # @!attribute [rw] mapped_input_fields
     #   A list of `MappedInputFields`. Each `MappedInputField` corresponds
@@ -1323,45 +1324,48 @@ module Aws::EntityResolution
     #   additional information Venice uses for matching.
     #   @return [Array<Types::SchemaInputAttribute>]
     #
-    # @!attribute [rw] schema_arn
-    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
-    #   the SchemaMapping.
-    #   @return [String]
+    # @!attribute [rw] created_at
+    #   The timestamp of when the `SchemaMapping` was created.
+    #   @return [Time]
     #
-    # @!attribute [rw] schema_name
-    #   The name of the schema.
-    #   @return [String]
+    # @!attribute [rw] updated_at
+    #   The timestamp of when the `SchemaMapping` was last updated.
+    #   @return [Time]
     #
     # @!attribute [rw] tags
     #   The tags used to organize, track, or control access for this
     #   resource.
     #   @return [Hash<String,String>]
     #
-    # @!attribute [rw] updated_at
-    #   The timestamp of when the `SchemaMapping` was last updated.
-    #   @return [Time]
+    # @!attribute [rw] has_workflows
+    #   Specifies whether the schema mapping has been applied to a workflow.
+    #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/GetSchemaMappingOutput AWS API Documentation
     #
     class GetSchemaMappingOutput < Struct.new(
-      :created_at,
-      :description,
-      :has_workflows,
-      :mapped_input_fields,
-      :schema_arn,
       :schema_name,
+      :schema_arn,
+      :description,
+      :mapped_input_fields,
+      :created_at,
+      :updated_at,
       :tags,
-      :updated_at)
+      :has_workflows)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # An object containing `InputRecords`, `RecordsNotProcessed`,
-    # `TotalRecordsProcessed`, `TotalMappedRecords`,
-    # `TotalMappedSourceRecords`, and `TotalMappedTargetRecords`.
+    # An object that contains metrics about an ID mapping job, including
+    # counts of input records, processed records, and mapped records between
+    # source and target identifiers.
     #
     # @!attribute [rw] input_records
     #   The total number of records that were input for processing.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] total_records_processed
+    #   The total number of records that were processed.
     #   @return [Integer]
     #
     # @!attribute [rw] records_not_processed
@@ -1380,33 +1384,31 @@ module Aws::EntityResolution
     #   The total number of distinct mapped target records.
     #   @return [Integer]
     #
-    # @!attribute [rw] total_records_processed
-    #   The total number of records that were processed.
+    # @!attribute [rw] unique_records_loaded
+    #   The number of records remaining after loading and aggregating
+    #   duplicate records. Duplicates are determined by the field marked as
+    #   UNIQUE\_ID in your schema mapping - records sharing the same value
+    #   in this field are considered duplicates. For example, if you
+    #   specified "customer\_id" as a UNIQUE\_ID field and had three
+    #   records with the same customer\_id value, they would count as one
+    #   unique record in this metric.
     #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/IdMappingJobMetrics AWS API Documentation
     #
     class IdMappingJobMetrics < Struct.new(
       :input_records,
+      :total_records_processed,
       :records_not_processed,
       :total_mapped_records,
       :total_mapped_source_records,
       :total_mapped_target_records,
-      :total_records_processed)
+      :unique_records_loaded)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # An object containing `KMSArn`, `OutputS3Path`, and `RoleARN`.
-    #
-    # @!attribute [rw] kms_arn
-    #   Customer KMS ARN for encryption at rest. If not provided, system
-    #   will use an Entity Resolution managed KMS key.
-    #   @return [String]
-    #
-    # @!attribute [rw] output_s3_path
-    #   The S3 path to which Entity Resolution will write the output table.
-    #   @return [String]
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
@@ -1414,18 +1416,37 @@ module Aws::EntityResolution
     #   behalf as part of workflow execution.
     #   @return [String]
     #
+    # @!attribute [rw] output_s3_path
+    #   The S3 path to which Entity Resolution will write the output table.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_arn
+    #   Customer KMS ARN for encryption at rest. If not provided, system
+    #   will use an Entity Resolution managed KMS key.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/IdMappingJobOutputSource AWS API Documentation
     #
     class IdMappingJobOutputSource < Struct.new(
-      :kms_arn,
+      :role_arn,
       :output_s3_path,
-      :role_arn)
+      :kms_arn)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # An object that defines the list of matching rules to run in an ID
     # mapping workflow.
+    #
+    # @!attribute [rw] rules
+    #   The rules that can be used for ID mapping.
+    #   @return [Array<Types::Rule>]
+    #
+    # @!attribute [rw] rule_definition_type
+    #   The set of rules you can use in an ID mapping workflow. The
+    #   limitations specified for the source or target to define the match
+    #   rules must be compatible.
+    #   @return [String]
     #
     # @!attribute [rw] attribute_matching_model
     #   The comparison type. You can either choose `ONE_TO_ONE` or
@@ -1455,23 +1476,13 @@ module Aws::EntityResolution
     #   in the source can be matched to one record in the target.
     #   @return [String]
     #
-    # @!attribute [rw] rule_definition_type
-    #   The set of rules you can use in an ID mapping workflow. The
-    #   limitations specified for the source or target to define the match
-    #   rules must be compatible.
-    #   @return [String]
-    #
-    # @!attribute [rw] rules
-    #   The rules that can be used for ID mapping.
-    #   @return [Array<Types::Rule>]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/IdMappingRuleBasedProperties AWS API Documentation
     #
     class IdMappingRuleBasedProperties < Struct.new(
-      :attribute_matching_model,
-      :record_matching_model,
+      :rules,
       :rule_definition_type,
-      :rules)
+      :attribute_matching_model,
+      :record_matching_model)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1483,22 +1494,22 @@ module Aws::EntityResolution
     #   The type of ID mapping.
     #   @return [String]
     #
-    # @!attribute [rw] provider_properties
-    #   An object which defines any additional configurations required by
-    #   the provider service.
-    #   @return [Types::ProviderProperties]
-    #
     # @!attribute [rw] rule_based_properties
     #   An object which defines any additional configurations required by
     #   rule-based matching.
     #   @return [Types::IdMappingRuleBasedProperties]
     #
+    # @!attribute [rw] provider_properties
+    #   An object which defines any additional configurations required by
+    #   the provider service.
+    #   @return [Types::ProviderProperties]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/IdMappingTechniques AWS API Documentation
     #
     class IdMappingTechniques < Struct.new(
       :id_mapping_type,
-      :provider_properties,
-      :rule_based_properties)
+      :rule_based_properties,
+      :provider_properties)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1537,20 +1548,20 @@ module Aws::EntityResolution
 
     # The output source for the ID mapping workflow.
     #
+    # @!attribute [rw] output_s3_path
+    #   The S3 path to which Entity Resolution will write the output table.
+    #   @return [String]
+    #
     # @!attribute [rw] kms_arn
     #   Customer KMS ARN for encryption at rest. If not provided, system
     #   will use an Entity Resolution managed KMS key.
     #   @return [String]
     #
-    # @!attribute [rw] output_s3_path
-    #   The S3 path to which Entity Resolution will write the output table.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/IdMappingWorkflowOutputSource AWS API Documentation
     #
     class IdMappingWorkflowOutputSource < Struct.new(
-      :kms_arn,
-      :output_s3_path)
+      :output_s3_path,
+      :kms_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1558,6 +1569,15 @@ module Aws::EntityResolution
     # A list of `IdMappingWorkflowSummary` objects, each of which contain
     # the fields `WorkflowName`, `WorkflowArn`, `CreatedAt`, and
     # `UpdatedAt`.
+    #
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] workflow_arn
+    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
+    #   the `IdMappingWorkflow`.
+    #   @return [String]
     #
     # @!attribute [rw] created_at
     #   The timestamp of when the workflow was created.
@@ -1567,22 +1587,13 @@ module Aws::EntityResolution
     #   The timestamp of when the workflow was last updated.
     #   @return [Time]
     #
-    # @!attribute [rw] workflow_arn
-    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
-    #   the `IdMappingWorkflow`.
-    #   @return [String]
-    #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/IdMappingWorkflowSummary AWS API Documentation
     #
     class IdMappingWorkflowSummary < Struct.new(
-      :created_at,
-      :updated_at,
+      :workflow_name,
       :workflow_arn,
-      :workflow_name)
+      :created_at,
+      :updated_at)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1608,22 +1619,22 @@ module Aws::EntityResolution
     #   The type of ID mapping.
     #   @return [String]
     #
-    # @!attribute [rw] provider_properties
-    #   An object which defines any additional configurations required by
-    #   the provider service.
-    #   @return [Types::NamespaceProviderProperties]
-    #
     # @!attribute [rw] rule_based_properties
     #   An object which defines any additional configurations required by
     #   rule-based matching.
     #   @return [Types::NamespaceRuleBasedProperties]
     #
+    # @!attribute [rw] provider_properties
+    #   An object which defines any additional configurations required by
+    #   the provider service.
+    #   @return [Types::NamespaceProviderProperties]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/IdNamespaceIdMappingWorkflowProperties AWS API Documentation
     #
     class IdNamespaceIdMappingWorkflowProperties < Struct.new(
       :id_mapping_type,
-      :provider_properties,
-      :rule_based_properties)
+      :rule_based_properties,
+      :provider_properties)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1650,9 +1661,13 @@ module Aws::EntityResolution
 
     # A summary of ID namespaces.
     #
-    # @!attribute [rw] created_at
-    #   The timestamp of when the ID namespace was created.
-    #   @return [Time]
+    # @!attribute [rw] id_namespace_name
+    #   The name of the ID namespace.
+    #   @return [String]
+    #
+    # @!attribute [rw] id_namespace_arn
+    #   The Amazon Resource Name (ARN) of the ID namespace.
+    #   @return [String]
     #
     # @!attribute [rw] description
     #   The description of the ID namespace.
@@ -1662,14 +1677,6 @@ module Aws::EntityResolution
     #   An object which defines any additional configurations required by
     #   the ID mapping workflow.
     #   @return [Array<Types::IdNamespaceIdMappingWorkflowMetadata>]
-    #
-    # @!attribute [rw] id_namespace_arn
-    #   The Amazon Resource Name (ARN) of the ID namespace.
-    #   @return [String]
-    #
-    # @!attribute [rw] id_namespace_name
-    #   The name of the ID namespace.
-    #   @return [String]
     #
     # @!attribute [rw] type
     #   The type of ID namespace. There are two types: `SOURCE` and
@@ -1682,6 +1689,10 @@ module Aws::EntityResolution
     #   `sourceIds` will resolve to.
     #   @return [String]
     #
+    # @!attribute [rw] created_at
+    #   The timestamp of when the ID namespace was created.
+    #   @return [Time]
+    #
     # @!attribute [rw] updated_at
     #   The timestamp of when the ID namespace was last updated.
     #   @return [Time]
@@ -1689,12 +1700,12 @@ module Aws::EntityResolution
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/IdNamespaceSummary AWS API Documentation
     #
     class IdNamespaceSummary < Struct.new(
-      :created_at,
+      :id_namespace_name,
+      :id_namespace_arn,
       :description,
       :id_mapping_workflow_properties,
-      :id_namespace_arn,
-      :id_namespace_name,
       :type,
+      :created_at,
       :updated_at)
       SENSITIVE = []
       include Aws::Structure
@@ -1718,14 +1729,6 @@ module Aws::EntityResolution
     # An object containing `InputSourceARN`, `SchemaName`, and
     # `ApplyNormalization`.
     #
-    # @!attribute [rw] apply_normalization
-    #   Normalizes the attributes defined in the schema in the input data.
-    #   For example, if an attribute has an `AttributeType` of
-    #   `PHONE_NUMBER`, and the data in the input table is in a format of
-    #   1234567890, Entity Resolution will normalize this field in the
-    #   output to (123)-456-7890.
-    #   @return [Boolean]
-    #
     # @!attribute [rw] input_source_arn
     #   An Glue table Amazon Resource Name (ARN) for the input source table.
     #   @return [String]
@@ -1734,12 +1737,20 @@ module Aws::EntityResolution
     #   The name of the schema to be retrieved.
     #   @return [String]
     #
+    # @!attribute [rw] apply_normalization
+    #   Normalizes the attributes defined in the schema in the input data.
+    #   For example, if an attribute has an `AttributeType` of
+    #   `PHONE_NUMBER`, and the data in the input table is in a format of
+    #   1234567890, Entity Resolution will normalize this field in the
+    #   output to (123)-456-7890.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/InputSource AWS API Documentation
     #
     class InputSource < Struct.new(
-      :apply_normalization,
       :input_source_arn,
-      :schema_name)
+      :schema_name,
+      :apply_normalization)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1781,39 +1792,30 @@ module Aws::EntityResolution
     #   The total number of input records.
     #   @return [Integer]
     #
-    # @!attribute [rw] match_i_ds
-    #   The total number of `matchID`s generated.
+    # @!attribute [rw] total_records_processed
+    #   The total number of records processed.
     #   @return [Integer]
     #
     # @!attribute [rw] records_not_processed
     #   The total number of records that did not get processed.
     #   @return [Integer]
     #
-    # @!attribute [rw] total_records_processed
-    #   The total number of records processed.
+    # @!attribute [rw] match_i_ds
+    #   The total number of `matchID`s generated.
     #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/JobMetrics AWS API Documentation
     #
     class JobMetrics < Struct.new(
       :input_records,
-      :match_i_ds,
+      :total_records_processed,
       :records_not_processed,
-      :total_records_processed)
+      :match_i_ds)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # An object containing `KMSArn`, `OutputS3Path`, and `RoleArn`.
-    #
-    # @!attribute [rw] kms_arn
-    #   Customer KMS ARN for encryption at rest. If not provided, system
-    #   will use an Entity Resolution managed KMS key.
-    #   @return [String]
-    #
-    # @!attribute [rw] output_s3_path
-    #   The S3 path to which Entity Resolution will write the output table.
-    #   @return [String]
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
@@ -1821,12 +1823,21 @@ module Aws::EntityResolution
     #   behalf as part of workflow execution.
     #   @return [String]
     #
+    # @!attribute [rw] output_s3_path
+    #   The S3 path to which Entity Resolution will write the output table.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_arn
+    #   Customer KMS ARN for encryption at rest. If not provided, system
+    #   will use an Entity Resolution managed KMS key.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/JobOutputSource AWS API Documentation
     #
     class JobOutputSource < Struct.new(
-      :kms_arn,
+      :role_arn,
       :output_s3_path,
-      :role_arn)
+      :kms_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1834,51 +1845,51 @@ module Aws::EntityResolution
     # An object containing the `JobId`, `Status`, `StartTime`, and `EndTime`
     # of a job.
     #
-    # @!attribute [rw] end_time
-    #   The time at which the job has finished.
-    #   @return [Time]
-    #
     # @!attribute [rw] job_id
     #   The ID of the job.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The current status of the job.
     #   @return [String]
     #
     # @!attribute [rw] start_time
     #   The time at which the job was started.
     #   @return [Time]
     #
-    # @!attribute [rw] status
-    #   The current status of the job.
-    #   @return [String]
+    # @!attribute [rw] end_time
+    #   The time at which the job has finished.
+    #   @return [Time]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/JobSummary AWS API Documentation
     #
     class JobSummary < Struct.new(
-      :end_time,
       :job_id,
+      :status,
       :start_time,
-      :status)
+      :end_time)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # @!attribute [rw] max_results
-    #   The maximum number of objects returned per page.
-    #   @return [Integer]
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow to be retrieved.
+    #   @return [String]
     #
     # @!attribute [rw] next_token
     #   The pagination token from the previous API call.
     #   @return [String]
     #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow to be retrieved.
-    #   @return [String]
+    # @!attribute [rw] max_results
+    #   The maximum number of objects returned per page.
+    #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListIdMappingJobsInput AWS API Documentation
     #
     class ListIdMappingJobsInput < Struct.new(
-      :max_results,
+      :workflow_name,
       :next_token,
-      :workflow_name)
+      :max_results)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1900,53 +1911,53 @@ module Aws::EntityResolution
       include Aws::Structure
     end
 
+    # @!attribute [rw] next_token
+    #   The pagination token from the previous API call.
+    #   @return [String]
+    #
     # @!attribute [rw] max_results
     #   The maximum number of objects returned per page.
     #   @return [Integer]
     #
-    # @!attribute [rw] next_token
-    #   The pagination token from the previous API call.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListIdMappingWorkflowsInput AWS API Documentation
     #
     class ListIdMappingWorkflowsInput < Struct.new(
-      :max_results,
-      :next_token)
+      :next_token,
+      :max_results)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # @!attribute [rw] next_token
-    #   The pagination token from the previous API call.
-    #   @return [String]
-    #
     # @!attribute [rw] workflow_summaries
     #   A list of `IdMappingWorkflowSummary` objects.
     #   @return [Array<Types::IdMappingWorkflowSummary>]
     #
-    # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListIdMappingWorkflowsOutput AWS API Documentation
-    #
-    class ListIdMappingWorkflowsOutput < Struct.new(
-      :next_token,
-      :workflow_summaries)
-      SENSITIVE = []
-      include Aws::Structure
-    end
-
-    # @!attribute [rw] max_results
-    #   The maximum number of `IdNamespace` objects returned per page.
-    #   @return [Integer]
-    #
     # @!attribute [rw] next_token
     #   The pagination token from the previous API call.
     #   @return [String]
     #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListIdMappingWorkflowsOutput AWS API Documentation
+    #
+    class ListIdMappingWorkflowsOutput < Struct.new(
+      :workflow_summaries,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   The pagination token from the previous API call.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of `IdNamespace` objects returned per page.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListIdNamespacesInput AWS API Documentation
     #
     class ListIdNamespacesInput < Struct.new(
-      :max_results,
-      :next_token)
+      :next_token,
+      :max_results)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1968,24 +1979,24 @@ module Aws::EntityResolution
       include Aws::Structure
     end
 
-    # @!attribute [rw] max_results
-    #   The maximum number of objects returned per page.
-    #   @return [Integer]
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow to be retrieved.
+    #   @return [String]
     #
     # @!attribute [rw] next_token
     #   The pagination token from the previous API call.
     #   @return [String]
     #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow to be retrieved.
-    #   @return [String]
+    # @!attribute [rw] max_results
+    #   The maximum number of objects returned per page.
+    #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListMatchingJobsInput AWS API Documentation
     #
     class ListMatchingJobsInput < Struct.new(
-      :max_results,
+      :workflow_name,
       :next_token,
-      :workflow_name)
+      :max_results)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2008,18 +2019,37 @@ module Aws::EntityResolution
       include Aws::Structure
     end
 
+    # @!attribute [rw] next_token
+    #   The pagination token from the previous API call.
+    #   @return [String]
+    #
     # @!attribute [rw] max_results
     #   The maximum number of objects returned per page.
     #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListMatchingWorkflowsInput AWS API Documentation
+    #
+    class ListMatchingWorkflowsInput < Struct.new(
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] workflow_summaries
+    #   A list of `MatchingWorkflowSummary` objects, each of which contain
+    #   the fields `WorkflowName`, `WorkflowArn`, `CreatedAt`, and
+    #   `UpdatedAt`.
+    #   @return [Array<Types::MatchingWorkflowSummary>]
     #
     # @!attribute [rw] next_token
     #   The pagination token from the previous API call.
     #   @return [String]
     #
-    # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListMatchingWorkflowsInput AWS API Documentation
+    # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListMatchingWorkflowsOutput AWS API Documentation
     #
-    class ListMatchingWorkflowsInput < Struct.new(
-      :max_results,
+    class ListMatchingWorkflowsOutput < Struct.new(
+      :workflow_summaries,
       :next_token)
       SENSITIVE = []
       include Aws::Structure
@@ -2029,28 +2059,9 @@ module Aws::EntityResolution
     #   The pagination token from the previous API call.
     #   @return [String]
     #
-    # @!attribute [rw] workflow_summaries
-    #   A list of `MatchingWorkflowSummary` objects, each of which contain
-    #   the fields `WorkflowName`, `WorkflowArn`, `CreatedAt`, and
-    #   `UpdatedAt`.
-    #   @return [Array<Types::MatchingWorkflowSummary>]
-    #
-    # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListMatchingWorkflowsOutput AWS API Documentation
-    #
-    class ListMatchingWorkflowsOutput < Struct.new(
-      :next_token,
-      :workflow_summaries)
-      SENSITIVE = []
-      include Aws::Structure
-    end
-
     # @!attribute [rw] max_results
     #   The maximum number of objects returned per page.
     #   @return [Integer]
-    #
-    # @!attribute [rw] next_token
-    #   The pagination token from the previous API call.
-    #   @return [String]
     #
     # @!attribute [rw] provider_name
     #   The name of the provider. This name is typically the company name.
@@ -2059,42 +2070,25 @@ module Aws::EntityResolution
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListProviderServicesInput AWS API Documentation
     #
     class ListProviderServicesInput < Struct.new(
-      :max_results,
       :next_token,
+      :max_results,
       :provider_name)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # @!attribute [rw] next_token
-    #   The pagination token from the previous API call.
-    #   @return [String]
-    #
     # @!attribute [rw] provider_service_summaries
     #   A list of `ProviderServices` objects.
     #   @return [Array<Types::ProviderServiceSummary>]
     #
-    # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListProviderServicesOutput AWS API Documentation
-    #
-    class ListProviderServicesOutput < Struct.new(
-      :next_token,
-      :provider_service_summaries)
-      SENSITIVE = []
-      include Aws::Structure
-    end
-
-    # @!attribute [rw] max_results
-    #   The maximum number of objects returned per page.
-    #   @return [Integer]
-    #
     # @!attribute [rw] next_token
     #   The pagination token from the previous API call.
     #   @return [String]
     #
-    # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListSchemaMappingsInput AWS API Documentation
+    # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListProviderServicesOutput AWS API Documentation
     #
-    class ListSchemaMappingsInput < Struct.new(
-      :max_results,
+    class ListProviderServicesOutput < Struct.new(
+      :provider_service_summaries,
       :next_token)
       SENSITIVE = []
       include Aws::Structure
@@ -2104,16 +2098,33 @@ module Aws::EntityResolution
     #   The pagination token from the previous API call.
     #   @return [String]
     #
+    # @!attribute [rw] max_results
+    #   The maximum number of objects returned per page.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListSchemaMappingsInput AWS API Documentation
+    #
+    class ListSchemaMappingsInput < Struct.new(
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] schema_list
     #   A list of `SchemaMappingSummary` objects, each of which contain the
     #   fields `SchemaName`, `SchemaArn`, `CreatedAt`, `UpdatedAt`.
     #   @return [Array<Types::SchemaMappingSummary>]
     #
+    # @!attribute [rw] next_token
+    #   The pagination token from the previous API call.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ListSchemaMappingsOutput AWS API Documentation
     #
     class ListSchemaMappingsOutput < Struct.new(
-      :next_token,
-      :schema_list)
+      :schema_list,
+      :next_token)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2146,8 +2157,21 @@ module Aws::EntityResolution
     # A list of `MatchingWorkflowSummary` objects, each of which contain the
     # fields `WorkflowName`, `WorkflowArn`, `CreatedAt`, `UpdatedAt`.
     #
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] workflow_arn
+    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
+    #   the `MatchingWorkflow`.
+    #   @return [String]
+    #
     # @!attribute [rw] created_at
     #   The timestamp of when the workflow was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] updated_at
+    #   The timestamp of when the workflow was last updated.
     #   @return [Time]
     #
     # @!attribute [rw] resolution_type
@@ -2156,53 +2180,49 @@ module Aws::EntityResolution
     #   service.
     #   @return [String]
     #
-    # @!attribute [rw] updated_at
-    #   The timestamp of when the workflow was last updated.
-    #   @return [Time]
-    #
-    # @!attribute [rw] workflow_arn
-    #   The ARN (Amazon Resource Name) that Entity Resolution generated for
-    #   the `MatchingWorkflow`.
-    #   @return [String]
-    #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/MatchingWorkflowSummary AWS API Documentation
     #
     class MatchingWorkflowSummary < Struct.new(
-      :created_at,
-      :resolution_type,
-      :updated_at,
+      :workflow_name,
       :workflow_arn,
-      :workflow_name)
+      :created_at,
+      :updated_at,
+      :resolution_type)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # An object containing `ProviderConfiguration` and `ProviderServiceArn`.
     #
+    # @!attribute [rw] provider_service_arn
+    #   The Amazon Resource Name (ARN) of the provider service.
+    #   @return [String]
+    #
     # @!attribute [rw] provider_configuration
     #   An object which defines any additional configurations required by
     #   the provider service.
     #   @return [Hash,Array,String,Numeric,Boolean]
     #
-    # @!attribute [rw] provider_service_arn
-    #   The Amazon Resource Name (ARN) of the provider service.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/NamespaceProviderProperties AWS API Documentation
     #
     class NamespaceProviderProperties < Struct.new(
-      :provider_configuration,
-      :provider_service_arn)
+      :provider_service_arn,
+      :provider_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # The rule-based properties of an ID namespace. These properties define
     # how the ID namespace can be used in an ID mapping workflow.
+    #
+    # @!attribute [rw] rules
+    #   The rules for the ID namespace.
+    #   @return [Array<Types::Rule>]
+    #
+    # @!attribute [rw] rule_definition_types
+    #   The sets of rules you can use in an ID mapping workflow. The
+    #   limitations specified for the source and target must be compatible.
+    #   @return [Array<String>]
     #
     # @!attribute [rw] attribute_matching_model
     #   The comparison type. You can either choose `ONE_TO_ONE` or
@@ -2232,22 +2252,13 @@ module Aws::EntityResolution
     #   records in the source are matched to one record in the target.
     #   @return [Array<String>]
     #
-    # @!attribute [rw] rule_definition_types
-    #   The sets of rules you can use in an ID mapping workflow. The
-    #   limitations specified for the source and target must be compatible.
-    #   @return [Array<String>]
-    #
-    # @!attribute [rw] rules
-    #   The rules for the ID namespace.
-    #   @return [Array<Types::Rule>]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/NamespaceRuleBasedProperties AWS API Documentation
     #
     class NamespaceRuleBasedProperties < Struct.new(
-      :attribute_matching_model,
-      :record_matching_models,
+      :rules,
       :rule_definition_types,
-      :rules)
+      :attribute_matching_model,
+      :record_matching_models)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2256,21 +2267,21 @@ module Aws::EntityResolution
     # `Name` and `Hashed`. Each of these objects selects a column to be
     # included in the output table, and whether the values of the column
     # should be hashed.
-    #
-    # @!attribute [rw] hashed
-    #   Enables the ability to hash the column values in the output.
-    #   @return [Boolean]
     #
     # @!attribute [rw] name
     #   A name of a column to be written to the output. This must be an
     #   `InputField` name in the schema mapping.
     #   @return [String]
     #
+    # @!attribute [rw] hashed
+    #   Enables the ability to hash the column values in the output.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/OutputAttribute AWS API Documentation
     #
     class OutputAttribute < Struct.new(
-      :hashed,
-      :name)
+      :name,
+      :hashed)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2280,10 +2291,21 @@ module Aws::EntityResolution
     # included in the output table, and whether the values of the column
     # should be hashed.
     #
+    # @!attribute [rw] output_s3_path
+    #   The S3 path to which Entity Resolution will write the output table.
+    #   @return [String]
+    #
     # @!attribute [rw] kms_arn
     #   Customer KMS ARN for encryption at rest. If not provided, system
     #   will use an Entity Resolution managed KMS key.
     #   @return [String]
+    #
+    # @!attribute [rw] output
+    #   A list of `OutputAttribute` objects, each of which have the fields
+    #   `Name` and `Hashed`. Each of these objects selects a column to be
+    #   included in the output table, and whether the values of the column
+    #   should be hashed.
+    #   @return [Array<Types::OutputAttribute>]
     #
     # @!attribute [rw] apply_normalization
     #   Normalizes the attributes defined in the schema in the input data.
@@ -2293,43 +2315,32 @@ module Aws::EntityResolution
     #   output to (123)-456-7890.
     #   @return [Boolean]
     #
-    # @!attribute [rw] output
-    #   A list of `OutputAttribute` objects, each of which have the fields
-    #   `Name` and `Hashed`. Each of these objects selects a column to be
-    #   included in the output table, and whether the values of the column
-    #   should be hashed.
-    #   @return [Array<Types::OutputAttribute>]
-    #
-    # @!attribute [rw] output_s3_path
-    #   The S3 path to which Entity Resolution will write the output table.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/OutputSource AWS API Documentation
     #
     class OutputSource < Struct.new(
+      :output_s3_path,
       :kms_arn,
-      :apply_normalization,
       :output,
-      :output_s3_path)
+      :apply_normalization)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # The input schema supported by provider service.
     #
-    # @!attribute [rw] provider_schema_attributes
-    #   The provider schema attributes.
-    #   @return [Array<Types::ProviderSchemaAttribute>]
-    #
     # @!attribute [rw] schemas
     #   Input schema for the provider service.
     #   @return [Array<Array<String>>]
     #
+    # @!attribute [rw] provider_schema_attributes
+    #   The provider schema attributes.
+    #   @return [Array<Types::ProviderSchemaAttribute>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ProviderComponentSchema AWS API Documentation
     #
     class ProviderComponentSchema < Struct.new(
-      :provider_schema_attributes,
-      :schemas)
+      :schemas,
+      :provider_schema_attributes)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2361,20 +2372,20 @@ module Aws::EntityResolution
     #   The description of the ID namespace.
     #   @return [String]
     #
-    # @!attribute [rw] provider_source_configuration_definition
-    #   Configurations required for the source ID namespace.
-    #   @return [Hash,Array,String,Numeric,Boolean]
-    #
     # @!attribute [rw] provider_target_configuration_definition
     #   Configurations required for the target ID namespace.
+    #   @return [Hash,Array,String,Numeric,Boolean]
+    #
+    # @!attribute [rw] provider_source_configuration_definition
+    #   Configurations required for the source ID namespace.
     #   @return [Hash,Array,String,Numeric,Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ProviderIdNameSpaceConfiguration AWS API Documentation
     #
     class ProviderIdNameSpaceConfiguration < Struct.new(
       :description,
-      :provider_source_configuration_definition,
-      :provider_target_configuration_definition)
+      :provider_target_configuration_definition,
+      :provider_source_configuration_definition)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2402,29 +2413,29 @@ module Aws::EntityResolution
 
     # The identifiers of the provider service, from Data Exchange.
     #
-    # @!attribute [rw] asset_id
-    #   The asset ID on Data Exchange.
-    #   @return [String]
-    #
     # @!attribute [rw] data_set_id
     #   The dataset ID on Data Exchange.
-    #   @return [String]
-    #
-    # @!attribute [rw] listing_id
-    #   The listing ID on Data Exchange.
     #   @return [String]
     #
     # @!attribute [rw] revision_id
     #   The revision ID on Data Exchange.
     #   @return [String]
     #
+    # @!attribute [rw] asset_id
+    #   The asset ID on Data Exchange.
+    #   @return [String]
+    #
+    # @!attribute [rw] listing_id
+    #   The listing ID on Data Exchange.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ProviderMarketplaceConfiguration AWS API Documentation
     #
     class ProviderMarketplaceConfiguration < Struct.new(
-      :asset_id,
       :data_set_id,
-      :listing_id,
-      :revision_id)
+      :revision_id,
+      :asset_id,
+      :listing_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2432,25 +2443,25 @@ module Aws::EntityResolution
     # An object containing the `providerServiceARN`,
     # `intermediateSourceConfiguration`, and `providerConfiguration`.
     #
-    # @!attribute [rw] intermediate_source_configuration
-    #   The Amazon S3 location that temporarily stores your data while it
-    #   processes. Your information won't be saved permanently.
-    #   @return [Types::IntermediateSourceConfiguration]
+    # @!attribute [rw] provider_service_arn
+    #   The ARN of the provider service.
+    #   @return [String]
     #
     # @!attribute [rw] provider_configuration
     #   The required configuration fields to use with the provider service.
     #   @return [Hash,Array,String,Numeric,Boolean]
     #
-    # @!attribute [rw] provider_service_arn
-    #   The ARN of the provider service.
-    #   @return [String]
+    # @!attribute [rw] intermediate_source_configuration
+    #   The Amazon S3 location that temporarily stores your data while it
+    #   processes. Your information won't be saved permanently.
+    #   @return [Types::IntermediateSourceConfiguration]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ProviderProperties AWS API Documentation
     #
     class ProviderProperties < Struct.new(
-      :intermediate_source_configuration,
+      :provider_service_arn,
       :provider_configuration,
-      :provider_service_arn)
+      :intermediate_source_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2461,25 +2472,25 @@ module Aws::EntityResolution
     #   The field name.
     #   @return [String]
     #
-    # @!attribute [rw] hashing
-    #   The hashing attribute of the provider schema.
-    #   @return [Boolean]
+    # @!attribute [rw] type
+    #   The type of the provider schema attribute.
+    #   @return [String]
     #
     # @!attribute [rw] sub_type
     #   The sub type of the provider schema attribute.
     #   @return [String]
     #
-    # @!attribute [rw] type
-    #   The type of the provider schema attribute.
-    #   @return [String]
+    # @!attribute [rw] hashing
+    #   The hashing attribute of the provider schema.
+    #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ProviderSchemaAttribute AWS API Documentation
     #
     class ProviderSchemaAttribute < Struct.new(
       :field_name,
-      :hashing,
+      :type,
       :sub_type,
-      :type)
+      :hashing)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2488,13 +2499,13 @@ module Aws::EntityResolution
     # `providerName`, `providerServiceArn`, `providerServiceName`, and
     # `providerServiceType`.
     #
-    # @!attribute [rw] provider_name
-    #   The name of the provider. This name is typically the company name.
-    #   @return [String]
-    #
     # @!attribute [rw] provider_service_arn
     #   The ARN (Amazon Resource Name) that Entity Resolution generated for
     #   the `providerService`.
+    #   @return [String]
+    #
+    # @!attribute [rw] provider_name
+    #   The name of the provider. This name is typically the company name.
     #   @return [String]
     #
     # @!attribute [rw] provider_service_display_name
@@ -2512,8 +2523,8 @@ module Aws::EntityResolution
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ProviderServiceSummary AWS API Documentation
     #
     class ProviderServiceSummary < Struct.new(
-      :provider_name,
       :provider_service_arn,
+      :provider_name,
       :provider_service_display_name,
       :provider_service_name,
       :provider_service_type)
@@ -2526,6 +2537,10 @@ module Aws::EntityResolution
     #   needs to be updated.
     #   @return [String]
     #
+    # @!attribute [rw] token
+    #   A unique identifier for the current revision of the policy.
+    #   @return [String]
+    #
     # @!attribute [rw] policy
     #   The resource-based policy.
     #
@@ -2535,16 +2550,12 @@ module Aws::EntityResolution
     #   operation.
     #   @return [String]
     #
-    # @!attribute [rw] token
-    #   A unique identifier for the current revision of the policy.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/PutPolicyInput AWS API Documentation
     #
     class PutPolicyInput < Struct.new(
       :arn,
-      :policy,
-      :token)
+      :token,
+      :policy)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2553,30 +2564,26 @@ module Aws::EntityResolution
     #   The Entity Resolution resource ARN.
     #   @return [String]
     #
-    # @!attribute [rw] policy
-    #   The resource-based policy.
-    #   @return [String]
-    #
     # @!attribute [rw] token
     #   A unique identifier for the current revision of the policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] policy
+    #   The resource-based policy.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/PutPolicyOutput AWS API Documentation
     #
     class PutPolicyOutput < Struct.new(
       :arn,
-      :policy,
-      :token)
+      :token,
+      :policy)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # An object which defines the `resolutionType` and the
     # `ruleBasedProperties`.
-    #
-    # @!attribute [rw] provider_properties
-    #   The properties of the provider service.
-    #   @return [Types::ProviderProperties]
     #
     # @!attribute [rw] resolution_type
     #   The type of matching. There are three types of matching:
@@ -2588,12 +2595,16 @@ module Aws::EntityResolution
     #   field `Rules`, which is a list of rule objects.
     #   @return [Types::RuleBasedProperties]
     #
+    # @!attribute [rw] provider_properties
+    #   The properties of the provider service.
+    #   @return [Types::ProviderProperties]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/ResolutionTechniques AWS API Documentation
     #
     class ResolutionTechniques < Struct.new(
-      :provider_properties,
       :resolution_type,
-      :rule_based_properties)
+      :rule_based_properties,
+      :provider_properties)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2613,21 +2624,21 @@ module Aws::EntityResolution
 
     # An object containing `RuleName`, and `MatchingKeys`.
     #
+    # @!attribute [rw] rule_name
+    #   A name for the matching rule.
+    #   @return [String]
+    #
     # @!attribute [rw] matching_keys
     #   A list of `MatchingKeys`. The `MatchingKeys` must have been defined
     #   in the `SchemaMapping`. Two records are considered to match
     #   according to this rule if all of the `MatchingKeys` match.
     #   @return [Array<String>]
     #
-    # @!attribute [rw] rule_name
-    #   A name for the matching rule.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/Rule AWS API Documentation
     #
     class Rule < Struct.new(
-      :matching_keys,
-      :rule_name)
+      :rule_name,
+      :matching_keys)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2635,6 +2646,11 @@ module Aws::EntityResolution
     # An object which defines the list of matching rules to run in a
     # matching workflow. RuleBasedProperties contain a `Rules` field, which
     # is a list of rule objects.
+    #
+    # @!attribute [rw] rules
+    #   A list of `Rule` objects, each of which have fields `RuleName` and
+    #   `MatchingKeys`.
+    #   @return [Array<Types::Rule>]
     #
     # @!attribute [rw] attribute_matching_model
     #   The comparison type. You can either choose `ONE_TO_ONE` or
@@ -2663,43 +2679,54 @@ module Aws::EntityResolution
     #   generating IDs.
     #   @return [String]
     #
-    # @!attribute [rw] rules
-    #   A list of `Rule` objects, each of which have fields `RuleName` and
-    #   `MatchingKeys`.
-    #   @return [Array<Types::Rule>]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/RuleBasedProperties AWS API Documentation
     #
     class RuleBasedProperties < Struct.new(
+      :rules,
       :attribute_matching_model,
-      :match_purpose,
-      :rules)
+      :match_purpose)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # An object containing `FieldName`, `Type`, `GroupName`, `MatchKey`,
-    # `Hashing`, and `SubType`.
+    # A configuration object for defining input data fields in Entity
+    # Resolution. The SchemaInputAttribute specifies how individual fields
+    # in your input data should be processed and matched.
     #
     # @!attribute [rw] field_name
     #   A string containing the field name.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of the attribute, selected from a list of values.
+    #
+    #   <note markdown="1"> Normalization is only supported for `NAME`, `ADDRESS`, `PHONE`, and
+    #   `EMAIL_ADDRESS`.
+    #
+    #    If you want to normalize `NAME_FIRST`, `NAME_MIDDLE`, and
+    #   `NAME_LAST`, you must group them by assigning them to the `NAME`
+    #   `groupName`.
+    #
+    #    If you want to normalize `ADDRESS_STREET1`, `ADDRESS_STREET2`,
+    #   `ADDRESS_STREET3`, `ADDRESS_CITY`, `ADDRESS_STATE`,
+    #   `ADDRESS_COUNTRY`, and `ADDRESS_POSTALCODE`, you must group them by
+    #   assigning them to the `ADDRESS` `groupName`.
+    #
+    #    If you want to normalize `PHONE_NUMBER` and `PHONE_COUNTRYCODE`, you
+    #   must group them by assigning them to the `PHONE` `groupName`.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] group_name
     #   A string that instructs Entity Resolution to combine several columns
     #   into a unified column with the identical attribute type.
     #
-    #   For example, when working with columns such as `first_name`,
-    #   `middle_name`, and `last_name`, assigning them a common `groupName`
+    #   For example, when working with columns such as `NAME_FIRST`,
+    #   `NAME_MIDDLE`, and `NAME_LAST`, assigning them a common `groupName`
     #   will prompt Entity Resolution to concatenate them into a single
     #   value.
     #   @return [String]
-    #
-    # @!attribute [rw] hashed
-    #   Indicates if the column values are hashed in the schema input. If
-    #   the value is set to `TRUE`, the column values are hashed. If the
-    #   value is set to `FALSE`, the column values are cleartext.
-    #   @return [Boolean]
     #
     # @!attribute [rw] match_key
     #   A key that allows grouping of multiple input attributes into a
@@ -2720,19 +2747,23 @@ module Aws::EntityResolution
     #   The subtype of the attribute, selected from a list of values.
     #   @return [String]
     #
-    # @!attribute [rw] type
-    #   The type of the attribute, selected from a list of values.
-    #   @return [String]
+    # @!attribute [rw] hashed
+    #   Indicates if the column values are hashed in the schema input.
+    #
+    #   If the value is set to `TRUE`, the column values are hashed.
+    #
+    #   If the value is set to `FALSE`, the column values are cleartext.
+    #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/SchemaInputAttribute AWS API Documentation
     #
     class SchemaInputAttribute < Struct.new(
       :field_name,
+      :type,
       :group_name,
-      :hashed,
       :match_key,
       :sub_type,
-      :type)
+      :hashed)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2740,52 +2771,52 @@ module Aws::EntityResolution
     # An object containing `SchemaName`, `SchemaArn`, `CreatedAt`,
     # and`UpdatedAt`.
     #
-    # @!attribute [rw] created_at
-    #   The timestamp of when the `SchemaMapping` was created.
-    #   @return [Time]
-    #
-    # @!attribute [rw] has_workflows
-    #   Specifies whether the schema mapping has been applied to a workflow.
-    #   @return [Boolean]
+    # @!attribute [rw] schema_name
+    #   The name of the schema.
+    #   @return [String]
     #
     # @!attribute [rw] schema_arn
     #   The ARN (Amazon Resource Name) that Entity Resolution generated for
     #   the `SchemaMapping`.
     #   @return [String]
     #
-    # @!attribute [rw] schema_name
-    #   The name of the schema.
-    #   @return [String]
+    # @!attribute [rw] created_at
+    #   The timestamp of when the `SchemaMapping` was created.
+    #   @return [Time]
     #
     # @!attribute [rw] updated_at
     #   The timestamp of when the `SchemaMapping` was last updated.
     #   @return [Time]
     #
+    # @!attribute [rw] has_workflows
+    #   Specifies whether the schema mapping has been applied to a workflow.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/SchemaMappingSummary AWS API Documentation
     #
     class SchemaMappingSummary < Struct.new(
-      :created_at,
-      :has_workflows,
-      :schema_arn,
       :schema_name,
-      :updated_at)
+      :schema_arn,
+      :created_at,
+      :updated_at,
+      :has_workflows)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # @!attribute [rw] output_source_config
-    #   A list of `OutputSource` objects.
-    #   @return [Array<Types::IdMappingJobOutputSource>]
-    #
     # @!attribute [rw] workflow_name
     #   The name of the ID mapping job to be retrieved.
     #   @return [String]
     #
+    # @!attribute [rw] output_source_config
+    #   A list of `OutputSource` objects.
+    #   @return [Array<Types::IdMappingJobOutputSource>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/StartIdMappingJobInput AWS API Documentation
     #
     class StartIdMappingJobInput < Struct.new(
-      :output_source_config,
-      :workflow_name)
+      :workflow_name,
+      :output_source_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2887,14 +2918,13 @@ module Aws::EntityResolution
     #
     class UntagResourceOutput < Aws::EmptyStructure; end
 
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow.
+    #   @return [String]
+    #
     # @!attribute [rw] description
     #   A description of the workflow.
     #   @return [String]
-    #
-    # @!attribute [rw] id_mapping_techniques
-    #   An object which defines the ID mapping technique and any additional
-    #   configurations.
-    #   @return [Types::IdMappingTechniques]
     #
     # @!attribute [rw] input_source_config
     #   A list of `InputSource` objects, which have the fields
@@ -2906,52 +2936,32 @@ module Aws::EntityResolution
     #   `OutputS3Path` and `KMSArn`.
     #   @return [Array<Types::IdMappingWorkflowOutputSource>]
     #
+    # @!attribute [rw] id_mapping_techniques
+    #   An object which defines the ID mapping technique and any additional
+    #   configurations.
+    #   @return [Types::IdMappingTechniques]
+    #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
     #   assumes this role to access Amazon Web Services resources on your
     #   behalf.
-    #   @return [String]
-    #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/UpdateIdMappingWorkflowInput AWS API Documentation
     #
     class UpdateIdMappingWorkflowInput < Struct.new(
+      :workflow_name,
       :description,
-      :id_mapping_techniques,
       :input_source_config,
       :output_source_config,
-      :role_arn,
-      :workflow_name)
+      :id_mapping_techniques,
+      :role_arn)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # @!attribute [rw] description
-    #   A description of the workflow.
-    #   @return [String]
-    #
-    # @!attribute [rw] id_mapping_techniques
-    #   An object which defines the ID mapping technique and any additional
-    #   configurations.
-    #   @return [Types::IdMappingTechniques]
-    #
-    # @!attribute [rw] input_source_config
-    #   A list of `InputSource` objects, which have the fields
-    #   `InputSourceARN` and `SchemaName`.
-    #   @return [Array<Types::IdMappingWorkflowInputSource>]
-    #
-    # @!attribute [rw] output_source_config
-    #   A list of `OutputSource` objects, each of which contains fields
-    #   `OutputS3Path` and `KMSArn`.
-    #   @return [Array<Types::IdMappingWorkflowOutputSource>]
-    #
-    # @!attribute [rw] role_arn
-    #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
-    #   assumes this role to access Amazon Web Services resources on your
-    #   behalf.
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow.
     #   @return [String]
     #
     # @!attribute [rw] workflow_arn
@@ -2960,41 +2970,62 @@ module Aws::EntityResolution
     #   on your behalf.
     #   @return [String]
     #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow.
+    # @!attribute [rw] description
+    #   A description of the workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_source_config
+    #   A list of `InputSource` objects, which have the fields
+    #   `InputSourceARN` and `SchemaName`.
+    #   @return [Array<Types::IdMappingWorkflowInputSource>]
+    #
+    # @!attribute [rw] output_source_config
+    #   A list of `OutputSource` objects, each of which contains fields
+    #   `OutputS3Path` and `KMSArn`.
+    #   @return [Array<Types::IdMappingWorkflowOutputSource>]
+    #
+    # @!attribute [rw] id_mapping_techniques
+    #   An object which defines the ID mapping technique and any additional
+    #   configurations.
+    #   @return [Types::IdMappingTechniques]
+    #
+    # @!attribute [rw] role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
+    #   assumes this role to access Amazon Web Services resources on your
+    #   behalf.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/UpdateIdMappingWorkflowOutput AWS API Documentation
     #
     class UpdateIdMappingWorkflowOutput < Struct.new(
+      :workflow_name,
+      :workflow_arn,
       :description,
-      :id_mapping_techniques,
       :input_source_config,
       :output_source_config,
-      :role_arn,
-      :workflow_arn,
-      :workflow_name)
+      :id_mapping_techniques,
+      :role_arn)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # @!attribute [rw] description
-    #   The description of the ID namespace.
-    #   @return [String]
-    #
-    # @!attribute [rw] id_mapping_workflow_properties
-    #   Determines the properties of `IdMappingWorkflow` where this
-    #   `IdNamespace` can be used as a `Source` or a `Target`.
-    #   @return [Array<Types::IdNamespaceIdMappingWorkflowProperties>]
-    #
     # @!attribute [rw] id_namespace_name
     #   The name of the ID namespace.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the ID namespace.
     #   @return [String]
     #
     # @!attribute [rw] input_source_config
     #   A list of `InputSource` objects, which have the fields
     #   `InputSourceARN` and `SchemaName`.
     #   @return [Array<Types::IdNamespaceInputSource>]
+    #
+    # @!attribute [rw] id_mapping_workflow_properties
+    #   Determines the properties of `IdMappingWorkflow` where this
+    #   `IdNamespace` can be used as a `Source` or a `Target`.
+    #   @return [Array<Types::IdNamespaceIdMappingWorkflowProperties>]
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
@@ -3005,34 +3036,25 @@ module Aws::EntityResolution
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/UpdateIdNamespaceInput AWS API Documentation
     #
     class UpdateIdNamespaceInput < Struct.new(
-      :description,
-      :id_mapping_workflow_properties,
       :id_namespace_name,
+      :description,
       :input_source_config,
+      :id_mapping_workflow_properties,
       :role_arn)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # @!attribute [rw] created_at
-    #   The timestamp of when the ID namespace was created.
-    #   @return [Time]
-    #
-    # @!attribute [rw] description
-    #   The description of the ID namespace.
+    # @!attribute [rw] id_namespace_name
+    #   The name of the ID namespace.
     #   @return [String]
-    #
-    # @!attribute [rw] id_mapping_workflow_properties
-    #   Determines the properties of `IdMappingWorkflow` where this
-    #   `IdNamespace` can be used as a `Source` or a `Target`.
-    #   @return [Array<Types::IdNamespaceIdMappingWorkflowProperties>]
     #
     # @!attribute [rw] id_namespace_arn
     #   The Amazon Resource Name (ARN) of the ID namespace.
     #   @return [String]
     #
-    # @!attribute [rw] id_namespace_name
-    #   The name of the ID namespace.
+    # @!attribute [rw] description
+    #   The description of the ID namespace.
     #   @return [String]
     #
     # @!attribute [rw] input_source_config
@@ -3040,11 +3062,10 @@ module Aws::EntityResolution
     #   `InputSourceARN` and `SchemaName`.
     #   @return [Array<Types::IdNamespaceInputSource>]
     #
-    # @!attribute [rw] role_arn
-    #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
-    #   assumes this role to access the resources defined in this
-    #   `IdNamespace` on your behalf as part of a workflow run.
-    #   @return [String]
+    # @!attribute [rw] id_mapping_workflow_properties
+    #   Determines the properties of `IdMappingWorkflow` where this
+    #   `IdNamespace` can be used as a `Source` or a `Target`.
+    #   @return [Array<Types::IdNamespaceIdMappingWorkflowProperties>]
     #
     # @!attribute [rw] type
     #   The type of ID namespace. There are two types: `SOURCE` and
@@ -3057,6 +3078,16 @@ module Aws::EntityResolution
     #   `sourceIds` will resolve to.
     #   @return [String]
     #
+    # @!attribute [rw] role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
+    #   assumes this role to access the resources defined in this
+    #   `IdNamespace` on your behalf as part of a workflow run.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp of when the ID namespace was created.
+    #   @return [Time]
+    #
     # @!attribute [rw] updated_at
     #   The timestamp of when the ID namespace was last updated.
     #   @return [Time]
@@ -3064,27 +3095,26 @@ module Aws::EntityResolution
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/UpdateIdNamespaceOutput AWS API Documentation
     #
     class UpdateIdNamespaceOutput < Struct.new(
-      :created_at,
-      :description,
-      :id_mapping_workflow_properties,
-      :id_namespace_arn,
       :id_namespace_name,
+      :id_namespace_arn,
+      :description,
       :input_source_config,
-      :role_arn,
+      :id_mapping_workflow_properties,
       :type,
+      :role_arn,
+      :created_at,
       :updated_at)
       SENSITIVE = []
       include Aws::Structure
     end
 
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow to be retrieved.
+    #   @return [String]
+    #
     # @!attribute [rw] description
     #   A description of the workflow.
     #   @return [String]
-    #
-    # @!attribute [rw] incremental_run_config
-    #   An object which defines an incremental run type and has only
-    #   `incrementalRunType` as a field.
-    #   @return [Types::IncrementalRunConfig]
     #
     # @!attribute [rw] input_source_config
     #   A list of `InputSource` objects, which have the fields
@@ -3101,38 +3131,38 @@ module Aws::EntityResolution
     #   `ruleBasedProperties`.
     #   @return [Types::ResolutionTechniques]
     #
+    # @!attribute [rw] incremental_run_config
+    #   An object which defines an incremental run type and has only
+    #   `incrementalRunType` as a field.
+    #   @return [Types::IncrementalRunConfig]
+    #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
     #   assumes this role to create resources on your behalf as part of
     #   workflow execution.
     #   @return [String]
     #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow to be retrieved.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/UpdateMatchingWorkflowInput AWS API Documentation
     #
     class UpdateMatchingWorkflowInput < Struct.new(
+      :workflow_name,
       :description,
-      :incremental_run_config,
       :input_source_config,
       :output_source_config,
       :resolution_techniques,
-      :role_arn,
-      :workflow_name)
+      :incremental_run_config,
+      :role_arn)
       SENSITIVE = []
       include Aws::Structure
     end
 
+    # @!attribute [rw] workflow_name
+    #   The name of the workflow.
+    #   @return [String]
+    #
     # @!attribute [rw] description
     #   A description of the workflow.
     #   @return [String]
-    #
-    # @!attribute [rw] incremental_run_config
-    #   An object which defines an incremental run type and has only
-    #   `incrementalRunType` as a field.
-    #   @return [Types::IncrementalRunConfig]
     #
     # @!attribute [rw] input_source_config
     #   A list of `InputSource` objects, which have the fields
@@ -3149,55 +3179,36 @@ module Aws::EntityResolution
     #   `ruleBasedProperties`
     #   @return [Types::ResolutionTechniques]
     #
+    # @!attribute [rw] incremental_run_config
+    #   An object which defines an incremental run type and has only
+    #   `incrementalRunType` as a field.
+    #   @return [Types::IncrementalRunConfig]
+    #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM role. Entity Resolution
     #   assumes this role to create resources on your behalf as part of
     #   workflow execution.
     #   @return [String]
     #
-    # @!attribute [rw] workflow_name
-    #   The name of the workflow.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/UpdateMatchingWorkflowOutput AWS API Documentation
     #
     class UpdateMatchingWorkflowOutput < Struct.new(
+      :workflow_name,
       :description,
-      :incremental_run_config,
       :input_source_config,
       :output_source_config,
       :resolution_techniques,
-      :role_arn,
-      :workflow_name)
+      :incremental_run_config,
+      :role_arn)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # @!attribute [rw] description
-    #   A description of the schema.
-    #   @return [String]
-    #
-    # @!attribute [rw] mapped_input_fields
-    #   A list of `MappedInputFields`. Each `MappedInputField` corresponds
-    #   to a column the source data table, and contains column name plus
-    #   additional information that Entity Resolution uses for matching.
-    #   @return [Array<Types::SchemaInputAttribute>]
-    #
     # @!attribute [rw] schema_name
     #   The name of the schema. There can't be multiple `SchemaMappings`
     #   with the same name.
     #   @return [String]
     #
-    # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/UpdateSchemaMappingInput AWS API Documentation
-    #
-    class UpdateSchemaMappingInput < Struct.new(
-      :description,
-      :mapped_input_fields,
-      :schema_name)
-      SENSITIVE = []
-      include Aws::Structure
-    end
-
     # @!attribute [rw] description
     #   A description of the schema.
     #   @return [String]
@@ -3207,23 +3218,43 @@ module Aws::EntityResolution
     #   to a column the source data table, and contains column name plus
     #   additional information that Entity Resolution uses for matching.
     #   @return [Array<Types::SchemaInputAttribute>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/UpdateSchemaMappingInput AWS API Documentation
+    #
+    class UpdateSchemaMappingInput < Struct.new(
+      :schema_name,
+      :description,
+      :mapped_input_fields)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] schema_name
+    #   The name of the schema.
+    #   @return [String]
     #
     # @!attribute [rw] schema_arn
     #   The ARN (Amazon Resource Name) that Entity Resolution generated for
     #   the `SchemaMapping`.
     #   @return [String]
     #
-    # @!attribute [rw] schema_name
-    #   The name of the schema.
+    # @!attribute [rw] description
+    #   A description of the schema.
     #   @return [String]
+    #
+    # @!attribute [rw] mapped_input_fields
+    #   A list of `MappedInputFields`. Each `MappedInputField` corresponds
+    #   to a column the source data table, and contains column name plus
+    #   additional information that Entity Resolution uses for matching.
+    #   @return [Array<Types::SchemaInputAttribute>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/entityresolution-2018-05-10/UpdateSchemaMappingOutput AWS API Documentation
     #
     class UpdateSchemaMappingOutput < Struct.new(
-      :description,
-      :mapped_input_fields,
+      :schema_name,
       :schema_arn,
-      :schema_name)
+      :description,
+      :mapped_input_fields)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -591,6 +591,42 @@ module Aws::TaxSettings
     #
     # ^
     #
+    # **Indonesia**
+    #
+    # * `PutTaxRegistration`: The use of this operation to submit tax
+    #   information is subject to the [Amazon Web Services service
+    #   terms][2]. By submitting, you’re providing consent for Amazon Web
+    #   Services to validate NIK, NPWP, and NITKU data, provided by you with
+    #   the Directorate General of Taxes of Indonesia in accordance with the
+    #   Minister of Finance Regulation (PMK) Number 112/PMK.03/2022.
+    #
+    # * `BatchPutTaxRegistration`: The use of this operation to submit tax
+    #   information is subject to the [Amazon Web Services service
+    #   terms][2]. By submitting, you’re providing consent for Amazon Web
+    #   Services to validate NIK, NPWP, and NITKU data, provided by you with
+    #   the Directorate General of Taxes of Indonesia in accordance with the
+    #   Minister of Finance Regulation (PMK) Number 112/PMK.03/2022, through
+    #   our third-party partner PT Achilles Advanced Management
+    #   (OnlinePajak).
+    #
+    # * You must specify the `taxRegistrationNumberType` in the
+    #   `indonesiaAdditionalInfo` field of the `additionalTaxInformation`
+    #   object.
+    #
+    # * If you specify `decisionNumber`, you must specify the
+    #   `ppnExceptionDesignationCode` in the `indonesiaAdditionalInfo` field
+    #   of the `additionalTaxInformation` object. If the
+    #   `taxRegistrationNumberType` is set to NPWP or NITKU, valid values
+    #   for `ppnExceptionDesignationCode` are either `01`, `02`, `03`, `07`,
+    #   or `08`.
+    #
+    #   For other `taxRegistrationNumberType` values,
+    #   `ppnExceptionDesignationCode` must be either `01`, `07`, or `08`.
+    #
+    # * If `ppnExceptionDesignationCode` is `07`, you must specify the
+    #   `decisionNumber` in the `indonesiaAdditionalInfo` field of the
+    #   `additionalTaxInformation` object.
+    #
     # **Kenya**
     #
     # * You must specify the `personType` in the `kenyaAdditionalInfo` field
@@ -714,6 +750,7 @@ module Aws::TaxSettings
     #
     #
     # [1]: https://console.aws.amazon.com/billing/home#/paymentpreferences/paymentmethods
+    # [2]: http://aws.amazon.com/service-terms/
     #
     # @option params [required, Array<String>] :account_ids
     #   List of unique account identifiers.
@@ -751,6 +788,11 @@ module Aws::TaxSettings
     #         },
     #         greece_additional_info: {
     #           contracting_authority_code: "ContractingAuthorityCode",
+    #         },
+    #         indonesia_additional_info: {
+    #           decision_number: "DecisionNumber",
+    #           ppn_exception_designation_code: "PpnExceptionDesignationCode",
+    #           tax_registration_number_type: "NIK", # accepts NIK, PassportNumber, NPWP, NITKU
     #         },
     #         israel_additional_info: {
     #           customer_type: "Business", # required, accepts Business, Individual
@@ -988,6 +1030,9 @@ module Aws::TaxSettings
     #   resp.tax_registration.additional_tax_information.georgia_additional_info.person_type #=> String, one of "Legal Person", "Physical Person", "Business"
     #   resp.tax_registration.additional_tax_information.greece_additional_info.contracting_authority_code #=> String
     #   resp.tax_registration.additional_tax_information.india_additional_info.pan #=> String
+    #   resp.tax_registration.additional_tax_information.indonesia_additional_info.decision_number #=> String
+    #   resp.tax_registration.additional_tax_information.indonesia_additional_info.ppn_exception_designation_code #=> String
+    #   resp.tax_registration.additional_tax_information.indonesia_additional_info.tax_registration_number_type #=> String, one of "NIK", "PassportNumber", "NPWP", "NITKU"
     #   resp.tax_registration.additional_tax_information.israel_additional_info.customer_type #=> String, one of "Business", "Individual"
     #   resp.tax_registration.additional_tax_information.israel_additional_info.dealer_type #=> String, one of "Authorized", "Non-authorized"
     #   resp.tax_registration.additional_tax_information.italy_additional_info.cig_number #=> String
@@ -1244,6 +1289,9 @@ module Aws::TaxSettings
     #   resp.account_details[0].tax_registration.additional_tax_information.georgia_additional_info.person_type #=> String, one of "Legal Person", "Physical Person", "Business"
     #   resp.account_details[0].tax_registration.additional_tax_information.greece_additional_info.contracting_authority_code #=> String
     #   resp.account_details[0].tax_registration.additional_tax_information.india_additional_info.pan #=> String
+    #   resp.account_details[0].tax_registration.additional_tax_information.indonesia_additional_info.decision_number #=> String
+    #   resp.account_details[0].tax_registration.additional_tax_information.indonesia_additional_info.ppn_exception_designation_code #=> String
+    #   resp.account_details[0].tax_registration.additional_tax_information.indonesia_additional_info.tax_registration_number_type #=> String, one of "NIK", "PassportNumber", "NPWP", "NITKU"
     #   resp.account_details[0].tax_registration.additional_tax_information.israel_additional_info.customer_type #=> String, one of "Business", "Individual"
     #   resp.account_details[0].tax_registration.additional_tax_information.israel_additional_info.dealer_type #=> String, one of "Authorized", "Non-authorized"
     #   resp.account_details[0].tax_registration.additional_tax_information.italy_additional_info.cig_number #=> String
@@ -1442,6 +1490,42 @@ module Aws::TaxSettings
     #
     # ^
     #
+    # **Indonesia**
+    #
+    # * `PutTaxRegistration`: The use of this operation to submit tax
+    #   information is subject to the [Amazon Web Services service
+    #   terms][2]. By submitting, you’re providing consent for Amazon Web
+    #   Services to validate NIK, NPWP, and NITKU data, provided by you with
+    #   the Directorate General of Taxes of Indonesia in accordance with the
+    #   Minister of Finance Regulation (PMK) Number 112/PMK.03/2022.
+    #
+    # * `BatchPutTaxRegistration`: The use of this operation to submit tax
+    #   information is subject to the [Amazon Web Services service
+    #   terms][2]. By submitting, you’re providing consent for Amazon Web
+    #   Services to validate NIK, NPWP, and NITKU data, provided by you with
+    #   the Directorate General of Taxes of Indonesia in accordance with the
+    #   Minister of Finance Regulation (PMK) Number 112/PMK.03/2022, through
+    #   our third-party partner PT Achilles Advanced Management
+    #   (OnlinePajak).
+    #
+    # * You must specify the `taxRegistrationNumberType` in the
+    #   `indonesiaAdditionalInfo` field of the `additionalTaxInformation`
+    #   object.
+    #
+    # * If you specify `decisionNumber`, you must specify the
+    #   `ppnExceptionDesignationCode` in the `indonesiaAdditionalInfo` field
+    #   of the `additionalTaxInformation` object. If the
+    #   `taxRegistrationNumberType` is set to NPWP or NITKU, valid values
+    #   for `ppnExceptionDesignationCode` are either `01`, `02`, `03`, `07`,
+    #   or `08`.
+    #
+    #   For other `taxRegistrationNumberType` values,
+    #   `ppnExceptionDesignationCode` must be either `01`, `07`, or `08`.
+    #
+    # * If `ppnExceptionDesignationCode` is `07`, you must specify the
+    #   `decisionNumber` in the `indonesiaAdditionalInfo` field of the
+    #   `additionalTaxInformation` object.
+    #
     # **Kenya**
     #
     # * You must specify the `personType` in the `kenyaAdditionalInfo` field
@@ -1565,6 +1649,7 @@ module Aws::TaxSettings
     #
     #
     # [1]: https://console.aws.amazon.com/billing/home#/paymentpreferences/paymentmethods
+    # [2]: http://aws.amazon.com/service-terms/
     #
     # @option params [String] :account_id
     #   Your unique account identifier.
@@ -1601,6 +1686,11 @@ module Aws::TaxSettings
     #         },
     #         greece_additional_info: {
     #           contracting_authority_code: "ContractingAuthorityCode",
+    #         },
+    #         indonesia_additional_info: {
+    #           decision_number: "DecisionNumber",
+    #           ppn_exception_designation_code: "PpnExceptionDesignationCode",
+    #           tax_registration_number_type: "NIK", # accepts NIK, PassportNumber, NPWP, NITKU
     #         },
     #         israel_additional_info: {
     #           customer_type: "Business", # required, accepts Business, Individual
@@ -1722,7 +1812,7 @@ module Aws::TaxSettings
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-taxsettings'
-      context[:gem_version] = '1.21.0'
+      context[:gem_version] = '1.22.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

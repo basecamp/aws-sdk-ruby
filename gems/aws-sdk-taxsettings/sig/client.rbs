@@ -127,6 +127,11 @@ module Aws
                                             greece_additional_info: {
                                               contracting_authority_code: ::String?
                                             }?,
+                                            indonesia_additional_info: {
+                                              decision_number: ::String?,
+                                              ppn_exception_designation_code: ::String?,
+                                              tax_registration_number_type: ("NIK" | "PassportNumber" | "NPWP" | "NITKU")?
+                                            }?,
                                             israel_additional_info: {
                                               customer_type: ("Business" | "Individual"),
                                               dealer_type: ("Authorized" | "Non-authorized")
@@ -397,6 +402,11 @@ module Aws
                                       }?,
                                       greece_additional_info: {
                                         contracting_authority_code: ::String?
+                                      }?,
+                                      indonesia_additional_info: {
+                                        decision_number: ::String?,
+                                        ppn_exception_designation_code: ::String?,
+                                        tax_registration_number_type: ("NIK" | "PassportNumber" | "NPWP" | "NITKU")?
                                       }?,
                                       israel_additional_info: {
                                         customer_type: ("Business" | "Individual"),

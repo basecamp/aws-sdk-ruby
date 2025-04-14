@@ -64,6 +64,7 @@ module Aws::TaxSettings
     CupNumber = Shapes::StringShape.new(name: 'CupNumber')
     DateOfBirth = Shapes::StringShape.new(name: 'DateOfBirth')
     DateString = Shapes::StringShape.new(name: 'DateString')
+    DecisionNumber = Shapes::StringShape.new(name: 'DecisionNumber')
     DeleteSupplementalTaxRegistrationRequest = Shapes::StructureShape.new(name: 'DeleteSupplementalTaxRegistrationRequest')
     DeleteSupplementalTaxRegistrationResponse = Shapes::StructureShape.new(name: 'DeleteSupplementalTaxRegistrationResponse')
     DeleteTaxRegistrationRequest = Shapes::StructureShape.new(name: 'DeleteTaxRegistrationRequest')
@@ -98,6 +99,8 @@ module Aws::TaxSettings
     HeritageStatus = Shapes::StringShape.new(name: 'HeritageStatus')
     IndiaAdditionalInfo = Shapes::StructureShape.new(name: 'IndiaAdditionalInfo')
     IndividualRegistrationNumber = Shapes::StringShape.new(name: 'IndividualRegistrationNumber')
+    IndonesiaAdditionalInfo = Shapes::StructureShape.new(name: 'IndonesiaAdditionalInfo')
+    IndonesiaTaxRegistrationNumberType = Shapes::StringShape.new(name: 'IndonesiaTaxRegistrationNumberType')
     Industries = Shapes::StringShape.new(name: 'Industries')
     InheritanceObtainedReason = Shapes::StringShape.new(name: 'InheritanceObtainedReason')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
@@ -128,6 +131,7 @@ module Aws::TaxSettings
     PersonType = Shapes::StringShape.new(name: 'PersonType')
     PolandAdditionalInfo = Shapes::StructureShape.new(name: 'PolandAdditionalInfo')
     PostalCode = Shapes::StringShape.new(name: 'PostalCode')
+    PpnExceptionDesignationCode = Shapes::StringShape.new(name: 'PpnExceptionDesignationCode')
     PutSupplementalTaxRegistrationRequest = Shapes::StructureShape.new(name: 'PutSupplementalTaxRegistrationRequest')
     PutSupplementalTaxRegistrationResponse = Shapes::StructureShape.new(name: 'PutSupplementalTaxRegistrationResponse')
     PutTaxExemptionRequest = Shapes::StructureShape.new(name: 'PutTaxExemptionRequest')
@@ -223,6 +227,7 @@ module Aws::TaxSettings
     AdditionalInfoRequest.add_member(:estonia_additional_info, Shapes::ShapeRef.new(shape: EstoniaAdditionalInfo, location_name: "estoniaAdditionalInfo"))
     AdditionalInfoRequest.add_member(:georgia_additional_info, Shapes::ShapeRef.new(shape: GeorgiaAdditionalInfo, location_name: "georgiaAdditionalInfo"))
     AdditionalInfoRequest.add_member(:greece_additional_info, Shapes::ShapeRef.new(shape: GreeceAdditionalInfo, location_name: "greeceAdditionalInfo"))
+    AdditionalInfoRequest.add_member(:indonesia_additional_info, Shapes::ShapeRef.new(shape: IndonesiaAdditionalInfo, location_name: "indonesiaAdditionalInfo"))
     AdditionalInfoRequest.add_member(:israel_additional_info, Shapes::ShapeRef.new(shape: IsraelAdditionalInfo, location_name: "israelAdditionalInfo"))
     AdditionalInfoRequest.add_member(:italy_additional_info, Shapes::ShapeRef.new(shape: ItalyAdditionalInfo, location_name: "italyAdditionalInfo"))
     AdditionalInfoRequest.add_member(:kenya_additional_info, Shapes::ShapeRef.new(shape: KenyaAdditionalInfo, location_name: "kenyaAdditionalInfo"))
@@ -245,6 +250,7 @@ module Aws::TaxSettings
     AdditionalInfoResponse.add_member(:georgia_additional_info, Shapes::ShapeRef.new(shape: GeorgiaAdditionalInfo, location_name: "georgiaAdditionalInfo"))
     AdditionalInfoResponse.add_member(:greece_additional_info, Shapes::ShapeRef.new(shape: GreeceAdditionalInfo, location_name: "greeceAdditionalInfo"))
     AdditionalInfoResponse.add_member(:india_additional_info, Shapes::ShapeRef.new(shape: IndiaAdditionalInfo, location_name: "indiaAdditionalInfo"))
+    AdditionalInfoResponse.add_member(:indonesia_additional_info, Shapes::ShapeRef.new(shape: IndonesiaAdditionalInfo, location_name: "indonesiaAdditionalInfo"))
     AdditionalInfoResponse.add_member(:israel_additional_info, Shapes::ShapeRef.new(shape: IsraelAdditionalInfo, location_name: "israelAdditionalInfo"))
     AdditionalInfoResponse.add_member(:italy_additional_info, Shapes::ShapeRef.new(shape: ItalyAdditionalInfo, location_name: "italyAdditionalInfo"))
     AdditionalInfoResponse.add_member(:kenya_additional_info, Shapes::ShapeRef.new(shape: KenyaAdditionalInfo, location_name: "kenyaAdditionalInfo"))
@@ -397,6 +403,11 @@ module Aws::TaxSettings
 
     IndiaAdditionalInfo.add_member(:pan, Shapes::ShapeRef.new(shape: Pan, location_name: "pan"))
     IndiaAdditionalInfo.struct_class = Types::IndiaAdditionalInfo
+
+    IndonesiaAdditionalInfo.add_member(:decision_number, Shapes::ShapeRef.new(shape: DecisionNumber, location_name: "decisionNumber"))
+    IndonesiaAdditionalInfo.add_member(:ppn_exception_designation_code, Shapes::ShapeRef.new(shape: PpnExceptionDesignationCode, location_name: "ppnExceptionDesignationCode"))
+    IndonesiaAdditionalInfo.add_member(:tax_registration_number_type, Shapes::ShapeRef.new(shape: IndonesiaTaxRegistrationNumberType, location_name: "taxRegistrationNumberType"))
+    IndonesiaAdditionalInfo.struct_class = Types::IndonesiaAdditionalInfo
 
     InternalServerException.add_member(:error_code, Shapes::ShapeRef.new(shape: ErrorCode, required: true, location_name: "errorCode"))
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, required: true, location_name: "message"))
