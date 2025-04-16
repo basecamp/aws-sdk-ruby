@@ -5987,7 +5987,7 @@ module Aws::ServiceCatalog
     #   @return [String]
     #
     # @!attribute [rw] access_level_filter
-    #   The access level to use to obtain results. The default is `User`.
+    #   The access level to use to obtain results. The default is `Account`.
     #   @return [Types::AccessLevelFilter]
     #
     # @!attribute [rw] filters

@@ -292,13 +292,31 @@ module Aws
                                    }?,
                                    file: {
                                      file_arn: ::String
+                                   }?,
+                                   sla: {
+                                     sla_input_configuration: {
+                                       field_id: ::String?,
+                                       name: ::String,
+                                       target_field_values: Array[
+                                         {
+                                           boolean_value: bool?,
+                                           double_value: ::Float?,
+                                           empty_value: {
+                                           }?,
+                                           string_value: ::String?,
+                                           user_arn_value: ::String?
+                                         },
+                                       ]?,
+                                       target_sla_minutes: ::Integer,
+                                       type: ("CaseField")
+                                     }?
                                    }?
                                  },
                                  domain_id: ::String,
                                  ?performed_by: {
                                    user_arn: ::String?
                                  },
-                                 type: ("Contact" | "Comment" | "File")
+                                 type: ("Contact" | "Comment" | "File" | "Sla")
                                ) -> _CreateRelatedItemResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateRelatedItemResponseSuccess
 
@@ -727,6 +745,10 @@ module Aws
                                       }?,
                                       file: {
                                         file_arn: ::String?
+                                      }?,
+                                      sla: {
+                                        name: ::String?,
+                                        status: ("Active" | "Overdue" | "Met" | "NotMet")?
                                       }?
                                     },
                                   ],

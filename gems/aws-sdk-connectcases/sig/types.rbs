@@ -18,7 +18,7 @@ module Aws::ConnectCases
       attr_accessor fields: ::Array[Types::AuditEventField]
       attr_accessor performed_by: Types::AuditEventPerformedBy
       attr_accessor performed_time: ::Time
-      attr_accessor related_item_type: ("Contact" | "Comment" | "File")
+      attr_accessor related_item_type: ("Contact" | "Comment" | "File" | "Sla")
       attr_accessor type: ("Case.Created" | "Case.Updated" | "RelatedItem.Created")
       SENSITIVE: []
     end
@@ -290,7 +290,7 @@ module Aws::ConnectCases
       attr_accessor content: Types::RelatedItemInputContent
       attr_accessor domain_id: ::String
       attr_accessor performed_by: Types::UserUnion
-      attr_accessor type: ("Contact" | "Comment" | "File")
+      attr_accessor type: ("Contact" | "Comment" | "File" | "Sla")
       SENSITIVE: []
     end
 
@@ -801,6 +801,7 @@ module Aws::ConnectCases
       attr_accessor comment: Types::CommentContent
       attr_accessor contact: Types::ContactContent
       attr_accessor file: Types::FileContent
+      attr_accessor sla: Types::SlaContent
       attr_accessor unknown: untyped
       SENSITIVE: []
 
@@ -809,6 +810,8 @@ module Aws::ConnectCases
       class Contact < RelatedItemContent
       end
       class File < RelatedItemContent
+      end
+      class Sla < RelatedItemContent
       end
       class Unknown < RelatedItemContent
       end
@@ -823,6 +826,7 @@ module Aws::ConnectCases
       attr_accessor comment: Types::CommentContent
       attr_accessor contact: Types::Contact
       attr_accessor file: Types::FileContent
+      attr_accessor sla: Types::SlaInputContent
       attr_accessor unknown: untyped
       SENSITIVE: []
 
@@ -832,6 +836,8 @@ module Aws::ConnectCases
       end
       class File < RelatedItemInputContent
       end
+      class Sla < RelatedItemInputContent
+      end
       class Unknown < RelatedItemInputContent
       end
     end
@@ -840,6 +846,7 @@ module Aws::ConnectCases
       attr_accessor comment: Types::CommentFilter
       attr_accessor contact: Types::ContactFilter
       attr_accessor file: Types::FileFilter
+      attr_accessor sla: Types::SlaFilter
       attr_accessor unknown: untyped
       SENSITIVE: []
 
@@ -848,6 +855,8 @@ module Aws::ConnectCases
       class Contact < RelatedItemTypeFilter
       end
       class File < RelatedItemTypeFilter
+      end
+      class Sla < RelatedItemTypeFilter
       end
       class Unknown < RelatedItemTypeFilter
       end
@@ -917,7 +926,7 @@ module Aws::ConnectCases
       attr_accessor performed_by: Types::UserUnion
       attr_accessor related_item_id: ::String
       attr_accessor tags: ::Hash[::String, ::String]
-      attr_accessor type: ("Contact" | "Comment" | "File")
+      attr_accessor type: ("Contact" | "Comment" | "File" | "Sla")
       SENSITIVE: []
     end
 
@@ -935,6 +944,48 @@ module Aws::ConnectCases
     class ServiceQuotaExceededException
       attr_accessor message: ::String
       SENSITIVE: []
+    end
+
+    class SlaConfiguration
+      attr_accessor completion_time: ::Time
+      attr_accessor field_id: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ("Active" | "Overdue" | "Met" | "NotMet")
+      attr_accessor target_field_values: ::Array[Types::FieldValueUnion]
+      attr_accessor target_time: ::Time
+      attr_accessor type: ("CaseField")
+      SENSITIVE: [:name]
+    end
+
+    class SlaContent
+      attr_accessor sla_configuration: Types::SlaConfiguration
+      SENSITIVE: []
+    end
+
+    class SlaFilter
+      attr_accessor name: ::String
+      attr_accessor status: ("Active" | "Overdue" | "Met" | "NotMet")
+      SENSITIVE: [:name]
+    end
+
+    class SlaInputConfiguration
+      attr_accessor field_id: ::String
+      attr_accessor name: ::String
+      attr_accessor target_field_values: ::Array[Types::FieldValueUnion]
+      attr_accessor target_sla_minutes: ::Integer
+      attr_accessor type: ("CaseField")
+      SENSITIVE: [:name]
+    end
+
+    class SlaInputContent
+      attr_accessor sla_input_configuration: Types::SlaInputConfiguration
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class SlaInputConfiguration < SlaInputContent
+      end
+      class Unknown < SlaInputContent
+      end
     end
 
     class Sort

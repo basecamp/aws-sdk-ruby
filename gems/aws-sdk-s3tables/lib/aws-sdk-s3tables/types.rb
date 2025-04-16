@@ -91,10 +91,19 @@ module Aws::S3Tables
     #   The name for the table bucket.
     #   @return [String]
     #
+    # @!attribute [rw] encryption_configuration
+    #   The encryption configuration to use for the table bucket. This
+    #   configuration specifies the default encryption settings that will be
+    #   applied to all tables created in this bucket unless overridden at
+    #   the table level. The configuration includes the encryption algorithm
+    #   and, if using SSE-KMS, the KMS key to use.
+    #   @return [Types::EncryptionConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/CreateTableBucketRequest AWS API Documentation
     #
     class CreateTableBucketRequest < Struct.new(
-      :name)
+      :name,
+      :encryption_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -132,6 +141,22 @@ module Aws::S3Tables
     #   The metadata for the table.
     #   @return [Types::TableMetadata]
     #
+    # @!attribute [rw] encryption_configuration
+    #   The encryption configuration to use for the table. This
+    #   configuration specifies the encryption algorithm and, if using
+    #   SSE-KMS, the KMS key to use for encrypting the table.
+    #
+    #   <note markdown="1"> If you choose SSE-KMS encryption you must grant the S3 Tables
+    #   maintenance principal access to your KMS key. For more information,
+    #   see [Permissions requirements for S3 Tables SSE-KMS encryption][1].
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-kms-permissions.html
+    #   @return [Types::EncryptionConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/CreateTableRequest AWS API Documentation
     #
     class CreateTableRequest < Struct.new(
@@ -139,7 +164,8 @@ module Aws::S3Tables
       :namespace,
       :name,
       :format,
-      :metadata)
+      :metadata,
+      :encryption_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -175,6 +201,18 @@ module Aws::S3Tables
     class DeleteNamespaceRequest < Struct.new(
       :table_bucket_arn,
       :namespace)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] table_bucket_arn
+    #   The Amazon Resource Name (ARN) of the table bucket.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/DeleteTableBucketEncryptionRequest AWS API Documentation
+    #
+    class DeleteTableBucketEncryptionRequest < Struct.new(
+      :table_bucket_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -254,6 +292,37 @@ module Aws::S3Tables
       include Aws::Structure
     end
 
+    # Configuration specifying how data should be encrypted. This structure
+    # defines the encryption algorithm and optional KMS key to be used for
+    # server-side encryption.
+    #
+    # @!attribute [rw] sse_algorithm
+    #   The server-side encryption algorithm to use. Valid values are
+    #   `AES256` for S3-managed encryption keys, or `aws:kms` for Amazon Web
+    #   Services KMS-managed encryption keys. If you choose SSE-KMS
+    #   encryption you must grant the S3 Tables maintenance principal access
+    #   to your KMS key. For more information, see [Permissions requirements
+    #   for S3 Tables SSE-KMS encryption][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-kms-permissions.html
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_arn
+    #   The Amazon Resource Name (ARN) of the KMS key to use for encryption.
+    #   This field is required only when `sseAlgorithm` is set to `aws:kms`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/EncryptionConfiguration AWS API Documentation
+    #
+    class EncryptionConfiguration < Struct.new(
+      :sse_algorithm,
+      :kms_key_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The caller isn't authorized to make the request.
     #
     # @!attribute [rw] message
@@ -300,13 +369,47 @@ module Aws::S3Tables
     #   The ID of the account that owns the namespcace.
     #   @return [String]
     #
+    # @!attribute [rw] namespace_id
+    #   The unique identifier of the namespace.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_bucket_id
+    #   The unique identifier of the table bucket containing this namespace.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/GetNamespaceResponse AWS API Documentation
     #
     class GetNamespaceResponse < Struct.new(
       :namespace,
       :created_at,
       :created_by,
-      :owner_account_id)
+      :owner_account_id,
+      :namespace_id,
+      :table_bucket_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] table_bucket_arn
+    #   The Amazon Resource Name (ARN) of the table bucket.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/GetTableBucketEncryptionRequest AWS API Documentation
+    #
+    class GetTableBucketEncryptionRequest < Struct.new(
+      :table_bucket_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] encryption_configuration
+    #   The encryption configuration for the table bucket.
+    #   @return [Types::EncryptionConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/GetTableBucketEncryptionResponse AWS API Documentation
+    #
+    class GetTableBucketEncryptionResponse < Struct.new(
+      :encryption_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -394,13 +497,53 @@ module Aws::S3Tables
     #   The date and time the table bucket was created.
     #   @return [Time]
     #
+    # @!attribute [rw] table_bucket_id
+    #   The unique identifier of the table bucket.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/GetTableBucketResponse AWS API Documentation
     #
     class GetTableBucketResponse < Struct.new(
       :arn,
       :name,
       :owner_account_id,
-      :created_at)
+      :created_at,
+      :table_bucket_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] table_bucket_arn
+    #   The Amazon Resource Name (ARN) of the table bucket containing the
+    #   table.
+    #   @return [String]
+    #
+    # @!attribute [rw] namespace
+    #   The namespace associated with the table.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the table.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/GetTableEncryptionRequest AWS API Documentation
+    #
+    class GetTableEncryptionRequest < Struct.new(
+      :table_bucket_arn,
+      :namespace,
+      :name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] encryption_configuration
+    #   The encryption configuration for the table.
+    #   @return [Types::EncryptionConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/GetTableEncryptionResponse AWS API Documentation
+    #
+    class GetTableEncryptionResponse < Struct.new(
+      :encryption_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -601,6 +744,10 @@ module Aws::S3Tables
     #   The namespace associated with the table.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] namespace_id
+    #   The unique identifier of the namespace containing this table.
+    #   @return [String]
+    #
     # @!attribute [rw] version_token
     #   The version token of the table.
     #   @return [String]
@@ -641,6 +788,10 @@ module Aws::S3Tables
     #   The format of the table.
     #   @return [String]
     #
+    # @!attribute [rw] table_bucket_id
+    #   The unique identifier of the table bucket containing this table.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/GetTableResponse AWS API Documentation
     #
     class GetTableResponse < Struct.new(
@@ -648,6 +799,7 @@ module Aws::S3Tables
       :type,
       :table_arn,
       :namespace,
+      :namespace_id,
       :version_token,
       :metadata_location,
       :warehouse_location,
@@ -657,7 +809,8 @@ module Aws::S3Tables
       :modified_at,
       :modified_by,
       :owner_account_id,
-      :format)
+      :format,
+      :table_bucket_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -732,12 +885,12 @@ module Aws::S3Tables
     #
     # @!attribute [rw] unreferenced_days
     #   The number of days an object has to be unreferenced before it is
-    #   marked as non-current.      </p>
+    #   marked as non-current.
     #   @return [Integer]
     #
     # @!attribute [rw] non_current_days
     #   The number of days an object has to be non-current before it is
-    #   deleted.     </p>
+    #   deleted.
     #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/IcebergUnreferencedFileRemovalSettings AWS API Documentation
@@ -923,13 +1076,24 @@ module Aws::S3Tables
     #   The ID of the account that owns the namespace.
     #   @return [String]
     #
+    # @!attribute [rw] namespace_id
+    #   The system-assigned unique identifier for the namespace.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_bucket_id
+    #   The system-assigned unique identifier for the table bucket that
+    #   contains this namespace.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/NamespaceSummary AWS API Documentation
     #
     class NamespaceSummary < Struct.new(
       :namespace,
       :created_at,
       :created_by,
-      :owner_account_id)
+      :owner_account_id,
+      :namespace_id,
+      :table_bucket_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -944,6 +1108,23 @@ module Aws::S3Tables
     #
     class NotFoundException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] table_bucket_arn
+    #   The Amazon Resource Name (ARN) of the table bucket.
+    #   @return [String]
+    #
+    # @!attribute [rw] encryption_configuration
+    #   The encryption configuration to apply to the table bucket.
+    #   @return [Types::EncryptionConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/PutTableBucketEncryptionRequest AWS API Documentation
+    #
+    class PutTableBucketEncryptionRequest < Struct.new(
+      :table_bucket_arn,
+      :encryption_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1182,13 +1363,18 @@ module Aws::S3Tables
     #   The date and time the table bucket was created at.
     #   @return [Time]
     #
+    # @!attribute [rw] table_bucket_id
+    #   The system-assigned unique identifier for the table bucket.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/TableBucketSummary AWS API Documentation
     #
     class TableBucketSummary < Struct.new(
       :arn,
       :name,
       :owner_account_id,
-      :created_at)
+      :created_at,
+      :table_bucket_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1316,6 +1502,14 @@ module Aws::S3Tables
     #   The date and time the table was last modified at.
     #   @return [Time]
     #
+    # @!attribute [rw] namespace_id
+    #   The unique identifier for the namespace that contains this table.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_bucket_id
+    #   The unique identifier for the table bucket that contains this table.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/TableSummary AWS API Documentation
     #
     class TableSummary < Struct.new(
@@ -1324,7 +1518,9 @@ module Aws::S3Tables
       :type,
       :table_arn,
       :created_at,
-      :modified_at)
+      :modified_at,
+      :namespace_id,
+      :table_bucket_id)
       SENSITIVE = []
       include Aws::Structure
     end

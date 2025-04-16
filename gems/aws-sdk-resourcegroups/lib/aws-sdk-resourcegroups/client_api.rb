@@ -232,6 +232,7 @@ module Aws::ResourceGroups
     GetTagSyncTaskOutput.add_member(:task_arn, Shapes::ShapeRef.new(shape: TagSyncTaskArn, location_name: "TaskArn"))
     GetTagSyncTaskOutput.add_member(:tag_key, Shapes::ShapeRef.new(shape: TagKey, location_name: "TagKey"))
     GetTagSyncTaskOutput.add_member(:tag_value, Shapes::ShapeRef.new(shape: TagValue, location_name: "TagValue"))
+    GetTagSyncTaskOutput.add_member(:resource_query, Shapes::ShapeRef.new(shape: ResourceQuery, location_name: "ResourceQuery"))
     GetTagSyncTaskOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "RoleArn"))
     GetTagSyncTaskOutput.add_member(:status, Shapes::ShapeRef.new(shape: TagSyncTaskStatus, location_name: "Status"))
     GetTagSyncTaskOutput.add_member(:error_message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "ErrorMessage"))
@@ -440,8 +441,9 @@ module Aws::ResourceGroups
     SearchResourcesOutput.struct_class = Types::SearchResourcesOutput
 
     StartTagSyncTaskInput.add_member(:group, Shapes::ShapeRef.new(shape: GroupStringV2, required: true, location_name: "Group"))
-    StartTagSyncTaskInput.add_member(:tag_key, Shapes::ShapeRef.new(shape: TagKey, required: true, location_name: "TagKey"))
-    StartTagSyncTaskInput.add_member(:tag_value, Shapes::ShapeRef.new(shape: TagValue, required: true, location_name: "TagValue"))
+    StartTagSyncTaskInput.add_member(:tag_key, Shapes::ShapeRef.new(shape: TagKey, location_name: "TagKey"))
+    StartTagSyncTaskInput.add_member(:tag_value, Shapes::ShapeRef.new(shape: TagValue, location_name: "TagValue"))
+    StartTagSyncTaskInput.add_member(:resource_query, Shapes::ShapeRef.new(shape: ResourceQuery, location_name: "ResourceQuery"))
     StartTagSyncTaskInput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "RoleArn"))
     StartTagSyncTaskInput.struct_class = Types::StartTagSyncTaskInput
 
@@ -450,6 +452,7 @@ module Aws::ResourceGroups
     StartTagSyncTaskOutput.add_member(:task_arn, Shapes::ShapeRef.new(shape: TagSyncTaskArn, location_name: "TaskArn"))
     StartTagSyncTaskOutput.add_member(:tag_key, Shapes::ShapeRef.new(shape: TagKey, location_name: "TagKey"))
     StartTagSyncTaskOutput.add_member(:tag_value, Shapes::ShapeRef.new(shape: TagValue, location_name: "TagValue"))
+    StartTagSyncTaskOutput.add_member(:resource_query, Shapes::ShapeRef.new(shape: ResourceQuery, location_name: "ResourceQuery"))
     StartTagSyncTaskOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "RoleArn"))
     StartTagSyncTaskOutput.struct_class = Types::StartTagSyncTaskOutput
 
@@ -468,6 +471,7 @@ module Aws::ResourceGroups
     TagSyncTaskItem.add_member(:task_arn, Shapes::ShapeRef.new(shape: TagSyncTaskArn, location_name: "TaskArn"))
     TagSyncTaskItem.add_member(:tag_key, Shapes::ShapeRef.new(shape: TagKey, location_name: "TagKey"))
     TagSyncTaskItem.add_member(:tag_value, Shapes::ShapeRef.new(shape: TagValue, location_name: "TagValue"))
+    TagSyncTaskItem.add_member(:resource_query, Shapes::ShapeRef.new(shape: ResourceQuery, location_name: "ResourceQuery"))
     TagSyncTaskItem.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "RoleArn"))
     TagSyncTaskItem.add_member(:status, Shapes::ShapeRef.new(shape: TagSyncTaskStatus, location_name: "Status"))
     TagSyncTaskItem.add_member(:error_message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "ErrorMessage"))

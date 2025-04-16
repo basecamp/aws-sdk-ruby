@@ -228,12 +228,24 @@ module Aws::ConnectCases
     Section = Shapes::UnionShape.new(name: 'Section')
     SectionsList = Shapes::ListShape.new(name: 'SectionsList')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
+    SlaCompletionTime = Shapes::TimestampShape.new(name: 'SlaCompletionTime', timestampFormat: "iso8601")
+    SlaConfiguration = Shapes::StructureShape.new(name: 'SlaConfiguration')
+    SlaContent = Shapes::StructureShape.new(name: 'SlaContent')
+    SlaFieldValueUnionList = Shapes::ListShape.new(name: 'SlaFieldValueUnionList')
+    SlaFilter = Shapes::StructureShape.new(name: 'SlaFilter')
+    SlaInputConfiguration = Shapes::StructureShape.new(name: 'SlaInputConfiguration')
+    SlaInputContent = Shapes::UnionShape.new(name: 'SlaInputContent')
+    SlaName = Shapes::StringShape.new(name: 'SlaName')
+    SlaStatus = Shapes::StringShape.new(name: 'SlaStatus')
+    SlaTargetTime = Shapes::TimestampShape.new(name: 'SlaTargetTime', timestampFormat: "iso8601")
+    SlaType = Shapes::StringShape.new(name: 'SlaType')
     Sort = Shapes::StructureShape.new(name: 'Sort')
     String = Shapes::StringShape.new(name: 'String')
     TagKey = Shapes::StringShape.new(name: 'TagKey')
     TagKeyList = Shapes::ListShape.new(name: 'TagKeyList')
     TagResourceRequest = Shapes::StructureShape.new(name: 'TagResourceRequest')
     Tags = Shapes::MapShape.new(name: 'Tags')
+    TargetSlaMinutes = Shapes::IntegerShape.new(name: 'TargetSlaMinutes')
     TemplateArn = Shapes::StringShape.new(name: 'TemplateArn')
     TemplateCaseRuleList = Shapes::ListShape.new(name: 'TemplateCaseRuleList')
     TemplateDescription = Shapes::StringShape.new(name: 'TemplateDescription')
@@ -854,10 +866,12 @@ module Aws::ConnectCases
     RelatedItemContent.add_member(:comment, Shapes::ShapeRef.new(shape: CommentContent, location_name: "comment"))
     RelatedItemContent.add_member(:contact, Shapes::ShapeRef.new(shape: ContactContent, location_name: "contact"))
     RelatedItemContent.add_member(:file, Shapes::ShapeRef.new(shape: FileContent, location_name: "file"))
+    RelatedItemContent.add_member(:sla, Shapes::ShapeRef.new(shape: SlaContent, location_name: "sla"))
     RelatedItemContent.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     RelatedItemContent.add_member_subclass(:comment, Types::RelatedItemContent::Comment)
     RelatedItemContent.add_member_subclass(:contact, Types::RelatedItemContent::Contact)
     RelatedItemContent.add_member_subclass(:file, Types::RelatedItemContent::File)
+    RelatedItemContent.add_member_subclass(:sla, Types::RelatedItemContent::Sla)
     RelatedItemContent.add_member_subclass(:unknown, Types::RelatedItemContent::Unknown)
     RelatedItemContent.struct_class = Types::RelatedItemContent
 
@@ -867,20 +881,24 @@ module Aws::ConnectCases
     RelatedItemInputContent.add_member(:comment, Shapes::ShapeRef.new(shape: CommentContent, location_name: "comment"))
     RelatedItemInputContent.add_member(:contact, Shapes::ShapeRef.new(shape: Contact, location_name: "contact"))
     RelatedItemInputContent.add_member(:file, Shapes::ShapeRef.new(shape: FileContent, location_name: "file"))
+    RelatedItemInputContent.add_member(:sla, Shapes::ShapeRef.new(shape: SlaInputContent, location_name: "sla"))
     RelatedItemInputContent.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     RelatedItemInputContent.add_member_subclass(:comment, Types::RelatedItemInputContent::Comment)
     RelatedItemInputContent.add_member_subclass(:contact, Types::RelatedItemInputContent::Contact)
     RelatedItemInputContent.add_member_subclass(:file, Types::RelatedItemInputContent::File)
+    RelatedItemInputContent.add_member_subclass(:sla, Types::RelatedItemInputContent::Sla)
     RelatedItemInputContent.add_member_subclass(:unknown, Types::RelatedItemInputContent::Unknown)
     RelatedItemInputContent.struct_class = Types::RelatedItemInputContent
 
     RelatedItemTypeFilter.add_member(:comment, Shapes::ShapeRef.new(shape: CommentFilter, location_name: "comment"))
     RelatedItemTypeFilter.add_member(:contact, Shapes::ShapeRef.new(shape: ContactFilter, location_name: "contact"))
     RelatedItemTypeFilter.add_member(:file, Shapes::ShapeRef.new(shape: FileFilter, location_name: "file"))
+    RelatedItemTypeFilter.add_member(:sla, Shapes::ShapeRef.new(shape: SlaFilter, location_name: "sla"))
     RelatedItemTypeFilter.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     RelatedItemTypeFilter.add_member_subclass(:comment, Types::RelatedItemTypeFilter::Comment)
     RelatedItemTypeFilter.add_member_subclass(:contact, Types::RelatedItemTypeFilter::Contact)
     RelatedItemTypeFilter.add_member_subclass(:file, Types::RelatedItemTypeFilter::File)
+    RelatedItemTypeFilter.add_member_subclass(:sla, Types::RelatedItemTypeFilter::Sla)
     RelatedItemTypeFilter.add_member_subclass(:unknown, Types::RelatedItemTypeFilter::Unknown)
     RelatedItemTypeFilter.struct_class = Types::RelatedItemTypeFilter
 
@@ -958,6 +976,37 @@ module Aws::ConnectCases
 
     ServiceQuotaExceededException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     ServiceQuotaExceededException.struct_class = Types::ServiceQuotaExceededException
+
+    SlaConfiguration.add_member(:completion_time, Shapes::ShapeRef.new(shape: SlaCompletionTime, location_name: "completionTime"))
+    SlaConfiguration.add_member(:field_id, Shapes::ShapeRef.new(shape: FieldId, location_name: "fieldId"))
+    SlaConfiguration.add_member(:name, Shapes::ShapeRef.new(shape: SlaName, required: true, location_name: "name"))
+    SlaConfiguration.add_member(:status, Shapes::ShapeRef.new(shape: SlaStatus, required: true, location_name: "status"))
+    SlaConfiguration.add_member(:target_field_values, Shapes::ShapeRef.new(shape: SlaFieldValueUnionList, location_name: "targetFieldValues"))
+    SlaConfiguration.add_member(:target_time, Shapes::ShapeRef.new(shape: SlaTargetTime, required: true, location_name: "targetTime"))
+    SlaConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: SlaType, required: true, location_name: "type"))
+    SlaConfiguration.struct_class = Types::SlaConfiguration
+
+    SlaContent.add_member(:sla_configuration, Shapes::ShapeRef.new(shape: SlaConfiguration, required: true, location_name: "slaConfiguration"))
+    SlaContent.struct_class = Types::SlaContent
+
+    SlaFieldValueUnionList.member = Shapes::ShapeRef.new(shape: FieldValueUnion)
+
+    SlaFilter.add_member(:name, Shapes::ShapeRef.new(shape: SlaName, location_name: "name"))
+    SlaFilter.add_member(:status, Shapes::ShapeRef.new(shape: SlaStatus, location_name: "status"))
+    SlaFilter.struct_class = Types::SlaFilter
+
+    SlaInputConfiguration.add_member(:field_id, Shapes::ShapeRef.new(shape: FieldId, location_name: "fieldId"))
+    SlaInputConfiguration.add_member(:name, Shapes::ShapeRef.new(shape: SlaName, required: true, location_name: "name"))
+    SlaInputConfiguration.add_member(:target_field_values, Shapes::ShapeRef.new(shape: SlaFieldValueUnionList, location_name: "targetFieldValues"))
+    SlaInputConfiguration.add_member(:target_sla_minutes, Shapes::ShapeRef.new(shape: TargetSlaMinutes, required: true, location_name: "targetSlaMinutes"))
+    SlaInputConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: SlaType, required: true, location_name: "type"))
+    SlaInputConfiguration.struct_class = Types::SlaInputConfiguration
+
+    SlaInputContent.add_member(:sla_input_configuration, Shapes::ShapeRef.new(shape: SlaInputConfiguration, location_name: "slaInputConfiguration"))
+    SlaInputContent.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    SlaInputContent.add_member_subclass(:sla_input_configuration, Types::SlaInputContent::SlaInputConfiguration)
+    SlaInputContent.add_member_subclass(:unknown, Types::SlaInputContent::Unknown)
+    SlaInputContent.struct_class = Types::SlaInputContent
 
     Sort.add_member(:field_id, Shapes::ShapeRef.new(shape: FieldId, required: true, location_name: "fieldId"))
     Sort.add_member(:sort_order, Shapes::ShapeRef.new(shape: Order, required: true, location_name: "sortOrder"))
@@ -1059,9 +1108,11 @@ module Aws::ConnectCases
 
       api.metadata = {
         "apiVersion" => "2022-10-03",
+        "auth" => ["aws.auth#sigv4"],
         "endpointPrefix" => "cases",
         "jsonVersion" => "1.1",
         "protocol" => "rest-json",
+        "protocols" => ["rest-json"],
         "serviceAbbreviation" => "ConnectCases",
         "serviceFullName" => "Amazon Connect Cases",
         "serviceId" => "ConnectCases",
@@ -1527,6 +1578,7 @@ module Aws::ConnectCases
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
       end)
 
       api.add_operation(:search_cases, Seahorse::Model::Operation.new.tap do |o|

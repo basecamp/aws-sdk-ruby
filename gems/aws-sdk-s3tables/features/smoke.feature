@@ -8,26 +8,14 @@
 Feature: Smoke tests for S3Tables
 
   @s3tables @smoke
-  Scenario: ListTableBuckets_Success
+  Scenario: GetTable_AccessDeniedException
     Given I create a 'Aws::S3Tables' client with config:
       """
 {"region":"us-east-1","use_fips_endpoint":false,"use_dualstack_endpoint":false}
       """
-    When I call the operation 'list_table_buckets' with params:
+    When I call the operation 'get_table' with params:
       """
-{}
-      """
-    Then I expect an error was not raised
-
-  @s3tables @smoke
-  Scenario: GetNamespace_AccessDeniedException
-    Given I create a 'Aws::S3Tables' client with config:
-      """
-{"region":"us-east-1","use_fips_endpoint":false,"use_dualstack_endpoint":false}
-      """
-    When I call the operation 'get_namespace' with params:
-      """
-{"table_bucket_arn":"arn:aws:s3tables:us-east-1:123456789012:bucket/does-not-exist","namespace":"doesnotexist"}
+{"table_bucket_arn":"arn:aws:s3tables:us-east-1:123456789012:bucket/does-not-exist","namespace":"doesnotexist","name":"doesnotexist"}
       """
     Then I expect a 'Aws::S3Tables::Errors::AccessDeniedException' was raised
 
@@ -44,14 +32,14 @@ Feature: Smoke tests for S3Tables
     Then I expect a 'Aws::S3Tables::Errors::AccessDeniedException' was raised
 
   @s3tables @smoke
-  Scenario: GetTable_AccessDeniedException
+  Scenario: GetNamespace_AccessDeniedException
     Given I create a 'Aws::S3Tables' client with config:
       """
 {"region":"us-east-1","use_fips_endpoint":false,"use_dualstack_endpoint":false}
       """
-    When I call the operation 'get_table' with params:
+    When I call the operation 'get_namespace' with params:
       """
-{"table_bucket_arn":"arn:aws:s3tables:us-east-1:123456789012:bucket/does-not-exist","namespace":"doesnotexist","name":"doesnotexist"}
+{"table_bucket_arn":"arn:aws:s3tables:us-east-1:123456789012:bucket/does-not-exist","namespace":"doesnotexist"}
       """
     Then I expect a 'Aws::S3Tables::Errors::AccessDeniedException' was raised
 
@@ -66,6 +54,18 @@ Feature: Smoke tests for S3Tables
 {"table_bucket_arn":"arn:aws:s3tables:us-east-1:123456789012:bucket/does-not-exist"}
       """
     Then I expect a 'Aws::S3Tables::Errors::AccessDeniedException' was raised
+
+  @s3tables @smoke
+  Scenario: ListTableBuckets_Success
+    Given I create a 'Aws::S3Tables' client with config:
+      """
+{"region":"us-east-1","use_fips_endpoint":false,"use_dualstack_endpoint":false}
+      """
+    When I call the operation 'list_table_buckets' with params:
+      """
+{}
+      """
+    Then I expect an error was not raised
 
   @s3tables @smoke
   Scenario: ListNamespaces_AccessDeniedException

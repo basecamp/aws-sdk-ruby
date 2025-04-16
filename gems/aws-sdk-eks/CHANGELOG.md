@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.135.0 (2025-04-16)
+------------------
+
+* Feature - Added support for new AL2023 ARM64 NVIDIA AMIs to the supported AMITypes.
+
 1.134.0 (2025-03-31)
 ------------------
 

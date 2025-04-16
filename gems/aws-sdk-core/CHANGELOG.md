@@ -1,6 +1,9 @@
 Unreleased Changes
 ------------------
 
+3.222.2 (2025-04-16)
+------------------
+
 * Issue - Additional metrics collection for credentials in the User-Agent plugin.
 
 3.222.1 (2025-03-28)

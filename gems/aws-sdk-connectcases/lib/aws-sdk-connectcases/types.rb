@@ -2485,12 +2485,17 @@ module Aws::ConnectCases
     #   Represents the content of a File to be returned to agents.
     #   @return [Types::FileContent]
     #
+    # @!attribute [rw] sla
+    #   Represents the content of an SLA to be returned to agents.
+    #   @return [Types::SlaContent]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connectcases-2022-10-03/RelatedItemContent AWS API Documentation
     #
     class RelatedItemContent < Struct.new(
       :comment,
       :contact,
       :file,
+      :sla,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
@@ -2499,6 +2504,7 @@ module Aws::ConnectCases
       class Comment < RelatedItemContent; end
       class Contact < RelatedItemContent; end
       class File < RelatedItemContent; end
+      class Sla < RelatedItemContent; end
       class Unknown < RelatedItemContent; end
     end
 
@@ -2535,12 +2541,17 @@ module Aws::ConnectCases
     #   A file of related items.
     #   @return [Types::FileContent]
     #
+    # @!attribute [rw] sla
+    #   Represents the content of an SLA to be created.
+    #   @return [Types::SlaInputContent]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connectcases-2022-10-03/RelatedItemInputContent AWS API Documentation
     #
     class RelatedItemInputContent < Struct.new(
       :comment,
       :contact,
       :file,
+      :sla,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
@@ -2549,6 +2560,7 @@ module Aws::ConnectCases
       class Comment < RelatedItemInputContent; end
       class Contact < RelatedItemInputContent; end
       class File < RelatedItemInputContent; end
+      class Sla < RelatedItemInputContent; end
       class Unknown < RelatedItemInputContent; end
     end
 
@@ -2569,12 +2581,17 @@ module Aws::ConnectCases
     #   A filter for related items of this type of `File`.
     #   @return [Types::FileFilter]
     #
+    # @!attribute [rw] sla
+    #   Filter for related items of type `SLA`.
+    #   @return [Types::SlaFilter]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connectcases-2022-10-03/RelatedItemTypeFilter AWS API Documentation
     #
     class RelatedItemTypeFilter < Struct.new(
       :comment,
       :contact,
       :file,
+      :sla,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
@@ -2583,6 +2600,7 @@ module Aws::ConnectCases
       class Comment < RelatedItemTypeFilter; end
       class Contact < RelatedItemTypeFilter; end
       class File < RelatedItemTypeFilter; end
+      class Sla < RelatedItemTypeFilter; end
       class Unknown < RelatedItemTypeFilter; end
     end
 
@@ -2883,6 +2901,141 @@ module Aws::ConnectCases
       :message)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # Represents an SLA configuration.
+    #
+    # @!attribute [rw] completion_time
+    #   Time at which an SLA was completed.
+    #   @return [Time]
+    #
+    # @!attribute [rw] field_id
+    #   Unique identifier of a field.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   Name of an SLA.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   Status of an SLA.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_field_values
+    #   Represents a list of target field values for the fieldId specified
+    #   in SlaConfiguration.
+    #   @return [Array<Types::FieldValueUnion>]
+    #
+    # @!attribute [rw] target_time
+    #   Target time by which an SLA should be completed.
+    #   @return [Time]
+    #
+    # @!attribute [rw] type
+    #   Type of SLA.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectcases-2022-10-03/SlaConfiguration AWS API Documentation
+    #
+    class SlaConfiguration < Struct.new(
+      :completion_time,
+      :field_id,
+      :name,
+      :status,
+      :target_field_values,
+      :target_time,
+      :type)
+      SENSITIVE = [:name]
+      include Aws::Structure
+    end
+
+    # Represents the content of an SLA to be returned to agents.
+    #
+    # @!attribute [rw] sla_configuration
+    #   Represents an SLA configuration.
+    #   @return [Types::SlaConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectcases-2022-10-03/SlaContent AWS API Documentation
+    #
+    class SlaContent < Struct.new(
+      :sla_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A filter for related items of type `SLA`.
+    #
+    # @!attribute [rw] name
+    #   Name of an SLA.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   Status of an SLA.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectcases-2022-10-03/SlaFilter AWS API Documentation
+    #
+    class SlaFilter < Struct.new(
+      :name,
+      :status)
+      SENSITIVE = [:name]
+      include Aws::Structure
+    end
+
+    # Represents the input configuration of an SLA being created.
+    #
+    # @!attribute [rw] field_id
+    #   Unique identifier of a field.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   Name of an SLA.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_field_values
+    #   Represents a list of target field values for the fieldId specified
+    #   in SlaInputConfiguration. The SLA is considered met if any one of
+    #   these target field values matches the actual field value.
+    #   @return [Array<Types::FieldValueUnion>]
+    #
+    # @!attribute [rw] target_sla_minutes
+    #   Target duration in minutes within which an SLA should be completed.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] type
+    #   Type of SLA.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectcases-2022-10-03/SlaInputConfiguration AWS API Documentation
+    #
+    class SlaInputConfiguration < Struct.new(
+      :field_id,
+      :name,
+      :target_field_values,
+      :target_sla_minutes,
+      :type)
+      SENSITIVE = [:name]
+      include Aws::Structure
+    end
+
+    # Represents the content of an SLA.
+    #
+    # @note SlaInputContent is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] sla_input_configuration
+    #   Represents an input SLA configuration.
+    #   @return [Types::SlaInputConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectcases-2022-10-03/SlaInputContent AWS API Documentation
+    #
+    class SlaInputContent < Struct.new(
+      :sla_input_configuration,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class SlaInputConfiguration < SlaInputContent; end
+      class Unknown < SlaInputContent; end
     end
 
     # A structured set of sort terms.

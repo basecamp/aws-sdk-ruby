@@ -27,20 +27,27 @@ module Aws::S3Tables
     CreateTableRequest = Shapes::StructureShape.new(name: 'CreateTableRequest')
     CreateTableResponse = Shapes::StructureShape.new(name: 'CreateTableResponse')
     DeleteNamespaceRequest = Shapes::StructureShape.new(name: 'DeleteNamespaceRequest')
+    DeleteTableBucketEncryptionRequest = Shapes::StructureShape.new(name: 'DeleteTableBucketEncryptionRequest')
     DeleteTableBucketPolicyRequest = Shapes::StructureShape.new(name: 'DeleteTableBucketPolicyRequest')
     DeleteTableBucketRequest = Shapes::StructureShape.new(name: 'DeleteTableBucketRequest')
     DeleteTablePolicyRequest = Shapes::StructureShape.new(name: 'DeleteTablePolicyRequest')
     DeleteTableRequest = Shapes::StructureShape.new(name: 'DeleteTableRequest')
+    EncryptionConfiguration = Shapes::StructureShape.new(name: 'EncryptionConfiguration')
+    EncryptionConfigurationKmsKeyArnString = Shapes::StringShape.new(name: 'EncryptionConfigurationKmsKeyArnString')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
     ForbiddenException = Shapes::StructureShape.new(name: 'ForbiddenException')
     GetNamespaceRequest = Shapes::StructureShape.new(name: 'GetNamespaceRequest')
     GetNamespaceResponse = Shapes::StructureShape.new(name: 'GetNamespaceResponse')
+    GetTableBucketEncryptionRequest = Shapes::StructureShape.new(name: 'GetTableBucketEncryptionRequest')
+    GetTableBucketEncryptionResponse = Shapes::StructureShape.new(name: 'GetTableBucketEncryptionResponse')
     GetTableBucketMaintenanceConfigurationRequest = Shapes::StructureShape.new(name: 'GetTableBucketMaintenanceConfigurationRequest')
     GetTableBucketMaintenanceConfigurationResponse = Shapes::StructureShape.new(name: 'GetTableBucketMaintenanceConfigurationResponse')
     GetTableBucketPolicyRequest = Shapes::StructureShape.new(name: 'GetTableBucketPolicyRequest')
     GetTableBucketPolicyResponse = Shapes::StructureShape.new(name: 'GetTableBucketPolicyResponse')
     GetTableBucketRequest = Shapes::StructureShape.new(name: 'GetTableBucketRequest')
     GetTableBucketResponse = Shapes::StructureShape.new(name: 'GetTableBucketResponse')
+    GetTableEncryptionRequest = Shapes::StructureShape.new(name: 'GetTableEncryptionRequest')
+    GetTableEncryptionResponse = Shapes::StructureShape.new(name: 'GetTableEncryptionResponse')
     GetTableMaintenanceConfigurationRequest = Shapes::StructureShape.new(name: 'GetTableMaintenanceConfigurationRequest')
     GetTableMaintenanceConfigurationResponse = Shapes::StructureShape.new(name: 'GetTableMaintenanceConfigurationResponse')
     GetTableMaintenanceJobStatusRequest = Shapes::StructureShape.new(name: 'GetTableMaintenanceJobStatusRequest')
@@ -72,6 +79,7 @@ module Aws::S3Tables
     ListTablesResponse = Shapes::StructureShape.new(name: 'ListTablesResponse')
     MaintenanceStatus = Shapes::StringShape.new(name: 'MaintenanceStatus')
     MetadataLocation = Shapes::StringShape.new(name: 'MetadataLocation')
+    NamespaceId = Shapes::StringShape.new(name: 'NamespaceId')
     NamespaceList = Shapes::ListShape.new(name: 'NamespaceList')
     NamespaceName = Shapes::StringShape.new(name: 'NamespaceName')
     NamespaceSummary = Shapes::StructureShape.new(name: 'NamespaceSummary')
@@ -80,18 +88,21 @@ module Aws::S3Tables
     NotFoundException = Shapes::StructureShape.new(name: 'NotFoundException')
     OpenTableFormat = Shapes::StringShape.new(name: 'OpenTableFormat')
     PositiveInteger = Shapes::IntegerShape.new(name: 'PositiveInteger')
+    PutTableBucketEncryptionRequest = Shapes::StructureShape.new(name: 'PutTableBucketEncryptionRequest')
     PutTableBucketMaintenanceConfigurationRequest = Shapes::StructureShape.new(name: 'PutTableBucketMaintenanceConfigurationRequest')
     PutTableBucketPolicyRequest = Shapes::StructureShape.new(name: 'PutTableBucketPolicyRequest')
     PutTableMaintenanceConfigurationRequest = Shapes::StructureShape.new(name: 'PutTableMaintenanceConfigurationRequest')
     PutTablePolicyRequest = Shapes::StructureShape.new(name: 'PutTablePolicyRequest')
     RenameTableRequest = Shapes::StructureShape.new(name: 'RenameTableRequest')
     ResourcePolicy = Shapes::StringShape.new(name: 'ResourcePolicy')
+    SSEAlgorithm = Shapes::StringShape.new(name: 'SSEAlgorithm')
     SchemaField = Shapes::StructureShape.new(name: 'SchemaField')
     SchemaFieldList = Shapes::ListShape.new(name: 'SchemaFieldList')
     String = Shapes::StringShape.new(name: 'String')
     SyntheticTimestamp_date_time = Shapes::TimestampShape.new(name: 'SyntheticTimestamp_date_time', timestampFormat: "iso8601")
     TableARN = Shapes::StringShape.new(name: 'TableARN')
     TableBucketARN = Shapes::StringShape.new(name: 'TableBucketARN')
+    TableBucketId = Shapes::StringShape.new(name: 'TableBucketId')
     TableBucketMaintenanceConfiguration = Shapes::MapShape.new(name: 'TableBucketMaintenanceConfiguration')
     TableBucketMaintenanceConfigurationValue = Shapes::StructureShape.new(name: 'TableBucketMaintenanceConfigurationValue')
     TableBucketMaintenanceSettings = Shapes::UnionShape.new(name: 'TableBucketMaintenanceSettings')
@@ -137,6 +148,7 @@ module Aws::S3Tables
     CreateNamespaceResponse.struct_class = Types::CreateNamespaceResponse
 
     CreateTableBucketRequest.add_member(:name, Shapes::ShapeRef.new(shape: TableBucketName, required: true, location_name: "name"))
+    CreateTableBucketRequest.add_member(:encryption_configuration, Shapes::ShapeRef.new(shape: EncryptionConfiguration, location_name: "encryptionConfiguration"))
     CreateTableBucketRequest.struct_class = Types::CreateTableBucketRequest
 
     CreateTableBucketResponse.add_member(:arn, Shapes::ShapeRef.new(shape: TableBucketARN, required: true, location_name: "arn"))
@@ -147,6 +159,7 @@ module Aws::S3Tables
     CreateTableRequest.add_member(:name, Shapes::ShapeRef.new(shape: TableName, required: true, location_name: "name"))
     CreateTableRequest.add_member(:format, Shapes::ShapeRef.new(shape: OpenTableFormat, required: true, location_name: "format"))
     CreateTableRequest.add_member(:metadata, Shapes::ShapeRef.new(shape: TableMetadata, location_name: "metadata"))
+    CreateTableRequest.add_member(:encryption_configuration, Shapes::ShapeRef.new(shape: EncryptionConfiguration, location_name: "encryptionConfiguration"))
     CreateTableRequest.struct_class = Types::CreateTableRequest
 
     CreateTableResponse.add_member(:table_arn, Shapes::ShapeRef.new(shape: TableARN, required: true, location_name: "tableARN"))
@@ -156,6 +169,9 @@ module Aws::S3Tables
     DeleteNamespaceRequest.add_member(:table_bucket_arn, Shapes::ShapeRef.new(shape: TableBucketARN, required: true, location: "uri", location_name: "tableBucketARN"))
     DeleteNamespaceRequest.add_member(:namespace, Shapes::ShapeRef.new(shape: NamespaceName, required: true, location: "uri", location_name: "namespace"))
     DeleteNamespaceRequest.struct_class = Types::DeleteNamespaceRequest
+
+    DeleteTableBucketEncryptionRequest.add_member(:table_bucket_arn, Shapes::ShapeRef.new(shape: TableBucketARN, required: true, location: "uri", location_name: "tableBucketARN"))
+    DeleteTableBucketEncryptionRequest.struct_class = Types::DeleteTableBucketEncryptionRequest
 
     DeleteTableBucketPolicyRequest.add_member(:table_bucket_arn, Shapes::ShapeRef.new(shape: TableBucketARN, required: true, location: "uri", location_name: "tableBucketARN"))
     DeleteTableBucketPolicyRequest.struct_class = Types::DeleteTableBucketPolicyRequest
@@ -174,6 +190,10 @@ module Aws::S3Tables
     DeleteTableRequest.add_member(:version_token, Shapes::ShapeRef.new(shape: VersionToken, location: "querystring", location_name: "versionToken"))
     DeleteTableRequest.struct_class = Types::DeleteTableRequest
 
+    EncryptionConfiguration.add_member(:sse_algorithm, Shapes::ShapeRef.new(shape: SSEAlgorithm, required: true, location_name: "sseAlgorithm"))
+    EncryptionConfiguration.add_member(:kms_key_arn, Shapes::ShapeRef.new(shape: EncryptionConfigurationKmsKeyArnString, location_name: "kmsKeyArn"))
+    EncryptionConfiguration.struct_class = Types::EncryptionConfiguration
+
     ForbiddenException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
     ForbiddenException.struct_class = Types::ForbiddenException
 
@@ -185,7 +205,15 @@ module Aws::S3Tables
     GetNamespaceResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, required: true, location_name: "createdAt"))
     GetNamespaceResponse.add_member(:created_by, Shapes::ShapeRef.new(shape: AccountId, required: true, location_name: "createdBy"))
     GetNamespaceResponse.add_member(:owner_account_id, Shapes::ShapeRef.new(shape: AccountId, required: true, location_name: "ownerAccountId"))
+    GetNamespaceResponse.add_member(:namespace_id, Shapes::ShapeRef.new(shape: NamespaceId, location_name: "namespaceId"))
+    GetNamespaceResponse.add_member(:table_bucket_id, Shapes::ShapeRef.new(shape: TableBucketId, location_name: "tableBucketId"))
     GetNamespaceResponse.struct_class = Types::GetNamespaceResponse
+
+    GetTableBucketEncryptionRequest.add_member(:table_bucket_arn, Shapes::ShapeRef.new(shape: TableBucketARN, required: true, location: "uri", location_name: "tableBucketARN"))
+    GetTableBucketEncryptionRequest.struct_class = Types::GetTableBucketEncryptionRequest
+
+    GetTableBucketEncryptionResponse.add_member(:encryption_configuration, Shapes::ShapeRef.new(shape: EncryptionConfiguration, required: true, location_name: "encryptionConfiguration"))
+    GetTableBucketEncryptionResponse.struct_class = Types::GetTableBucketEncryptionResponse
 
     GetTableBucketMaintenanceConfigurationRequest.add_member(:table_bucket_arn, Shapes::ShapeRef.new(shape: TableBucketARN, required: true, location: "uri", location_name: "tableBucketARN"))
     GetTableBucketMaintenanceConfigurationRequest.struct_class = Types::GetTableBucketMaintenanceConfigurationRequest
@@ -207,7 +235,16 @@ module Aws::S3Tables
     GetTableBucketResponse.add_member(:name, Shapes::ShapeRef.new(shape: TableBucketName, required: true, location_name: "name"))
     GetTableBucketResponse.add_member(:owner_account_id, Shapes::ShapeRef.new(shape: AccountId, required: true, location_name: "ownerAccountId"))
     GetTableBucketResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, required: true, location_name: "createdAt"))
+    GetTableBucketResponse.add_member(:table_bucket_id, Shapes::ShapeRef.new(shape: TableBucketId, location_name: "tableBucketId"))
     GetTableBucketResponse.struct_class = Types::GetTableBucketResponse
+
+    GetTableEncryptionRequest.add_member(:table_bucket_arn, Shapes::ShapeRef.new(shape: TableBucketARN, required: true, location: "uri", location_name: "tableBucketARN"))
+    GetTableEncryptionRequest.add_member(:namespace, Shapes::ShapeRef.new(shape: NamespaceName, required: true, location: "uri", location_name: "namespace"))
+    GetTableEncryptionRequest.add_member(:name, Shapes::ShapeRef.new(shape: TableName, required: true, location: "uri", location_name: "name"))
+    GetTableEncryptionRequest.struct_class = Types::GetTableEncryptionRequest
+
+    GetTableEncryptionResponse.add_member(:encryption_configuration, Shapes::ShapeRef.new(shape: EncryptionConfiguration, required: true, location_name: "encryptionConfiguration"))
+    GetTableEncryptionResponse.struct_class = Types::GetTableEncryptionResponse
 
     GetTableMaintenanceConfigurationRequest.add_member(:table_bucket_arn, Shapes::ShapeRef.new(shape: TableBucketARN, required: true, location: "uri", location_name: "tableBucketARN"))
     GetTableMaintenanceConfigurationRequest.add_member(:namespace, Shapes::ShapeRef.new(shape: NamespaceName, required: true, location: "uri", location_name: "namespace"))
@@ -254,6 +291,7 @@ module Aws::S3Tables
     GetTableResponse.add_member(:type, Shapes::ShapeRef.new(shape: TableType, required: true, location_name: "type"))
     GetTableResponse.add_member(:table_arn, Shapes::ShapeRef.new(shape: TableARN, required: true, location_name: "tableARN"))
     GetTableResponse.add_member(:namespace, Shapes::ShapeRef.new(shape: NamespaceList, required: true, location_name: "namespace"))
+    GetTableResponse.add_member(:namespace_id, Shapes::ShapeRef.new(shape: NamespaceId, location_name: "namespaceId"))
     GetTableResponse.add_member(:version_token, Shapes::ShapeRef.new(shape: VersionToken, required: true, location_name: "versionToken"))
     GetTableResponse.add_member(:metadata_location, Shapes::ShapeRef.new(shape: MetadataLocation, location_name: "metadataLocation"))
     GetTableResponse.add_member(:warehouse_location, Shapes::ShapeRef.new(shape: WarehouseLocation, required: true, location_name: "warehouseLocation"))
@@ -264,6 +302,7 @@ module Aws::S3Tables
     GetTableResponse.add_member(:modified_by, Shapes::ShapeRef.new(shape: AccountId, required: true, location_name: "modifiedBy"))
     GetTableResponse.add_member(:owner_account_id, Shapes::ShapeRef.new(shape: AccountId, required: true, location_name: "ownerAccountId"))
     GetTableResponse.add_member(:format, Shapes::ShapeRef.new(shape: OpenTableFormat, required: true, location_name: "format"))
+    GetTableResponse.add_member(:table_bucket_id, Shapes::ShapeRef.new(shape: TableBucketId, location_name: "tableBucketId"))
     GetTableResponse.struct_class = Types::GetTableResponse
 
     IcebergCompactionSettings.add_member(:target_file_size_mb, Shapes::ShapeRef.new(shape: PositiveInteger, location_name: "targetFileSizeMB"))
@@ -322,12 +361,18 @@ module Aws::S3Tables
     NamespaceSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, required: true, location_name: "createdAt"))
     NamespaceSummary.add_member(:created_by, Shapes::ShapeRef.new(shape: AccountId, required: true, location_name: "createdBy"))
     NamespaceSummary.add_member(:owner_account_id, Shapes::ShapeRef.new(shape: AccountId, required: true, location_name: "ownerAccountId"))
+    NamespaceSummary.add_member(:namespace_id, Shapes::ShapeRef.new(shape: NamespaceId, location_name: "namespaceId"))
+    NamespaceSummary.add_member(:table_bucket_id, Shapes::ShapeRef.new(shape: TableBucketId, location_name: "tableBucketId"))
     NamespaceSummary.struct_class = Types::NamespaceSummary
 
     NamespaceSummaryList.member = Shapes::ShapeRef.new(shape: NamespaceSummary)
 
     NotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
     NotFoundException.struct_class = Types::NotFoundException
+
+    PutTableBucketEncryptionRequest.add_member(:table_bucket_arn, Shapes::ShapeRef.new(shape: TableBucketARN, required: true, location: "uri", location_name: "tableBucketARN"))
+    PutTableBucketEncryptionRequest.add_member(:encryption_configuration, Shapes::ShapeRef.new(shape: EncryptionConfiguration, required: true, location_name: "encryptionConfiguration"))
+    PutTableBucketEncryptionRequest.struct_class = Types::PutTableBucketEncryptionRequest
 
     PutTableBucketMaintenanceConfigurationRequest.add_member(:table_bucket_arn, Shapes::ShapeRef.new(shape: TableBucketARN, required: true, location: "uri", location_name: "tableBucketARN"))
     PutTableBucketMaintenanceConfigurationRequest.add_member(:type, Shapes::ShapeRef.new(shape: TableBucketMaintenanceType, required: true, location: "uri", location_name: "type"))
@@ -383,6 +428,7 @@ module Aws::S3Tables
     TableBucketSummary.add_member(:name, Shapes::ShapeRef.new(shape: TableBucketName, required: true, location_name: "name"))
     TableBucketSummary.add_member(:owner_account_id, Shapes::ShapeRef.new(shape: AccountId, required: true, location_name: "ownerAccountId"))
     TableBucketSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, required: true, location_name: "createdAt"))
+    TableBucketSummary.add_member(:table_bucket_id, Shapes::ShapeRef.new(shape: TableBucketId, location_name: "tableBucketId"))
     TableBucketSummary.struct_class = Types::TableBucketSummary
 
     TableBucketSummaryList.member = Shapes::ShapeRef.new(shape: TableBucketSummary)
@@ -422,6 +468,8 @@ module Aws::S3Tables
     TableSummary.add_member(:table_arn, Shapes::ShapeRef.new(shape: TableARN, required: true, location_name: "tableARN"))
     TableSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, required: true, location_name: "createdAt"))
     TableSummary.add_member(:modified_at, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, required: true, location_name: "modifiedAt"))
+    TableSummary.add_member(:namespace_id, Shapes::ShapeRef.new(shape: NamespaceId, location_name: "namespaceId"))
+    TableSummary.add_member(:table_bucket_id, Shapes::ShapeRef.new(shape: TableBucketId, location_name: "tableBucketId"))
     TableSummary.struct_class = Types::TableSummary
 
     TableSummaryList.member = Shapes::ShapeRef.new(shape: TableSummary)
@@ -546,6 +594,20 @@ module Aws::S3Tables
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
       end)
 
+      api.add_operation(:delete_table_bucket_encryption, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteTableBucketEncryption"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/buckets/{tableBucketARN}/encryption"
+        o.input = Shapes::ShapeRef.new(shape: DeleteTableBucketEncryptionRequest)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+      end)
+
       api.add_operation(:delete_table_bucket_policy, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DeleteTableBucketPolicy"
         o.http_method = "DELETE"
@@ -619,6 +681,20 @@ module Aws::S3Tables
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
       end)
 
+      api.add_operation(:get_table_bucket_encryption, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetTableBucketEncryption"
+        o.http_method = "GET"
+        o.http_request_uri = "/buckets/{tableBucketARN}/encryption"
+        o.input = Shapes::ShapeRef.new(shape: GetTableBucketEncryptionRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetTableBucketEncryptionResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+      end)
+
       api.add_operation(:get_table_bucket_maintenance_configuration, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetTableBucketMaintenanceConfiguration"
         o.http_method = "GET"
@@ -644,6 +720,20 @@ module Aws::S3Tables
         o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+      end)
+
+      api.add_operation(:get_table_encryption, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetTableEncryption"
+        o.http_method = "GET"
+        o.http_request_uri = "/tables/{tableBucketARN}/{namespace}/{name}/encryption"
+        o.input = Shapes::ShapeRef.new(shape: GetTableEncryptionRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetTableEncryptionResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
       end)
 
@@ -763,6 +853,20 @@ module Aws::S3Tables
             "continuation_token" => "continuation_token"
           }
         )
+      end)
+
+      api.add_operation(:put_table_bucket_encryption, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "PutTableBucketEncryption"
+        o.http_method = "PUT"
+        o.http_request_uri = "/buckets/{tableBucketARN}/encryption"
+        o.input = Shapes::ShapeRef.new(shape: PutTableBucketEncryptionRequest)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
       end)
 
       api.add_operation(:put_table_bucket_maintenance_configuration, Seahorse::Model::Operation.new.tap do |o|

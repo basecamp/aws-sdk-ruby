@@ -332,6 +332,30 @@ module Aws::DSQL
       include Aws::Structure
     end
 
+    # @!attribute [rw] identifier
+    #   The ID of the cluster to retrieve.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/dsql-2018-05-10/GetVpcEndpointServiceNameInput AWS API Documentation
+    #
+    class GetVpcEndpointServiceNameInput < Struct.new(
+      :identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] service_name
+    #   The VPC endpoint service name.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/dsql-2018-05-10/GetVpcEndpointServiceNameOutput AWS API Documentation
+    #
+    class GetVpcEndpointServiceNameOutput < Struct.new(
+      :service_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The request processing has failed because of an unknown error,
     # exception or failure.
     #

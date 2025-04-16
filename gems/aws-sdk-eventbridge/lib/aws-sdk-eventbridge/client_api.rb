@@ -562,6 +562,7 @@ module Aws::EventBridge
     CreateConnectionRequest.add_member(:authorization_type, Shapes::ShapeRef.new(shape: ConnectionAuthorizationType, required: true, location_name: "AuthorizationType"))
     CreateConnectionRequest.add_member(:auth_parameters, Shapes::ShapeRef.new(shape: CreateConnectionAuthRequestParameters, required: true, location_name: "AuthParameters"))
     CreateConnectionRequest.add_member(:invocation_connectivity_parameters, Shapes::ShapeRef.new(shape: ConnectivityResourceParameters, location_name: "InvocationConnectivityParameters"))
+    CreateConnectionRequest.add_member(:kms_key_identifier, Shapes::ShapeRef.new(shape: KmsKeyIdentifier, location_name: "KmsKeyIdentifier"))
     CreateConnectionRequest.struct_class = Types::CreateConnectionRequest
 
     CreateConnectionResponse.add_member(:connection_arn, Shapes::ShapeRef.new(shape: ConnectionArn, location_name: "ConnectionArn"))
@@ -711,6 +712,7 @@ module Aws::EventBridge
     DescribeConnectionResponse.add_member(:state_reason, Shapes::ShapeRef.new(shape: ConnectionStateReason, location_name: "StateReason"))
     DescribeConnectionResponse.add_member(:authorization_type, Shapes::ShapeRef.new(shape: ConnectionAuthorizationType, location_name: "AuthorizationType"))
     DescribeConnectionResponse.add_member(:secret_arn, Shapes::ShapeRef.new(shape: SecretsManagerSecretArn, location_name: "SecretArn"))
+    DescribeConnectionResponse.add_member(:kms_key_identifier, Shapes::ShapeRef.new(shape: KmsKeyIdentifier, location_name: "KmsKeyIdentifier"))
     DescribeConnectionResponse.add_member(:auth_parameters, Shapes::ShapeRef.new(shape: ConnectionAuthResponseParameters, location_name: "AuthParameters"))
     DescribeConnectionResponse.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "CreationTime"))
     DescribeConnectionResponse.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "LastModifiedTime"))
@@ -1385,6 +1387,7 @@ module Aws::EventBridge
     UpdateConnectionRequest.add_member(:authorization_type, Shapes::ShapeRef.new(shape: ConnectionAuthorizationType, location_name: "AuthorizationType"))
     UpdateConnectionRequest.add_member(:auth_parameters, Shapes::ShapeRef.new(shape: UpdateConnectionAuthRequestParameters, location_name: "AuthParameters"))
     UpdateConnectionRequest.add_member(:invocation_connectivity_parameters, Shapes::ShapeRef.new(shape: ConnectivityResourceParameters, location_name: "InvocationConnectivityParameters"))
+    UpdateConnectionRequest.add_member(:kms_key_identifier, Shapes::ShapeRef.new(shape: KmsKeyIdentifier, location_name: "KmsKeyIdentifier"))
     UpdateConnectionRequest.struct_class = Types::UpdateConnectionRequest
 
     UpdateConnectionResponse.add_member(:connection_arn, Shapes::ShapeRef.new(shape: ConnectionArn, location_name: "ConnectionArn"))

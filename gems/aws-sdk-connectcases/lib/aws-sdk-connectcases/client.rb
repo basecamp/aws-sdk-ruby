@@ -650,7 +650,11 @@ module Aws::ConnectCases
     #
     # The following fields are required when creating a case:
     #
-    #      <ul> <li> <p> <code>customer_id</code> - You must provide the full customer profile ARN in this format: <code>arn:aws:profile:your_AWS_Region:your_AWS_account ID:domains/your_profiles_domain_name/profiles/profile_ID</code> </p> </li> <li> <p> <code>title</code> </p> </li> </ul>
+    # * `customer_id` - You must provide the full customer profile ARN in
+    #   this format: `arn:aws:profile:your_AWS_Region:your_AWS_account
+    #   ID:domains/your_profiles_domain_name/profiles/profile_ID`
+    #
+    # * `title`
     #
     #
     #
@@ -812,14 +816,10 @@ module Aws::ConnectCases
     # cases, fields, templates and layouts. Each Amazon Connect instance can
     # be associated with only one Cases domain.
     #
-    # <important markdown="1"> This will not associate your connect instance to Cases domain.
+    # This will not associate your connect instance to Cases domain.
     # Instead, use the Amazon Connect [CreateIntegrationAssociation][1] API.
     # You need specific IAM permissions to successfully associate the Cases
     # domain. For more information, see [Onboard to Cases][2].
-    #
-    #       </important>
-    #
-    #  </important>
     #
     #
     #
@@ -1039,12 +1039,30 @@ module Aws::ConnectCases
     #       file: {
     #         file_arn: "FileArn", # required
     #       },
+    #       sla: {
+    #         sla_input_configuration: {
+    #           field_id: "FieldId",
+    #           name: "SlaName", # required
+    #           target_field_values: [
+    #             {
+    #               boolean_value: false,
+    #               double_value: 1.0,
+    #               empty_value: {
+    #               },
+    #               string_value: "FieldValueUnionStringValueString",
+    #               user_arn_value: "String",
+    #             },
+    #           ],
+    #           target_sla_minutes: 1, # required
+    #           type: "CaseField", # required, accepts CaseField
+    #         },
+    #       },
     #     },
     #     domain_id: "DomainId", # required
     #     performed_by: {
     #       user_arn: "UserArn",
     #     },
-    #     type: "Contact", # required, accepts Contact, Comment, File
+    #     type: "Contact", # required, accepts Contact, Comment, File, Sla
     #   })
     #
     # @example Response structure
@@ -1191,7 +1209,16 @@ module Aws::ConnectCases
 
     # Deletes a Cases domain.
     #
-    #      <note> <p>After deleting your domain you must disassociate the deleted domain from your Amazon Connect instance with another API call before being able to use Cases again with this Amazon Connect instance. See <a href="https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteIntegrationAssociation.html">DeleteIntegrationAssociation</a>.</p> </note>
+    # <note markdown="1"> After deleting your domain you must disassociate the deleted domain
+    # from your Amazon Connect instance with another API call before being
+    # able to use Cases again with this Amazon Connect instance. See
+    # [DeleteIntegrationAssociation][1].
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteIntegrationAssociation.html
     #
     # @option params [required, String] :domain_id
     #   The unique identifier of the Cases domain.
@@ -1281,7 +1308,14 @@ module Aws::ConnectCases
     # Deletes a layout from a cases template. You can delete up to 100
     # layouts per domain.
     #
-    #      <p>After a layout is deleted:</p> <ul> <li> <p>You can still retrieve the layout by calling <code>GetLayout</code>.</p> </li> <li> <p>You cannot update a deleted layout by calling <code>UpdateLayout</code>; it throws a <code>ValidationException</code>.</p> </li> <li> <p>Deleted layouts are not included in the <code>ListLayouts</code> response.</p> </li> </ul>
+    # After a layout is deleted:
+    #
+    # * You can still retrieve the layout by calling `GetLayout`.
+    #
+    # * You cannot update a deleted layout by calling `UpdateLayout`; it
+    #   throws a `ValidationException`.
+    #
+    # * Deleted layouts are not included in the `ListLayouts` response.
     #
     # @option params [required, String] :domain_id
     #   The unique identifier of the Cases domain.
@@ -1310,7 +1344,15 @@ module Aws::ConnectCases
     # Deletes a cases template. You can delete up to 100 templates per
     # domain.
     #
-    #      <p>After a cases template is deleted:</p> <ul> <li> <p>You can still retrieve the template by calling <code>GetTemplate</code>.</p> </li> <li> <p>You cannot update the template. </p> </li> <li> <p>You cannot create a case by using the deleted template.</p> </li> <li> <p>Deleted templates are not included in the <code>ListTemplates</code> response.</p> </li> </ul>
+    # After a cases template is deleted:
+    #
+    # * You can still retrieve the template by calling `GetTemplate`.
+    #
+    # * You cannot update the template.
+    #
+    # * You cannot create a case by using the deleted template.
+    #
+    # * Deleted templates are not included in the `ListTemplates` response.
     #
     # @option params [required, String] :domain_id
     #   The unique identifier of the Cases domain.
@@ -1447,7 +1489,7 @@ module Aws::ConnectCases
     #   resp.audit_events[0].performed_by.iam_principal_arn #=> String
     #   resp.audit_events[0].performed_by.user.user_arn #=> String
     #   resp.audit_events[0].performed_time #=> Time
-    #   resp.audit_events[0].related_item_type #=> String, one of "Contact", "Comment", "File"
+    #   resp.audit_events[0].related_item_type #=> String, one of "Contact", "Comment", "File", "Sla"
     #   resp.audit_events[0].type #=> String, one of "Case.Created", "Case.Updated", "RelatedItem.Created"
     #   resp.next_token #=> String
     #
@@ -2309,6 +2351,10 @@ module Aws::ConnectCases
     #         file: {
     #           file_arn: "FileArn",
     #         },
+    #         sla: {
+    #           name: "SlaName",
+    #           status: "Active", # accepts Active, Overdue, Met, NotMet
+    #         },
     #       },
     #     ],
     #     max_results: 1,
@@ -2326,11 +2372,22 @@ module Aws::ConnectCases
     #   resp.related_items[0].content.contact.connected_to_system_time #=> Time
     #   resp.related_items[0].content.contact.contact_arn #=> String
     #   resp.related_items[0].content.file.file_arn #=> String
+    #   resp.related_items[0].content.sla.sla_configuration.completion_time #=> Time
+    #   resp.related_items[0].content.sla.sla_configuration.field_id #=> String
+    #   resp.related_items[0].content.sla.sla_configuration.name #=> String
+    #   resp.related_items[0].content.sla.sla_configuration.status #=> String, one of "Active", "Overdue", "Met", "NotMet"
+    #   resp.related_items[0].content.sla.sla_configuration.target_field_values #=> Array
+    #   resp.related_items[0].content.sla.sla_configuration.target_field_values[0].boolean_value #=> Boolean
+    #   resp.related_items[0].content.sla.sla_configuration.target_field_values[0].double_value #=> Float
+    #   resp.related_items[0].content.sla.sla_configuration.target_field_values[0].string_value #=> String
+    #   resp.related_items[0].content.sla.sla_configuration.target_field_values[0].user_arn_value #=> String
+    #   resp.related_items[0].content.sla.sla_configuration.target_time #=> Time
+    #   resp.related_items[0].content.sla.sla_configuration.type #=> String, one of "CaseField"
     #   resp.related_items[0].performed_by.user_arn #=> String
     #   resp.related_items[0].related_item_id #=> String
     #   resp.related_items[0].tags #=> Hash
     #   resp.related_items[0].tags["String"] #=> String
-    #   resp.related_items[0].type #=> String, one of "Contact", "Comment", "File"
+    #   resp.related_items[0].type #=> String, one of "Contact", "Comment", "File", "Sla"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connectcases-2022-10-03/SearchRelatedItems AWS API Documentation
     #
@@ -2757,7 +2814,7 @@ module Aws::ConnectCases
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-connectcases'
-      context[:gem_version] = '1.39.0'
+      context[:gem_version] = '1.40.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

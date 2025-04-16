@@ -5358,7 +5358,7 @@ module Aws::ServiceCatalog
     #   * `zh` - Chinese
     #
     # @option params [Types::AccessLevelFilter] :access_level_filter
-    #   The access level to use to obtain results. The default is `User`.
+    #   The access level to use to obtain results. The default is `Account`.
     #
     # @option params [Hash<String,Array>] :filters
     #   The search filters.
@@ -6373,7 +6373,7 @@ module Aws::ServiceCatalog
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-servicecatalog'
-      context[:gem_version] = '1.110.0'
+      context[:gem_version] = '1.111.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

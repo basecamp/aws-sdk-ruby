@@ -523,13 +523,17 @@ module Aws::S3Tables
     # the *Amazon Simple Storage Service User Guide*.
     #
     # Permissions
+    # : * You must have the `s3tables:CreateTable` permission to use this
+    #     operation.
     #
-    # : You must have the `s3tables:CreateTable` permission to use this
-    #   operation.
+    #   * If you use this operation with the optional `metadata` request
+    #     parameter you must have the `s3tables:PutTableData` permission.
     #
-    #   <note markdown="1"> Additionally, you must have the `s3tables:PutTableData` permission
-    #   to use this operation with the optional `metadata` request
-    #   parameter.
+    #   * If you use this operation with the optional
+    #     `encryptionConfiguration` request parameter you must have the
+    #     `s3tables:PutTableEncryption` permission.
+    #
+    #   <note markdown="1"> Additionally,
     #
     #    </note>
     #
@@ -552,6 +556,21 @@ module Aws::S3Tables
     #
     # @option params [Types::TableMetadata] :metadata
     #   The metadata for the table.
+    #
+    # @option params [Types::EncryptionConfiguration] :encryption_configuration
+    #   The encryption configuration to use for the table. This configuration
+    #   specifies the encryption algorithm and, if using SSE-KMS, the KMS key
+    #   to use for encrypting the table.
+    #
+    #   <note markdown="1"> If you choose SSE-KMS encryption you must grant the S3 Tables
+    #   maintenance principal access to your KMS key. For more information,
+    #   see [Permissions requirements for S3 Tables SSE-KMS encryption][1].
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-kms-permissions.html
     #
     # @return [Types::CreateTableResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -578,6 +597,10 @@ module Aws::S3Tables
     #         },
     #       },
     #     },
+    #     encryption_configuration: {
+    #       sse_algorithm: "AES256", # required, accepts AES256, aws:kms
+    #       kms_key_arn: "EncryptionConfigurationKmsKeyArnString",
+    #     },
     #   })
     #
     # @example Response structure
@@ -598,9 +621,12 @@ module Aws::S3Tables
     # bucket][1] in the *Amazon Simple Storage Service User Guide*.
     #
     # Permissions
+    # : * You must have the `s3tables:CreateTableBucket` permission to use
+    #     this operation.
     #
-    # : You must have the `s3tables:CreateTableBucket` permission to use
-    #   this operation.
+    #   * If you use this operation with the optional
+    #     `encryptionConfiguration` parameter you must have the
+    #     `s3tables:PutTableBucketEncryption` permission.
     #
     #
     #
@@ -608,6 +634,13 @@ module Aws::S3Tables
     #
     # @option params [required, String] :name
     #   The name for the table bucket.
+    #
+    # @option params [Types::EncryptionConfiguration] :encryption_configuration
+    #   The encryption configuration to use for the table bucket. This
+    #   configuration specifies the default encryption settings that will be
+    #   applied to all tables created in this bucket unless overridden at the
+    #   table level. The configuration includes the encryption algorithm and,
+    #   if using SSE-KMS, the KMS key to use.
     #
     # @return [Types::CreateTableBucketResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -617,6 +650,10 @@ module Aws::S3Tables
     #
     #   resp = client.create_table_bucket({
     #     name: "TableBucketName", # required
+    #     encryption_configuration: {
+    #       sse_algorithm: "AES256", # required, accepts AES256, aws:kms
+    #       kms_key_arn: "EncryptionConfigurationKmsKeyArnString",
+    #     },
     #   })
     #
     # @example Response structure
@@ -746,6 +783,33 @@ module Aws::S3Tables
       req.send_request(options)
     end
 
+    # Deletes the encryption configuration for a table bucket.
+    #
+    # Permissions
+    #
+    # : You must have the `s3tables:DeleteTableBucketEncryption` permission
+    #   to use this operation.
+    #
+    # @option params [required, String] :table_bucket_arn
+    #   The Amazon Resource Name (ARN) of the table bucket.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_table_bucket_encryption({
+    #     table_bucket_arn: "TableBucketARN", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/DeleteTableBucketEncryption AWS API Documentation
+    #
+    # @overload delete_table_bucket_encryption(params = {})
+    # @param [Hash] params ({})
+    def delete_table_bucket_encryption(params = {}, options = {})
+      req = build_request(:delete_table_bucket_encryption, params)
+      req.send_request(options)
+    end
+
     # Deletes a table bucket policy. For more information, see [Deleting a
     # table bucket policy][1] in the *Amazon Simple Storage Service User
     # Guide*.
@@ -844,6 +908,8 @@ module Aws::S3Tables
     #   * {Types::GetNamespaceResponse#created_at #created_at} => Time
     #   * {Types::GetNamespaceResponse#created_by #created_by} => String
     #   * {Types::GetNamespaceResponse#owner_account_id #owner_account_id} => String
+    #   * {Types::GetNamespaceResponse#namespace_id #namespace_id} => String
+    #   * {Types::GetNamespaceResponse#table_bucket_id #table_bucket_id} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -859,6 +925,8 @@ module Aws::S3Tables
     #   resp.created_at #=> Time
     #   resp.created_by #=> String
     #   resp.owner_account_id #=> String
+    #   resp.namespace_id #=> String
+    #   resp.table_bucket_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/GetNamespace AWS API Documentation
     #
@@ -897,6 +965,7 @@ module Aws::S3Tables
     #   * {Types::GetTableResponse#type #type} => String
     #   * {Types::GetTableResponse#table_arn #table_arn} => String
     #   * {Types::GetTableResponse#namespace #namespace} => Array&lt;String&gt;
+    #   * {Types::GetTableResponse#namespace_id #namespace_id} => String
     #   * {Types::GetTableResponse#version_token #version_token} => String
     #   * {Types::GetTableResponse#metadata_location #metadata_location} => String
     #   * {Types::GetTableResponse#warehouse_location #warehouse_location} => String
@@ -907,6 +976,7 @@ module Aws::S3Tables
     #   * {Types::GetTableResponse#modified_by #modified_by} => String
     #   * {Types::GetTableResponse#owner_account_id #owner_account_id} => String
     #   * {Types::GetTableResponse#format #format} => String
+    #   * {Types::GetTableResponse#table_bucket_id #table_bucket_id} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -923,6 +993,7 @@ module Aws::S3Tables
     #   resp.table_arn #=> String
     #   resp.namespace #=> Array
     #   resp.namespace[0] #=> String
+    #   resp.namespace_id #=> String
     #   resp.version_token #=> String
     #   resp.metadata_location #=> String
     #   resp.warehouse_location #=> String
@@ -933,6 +1004,7 @@ module Aws::S3Tables
     #   resp.modified_by #=> String
     #   resp.owner_account_id #=> String
     #   resp.format #=> String, one of "ICEBERG"
+    #   resp.table_bucket_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/GetTable AWS API Documentation
     #
@@ -965,6 +1037,7 @@ module Aws::S3Tables
     #   * {Types::GetTableBucketResponse#name #name} => String
     #   * {Types::GetTableBucketResponse#owner_account_id #owner_account_id} => String
     #   * {Types::GetTableBucketResponse#created_at #created_at} => Time
+    #   * {Types::GetTableBucketResponse#table_bucket_id #table_bucket_id} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -978,6 +1051,7 @@ module Aws::S3Tables
     #   resp.name #=> String
     #   resp.owner_account_id #=> String
     #   resp.created_at #=> Time
+    #   resp.table_bucket_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/GetTableBucket AWS API Documentation
     #
@@ -985,6 +1059,40 @@ module Aws::S3Tables
     # @param [Hash] params ({})
     def get_table_bucket(params = {}, options = {})
       req = build_request(:get_table_bucket, params)
+      req.send_request(options)
+    end
+
+    # Gets the encryption configuration for a table bucket.
+    #
+    # Permissions
+    #
+    # : You must have the `s3tables:GetTableBucketEncryption` permission to
+    #   use this operation.
+    #
+    # @option params [required, String] :table_bucket_arn
+    #   The Amazon Resource Name (ARN) of the table bucket.
+    #
+    # @return [Types::GetTableBucketEncryptionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetTableBucketEncryptionResponse#encryption_configuration #encryption_configuration} => Types::EncryptionConfiguration
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_table_bucket_encryption({
+    #     table_bucket_arn: "TableBucketARN", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.encryption_configuration.sse_algorithm #=> String, one of "AES256", "aws:kms"
+    #   resp.encryption_configuration.kms_key_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/GetTableBucketEncryption AWS API Documentation
+    #
+    # @overload get_table_bucket_encryption(params = {})
+    # @param [Hash] params ({})
+    def get_table_bucket_encryption(params = {}, options = {})
+      req = build_request(:get_table_bucket_encryption, params)
       req.send_request(options)
     end
 
@@ -1069,6 +1177,49 @@ module Aws::S3Tables
     # @param [Hash] params ({})
     def get_table_bucket_policy(params = {}, options = {})
       req = build_request(:get_table_bucket_policy, params)
+      req.send_request(options)
+    end
+
+    # Gets the encryption configuration for a table.
+    #
+    # Permissions
+    #
+    # : You must have the `s3tables:GetTableEncryption` permission to use
+    #   this operation.
+    #
+    # @option params [required, String] :table_bucket_arn
+    #   The Amazon Resource Name (ARN) of the table bucket containing the
+    #   table.
+    #
+    # @option params [required, String] :namespace
+    #   The namespace associated with the table.
+    #
+    # @option params [required, String] :name
+    #   The name of the table.
+    #
+    # @return [Types::GetTableEncryptionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetTableEncryptionResponse#encryption_configuration #encryption_configuration} => Types::EncryptionConfiguration
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_table_encryption({
+    #     table_bucket_arn: "TableBucketARN", # required
+    #     namespace: "NamespaceName", # required
+    #     name: "TableName", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.encryption_configuration.sse_algorithm #=> String, one of "AES256", "aws:kms"
+    #   resp.encryption_configuration.kms_key_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/GetTableEncryption AWS API Documentation
+    #
+    # @overload get_table_encryption(params = {})
+    # @param [Hash] params ({})
+    def get_table_encryption(params = {}, options = {})
+      req = build_request(:get_table_encryption, params)
       req.send_request(options)
     end
 
@@ -1321,6 +1472,8 @@ module Aws::S3Tables
     #   resp.namespaces[0].created_at #=> Time
     #   resp.namespaces[0].created_by #=> String
     #   resp.namespaces[0].owner_account_id #=> String
+    #   resp.namespaces[0].namespace_id #=> String
+    #   resp.namespaces[0].table_bucket_id #=> String
     #   resp.continuation_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/ListNamespaces AWS API Documentation
@@ -1378,6 +1531,7 @@ module Aws::S3Tables
     #   resp.table_buckets[0].name #=> String
     #   resp.table_buckets[0].owner_account_id #=> String
     #   resp.table_buckets[0].created_at #=> Time
+    #   resp.table_buckets[0].table_bucket_id #=> String
     #   resp.continuation_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/ListTableBuckets AWS API Documentation
@@ -1446,6 +1600,8 @@ module Aws::S3Tables
     #   resp.tables[0].table_arn #=> String
     #   resp.tables[0].created_at #=> Time
     #   resp.tables[0].modified_at #=> Time
+    #   resp.tables[0].namespace_id #=> String
+    #   resp.tables[0].table_bucket_id #=> String
     #   resp.continuation_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/ListTables AWS API Documentation
@@ -1454,6 +1610,47 @@ module Aws::S3Tables
     # @param [Hash] params ({})
     def list_tables(params = {}, options = {})
       req = build_request(:list_tables, params)
+      req.send_request(options)
+    end
+
+    # Sets the encryption configuration for a table bucket.
+    #
+    # Permissions
+    #
+    # : You must have the `s3tables:PutTableBucketEncryption` permission to
+    #   use this operation.
+    #
+    #   <note markdown="1"> If you choose SSE-KMS encryption you must grant the S3 Tables
+    #   maintenance principal access to your KMS key. For more information,
+    #   see [Permissions requirements for S3 Tables SSE-KMS
+    #   encryption](AmazonS3/latest/userguide/s3-tables-kms-permissions.html)
+    #
+    #    </note>
+    #
+    # @option params [required, String] :table_bucket_arn
+    #   The Amazon Resource Name (ARN) of the table bucket.
+    #
+    # @option params [required, Types::EncryptionConfiguration] :encryption_configuration
+    #   The encryption configuration to apply to the table bucket.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_table_bucket_encryption({
+    #     table_bucket_arn: "TableBucketARN", # required
+    #     encryption_configuration: { # required
+    #       sse_algorithm: "AES256", # required, accepts AES256, aws:kms
+    #       kms_key_arn: "EncryptionConfigurationKmsKeyArnString",
+    #     },
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3tables-2018-05-10/PutTableBucketEncryption AWS API Documentation
+    #
+    # @overload put_table_bucket_encryption(params = {})
+    # @param [Hash] params ({})
+    def put_table_bucket_encryption(params = {}, options = {})
+      req = build_request(:put_table_bucket_encryption, params)
       req.send_request(options)
     end
 
@@ -1787,7 +1984,7 @@ module Aws::S3Tables
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-s3tables'
-      context[:gem_version] = '1.4.0'
+      context[:gem_version] = '1.5.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

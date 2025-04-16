@@ -736,6 +736,22 @@ module Aws::EventBridge
     #
     #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html
     #
+    # @option params [String] :kms_key_identifier
+    #   The identifier of the KMS customer managed key for EventBridge to use,
+    #   if you choose to use a customer managed key to encrypt this
+    #   connection. The identifier can be the key Amazon Resource Name (ARN),
+    #   KeyId, key alias, or key alias ARN.
+    #
+    #   If you do not specify a customer managed key identifier, EventBridge
+    #   uses an Amazon Web Services owned key to encrypt the connection.
+    #
+    #   For more information, see [Identify and view keys][1] in the *Key
+    #   Management Service Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html
+    #
     # @return [Types::CreateConnectionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateConnectionResponse#connection_arn #connection_arn} => String
@@ -823,6 +839,7 @@ module Aws::EventBridge
     #         resource_configuration_arn: "ResourceConfigurationArn", # required
     #       },
     #     },
+    #     kms_key_identifier: "KmsKeyIdentifier",
     #   })
     #
     # @example Response structure
@@ -968,9 +985,13 @@ module Aws::EventBridge
     #   Management Service Developer Guide*.
     #
     #   <note markdown="1"> Schema discovery is not supported for event buses encrypted using a
-    #   customer managed key. EventBridge returns an error if you call `
-    #   CreateDiscoverer ` on an event bus set to use a customer managed key
-    #   for encryption.
+    #   customer managed key. EventBridge returns an error if:
+    #
+    #    * You call ` CreateDiscoverer ` on an event bus set to use a customer
+    #     managed key for encryption.
+    #
+    #   * You call ` UpdatedEventBus ` to set a customer managed key on an
+    #     event bus with schema discovery enabled.
     #
     #    To enable schema discovery on an event bus, choose to use an Amazon
     #   Web Services owned key. For more information, see [Encrypting
@@ -1527,6 +1548,7 @@ module Aws::EventBridge
     #   * {Types::DescribeConnectionResponse#state_reason #state_reason} => String
     #   * {Types::DescribeConnectionResponse#authorization_type #authorization_type} => String
     #   * {Types::DescribeConnectionResponse#secret_arn #secret_arn} => String
+    #   * {Types::DescribeConnectionResponse#kms_key_identifier #kms_key_identifier} => String
     #   * {Types::DescribeConnectionResponse#auth_parameters #auth_parameters} => Types::ConnectionAuthResponseParameters
     #   * {Types::DescribeConnectionResponse#creation_time #creation_time} => Time
     #   * {Types::DescribeConnectionResponse#last_modified_time #last_modified_time} => Time
@@ -1549,6 +1571,7 @@ module Aws::EventBridge
     #   resp.state_reason #=> String
     #   resp.authorization_type #=> String, one of "BASIC", "OAUTH_CLIENT_CREDENTIALS", "API_KEY"
     #   resp.secret_arn #=> String
+    #   resp.kms_key_identifier #=> String
     #   resp.auth_parameters.basic_auth_parameters.username #=> String
     #   resp.auth_parameters.o_auth_parameters.client_parameters.client_id #=> String
     #   resp.auth_parameters.o_auth_parameters.authorization_endpoint #=> String
@@ -3963,6 +3986,22 @@ module Aws::EventBridge
     #
     #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html
     #
+    # @option params [String] :kms_key_identifier
+    #   The identifier of the KMS customer managed key for EventBridge to use,
+    #   if you choose to use a customer managed key to encrypt this
+    #   connection. The identifier can be the key Amazon Resource Name (ARN),
+    #   KeyId, key alias, or key alias ARN.
+    #
+    #   If you do not specify a customer managed key identifier, EventBridge
+    #   uses an Amazon Web Services owned key to encrypt the connection.
+    #
+    #   For more information, see [Identify and view keys][1] in the *Key
+    #   Management Service Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html
+    #
     # @return [Types::UpdateConnectionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateConnectionResponse#connection_arn #connection_arn} => String
@@ -4051,6 +4090,7 @@ module Aws::EventBridge
     #         resource_configuration_arn: "ResourceConfigurationArn", # required
     #       },
     #     },
+    #     kms_key_identifier: "KmsKeyIdentifier",
     #   })
     #
     # @example Response structure
@@ -4178,9 +4218,13 @@ module Aws::EventBridge
     #   Management Service Developer Guide*.
     #
     #   <note markdown="1"> Schema discovery is not supported for event buses encrypted using a
-    #   customer managed key. EventBridge returns an error if you call `
-    #   CreateDiscoverer ` on an event bus set to use a customer managed key
-    #   for encryption.
+    #   customer managed key. EventBridge returns an error if:
+    #
+    #    * You call ` CreateDiscoverer ` on an event bus set to use a customer
+    #     managed key for encryption.
+    #
+    #   * You call ` UpdatedEventBus ` to set a customer managed key on an
+    #     event bus with schema discovery enabled.
     #
     #    To enable schema discovery on an event bus, choose to use an Amazon
     #   Web Services owned key. For more information, see [Encrypting
@@ -4270,7 +4314,7 @@ module Aws::EventBridge
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-eventbridge'
-      context[:gem_version] = '1.78.0'
+      context[:gem_version] = '1.79.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

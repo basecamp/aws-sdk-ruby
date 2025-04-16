@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.5.0 (2025-04-16)
+------------------
+
+* Feature - Added GetClusterEndpointService API. The new API allows retrieving endpoint service name specific to a cluster.
+
 1.4.0 (2025-02-18)
 ------------------
 

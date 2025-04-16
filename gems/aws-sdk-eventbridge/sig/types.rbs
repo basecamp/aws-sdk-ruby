@@ -259,6 +259,7 @@ module Aws::EventBridge
       attr_accessor authorization_type: ("BASIC" | "OAUTH_CLIENT_CREDENTIALS" | "API_KEY")
       attr_accessor auth_parameters: Types::CreateConnectionAuthRequestParameters
       attr_accessor invocation_connectivity_parameters: Types::ConnectivityResourceParameters
+      attr_accessor kms_key_identifier: ::String
       SENSITIVE: []
     end
 
@@ -465,6 +466,7 @@ module Aws::EventBridge
       attr_accessor state_reason: ::String
       attr_accessor authorization_type: ("BASIC" | "OAUTH_CLIENT_CREDENTIALS" | "API_KEY")
       attr_accessor secret_arn: ::String
+      attr_accessor kms_key_identifier: ::String
       attr_accessor auth_parameters: Types::ConnectionAuthResponseParameters
       attr_accessor creation_time: ::Time
       attr_accessor last_modified_time: ::Time
@@ -1293,6 +1295,7 @@ module Aws::EventBridge
       attr_accessor authorization_type: ("BASIC" | "OAUTH_CLIENT_CREDENTIALS" | "API_KEY")
       attr_accessor auth_parameters: Types::UpdateConnectionAuthRequestParameters
       attr_accessor invocation_connectivity_parameters: Types::ConnectivityResourceParameters
+      attr_accessor kms_key_identifier: ::String
       SENSITIVE: []
     end
 

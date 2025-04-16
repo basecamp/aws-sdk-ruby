@@ -898,6 +898,7 @@ module Aws::ResourceGroups
     #   * {Types::GetTagSyncTaskOutput#task_arn #task_arn} => String
     #   * {Types::GetTagSyncTaskOutput#tag_key #tag_key} => String
     #   * {Types::GetTagSyncTaskOutput#tag_value #tag_value} => String
+    #   * {Types::GetTagSyncTaskOutput#resource_query #resource_query} => Types::ResourceQuery
     #   * {Types::GetTagSyncTaskOutput#role_arn #role_arn} => String
     #   * {Types::GetTagSyncTaskOutput#status #status} => String
     #   * {Types::GetTagSyncTaskOutput#error_message #error_message} => String
@@ -916,6 +917,8 @@ module Aws::ResourceGroups
     #   resp.task_arn #=> String
     #   resp.tag_key #=> String
     #   resp.tag_value #=> String
+    #   resp.resource_query.type #=> String, one of "TAG_FILTERS_1_0", "CLOUDFORMATION_STACK_1_0"
+    #   resp.resource_query.query #=> String
     #   resp.role_arn #=> String
     #   resp.status #=> String, one of "ACTIVE", "ERROR"
     #   resp.error_message #=> String
@@ -1244,7 +1247,7 @@ module Aws::ResourceGroups
     #
     #     * `AWS::AppRegistry::Application`
     #
-    #     * `AWS::AppRegistry::ApplicationResourceGroups`
+    #     * `AWS::AppRegistry::ApplicationResourceGroup`
     #
     #     * `AWS::CloudFormation::Stack`
     #
@@ -1376,6 +1379,8 @@ module Aws::ResourceGroups
     #   resp.tag_sync_tasks[0].task_arn #=> String
     #   resp.tag_sync_tasks[0].tag_key #=> String
     #   resp.tag_sync_tasks[0].tag_value #=> String
+    #   resp.tag_sync_tasks[0].resource_query.type #=> String, one of "TAG_FILTERS_1_0", "CLOUDFORMATION_STACK_1_0"
+    #   resp.tag_sync_tasks[0].resource_query.query #=> String
     #   resp.tag_sync_tasks[0].role_arn #=> String
     #   resp.tag_sync_tasks[0].status #=> String, one of "ACTIVE", "ERROR"
     #   resp.tag_sync_tasks[0].error_message #=> String
@@ -1532,7 +1537,15 @@ module Aws::ResourceGroups
     end
 
     # Creates a new tag-sync task to onboard and sync resources tagged with
-    # a specific tag key-value pair to an application.
+    # a specific tag key-value pair to an application. To start a tag-sync
+    # task, you need a [resource tagging role][1]. The resource tagging role
+    # grants permissions to tag and untag applications resources and must
+    # include a trust policy that allows Resource Groups to assume the role
+    # and perform resource tagging tasks on your behalf.
+    #
+    # For instructions on creating a tag-sync task, see [Create a tag-sync
+    # using the Resource Groups API][2] in the *Amazon Web Services Service
+    # Catalog AppRegistry Administrator Guide*.
     #
     # **Minimum permissions**
     #
@@ -1544,19 +1557,71 @@ module Aws::ResourceGroups
     #
     # * `iam:PassRole` on the role provided in the request
     #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/servicecatalog/latest/arguide/app-tag-sync.html#tag-sync-role
+    # [2]: https://docs.aws.amazon.com/servicecatalog/latest/arguide/app-tag-sync.html#create-tag-sync
+    #
     # @option params [required, String] :group
     #   The Amazon resource name (ARN) or name of the application group for
     #   which you want to create a tag-sync task.
     #
-    # @option params [required, String] :tag_key
+    # @option params [String] :tag_key
     #   The tag key. Resources tagged with this tag key-value pair will be
     #   added to the application. If a resource with this tag is later
     #   untagged, the tag-sync task removes the resource from the application.
     #
-    # @option params [required, String] :tag_value
+    #   When using the `TagKey` parameter, you must also specify the
+    #   `TagValue` parameter. If you specify a tag key-value pair, you can't
+    #   use the `ResourceQuery` parameter.
+    #
+    # @option params [String] :tag_value
     #   The tag value. Resources tagged with this tag key-value pair will be
     #   added to the application. If a resource with this tag is later
     #   untagged, the tag-sync task removes the resource from the application.
+    #
+    #   When using the `TagValue` parameter, you must also specify the
+    #   `TagKey` parameter. If you specify a tag key-value pair, you can't
+    #   use the `ResourceQuery` parameter.
+    #
+    # @option params [Types::ResourceQuery] :resource_query
+    #   The query you can use to create the tag-sync task. With this method,
+    #   all resources matching the query are added to the specified
+    #   application group. A `ResourceQuery` specifies both a query `Type` and
+    #   a `Query` string as JSON string objects. For more information on
+    #   defining a resource query for a tag-sync task, see the tag-based query
+    #   type in [ Types of resource group queries][1] in *Resource Groups User
+    #   Guide*.
+    #
+    #   When using the `ResourceQuery` parameter, you cannot use the `TagKey`
+    #   and `TagValue` parameters.
+    #
+    #   When you combine all of the elements together into a single string,
+    #   any double quotes that are embedded inside another double quote pair
+    #   must be escaped by preceding the embedded double quote with a
+    #   backslash character (\\). For example, a complete `ResourceQuery`
+    #   parameter must be formatted like the following CLI parameter example:
+    #
+    #   `--resource-query
+    #   '{"Type":"TAG_FILTERS_1_0","Query":"{"ResourceTypeFilters":["AWS::AllSupported"],"TagFilters":[{"Key":"Stage","Values":["Test"]}]}"}'`
+    #
+    #   In the preceding example, all of the double quote characters in the
+    #   value part of the `Query` element must be escaped because the value
+    #   itself is surrounded by double quotes. For more information, see
+    #   [Quoting strings][2] in the *Command Line Interface User Guide*.
+    #
+    #   For the complete list of resource types that you can use in the array
+    #   value for `ResourceTypeFilters`, see [Resources you can use with
+    #   Resource Groups and Tag Editor][3] in the *Resource Groups User
+    #   Guide*. For example:
+    #
+    #   `"ResourceTypeFilters":["AWS::S3::Bucket", "AWS::EC2::Instance"]`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ARG/latest/userguide/gettingstarted-query.html#getting_started-query_types
+    #   [2]: https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-quoting-strings.html
+    #   [3]: https://docs.aws.amazon.com/ARG/latest/userguide/supported-resources.html
     #
     # @option params [required, String] :role_arn
     #   The Amazon resource name (ARN) of the role assumed by the service to
@@ -1569,14 +1634,19 @@ module Aws::ResourceGroups
     #   * {Types::StartTagSyncTaskOutput#task_arn #task_arn} => String
     #   * {Types::StartTagSyncTaskOutput#tag_key #tag_key} => String
     #   * {Types::StartTagSyncTaskOutput#tag_value #tag_value} => String
+    #   * {Types::StartTagSyncTaskOutput#resource_query #resource_query} => Types::ResourceQuery
     #   * {Types::StartTagSyncTaskOutput#role_arn #role_arn} => String
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.start_tag_sync_task({
     #     group: "GroupStringV2", # required
-    #     tag_key: "TagKey", # required
-    #     tag_value: "TagValue", # required
+    #     tag_key: "TagKey",
+    #     tag_value: "TagValue",
+    #     resource_query: {
+    #       type: "TAG_FILTERS_1_0", # required, accepts TAG_FILTERS_1_0, CLOUDFORMATION_STACK_1_0
+    #       query: "Query", # required
+    #     },
     #     role_arn: "RoleArn", # required
     #   })
     #
@@ -1587,6 +1657,8 @@ module Aws::ResourceGroups
     #   resp.task_arn #=> String
     #   resp.tag_key #=> String
     #   resp.tag_value #=> String
+    #   resp.resource_query.type #=> String, one of "TAG_FILTERS_1_0", "CLOUDFORMATION_STACK_1_0"
+    #   resp.resource_query.query #=> String
     #   resp.role_arn #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/resource-groups-2017-11-27/StartTagSyncTask AWS API Documentation
@@ -1945,7 +2017,7 @@ module Aws::ResourceGroups
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-resourcegroups'
-      context[:gem_version] = '1.79.0'
+      context[:gem_version] = '1.80.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

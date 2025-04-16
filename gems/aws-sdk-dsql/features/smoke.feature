@@ -20,6 +20,18 @@ Feature: Smoke tests for DSQL
     Then I expect a 'Aws::DSQL::Errors::ResourceNotFoundException' was raised
 
   @dsql @smoke
+  Scenario: GetVpcEndpointServiceNameNotFound
+    Given I create a 'Aws::DSQL' client with config:
+      """
+{"region":"us-east-1","use_fips_endpoint":false,"use_dualstack_endpoint":false}
+      """
+    When I call the operation 'get_vpc_endpoint_service_name' with params:
+      """
+{"identifier":"ruabtlcu6nqjdl6k6jjcug67ta"}
+      """
+    Then I expect a 'Aws::DSQL::Errors::ResourceNotFoundException' was raised
+
+  @dsql @smoke
   Scenario: ListClustersSuccess
     Given I create a 'Aws::DSQL' client with config:
       """

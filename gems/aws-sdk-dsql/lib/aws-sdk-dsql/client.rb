@@ -781,6 +781,41 @@ module Aws::DSQL
       req.send_request(options)
     end
 
+    # Retrieves the VPC endpoint service name.
+    #
+    # @option params [required, String] :identifier
+    #   The ID of the cluster to retrieve.
+    #
+    # @return [Types::GetVpcEndpointServiceNameOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetVpcEndpointServiceNameOutput#service_name #service_name} => String
+    #
+    #
+    # @example Example: Get VPC Endpoint Service Name
+    #
+    #   resp = client.get_vpc_endpoint_service_name({
+    #     identifier: "kiqenqglxyl2snyvkvnj2c3s2e", 
+    #   })
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_vpc_endpoint_service_name({
+    #     identifier: "ClusterId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.service_name #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/dsql-2018-05-10/GetVpcEndpointServiceName AWS API Documentation
+    #
+    # @overload get_vpc_endpoint_service_name(params = {})
+    # @param [Hash] params ({})
+    def get_vpc_endpoint_service_name(params = {}, options = {})
+      req = build_request(:get_vpc_endpoint_service_name, params)
+      req.send_request(options)
+    end
+
     # Retrieves information about a list of clusters.
     #
     # @option params [Integer] :max_results
@@ -1026,7 +1061,7 @@ module Aws::DSQL
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-dsql'
-      context[:gem_version] = '1.4.0'
+      context[:gem_version] = '1.5.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

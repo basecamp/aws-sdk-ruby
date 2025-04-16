@@ -217,7 +217,8 @@ module Aws
                                  resource_parameters: {
                                    resource_configuration_arn: ::String
                                  }
-                               }
+                               },
+                               ?kms_key_identifier: ::String
                              ) -> _CreateConnectionResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateConnectionResponseSuccess
 
@@ -425,6 +426,7 @@ module Aws
         def state_reason: () -> ::String
         def authorization_type: () -> ("BASIC" | "OAUTH_CLIENT_CREDENTIALS" | "API_KEY")
         def secret_arn: () -> ::String
+        def kms_key_identifier: () -> ::String
         def auth_parameters: () -> Types::ConnectionAuthResponseParameters
         def creation_time: () -> ::Time
         def last_modified_time: () -> ::Time
@@ -1135,7 +1137,8 @@ module Aws
                                  resource_parameters: {
                                    resource_configuration_arn: ::String
                                  }
-                               }
+                               },
+                               ?kms_key_identifier: ::String
                              ) -> _UpdateConnectionResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateConnectionResponseSuccess
 

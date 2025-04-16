@@ -395,6 +395,43 @@ module Aws::ResourceGroups
     #   The tag value.
     #   @return [String]
     #
+    # @!attribute [rw] resource_query
+    #   The query you can use to define a resource group or a search for
+    #   resources. A `ResourceQuery` specifies both a query `Type` and a
+    #   `Query` string as JSON string objects. See the examples section for
+    #   example JSON strings. For more information about creating a resource
+    #   group with a resource query, see [Build queries and groups in
+    #   Resource Groups][1] in the *Resource Groups User Guide*
+    #
+    #   When you combine all of the elements together into a single string,
+    #   any double quotes that are embedded inside another double quote pair
+    #   must be escaped by preceding the embedded double quote with a
+    #   backslash character (\\). For example, a complete `ResourceQuery`
+    #   parameter must be formatted like the following CLI parameter
+    #   example:
+    #
+    #   `--resource-query
+    #   '{"Type":"TAG_FILTERS_1_0","Query":"{"ResourceTypeFilters":["AWS::AllSupported"],"TagFilters":[{"Key":"Stage","Values":["Test"]}]}"}'`
+    #
+    #   In the preceding example, all of the double quote characters in the
+    #   value part of the `Query` element must be escaped because the value
+    #   itself is surrounded by double quotes. For more information, see
+    #   [Quoting strings][2] in the *Command Line Interface User Guide*.
+    #
+    #   For the complete list of resource types that you can use in the
+    #   array value for `ResourceTypeFilters`, see [Resources you can use
+    #   with Resource Groups and Tag Editor][3] in the *Resource Groups User
+    #   Guide*. For example:
+    #
+    #   `"ResourceTypeFilters":["AWS::S3::Bucket", "AWS::EC2::Instance"]`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ARG/latest/userguide/gettingstarted-query.html
+    #   [2]: https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-quoting-strings.html
+    #   [3]: https://docs.aws.amazon.com/ARG/latest/userguide/supported-resources.html
+    #   @return [Types::ResourceQuery]
+    #
     # @!attribute [rw] role_arn
     #   The Amazon resource name (ARN) of the role assumed by Resource
     #   Groups to tag and untag resources on your behalf.
@@ -439,6 +476,7 @@ module Aws::ResourceGroups
       :task_arn,
       :tag_key,
       :tag_value,
+      :resource_query,
       :role_arn,
       :status,
       :error_message,
@@ -1086,7 +1124,7 @@ module Aws::ResourceGroups
     #
     #     * `AWS::AppRegistry::Application`
     #
-    #     * `AWS::AppRegistry::ApplicationResourceGroups`
+    #     * `AWS::AppRegistry::ApplicationResourceGroup`
     #
     #     * `AWS::CloudFormation::Stack`
     #
@@ -1592,6 +1630,10 @@ module Aws::ResourceGroups
     #   added to the application. If a resource with this tag is later
     #   untagged, the tag-sync task removes the resource from the
     #   application.
+    #
+    #   When using the `TagKey` parameter, you must also specify the
+    #   `TagValue` parameter. If you specify a tag key-value pair, you
+    #   can't use the `ResourceQuery` parameter.
     #   @return [String]
     #
     # @!attribute [rw] tag_value
@@ -1599,7 +1641,52 @@ module Aws::ResourceGroups
     #   added to the application. If a resource with this tag is later
     #   untagged, the tag-sync task removes the resource from the
     #   application.
+    #
+    #   When using the `TagValue` parameter, you must also specify the
+    #   `TagKey` parameter. If you specify a tag key-value pair, you can't
+    #   use the `ResourceQuery` parameter.
     #   @return [String]
+    #
+    # @!attribute [rw] resource_query
+    #   The query you can use to create the tag-sync task. With this method,
+    #   all resources matching the query are added to the specified
+    #   application group. A `ResourceQuery` specifies both a query `Type`
+    #   and a `Query` string as JSON string objects. For more information on
+    #   defining a resource query for a tag-sync task, see the tag-based
+    #   query type in [ Types of resource group queries][1] in *Resource
+    #   Groups User Guide*.
+    #
+    #   When using the `ResourceQuery` parameter, you cannot use the
+    #   `TagKey` and `TagValue` parameters.
+    #
+    #   When you combine all of the elements together into a single string,
+    #   any double quotes that are embedded inside another double quote pair
+    #   must be escaped by preceding the embedded double quote with a
+    #   backslash character (\\). For example, a complete `ResourceQuery`
+    #   parameter must be formatted like the following CLI parameter
+    #   example:
+    #
+    #   `--resource-query
+    #   '{"Type":"TAG_FILTERS_1_0","Query":"{"ResourceTypeFilters":["AWS::AllSupported"],"TagFilters":[{"Key":"Stage","Values":["Test"]}]}"}'`
+    #
+    #   In the preceding example, all of the double quote characters in the
+    #   value part of the `Query` element must be escaped because the value
+    #   itself is surrounded by double quotes. For more information, see
+    #   [Quoting strings][2] in the *Command Line Interface User Guide*.
+    #
+    #   For the complete list of resource types that you can use in the
+    #   array value for `ResourceTypeFilters`, see [Resources you can use
+    #   with Resource Groups and Tag Editor][3] in the *Resource Groups User
+    #   Guide*. For example:
+    #
+    #   `"ResourceTypeFilters":["AWS::S3::Bucket", "AWS::EC2::Instance"]`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ARG/latest/userguide/gettingstarted-query.html#getting_started-query_types
+    #   [2]: https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-quoting-strings.html
+    #   [3]: https://docs.aws.amazon.com/ARG/latest/userguide/supported-resources.html
+    #   @return [Types::ResourceQuery]
     #
     # @!attribute [rw] role_arn
     #   The Amazon resource name (ARN) of the role assumed by the service to
@@ -1612,6 +1699,7 @@ module Aws::ResourceGroups
       :group,
       :tag_key,
       :tag_value,
+      :resource_query,
       :role_arn)
       SENSITIVE = []
       include Aws::Structure
@@ -1638,6 +1726,43 @@ module Aws::ResourceGroups
     #   The tag value of the tag-sync task.
     #   @return [String]
     #
+    # @!attribute [rw] resource_query
+    #   The query you can use to define a resource group or a search for
+    #   resources. A `ResourceQuery` specifies both a query `Type` and a
+    #   `Query` string as JSON string objects. See the examples section for
+    #   example JSON strings. For more information about creating a resource
+    #   group with a resource query, see [Build queries and groups in
+    #   Resource Groups][1] in the *Resource Groups User Guide*
+    #
+    #   When you combine all of the elements together into a single string,
+    #   any double quotes that are embedded inside another double quote pair
+    #   must be escaped by preceding the embedded double quote with a
+    #   backslash character (\\). For example, a complete `ResourceQuery`
+    #   parameter must be formatted like the following CLI parameter
+    #   example:
+    #
+    #   `--resource-query
+    #   '{"Type":"TAG_FILTERS_1_0","Query":"{"ResourceTypeFilters":["AWS::AllSupported"],"TagFilters":[{"Key":"Stage","Values":["Test"]}]}"}'`
+    #
+    #   In the preceding example, all of the double quote characters in the
+    #   value part of the `Query` element must be escaped because the value
+    #   itself is surrounded by double quotes. For more information, see
+    #   [Quoting strings][2] in the *Command Line Interface User Guide*.
+    #
+    #   For the complete list of resource types that you can use in the
+    #   array value for `ResourceTypeFilters`, see [Resources you can use
+    #   with Resource Groups and Tag Editor][3] in the *Resource Groups User
+    #   Guide*. For example:
+    #
+    #   `"ResourceTypeFilters":["AWS::S3::Bucket", "AWS::EC2::Instance"]`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ARG/latest/userguide/gettingstarted-query.html
+    #   [2]: https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-quoting-strings.html
+    #   [3]: https://docs.aws.amazon.com/ARG/latest/userguide/supported-resources.html
+    #   @return [Types::ResourceQuery]
+    #
     # @!attribute [rw] role_arn
     #   The Amazon resource name (ARN) of the role assumed by the service to
     #   tag and untag resources on your behalf.
@@ -1651,6 +1776,7 @@ module Aws::ResourceGroups
       :task_arn,
       :tag_key,
       :tag_value,
+      :resource_query,
       :role_arn)
       SENSITIVE = []
       include Aws::Structure
@@ -1714,6 +1840,43 @@ module Aws::ResourceGroups
     #   The tag value.
     #   @return [String]
     #
+    # @!attribute [rw] resource_query
+    #   The query you can use to define a resource group or a search for
+    #   resources. A `ResourceQuery` specifies both a query `Type` and a
+    #   `Query` string as JSON string objects. See the examples section for
+    #   example JSON strings. For more information about creating a resource
+    #   group with a resource query, see [Build queries and groups in
+    #   Resource Groups][1] in the *Resource Groups User Guide*
+    #
+    #   When you combine all of the elements together into a single string,
+    #   any double quotes that are embedded inside another double quote pair
+    #   must be escaped by preceding the embedded double quote with a
+    #   backslash character (\\). For example, a complete `ResourceQuery`
+    #   parameter must be formatted like the following CLI parameter
+    #   example:
+    #
+    #   `--resource-query
+    #   '{"Type":"TAG_FILTERS_1_0","Query":"{"ResourceTypeFilters":["AWS::AllSupported"],"TagFilters":[{"Key":"Stage","Values":["Test"]}]}"}'`
+    #
+    #   In the preceding example, all of the double quote characters in the
+    #   value part of the `Query` element must be escaped because the value
+    #   itself is surrounded by double quotes. For more information, see
+    #   [Quoting strings][2] in the *Command Line Interface User Guide*.
+    #
+    #   For the complete list of resource types that you can use in the
+    #   array value for `ResourceTypeFilters`, see [Resources you can use
+    #   with Resource Groups and Tag Editor][3] in the *Resource Groups User
+    #   Guide*. For example:
+    #
+    #   `"ResourceTypeFilters":["AWS::S3::Bucket", "AWS::EC2::Instance"]`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ARG/latest/userguide/gettingstarted-query.html
+    #   [2]: https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-quoting-strings.html
+    #   [3]: https://docs.aws.amazon.com/ARG/latest/userguide/supported-resources.html
+    #   @return [Types::ResourceQuery]
+    #
     # @!attribute [rw] role_arn
     #   The Amazon resource name (ARN) of the role assumed by the service to
     #   tag and untag resources on your behalf.
@@ -1751,6 +1914,7 @@ module Aws::ResourceGroups
       :task_arn,
       :tag_key,
       :tag_value,
+      :resource_query,
       :role_arn,
       :status,
       :error_message,

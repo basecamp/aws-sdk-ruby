@@ -37,6 +37,7 @@ module Aws::S3Tables
 
     class CreateTableBucketRequest
       attr_accessor name: ::String
+      attr_accessor encryption_configuration: Types::EncryptionConfiguration
       SENSITIVE: []
     end
 
@@ -51,6 +52,7 @@ module Aws::S3Tables
       attr_accessor name: ::String
       attr_accessor format: ("ICEBERG")
       attr_accessor metadata: Types::TableMetadata
+      attr_accessor encryption_configuration: Types::EncryptionConfiguration
       SENSITIVE: []
     end
 
@@ -63,6 +65,11 @@ module Aws::S3Tables
     class DeleteNamespaceRequest
       attr_accessor table_bucket_arn: ::String
       attr_accessor namespace: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteTableBucketEncryptionRequest
+      attr_accessor table_bucket_arn: ::String
       SENSITIVE: []
     end
 
@@ -91,6 +98,12 @@ module Aws::S3Tables
       SENSITIVE: []
     end
 
+    class EncryptionConfiguration
+      attr_accessor sse_algorithm: ("AES256" | "aws:kms")
+      attr_accessor kms_key_arn: ::String
+      SENSITIVE: []
+    end
+
     class ForbiddenException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -107,6 +120,18 @@ module Aws::S3Tables
       attr_accessor created_at: ::Time
       attr_accessor created_by: ::String
       attr_accessor owner_account_id: ::String
+      attr_accessor namespace_id: ::String
+      attr_accessor table_bucket_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableBucketEncryptionRequest
+      attr_accessor table_bucket_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableBucketEncryptionResponse
+      attr_accessor encryption_configuration: Types::EncryptionConfiguration
       SENSITIVE: []
     end
 
@@ -141,6 +166,19 @@ module Aws::S3Tables
       attr_accessor name: ::String
       attr_accessor owner_account_id: ::String
       attr_accessor created_at: ::Time
+      attr_accessor table_bucket_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableEncryptionRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableEncryptionResponse
+      attr_accessor encryption_configuration: Types::EncryptionConfiguration
       SENSITIVE: []
     end
 
@@ -208,6 +246,7 @@ module Aws::S3Tables
       attr_accessor type: ("customer" | "aws")
       attr_accessor table_arn: ::String
       attr_accessor namespace: ::Array[::String]
+      attr_accessor namespace_id: ::String
       attr_accessor version_token: ::String
       attr_accessor metadata_location: ::String
       attr_accessor warehouse_location: ::String
@@ -218,6 +257,7 @@ module Aws::S3Tables
       attr_accessor modified_by: ::String
       attr_accessor owner_account_id: ::String
       attr_accessor format: ("ICEBERG")
+      attr_accessor table_bucket_id: ::String
       SENSITIVE: []
     end
 
@@ -300,11 +340,19 @@ module Aws::S3Tables
       attr_accessor created_at: ::Time
       attr_accessor created_by: ::String
       attr_accessor owner_account_id: ::String
+      attr_accessor namespace_id: ::String
+      attr_accessor table_bucket_id: ::String
       SENSITIVE: []
     end
 
     class NotFoundException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class PutTableBucketEncryptionRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor encryption_configuration: Types::EncryptionConfiguration
       SENSITIVE: []
     end
 
@@ -377,6 +425,7 @@ module Aws::S3Tables
       attr_accessor name: ::String
       attr_accessor owner_account_id: ::String
       attr_accessor created_at: ::Time
+      attr_accessor table_bucket_id: ::String
       SENSITIVE: []
     end
 
@@ -425,6 +474,8 @@ module Aws::S3Tables
       attr_accessor table_arn: ::String
       attr_accessor created_at: ::Time
       attr_accessor modified_at: ::Time
+      attr_accessor namespace_id: ::String
+      attr_accessor table_bucket_id: ::String
       SENSITIVE: []
     end
 

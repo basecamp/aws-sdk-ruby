@@ -112,6 +112,10 @@ module Aws
                                 ]
                               }
                             }?
+                          },
+                          ?encryption_configuration: {
+                            sse_algorithm: ("AES256" | "aws:kms"),
+                            kms_key_arn: ::String?
                           }
                         ) -> _CreateTableResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateTableResponseSuccess
@@ -122,7 +126,11 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Tables/Client.html#create_table_bucket-instance_method
       def create_table_bucket: (
-                                 name: ::String
+                                 name: ::String,
+                                 ?encryption_configuration: {
+                                   sse_algorithm: ("AES256" | "aws:kms"),
+                                   kms_key_arn: ::String?
+                                 }
                                ) -> _CreateTableBucketResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateTableBucketResponseSuccess
 
@@ -148,6 +156,12 @@ module Aws
                                ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Tables/Client.html#delete_table_bucket_encryption-instance_method
+      def delete_table_bucket_encryption: (
+                                            table_bucket_arn: ::String
+                                          ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Tables/Client.html#delete_table_bucket_policy-instance_method
       def delete_table_bucket_policy: (
                                         table_bucket_arn: ::String
@@ -168,6 +182,8 @@ module Aws
         def created_at: () -> ::Time
         def created_by: () -> ::String
         def owner_account_id: () -> ::String
+        def namespace_id: () -> ::String
+        def table_bucket_id: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Tables/Client.html#get_namespace-instance_method
       def get_namespace: (
@@ -182,6 +198,7 @@ module Aws
         def type: () -> ("customer" | "aws")
         def table_arn: () -> ::String
         def namespace: () -> ::Array[::String]
+        def namespace_id: () -> ::String
         def version_token: () -> ::String
         def metadata_location: () -> ::String
         def warehouse_location: () -> ::String
@@ -192,6 +209,7 @@ module Aws
         def modified_by: () -> ::String
         def owner_account_id: () -> ::String
         def format: () -> ("ICEBERG")
+        def table_bucket_id: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Tables/Client.html#get_table-instance_method
       def get_table: (
@@ -207,12 +225,23 @@ module Aws
         def name: () -> ::String
         def owner_account_id: () -> ::String
         def created_at: () -> ::Time
+        def table_bucket_id: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Tables/Client.html#get_table_bucket-instance_method
       def get_table_bucket: (
                               table_bucket_arn: ::String
                             ) -> _GetTableBucketResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetTableBucketResponseSuccess
+
+      interface _GetTableBucketEncryptionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetTableBucketEncryptionResponse]
+        def encryption_configuration: () -> Types::EncryptionConfiguration
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Tables/Client.html#get_table_bucket_encryption-instance_method
+      def get_table_bucket_encryption: (
+                                         table_bucket_arn: ::String
+                                       ) -> _GetTableBucketEncryptionResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetTableBucketEncryptionResponseSuccess
 
       interface _GetTableBucketMaintenanceConfigurationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetTableBucketMaintenanceConfigurationResponse]
@@ -234,6 +263,18 @@ module Aws
                                      table_bucket_arn: ::String
                                    ) -> _GetTableBucketPolicyResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetTableBucketPolicyResponseSuccess
+
+      interface _GetTableEncryptionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetTableEncryptionResponse]
+        def encryption_configuration: () -> Types::EncryptionConfiguration
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Tables/Client.html#get_table_encryption-instance_method
+      def get_table_encryption: (
+                                  table_bucket_arn: ::String,
+                                  namespace: ::String,
+                                  name: ::String
+                                ) -> _GetTableEncryptionResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetTableEncryptionResponseSuccess
 
       interface _GetTableMaintenanceConfigurationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetTableMaintenanceConfigurationResponse]
@@ -328,6 +369,16 @@ module Aws
                          ?max_tables: ::Integer
                        ) -> _ListTablesResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListTablesResponseSuccess
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Tables/Client.html#put_table_bucket_encryption-instance_method
+      def put_table_bucket_encryption: (
+                                         table_bucket_arn: ::String,
+                                         encryption_configuration: {
+                                           sse_algorithm: ("AES256" | "aws:kms"),
+                                           kms_key_arn: ::String?
+                                         }
+                                       ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3Tables/Client.html#put_table_bucket_maintenance_configuration-instance_method
       def put_table_bucket_maintenance_configuration: (

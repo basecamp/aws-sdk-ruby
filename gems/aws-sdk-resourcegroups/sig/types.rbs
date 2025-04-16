@@ -116,6 +116,7 @@ module Aws::ResourceGroups
       attr_accessor task_arn: ::String
       attr_accessor tag_key: ::String
       attr_accessor tag_value: ::String
+      attr_accessor resource_query: Types::ResourceQuery
       attr_accessor role_arn: ::String
       attr_accessor status: ("ACTIVE" | "ERROR")
       attr_accessor error_message: ::String
@@ -363,6 +364,7 @@ module Aws::ResourceGroups
       attr_accessor group: ::String
       attr_accessor tag_key: ::String
       attr_accessor tag_value: ::String
+      attr_accessor resource_query: Types::ResourceQuery
       attr_accessor role_arn: ::String
       SENSITIVE: []
     end
@@ -373,6 +375,7 @@ module Aws::ResourceGroups
       attr_accessor task_arn: ::String
       attr_accessor tag_key: ::String
       attr_accessor tag_value: ::String
+      attr_accessor resource_query: Types::ResourceQuery
       attr_accessor role_arn: ::String
       SENSITIVE: []
     end
@@ -395,6 +398,7 @@ module Aws::ResourceGroups
       attr_accessor task_arn: ::String
       attr_accessor tag_key: ::String
       attr_accessor tag_value: ::String
+      attr_accessor resource_query: Types::ResourceQuery
       attr_accessor role_arn: ::String
       attr_accessor status: ("ACTIVE" | "ERROR")
       attr_accessor error_message: ::String

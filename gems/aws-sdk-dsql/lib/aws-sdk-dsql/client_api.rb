@@ -36,6 +36,8 @@ module Aws::DSQL
     DeletionProtectionEnabled = Shapes::BooleanShape.new(name: 'DeletionProtectionEnabled')
     GetClusterInput = Shapes::StructureShape.new(name: 'GetClusterInput')
     GetClusterOutput = Shapes::StructureShape.new(name: 'GetClusterOutput')
+    GetVpcEndpointServiceNameInput = Shapes::StructureShape.new(name: 'GetVpcEndpointServiceNameInput')
+    GetVpcEndpointServiceNameOutput = Shapes::StructureShape.new(name: 'GetVpcEndpointServiceNameOutput')
     Integer = Shapes::IntegerShape.new(name: 'Integer')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
     LinkedClusterProperties = Shapes::StructureShape.new(name: 'LinkedClusterProperties')
@@ -48,6 +50,7 @@ module Aws::DSQL
     Region = Shapes::StringShape.new(name: 'Region')
     RegionList = Shapes::ListShape.new(name: 'RegionList')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
+    ServiceName = Shapes::StringShape.new(name: 'ServiceName')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
     String = Shapes::StringShape.new(name: 'String')
     TagKey = Shapes::StringShape.new(name: 'TagKey')
@@ -130,6 +133,12 @@ module Aws::DSQL
     GetClusterOutput.add_member(:witness_region, Shapes::ShapeRef.new(shape: Region, location_name: "witnessRegion"))
     GetClusterOutput.add_member(:linked_cluster_arns, Shapes::ShapeRef.new(shape: ClusterArnList, location_name: "linkedClusterArns"))
     GetClusterOutput.struct_class = Types::GetClusterOutput
+
+    GetVpcEndpointServiceNameInput.add_member(:identifier, Shapes::ShapeRef.new(shape: ClusterId, required: true, location: "uri", location_name: "identifier"))
+    GetVpcEndpointServiceNameInput.struct_class = Types::GetVpcEndpointServiceNameInput
+
+    GetVpcEndpointServiceNameOutput.add_member(:service_name, Shapes::ShapeRef.new(shape: ServiceName, required: true, location_name: "serviceName"))
+    GetVpcEndpointServiceNameOutput.struct_class = Types::GetVpcEndpointServiceNameOutput
 
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     InternalServerException.add_member(:retry_after_seconds, Shapes::ShapeRef.new(shape: Integer, location: "header", location_name: "Retry-After"))
@@ -295,6 +304,19 @@ module Aws::DSQL
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
+      api.add_operation(:get_vpc_endpoint_service_name, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetVpcEndpointServiceName"
+        o.http_method = "GET"
+        o.http_request_uri = "/clusters/{identifier}/vpc-endpoint-service-name"
+        o.input = Shapes::ShapeRef.new(shape: GetVpcEndpointServiceNameInput)
+        o.output = Shapes::ShapeRef.new(shape: GetVpcEndpointServiceNameOutput)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)

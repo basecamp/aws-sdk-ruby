@@ -92,6 +92,16 @@ module Aws::DSQL
       SENSITIVE: []
     end
 
+    class GetVpcEndpointServiceNameInput
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetVpcEndpointServiceNameOutput
+      attr_accessor service_name: ::String
+      SENSITIVE: []
+    end
+
     class InternalServerException
       attr_accessor message: ::String
       attr_accessor retry_after_seconds: ::Integer
