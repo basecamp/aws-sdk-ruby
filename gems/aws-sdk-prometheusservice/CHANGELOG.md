@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.49.0 (2025-04-17)
+------------------
+
+* Feature - Add Workspace Configuration APIs for Amazon Prometheus
+
 1.48.0 (2025-02-18)
 ------------------
 

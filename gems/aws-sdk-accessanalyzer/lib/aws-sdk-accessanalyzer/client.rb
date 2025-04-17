@@ -779,7 +779,7 @@ module Aws::AccessAnalyzer
     #
     #   resp = client.check_no_public_access({
     #     policy_document: "AccessCheckPolicyDocument", # required
-    #     resource_type: "AWS::DynamoDB::Table", # required, accepts AWS::DynamoDB::Table, AWS::DynamoDB::Stream, AWS::EFS::FileSystem, AWS::OpenSearchService::Domain, AWS::Kinesis::Stream, AWS::Kinesis::StreamConsumer, AWS::KMS::Key, AWS::Lambda::Function, AWS::S3::Bucket, AWS::S3::AccessPoint, AWS::S3Express::DirectoryBucket, AWS::S3::Glacier, AWS::S3Outposts::Bucket, AWS::S3Outposts::AccessPoint, AWS::SecretsManager::Secret, AWS::SNS::Topic, AWS::SQS::Queue, AWS::IAM::AssumeRolePolicyDocument
+    #     resource_type: "AWS::DynamoDB::Table", # required, accepts AWS::DynamoDB::Table, AWS::DynamoDB::Stream, AWS::EFS::FileSystem, AWS::OpenSearchService::Domain, AWS::Kinesis::Stream, AWS::Kinesis::StreamConsumer, AWS::KMS::Key, AWS::Lambda::Function, AWS::S3::Bucket, AWS::S3::AccessPoint, AWS::S3Express::DirectoryBucket, AWS::S3::Glacier, AWS::S3Outposts::Bucket, AWS::S3Outposts::AccessPoint, AWS::SecretsManager::Secret, AWS::SNS::Topic, AWS::SQS::Queue, AWS::IAM::AssumeRolePolicyDocument, AWS::S3Tables::TableBucket, AWS::ApiGateway::RestApi, AWS::CodeArtifact::Domain, AWS::Backup::BackupVault, AWS::CloudTrail::Dashboard, AWS::CloudTrail::EventDataStore, AWS::S3Tables::Table, AWS::S3Express::AccessPoint
     #   })
     #
     # @example Response structure
@@ -931,6 +931,18 @@ module Aws::AccessAnalyzer
     #         },
     #         s3_express_directory_bucket: {
     #           bucket_policy: "S3ExpressDirectoryBucketPolicy",
+    #           access_points: {
+    #             "S3ExpressDirectoryAccessPointArn" => {
+    #               access_point_policy: "AccessPointPolicy",
+    #               network_origin: {
+    #                 vpc_configuration: {
+    #                   vpc_id: "VpcId", # required
+    #                 },
+    #                 internet_configuration: {
+    #                 },
+    #               },
+    #             },
+    #           },
     #         },
     #         dynamodb_stream: {
     #           stream_policy: "DynamodbStreamPolicy",
@@ -1295,6 +1307,9 @@ module Aws::AccessAnalyzer
     #   resp.access_preview.configurations["ConfigurationsMapKey"].sns_topic.topic_policy #=> String
     #   resp.access_preview.configurations["ConfigurationsMapKey"].sqs_queue.queue_policy #=> String
     #   resp.access_preview.configurations["ConfigurationsMapKey"].s3_express_directory_bucket.bucket_policy #=> String
+    #   resp.access_preview.configurations["ConfigurationsMapKey"].s3_express_directory_bucket.access_points #=> Hash
+    #   resp.access_preview.configurations["ConfigurationsMapKey"].s3_express_directory_bucket.access_points["S3ExpressDirectoryAccessPointArn"].access_point_policy #=> String
+    #   resp.access_preview.configurations["ConfigurationsMapKey"].s3_express_directory_bucket.access_points["S3ExpressDirectoryAccessPointArn"].network_origin.vpc_configuration.vpc_id #=> String
     #   resp.access_preview.configurations["ConfigurationsMapKey"].dynamodb_stream.stream_policy #=> String
     #   resp.access_preview.configurations["ConfigurationsMapKey"].dynamodb_table.table_policy #=> String
     #   resp.access_preview.created_at #=> Time
@@ -2826,7 +2841,7 @@ module Aws::AccessAnalyzer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-accessanalyzer'
-      context[:gem_version] = '1.68.0'
+      context[:gem_version] = '1.69.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -100,6 +100,8 @@ module Aws::MemoryDB
       attr_accessor acl_name: ::String
       attr_accessor auto_minor_version_upgrade: bool
       attr_accessor data_tiering: ("true" | "false")
+      attr_accessor network_type: ("ipv4" | "ipv6" | "dual_stack")
+      attr_accessor ip_discovery: ("ipv4" | "ipv6")
       SENSITIVE: []
     end
 
@@ -191,6 +193,8 @@ module Aws::MemoryDB
       attr_accessor engine_version: ::String
       attr_accessor auto_minor_version_upgrade: bool
       attr_accessor data_tiering: bool
+      attr_accessor network_type: ("ipv4" | "ipv6" | "dual_stack")
+      attr_accessor ip_discovery: ("ipv4" | "ipv6")
       SENSITIVE: []
     end
 
@@ -917,6 +921,7 @@ module Aws::MemoryDB
     class Subnet
       attr_accessor identifier: ::String
       attr_accessor availability_zone: Types::AvailabilityZone
+      attr_accessor supported_network_types: ::Array[("ipv4" | "ipv6" | "dual_stack")]
       SENSITIVE: []
     end
 
@@ -926,6 +931,7 @@ module Aws::MemoryDB
       attr_accessor vpc_id: ::String
       attr_accessor subnets: ::Array[Types::Subnet]
       attr_accessor arn: ::String
+      attr_accessor supported_network_types: ::Array[("ipv4" | "ipv6" | "dual_stack")]
       SENSITIVE: []
     end
 
@@ -1022,6 +1028,7 @@ module Aws::MemoryDB
       attr_accessor replica_configuration: Types::ReplicaConfigurationRequest
       attr_accessor shard_configuration: Types::ShardConfigurationRequest
       attr_accessor acl_name: ::String
+      attr_accessor ip_discovery: ("ipv4" | "ipv6")
       SENSITIVE: []
     end
 

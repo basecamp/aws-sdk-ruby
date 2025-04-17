@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.42.0 (2025-04-17)
+------------------
+
+* Feature - With this release, Bedrock Evaluation will now support custom metrics for evaluation.
+
 1.41.0 (2025-04-07)
 ------------------
 

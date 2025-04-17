@@ -847,13 +847,13 @@ module Aws
                          instance_id: ::String,
                          name: ::String,
                          trigger_event_source: {
-                           event_source_name: ("OnPostCallAnalysisAvailable" | "OnRealTimeCallAnalysisAvailable" | "OnRealTimeChatAnalysisAvailable" | "OnPostChatAnalysisAvailable" | "OnZendeskTicketCreate" | "OnZendeskTicketStatusUpdate" | "OnSalesforceCaseCreate" | "OnContactEvaluationSubmit" | "OnMetricDataUpdate" | "OnCaseCreate" | "OnCaseUpdate"),
+                           event_source_name: ("OnPostCallAnalysisAvailable" | "OnRealTimeCallAnalysisAvailable" | "OnRealTimeChatAnalysisAvailable" | "OnPostChatAnalysisAvailable" | "OnZendeskTicketCreate" | "OnZendeskTicketStatusUpdate" | "OnSalesforceCaseCreate" | "OnContactEvaluationSubmit" | "OnMetricDataUpdate" | "OnCaseCreate" | "OnCaseUpdate" | "OnSlaBreach"),
                            integration_association_id: ::String?
                          },
                          function: ::String,
                          actions: Array[
                            {
-                             action_type: ("CREATE_TASK" | "ASSIGN_CONTACT_CATEGORY" | "GENERATE_EVENTBRIDGE_EVENT" | "SEND_NOTIFICATION" | "CREATE_CASE" | "UPDATE_CASE" | "END_ASSOCIATED_TASKS" | "SUBMIT_AUTO_EVALUATION"),
+                             action_type: ("CREATE_TASK" | "ASSIGN_CONTACT_CATEGORY" | "GENERATE_EVENTBRIDGE_EVENT" | "SEND_NOTIFICATION" | "CREATE_CASE" | "UPDATE_CASE" | "ASSIGN_SLA" | "END_ASSOCIATED_TASKS" | "SUBMIT_AUTO_EVALUATION"),
                              task_action: {
                                name: ::String,
                                description: ::String?,
@@ -909,6 +909,24 @@ module Aws
                                    }
                                  },
                                ]
+                             }?,
+                             assign_sla_action: {
+                               sla_assignment_type: ("CASES"),
+                               case_sla_configuration: {
+                                 name: ::String,
+                                 type: ("CaseField"),
+                                 field_id: ::String?,
+                                 target_field_values: Array[
+                                   {
+                                     boolean_value: bool?,
+                                     double_value: ::Float?,
+                                     empty_value: {
+                                     }?,
+                                     string_value: ::String?
+                                   },
+                                 ]?,
+                                 target_sla_minutes: ::Integer
+                               }?
                              }?,
                              end_associated_tasks_action: {
                              }?,
@@ -2580,7 +2598,7 @@ module Aws
       def list_rules: (
                         instance_id: ::String,
                         ?publish_status: ("DRAFT" | "PUBLISHED"),
-                        ?event_source_name: ("OnPostCallAnalysisAvailable" | "OnRealTimeCallAnalysisAvailable" | "OnRealTimeChatAnalysisAvailable" | "OnPostChatAnalysisAvailable" | "OnZendeskTicketCreate" | "OnZendeskTicketStatusUpdate" | "OnSalesforceCaseCreate" | "OnContactEvaluationSubmit" | "OnMetricDataUpdate" | "OnCaseCreate" | "OnCaseUpdate"),
+                        ?event_source_name: ("OnPostCallAnalysisAvailable" | "OnRealTimeCallAnalysisAvailable" | "OnRealTimeChatAnalysisAvailable" | "OnPostChatAnalysisAvailable" | "OnZendeskTicketCreate" | "OnZendeskTicketStatusUpdate" | "OnSalesforceCaseCreate" | "OnContactEvaluationSubmit" | "OnMetricDataUpdate" | "OnCaseCreate" | "OnCaseUpdate" | "OnSlaBreach"),
                         ?max_results: ::Integer,
                         ?next_token: ::String
                       ) -> _ListRulesResponseSuccess
@@ -4930,7 +4948,7 @@ module Aws
                          function: ::String,
                          actions: Array[
                            {
-                             action_type: ("CREATE_TASK" | "ASSIGN_CONTACT_CATEGORY" | "GENERATE_EVENTBRIDGE_EVENT" | "SEND_NOTIFICATION" | "CREATE_CASE" | "UPDATE_CASE" | "END_ASSOCIATED_TASKS" | "SUBMIT_AUTO_EVALUATION"),
+                             action_type: ("CREATE_TASK" | "ASSIGN_CONTACT_CATEGORY" | "GENERATE_EVENTBRIDGE_EVENT" | "SEND_NOTIFICATION" | "CREATE_CASE" | "UPDATE_CASE" | "ASSIGN_SLA" | "END_ASSOCIATED_TASKS" | "SUBMIT_AUTO_EVALUATION"),
                              task_action: {
                                name: ::String,
                                description: ::String?,
@@ -4986,6 +5004,24 @@ module Aws
                                    }
                                  },
                                ]
+                             }?,
+                             assign_sla_action: {
+                               sla_assignment_type: ("CASES"),
+                               case_sla_configuration: {
+                                 name: ::String,
+                                 type: ("CaseField"),
+                                 field_id: ::String?,
+                                 target_field_values: Array[
+                                   {
+                                     boolean_value: bool?,
+                                     double_value: ::Float?,
+                                     empty_value: {
+                                     }?,
+                                     string_value: ::String?
+                                   },
+                                 ]?,
+                                 target_sla_minutes: ::Integer
+                               }?
                              }?,
                              end_associated_tasks_action: {
                              }?,

@@ -39,13 +39,74 @@ module Aws::Bedrock
     #   This model computes all evaluation related metrics.
     #   @return [Types::EvaluatorModelConfig]
     #
+    # @!attribute [rw] custom_metric_config
+    #   Defines the configuration of custom metrics to be used in an
+    #   evaluation job.
+    #   @return [Types::AutomatedEvaluationCustomMetricConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/AutomatedEvaluationConfig AWS API Documentation
     #
     class AutomatedEvaluationConfig < Struct.new(
       :dataset_metric_configs,
+      :evaluator_model_config,
+      :custom_metric_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Defines the configuration of custom metrics to be used in an
+    # evaluation job. To learn more about using custom metrics in Amazon
+    # Bedrock evaluation jobs, see [Create a prompt for a custom metrics
+    # (LLM-as-a-judge model evaluations)][1] and [Create a prompt for a
+    # custom metrics (RAG evaluations)][2].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation-custom-metrics-prompt-formats.html
+    # [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-evaluation-custom-metrics-prompt-formats.html
+    #
+    # @!attribute [rw] custom_metrics
+    #   Defines a list of custom metrics to be used in an Amazon Bedrock
+    #   evaluation job.
+    #   @return [Array<Types::AutomatedEvaluationCustomMetricSource>]
+    #
+    # @!attribute [rw] evaluator_model_config
+    #   Configuration of the evaluator model you want to use to evaluate
+    #   custom metrics in an Amazon Bedrock evaluation job.
+    #   @return [Types::CustomMetricEvaluatorModelConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/AutomatedEvaluationCustomMetricConfig AWS API Documentation
+    #
+    class AutomatedEvaluationCustomMetricConfig < Struct.new(
+      :custom_metrics,
       :evaluator_model_config)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # An array item definining a single custom metric for use in an Amazon
+    # Bedrock evaluation job.
+    #
+    # @note AutomatedEvaluationCustomMetricSource is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note AutomatedEvaluationCustomMetricSource is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of AutomatedEvaluationCustomMetricSource corresponding to the set member.
+    #
+    # @!attribute [rw] custom_metric_definition
+    #   The definition of a custom metric for use in an Amazon Bedrock
+    #   evaluation job.
+    #   @return [Types::CustomMetricDefinition]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/AutomatedEvaluationCustomMetricSource AWS API Documentation
+    #
+    class AutomatedEvaluationCustomMetricSource < Struct.new(
+      :custom_metric_definition,
+      :unknown)
+      SENSITIVE = [:custom_metric_definition]
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class CustomMetricDefinition < AutomatedEvaluationCustomMetricSource; end
+      class Unknown < AutomatedEvaluationCustomMetricSource; end
     end
 
     # A JSON array that provides the status of the evaluation jobs being
@@ -1101,6 +1162,95 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # Defines the model you want to evaluate custom metrics in an Amazon
+    # Bedrock evaluation job.
+    #
+    # @!attribute [rw] model_identifier
+    #   The Amazon Resource Name (ARN) of the evaluator model for custom
+    #   metrics. For a list of supported evaluator models, see [Evaluate
+    #   model performance using another LLM as a judge][1] and [Evaluate the
+    #   performance of RAG sources using Amazon Bedrock evaluations][2].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/evaluation-judge.html
+    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/evaluation-kb.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/CustomMetricBedrockEvaluatorModel AWS API Documentation
+    #
+    class CustomMetricBedrockEvaluatorModel < Struct.new(
+      :model_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The definition of a custom metric for use in an Amazon Bedrock
+    # evaluation job. A custom metric definition includes a metric name,
+    # prompt (instructions) and optionally, a rating scale. Your prompt must
+    # include a task description and input variables. The required input
+    # variables are different for model-as-a-judge and RAG evaluations.
+    #
+    # For more information about how to define a custom metric in Amazon
+    # Bedrock, see [Create a prompt for a custom metrics (LLM-as-a-judge
+    # model evaluations)][1] and [Create a prompt for a custom metrics (RAG
+    # evaluations)][2].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation-custom-metrics-prompt-formats.html
+    # [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-evaluation-custom-metrics-prompt-formats.html
+    #
+    # @!attribute [rw] name
+    #   The name for a custom metric. Names must be unique in your Amazon
+    #   Web Services region.
+    #   @return [String]
+    #
+    # @!attribute [rw] instructions
+    #   The prompt for a custom metric that instructs the evaluator model
+    #   how to rate the model or RAG source under evaluation.
+    #   @return [String]
+    #
+    # @!attribute [rw] rating_scale
+    #   Defines the rating scale to be used for a custom metric. We
+    #   recommend that you always define a ratings scale when creating a
+    #   custom metric. If you don't define a scale, Amazon Bedrock won't
+    #   be able to visually display the results of the evaluation in the
+    #   console or calculate average values of numerical scores. For more
+    #   information on specifying a rating scale, see [Specifying an output
+    #   schema (rating scale)][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation-custom-metrics-prompt-formats.html#model-evaluation-custom-metrics-prompt-formats-schema
+    #   @return [Array<Types::RatingScaleItem>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/CustomMetricDefinition AWS API Documentation
+    #
+    class CustomMetricDefinition < Struct.new(
+      :name,
+      :instructions,
+      :rating_scale)
+      SENSITIVE = [:name]
+      include Aws::Structure
+    end
+
+    # Configuration of the evaluator model you want to use to evaluate
+    # custom metrics in an Amazon Bedrock evaluation job.
+    #
+    # @!attribute [rw] bedrock_evaluator_models
+    #   Defines the model you want to evaluate custom metrics in an Amazon
+    #   Bedrock evaluation job.
+    #   @return [Array<Types::CustomMetricBedrockEvaluatorModel>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/CustomMetricEvaluatorModelConfig AWS API Documentation
+    #
+    class CustomMetricEvaluatorModelConfig < Struct.new(
+      :bedrock_evaluator_models)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Summary information for a custom model.
     #
     # @!attribute [rw] model_arn
@@ -1526,7 +1676,7 @@ module Aws::Bedrock
     #
     #   For knowledge base evaluation jobs that evaluate retrieval only,
     #   valid values are "`Builtin.ContextRelevance`",
-    #   "`Builtin.ContextConverage`".
+    #   "`Builtin.ContextCoverage`".
     #
     #   For knowledge base evaluation jobs that evaluate retrieval with
     #   response generation, valid values are "`Builtin.Correctness`",
@@ -1847,6 +1997,11 @@ module Aws::Bedrock
     #   metrics for a knowledge base evaluation job.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] custom_metrics_evaluator_model_identifiers
+    #   The Amazon Resource Names (ARNs) of the models used to compute
+    #   custom metrics in an Amazon Bedrock evaluation job.
+    #   @return [Array<String>]
+    #
     # @!attribute [rw] inference_config_summary
     #   Identifies the models, Knowledge Bases, or other RAG sources
     #   evaluated in a model or Knowledge Base evaluation job.
@@ -1869,6 +2024,7 @@ module Aws::Bedrock
       :model_identifiers,
       :rag_identifiers,
       :evaluator_model_identifiers,
+      :custom_metrics_evaluator_model_identifiers,
       :inference_config_summary,
       :application_type)
       SENSITIVE = []
@@ -3089,7 +3245,7 @@ module Aws::Bedrock
     #
     #   * Failed – This job has failed. Check the failure message for any
     #     further details. For further assistance, reach out to the [Amazon
-    #     Web Services Support Center][3].
+    #     Web ServicesSupport Center][3].
     #
     #   * Stopped – This job was stopped by a user.
     #
@@ -5895,7 +6051,7 @@ module Aws::Bedrock
     #
     #   * Failed – This job has failed. Check the failure message for any
     #     further details. For further assistance, reach out to the [Amazon
-    #     Web Services Support Center][3].
+    #     Web ServicesSupport Center][3].
     #
     #   * Stopped – This job was stopped by a user.
     #
@@ -6651,7 +6807,7 @@ module Aws::Bedrock
     #
     #   * Failed – This job has failed. Check the failure message for any
     #     further details. For further assistance, reach out to the [Amazon
-    #     Web Services Support Center][3].
+    #     Web ServicesSupport Center][3].
     #
     #   * Stopped – This job was stopped by a user.
     #
@@ -7021,6 +7177,58 @@ module Aws::Bedrock
       class KnowledgeBaseConfig < RAGConfig; end
       class PrecomputedRagSourceConfig < RAGConfig; end
       class Unknown < RAGConfig; end
+    end
+
+    # Defines the value and corresponding definition for one rating in a
+    # custom metric rating scale.
+    #
+    # @!attribute [rw] definition
+    #   Defines the definition for one rating in a custom metric rating
+    #   scale.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   Defines the value for one rating in a custom metric rating scale.
+    #   @return [Types::RatingScaleItemValue]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/RatingScaleItem AWS API Documentation
+    #
+    class RatingScaleItem < Struct.new(
+      :definition,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Defines the value for one rating in a custom metric rating scale.
+    #
+    # @note RatingScaleItemValue is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note RatingScaleItemValue is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of RatingScaleItemValue corresponding to the set member.
+    #
+    # @!attribute [rw] string_value
+    #   A string representing the value for a rating in a custom metric
+    #   rating scale.
+    #   @return [String]
+    #
+    # @!attribute [rw] float_value
+    #   A floating point number representing the value for a rating in a
+    #   custom metric rating scale.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/RatingScaleItemValue AWS API Documentation
+    #
+    class RatingScaleItemValue < Struct.new(
+      :string_value,
+      :float_value,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class StringValue < RatingScaleItemValue; end
+      class FloatValue < RatingScaleItemValue; end
+      class Unknown < RatingScaleItemValue; end
     end
 
     # @!attribute [rw] endpoint_identifier

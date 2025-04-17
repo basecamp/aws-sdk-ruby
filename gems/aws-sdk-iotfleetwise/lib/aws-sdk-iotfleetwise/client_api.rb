@@ -16,15 +16,18 @@ module Aws::IoTFleetWise
 
     AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
     Actuator = Shapes::StructureShape.new(name: 'Actuator')
+    ActuatorFullyQualifiedNameString = Shapes::StringShape.new(name: 'ActuatorFullyQualifiedNameString')
     AmazonResourceName = Shapes::StringShape.new(name: 'AmazonResourceName')
     AssociateVehicleFleetRequest = Shapes::StructureShape.new(name: 'AssociateVehicleFleetRequest')
     AssociateVehicleFleetResponse = Shapes::StructureShape.new(name: 'AssociateVehicleFleetResponse')
     Attribute = Shapes::StructureShape.new(name: 'Attribute')
+    AttributeFullyQualifiedNameString = Shapes::StringShape.new(name: 'AttributeFullyQualifiedNameString')
     BatchCreateVehicleRequest = Shapes::StructureShape.new(name: 'BatchCreateVehicleRequest')
     BatchCreateVehicleResponse = Shapes::StructureShape.new(name: 'BatchCreateVehicleResponse')
     BatchUpdateVehicleRequest = Shapes::StructureShape.new(name: 'BatchUpdateVehicleRequest')
     BatchUpdateVehicleResponse = Shapes::StructureShape.new(name: 'BatchUpdateVehicleResponse')
     Branch = Shapes::StructureShape.new(name: 'Branch')
+    BranchFullyQualifiedNameString = Shapes::StringShape.new(name: 'BranchFullyQualifiedNameString')
     CampaignStatus = Shapes::StringShape.new(name: 'CampaignStatus')
     CampaignSummary = Shapes::StructureShape.new(name: 'CampaignSummary')
     CanDbcDefinition = Shapes::StructureShape.new(name: 'CanDbcDefinition')
@@ -42,10 +45,12 @@ module Aws::IoTFleetWise
     CreateCampaignRequest = Shapes::StructureShape.new(name: 'CreateCampaignRequest')
     CreateCampaignResponse = Shapes::StructureShape.new(name: 'CreateCampaignResponse')
     CreateDecoderManifestRequest = Shapes::StructureShape.new(name: 'CreateDecoderManifestRequest')
+    CreateDecoderManifestRequestModelManifestArnString = Shapes::StringShape.new(name: 'CreateDecoderManifestRequestModelManifestArnString')
     CreateDecoderManifestResponse = Shapes::StructureShape.new(name: 'CreateDecoderManifestResponse')
     CreateFleetRequest = Shapes::StructureShape.new(name: 'CreateFleetRequest')
     CreateFleetResponse = Shapes::StructureShape.new(name: 'CreateFleetResponse')
     CreateModelManifestRequest = Shapes::StructureShape.new(name: 'CreateModelManifestRequest')
+    CreateModelManifestRequestNodesList = Shapes::ListShape.new(name: 'CreateModelManifestRequestNodesList')
     CreateModelManifestResponse = Shapes::StructureShape.new(name: 'CreateModelManifestResponse')
     CreateSignalCatalogRequest = Shapes::StructureShape.new(name: 'CreateSignalCatalogRequest')
     CreateSignalCatalogResponse = Shapes::StructureShape.new(name: 'CreateSignalCatalogResponse')
@@ -61,7 +66,9 @@ module Aws::IoTFleetWise
     CustomDecodingSignal = Shapes::StructureShape.new(name: 'CustomDecodingSignal')
     CustomDecodingSignalInterfaceName = Shapes::StringShape.new(name: 'CustomDecodingSignalInterfaceName')
     CustomProperty = Shapes::StructureShape.new(name: 'CustomProperty')
+    CustomPropertyFullyQualifiedNameString = Shapes::StringShape.new(name: 'CustomPropertyFullyQualifiedNameString')
     CustomStruct = Shapes::StructureShape.new(name: 'CustomStruct')
+    CustomStructFullyQualifiedNameString = Shapes::StringShape.new(name: 'CustomStructFullyQualifiedNameString')
     DataDestinationConfig = Shapes::UnionShape.new(name: 'DataDestinationConfig')
     DataDestinationConfigs = Shapes::ListShape.new(name: 'DataDestinationConfigs')
     DataExtraDimensionNodePathList = Shapes::ListShape.new(name: 'DataExtraDimensionNodePathList')
@@ -221,6 +228,7 @@ module Aws::IoTFleetWise
     S3BucketArn = Shapes::StringShape.new(name: 'S3BucketArn')
     S3Config = Shapes::StructureShape.new(name: 'S3Config')
     Sensor = Shapes::StructureShape.new(name: 'Sensor')
+    SensorFullyQualifiedNameString = Shapes::StringShape.new(name: 'SensorFullyQualifiedNameString')
     SignalCatalogSummary = Shapes::StructureShape.new(name: 'SignalCatalogSummary')
     SignalDecoder = Shapes::StructureShape.new(name: 'SignalDecoder')
     SignalDecoderFailureReason = Shapes::StringShape.new(name: 'SignalDecoderFailureReason')
@@ -365,7 +373,7 @@ module Aws::IoTFleetWise
     AccessDeniedException.add_member(:message, Shapes::ShapeRef.new(shape: string, required: true, location_name: "message"))
     AccessDeniedException.struct_class = Types::AccessDeniedException
 
-    Actuator.add_member(:fully_qualified_name, Shapes::ShapeRef.new(shape: string, required: true, location_name: "fullyQualifiedName"))
+    Actuator.add_member(:fully_qualified_name, Shapes::ShapeRef.new(shape: ActuatorFullyQualifiedNameString, required: true, location_name: "fullyQualifiedName"))
     Actuator.add_member(:data_type, Shapes::ShapeRef.new(shape: NodeDataType, required: true, location_name: "dataType"))
     Actuator.add_member(:description, Shapes::ShapeRef.new(shape: description, location_name: "description"))
     Actuator.add_member(:unit, Shapes::ShapeRef.new(shape: string, location_name: "unit"))
@@ -384,7 +392,7 @@ module Aws::IoTFleetWise
 
     AssociateVehicleFleetResponse.struct_class = Types::AssociateVehicleFleetResponse
 
-    Attribute.add_member(:fully_qualified_name, Shapes::ShapeRef.new(shape: string, required: true, location_name: "fullyQualifiedName"))
+    Attribute.add_member(:fully_qualified_name, Shapes::ShapeRef.new(shape: AttributeFullyQualifiedNameString, required: true, location_name: "fullyQualifiedName"))
     Attribute.add_member(:data_type, Shapes::ShapeRef.new(shape: NodeDataType, required: true, location_name: "dataType"))
     Attribute.add_member(:description, Shapes::ShapeRef.new(shape: description, location_name: "description"))
     Attribute.add_member(:unit, Shapes::ShapeRef.new(shape: string, location_name: "unit"))
@@ -411,7 +419,7 @@ module Aws::IoTFleetWise
     BatchUpdateVehicleResponse.add_member(:errors, Shapes::ShapeRef.new(shape: updateVehicleErrors, location_name: "errors"))
     BatchUpdateVehicleResponse.struct_class = Types::BatchUpdateVehicleResponse
 
-    Branch.add_member(:fully_qualified_name, Shapes::ShapeRef.new(shape: string, required: true, location_name: "fullyQualifiedName"))
+    Branch.add_member(:fully_qualified_name, Shapes::ShapeRef.new(shape: BranchFullyQualifiedNameString, required: true, location_name: "fullyQualifiedName"))
     Branch.add_member(:description, Shapes::ShapeRef.new(shape: description, location_name: "description"))
     Branch.add_member(:deprecation_message, Shapes::ShapeRef.new(shape: message, location_name: "deprecationMessage"))
     Branch.add_member(:comment, Shapes::ShapeRef.new(shape: message, location_name: "comment"))
@@ -501,7 +509,7 @@ module Aws::IoTFleetWise
 
     CreateDecoderManifestRequest.add_member(:name, Shapes::ShapeRef.new(shape: resourceName, required: true, location_name: "name"))
     CreateDecoderManifestRequest.add_member(:description, Shapes::ShapeRef.new(shape: description, location_name: "description"))
-    CreateDecoderManifestRequest.add_member(:model_manifest_arn, Shapes::ShapeRef.new(shape: arn, required: true, location_name: "modelManifestArn"))
+    CreateDecoderManifestRequest.add_member(:model_manifest_arn, Shapes::ShapeRef.new(shape: CreateDecoderManifestRequestModelManifestArnString, required: true, location_name: "modelManifestArn"))
     CreateDecoderManifestRequest.add_member(:signal_decoders, Shapes::ShapeRef.new(shape: SignalDecoders, location_name: "signalDecoders"))
     CreateDecoderManifestRequest.add_member(:network_interfaces, Shapes::ShapeRef.new(shape: NetworkInterfaces, location_name: "networkInterfaces"))
     CreateDecoderManifestRequest.add_member(:default_for_unmapped_signals, Shapes::ShapeRef.new(shape: DefaultForUnmappedSignalsType, location_name: "defaultForUnmappedSignals"))
@@ -524,10 +532,12 @@ module Aws::IoTFleetWise
 
     CreateModelManifestRequest.add_member(:name, Shapes::ShapeRef.new(shape: resourceName, required: true, location_name: "name"))
     CreateModelManifestRequest.add_member(:description, Shapes::ShapeRef.new(shape: description, location_name: "description"))
-    CreateModelManifestRequest.add_member(:nodes, Shapes::ShapeRef.new(shape: listOfStrings, required: true, location_name: "nodes"))
+    CreateModelManifestRequest.add_member(:nodes, Shapes::ShapeRef.new(shape: CreateModelManifestRequestNodesList, required: true, location_name: "nodes"))
     CreateModelManifestRequest.add_member(:signal_catalog_arn, Shapes::ShapeRef.new(shape: arn, required: true, location_name: "signalCatalogArn"))
     CreateModelManifestRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tags"))
     CreateModelManifestRequest.struct_class = Types::CreateModelManifestRequest
+
+    CreateModelManifestRequestNodesList.member = Shapes::ShapeRef.new(shape: string)
 
     CreateModelManifestResponse.add_member(:name, Shapes::ShapeRef.new(shape: resourceName, required: true, location_name: "name"))
     CreateModelManifestResponse.add_member(:arn, Shapes::ShapeRef.new(shape: arn, required: true, location_name: "arn"))
@@ -596,7 +606,7 @@ module Aws::IoTFleetWise
     CustomDecodingSignal.add_member(:id, Shapes::ShapeRef.new(shape: CustomDecodingId, required: true, location_name: "id"))
     CustomDecodingSignal.struct_class = Types::CustomDecodingSignal
 
-    CustomProperty.add_member(:fully_qualified_name, Shapes::ShapeRef.new(shape: string, required: true, location_name: "fullyQualifiedName"))
+    CustomProperty.add_member(:fully_qualified_name, Shapes::ShapeRef.new(shape: CustomPropertyFullyQualifiedNameString, required: true, location_name: "fullyQualifiedName"))
     CustomProperty.add_member(:data_type, Shapes::ShapeRef.new(shape: NodeDataType, required: true, location_name: "dataType"))
     CustomProperty.add_member(:data_encoding, Shapes::ShapeRef.new(shape: NodeDataEncoding, location_name: "dataEncoding"))
     CustomProperty.add_member(:description, Shapes::ShapeRef.new(shape: description, location_name: "description"))
@@ -605,7 +615,7 @@ module Aws::IoTFleetWise
     CustomProperty.add_member(:struct_fully_qualified_name, Shapes::ShapeRef.new(shape: NodePath, location_name: "structFullyQualifiedName"))
     CustomProperty.struct_class = Types::CustomProperty
 
-    CustomStruct.add_member(:fully_qualified_name, Shapes::ShapeRef.new(shape: string, required: true, location_name: "fullyQualifiedName"))
+    CustomStruct.add_member(:fully_qualified_name, Shapes::ShapeRef.new(shape: CustomStructFullyQualifiedNameString, required: true, location_name: "fullyQualifiedName"))
     CustomStruct.add_member(:description, Shapes::ShapeRef.new(shape: description, location_name: "description"))
     CustomStruct.add_member(:deprecation_message, Shapes::ShapeRef.new(shape: message, location_name: "deprecationMessage"))
     CustomStruct.add_member(:comment, Shapes::ShapeRef.new(shape: message, location_name: "comment"))
@@ -1203,7 +1213,7 @@ module Aws::IoTFleetWise
     S3Config.add_member(:prefix, Shapes::ShapeRef.new(shape: Prefix, location_name: "prefix"))
     S3Config.struct_class = Types::S3Config
 
-    Sensor.add_member(:fully_qualified_name, Shapes::ShapeRef.new(shape: string, required: true, location_name: "fullyQualifiedName"))
+    Sensor.add_member(:fully_qualified_name, Shapes::ShapeRef.new(shape: SensorFullyQualifiedNameString, required: true, location_name: "fullyQualifiedName"))
     Sensor.add_member(:data_type, Shapes::ShapeRef.new(shape: NodeDataType, required: true, location_name: "dataType"))
     Sensor.add_member(:description, Shapes::ShapeRef.new(shape: description, location_name: "description"))
     Sensor.add_member(:unit, Shapes::ShapeRef.new(shape: string, location_name: "unit"))

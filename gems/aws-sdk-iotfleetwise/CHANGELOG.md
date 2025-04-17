@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.45.0 (2025-04-17)
+------------------
+
+* Feature - We've added stricter parameter validations to AWS IoT FleetWise signal catalog, model manifest, and decoder manifest APIs.
+
 1.44.0 (2025-04-08)
 ------------------
 

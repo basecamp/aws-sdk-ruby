@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.45.0 (2025-04-17)
+------------------
+
+* Feature - Add versioning for HealthOmics workflows
+
 1.44.0 (2025-02-18)
 ------------------
 

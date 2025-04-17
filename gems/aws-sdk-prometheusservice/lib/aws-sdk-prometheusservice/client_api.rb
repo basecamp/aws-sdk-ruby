@@ -47,6 +47,8 @@ module Aws::PrometheusService
     DescribeRuleGroupsNamespaceResponse = Shapes::StructureShape.new(name: 'DescribeRuleGroupsNamespaceResponse')
     DescribeScraperRequest = Shapes::StructureShape.new(name: 'DescribeScraperRequest')
     DescribeScraperResponse = Shapes::StructureShape.new(name: 'DescribeScraperResponse')
+    DescribeWorkspaceConfigurationRequest = Shapes::StructureShape.new(name: 'DescribeWorkspaceConfigurationRequest')
+    DescribeWorkspaceConfigurationResponse = Shapes::StructureShape.new(name: 'DescribeWorkspaceConfigurationResponse')
     DescribeWorkspaceRequest = Shapes::StructureShape.new(name: 'DescribeWorkspaceRequest')
     DescribeWorkspaceResponse = Shapes::StructureShape.new(name: 'DescribeWorkspaceResponse')
     Destination = Shapes::UnionShape.new(name: 'Destination')
@@ -61,6 +63,13 @@ module Aws::PrometheusService
     Integer = Shapes::IntegerShape.new(name: 'Integer')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
     KmsKeyArn = Shapes::StringShape.new(name: 'KmsKeyArn')
+    LabelName = Shapes::StringShape.new(name: 'LabelName')
+    LabelSet = Shapes::MapShape.new(name: 'LabelSet')
+    LabelValue = Shapes::StringShape.new(name: 'LabelValue')
+    LimitsPerLabelSet = Shapes::StructureShape.new(name: 'LimitsPerLabelSet')
+    LimitsPerLabelSetEntry = Shapes::StructureShape.new(name: 'LimitsPerLabelSetEntry')
+    LimitsPerLabelSetEntryMaxSeriesLong = Shapes::IntegerShape.new(name: 'LimitsPerLabelSetEntryMaxSeriesLong')
+    LimitsPerLabelSetList = Shapes::ListShape.new(name: 'LimitsPerLabelSetList')
     ListRuleGroupsNamespacesRequest = Shapes::StructureShape.new(name: 'ListRuleGroupsNamespacesRequest')
     ListRuleGroupsNamespacesRequestMaxResultsInteger = Shapes::IntegerShape.new(name: 'ListRuleGroupsNamespacesRequestMaxResultsInteger')
     ListRuleGroupsNamespacesResponse = Shapes::StructureShape.new(name: 'ListRuleGroupsNamespacesResponse')
@@ -124,6 +133,9 @@ module Aws::PrometheusService
     UpdateScraperRequest = Shapes::StructureShape.new(name: 'UpdateScraperRequest')
     UpdateScraperResponse = Shapes::StructureShape.new(name: 'UpdateScraperResponse')
     UpdateWorkspaceAliasRequest = Shapes::StructureShape.new(name: 'UpdateWorkspaceAliasRequest')
+    UpdateWorkspaceConfigurationRequest = Shapes::StructureShape.new(name: 'UpdateWorkspaceConfigurationRequest')
+    UpdateWorkspaceConfigurationRequestRetentionPeriodInDaysInteger = Shapes::IntegerShape.new(name: 'UpdateWorkspaceConfigurationRequestRetentionPeriodInDaysInteger')
+    UpdateWorkspaceConfigurationResponse = Shapes::StructureShape.new(name: 'UpdateWorkspaceConfigurationResponse')
     Uri = Shapes::StringShape.new(name: 'Uri')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
     ValidationExceptionField = Shapes::StructureShape.new(name: 'ValidationExceptionField')
@@ -131,6 +143,10 @@ module Aws::PrometheusService
     ValidationExceptionReason = Shapes::StringShape.new(name: 'ValidationExceptionReason')
     WorkspaceAlias = Shapes::StringShape.new(name: 'WorkspaceAlias')
     WorkspaceArn = Shapes::StringShape.new(name: 'WorkspaceArn')
+    WorkspaceConfigurationDescription = Shapes::StructureShape.new(name: 'WorkspaceConfigurationDescription')
+    WorkspaceConfigurationDescriptionRetentionPeriodInDaysInteger = Shapes::IntegerShape.new(name: 'WorkspaceConfigurationDescriptionRetentionPeriodInDaysInteger')
+    WorkspaceConfigurationStatus = Shapes::StructureShape.new(name: 'WorkspaceConfigurationStatus')
+    WorkspaceConfigurationStatusCode = Shapes::StringShape.new(name: 'WorkspaceConfigurationStatusCode')
     WorkspaceDescription = Shapes::StructureShape.new(name: 'WorkspaceDescription')
     WorkspaceId = Shapes::StringShape.new(name: 'WorkspaceId')
     WorkspaceStatus = Shapes::StructureShape.new(name: 'WorkspaceStatus')
@@ -266,6 +282,12 @@ module Aws::PrometheusService
     DescribeScraperResponse.add_member(:scraper, Shapes::ShapeRef.new(shape: ScraperDescription, required: true, location_name: "scraper"))
     DescribeScraperResponse.struct_class = Types::DescribeScraperResponse
 
+    DescribeWorkspaceConfigurationRequest.add_member(:workspace_id, Shapes::ShapeRef.new(shape: WorkspaceId, required: true, location: "uri", location_name: "workspaceId"))
+    DescribeWorkspaceConfigurationRequest.struct_class = Types::DescribeWorkspaceConfigurationRequest
+
+    DescribeWorkspaceConfigurationResponse.add_member(:workspace_configuration, Shapes::ShapeRef.new(shape: WorkspaceConfigurationDescription, required: true, location_name: "workspaceConfiguration"))
+    DescribeWorkspaceConfigurationResponse.struct_class = Types::DescribeWorkspaceConfigurationResponse
+
     DescribeWorkspaceRequest.add_member(:workspace_id, Shapes::ShapeRef.new(shape: WorkspaceId, required: true, location: "uri", location_name: "workspaceId"))
     DescribeWorkspaceRequest.struct_class = Types::DescribeWorkspaceRequest
 
@@ -293,6 +315,18 @@ module Aws::PrometheusService
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     InternalServerException.add_member(:retry_after_seconds, Shapes::ShapeRef.new(shape: Integer, location: "header", location_name: "Retry-After"))
     InternalServerException.struct_class = Types::InternalServerException
+
+    LabelSet.key = Shapes::ShapeRef.new(shape: LabelName)
+    LabelSet.value = Shapes::ShapeRef.new(shape: LabelValue)
+
+    LimitsPerLabelSet.add_member(:label_set, Shapes::ShapeRef.new(shape: LabelSet, required: true, location_name: "labelSet"))
+    LimitsPerLabelSet.add_member(:limits, Shapes::ShapeRef.new(shape: LimitsPerLabelSetEntry, required: true, location_name: "limits"))
+    LimitsPerLabelSet.struct_class = Types::LimitsPerLabelSet
+
+    LimitsPerLabelSetEntry.add_member(:max_series, Shapes::ShapeRef.new(shape: LimitsPerLabelSetEntryMaxSeriesLong, location_name: "maxSeries"))
+    LimitsPerLabelSetEntry.struct_class = Types::LimitsPerLabelSetEntry
+
+    LimitsPerLabelSetList.member = Shapes::ShapeRef.new(shape: LimitsPerLabelSet)
 
     ListRuleGroupsNamespacesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListRuleGroupsNamespacesRequestMaxResultsInteger, location: "querystring", location_name: "maxResults"))
     ListRuleGroupsNamespacesRequest.add_member(:name, Shapes::ShapeRef.new(shape: RuleGroupsNamespaceName, location: "querystring", location_name: "name"))
@@ -501,6 +535,15 @@ module Aws::PrometheusService
     UpdateWorkspaceAliasRequest.add_member(:workspace_id, Shapes::ShapeRef.new(shape: WorkspaceId, required: true, location: "uri", location_name: "workspaceId"))
     UpdateWorkspaceAliasRequest.struct_class = Types::UpdateWorkspaceAliasRequest
 
+    UpdateWorkspaceConfigurationRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    UpdateWorkspaceConfigurationRequest.add_member(:limits_per_label_set, Shapes::ShapeRef.new(shape: LimitsPerLabelSetList, location_name: "limitsPerLabelSet"))
+    UpdateWorkspaceConfigurationRequest.add_member(:retention_period_in_days, Shapes::ShapeRef.new(shape: UpdateWorkspaceConfigurationRequestRetentionPeriodInDaysInteger, location_name: "retentionPeriodInDays"))
+    UpdateWorkspaceConfigurationRequest.add_member(:workspace_id, Shapes::ShapeRef.new(shape: WorkspaceId, required: true, location: "uri", location_name: "workspaceId"))
+    UpdateWorkspaceConfigurationRequest.struct_class = Types::UpdateWorkspaceConfigurationRequest
+
+    UpdateWorkspaceConfigurationResponse.add_member(:status, Shapes::ShapeRef.new(shape: WorkspaceConfigurationStatus, required: true, location_name: "status"))
+    UpdateWorkspaceConfigurationResponse.struct_class = Types::UpdateWorkspaceConfigurationResponse
+
     ValidationException.add_member(:field_list, Shapes::ShapeRef.new(shape: ValidationExceptionFieldList, location_name: "fieldList"))
     ValidationException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     ValidationException.add_member(:reason, Shapes::ShapeRef.new(shape: ValidationExceptionReason, required: true, location_name: "reason"))
@@ -511,6 +554,15 @@ module Aws::PrometheusService
     ValidationExceptionField.struct_class = Types::ValidationExceptionField
 
     ValidationExceptionFieldList.member = Shapes::ShapeRef.new(shape: ValidationExceptionField)
+
+    WorkspaceConfigurationDescription.add_member(:limits_per_label_set, Shapes::ShapeRef.new(shape: LimitsPerLabelSetList, location_name: "limitsPerLabelSet"))
+    WorkspaceConfigurationDescription.add_member(:retention_period_in_days, Shapes::ShapeRef.new(shape: WorkspaceConfigurationDescriptionRetentionPeriodInDaysInteger, location_name: "retentionPeriodInDays"))
+    WorkspaceConfigurationDescription.add_member(:status, Shapes::ShapeRef.new(shape: WorkspaceConfigurationStatus, required: true, location_name: "status"))
+    WorkspaceConfigurationDescription.struct_class = Types::WorkspaceConfigurationDescription
+
+    WorkspaceConfigurationStatus.add_member(:status_code, Shapes::ShapeRef.new(shape: WorkspaceConfigurationStatusCode, required: true, location_name: "statusCode"))
+    WorkspaceConfigurationStatus.add_member(:status_reason, Shapes::ShapeRef.new(shape: String, location_name: "statusReason"))
+    WorkspaceConfigurationStatus.struct_class = Types::WorkspaceConfigurationStatus
 
     WorkspaceDescription.add_member(:alias, Shapes::ShapeRef.new(shape: WorkspaceAlias, location_name: "alias"))
     WorkspaceDescription.add_member(:arn, Shapes::ShapeRef.new(shape: WorkspaceArn, required: true, location_name: "arn"))
@@ -760,6 +812,19 @@ module Aws::PrometheusService
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
+      api.add_operation(:describe_workspace_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeWorkspaceConfiguration"
+        o.http_method = "GET"
+        o.http_request_uri = "/workspaces/{workspaceId}/configuration"
+        o.input = Shapes::ShapeRef.new(shape: DescribeWorkspaceConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeWorkspaceConfigurationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
       api.add_operation(:get_default_scraper_configuration, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetDefaultScraperConfiguration"
         o.http_method = "GET"
@@ -929,6 +994,21 @@ module Aws::PrometheusService
         o.http_request_uri = "/workspaces/{workspaceId}/alias"
         o.input = Shapes::ShapeRef.new(shape: UpdateWorkspaceAliasRequest)
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+      end)
+
+      api.add_operation(:update_workspace_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateWorkspaceConfiguration"
+        o.http_method = "PATCH"
+        o.http_request_uri = "/workspaces/{workspaceId}/configuration"
+        o.input = Shapes::ShapeRef.new(shape: UpdateWorkspaceConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateWorkspaceConfigurationResponse)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)

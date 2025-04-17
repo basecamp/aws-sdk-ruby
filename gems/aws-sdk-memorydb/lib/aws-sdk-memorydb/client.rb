@@ -554,6 +554,8 @@ module Aws::MemoryDB
     #   resp.processed_clusters[0].acl_name #=> String
     #   resp.processed_clusters[0].auto_minor_version_upgrade #=> Boolean
     #   resp.processed_clusters[0].data_tiering #=> String, one of "true", "false"
+    #   resp.processed_clusters[0].network_type #=> String, one of "ipv4", "ipv6", "dual_stack"
+    #   resp.processed_clusters[0].ip_discovery #=> String, one of "ipv4", "ipv6"
     #   resp.unprocessed_clusters #=> Array
     #   resp.unprocessed_clusters[0].cluster_name #=> String
     #   resp.unprocessed_clusters[0].error_type #=> String
@@ -838,6 +840,23 @@ module Aws::MemoryDB
     #
     #   [1]: https://docs.aws.amazon.com/memorydb/latest/devguide/data-tiering.html
     #
+    # @option params [String] :network_type
+    #   Specifies the IP address type for the cluster. Valid values are
+    #   'ipv4', 'ipv6', or 'dual\_stack'. When set to 'ipv4', the
+    #   cluster will only be accessible via IPv4 addresses. When set to
+    #   'ipv6', the cluster will only be accessible via IPv6 addresses. When
+    #   set to 'dual\_stack', the cluster will be accessible via both IPv4
+    #   and IPv6 addresses. If not specified, the default is 'ipv4'.
+    #
+    # @option params [String] :ip_discovery
+    #   The mechanism for discovering IP addresses for the cluster discovery
+    #   protocol. Valid values are 'ipv4' or 'ipv6'. When set to 'ipv4',
+    #   cluster discovery functions such as cluster slots, cluster shards, and
+    #   cluster nodes return IPv4 addresses for cluster nodes. When set to
+    #   'ipv6', the cluster discovery functions return IPv6 addresses for
+    #   cluster nodes. The value must be compatible with the NetworkType
+    #   parameter. If not specified, the default is 'ipv4'.
+    #
     # @return [Types::CreateClusterResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateClusterResponse#cluster #cluster} => Types::Cluster
@@ -874,6 +893,8 @@ module Aws::MemoryDB
     #     engine_version: "String",
     #     auto_minor_version_upgrade: false,
     #     data_tiering: false,
+    #     network_type: "ipv4", # accepts ipv4, ipv6, dual_stack
+    #     ip_discovery: "ipv4", # accepts ipv4, ipv6
     #   })
     #
     # @example Response structure
@@ -924,6 +945,8 @@ module Aws::MemoryDB
     #   resp.cluster.acl_name #=> String
     #   resp.cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.cluster.data_tiering #=> String, one of "true", "false"
+    #   resp.cluster.network_type #=> String, one of "ipv4", "ipv6", "dual_stack"
+    #   resp.cluster.ip_discovery #=> String, one of "ipv4", "ipv6"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/CreateCluster AWS API Documentation
     #
@@ -937,7 +960,13 @@ module Aws::MemoryDB
     # Creates a new multi-Region cluster.
     #
     # @option params [required, String] :multi_region_cluster_name_suffix
-    #   A suffix to be added to the multi-Region cluster name.
+    #   A suffix to be added to the Multi-Region cluster name. Amazon MemoryDB
+    #   automatically applies a prefix to the Multi-Region cluster Name when
+    #   it is created. Each Amazon Region has its own prefix. For instance, a
+    #   Multi-Region cluster Name created in the US-West-1 region will begin
+    #   with "virxk", along with the suffix name you provide. The suffix
+    #   guarantees uniqueness of the Multi-Region cluster name across multiple
+    #   regions.
     #
     # @option params [String] :description
     #   A description for the multi-Region cluster.
@@ -1198,7 +1227,11 @@ module Aws::MemoryDB
     #   resp.subnet_group.subnets #=> Array
     #   resp.subnet_group.subnets[0].identifier #=> String
     #   resp.subnet_group.subnets[0].availability_zone.name #=> String
+    #   resp.subnet_group.subnets[0].supported_network_types #=> Array
+    #   resp.subnet_group.subnets[0].supported_network_types[0] #=> String, one of "ipv4", "ipv6", "dual_stack"
     #   resp.subnet_group.arn #=> String
+    #   resp.subnet_group.supported_network_types #=> Array
+    #   resp.subnet_group.supported_network_types[0] #=> String, one of "ipv4", "ipv6", "dual_stack"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/CreateSubnetGroup AWS API Documentation
     #
@@ -1399,6 +1432,8 @@ module Aws::MemoryDB
     #   resp.cluster.acl_name #=> String
     #   resp.cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.cluster.data_tiering #=> String, one of "true", "false"
+    #   resp.cluster.network_type #=> String, one of "ipv4", "ipv6", "dual_stack"
+    #   resp.cluster.ip_discovery #=> String, one of "ipv4", "ipv6"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DeleteCluster AWS API Documentation
     #
@@ -1565,7 +1600,11 @@ module Aws::MemoryDB
     #   resp.subnet_group.subnets #=> Array
     #   resp.subnet_group.subnets[0].identifier #=> String
     #   resp.subnet_group.subnets[0].availability_zone.name #=> String
+    #   resp.subnet_group.subnets[0].supported_network_types #=> Array
+    #   resp.subnet_group.subnets[0].supported_network_types[0] #=> String, one of "ipv4", "ipv6", "dual_stack"
     #   resp.subnet_group.arn #=> String
+    #   resp.subnet_group.supported_network_types #=> Array
+    #   resp.subnet_group.supported_network_types[0] #=> String, one of "ipv4", "ipv6", "dual_stack"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DeleteSubnetGroup AWS API Documentation
     #
@@ -1760,6 +1799,8 @@ module Aws::MemoryDB
     #   resp.clusters[0].acl_name #=> String
     #   resp.clusters[0].auto_minor_version_upgrade #=> Boolean
     #   resp.clusters[0].data_tiering #=> String, one of "true", "false"
+    #   resp.clusters[0].network_type #=> String, one of "ipv4", "ipv6", "dual_stack"
+    #   resp.clusters[0].ip_discovery #=> String, one of "ipv4", "ipv6"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DescribeClusters AWS API Documentation
     #
@@ -2435,7 +2476,11 @@ module Aws::MemoryDB
     #   resp.subnet_groups[0].subnets #=> Array
     #   resp.subnet_groups[0].subnets[0].identifier #=> String
     #   resp.subnet_groups[0].subnets[0].availability_zone.name #=> String
+    #   resp.subnet_groups[0].subnets[0].supported_network_types #=> Array
+    #   resp.subnet_groups[0].subnets[0].supported_network_types[0] #=> String, one of "ipv4", "ipv6", "dual_stack"
     #   resp.subnet_groups[0].arn #=> String
+    #   resp.subnet_groups[0].supported_network_types #=> Array
+    #   resp.subnet_groups[0].supported_network_types[0] #=> String, one of "ipv4", "ipv6", "dual_stack"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DescribeSubnetGroups AWS API Documentation
     #
@@ -2582,6 +2627,8 @@ module Aws::MemoryDB
     #   resp.cluster.acl_name #=> String
     #   resp.cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.cluster.data_tiering #=> String, one of "true", "false"
+    #   resp.cluster.network_type #=> String, one of "ipv4", "ipv6", "dual_stack"
+    #   resp.cluster.ip_discovery #=> String, one of "ipv4", "ipv6"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/FailoverShard AWS API Documentation
     #
@@ -2665,6 +2712,14 @@ module Aws::MemoryDB
     # pair where the key and value are case-sensitive. You can use tags to
     # categorize and track your MemoryDB resources. For more information,
     # see [Tagging your MemoryDB resources][1].
+    #
+    # When you add or remove tags from multi region clusters, you might not
+    # immediately see the latest effective tags in the ListTags API response
+    # due to it being eventually consistent specifically for multi region
+    # clusters. For more information, see [Tagging your MemoryDB
+    # resources][1].
+    #
+    #
     #
     #
     #
@@ -2805,23 +2860,26 @@ module Aws::MemoryDB
       req.send_request(options)
     end
 
-    # A tag is a key-value pair where the key and value are case-sensitive.
-    # You can use tags to categorize and track all your MemoryDB resources.
-    # When you add or remove tags on clusters, those actions will be
-    # replicated to all nodes in the cluster. For more information, see
-    # [Resource-level permissions][1].
+    # Use this operation to add tags to a resource. A tag is a key-value
+    # pair where the key and value are case-sensitive. You can use tags to
+    # categorize and track all your MemoryDB resources. For more
+    # information, see [Tagging your MemoryDB resources][1].
     #
-    # For example, you can use cost-allocation tags to your MemoryDB
-    # resources, Amazon generates a cost allocation report as a
-    # comma-separated value (CSV) file with your usage and costs aggregated
-    # by your tags. You can apply tags that represent business categories
-    # (such as cost centers, application names, or owners) to organize your
-    # costs across multiple services. For more information, see [Using Cost
-    # Allocation Tags][2].
+    # When you add tags to multi region clusters, you might not immediately
+    # see the latest effective tags in the ListTags API response due to it
+    # being eventually consistent specifically for multi region clusters.
+    # For more information, see [Tagging your MemoryDB resources][1].
+    #
+    # You can specify cost-allocation tags for your MemoryDB resources,
+    # Amazon generates a cost allocation report as a comma-separated value
+    # (CSV) file with your usage and costs aggregated by your tags. You can
+    # apply tags that represent business categories (such as cost centers,
+    # application names, or owners) to organize your costs across multiple
+    # services. For more information, see [Using Cost Allocation Tags][2].
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/MemoryDB/latest/devguide/iam.resourcelevelpermissions.html
+    # [1]: https://docs.aws.amazon.com/MemoryDB/latest/devguide/Tagging-Resources.html
     # [2]: https://docs.aws.amazon.com/MemoryDB/latest/devguide/tagging.html
     #
     # @option params [required, String] :resource_arn
@@ -2864,7 +2922,28 @@ module Aws::MemoryDB
       req.send_request(options)
     end
 
-    # Use this operation to remove tags on a resource.
+    # Use this operation to remove tags on a resource. A tag is a key-value
+    # pair where the key and value are case-sensitive. You can use tags to
+    # categorize and track all your MemoryDB resources. For more
+    # information, see [Tagging your MemoryDB resources][1].
+    #
+    # When you remove tags from multi region clusters, you might not
+    # immediately see the latest effective tags in the ListTags API response
+    # due to it being eventually consistent specifically for multi region
+    # clusters. For more information, see [Tagging your MemoryDB
+    # resources][1].
+    #
+    # You can specify cost-allocation tags for your MemoryDB resources,
+    # Amazon generates a cost allocation report as a comma-separated value
+    # (CSV) file with your usage and costs aggregated by your tags. You can
+    # apply tags that represent business categories (such as cost centers,
+    # application names, or owners) to organize your costs across multiple
+    # services. For more information, see [Using Cost Allocation Tags][2].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/MemoryDB/latest/devguide/Tagging-Resources.html
+    # [2]: https://docs.aws.amazon.com/MemoryDB/latest/devguide/tagging.html
     #
     # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) of the resource to which the tags are
@@ -3025,6 +3104,15 @@ module Aws::MemoryDB
     # @option params [String] :acl_name
     #   The Access Control List that is associated with the cluster.
     #
+    # @option params [String] :ip_discovery
+    #   The mechanism for discovering IP addresses for the cluster discovery
+    #   protocol. Valid values are 'ipv4' or 'ipv6'. When set to 'ipv4',
+    #   cluster discovery functions such as cluster slots, cluster shards, and
+    #   cluster nodes will return IPv4 addresses for cluster nodes. When set
+    #   to 'ipv6', the cluster discovery functions return IPv6 addresses for
+    #   cluster nodes. The value must be compatible with the NetworkType
+    #   parameter. If not specified, the default is 'ipv4'.
+    #
     # @return [Types::UpdateClusterResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateClusterResponse#cluster #cluster} => Types::Cluster
@@ -3051,6 +3139,7 @@ module Aws::MemoryDB
     #       shard_count: 1,
     #     },
     #     acl_name: "ACLName",
+    #     ip_discovery: "ipv4", # accepts ipv4, ipv6
     #   })
     #
     # @example Response structure
@@ -3101,6 +3190,8 @@ module Aws::MemoryDB
     #   resp.cluster.acl_name #=> String
     #   resp.cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.cluster.data_tiering #=> String, one of "true", "false"
+    #   resp.cluster.network_type #=> String, one of "ipv4", "ipv6", "dual_stack"
+    #   resp.cluster.ip_discovery #=> String, one of "ipv4", "ipv6"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/UpdateCluster AWS API Documentation
     #
@@ -3133,7 +3224,8 @@ module Aws::MemoryDB
     #   cluster.
     #
     # @option params [String] :update_strategy
-    #   Whether to force the update even if it may cause data loss.
+    #   The strategy to use for the update operation. Supported values are
+    #   "coordinated" or "uncoordinated".
     #
     # @return [Types::UpdateMultiRegionClusterResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3261,7 +3353,11 @@ module Aws::MemoryDB
     #   resp.subnet_group.subnets #=> Array
     #   resp.subnet_group.subnets[0].identifier #=> String
     #   resp.subnet_group.subnets[0].availability_zone.name #=> String
+    #   resp.subnet_group.subnets[0].supported_network_types #=> Array
+    #   resp.subnet_group.subnets[0].supported_network_types[0] #=> String, one of "ipv4", "ipv6", "dual_stack"
     #   resp.subnet_group.arn #=> String
+    #   resp.subnet_group.supported_network_types #=> Array
+    #   resp.subnet_group.supported_network_types[0] #=> String, one of "ipv4", "ipv6", "dual_stack"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/UpdateSubnetGroup AWS API Documentation
     #
@@ -3338,7 +3434,7 @@ module Aws::MemoryDB
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-memorydb'
-      context[:gem_version] = '1.43.0'
+      context[:gem_version] = '1.44.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

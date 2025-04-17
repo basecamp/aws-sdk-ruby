@@ -484,6 +484,35 @@ module Aws::Bedrock
     #   * {Types::BatchDeleteEvaluationJobResponse#errors #errors} => Array&lt;Types::BatchDeleteEvaluationJobError&gt;
     #   * {Types::BatchDeleteEvaluationJobResponse#evaluation_jobs #evaluation_jobs} => Array&lt;Types::BatchDeleteEvaluationJobItem&gt;
     #
+    #
+    # @example Example: Delete evaluation jobs
+    #
+    #   # The following example shows a request to delete two model evaluation jobs, where one of the jobs is not found.
+    #
+    #   resp = client.batch_delete_evaluation_job({
+    #     job_identifiers: [
+    #       "arn:aws:bedrock:us-east-2:123456789012:evaluation-job/12rnxmplqv0v", 
+    #       "arn:aws:bedrock:us-east-2:123456789012:evaluation-job/rispxmpl12rn", 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     errors: [
+    #       {
+    #         code: "404", 
+    #         job_identifier: "arn:aws:bedrock:us-east-2:123456789012:evaluation-job/rispxmpl12rn", 
+    #         message: "Unable to locate this job to delete.", 
+    #       }, 
+    #     ], 
+    #     evaluation_jobs: [
+    #       {
+    #         job_identifier: "arn:aws:bedrock:us-east-2:123456789012:evaluation-job/12rnxmplqv0v", 
+    #         job_status: "Deleting", 
+    #       }, 
+    #     ], 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.batch_delete_evaluation_job({
@@ -611,6 +640,32 @@ module Aws::Bedrock
     #               model_identifier: "EvaluatorModelIdentifier", # required
     #             },
     #           ],
+    #         },
+    #         custom_metric_config: {
+    #           custom_metrics: [ # required
+    #             {
+    #               custom_metric_definition: {
+    #                 name: "MetricName", # required
+    #                 instructions: "CustomMetricInstructions", # required
+    #                 rating_scale: [
+    #                   {
+    #                     definition: "RatingScaleItemDefinition", # required
+    #                     value: { # required
+    #                       string_value: "RatingScaleItemValueStringValueString",
+    #                       float_value: 1.0,
+    #                     },
+    #                   },
+    #                 ],
+    #               },
+    #             },
+    #           ],
+    #           evaluator_model_config: { # required
+    #             bedrock_evaluator_models: [ # required
+    #               {
+    #                 model_identifier: "EvaluatorModelIdentifier", # required
+    #               },
+    #             ],
+    #           },
     #         },
     #       },
     #       human: {
@@ -2367,6 +2422,15 @@ module Aws::Bedrock
     #   resp.evaluation_config.automated.dataset_metric_configs[0].metric_names[0] #=> String
     #   resp.evaluation_config.automated.evaluator_model_config.bedrock_evaluator_models #=> Array
     #   resp.evaluation_config.automated.evaluator_model_config.bedrock_evaluator_models[0].model_identifier #=> String
+    #   resp.evaluation_config.automated.custom_metric_config.custom_metrics #=> Array
+    #   resp.evaluation_config.automated.custom_metric_config.custom_metrics[0].custom_metric_definition.name #=> String
+    #   resp.evaluation_config.automated.custom_metric_config.custom_metrics[0].custom_metric_definition.instructions #=> String
+    #   resp.evaluation_config.automated.custom_metric_config.custom_metrics[0].custom_metric_definition.rating_scale #=> Array
+    #   resp.evaluation_config.automated.custom_metric_config.custom_metrics[0].custom_metric_definition.rating_scale[0].definition #=> String
+    #   resp.evaluation_config.automated.custom_metric_config.custom_metrics[0].custom_metric_definition.rating_scale[0].value.string_value #=> String
+    #   resp.evaluation_config.automated.custom_metric_config.custom_metrics[0].custom_metric_definition.rating_scale[0].value.float_value #=> Float
+    #   resp.evaluation_config.automated.custom_metric_config.evaluator_model_config.bedrock_evaluator_models #=> Array
+    #   resp.evaluation_config.automated.custom_metric_config.evaluator_model_config.bedrock_evaluator_models[0].model_identifier #=> String
     #   resp.evaluation_config.human.human_workflow_config.flow_definition_arn #=> String
     #   resp.evaluation_config.human.human_workflow_config.instructions #=> String
     #   resp.evaluation_config.human.custom_metrics #=> Array
@@ -3357,6 +3421,8 @@ module Aws::Bedrock
     #   resp.job_summaries[0].rag_identifiers[0] #=> String
     #   resp.job_summaries[0].evaluator_model_identifiers #=> Array
     #   resp.job_summaries[0].evaluator_model_identifiers[0] #=> String
+    #   resp.job_summaries[0].custom_metrics_evaluator_model_identifiers #=> Array
+    #   resp.job_summaries[0].custom_metrics_evaluator_model_identifiers[0] #=> String
     #   resp.job_summaries[0].inference_config_summary.model_config_summary.bedrock_model_identifiers #=> Array
     #   resp.job_summaries[0].inference_config_summary.model_config_summary.bedrock_model_identifiers[0] #=> String
     #   resp.job_summaries[0].inference_config_summary.model_config_summary.precomputed_inference_source_identifiers #=> Array
@@ -4029,7 +4095,7 @@ module Aws::Bedrock
     #
     #   * Failed – This job has failed. Check the failure message for any
     #     further details. For further assistance, reach out to the [Amazon
-    #     Web Services Support Center][3].
+    #     Web ServicesSupport Center][3].
     #
     #   * Stopped – This job was stopped by a user.
     #
@@ -4866,7 +4932,7 @@ module Aws::Bedrock
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrock'
-      context[:gem_version] = '1.41.0'
+      context[:gem_version] = '1.42.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

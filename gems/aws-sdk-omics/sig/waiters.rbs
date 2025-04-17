@@ -191,6 +191,20 @@ module Aws
                   ) -> Client::_GetWorkflowResponseSuccess
                 | (Hash[Symbol, untyped]) -> Client::_GetWorkflowResponseSuccess
       end
+
+      class WorkflowVersionActive
+        def initialize: (?client: Client, ?max_attempts: Integer, ?delay: Integer, ?before_attempt: Proc, ?before_wait: Proc) -> void
+                      | (?Hash[Symbol, untyped]) -> void
+
+        def wait: (
+                    workflow_id: ::String,
+                    version_name: ::String,
+                    ?type: ("PRIVATE" | "READY2RUN"),
+                    ?export: Array[("DEFINITION")],
+                    ?workflow_owner_id: ::String
+                  ) -> Client::_GetWorkflowVersionResponseSuccess
+                | (Hash[Symbol, untyped]) -> Client::_GetWorkflowVersionResponseSuccess
+      end
     end
   end
 end

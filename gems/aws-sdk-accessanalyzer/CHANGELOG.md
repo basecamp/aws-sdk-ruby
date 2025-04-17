@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.69.0 (2025-04-17)
+------------------
+
+* Feature - Added new resource types to evaluate for public access in resource policies and added support for S3 directory bucket access points.
+
 1.68.0 (2025-02-18)
 ------------------
 

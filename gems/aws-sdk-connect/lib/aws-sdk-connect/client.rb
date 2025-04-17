@@ -1770,10 +1770,12 @@ module Aws::Connect
       req.send_request(options)
     end
 
-    # Only the EMAIL channel is supported. The supported initiation methods
-    # are: OUTBOUND, AGENT\_REPLY, and FLOW.
+    # Only the EMAIL and VOICE channels are supported. The supported
+    # initiation methods for EMAIL are: OUTBOUND, AGENT\_REPLY, and FLOW.
+    # For VOICE the supported initiation methods are TRANSFER and the
+    # subtype connect:ExternalAudio.
     #
-    # Creates a new EMAIL contact.
+    # Creates a new EMAIL or VOICE contact.
     #
     # @option params [required, String] :instance_id
     #   The identifier of the Amazon Connect instance. You can [find the
@@ -1797,8 +1799,7 @@ module Aws::Connect
     #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
     #
     # @option params [String] :related_contact_id
-    #   The unique identifier for an Amazon Connect contact. This identifier
-    #   is related to the contact starting.
+    #   The identifier of the contact in this instance of Amazon Connect.
     #
     # @option params [Hash<String,String>] :attributes
     #   A custom key-value pair using an attribute map. The attributes are
@@ -1817,17 +1818,21 @@ module Aws::Connect
     # @option params [required, String] :channel
     #   The channel for the contact
     #
-    #   CreateContact only supports the EMAIL channel. The following
-    #   information that states other channels are supported is incorrect. We
-    #   are working to update this topic.
+    #   CreateContact only supports the EMAIL and VOICE channels. The
+    #   following information that states other channels are supported is
+    #   incorrect. We are working to update this topic.
     #
     # @option params [required, String] :initiation_method
     #   Indicates how the contact was initiated.
     #
     #   CreateContact only supports the following initiation methods:
-    #   OUTBOUND, AGENT\_REPLY, and FLOW. The following information that
-    #   states other initiation methods are supported is incorrect. We are
-    #   working to update this topic.
+    #
+    #    * For EMAIL: OUTBOUND, AGENT\_REPLY, and FLOW.
+    #
+    #   * For VOICE: TRANSFER and the subtype connect:ExternalAudio.
+    #
+    #    The following information that states other initiation methods are
+    #   supported is incorrect. We are working to update this topic.
     #
     # @option params [Integer] :expiry_duration_in_minutes
     #   Number of minutes the contact will be active for before expiring
@@ -3351,13 +3356,13 @@ module Aws::Connect
     #     instance_id: "InstanceId", # required
     #     name: "RuleName", # required
     #     trigger_event_source: { # required
-    #       event_source_name: "OnPostCallAnalysisAvailable", # required, accepts OnPostCallAnalysisAvailable, OnRealTimeCallAnalysisAvailable, OnRealTimeChatAnalysisAvailable, OnPostChatAnalysisAvailable, OnZendeskTicketCreate, OnZendeskTicketStatusUpdate, OnSalesforceCaseCreate, OnContactEvaluationSubmit, OnMetricDataUpdate, OnCaseCreate, OnCaseUpdate
+    #       event_source_name: "OnPostCallAnalysisAvailable", # required, accepts OnPostCallAnalysisAvailable, OnRealTimeCallAnalysisAvailable, OnRealTimeChatAnalysisAvailable, OnPostChatAnalysisAvailable, OnZendeskTicketCreate, OnZendeskTicketStatusUpdate, OnSalesforceCaseCreate, OnContactEvaluationSubmit, OnMetricDataUpdate, OnCaseCreate, OnCaseUpdate, OnSlaBreach
     #       integration_association_id: "IntegrationAssociationId",
     #     },
     #     function: "RuleFunction", # required
     #     actions: [ # required
     #       {
-    #         action_type: "CREATE_TASK", # required, accepts CREATE_TASK, ASSIGN_CONTACT_CATEGORY, GENERATE_EVENTBRIDGE_EVENT, SEND_NOTIFICATION, CREATE_CASE, UPDATE_CASE, END_ASSOCIATED_TASKS, SUBMIT_AUTO_EVALUATION
+    #         action_type: "CREATE_TASK", # required, accepts CREATE_TASK, ASSIGN_CONTACT_CATEGORY, GENERATE_EVENTBRIDGE_EVENT, SEND_NOTIFICATION, CREATE_CASE, UPDATE_CASE, ASSIGN_SLA, END_ASSOCIATED_TASKS, SUBMIT_AUTO_EVALUATION
     #         task_action: {
     #           name: "TaskNameExpression", # required
     #           description: "TaskDescriptionExpression",
@@ -3417,6 +3422,24 @@ module Aws::Connect
     #               },
     #             },
     #           ],
+    #         },
+    #         assign_sla_action: {
+    #           sla_assignment_type: "CASES", # required, accepts CASES
+    #           case_sla_configuration: {
+    #             name: "SlaName", # required
+    #             type: "CaseField", # required, accepts CaseField
+    #             field_id: "FieldValueId",
+    #             target_field_values: [
+    #               {
+    #                 boolean_value: false,
+    #                 double_value: 1.0,
+    #                 empty_value: {
+    #                 },
+    #                 string_value: "FieldStringValue",
+    #               },
+    #             ],
+    #             target_sla_minutes: 1, # required
+    #           },
     #         },
     #         end_associated_tasks_action: {
     #         },
@@ -6427,11 +6450,11 @@ module Aws::Connect
     #   resp.rule.name #=> String
     #   resp.rule.rule_id #=> String
     #   resp.rule.rule_arn #=> String
-    #   resp.rule.trigger_event_source.event_source_name #=> String, one of "OnPostCallAnalysisAvailable", "OnRealTimeCallAnalysisAvailable", "OnRealTimeChatAnalysisAvailable", "OnPostChatAnalysisAvailable", "OnZendeskTicketCreate", "OnZendeskTicketStatusUpdate", "OnSalesforceCaseCreate", "OnContactEvaluationSubmit", "OnMetricDataUpdate", "OnCaseCreate", "OnCaseUpdate"
+    #   resp.rule.trigger_event_source.event_source_name #=> String, one of "OnPostCallAnalysisAvailable", "OnRealTimeCallAnalysisAvailable", "OnRealTimeChatAnalysisAvailable", "OnPostChatAnalysisAvailable", "OnZendeskTicketCreate", "OnZendeskTicketStatusUpdate", "OnSalesforceCaseCreate", "OnContactEvaluationSubmit", "OnMetricDataUpdate", "OnCaseCreate", "OnCaseUpdate", "OnSlaBreach"
     #   resp.rule.trigger_event_source.integration_association_id #=> String
     #   resp.rule.function #=> String
     #   resp.rule.actions #=> Array
-    #   resp.rule.actions[0].action_type #=> String, one of "CREATE_TASK", "ASSIGN_CONTACT_CATEGORY", "GENERATE_EVENTBRIDGE_EVENT", "SEND_NOTIFICATION", "CREATE_CASE", "UPDATE_CASE", "END_ASSOCIATED_TASKS", "SUBMIT_AUTO_EVALUATION"
+    #   resp.rule.actions[0].action_type #=> String, one of "CREATE_TASK", "ASSIGN_CONTACT_CATEGORY", "GENERATE_EVENTBRIDGE_EVENT", "SEND_NOTIFICATION", "CREATE_CASE", "UPDATE_CASE", "ASSIGN_SLA", "END_ASSOCIATED_TASKS", "SUBMIT_AUTO_EVALUATION"
     #   resp.rule.actions[0].task_action.name #=> String
     #   resp.rule.actions[0].task_action.description #=> String
     #   resp.rule.actions[0].task_action.contact_flow_id #=> String
@@ -6461,6 +6484,15 @@ module Aws::Connect
     #   resp.rule.actions[0].update_case_action.fields[0].value.boolean_value #=> Boolean
     #   resp.rule.actions[0].update_case_action.fields[0].value.double_value #=> Float
     #   resp.rule.actions[0].update_case_action.fields[0].value.string_value #=> String
+    #   resp.rule.actions[0].assign_sla_action.sla_assignment_type #=> String, one of "CASES"
+    #   resp.rule.actions[0].assign_sla_action.case_sla_configuration.name #=> String
+    #   resp.rule.actions[0].assign_sla_action.case_sla_configuration.type #=> String, one of "CaseField"
+    #   resp.rule.actions[0].assign_sla_action.case_sla_configuration.field_id #=> String
+    #   resp.rule.actions[0].assign_sla_action.case_sla_configuration.target_field_values #=> Array
+    #   resp.rule.actions[0].assign_sla_action.case_sla_configuration.target_field_values[0].boolean_value #=> Boolean
+    #   resp.rule.actions[0].assign_sla_action.case_sla_configuration.target_field_values[0].double_value #=> Float
+    #   resp.rule.actions[0].assign_sla_action.case_sla_configuration.target_field_values[0].string_value #=> String
+    #   resp.rule.actions[0].assign_sla_action.case_sla_configuration.target_sla_minutes #=> Integer
     #   resp.rule.actions[0].submit_auto_evaluation_action.evaluation_form_id #=> String
     #   resp.rule.publish_status #=> String, one of "DRAFT", "PUBLISHED"
     #   resp.rule.created_time #=> Time
@@ -12532,7 +12564,7 @@ module Aws::Connect
     #   resp = client.list_rules({
     #     instance_id: "InstanceId", # required
     #     publish_status: "DRAFT", # accepts DRAFT, PUBLISHED
-    #     event_source_name: "OnPostCallAnalysisAvailable", # accepts OnPostCallAnalysisAvailable, OnRealTimeCallAnalysisAvailable, OnRealTimeChatAnalysisAvailable, OnPostChatAnalysisAvailable, OnZendeskTicketCreate, OnZendeskTicketStatusUpdate, OnSalesforceCaseCreate, OnContactEvaluationSubmit, OnMetricDataUpdate, OnCaseCreate, OnCaseUpdate
+    #     event_source_name: "OnPostCallAnalysisAvailable", # accepts OnPostCallAnalysisAvailable, OnRealTimeCallAnalysisAvailable, OnRealTimeChatAnalysisAvailable, OnPostChatAnalysisAvailable, OnZendeskTicketCreate, OnZendeskTicketStatusUpdate, OnSalesforceCaseCreate, OnContactEvaluationSubmit, OnMetricDataUpdate, OnCaseCreate, OnCaseUpdate, OnSlaBreach
     #     max_results: 1,
     #     next_token: "NextToken",
     #   })
@@ -12543,10 +12575,10 @@ module Aws::Connect
     #   resp.rule_summary_list[0].name #=> String
     #   resp.rule_summary_list[0].rule_id #=> String
     #   resp.rule_summary_list[0].rule_arn #=> String
-    #   resp.rule_summary_list[0].event_source_name #=> String, one of "OnPostCallAnalysisAvailable", "OnRealTimeCallAnalysisAvailable", "OnRealTimeChatAnalysisAvailable", "OnPostChatAnalysisAvailable", "OnZendeskTicketCreate", "OnZendeskTicketStatusUpdate", "OnSalesforceCaseCreate", "OnContactEvaluationSubmit", "OnMetricDataUpdate", "OnCaseCreate", "OnCaseUpdate"
+    #   resp.rule_summary_list[0].event_source_name #=> String, one of "OnPostCallAnalysisAvailable", "OnRealTimeCallAnalysisAvailable", "OnRealTimeChatAnalysisAvailable", "OnPostChatAnalysisAvailable", "OnZendeskTicketCreate", "OnZendeskTicketStatusUpdate", "OnSalesforceCaseCreate", "OnContactEvaluationSubmit", "OnMetricDataUpdate", "OnCaseCreate", "OnCaseUpdate", "OnSlaBreach"
     #   resp.rule_summary_list[0].publish_status #=> String, one of "DRAFT", "PUBLISHED"
     #   resp.rule_summary_list[0].action_summaries #=> Array
-    #   resp.rule_summary_list[0].action_summaries[0].action_type #=> String, one of "CREATE_TASK", "ASSIGN_CONTACT_CATEGORY", "GENERATE_EVENTBRIDGE_EVENT", "SEND_NOTIFICATION", "CREATE_CASE", "UPDATE_CASE", "END_ASSOCIATED_TASKS", "SUBMIT_AUTO_EVALUATION"
+    #   resp.rule_summary_list[0].action_summaries[0].action_type #=> String, one of "CREATE_TASK", "ASSIGN_CONTACT_CATEGORY", "GENERATE_EVENTBRIDGE_EVENT", "SEND_NOTIFICATION", "CREATE_CASE", "UPDATE_CASE", "ASSIGN_SLA", "END_ASSOCIATED_TASKS", "SUBMIT_AUTO_EVALUATION"
     #   resp.rule_summary_list[0].created_time #=> Time
     #   resp.rule_summary_list[0].last_updated_time #=> Time
     #   resp.next_token #=> String
@@ -15786,6 +15818,10 @@ module Aws::Connect
     # @option params [required, String] :traffic_type
     #   Denotes the class of traffic.
     #
+    #   <note markdown="1"> Only the CAMPAIGN traffic type is supported.
+    #
+    #    </note>
+    #
     # @option params [Types::SourceCampaign] :source_campaign
     #   A Campaign object need for Campaign traffic type.
     #
@@ -16885,8 +16921,14 @@ module Aws::Connect
     #   Control Panel (CCP).
     #
     # @option params [String] :description
-    #   A description of the voice contact that is shown to an agent in the
-    #   Contact Control Panel (CCP).
+    #   A description of the voice contact that appears in the agent's
+    #   snapshot in the CCP logs. For more information about CCP logs, see
+    #   [Download and review CCP logs][1] in the *Amazon Connect Administrator
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/download-ccp-logs.html
     #
     # @option params [Hash<String,Types::Reference>] :references
     #   A formatted URL that is shown to an agent in the Contact Control Panel
@@ -17637,16 +17679,21 @@ module Aws::Connect
     end
 
     # When a contact is being recorded, this API suspends recording whatever
-    # is selected in the flow configuration: call, screen, or both. If only
-    # call recording or only screen recording is enabled, then it would be
-    # suspended. For example, you might suspend the screen recording while
-    # collecting sensitive information, such as a credit card number. Then
-    # use ResumeContactRecording to restart recording the screen.
+    # is selected in the flow configuration: call (IVR or agent), screen, or
+    # both. If only call recording or only screen recording is enabled, then
+    # it would be suspended. For example, you might suspend the screen
+    # recording while collecting sensitive information, such as a credit
+    # card number. Then use [ResumeContactRecording][1] to restart recording
+    # the screen.
     #
     # The period of time that the recording is suspended is filled with
     # silence in the final recording.
     #
-    # Voice and screen recordings are supported.
+    # Voice (IVR, agent) and screen recordings are supported.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_ResumeContactRecording.html
     #
     # @option params [required, String] :instance_id
     #   The identifier of the Amazon Connect instance. You can [find the
@@ -17786,7 +17833,7 @@ module Aws::Connect
     #
     # Note the following requirements:
     #
-    # * Transfer is supported for only `TASK` and `EMAIL` contacts.
+    # * Transfer is only supported for `TASK` and `EMAIL` contacts.
     #
     # * Do not use both `QueueId` and `UserId` in the same call.
     #
@@ -20168,7 +20215,7 @@ module Aws::Connect
     #     function: "RuleFunction", # required
     #     actions: [ # required
     #       {
-    #         action_type: "CREATE_TASK", # required, accepts CREATE_TASK, ASSIGN_CONTACT_CATEGORY, GENERATE_EVENTBRIDGE_EVENT, SEND_NOTIFICATION, CREATE_CASE, UPDATE_CASE, END_ASSOCIATED_TASKS, SUBMIT_AUTO_EVALUATION
+    #         action_type: "CREATE_TASK", # required, accepts CREATE_TASK, ASSIGN_CONTACT_CATEGORY, GENERATE_EVENTBRIDGE_EVENT, SEND_NOTIFICATION, CREATE_CASE, UPDATE_CASE, ASSIGN_SLA, END_ASSOCIATED_TASKS, SUBMIT_AUTO_EVALUATION
     #         task_action: {
     #           name: "TaskNameExpression", # required
     #           description: "TaskDescriptionExpression",
@@ -20228,6 +20275,24 @@ module Aws::Connect
     #               },
     #             },
     #           ],
+    #         },
+    #         assign_sla_action: {
+    #           sla_assignment_type: "CASES", # required, accepts CASES
+    #           case_sla_configuration: {
+    #             name: "SlaName", # required
+    #             type: "CaseField", # required, accepts CaseField
+    #             field_id: "FieldValueId",
+    #             target_field_values: [
+    #               {
+    #                 boolean_value: false,
+    #                 double_value: 1.0,
+    #                 empty_value: {
+    #                 },
+    #                 string_value: "FieldStringValue",
+    #               },
+    #             ],
+    #             target_sla_minutes: 1, # required
+    #           },
     #         },
     #         end_associated_tasks_action: {
     #         },
@@ -21016,7 +21081,7 @@ module Aws::Connect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-connect'
-      context[:gem_version] = '1.199.0'
+      context[:gem_version] = '1.200.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

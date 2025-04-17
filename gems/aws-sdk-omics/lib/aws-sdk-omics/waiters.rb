@@ -86,6 +86,7 @@ module Aws::Omics
   # | variant_store_created             | {Client#get_variant_store}            | 30       | 20            |
   # | variant_store_deleted             | {Client#get_variant_store}            | 30       | 20            |
   # | workflow_active                   | {Client#get_workflow}                 | 3        | 10            |
+  # | workflow_version_active           | {Client#get_workflow_version}         | 3        | 10            |
   #
   module Waiters
 
@@ -1148,6 +1149,63 @@ module Aws::Omics
 
       # @option (see Client#get_workflow)
       # @return (see Client#get_workflow)
+      def wait(params = {})
+        @waiter.wait(client: @client, params: params)
+      end
+
+      # @api private
+      attr_reader :waiter
+
+    end
+
+    # Wait until a workflow version is active.
+    class WorkflowVersionActive
+
+      # @param [Hash] options
+      # @option options [required, Client] :client
+      # @option options [Integer] :max_attempts (10)
+      # @option options [Integer] :delay (3)
+      # @option options [Proc] :before_attempt
+      # @option options [Proc] :before_wait
+      def initialize(options)
+        @client = options.fetch(:client)
+        @waiter = Aws::Waiters::Waiter.new({
+          max_attempts: 10,
+          delay: 3,
+          poller: Aws::Waiters::Poller.new(
+            operation_name: :get_workflow_version,
+            acceptors: [
+              {
+                "matcher" => "path",
+                "argument" => "status",
+                "state" => "success",
+                "expected" => "ACTIVE"
+              },
+              {
+                "matcher" => "path",
+                "argument" => "status",
+                "state" => "retry",
+                "expected" => "CREATING"
+              },
+              {
+                "matcher" => "path",
+                "argument" => "status",
+                "state" => "retry",
+                "expected" => "UPDATING"
+              },
+              {
+                "matcher" => "path",
+                "argument" => "status",
+                "state" => "failure",
+                "expected" => "FAILED"
+              }
+            ]
+          )
+        }.merge(options))
+      end
+
+      # @option (see Client#get_workflow_version)
+      # @return (see Client#get_workflow_version)
       def wait(params = {})
         @waiter.wait(client: @client, params: params)
       end

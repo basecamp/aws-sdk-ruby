@@ -261,6 +261,16 @@ module Aws
                               ) -> _DescribeWorkspaceResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeWorkspaceResponseSuccess
 
+      interface _DescribeWorkspaceConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeWorkspaceConfigurationResponse]
+        def workspace_configuration: () -> Types::WorkspaceConfigurationDescription
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/PrometheusService/Client.html#describe_workspace_configuration-instance_method
+      def describe_workspace_configuration: (
+                                              workspace_id: ::String
+                                            ) -> _DescribeWorkspaceConfigurationResponseSuccess
+                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeWorkspaceConfigurationResponseSuccess
+
       interface _GetDefaultScraperConfigurationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetDefaultScraperConfigurationResponse]
         def configuration: () -> ::String
@@ -414,6 +424,26 @@ module Aws
                                     workspace_id: ::String
                                   ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      interface _UpdateWorkspaceConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateWorkspaceConfigurationResponse]
+        def status: () -> Types::WorkspaceConfigurationStatus
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/PrometheusService/Client.html#update_workspace_configuration-instance_method
+      def update_workspace_configuration: (
+                                            ?client_token: ::String,
+                                            ?limits_per_label_set: Array[
+                                              {
+                                                label_set: Hash[::String, ::String],
+                                                limits: {
+                                                  max_series: ::Integer?
+                                                }
+                                              },
+                                            ],
+                                            ?retention_period_in_days: ::Integer,
+                                            workspace_id: ::String
+                                          ) -> _UpdateWorkspaceConfigurationResponseSuccess
+                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateWorkspaceConfigurationResponseSuccess
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/PrometheusService/Client.html#wait_until-instance_method
       def wait_until: (:scraper_active waiter_name, 

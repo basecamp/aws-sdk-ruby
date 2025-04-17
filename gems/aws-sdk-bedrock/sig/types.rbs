@@ -16,7 +16,25 @@ module Aws::Bedrock
     class AutomatedEvaluationConfig
       attr_accessor dataset_metric_configs: ::Array[Types::EvaluationDatasetMetricConfig]
       attr_accessor evaluator_model_config: Types::EvaluatorModelConfig
+      attr_accessor custom_metric_config: Types::AutomatedEvaluationCustomMetricConfig
       SENSITIVE: []
+    end
+
+    class AutomatedEvaluationCustomMetricConfig
+      attr_accessor custom_metrics: ::Array[Types::AutomatedEvaluationCustomMetricSource]
+      attr_accessor evaluator_model_config: Types::CustomMetricEvaluatorModelConfig
+      SENSITIVE: []
+    end
+
+    class AutomatedEvaluationCustomMetricSource
+      attr_accessor custom_metric_definition: Types::CustomMetricDefinition
+      attr_accessor unknown: untyped
+      SENSITIVE: [:custom_metric_definition]
+
+      class CustomMetricDefinition < AutomatedEvaluationCustomMetricSource
+      end
+      class Unknown < AutomatedEvaluationCustomMetricSource
+      end
     end
 
     class BatchDeleteEvaluationJobError
@@ -255,6 +273,23 @@ module Aws::Bedrock
 
     class CreateProvisionedModelThroughputResponse
       attr_accessor provisioned_model_arn: ::String
+      SENSITIVE: []
+    end
+
+    class CustomMetricBedrockEvaluatorModel
+      attr_accessor model_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class CustomMetricDefinition
+      attr_accessor name: ::String
+      attr_accessor instructions: ::String
+      attr_accessor rating_scale: ::Array[Types::RatingScaleItem]
+      SENSITIVE: [:name]
+    end
+
+    class CustomMetricEvaluatorModelConfig
+      attr_accessor bedrock_evaluator_models: ::Array[Types::CustomMetricBedrockEvaluatorModel]
       SENSITIVE: []
     end
 
@@ -508,6 +543,7 @@ module Aws::Bedrock
       attr_accessor model_identifiers: ::Array[::String]
       attr_accessor rag_identifiers: ::Array[::String]
       attr_accessor evaluator_model_identifiers: ::Array[::String]
+      attr_accessor custom_metrics_evaluator_model_identifiers: ::Array[::String]
       attr_accessor inference_config_summary: Types::EvaluationInferenceConfigSummary
       attr_accessor application_type: ("ModelEvaluation" | "RagEvaluation")
       SENSITIVE: []
@@ -1653,6 +1689,26 @@ module Aws::Bedrock
       class PrecomputedRagSourceConfig < RAGConfig
       end
       class Unknown < RAGConfig
+      end
+    end
+
+    class RatingScaleItem
+      attr_accessor definition: ::String
+      attr_accessor value: Types::RatingScaleItemValue
+      SENSITIVE: []
+    end
+
+    class RatingScaleItemValue
+      attr_accessor string_value: ::String
+      attr_accessor float_value: ::Float
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class StringValue < RatingScaleItemValue
+      end
+      class FloatValue < RatingScaleItemValue
+      end
+      class Unknown < RatingScaleItemValue
       end
     end
 

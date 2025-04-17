@@ -318,7 +318,9 @@ module Aws::PrometheusService
     #   @return [Types::Destination]
     #
     # @!attribute [rw] role_configuration
-    #   The scraper role configuration for the workspace.
+    #   Use this structure to enable cross-account access, so that you can
+    #   use a target account to access Prometheus metrics from source
+    #   accounts.
     #   @return [Types::RoleConfiguration]
     #
     # @!attribute [rw] scrape_configuration
@@ -725,6 +727,37 @@ module Aws::PrometheusService
       include Aws::Structure
     end
 
+    # @!attribute [rw] workspace_id
+    #   The ID of the workspace that you want to retrieve information for.
+    #   To find the IDs of your workspaces, use the [ListWorkspaces][1]
+    #   operation.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/prometheus/latest/APIReference/API_ListWorkspaces.htm
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/amp-2020-08-01/DescribeWorkspaceConfigurationRequest AWS API Documentation
+    #
+    class DescribeWorkspaceConfigurationRequest < Struct.new(
+      :workspace_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] workspace_configuration
+    #   This structure contains the information about the workspace
+    #   configuration.
+    #   @return [Types::WorkspaceConfigurationDescription]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/amp-2020-08-01/DescribeWorkspaceConfigurationResponse AWS API Documentation
+    #
+    class DescribeWorkspaceConfigurationResponse < Struct.new(
+      :workspace_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Represents the input of a `DescribeWorkspace` operation.
     #
     # @!attribute [rw] workspace_id
@@ -846,6 +879,58 @@ module Aws::PrometheusService
     class InternalServerException < Struct.new(
       :message,
       :retry_after_seconds)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure defines one label set used to enforce ingestion limits
+    # for the workspace, and defines the limit for that label set.
+    #
+    # A label set is a unique combination of label-value pairs. Use them to
+    # control time series ingestion limits and to monitor usage by specific
+    # label groups. Example label sets might be `team:finance` or `env:prod`
+    #
+    # @!attribute [rw] label_set
+    #   This defines one label set that will have an enforced ingestion
+    #   limit.
+    #
+    #   Label values accept ASCII characters and must contain at least one
+    #   character that isn't whitespace. ASCII control characters are not
+    #   accepted. If the label name is metric name label `__name__`, then
+    #   the *metric* part of the name must conform to the following pattern:
+    #   `[a-zA-Z_:][a-zA-Z0-9_:]*`
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] limits
+    #   This structure contains the information about the limits that apply
+    #   to time series that match this label set.
+    #   @return [Types::LimitsPerLabelSetEntry]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/amp-2020-08-01/LimitsPerLabelSet AWS API Documentation
+    #
+    class LimitsPerLabelSet < Struct.new(
+      :label_set,
+      :limits)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains the information about the limits that apply to
+    # time series that match one label set.
+    #
+    # @!attribute [rw] max_series
+    #   The maximum number of active series that can be ingested that match
+    #   this label set.
+    #
+    #   Setting this to 0 causes no label set limit to be enforced, but it
+    #   does cause Amazon Managed Service for Prometheus to vend label set
+    #   metrics to CloudWatch
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/amp-2020-08-01/LimitsPerLabelSetEntry AWS API Documentation
+    #
+    class LimitsPerLabelSetEntry < Struct.new(
+      :max_series)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1264,15 +1349,27 @@ module Aws::PrometheusService
       include Aws::Structure
     end
 
-    # To configure roles that allows users to write to an Amazon Managed
-    # Service for Prometheus workspace in a different account.
+    # Use this structure to enable cross-account access, so that you can use
+    # a target account to access Prometheus metrics from source accounts.
     #
     # @!attribute [rw] source_role_arn
-    #   A ARN identifying the source role configuration.
+    #   The Amazon Resource Name (ARN) of the role used in the source
+    #   account to enable cross-account scraping. For information about the
+    #   contents of this policy, see [Cross-account setup][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-collector-how-to.html#cross-account-remote-write
     #   @return [String]
     #
     # @!attribute [rw] target_role_arn
-    #   A ARN identifying the target role configuration.
+    #   The Amazon Resource Name (ARN) of the role used in the target
+    #   account to enable cross-account scraping. For information about the
+    #   contents of this policy, see [Cross-account setup][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-collector-how-to.html#cross-account-remote-write
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amp-2020-08-01/RoleConfiguration AWS API Documentation
@@ -1464,8 +1561,8 @@ module Aws::PrometheusService
     #   @return [String]
     #
     # @!attribute [rw] role_configuration
-    #   To configure roles that allows users to write to an Amazon Managed
-    #   Service for Prometheus workspace in a different account.
+    #   This structure displays information about the IAM roles used for
+    #   cross-account scraping configuration.
     #   @return [Types::RoleConfiguration]
     #
     # @!attribute [rw] scrape_configuration
@@ -1560,8 +1657,8 @@ module Aws::PrometheusService
     #   @return [String]
     #
     # @!attribute [rw] role_configuration
-    #   To configure roles that allows users to write to an Amazon Managed
-    #   Service for Prometheus workspace in a different account.
+    #   This structure displays information about the IAM roles used for
+    #   cross-account scraping configuration.
     #   @return [Types::RoleConfiguration]
     #
     # @!attribute [rw] scraper_id
@@ -1796,7 +1893,9 @@ module Aws::PrometheusService
     #   @return [Types::Destination]
     #
     # @!attribute [rw] role_configuration
-    #   The scraper role configuration for the workspace.
+    #   Use this structure to enable cross-account access, so that you can
+    #   use a target account to access Prometheus metrics from source
+    #   accounts.
     #   @return [Types::RoleConfiguration]
     #
     # @!attribute [rw] scrape_configuration
@@ -1890,6 +1989,58 @@ module Aws::PrometheusService
       include Aws::Structure
     end
 
+    # @!attribute [rw] client_token
+    #   You can include a token in your operation to make it an idempotent
+    #   opeartion.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] limits_per_label_set
+    #   This is an array of structures, where each structure defines a label
+    #   set for the workspace, and defines the ingestion limit for active
+    #   time series for each of those label sets. Each label name in a label
+    #   set must be unique.
+    #   @return [Array<Types::LimitsPerLabelSet>]
+    #
+    # @!attribute [rw] retention_period_in_days
+    #   Specifies how many days that metrics will be retained in the
+    #   workspace.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] workspace_id
+    #   The ID of the workspace that you want to update. To find the IDs of
+    #   your workspaces, use the [ListWorkspaces][1] operation.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/prometheus/latest/APIReference/API_ListWorkspaces.htm
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/amp-2020-08-01/UpdateWorkspaceConfigurationRequest AWS API Documentation
+    #
+    class UpdateWorkspaceConfigurationRequest < Struct.new(
+      :client_token,
+      :limits_per_label_set,
+      :retention_period_in_days,
+      :workspace_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] status
+    #   The status of the workspace configuration.
+    #   @return [Types::WorkspaceConfigurationStatus]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/amp-2020-08-01/UpdateWorkspaceConfigurationResponse AWS API Documentation
+    #
+    class UpdateWorkspaceConfigurationResponse < Struct.new(
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The input fails to satisfy the constraints specified by an Amazon Web
     # Services service.
     #
@@ -1931,6 +2082,54 @@ module Aws::PrometheusService
     class ValidationExceptionField < Struct.new(
       :message,
       :name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains the description of the workspace
+    # configuration.
+    #
+    # @!attribute [rw] limits_per_label_set
+    #   This is an array of structures, where each structure displays one
+    #   label sets for the workspace and the limits for that label set.
+    #   @return [Array<Types::LimitsPerLabelSet>]
+    #
+    # @!attribute [rw] retention_period_in_days
+    #   This field displays how many days that metrics are retained in the
+    #   workspace.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] status
+    #   This structure displays the current status of the workspace
+    #   configuration, and might also contain a reason for that status.
+    #   @return [Types::WorkspaceConfigurationStatus]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/amp-2020-08-01/WorkspaceConfigurationDescription AWS API Documentation
+    #
+    class WorkspaceConfigurationDescription < Struct.new(
+      :limits_per_label_set,
+      :retention_period_in_days,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure displays the current status of the workspace
+    # configuration, and might also contain a reason for that status.
+    #
+    # @!attribute [rw] status_code
+    #   The current status of the workspace configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_reason
+    #   The reason for the current status, if a reason is available.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/amp-2020-08-01/WorkspaceConfigurationStatus AWS API Documentation
+    #
+    class WorkspaceConfigurationStatus < Struct.new(
+      :status_code,
+      :status_reason)
       SENSITIVE = []
       include Aws::Structure
     end

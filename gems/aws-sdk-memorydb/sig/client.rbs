@@ -162,7 +162,9 @@ module Aws
                             ?engine: ::String,
                             ?engine_version: ::String,
                             ?auto_minor_version_upgrade: bool,
-                            ?data_tiering: bool
+                            ?data_tiering: bool,
+                            ?network_type: ("ipv4" | "ipv6" | "dual_stack"),
+                            ?ip_discovery: ("ipv4" | "ipv6")
                           ) -> _CreateClusterResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateClusterResponseSuccess
 
@@ -668,7 +670,8 @@ module Aws
                             ?shard_configuration: {
                               shard_count: ::Integer?
                             },
-                            ?acl_name: ::String
+                            ?acl_name: ::String,
+                            ?ip_discovery: ("ipv4" | "ipv6")
                           ) -> _UpdateClusterResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateClusterResponseSuccess
 

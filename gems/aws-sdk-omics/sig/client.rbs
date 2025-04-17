@@ -380,6 +380,7 @@ module Aws
         def id: () -> ::String
         def status: () -> ("CREATING" | "ACTIVE" | "UPDATING" | "DELETED" | "FAILED" | "INACTIVE")
         def tags: () -> ::Hash[::String, ::String]
+        def uuid: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#create_workflow-instance_method
       def create_workflow: (
@@ -396,9 +397,41 @@ module Aws
                              ?storage_capacity: ::Integer,
                              ?tags: Hash[::String, ::String],
                              request_id: ::String,
-                             ?accelerators: ("GPU")
+                             ?accelerators: ("GPU"),
+                             ?storage_type: ("STATIC" | "DYNAMIC")
                            ) -> _CreateWorkflowResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateWorkflowResponseSuccess
+
+      interface _CreateWorkflowVersionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateWorkflowVersionResponse]
+        def arn: () -> ::String
+        def workflow_id: () -> ::String
+        def version_name: () -> ::String
+        def status: () -> ("CREATING" | "ACTIVE" | "UPDATING" | "DELETED" | "FAILED" | "INACTIVE")
+        def tags: () -> ::Hash[::String, ::String]
+        def uuid: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#create_workflow_version-instance_method
+      def create_workflow_version: (
+                                     workflow_id: ::String,
+                                     version_name: ::String,
+                                     ?definition_zip: ::String,
+                                     ?definition_uri: ::String,
+                                     ?accelerators: ("GPU"),
+                                     ?description: ::String,
+                                     ?engine: ("WDL" | "NEXTFLOW" | "CWL"),
+                                     ?main: ::String,
+                                     ?parameter_template: Hash[::String, {
+                                         description: ::String?,
+                                         optional: bool?
+                                       }],
+                                     request_id: ::String,
+                                     ?storage_type: ("STATIC" | "DYNAMIC"),
+                                     ?storage_capacity: ::Integer,
+                                     ?tags: Hash[::String, ::String],
+                                     ?workflow_bucket_owner_id: ::String
+                                   ) -> _CreateWorkflowVersionResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateWorkflowVersionResponseSuccess
 
       interface _DeleteAnnotationStoreResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteAnnotationStoreResponse]
@@ -504,6 +537,13 @@ module Aws
                              id: ::String
                            ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#delete_workflow_version-instance_method
+      def delete_workflow_version: (
+                                     workflow_id: ::String,
+                                     version_name: ::String
+                                   ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       interface _GetAnnotationImportJobResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetAnnotationImportResponse]
@@ -772,6 +812,8 @@ module Aws
         def run_output_uri: () -> ::String
         def storage_type: () -> ("STATIC" | "DYNAMIC")
         def workflow_owner_id: () -> ::String
+        def workflow_version_name: () -> ::String
+        def workflow_uuid: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#get_run-instance_method
       def get_run: (
@@ -948,6 +990,8 @@ module Aws
         def tags: () -> ::Hash[::String, ::String]
         def metadata: () -> ::Hash[::String, ::String]
         def accelerators: () -> ("GPU")
+        def storage_type: () -> ("STATIC" | "DYNAMIC")
+        def uuid: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#get_workflow-instance_method
       def get_workflow: (
@@ -957,6 +1001,39 @@ module Aws
                           ?workflow_owner_id: ::String
                         ) -> _GetWorkflowResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetWorkflowResponseSuccess
+
+      interface _GetWorkflowVersionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetWorkflowVersionResponse]
+        def arn: () -> ::String
+        def workflow_id: () -> ::String
+        def version_name: () -> ::String
+        def accelerators: () -> ("GPU")
+        def creation_time: () -> ::Time
+        def description: () -> ::String
+        def definition: () -> ::String
+        def digest: () -> ::String
+        def engine: () -> ("WDL" | "NEXTFLOW" | "CWL")
+        def main: () -> ::String
+        def metadata: () -> ::Hash[::String, ::String]
+        def parameter_template: () -> ::Hash[::String, Types::WorkflowParameter]
+        def status: () -> ("CREATING" | "ACTIVE" | "UPDATING" | "DELETED" | "FAILED" | "INACTIVE")
+        def status_message: () -> ::String
+        def storage_type: () -> ("STATIC" | "DYNAMIC")
+        def storage_capacity: () -> ::Integer
+        def type: () -> ("PRIVATE" | "READY2RUN")
+        def tags: () -> ::Hash[::String, ::String]
+        def uuid: () -> ::String
+        def workflow_bucket_owner_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#get_workflow_version-instance_method
+      def get_workflow_version: (
+                                  workflow_id: ::String,
+                                  version_name: ::String,
+                                  ?type: ("PRIVATE" | "READY2RUN"),
+                                  ?export: Array[("DEFINITION")],
+                                  ?workflow_owner_id: ::String
+                                ) -> _GetWorkflowVersionResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetWorkflowVersionResponseSuccess
 
       interface _ListAnnotationImportJobsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListAnnotationImportJobsResponse]
@@ -1306,6 +1383,21 @@ module Aws
                                ) -> _ListVariantStoresResponseSuccess
                              | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListVariantStoresResponseSuccess
 
+      interface _ListWorkflowVersionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListWorkflowVersionsResponse]
+        def items: () -> ::Array[Types::WorkflowVersionListItem]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#list_workflow_versions-instance_method
+      def list_workflow_versions: (
+                                    workflow_id: ::String,
+                                    ?type: ("PRIVATE" | "READY2RUN"),
+                                    ?workflow_owner_id: ::String,
+                                    ?starting_token: ::String,
+                                    ?max_results: ::Integer
+                                  ) -> _ListWorkflowVersionsResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListWorkflowVersionsResponseSuccess
+
       interface _ListWorkflowsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListWorkflowsResponse]
         def items: () -> ::Array[Types::WorkflowListItem]
@@ -1497,7 +1589,8 @@ module Aws
                        request_id: ::String,
                        ?retention_mode: ("RETAIN" | "REMOVE"),
                        ?storage_type: ("STATIC" | "DYNAMIC"),
-                       ?workflow_owner_id: ::String
+                       ?workflow_owner_id: ::String,
+                       ?workflow_version_name: ::String
                      ) -> _StartRunResponseSuccess
                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartRunResponseSuccess
 
@@ -1648,9 +1741,21 @@ module Aws
       def update_workflow: (
                              id: ::String,
                              ?name: ::String,
-                             ?description: ::String
+                             ?description: ::String,
+                             ?storage_type: ("STATIC" | "DYNAMIC"),
+                             ?storage_capacity: ::Integer
                            ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#update_workflow_version-instance_method
+      def update_workflow_version: (
+                                     workflow_id: ::String,
+                                     version_name: ::String,
+                                     ?description: ::String,
+                                     ?storage_type: ("STATIC" | "DYNAMIC"),
+                                     ?storage_capacity: ::Integer
+                                   ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       interface _UploadReadSetPartResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UploadReadSetPartResponse]
@@ -1748,6 +1853,14 @@ module Aws
                     ?workflow_owner_id: ::String
                   ) -> Client::_GetWorkflowResponseSuccess
                     | (:workflow_active waiter_name, Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> Client::_GetWorkflowResponseSuccess
+                    | (:workflow_version_active waiter_name, 
+                    workflow_id: ::String,
+                    version_name: ::String,
+                    ?type: ("PRIVATE" | "READY2RUN"),
+                    ?export: Array[("DEFINITION")],
+                    ?workflow_owner_id: ::String
+                  ) -> Client::_GetWorkflowVersionResponseSuccess
+                    | (:workflow_version_active waiter_name, Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> Client::_GetWorkflowVersionResponseSuccess
     end
   end
 end

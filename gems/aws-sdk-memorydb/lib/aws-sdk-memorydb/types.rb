@@ -331,6 +331,18 @@ module Aws::MemoryDB
     #   [1]: https://docs.aws.amazon.com/memorydb/latest/devguide/data-tiering.html
     #   @return [String]
     #
+    # @!attribute [rw] network_type
+    #   The IP address type for the cluster. Returns 'ipv4' for IPv4 only,
+    #   'ipv6' for IPv6 only, or 'dual-stack' if the cluster supports
+    #   both IPv4 and IPv6 addressing.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip_discovery
+    #   The mechanism that the cluster uses to discover IP addresses.
+    #   Returns 'ipv4' when DNS endpoints resolve to IPv4 addresses, or
+    #   'ipv6' when DNS endpoints resolve to IPv6 addresses.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/Cluster AWS API Documentation
     #
     class Cluster < Struct.new(
@@ -361,7 +373,9 @@ module Aws::MemoryDB
       :snapshot_window,
       :acl_name,
       :auto_minor_version_upgrade,
-      :data_tiering)
+      :data_tiering,
+      :network_type,
+      :ip_discovery)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -739,6 +753,25 @@ module Aws::MemoryDB
     #   [1]: https://docs.aws.amazon.com/memorydb/latest/devguide/data-tiering.html
     #   @return [Boolean]
     #
+    # @!attribute [rw] network_type
+    #   Specifies the IP address type for the cluster. Valid values are
+    #   'ipv4', 'ipv6', or 'dual\_stack'. When set to 'ipv4', the
+    #   cluster will only be accessible via IPv4 addresses. When set to
+    #   'ipv6', the cluster will only be accessible via IPv6 addresses.
+    #   When set to 'dual\_stack', the cluster will be accessible via both
+    #   IPv4 and IPv6 addresses. If not specified, the default is 'ipv4'.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip_discovery
+    #   The mechanism for discovering IP addresses for the cluster discovery
+    #   protocol. Valid values are 'ipv4' or 'ipv6'. When set to
+    #   'ipv4', cluster discovery functions such as cluster slots, cluster
+    #   shards, and cluster nodes return IPv4 addresses for cluster nodes.
+    #   When set to 'ipv6', the cluster discovery functions return IPv6
+    #   addresses for cluster nodes. The value must be compatible with the
+    #   NetworkType parameter. If not specified, the default is 'ipv4'.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/CreateClusterRequest AWS API Documentation
     #
     class CreateClusterRequest < Struct.new(
@@ -765,7 +798,9 @@ module Aws::MemoryDB
       :engine,
       :engine_version,
       :auto_minor_version_upgrade,
-      :data_tiering)
+      :data_tiering,
+      :network_type,
+      :ip_discovery)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -783,7 +818,13 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] multi_region_cluster_name_suffix
-    #   A suffix to be added to the multi-Region cluster name.
+    #   A suffix to be added to the Multi-Region cluster name. Amazon
+    #   MemoryDB automatically applies a prefix to the Multi-Region cluster
+    #   Name when it is created. Each Amazon Region has its own prefix. For
+    #   instance, a Multi-Region cluster Name created in the US-West-1
+    #   region will begin with "virxk", along with the suffix name you
+    #   provide. The suffix guarantees uniqueness of the Multi-Region
+    #   cluster name across multiple regions.
     #   @return [String]
     #
     # @!attribute [rw] description
@@ -3149,11 +3190,19 @@ module Aws::MemoryDB
     #   The Availability Zone where the subnet resides
     #   @return [Types::AvailabilityZone]
     #
+    # @!attribute [rw] supported_network_types
+    #   The network types supported by this subnet. Returns an array of
+    #   strings that can include 'ipv4', 'ipv6', or both, indicating
+    #   whether the subnet supports IPv4 only, IPv6 only, or dual-stack
+    #   deployments.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/Subnet AWS API Documentation
     #
     class Subnet < Struct.new(
       :identifier,
-      :availability_zone)
+      :availability_zone,
+      :supported_network_types)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3189,6 +3238,13 @@ module Aws::MemoryDB
     #   The ARN (Amazon Resource Name) of the subnet group.
     #   @return [String]
     #
+    # @!attribute [rw] supported_network_types
+    #   The network types supported by this subnet group. Returns an array
+    #   of strings that can include 'ipv4', 'ipv6', or both, indicating
+    #   the IP address types that can be used for clusters deployed in this
+    #   subnet group.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/SubnetGroup AWS API Documentation
     #
     class SubnetGroup < Struct.new(
@@ -3196,7 +3252,8 @@ module Aws::MemoryDB
       :description,
       :vpc_id,
       :subnets,
-      :arn)
+      :arn,
+      :supported_network_types)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3479,6 +3536,17 @@ module Aws::MemoryDB
     #   The Access Control List that is associated with the cluster.
     #   @return [String]
     #
+    # @!attribute [rw] ip_discovery
+    #   The mechanism for discovering IP addresses for the cluster discovery
+    #   protocol. Valid values are 'ipv4' or 'ipv6'. When set to
+    #   'ipv4', cluster discovery functions such as cluster slots, cluster
+    #   shards, and cluster nodes will return IPv4 addresses for cluster
+    #   nodes. When set to 'ipv6', the cluster discovery functions return
+    #   IPv6 addresses for cluster nodes. The value must be compatible with
+    #   the NetworkType parameter. If not specified, the default is
+    #   'ipv4'.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/UpdateClusterRequest AWS API Documentation
     #
     class UpdateClusterRequest < Struct.new(
@@ -3496,7 +3564,8 @@ module Aws::MemoryDB
       :engine_version,
       :replica_configuration,
       :shard_configuration,
-      :acl_name)
+      :acl_name,
+      :ip_discovery)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3539,7 +3608,8 @@ module Aws::MemoryDB
     #   @return [String]
     #
     # @!attribute [rw] update_strategy
-    #   Whether to force the update even if it may cause data loss.
+    #   The strategy to use for the update operation. Supported values are
+    #   "coordinated" or "uncoordinated".
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/UpdateMultiRegionClusterRequest AWS API Documentation

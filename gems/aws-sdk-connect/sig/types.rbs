@@ -14,7 +14,7 @@ module Aws::Connect
     end
 
     class ActionSummary
-      attr_accessor action_type: ("CREATE_TASK" | "ASSIGN_CONTACT_CATEGORY" | "GENERATE_EVENTBRIDGE_EVENT" | "SEND_NOTIFICATION" | "CREATE_CASE" | "UPDATE_CASE" | "END_ASSOCIATED_TASKS" | "SUBMIT_AUTO_EVALUATION")
+      attr_accessor action_type: ("CREATE_TASK" | "ASSIGN_CONTACT_CATEGORY" | "GENERATE_EVENTBRIDGE_EVENT" | "SEND_NOTIFICATION" | "CREATE_CASE" | "UPDATE_CASE" | "ASSIGN_SLA" | "END_ASSOCIATED_TASKS" | "SUBMIT_AUTO_EVALUATION")
       SENSITIVE: []
     end
 
@@ -165,6 +165,12 @@ module Aws::Connect
     end
 
     class AssignContactCategoryActionDefinition < Aws::EmptyStructure
+    end
+
+    class AssignSlaActionDefinition
+      attr_accessor sla_assignment_type: ("CASES")
+      attr_accessor case_sla_configuration: Types::CaseSlaConfiguration
+      SENSITIVE: []
     end
 
     class AssociateAnalyticsDataSetRequest
@@ -475,6 +481,15 @@ module Aws::Connect
 
     class Campaign
       attr_accessor campaign_id: ::String
+      SENSITIVE: []
+    end
+
+    class CaseSlaConfiguration
+      attr_accessor name: ::String
+      attr_accessor type: ("CaseField")
+      attr_accessor field_id: ::String
+      attr_accessor target_field_values: ::Array[Types::FieldValueUnion]
+      attr_accessor target_sla_minutes: ::Integer
       SENSITIVE: []
     end
 
@@ -3494,7 +3509,7 @@ module Aws::Connect
     class ListRulesRequest
       attr_accessor instance_id: ::String
       attr_accessor publish_status: ("DRAFT" | "PUBLISHED")
-      attr_accessor event_source_name: ("OnPostCallAnalysisAvailable" | "OnRealTimeCallAnalysisAvailable" | "OnRealTimeChatAnalysisAvailable" | "OnPostChatAnalysisAvailable" | "OnZendeskTicketCreate" | "OnZendeskTicketStatusUpdate" | "OnSalesforceCaseCreate" | "OnContactEvaluationSubmit" | "OnMetricDataUpdate" | "OnCaseCreate" | "OnCaseUpdate")
+      attr_accessor event_source_name: ("OnPostCallAnalysisAvailable" | "OnRealTimeCallAnalysisAvailable" | "OnRealTimeChatAnalysisAvailable" | "OnPostChatAnalysisAvailable" | "OnZendeskTicketCreate" | "OnZendeskTicketStatusUpdate" | "OnSalesforceCaseCreate" | "OnContactEvaluationSubmit" | "OnMetricDataUpdate" | "OnCaseCreate" | "OnCaseUpdate" | "OnSlaBreach")
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
       SENSITIVE: []
@@ -4534,13 +4549,14 @@ module Aws::Connect
     end
 
     class RuleAction
-      attr_accessor action_type: ("CREATE_TASK" | "ASSIGN_CONTACT_CATEGORY" | "GENERATE_EVENTBRIDGE_EVENT" | "SEND_NOTIFICATION" | "CREATE_CASE" | "UPDATE_CASE" | "END_ASSOCIATED_TASKS" | "SUBMIT_AUTO_EVALUATION")
+      attr_accessor action_type: ("CREATE_TASK" | "ASSIGN_CONTACT_CATEGORY" | "GENERATE_EVENTBRIDGE_EVENT" | "SEND_NOTIFICATION" | "CREATE_CASE" | "UPDATE_CASE" | "ASSIGN_SLA" | "END_ASSOCIATED_TASKS" | "SUBMIT_AUTO_EVALUATION")
       attr_accessor task_action: Types::TaskActionDefinition
       attr_accessor event_bridge_action: Types::EventBridgeActionDefinition
       attr_accessor assign_contact_category_action: Types::AssignContactCategoryActionDefinition
       attr_accessor send_notification_action: Types::SendNotificationActionDefinition
       attr_accessor create_case_action: Types::CreateCaseActionDefinition
       attr_accessor update_case_action: Types::UpdateCaseActionDefinition
+      attr_accessor assign_sla_action: Types::AssignSlaActionDefinition
       attr_accessor end_associated_tasks_action: Types::EndAssociatedTasksActionDefinition
       attr_accessor submit_auto_evaluation_action: Types::SubmitAutoEvaluationActionDefinition
       SENSITIVE: []
@@ -4550,7 +4566,7 @@ module Aws::Connect
       attr_accessor name: ::String
       attr_accessor rule_id: ::String
       attr_accessor rule_arn: ::String
-      attr_accessor event_source_name: ("OnPostCallAnalysisAvailable" | "OnRealTimeCallAnalysisAvailable" | "OnRealTimeChatAnalysisAvailable" | "OnPostChatAnalysisAvailable" | "OnZendeskTicketCreate" | "OnZendeskTicketStatusUpdate" | "OnSalesforceCaseCreate" | "OnContactEvaluationSubmit" | "OnMetricDataUpdate" | "OnCaseCreate" | "OnCaseUpdate")
+      attr_accessor event_source_name: ("OnPostCallAnalysisAvailable" | "OnRealTimeCallAnalysisAvailable" | "OnRealTimeChatAnalysisAvailable" | "OnPostChatAnalysisAvailable" | "OnZendeskTicketCreate" | "OnZendeskTicketStatusUpdate" | "OnSalesforceCaseCreate" | "OnContactEvaluationSubmit" | "OnMetricDataUpdate" | "OnCaseCreate" | "OnCaseUpdate" | "OnSlaBreach")
       attr_accessor publish_status: ("DRAFT" | "PUBLISHED")
       attr_accessor action_summaries: ::Array[Types::ActionSummary]
       attr_accessor created_time: ::Time
@@ -4559,7 +4575,7 @@ module Aws::Connect
     end
 
     class RuleTriggerEventSource
-      attr_accessor event_source_name: ("OnPostCallAnalysisAvailable" | "OnRealTimeCallAnalysisAvailable" | "OnRealTimeChatAnalysisAvailable" | "OnPostChatAnalysisAvailable" | "OnZendeskTicketCreate" | "OnZendeskTicketStatusUpdate" | "OnSalesforceCaseCreate" | "OnContactEvaluationSubmit" | "OnMetricDataUpdate" | "OnCaseCreate" | "OnCaseUpdate")
+      attr_accessor event_source_name: ("OnPostCallAnalysisAvailable" | "OnRealTimeCallAnalysisAvailable" | "OnRealTimeChatAnalysisAvailable" | "OnPostChatAnalysisAvailable" | "OnZendeskTicketCreate" | "OnZendeskTicketStatusUpdate" | "OnSalesforceCaseCreate" | "OnContactEvaluationSubmit" | "OnMetricDataUpdate" | "OnCaseCreate" | "OnCaseUpdate" | "OnSlaBreach")
       attr_accessor integration_association_id: ::String
       SENSITIVE: []
     end

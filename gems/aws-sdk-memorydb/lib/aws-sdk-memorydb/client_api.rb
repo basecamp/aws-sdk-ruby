@@ -134,6 +134,7 @@ module Aws::MemoryDB
     InvalidSubnet = Shapes::StructureShape.new(name: 'InvalidSubnet')
     InvalidUserStateFault = Shapes::StructureShape.new(name: 'InvalidUserStateFault')
     InvalidVPCNetworkStateFault = Shapes::StructureShape.new(name: 'InvalidVPCNetworkStateFault')
+    IpDiscovery = Shapes::StringShape.new(name: 'IpDiscovery')
     KeyList = Shapes::ListShape.new(name: 'KeyList')
     KmsKeyId = Shapes::StringShape.new(name: 'KmsKeyId')
     ListAllowedMultiRegionClusterUpdatesRequest = Shapes::StructureShape.new(name: 'ListAllowedMultiRegionClusterUpdatesRequest')
@@ -147,6 +148,8 @@ module Aws::MemoryDB
     MultiRegionClusterList = Shapes::ListShape.new(name: 'MultiRegionClusterList')
     MultiRegionClusterNotFoundFault = Shapes::StructureShape.new(name: 'MultiRegionClusterNotFoundFault')
     MultiRegionParameterGroupNotFoundFault = Shapes::StructureShape.new(name: 'MultiRegionParameterGroupNotFoundFault')
+    NetworkType = Shapes::StringShape.new(name: 'NetworkType')
+    NetworkTypeList = Shapes::ListShape.new(name: 'NetworkTypeList')
     NoOperationFault = Shapes::StructureShape.new(name: 'NoOperationFault')
     Node = Shapes::StructureShape.new(name: 'Node')
     NodeList = Shapes::ListShape.new(name: 'NodeList')
@@ -336,6 +339,8 @@ module Aws::MemoryDB
     Cluster.add_member(:acl_name, Shapes::ShapeRef.new(shape: ACLName, location_name: "ACLName"))
     Cluster.add_member(:auto_minor_version_upgrade, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "AutoMinorVersionUpgrade"))
     Cluster.add_member(:data_tiering, Shapes::ShapeRef.new(shape: DataTieringStatus, location_name: "DataTiering"))
+    Cluster.add_member(:network_type, Shapes::ShapeRef.new(shape: NetworkType, location_name: "NetworkType"))
+    Cluster.add_member(:ip_discovery, Shapes::ShapeRef.new(shape: IpDiscovery, location_name: "IpDiscovery"))
     Cluster.struct_class = Types::Cluster
 
     ClusterAlreadyExistsFault.struct_class = Types::ClusterAlreadyExistsFault
@@ -414,6 +419,8 @@ module Aws::MemoryDB
     CreateClusterRequest.add_member(:engine_version, Shapes::ShapeRef.new(shape: String, location_name: "EngineVersion"))
     CreateClusterRequest.add_member(:auto_minor_version_upgrade, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "AutoMinorVersionUpgrade"))
     CreateClusterRequest.add_member(:data_tiering, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "DataTiering"))
+    CreateClusterRequest.add_member(:network_type, Shapes::ShapeRef.new(shape: NetworkType, location_name: "NetworkType"))
+    CreateClusterRequest.add_member(:ip_discovery, Shapes::ShapeRef.new(shape: IpDiscovery, location_name: "IpDiscovery"))
     CreateClusterRequest.struct_class = Types::CreateClusterRequest
 
     CreateClusterResponse.add_member(:cluster, Shapes::ShapeRef.new(shape: Cluster, location_name: "Cluster"))
@@ -766,6 +773,8 @@ module Aws::MemoryDB
 
     MultiRegionParameterGroupNotFoundFault.struct_class = Types::MultiRegionParameterGroupNotFoundFault
 
+    NetworkTypeList.member = Shapes::ShapeRef.new(shape: NetworkType)
+
     NoOperationFault.struct_class = Types::NoOperationFault
 
     Node.add_member(:name, Shapes::ShapeRef.new(shape: String, location_name: "Name"))
@@ -975,6 +984,7 @@ module Aws::MemoryDB
 
     Subnet.add_member(:identifier, Shapes::ShapeRef.new(shape: String, location_name: "Identifier"))
     Subnet.add_member(:availability_zone, Shapes::ShapeRef.new(shape: AvailabilityZone, location_name: "AvailabilityZone"))
+    Subnet.add_member(:supported_network_types, Shapes::ShapeRef.new(shape: NetworkTypeList, location_name: "SupportedNetworkTypes"))
     Subnet.struct_class = Types::Subnet
 
     SubnetGroup.add_member(:name, Shapes::ShapeRef.new(shape: String, location_name: "Name"))
@@ -982,6 +992,7 @@ module Aws::MemoryDB
     SubnetGroup.add_member(:vpc_id, Shapes::ShapeRef.new(shape: String, location_name: "VpcId"))
     SubnetGroup.add_member(:subnets, Shapes::ShapeRef.new(shape: SubnetList, location_name: "Subnets"))
     SubnetGroup.add_member(:arn, Shapes::ShapeRef.new(shape: String, location_name: "ARN"))
+    SubnetGroup.add_member(:supported_network_types, Shapes::ShapeRef.new(shape: NetworkTypeList, location_name: "SupportedNetworkTypes"))
     SubnetGroup.struct_class = Types::SubnetGroup
 
     SubnetGroupAlreadyExistsFault.struct_class = Types::SubnetGroupAlreadyExistsFault
@@ -1060,6 +1071,7 @@ module Aws::MemoryDB
     UpdateClusterRequest.add_member(:replica_configuration, Shapes::ShapeRef.new(shape: ReplicaConfigurationRequest, location_name: "ReplicaConfiguration"))
     UpdateClusterRequest.add_member(:shard_configuration, Shapes::ShapeRef.new(shape: ShardConfigurationRequest, location_name: "ShardConfiguration"))
     UpdateClusterRequest.add_member(:acl_name, Shapes::ShapeRef.new(shape: ACLName, location_name: "ACLName"))
+    UpdateClusterRequest.add_member(:ip_discovery, Shapes::ShapeRef.new(shape: IpDiscovery, location_name: "IpDiscovery"))
     UpdateClusterRequest.struct_class = Types::UpdateClusterRequest
 
     UpdateClusterResponse.add_member(:cluster, Shapes::ShapeRef.new(shape: Cluster, location_name: "Cluster"))

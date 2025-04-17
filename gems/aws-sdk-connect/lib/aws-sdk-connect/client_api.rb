@@ -75,6 +75,7 @@ module Aws::Connect
     ArtifactId = Shapes::StringShape.new(name: 'ArtifactId')
     ArtifactStatus = Shapes::StringShape.new(name: 'ArtifactStatus')
     AssignContactCategoryActionDefinition = Shapes::StructureShape.new(name: 'AssignContactCategoryActionDefinition')
+    AssignSlaActionDefinition = Shapes::StructureShape.new(name: 'AssignSlaActionDefinition')
     AssociateAnalyticsDataSetRequest = Shapes::StructureShape.new(name: 'AssociateAnalyticsDataSetRequest')
     AssociateAnalyticsDataSetResponse = Shapes::StructureShape.new(name: 'AssociateAnalyticsDataSetResponse')
     AssociateApprovedOriginRequest = Shapes::StructureShape.new(name: 'AssociateApprovedOriginRequest')
@@ -151,6 +152,7 @@ module Aws::Connect
     BucketName = Shapes::StringShape.new(name: 'BucketName')
     Campaign = Shapes::StructureShape.new(name: 'Campaign')
     CampaignId = Shapes::StringShape.new(name: 'CampaignId')
+    CaseSlaConfiguration = Shapes::StructureShape.new(name: 'CaseSlaConfiguration')
     Channel = Shapes::StringShape.new(name: 'Channel')
     ChannelList = Shapes::ListShape.new(name: 'ChannelList')
     ChannelToCountMap = Shapes::MapShape.new(name: 'ChannelToCountMap')
@@ -1233,6 +1235,10 @@ module Aws::Connect
     SingleSelectQuestionRuleCategoryAutomation = Shapes::StructureShape.new(name: 'SingleSelectQuestionRuleCategoryAutomation')
     SingleSelectQuestionRuleCategoryAutomationCondition = Shapes::StringShape.new(name: 'SingleSelectQuestionRuleCategoryAutomationCondition')
     SingleSelectQuestionRuleCategoryAutomationLabel = Shapes::StringShape.new(name: 'SingleSelectQuestionRuleCategoryAutomationLabel')
+    SlaAssignmentType = Shapes::StringShape.new(name: 'SlaAssignmentType')
+    SlaFieldValueUnionList = Shapes::ListShape.new(name: 'SlaFieldValueUnionList')
+    SlaName = Shapes::StringShape.new(name: 'SlaName')
+    SlaType = Shapes::StringShape.new(name: 'SlaType')
     SnapshotVersion = Shapes::StringShape.new(name: 'SnapshotVersion')
     Sort = Shapes::StructureShape.new(name: 'Sort')
     SortOrder = Shapes::StringShape.new(name: 'SortOrder')
@@ -1309,6 +1315,7 @@ module Aws::Connect
     TagValueString = Shapes::StringShape.new(name: 'TagValueString')
     TagsList = Shapes::ListShape.new(name: 'TagsList')
     TargetListType = Shapes::StringShape.new(name: 'TargetListType')
+    TargetSlaMinutes = Shapes::IntegerShape.new(name: 'TargetSlaMinutes')
     TaskActionDefinition = Shapes::StructureShape.new(name: 'TaskActionDefinition')
     TaskDescriptionExpression = Shapes::StringShape.new(name: 'TaskDescriptionExpression')
     TaskNameExpression = Shapes::StringShape.new(name: 'TaskNameExpression')
@@ -1670,6 +1677,10 @@ module Aws::Connect
 
     AssignContactCategoryActionDefinition.struct_class = Types::AssignContactCategoryActionDefinition
 
+    AssignSlaActionDefinition.add_member(:sla_assignment_type, Shapes::ShapeRef.new(shape: SlaAssignmentType, required: true, location_name: "SlaAssignmentType"))
+    AssignSlaActionDefinition.add_member(:case_sla_configuration, Shapes::ShapeRef.new(shape: CaseSlaConfiguration, location_name: "CaseSlaConfiguration"))
+    AssignSlaActionDefinition.struct_class = Types::AssignSlaActionDefinition
+
     AssociateAnalyticsDataSetRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     AssociateAnalyticsDataSetRequest.add_member(:data_set_id, Shapes::ShapeRef.new(shape: DataSetId, required: true, location_name: "DataSetId"))
     AssociateAnalyticsDataSetRequest.add_member(:target_account_id, Shapes::ShapeRef.new(shape: AWSAccountId, location_name: "TargetAccountId"))
@@ -1914,6 +1925,13 @@ module Aws::Connect
 
     Campaign.add_member(:campaign_id, Shapes::ShapeRef.new(shape: CampaignId, location_name: "CampaignId"))
     Campaign.struct_class = Types::Campaign
+
+    CaseSlaConfiguration.add_member(:name, Shapes::ShapeRef.new(shape: SlaName, required: true, location_name: "Name"))
+    CaseSlaConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: SlaType, required: true, location_name: "Type"))
+    CaseSlaConfiguration.add_member(:field_id, Shapes::ShapeRef.new(shape: FieldValueId, location_name: "FieldId"))
+    CaseSlaConfiguration.add_member(:target_field_values, Shapes::ShapeRef.new(shape: SlaFieldValueUnionList, location_name: "TargetFieldValues"))
+    CaseSlaConfiguration.add_member(:target_sla_minutes, Shapes::ShapeRef.new(shape: TargetSlaMinutes, required: true, location_name: "TargetSlaMinutes"))
+    CaseSlaConfiguration.struct_class = Types::CaseSlaConfiguration
 
     ChannelList.member = Shapes::ShapeRef.new(shape: Channel)
 
@@ -5105,6 +5123,7 @@ module Aws::Connect
     RuleAction.add_member(:send_notification_action, Shapes::ShapeRef.new(shape: SendNotificationActionDefinition, location_name: "SendNotificationAction"))
     RuleAction.add_member(:create_case_action, Shapes::ShapeRef.new(shape: CreateCaseActionDefinition, location_name: "CreateCaseAction"))
     RuleAction.add_member(:update_case_action, Shapes::ShapeRef.new(shape: UpdateCaseActionDefinition, location_name: "UpdateCaseAction"))
+    RuleAction.add_member(:assign_sla_action, Shapes::ShapeRef.new(shape: AssignSlaActionDefinition, location_name: "AssignSlaAction"))
     RuleAction.add_member(:end_associated_tasks_action, Shapes::ShapeRef.new(shape: EndAssociatedTasksActionDefinition, location_name: "EndAssociatedTasksAction"))
     RuleAction.add_member(:submit_auto_evaluation_action, Shapes::ShapeRef.new(shape: SubmitAutoEvaluationActionDefinition, location_name: "SubmitAutoEvaluationAction"))
     RuleAction.struct_class = Types::RuleAction
@@ -5507,6 +5526,8 @@ module Aws::Connect
     SingleSelectQuestionRuleCategoryAutomation.add_member(:condition, Shapes::ShapeRef.new(shape: SingleSelectQuestionRuleCategoryAutomationCondition, required: true, location_name: "Condition"))
     SingleSelectQuestionRuleCategoryAutomation.add_member(:option_ref_id, Shapes::ShapeRef.new(shape: ReferenceId, required: true, location_name: "OptionRefId"))
     SingleSelectQuestionRuleCategoryAutomation.struct_class = Types::SingleSelectQuestionRuleCategoryAutomation
+
+    SlaFieldValueUnionList.member = Shapes::ShapeRef.new(shape: FieldValueUnion)
 
     Sort.add_member(:field_name, Shapes::ShapeRef.new(shape: SortableFieldName, required: true, location_name: "FieldName"))
     Sort.add_member(:order, Shapes::ShapeRef.new(shape: SortOrder, required: true, location_name: "Order"))

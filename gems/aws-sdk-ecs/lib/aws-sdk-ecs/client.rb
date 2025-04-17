@@ -2224,13 +2224,13 @@ module Aws::ECS
     # @example Request syntax with placeholder values
     #
     #   resp = client.delete_account_setting({
-    #     name: "serviceLongArnFormat", # required, accepts serviceLongArnFormat, taskLongArnFormat, containerInstanceLongArnFormat, awsvpcTrunking, containerInsights, fargateFIPSMode, tagResourceAuthorization, fargateTaskRetirementWaitPeriod, guardDutyActivate
+    #     name: "serviceLongArnFormat", # required, accepts serviceLongArnFormat, taskLongArnFormat, containerInstanceLongArnFormat, awsvpcTrunking, containerInsights, fargateFIPSMode, tagResourceAuthorization, fargateTaskRetirementWaitPeriod, guardDutyActivate, defaultLogDriverMode
     #     principal_arn: "String",
     #   })
     #
     # @example Response structure
     #
-    #   resp.setting.name #=> String, one of "serviceLongArnFormat", "taskLongArnFormat", "containerInstanceLongArnFormat", "awsvpcTrunking", "containerInsights", "fargateFIPSMode", "tagResourceAuthorization", "fargateTaskRetirementWaitPeriod", "guardDutyActivate"
+    #   resp.setting.name #=> String, one of "serviceLongArnFormat", "taskLongArnFormat", "containerInstanceLongArnFormat", "awsvpcTrunking", "containerInsights", "fargateFIPSMode", "tagResourceAuthorization", "fargateTaskRetirementWaitPeriod", "guardDutyActivate", "defaultLogDriverMode"
     #   resp.setting.value #=> String
     #   resp.setting.principal_arn #=> String
     #   resp.setting.type #=> String, one of "user", "aws_managed"
@@ -4105,12 +4105,12 @@ module Aws::ECS
     # Describes one or more of your service deployments.
     #
     # A service deployment happens when you release a software update for
-    # the service. For more information, see [Amazon ECS service
-    # deployments][1].
+    # the service. For more information, see [View service history using
+    # Amazon ECS service deployments][1].
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-deployments.html
+    # [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-deployment.html
     #
     # @option params [required, Array<String>] :service_deployment_arns
     #   The ARN of the service deployment.
@@ -5657,7 +5657,7 @@ module Aws::ECS
     # @example Request syntax with placeholder values
     #
     #   resp = client.list_account_settings({
-    #     name: "serviceLongArnFormat", # accepts serviceLongArnFormat, taskLongArnFormat, containerInstanceLongArnFormat, awsvpcTrunking, containerInsights, fargateFIPSMode, tagResourceAuthorization, fargateTaskRetirementWaitPeriod, guardDutyActivate
+    #     name: "serviceLongArnFormat", # accepts serviceLongArnFormat, taskLongArnFormat, containerInstanceLongArnFormat, awsvpcTrunking, containerInsights, fargateFIPSMode, tagResourceAuthorization, fargateTaskRetirementWaitPeriod, guardDutyActivate, defaultLogDriverMode
     #     value: "String",
     #     principal_arn: "String",
     #     effective_settings: false,
@@ -5668,7 +5668,7 @@ module Aws::ECS
     # @example Response structure
     #
     #   resp.settings #=> Array
-    #   resp.settings[0].name #=> String, one of "serviceLongArnFormat", "taskLongArnFormat", "containerInstanceLongArnFormat", "awsvpcTrunking", "containerInsights", "fargateFIPSMode", "tagResourceAuthorization", "fargateTaskRetirementWaitPeriod", "guardDutyActivate"
+    #   resp.settings[0].name #=> String, one of "serviceLongArnFormat", "taskLongArnFormat", "containerInstanceLongArnFormat", "awsvpcTrunking", "containerInsights", "fargateFIPSMode", "tagResourceAuthorization", "fargateTaskRetirementWaitPeriod", "guardDutyActivate", "defaultLogDriverMode"
     #   resp.settings[0].value #=> String
     #   resp.settings[0].principal_arn #=> String
     #   resp.settings[0].type #=> String, one of "user", "aws_managed"
@@ -6775,12 +6775,23 @@ module Aws::ECS
     #     information, see [Grant permission to tag resources on creation][6]
     #     in the *Amazon ECS Developer Guide*.
     #
+    #   * `defaultLogDriverMode` - Amazon ECS supports setting a default
+    #     delivery mode of log messages from a container to the `logDriver`
+    #     that you specify in the container's `logConfiguration`. The
+    #     delivery mode affects application stability when the flow of logs
+    #     from the container to the log driver is interrupted. The
+    #     `defaultLogDriverMode` setting supports two values: `blocking` and
+    #     `non-blocking`. If you don't specify a delivery mode in your
+    #     container definition's `logConfiguration`, the mode you specify
+    #     using this account setting will be used as the default. For more
+    #     information about log delivery modes, see [LogConfiguration][7].
+    #
     #   * `guardDutyActivate` - The `guardDutyActivate` parameter is read-only
     #     in Amazon ECS and indicates whether Amazon ECS Runtime Monitoring is
     #     enabled or disabled by your security administrator in your Amazon
     #     ECS account. Amazon GuardDuty controls this account setting on your
     #     behalf. For more information, see [Protecting Amazon ECS workloads
-    #     with Amazon ECS Runtime Monitoring][7].
+    #     with Amazon ECS Runtime Monitoring][8].
     #
     #
     #
@@ -6790,7 +6801,8 @@ module Aws::ECS
     #   [4]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-task-networking.html#fargate-task-networking-vpc-dual-stack
     #   [5]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-maintenance.html
     #   [6]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/supported-iam-actions-tagging.html
-    #   [7]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-guard-duty-integration.html
+    #   [7]: https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_LogConfiguration.html
+    #   [8]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-guard-duty-integration.html
     #
     # @option params [required, String] :value
     #   The account setting value for the specified principal ARN. Accepted
@@ -6872,14 +6884,14 @@ module Aws::ECS
     # @example Request syntax with placeholder values
     #
     #   resp = client.put_account_setting({
-    #     name: "serviceLongArnFormat", # required, accepts serviceLongArnFormat, taskLongArnFormat, containerInstanceLongArnFormat, awsvpcTrunking, containerInsights, fargateFIPSMode, tagResourceAuthorization, fargateTaskRetirementWaitPeriod, guardDutyActivate
+    #     name: "serviceLongArnFormat", # required, accepts serviceLongArnFormat, taskLongArnFormat, containerInstanceLongArnFormat, awsvpcTrunking, containerInsights, fargateFIPSMode, tagResourceAuthorization, fargateTaskRetirementWaitPeriod, guardDutyActivate, defaultLogDriverMode
     #     value: "String", # required
     #     principal_arn: "String",
     #   })
     #
     # @example Response structure
     #
-    #   resp.setting.name #=> String, one of "serviceLongArnFormat", "taskLongArnFormat", "containerInstanceLongArnFormat", "awsvpcTrunking", "containerInsights", "fargateFIPSMode", "tagResourceAuthorization", "fargateTaskRetirementWaitPeriod", "guardDutyActivate"
+    #   resp.setting.name #=> String, one of "serviceLongArnFormat", "taskLongArnFormat", "containerInstanceLongArnFormat", "awsvpcTrunking", "containerInsights", "fargateFIPSMode", "tagResourceAuthorization", "fargateTaskRetirementWaitPeriod", "guardDutyActivate", "defaultLogDriverMode"
     #   resp.setting.value #=> String
     #   resp.setting.principal_arn #=> String
     #   resp.setting.type #=> String, one of "user", "aws_managed"
@@ -6987,12 +6999,23 @@ module Aws::ECS
     #     information, see [Grant permission to tag resources on creation][6]
     #     in the *Amazon ECS Developer Guide*.
     #
+    #   * `defaultLogDriverMode` -Amazon ECS supports setting a default
+    #     delivery mode of log messages from a container to the `logDriver`
+    #     that you specify in the container's `logConfiguration`. The
+    #     delivery mode affects application stability when the flow of logs
+    #     from the container to the log driver is interrupted. The
+    #     `defaultLogDriverMode` setting supports two values: `blocking` and
+    #     `non-blocking`. If you don't specify a delivery mode in your
+    #     container definition's `logConfiguration`, the mode you specify
+    #     using this account setting will be used as the default. For more
+    #     information about log delivery modes, see [LogConfiguration][7].
+    #
     #   * `guardDutyActivate` - The `guardDutyActivate` parameter is read-only
     #     in Amazon ECS and indicates whether Amazon ECS Runtime Monitoring is
     #     enabled or disabled by your security administrator in your Amazon
     #     ECS account. Amazon GuardDuty controls this account setting on your
     #     behalf. For more information, see [Protecting Amazon ECS workloads
-    #     with Amazon ECS Runtime Monitoring][7].
+    #     with Amazon ECS Runtime Monitoring][8].
     #
     #
     #
@@ -7002,7 +7025,8 @@ module Aws::ECS
     #   [4]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-task-networking.html#fargate-task-networking-vpc-dual-stack
     #   [5]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-maintenance.html
     #   [6]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/supported-iam-actions-tagging.html
-    #   [7]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-guard-duty-integration.html
+    #   [7]: https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_LogConfiguration.html
+    #   [8]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-guard-duty-integration.html
     #
     # @option params [required, String] :value
     #   The account setting value for the specified principal ARN. Accepted
@@ -7048,13 +7072,13 @@ module Aws::ECS
     # @example Request syntax with placeholder values
     #
     #   resp = client.put_account_setting_default({
-    #     name: "serviceLongArnFormat", # required, accepts serviceLongArnFormat, taskLongArnFormat, containerInstanceLongArnFormat, awsvpcTrunking, containerInsights, fargateFIPSMode, tagResourceAuthorization, fargateTaskRetirementWaitPeriod, guardDutyActivate
+    #     name: "serviceLongArnFormat", # required, accepts serviceLongArnFormat, taskLongArnFormat, containerInstanceLongArnFormat, awsvpcTrunking, containerInsights, fargateFIPSMode, tagResourceAuthorization, fargateTaskRetirementWaitPeriod, guardDutyActivate, defaultLogDriverMode
     #     value: "String", # required
     #   })
     #
     # @example Response structure
     #
-    #   resp.setting.name #=> String, one of "serviceLongArnFormat", "taskLongArnFormat", "containerInstanceLongArnFormat", "awsvpcTrunking", "containerInsights", "fargateFIPSMode", "tagResourceAuthorization", "fargateTaskRetirementWaitPeriod", "guardDutyActivate"
+    #   resp.setting.name #=> String, one of "serviceLongArnFormat", "taskLongArnFormat", "containerInstanceLongArnFormat", "awsvpcTrunking", "containerInsights", "fargateFIPSMode", "tagResourceAuthorization", "fargateTaskRetirementWaitPeriod", "guardDutyActivate", "defaultLogDriverMode"
     #   resp.setting.value #=> String
     #   resp.setting.principal_arn #=> String
     #   resp.setting.type #=> String, one of "user", "aws_managed"
@@ -12442,7 +12466,7 @@ module Aws::ECS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ecs'
-      context[:gem_version] = '1.183.0'
+      context[:gem_version] = '1.184.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

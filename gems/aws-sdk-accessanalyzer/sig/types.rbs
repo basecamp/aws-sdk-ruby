@@ -188,7 +188,7 @@ module Aws::AccessAnalyzer
 
     class CheckNoPublicAccessRequest
       attr_accessor policy_document: ::String
-      attr_accessor resource_type: ("AWS::DynamoDB::Table" | "AWS::DynamoDB::Stream" | "AWS::EFS::FileSystem" | "AWS::OpenSearchService::Domain" | "AWS::Kinesis::Stream" | "AWS::Kinesis::StreamConsumer" | "AWS::KMS::Key" | "AWS::Lambda::Function" | "AWS::S3::Bucket" | "AWS::S3::AccessPoint" | "AWS::S3Express::DirectoryBucket" | "AWS::S3::Glacier" | "AWS::S3Outposts::Bucket" | "AWS::S3Outposts::AccessPoint" | "AWS::SecretsManager::Secret" | "AWS::SNS::Topic" | "AWS::SQS::Queue" | "AWS::IAM::AssumeRolePolicyDocument")
+      attr_accessor resource_type: ("AWS::DynamoDB::Table" | "AWS::DynamoDB::Stream" | "AWS::EFS::FileSystem" | "AWS::OpenSearchService::Domain" | "AWS::Kinesis::Stream" | "AWS::Kinesis::StreamConsumer" | "AWS::KMS::Key" | "AWS::Lambda::Function" | "AWS::S3::Bucket" | "AWS::S3::AccessPoint" | "AWS::S3Express::DirectoryBucket" | "AWS::S3::Glacier" | "AWS::S3Outposts::Bucket" | "AWS::S3Outposts::AccessPoint" | "AWS::SecretsManager::Secret" | "AWS::SNS::Topic" | "AWS::SQS::Queue" | "AWS::IAM::AssumeRolePolicyDocument" | "AWS::S3Tables::TableBucket" | "AWS::ApiGateway::RestApi" | "AWS::CodeArtifact::Domain" | "AWS::Backup::BackupVault" | "AWS::CloudTrail::Dashboard" | "AWS::CloudTrail::EventDataStore" | "AWS::S3Tables::Table" | "AWS::S3Express::AccessPoint")
       SENSITIVE: [:policy_document]
     end
 
@@ -961,8 +961,15 @@ module Aws::AccessAnalyzer
       SENSITIVE: []
     end
 
+    class S3ExpressDirectoryAccessPointConfiguration
+      attr_accessor access_point_policy: ::String
+      attr_accessor network_origin: Types::NetworkOriginConfiguration
+      SENSITIVE: []
+    end
+
     class S3ExpressDirectoryBucketConfiguration
       attr_accessor bucket_policy: ::String
+      attr_accessor access_points: ::Hash[::String, Types::S3ExpressDirectoryAccessPointConfiguration]
       SENSITIVE: []
     end
 

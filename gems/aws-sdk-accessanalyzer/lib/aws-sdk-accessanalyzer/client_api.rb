@@ -250,6 +250,9 @@ module Aws::AccessAnalyzer
     S3BucketAclGrantConfigurationsList = Shapes::ListShape.new(name: 'S3BucketAclGrantConfigurationsList')
     S3BucketConfiguration = Shapes::StructureShape.new(name: 'S3BucketConfiguration')
     S3BucketPolicy = Shapes::StringShape.new(name: 'S3BucketPolicy')
+    S3ExpressDirectoryAccessPointArn = Shapes::StringShape.new(name: 'S3ExpressDirectoryAccessPointArn')
+    S3ExpressDirectoryAccessPointConfiguration = Shapes::StructureShape.new(name: 'S3ExpressDirectoryAccessPointConfiguration')
+    S3ExpressDirectoryAccessPointConfigurationsMap = Shapes::MapShape.new(name: 'S3ExpressDirectoryAccessPointConfigurationsMap')
     S3ExpressDirectoryBucketConfiguration = Shapes::StructureShape.new(name: 'S3ExpressDirectoryBucketConfiguration')
     S3ExpressDirectoryBucketPolicy = Shapes::StringShape.new(name: 'S3ExpressDirectoryBucketPolicy')
     S3PublicAccessBlockConfiguration = Shapes::StructureShape.new(name: 'S3PublicAccessBlockConfiguration')
@@ -1081,7 +1084,15 @@ module Aws::AccessAnalyzer
     S3BucketConfiguration.add_member(:access_points, Shapes::ShapeRef.new(shape: S3AccessPointConfigurationsMap, location_name: "accessPoints"))
     S3BucketConfiguration.struct_class = Types::S3BucketConfiguration
 
+    S3ExpressDirectoryAccessPointConfiguration.add_member(:access_point_policy, Shapes::ShapeRef.new(shape: AccessPointPolicy, location_name: "accessPointPolicy"))
+    S3ExpressDirectoryAccessPointConfiguration.add_member(:network_origin, Shapes::ShapeRef.new(shape: NetworkOriginConfiguration, location_name: "networkOrigin"))
+    S3ExpressDirectoryAccessPointConfiguration.struct_class = Types::S3ExpressDirectoryAccessPointConfiguration
+
+    S3ExpressDirectoryAccessPointConfigurationsMap.key = Shapes::ShapeRef.new(shape: S3ExpressDirectoryAccessPointArn)
+    S3ExpressDirectoryAccessPointConfigurationsMap.value = Shapes::ShapeRef.new(shape: S3ExpressDirectoryAccessPointConfiguration)
+
     S3ExpressDirectoryBucketConfiguration.add_member(:bucket_policy, Shapes::ShapeRef.new(shape: S3ExpressDirectoryBucketPolicy, location_name: "bucketPolicy"))
+    S3ExpressDirectoryBucketConfiguration.add_member(:access_points, Shapes::ShapeRef.new(shape: S3ExpressDirectoryAccessPointConfigurationsMap, location_name: "accessPoints"))
     S3ExpressDirectoryBucketConfiguration.struct_class = Types::S3ExpressDirectoryBucketConfiguration
 
     S3PublicAccessBlockConfiguration.add_member(:ignore_public_acls, Shapes::ShapeRef.new(shape: Boolean, required: true, location_name: "ignorePublicAcls"))
@@ -1312,8 +1323,8 @@ module Aws::AccessAnalyzer
         o.http_request_uri = "/policy/generation/{jobId}"
         o.input = Shapes::ShapeRef.new(shape: CancelPolicyGenerationRequest)
         o.output = Shapes::ShapeRef.new(shape: CancelPolicyGenerationResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
@@ -1324,8 +1335,8 @@ module Aws::AccessAnalyzer
         o.http_request_uri = "/policy/check-access-not-granted"
         o.input = Shapes::ShapeRef.new(shape: CheckAccessNotGrantedRequest)
         o.output = Shapes::ShapeRef.new(shape: CheckAccessNotGrantedResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
         o.errors << Shapes::ShapeRef.new(shape: UnprocessableEntityException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
@@ -1338,8 +1349,8 @@ module Aws::AccessAnalyzer
         o.http_request_uri = "/policy/check-no-new-access"
         o.input = Shapes::ShapeRef.new(shape: CheckNoNewAccessRequest)
         o.output = Shapes::ShapeRef.new(shape: CheckNoNewAccessResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
         o.errors << Shapes::ShapeRef.new(shape: UnprocessableEntityException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
@@ -1352,8 +1363,8 @@ module Aws::AccessAnalyzer
         o.http_request_uri = "/policy/check-no-public-access"
         o.input = Shapes::ShapeRef.new(shape: CheckNoPublicAccessRequest)
         o.output = Shapes::ShapeRef.new(shape: CheckNoPublicAccessResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
         o.errors << Shapes::ShapeRef.new(shape: UnprocessableEntityException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
@@ -1366,10 +1377,10 @@ module Aws::AccessAnalyzer
         o.http_request_uri = "/access-preview"
         o.input = Shapes::ShapeRef.new(shape: CreateAccessPreviewRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateAccessPreviewResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -1395,8 +1406,8 @@ module Aws::AccessAnalyzer
         o.http_request_uri = "/analyzer/{analyzerName}/archive-rule"
         o.input = Shapes::ShapeRef.new(shape: CreateArchiveRuleRequest)
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
@@ -1436,8 +1447,8 @@ module Aws::AccessAnalyzer
         o.http_request_uri = "/recommendation/{id}"
         o.input = Shapes::ShapeRef.new(shape: GenerateFindingRecommendationRequest)
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
@@ -1449,8 +1460,8 @@ module Aws::AccessAnalyzer
         o.input = Shapes::ShapeRef.new(shape: GetAccessPreviewRequest)
         o.output = Shapes::ShapeRef.new(shape: GetAccessPreviewResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
@@ -1564,8 +1575,8 @@ module Aws::AccessAnalyzer
         o.http_request_uri = "/policy/generation/{jobId}"
         o.input = Shapes::ShapeRef.new(shape: GetGeneratedPolicyRequest)
         o.output = Shapes::ShapeRef.new(shape: GetGeneratedPolicyResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
@@ -1576,10 +1587,10 @@ module Aws::AccessAnalyzer
         o.http_request_uri = "/access-preview/{accessPreviewId}"
         o.input = Shapes::ShapeRef.new(shape: ListAccessPreviewFindingsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListAccessPreviewFindingsResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o[:pager] = Aws::Pager.new(
@@ -1597,8 +1608,8 @@ module Aws::AccessAnalyzer
         o.input = Shapes::ShapeRef.new(shape: ListAccessPreviewsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListAccessPreviewsResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o[:pager] = Aws::Pager.new(
@@ -1708,8 +1719,8 @@ module Aws::AccessAnalyzer
         o.http_request_uri = "/policy/generation"
         o.input = Shapes::ShapeRef.new(shape: ListPolicyGenerationsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListPolicyGenerationsResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o[:pager] = Aws::Pager.new(
@@ -1727,8 +1738,8 @@ module Aws::AccessAnalyzer
         o.input = Shapes::ShapeRef.new(shape: ListTagsForResourceRequest)
         o.output = Shapes::ShapeRef.new(shape: ListTagsForResourceResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
@@ -1740,8 +1751,8 @@ module Aws::AccessAnalyzer
         o.input = Shapes::ShapeRef.new(shape: StartPolicyGenerationRequest)
         o.output = Shapes::ShapeRef.new(shape: StartPolicyGenerationResponse)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -1767,8 +1778,8 @@ module Aws::AccessAnalyzer
         o.input = Shapes::ShapeRef.new(shape: TagResourceRequest)
         o.output = Shapes::ShapeRef.new(shape: TagResourceResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
@@ -1780,8 +1791,8 @@ module Aws::AccessAnalyzer
         o.input = Shapes::ShapeRef.new(shape: UntagResourceRequest)
         o.output = Shapes::ShapeRef.new(shape: UntagResourceResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
@@ -1832,8 +1843,8 @@ module Aws::AccessAnalyzer
         o.http_request_uri = "/policy/validation"
         o.input = Shapes::ShapeRef.new(shape: ValidatePolicyRequest)
         o.output = Shapes::ShapeRef.new(shape: ValidatePolicyResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o[:pager] = Aws::Pager.new(

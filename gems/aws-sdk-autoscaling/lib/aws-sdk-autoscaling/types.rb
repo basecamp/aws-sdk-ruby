@@ -454,7 +454,14 @@ module Aws::AutoScaling
     #
     # @!attribute [rw] new_instances_protected_from_scale_in
     #   Indicates whether newly launched instances are protected from
-    #   termination by Amazon EC2 Auto Scaling when scaling in.
+    #   termination by Amazon EC2 Auto Scaling when scaling in. For more
+    #   information about preventing instances from terminating on scale in,
+    #   see [Use instance scale-in protection][1] in the *Amazon EC2 Auto
+    #   Scaling User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-instance-protection.html
     #   @return [Boolean]
     #
     # @!attribute [rw] service_linked_role_arn
@@ -8160,13 +8167,21 @@ module Aws::AutoScaling
     #   @return [Integer]
     #
     # @!attribute [rw] capacity_rebalance
-    #   Enables or disables Capacity Rebalancing. For more information, see
-    #   [Use Capacity Rebalancing to handle Amazon EC2 Spot
-    #   Interruptions][1] in the *Amazon EC2 Auto Scaling User Guide*.
+    #   Enables or disables Capacity Rebalancing. If Capacity Rebalancing is
+    #   disabled, proactive replacement of at-risk Spot Instances does not
+    #   occur. For more information, see [Capacity Rebalancing in Auto
+    #   Scaling to replace at-risk Spot Instances][1] in the *Amazon EC2
+    #   Auto Scaling User Guide*.
+    #
+    #   <note markdown="1"> To suspend rebalancing across Availability Zones, use the
+    #   [SuspendProcesses][2] API.
+    #
+    #    </note>
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-capacity-rebalancing.html
+    #   [2]: https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SuspendedProcess.html
     #   @return [Boolean]
     #
     # @!attribute [rw] context

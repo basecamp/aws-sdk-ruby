@@ -369,6 +369,7 @@ module Aws::Omics
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor request_id: ::String
       attr_accessor accelerators: ("GPU")
+      attr_accessor storage_type: ("STATIC" | "DYNAMIC")
       SENSITIVE: []
     end
 
@@ -377,6 +378,35 @@ module Aws::Omics
       attr_accessor id: ::String
       attr_accessor status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETED" | "FAILED" | "INACTIVE")
       attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor uuid: ::String
+      SENSITIVE: []
+    end
+
+    class CreateWorkflowVersionRequest
+      attr_accessor workflow_id: ::String
+      attr_accessor version_name: ::String
+      attr_accessor definition_zip: ::String
+      attr_accessor definition_uri: ::String
+      attr_accessor accelerators: ("GPU")
+      attr_accessor description: ::String
+      attr_accessor engine: ("WDL" | "NEXTFLOW" | "CWL")
+      attr_accessor main: ::String
+      attr_accessor parameter_template: ::Hash[::String, Types::WorkflowParameter]
+      attr_accessor request_id: ::String
+      attr_accessor storage_type: ("STATIC" | "DYNAMIC")
+      attr_accessor storage_capacity: ::Integer
+      attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor workflow_bucket_owner_id: ::String
+      SENSITIVE: []
+    end
+
+    class CreateWorkflowVersionResponse
+      attr_accessor arn: ::String
+      attr_accessor workflow_id: ::String
+      attr_accessor version_name: ::String
+      attr_accessor status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETED" | "FAILED" | "INACTIVE")
+      attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor uuid: ::String
       SENSITIVE: []
     end
 
@@ -474,6 +504,12 @@ module Aws::Omics
 
     class DeleteWorkflowRequest
       attr_accessor id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteWorkflowVersionRequest
+      attr_accessor workflow_id: ::String
+      attr_accessor version_name: ::String
       SENSITIVE: []
     end
 
@@ -851,6 +887,8 @@ module Aws::Omics
       attr_accessor run_output_uri: ::String
       attr_accessor storage_type: ("STATIC" | "DYNAMIC")
       attr_accessor workflow_owner_id: ::String
+      attr_accessor workflow_version_name: ::String
+      attr_accessor workflow_uuid: ::String
       SENSITIVE: []
     end
 
@@ -992,6 +1030,41 @@ module Aws::Omics
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor metadata: ::Hash[::String, ::String]
       attr_accessor accelerators: ("GPU")
+      attr_accessor storage_type: ("STATIC" | "DYNAMIC")
+      attr_accessor uuid: ::String
+      SENSITIVE: []
+    end
+
+    class GetWorkflowVersionRequest
+      attr_accessor workflow_id: ::String
+      attr_accessor version_name: ::String
+      attr_accessor type: ("PRIVATE" | "READY2RUN")
+      attr_accessor export: ::Array[("DEFINITION")]
+      attr_accessor workflow_owner_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetWorkflowVersionResponse
+      attr_accessor arn: ::String
+      attr_accessor workflow_id: ::String
+      attr_accessor version_name: ::String
+      attr_accessor accelerators: ("GPU")
+      attr_accessor creation_time: ::Time
+      attr_accessor description: ::String
+      attr_accessor definition: ::String
+      attr_accessor digest: ::String
+      attr_accessor engine: ("WDL" | "NEXTFLOW" | "CWL")
+      attr_accessor main: ::String
+      attr_accessor metadata: ::Hash[::String, ::String]
+      attr_accessor parameter_template: ::Hash[::String, Types::WorkflowParameter]
+      attr_accessor status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETED" | "FAILED" | "INACTIVE")
+      attr_accessor status_message: ::String
+      attr_accessor storage_type: ("STATIC" | "DYNAMIC")
+      attr_accessor storage_capacity: ::Integer
+      attr_accessor type: ("PRIVATE" | "READY2RUN")
+      attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor uuid: ::String
+      attr_accessor workflow_bucket_owner_id: ::String
       SENSITIVE: []
     end
 
@@ -1375,6 +1448,21 @@ module Aws::Omics
       SENSITIVE: []
     end
 
+    class ListWorkflowVersionsRequest
+      attr_accessor workflow_id: ::String
+      attr_accessor type: ("PRIVATE" | "READY2RUN")
+      attr_accessor workflow_owner_id: ::String
+      attr_accessor starting_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListWorkflowVersionsResponse
+      attr_accessor items: ::Array[Types::WorkflowVersionListItem]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListWorkflowsRequest
       attr_accessor type: ("PRIVATE" | "READY2RUN")
       attr_accessor name: ::String
@@ -1607,6 +1695,7 @@ module Aws::Omics
       attr_accessor start_time: ::Time
       attr_accessor stop_time: ::Time
       attr_accessor storage_type: ("STATIC" | "DYNAMIC")
+      attr_accessor workflow_version_name: ::String
       SENSITIVE: []
     end
 
@@ -1820,6 +1909,7 @@ module Aws::Omics
       attr_accessor retention_mode: ("RETAIN" | "REMOVE")
       attr_accessor storage_type: ("STATIC" | "DYNAMIC")
       attr_accessor workflow_owner_id: ::String
+      attr_accessor workflow_version_name: ::String
       SENSITIVE: []
     end
 
@@ -2021,6 +2111,17 @@ module Aws::Omics
       attr_accessor id: ::String
       attr_accessor name: ::String
       attr_accessor description: ::String
+      attr_accessor storage_type: ("STATIC" | "DYNAMIC")
+      attr_accessor storage_capacity: ::Integer
+      SENSITIVE: []
+    end
+
+    class UpdateWorkflowVersionRequest
+      attr_accessor workflow_id: ::String
+      attr_accessor version_name: ::String
+      attr_accessor description: ::String
+      attr_accessor storage_type: ("STATIC" | "DYNAMIC")
+      attr_accessor storage_capacity: ::Integer
       SENSITIVE: []
     end
 
@@ -2121,6 +2222,19 @@ module Aws::Omics
     class WorkflowParameter
       attr_accessor description: ::String
       attr_accessor optional: bool
+      SENSITIVE: []
+    end
+
+    class WorkflowVersionListItem
+      attr_accessor arn: ::String
+      attr_accessor workflow_id: ::String
+      attr_accessor version_name: ::String
+      attr_accessor description: ::String
+      attr_accessor status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETED" | "FAILED" | "INACTIVE")
+      attr_accessor type: ("PRIVATE" | "READY2RUN")
+      attr_accessor digest: ::String
+      attr_accessor creation_time: ::Time
+      attr_accessor metadata: ::Hash[::String, ::String]
       SENSITIVE: []
     end
   end

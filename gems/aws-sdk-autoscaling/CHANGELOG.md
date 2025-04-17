@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.133.0 (2025-04-17)
+------------------
+
+* Feature - Doc only update for EC2 Auto Scaling.
+
 1.132.0 (2025-03-04)
 ------------------
 

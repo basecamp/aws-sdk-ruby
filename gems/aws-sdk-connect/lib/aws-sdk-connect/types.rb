@@ -634,6 +634,25 @@ module Aws::Connect
     #
     class AssignContactCategoryActionDefinition < Aws::EmptyStructure; end
 
+    # The AssignSla action definition.
+    #
+    # @!attribute [rw] sla_assignment_type
+    #   Type of SLA assignment.
+    #   @return [String]
+    #
+    # @!attribute [rw] case_sla_configuration
+    #   The SLA configuration for Case SLA Assignment.
+    #   @return [Types::CaseSlaConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/AssignSlaActionDefinition AWS API Documentation
+    #
+    class AssignSlaActionDefinition < Struct.new(
+      :sla_assignment_type,
+      :case_sla_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] instance_id
     #   The identifier of the Amazon Connect instance. You can [find the
     #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
@@ -1204,8 +1223,10 @@ module Aws::Connect
     #   @return [Time]
     #
     # @!attribute [rw] disconnect_timestamp
-    #   The timestamp when the customer endpoint disconnected from Amazon
-    #   Connect.
+    #   The date and time that the customer endpoint disconnected from the
+    #   current contact, in UTC time. In transfer scenarios, the
+    #   DisconnectTimestamp of the previous contact indicates the date and
+    #   time when that contact ended.
     #   @return [Time]
     #
     # @!attribute [rw] initial_contact_id
@@ -1954,6 +1975,42 @@ module Aws::Connect
     #
     class Campaign < Struct.new(
       :campaign_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The SLA configuration for Case SlaAssignmentType.
+    #
+    # @!attribute [rw] name
+    #   Name of an SLA.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   Type of SLA for Case SlaAssignmentType.
+    #   @return [String]
+    #
+    # @!attribute [rw] field_id
+    #   Unique identifier of a Case field.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_field_values
+    #   Represents a list of target field values for the fieldId specified
+    #   in CaseSlaConfiguration. The SLA is considered met if any one of
+    #   these target field values matches the actual field value.
+    #   @return [Array<Types::FieldValueUnion>]
+    #
+    # @!attribute [rw] target_sla_minutes
+    #   Target duration in minutes within which an SLA should be completed.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CaseSlaConfiguration AWS API Documentation
+    #
+    class CaseSlaConfiguration < Struct.new(
+      :name,
+      :type,
+      :field_id,
+      :target_field_values,
+      :target_sla_minutes)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3724,8 +3781,7 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] related_contact_id
-    #   The unique identifier for an Amazon Connect contact. This identifier
-    #   is related to the contact starting.
+    #   The identifier of the contact in this instance of Amazon Connect.
     #   @return [String]
     #
     # @!attribute [rw] attributes
@@ -3748,18 +3804,22 @@ module Aws::Connect
     # @!attribute [rw] channel
     #   The channel for the contact
     #
-    #   CreateContact only supports the EMAIL channel. The following
-    #   information that states other channels are supported is incorrect.
-    #   We are working to update this topic.
+    #   CreateContact only supports the EMAIL and VOICE channels. The
+    #   following information that states other channels are supported is
+    #   incorrect. We are working to update this topic.
     #   @return [String]
     #
     # @!attribute [rw] initiation_method
     #   Indicates how the contact was initiated.
     #
     #   CreateContact only supports the following initiation methods:
-    #   OUTBOUND, AGENT\_REPLY, and FLOW. The following information that
-    #   states other initiation methods are supported is incorrect. We are
-    #   working to update this topic.
+    #
+    #    * For EMAIL: OUTBOUND, AGENT\_REPLY, and FLOW.
+    #
+    #   * For VOICE: TRANSFER and the subtype connect:ExternalAudio.
+    #
+    #    The following information that states other initiation methods are
+    #   supported is incorrect. We are working to update this topic.
     #   @return [String]
     #
     # @!attribute [rw] expiry_duration_in_minutes
@@ -19618,6 +19678,10 @@ module Aws::Connect
     #   `OnCaseUpdate`.
     #   @return [Types::UpdateCaseActionDefinition]
     #
+    # @!attribute [rw] assign_sla_action
+    #   Information about the assign SLA action.
+    #   @return [Types::AssignSlaActionDefinition]
+    #
     # @!attribute [rw] end_associated_tasks_action
     #   Information about the end associated tasks action.
     #
@@ -19638,6 +19702,7 @@ module Aws::Connect
       :send_notification_action,
       :create_case_action,
       :update_case_action,
+      :assign_sla_action,
       :end_associated_tasks_action,
       :submit_auto_evaluation_action)
       SENSITIVE = []
@@ -21487,6 +21552,10 @@ module Aws::Connect
     #
     # @!attribute [rw] traffic_type
     #   Denotes the class of traffic.
+    #
+    #   <note markdown="1"> Only the CAMPAIGN traffic type is supported.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] source_campaign
@@ -22470,8 +22539,14 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] description
-    #   A description of the voice contact that is shown to an agent in the
-    #   Contact Control Panel (CCP).
+    #   A description of the voice contact that appears in the agent's
+    #   snapshot in the CCP logs. For more information about CCP logs, see
+    #   [Download and review CCP logs][1] in the *Amazon Connect
+    #   Administrator Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/download-ccp-logs.html
     #   @return [String]
     #
     # @!attribute [rw] references

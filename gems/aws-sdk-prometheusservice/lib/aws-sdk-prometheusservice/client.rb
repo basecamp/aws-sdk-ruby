@@ -687,7 +687,8 @@ module Aws::PrometheusService
     #   to.
     #
     # @option params [Types::RoleConfiguration] :role_configuration
-    #   The scraper role configuration for the workspace.
+    #   Use this structure to enable cross-account access, so that you can use
+    #   a target account to access Prometheus metrics from source accounts.
     #
     # @option params [required, Types::ScrapeConfiguration] :scrape_configuration
     #   The configuration file to use in the new scraper. For more
@@ -1202,6 +1203,48 @@ module Aws::PrometheusService
       req.send_request(options)
     end
 
+    # Use this operation to return information about the configuration of a
+    # workspace. The configuration details returned include workspace
+    # configuration status, label set limits, and retention period.
+    #
+    # @option params [required, String] :workspace_id
+    #   The ID of the workspace that you want to retrieve information for. To
+    #   find the IDs of your workspaces, use the [ListWorkspaces][1]
+    #   operation.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/prometheus/latest/APIReference/API_ListWorkspaces.htm
+    #
+    # @return [Types::DescribeWorkspaceConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeWorkspaceConfigurationResponse#workspace_configuration #workspace_configuration} => Types::WorkspaceConfigurationDescription
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_workspace_configuration({
+    #     workspace_id: "WorkspaceId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.workspace_configuration.limits_per_label_set #=> Array
+    #   resp.workspace_configuration.limits_per_label_set[0].label_set #=> Hash
+    #   resp.workspace_configuration.limits_per_label_set[0].label_set["LabelName"] #=> String
+    #   resp.workspace_configuration.limits_per_label_set[0].limits.max_series #=> Integer
+    #   resp.workspace_configuration.retention_period_in_days #=> Integer
+    #   resp.workspace_configuration.status.status_code #=> String, one of "ACTIVE", "UPDATING", "UPDATE_FAILED"
+    #   resp.workspace_configuration.status.status_reason #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/amp-2020-08-01/DescribeWorkspaceConfiguration AWS API Documentation
+    #
+    # @overload describe_workspace_configuration(params = {})
+    # @param [Hash] params ({})
+    def describe_workspace_configuration(params = {}, options = {})
+      req = build_request(:describe_workspace_configuration, params)
+      req.send_request(options)
+    end
+
     # The `GetDefaultScraperConfiguration` operation returns the default
     # scraper configuration used when Amazon EKS creates a scraper for you.
     #
@@ -1710,7 +1753,8 @@ module Aws::PrometheusService
     #   metrics to.
     #
     # @option params [Types::RoleConfiguration] :role_configuration
-    #   The scraper role configuration for the workspace.
+    #   Use this structure to enable cross-account access, so that you can use
+    #   a target account to access Prometheus metrics from source accounts.
     #
     # @option params [Types::ScrapeConfiguration] :scrape_configuration
     #   Contains the base-64 encoded YAML configuration for the scraper.
@@ -1809,6 +1853,73 @@ module Aws::PrometheusService
       req.send_request(options)
     end
 
+    # Use this operation to create or update the label sets, label set
+    # limits, and retention period of a workspace.
+    #
+    # You must specify at least one of `limitsPerLabelSet` or
+    # `retentionPeriodInDays` for the request to be valid.
+    #
+    # @option params [String] :client_token
+    #   You can include a token in your operation to make it an idempotent
+    #   opeartion.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [Array<Types::LimitsPerLabelSet>] :limits_per_label_set
+    #   This is an array of structures, where each structure defines a label
+    #   set for the workspace, and defines the ingestion limit for active time
+    #   series for each of those label sets. Each label name in a label set
+    #   must be unique.
+    #
+    # @option params [Integer] :retention_period_in_days
+    #   Specifies how many days that metrics will be retained in the
+    #   workspace.
+    #
+    # @option params [required, String] :workspace_id
+    #   The ID of the workspace that you want to update. To find the IDs of
+    #   your workspaces, use the [ListWorkspaces][1] operation.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/prometheus/latest/APIReference/API_ListWorkspaces.htm
+    #
+    # @return [Types::UpdateWorkspaceConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateWorkspaceConfigurationResponse#status #status} => Types::WorkspaceConfigurationStatus
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_workspace_configuration({
+    #     client_token: "IdempotencyToken",
+    #     limits_per_label_set: [
+    #       {
+    #         label_set: { # required
+    #           "LabelName" => "LabelValue",
+    #         },
+    #         limits: { # required
+    #           max_series: 1,
+    #         },
+    #       },
+    #     ],
+    #     retention_period_in_days: 1,
+    #     workspace_id: "WorkspaceId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.status.status_code #=> String, one of "ACTIVE", "UPDATING", "UPDATE_FAILED"
+    #   resp.status.status_reason #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/amp-2020-08-01/UpdateWorkspaceConfiguration AWS API Documentation
+    #
+    # @overload update_workspace_configuration(params = {})
+    # @param [Hash] params ({})
+    def update_workspace_configuration(params = {}, options = {})
+      req = build_request(:update_workspace_configuration, params)
+      req.send_request(options)
+    end
+
     # @!endgroup
 
     # @param params ({})
@@ -1827,7 +1938,7 @@ module Aws::PrometheusService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-prometheusservice'
-      context[:gem_version] = '1.48.0'
+      context[:gem_version] = '1.49.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

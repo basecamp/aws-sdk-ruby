@@ -967,7 +967,7 @@ module Aws::IoTFleetWise
     #   resp = client.create_decoder_manifest({
     #     name: "resourceName", # required
     #     description: "description",
-    #     model_manifest_arn: "arn", # required
+    #     model_manifest_arn: "CreateDecoderManifestRequestModelManifestArnString", # required
     #     signal_decoders: [
     #       {
     #         fully_qualified_name: "FullyQualifiedName", # required
@@ -1222,13 +1222,13 @@ module Aws::IoTFleetWise
     #     nodes: [
     #       {
     #         branch: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "BranchFullyQualifiedNameString", # required
     #           description: "description",
     #           deprecation_message: "message",
     #           comment: "message",
     #         },
     #         sensor: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "SensorFullyQualifiedNameString", # required
     #           data_type: "INT8", # required, accepts INT8, UINT8, INT16, UINT16, INT32, UINT32, INT64, UINT64, BOOLEAN, FLOAT, DOUBLE, STRING, UNIX_TIMESTAMP, INT8_ARRAY, UINT8_ARRAY, INT16_ARRAY, UINT16_ARRAY, INT32_ARRAY, UINT32_ARRAY, INT64_ARRAY, UINT64_ARRAY, BOOLEAN_ARRAY, FLOAT_ARRAY, DOUBLE_ARRAY, STRING_ARRAY, UNIX_TIMESTAMP_ARRAY, UNKNOWN, STRUCT, STRUCT_ARRAY
     #           description: "description",
     #           unit: "string",
@@ -1240,7 +1240,7 @@ module Aws::IoTFleetWise
     #           struct_fully_qualified_name: "NodePath",
     #         },
     #         actuator: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "ActuatorFullyQualifiedNameString", # required
     #           data_type: "INT8", # required, accepts INT8, UINT8, INT16, UINT16, INT32, UINT32, INT64, UINT64, BOOLEAN, FLOAT, DOUBLE, STRING, UNIX_TIMESTAMP, INT8_ARRAY, UINT8_ARRAY, INT16_ARRAY, UINT16_ARRAY, INT32_ARRAY, UINT32_ARRAY, INT64_ARRAY, UINT64_ARRAY, BOOLEAN_ARRAY, FLOAT_ARRAY, DOUBLE_ARRAY, STRING_ARRAY, UNIX_TIMESTAMP_ARRAY, UNKNOWN, STRUCT, STRUCT_ARRAY
     #           description: "description",
     #           unit: "string",
@@ -1253,7 +1253,7 @@ module Aws::IoTFleetWise
     #           struct_fully_qualified_name: "NodePath",
     #         },
     #         attribute: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "AttributeFullyQualifiedNameString", # required
     #           data_type: "INT8", # required, accepts INT8, UINT8, INT16, UINT16, INT32, UINT32, INT64, UINT64, BOOLEAN, FLOAT, DOUBLE, STRING, UNIX_TIMESTAMP, INT8_ARRAY, UINT8_ARRAY, INT16_ARRAY, UINT16_ARRAY, INT32_ARRAY, UINT32_ARRAY, INT64_ARRAY, UINT64_ARRAY, BOOLEAN_ARRAY, FLOAT_ARRAY, DOUBLE_ARRAY, STRING_ARRAY, UNIX_TIMESTAMP_ARRAY, UNKNOWN, STRUCT, STRUCT_ARRAY
     #           description: "description",
     #           unit: "string",
@@ -1266,13 +1266,13 @@ module Aws::IoTFleetWise
     #           comment: "message",
     #         },
     #         struct: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "CustomStructFullyQualifiedNameString", # required
     #           description: "description",
     #           deprecation_message: "message",
     #           comment: "message",
     #         },
     #         property: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "CustomPropertyFullyQualifiedNameString", # required
     #           data_type: "INT8", # required, accepts INT8, UINT8, INT16, UINT16, INT32, UINT32, INT64, UINT64, BOOLEAN, FLOAT, DOUBLE, STRING, UNIX_TIMESTAMP, INT8_ARRAY, UINT8_ARRAY, INT16_ARRAY, UINT16_ARRAY, INT32_ARRAY, UINT32_ARRAY, INT64_ARRAY, UINT64_ARRAY, BOOLEAN_ARRAY, FLOAT_ARRAY, DOUBLE_ARRAY, STRING_ARRAY, UNIX_TIMESTAMP_ARRAY, UNKNOWN, STRUCT, STRUCT_ARRAY
     #           data_encoding: "BINARY", # accepts BINARY, TYPED
     #           description: "description",
@@ -3906,13 +3906,13 @@ module Aws::IoTFleetWise
     #     nodes_to_add: [
     #       {
     #         branch: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "BranchFullyQualifiedNameString", # required
     #           description: "description",
     #           deprecation_message: "message",
     #           comment: "message",
     #         },
     #         sensor: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "SensorFullyQualifiedNameString", # required
     #           data_type: "INT8", # required, accepts INT8, UINT8, INT16, UINT16, INT32, UINT32, INT64, UINT64, BOOLEAN, FLOAT, DOUBLE, STRING, UNIX_TIMESTAMP, INT8_ARRAY, UINT8_ARRAY, INT16_ARRAY, UINT16_ARRAY, INT32_ARRAY, UINT32_ARRAY, INT64_ARRAY, UINT64_ARRAY, BOOLEAN_ARRAY, FLOAT_ARRAY, DOUBLE_ARRAY, STRING_ARRAY, UNIX_TIMESTAMP_ARRAY, UNKNOWN, STRUCT, STRUCT_ARRAY
     #           description: "description",
     #           unit: "string",
@@ -3924,7 +3924,7 @@ module Aws::IoTFleetWise
     #           struct_fully_qualified_name: "NodePath",
     #         },
     #         actuator: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "ActuatorFullyQualifiedNameString", # required
     #           data_type: "INT8", # required, accepts INT8, UINT8, INT16, UINT16, INT32, UINT32, INT64, UINT64, BOOLEAN, FLOAT, DOUBLE, STRING, UNIX_TIMESTAMP, INT8_ARRAY, UINT8_ARRAY, INT16_ARRAY, UINT16_ARRAY, INT32_ARRAY, UINT32_ARRAY, INT64_ARRAY, UINT64_ARRAY, BOOLEAN_ARRAY, FLOAT_ARRAY, DOUBLE_ARRAY, STRING_ARRAY, UNIX_TIMESTAMP_ARRAY, UNKNOWN, STRUCT, STRUCT_ARRAY
     #           description: "description",
     #           unit: "string",
@@ -3937,7 +3937,7 @@ module Aws::IoTFleetWise
     #           struct_fully_qualified_name: "NodePath",
     #         },
     #         attribute: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "AttributeFullyQualifiedNameString", # required
     #           data_type: "INT8", # required, accepts INT8, UINT8, INT16, UINT16, INT32, UINT32, INT64, UINT64, BOOLEAN, FLOAT, DOUBLE, STRING, UNIX_TIMESTAMP, INT8_ARRAY, UINT8_ARRAY, INT16_ARRAY, UINT16_ARRAY, INT32_ARRAY, UINT32_ARRAY, INT64_ARRAY, UINT64_ARRAY, BOOLEAN_ARRAY, FLOAT_ARRAY, DOUBLE_ARRAY, STRING_ARRAY, UNIX_TIMESTAMP_ARRAY, UNKNOWN, STRUCT, STRUCT_ARRAY
     #           description: "description",
     #           unit: "string",
@@ -3950,13 +3950,13 @@ module Aws::IoTFleetWise
     #           comment: "message",
     #         },
     #         struct: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "CustomStructFullyQualifiedNameString", # required
     #           description: "description",
     #           deprecation_message: "message",
     #           comment: "message",
     #         },
     #         property: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "CustomPropertyFullyQualifiedNameString", # required
     #           data_type: "INT8", # required, accepts INT8, UINT8, INT16, UINT16, INT32, UINT32, INT64, UINT64, BOOLEAN, FLOAT, DOUBLE, STRING, UNIX_TIMESTAMP, INT8_ARRAY, UINT8_ARRAY, INT16_ARRAY, UINT16_ARRAY, INT32_ARRAY, UINT32_ARRAY, INT64_ARRAY, UINT64_ARRAY, BOOLEAN_ARRAY, FLOAT_ARRAY, DOUBLE_ARRAY, STRING_ARRAY, UNIX_TIMESTAMP_ARRAY, UNKNOWN, STRUCT, STRUCT_ARRAY
     #           data_encoding: "BINARY", # accepts BINARY, TYPED
     #           description: "description",
@@ -3969,13 +3969,13 @@ module Aws::IoTFleetWise
     #     nodes_to_update: [
     #       {
     #         branch: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "BranchFullyQualifiedNameString", # required
     #           description: "description",
     #           deprecation_message: "message",
     #           comment: "message",
     #         },
     #         sensor: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "SensorFullyQualifiedNameString", # required
     #           data_type: "INT8", # required, accepts INT8, UINT8, INT16, UINT16, INT32, UINT32, INT64, UINT64, BOOLEAN, FLOAT, DOUBLE, STRING, UNIX_TIMESTAMP, INT8_ARRAY, UINT8_ARRAY, INT16_ARRAY, UINT16_ARRAY, INT32_ARRAY, UINT32_ARRAY, INT64_ARRAY, UINT64_ARRAY, BOOLEAN_ARRAY, FLOAT_ARRAY, DOUBLE_ARRAY, STRING_ARRAY, UNIX_TIMESTAMP_ARRAY, UNKNOWN, STRUCT, STRUCT_ARRAY
     #           description: "description",
     #           unit: "string",
@@ -3987,7 +3987,7 @@ module Aws::IoTFleetWise
     #           struct_fully_qualified_name: "NodePath",
     #         },
     #         actuator: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "ActuatorFullyQualifiedNameString", # required
     #           data_type: "INT8", # required, accepts INT8, UINT8, INT16, UINT16, INT32, UINT32, INT64, UINT64, BOOLEAN, FLOAT, DOUBLE, STRING, UNIX_TIMESTAMP, INT8_ARRAY, UINT8_ARRAY, INT16_ARRAY, UINT16_ARRAY, INT32_ARRAY, UINT32_ARRAY, INT64_ARRAY, UINT64_ARRAY, BOOLEAN_ARRAY, FLOAT_ARRAY, DOUBLE_ARRAY, STRING_ARRAY, UNIX_TIMESTAMP_ARRAY, UNKNOWN, STRUCT, STRUCT_ARRAY
     #           description: "description",
     #           unit: "string",
@@ -4000,7 +4000,7 @@ module Aws::IoTFleetWise
     #           struct_fully_qualified_name: "NodePath",
     #         },
     #         attribute: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "AttributeFullyQualifiedNameString", # required
     #           data_type: "INT8", # required, accepts INT8, UINT8, INT16, UINT16, INT32, UINT32, INT64, UINT64, BOOLEAN, FLOAT, DOUBLE, STRING, UNIX_TIMESTAMP, INT8_ARRAY, UINT8_ARRAY, INT16_ARRAY, UINT16_ARRAY, INT32_ARRAY, UINT32_ARRAY, INT64_ARRAY, UINT64_ARRAY, BOOLEAN_ARRAY, FLOAT_ARRAY, DOUBLE_ARRAY, STRING_ARRAY, UNIX_TIMESTAMP_ARRAY, UNKNOWN, STRUCT, STRUCT_ARRAY
     #           description: "description",
     #           unit: "string",
@@ -4013,13 +4013,13 @@ module Aws::IoTFleetWise
     #           comment: "message",
     #         },
     #         struct: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "CustomStructFullyQualifiedNameString", # required
     #           description: "description",
     #           deprecation_message: "message",
     #           comment: "message",
     #         },
     #         property: {
-    #           fully_qualified_name: "string", # required
+    #           fully_qualified_name: "CustomPropertyFullyQualifiedNameString", # required
     #           data_type: "INT8", # required, accepts INT8, UINT8, INT16, UINT16, INT32, UINT32, INT64, UINT64, BOOLEAN, FLOAT, DOUBLE, STRING, UNIX_TIMESTAMP, INT8_ARRAY, UINT8_ARRAY, INT16_ARRAY, UINT16_ARRAY, INT32_ARRAY, UINT32_ARRAY, INT64_ARRAY, UINT64_ARRAY, BOOLEAN_ARRAY, FLOAT_ARRAY, DOUBLE_ARRAY, STRING_ARRAY, UNIX_TIMESTAMP_ARRAY, UNKNOWN, STRUCT, STRUCT_ARRAY
     #           data_encoding: "BINARY", # accepts BINARY, TYPED
     #           description: "description",
@@ -4248,7 +4248,7 @@ module Aws::IoTFleetWise
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-iotfleetwise'
-      context[:gem_version] = '1.44.0'
+      context[:gem_version] = '1.45.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -6935,8 +6935,7 @@ module Aws::ECS
     #
     #   awslogs-stream-prefix
     #
-    #   : Required: Yes, when using the Fargate launch type.Optional for the
-    #     EC2 launch type, required for the Fargate launch type.
+    #   : Required: Yes, when using Fargate.Optional when using EC2.
     #
     #     Use the `awslogs-stream-prefix` option to associate a log stream
     #     with the specified prefix, the container name, and the ID of the
@@ -7008,6 +7007,8 @@ module Aws::ECS
     #
     #      </note>
     #
+    #   The following options apply to all supported log drivers.
+    #
     #   mode
     #
     #   : Required: No
@@ -7015,12 +7016,12 @@ module Aws::ECS
     #     Valid values: `non-blocking` \| `blocking`
     #
     #     This option defines the delivery mode of log messages from the
-    #     container to CloudWatch Logs. The delivery mode you choose affects
-    #     application availability when the flow of logs from container to
-    #     CloudWatch is interrupted.
+    #     container to the log driver specified using `logDriver`. The
+    #     delivery mode you choose affects application availability when the
+    #     flow of logs from container is interrupted.
     #
-    #     If you use the `blocking` mode and the flow of logs to CloudWatch
-    #     is interrupted, calls from container code to write to the `stdout`
+    #     If you use the `blocking` mode and the flow of logs is
+    #     interrupted, calls from container code to write to the `stdout`
     #     and `stderr` streams will block. The logging thread of the
     #     application will block as a result. This may cause the application
     #     to become unresponsive and lead to container healthcheck failure.
@@ -7028,11 +7029,18 @@ module Aws::ECS
     #     If you use the `non-blocking` mode, the container's logs are
     #     instead stored in an in-memory intermediate buffer configured with
     #     the `max-buffer-size` option. This prevents the application from
-    #     becoming unresponsive when logs cannot be sent to CloudWatch. We
-    #     recommend using this mode if you want to ensure service
-    #     availability and are okay with some log loss. For more
-    #     information, see [Preventing log loss with non-blocking mode in
-    #     the `awslogs` container log driver][3].
+    #     becoming unresponsive when logs cannot be sent. We recommend using
+    #     this mode if you want to ensure service availability and are okay
+    #     with some log loss. For more information, see [Preventing log loss
+    #     with non-blocking mode in the `awslogs` container log driver][3].
+    #
+    #     You can set a default `mode` for all containers in a specific
+    #     Amazon Web Services Region by using the `defaultLogDriverMode`
+    #     account setting. If you don't specify the `mode` option or
+    #     configure the account setting, Amazon ECS will default to the
+    #     `blocking` mode. For more information about the account setting,
+    #     see [Default log driver mode][4] in the *Amazon Elastic Container
+    #     Service Developer Guide*.
     #
     #   max-buffer-size
     #
@@ -7071,7 +7079,7 @@ module Aws::ECS
     #   options like `Name`, `Host` (OpenSearch Service endpoint without
     #   protocol), `Port`, `Index`, `Type`, `Aws_auth`, `Aws_region`,
     #   `Suppress_Type_Name`, and `tls`. For more information, see [Under
-    #   the hood: FireLens for Amazon ECS Tasks][4].
+    #   the hood: FireLens for Amazon ECS Tasks][5].
     #
     #   When you export logs to Amazon S3, you can specify the bucket using
     #   the `bucket` option. You can also specify `region`,
@@ -7089,7 +7097,8 @@ module Aws::ECS
     #   [1]: https://docs.docker.com/config/containers/logging/awslogs/#awslogs-datetime-format
     #   [2]: https://docs.docker.com/config/containers/logging/awslogs/#awslogs-multiline-pattern
     #   [3]: http://aws.amazon.com/blogs/containers/preventing-log-loss-with-non-blocking-mode-in-the-awslogs-container-log-driver/
-    #   [4]: http://aws.amazon.com/blogs/containers/under-the-hood-firelens-for-amazon-ecs-tasks/
+    #   [4]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html#default-log-driver-mode
+    #   [5]: http://aws.amazon.com/blogs/containers/under-the-hood-firelens-for-amazon-ecs-tasks/
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] secret_options
@@ -7989,12 +7998,23 @@ module Aws::ECS
     #     information, see [Grant permission to tag resources on
     #     creation][6] in the *Amazon ECS Developer Guide*.
     #
+    #   * `defaultLogDriverMode` -Amazon ECS supports setting a default
+    #     delivery mode of log messages from a container to the `logDriver`
+    #     that you specify in the container's `logConfiguration`. The
+    #     delivery mode affects application stability when the flow of logs
+    #     from the container to the log driver is interrupted. The
+    #     `defaultLogDriverMode` setting supports two values: `blocking` and
+    #     `non-blocking`. If you don't specify a delivery mode in your
+    #     container definition's `logConfiguration`, the mode you specify
+    #     using this account setting will be used as the default. For more
+    #     information about log delivery modes, see [LogConfiguration][7].
+    #
     #   * `guardDutyActivate` - The `guardDutyActivate` parameter is
     #     read-only in Amazon ECS and indicates whether Amazon ECS Runtime
     #     Monitoring is enabled or disabled by your security administrator
     #     in your Amazon ECS account. Amazon GuardDuty controls this account
     #     setting on your behalf. For more information, see [Protecting
-    #     Amazon ECS workloads with Amazon ECS Runtime Monitoring][7].
+    #     Amazon ECS workloads with Amazon ECS Runtime Monitoring][8].
     #
     #
     #
@@ -8004,7 +8024,8 @@ module Aws::ECS
     #   [4]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-task-networking.html#fargate-task-networking-vpc-dual-stack
     #   [5]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-maintenance.html
     #   [6]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/supported-iam-actions-tagging.html
-    #   [7]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-guard-duty-integration.html
+    #   [7]: https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_LogConfiguration.html
+    #   [8]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-guard-duty-integration.html
     #   @return [String]
     #
     # @!attribute [rw] value
@@ -8132,12 +8153,23 @@ module Aws::ECS
     #     information, see [Grant permission to tag resources on
     #     creation][6] in the *Amazon ECS Developer Guide*.
     #
+    #   * `defaultLogDriverMode` - Amazon ECS supports setting a default
+    #     delivery mode of log messages from a container to the `logDriver`
+    #     that you specify in the container's `logConfiguration`. The
+    #     delivery mode affects application stability when the flow of logs
+    #     from the container to the log driver is interrupted. The
+    #     `defaultLogDriverMode` setting supports two values: `blocking` and
+    #     `non-blocking`. If you don't specify a delivery mode in your
+    #     container definition's `logConfiguration`, the mode you specify
+    #     using this account setting will be used as the default. For more
+    #     information about log delivery modes, see [LogConfiguration][7].
+    #
     #   * `guardDutyActivate` - The `guardDutyActivate` parameter is
     #     read-only in Amazon ECS and indicates whether Amazon ECS Runtime
     #     Monitoring is enabled or disabled by your security administrator
     #     in your Amazon ECS account. Amazon GuardDuty controls this account
     #     setting on your behalf. For more information, see [Protecting
-    #     Amazon ECS workloads with Amazon ECS Runtime Monitoring][7].
+    #     Amazon ECS workloads with Amazon ECS Runtime Monitoring][8].
     #
     #
     #
@@ -8147,7 +8179,8 @@ module Aws::ECS
     #   [4]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-task-networking.html#fargate-task-networking-vpc-dual-stack
     #   [5]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-maintenance.html
     #   [6]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/supported-iam-actions-tagging.html
-    #   [7]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-guard-duty-integration.html
+    #   [7]: https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_LogConfiguration.html
+    #   [8]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-guard-duty-integration.html
     #   @return [String]
     #
     # @!attribute [rw] value

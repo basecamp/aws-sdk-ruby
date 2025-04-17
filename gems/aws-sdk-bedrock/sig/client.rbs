@@ -126,6 +126,32 @@ module Aws
                                              model_identifier: ::String
                                            },
                                          ]?
+                                       }?,
+                                       custom_metric_config: {
+                                         custom_metrics: Array[
+                                           {
+                                             custom_metric_definition: {
+                                               name: ::String,
+                                               instructions: ::String,
+                                               rating_scale: Array[
+                                                 {
+                                                   definition: ::String,
+                                                   value: {
+                                                     string_value: ::String?,
+                                                     float_value: ::Float?
+                                                   }
+                                                 },
+                                               ]?
+                                             }?
+                                           },
+                                         ],
+                                         evaluator_model_config: {
+                                           bedrock_evaluator_models: Array[
+                                             {
+                                               model_identifier: ::String
+                                             },
+                                           ]
+                                         }
                                        }?
                                      }?,
                                      human: {

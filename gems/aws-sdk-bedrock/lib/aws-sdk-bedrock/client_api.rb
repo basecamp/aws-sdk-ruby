@@ -23,6 +23,9 @@ module Aws::Bedrock
     ApplicationType = Shapes::StringShape.new(name: 'ApplicationType')
     Arn = Shapes::StringShape.new(name: 'Arn')
     AutomatedEvaluationConfig = Shapes::StructureShape.new(name: 'AutomatedEvaluationConfig')
+    AutomatedEvaluationCustomMetricConfig = Shapes::StructureShape.new(name: 'AutomatedEvaluationCustomMetricConfig')
+    AutomatedEvaluationCustomMetricSource = Shapes::UnionShape.new(name: 'AutomatedEvaluationCustomMetricSource')
+    AutomatedEvaluationCustomMetrics = Shapes::ListShape.new(name: 'AutomatedEvaluationCustomMetrics')
     BaseModelIdentifier = Shapes::StringShape.new(name: 'BaseModelIdentifier')
     BatchDeleteEvaluationJobError = Shapes::StructureShape.new(name: 'BatchDeleteEvaluationJobError')
     BatchDeleteEvaluationJobErrors = Shapes::ListShape.new(name: 'BatchDeleteEvaluationJobErrors')
@@ -65,6 +68,11 @@ module Aws::Bedrock
     CreatePromptRouterResponse = Shapes::StructureShape.new(name: 'CreatePromptRouterResponse')
     CreateProvisionedModelThroughputRequest = Shapes::StructureShape.new(name: 'CreateProvisionedModelThroughputRequest')
     CreateProvisionedModelThroughputResponse = Shapes::StructureShape.new(name: 'CreateProvisionedModelThroughputResponse')
+    CustomMetricBedrockEvaluatorModel = Shapes::StructureShape.new(name: 'CustomMetricBedrockEvaluatorModel')
+    CustomMetricBedrockEvaluatorModels = Shapes::ListShape.new(name: 'CustomMetricBedrockEvaluatorModels')
+    CustomMetricDefinition = Shapes::StructureShape.new(name: 'CustomMetricDefinition')
+    CustomMetricEvaluatorModelConfig = Shapes::StructureShape.new(name: 'CustomMetricEvaluatorModelConfig')
+    CustomMetricInstructions = Shapes::StringShape.new(name: 'CustomMetricInstructions')
     CustomModelArn = Shapes::StringShape.new(name: 'CustomModelArn')
     CustomModelName = Shapes::StringShape.new(name: 'CustomModelName')
     CustomModelSummary = Shapes::StructureShape.new(name: 'CustomModelSummary')
@@ -149,6 +157,7 @@ module Aws::Bedrock
     FilterKey = Shapes::StringShape.new(name: 'FilterKey')
     FilterValue = Shapes::DocumentShape.new(name: 'FilterValue', document: true)
     FineTuningJobStatus = Shapes::StringShape.new(name: 'FineTuningJobStatus')
+    Float = Shapes::FloatShape.new(name: 'Float')
     FoundationModelArn = Shapes::StringShape.new(name: 'FoundationModelArn')
     FoundationModelDetails = Shapes::StructureShape.new(name: 'FoundationModelDetails')
     FoundationModelLifecycle = Shapes::StructureShape.new(name: 'FoundationModelLifecycle')
@@ -350,6 +359,7 @@ module Aws::Bedrock
     MaxTokens = Shapes::IntegerShape.new(name: 'MaxTokens')
     Message = Shapes::StringShape.new(name: 'Message')
     MetricFloat = Shapes::FloatShape.new(name: 'MetricFloat')
+    MetricName = Shapes::StringShape.new(name: 'MetricName')
     ModelArchitecture = Shapes::StringShape.new(name: 'ModelArchitecture')
     ModelArn = Shapes::StringShape.new(name: 'ModelArn')
     ModelCopyJobArn = Shapes::StringShape.new(name: 'ModelCopyJobArn')
@@ -421,6 +431,11 @@ module Aws::Bedrock
     RAGStopSequences = Shapes::ListShape.new(name: 'RAGStopSequences')
     RAGStopSequencesMemberString = Shapes::StringShape.new(name: 'RAGStopSequencesMemberString')
     RagConfigs = Shapes::ListShape.new(name: 'RagConfigs')
+    RatingScale = Shapes::ListShape.new(name: 'RatingScale')
+    RatingScaleItem = Shapes::StructureShape.new(name: 'RatingScaleItem')
+    RatingScaleItemDefinition = Shapes::StringShape.new(name: 'RatingScaleItemDefinition')
+    RatingScaleItemValue = Shapes::UnionShape.new(name: 'RatingScaleItemValue')
+    RatingScaleItemValueStringValueString = Shapes::StringShape.new(name: 'RatingScaleItemValueStringValueString')
     RegisterMarketplaceModelEndpointRequest = Shapes::StructureShape.new(name: 'RegisterMarketplaceModelEndpointRequest')
     RegisterMarketplaceModelEndpointResponse = Shapes::StructureShape.new(name: 'RegisterMarketplaceModelEndpointResponse')
     RequestMetadataBaseFilters = Shapes::StructureShape.new(name: 'RequestMetadataBaseFilters')
@@ -509,7 +524,20 @@ module Aws::Bedrock
 
     AutomatedEvaluationConfig.add_member(:dataset_metric_configs, Shapes::ShapeRef.new(shape: EvaluationDatasetMetricConfigs, required: true, location_name: "datasetMetricConfigs"))
     AutomatedEvaluationConfig.add_member(:evaluator_model_config, Shapes::ShapeRef.new(shape: EvaluatorModelConfig, location_name: "evaluatorModelConfig"))
+    AutomatedEvaluationConfig.add_member(:custom_metric_config, Shapes::ShapeRef.new(shape: AutomatedEvaluationCustomMetricConfig, location_name: "customMetricConfig"))
     AutomatedEvaluationConfig.struct_class = Types::AutomatedEvaluationConfig
+
+    AutomatedEvaluationCustomMetricConfig.add_member(:custom_metrics, Shapes::ShapeRef.new(shape: AutomatedEvaluationCustomMetrics, required: true, location_name: "customMetrics"))
+    AutomatedEvaluationCustomMetricConfig.add_member(:evaluator_model_config, Shapes::ShapeRef.new(shape: CustomMetricEvaluatorModelConfig, required: true, location_name: "evaluatorModelConfig"))
+    AutomatedEvaluationCustomMetricConfig.struct_class = Types::AutomatedEvaluationCustomMetricConfig
+
+    AutomatedEvaluationCustomMetricSource.add_member(:custom_metric_definition, Shapes::ShapeRef.new(shape: CustomMetricDefinition, location_name: "customMetricDefinition"))
+    AutomatedEvaluationCustomMetricSource.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    AutomatedEvaluationCustomMetricSource.add_member_subclass(:custom_metric_definition, Types::AutomatedEvaluationCustomMetricSource::CustomMetricDefinition)
+    AutomatedEvaluationCustomMetricSource.add_member_subclass(:unknown, Types::AutomatedEvaluationCustomMetricSource::Unknown)
+    AutomatedEvaluationCustomMetricSource.struct_class = Types::AutomatedEvaluationCustomMetricSource
+
+    AutomatedEvaluationCustomMetrics.member = Shapes::ShapeRef.new(shape: AutomatedEvaluationCustomMetricSource)
 
     BatchDeleteEvaluationJobError.add_member(:job_identifier, Shapes::ShapeRef.new(shape: EvaluationJobIdentifier, required: true, location_name: "jobIdentifier"))
     BatchDeleteEvaluationJobError.add_member(:code, Shapes::ShapeRef.new(shape: String, required: true, location_name: "code"))
@@ -696,6 +724,19 @@ module Aws::Bedrock
     CreateProvisionedModelThroughputResponse.add_member(:provisioned_model_arn, Shapes::ShapeRef.new(shape: ProvisionedModelArn, required: true, location_name: "provisionedModelArn"))
     CreateProvisionedModelThroughputResponse.struct_class = Types::CreateProvisionedModelThroughputResponse
 
+    CustomMetricBedrockEvaluatorModel.add_member(:model_identifier, Shapes::ShapeRef.new(shape: EvaluatorModelIdentifier, required: true, location_name: "modelIdentifier"))
+    CustomMetricBedrockEvaluatorModel.struct_class = Types::CustomMetricBedrockEvaluatorModel
+
+    CustomMetricBedrockEvaluatorModels.member = Shapes::ShapeRef.new(shape: CustomMetricBedrockEvaluatorModel)
+
+    CustomMetricDefinition.add_member(:name, Shapes::ShapeRef.new(shape: MetricName, required: true, location_name: "name"))
+    CustomMetricDefinition.add_member(:instructions, Shapes::ShapeRef.new(shape: CustomMetricInstructions, required: true, location_name: "instructions"))
+    CustomMetricDefinition.add_member(:rating_scale, Shapes::ShapeRef.new(shape: RatingScale, location_name: "ratingScale"))
+    CustomMetricDefinition.struct_class = Types::CustomMetricDefinition
+
+    CustomMetricEvaluatorModelConfig.add_member(:bedrock_evaluator_models, Shapes::ShapeRef.new(shape: CustomMetricBedrockEvaluatorModels, required: true, location_name: "bedrockEvaluatorModels"))
+    CustomMetricEvaluatorModelConfig.struct_class = Types::CustomMetricEvaluatorModelConfig
+
     CustomModelSummary.add_member(:model_arn, Shapes::ShapeRef.new(shape: CustomModelArn, required: true, location_name: "modelArn"))
     CustomModelSummary.add_member(:model_name, Shapes::ShapeRef.new(shape: CustomModelName, required: true, location_name: "modelName"))
     CustomModelSummary.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "creationTime"))
@@ -873,9 +914,10 @@ module Aws::Bedrock
     EvaluationSummary.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "creationTime"))
     EvaluationSummary.add_member(:job_type, Shapes::ShapeRef.new(shape: EvaluationJobType, required: true, location_name: "jobType"))
     EvaluationSummary.add_member(:evaluation_task_types, Shapes::ShapeRef.new(shape: EvaluationTaskTypes, required: true, location_name: "evaluationTaskTypes"))
-    EvaluationSummary.add_member(:model_identifiers, Shapes::ShapeRef.new(shape: EvaluationBedrockModelIdentifiers, deprecated: true, location_name: "modelIdentifiers", metadata: {"deprecatedMessage"=>"Inference identifiers should be retrieved from the inferenceConfigSummary"}))
-    EvaluationSummary.add_member(:rag_identifiers, Shapes::ShapeRef.new(shape: EvaluationBedrockKnowledgeBaseIdentifiers, deprecated: true, location_name: "ragIdentifiers", metadata: {"deprecatedMessage"=>"Inference identifiers should be retrieved from the inferenceConfigSummary"}))
+    EvaluationSummary.add_member(:model_identifiers, Shapes::ShapeRef.new(shape: EvaluationBedrockModelIdentifiers, deprecated: true, location_name: "modelIdentifiers", metadata: {"deprecatedMessage"=>"Inference identifiers should be retrieved from the inferenceConfigSummary", "deprecatedSince"=>"2025-03-07"}))
+    EvaluationSummary.add_member(:rag_identifiers, Shapes::ShapeRef.new(shape: EvaluationBedrockKnowledgeBaseIdentifiers, deprecated: true, location_name: "ragIdentifiers", metadata: {"deprecatedMessage"=>"Inference identifiers should be retrieved from the inferenceConfigSummary", "deprecatedSince"=>"2025-03-07"}))
     EvaluationSummary.add_member(:evaluator_model_identifiers, Shapes::ShapeRef.new(shape: EvaluatorModelIdentifiers, location_name: "evaluatorModelIdentifiers"))
+    EvaluationSummary.add_member(:custom_metrics_evaluator_model_identifiers, Shapes::ShapeRef.new(shape: EvaluatorModelIdentifiers, location_name: "customMetricsEvaluatorModelIdentifiers"))
     EvaluationSummary.add_member(:inference_config_summary, Shapes::ShapeRef.new(shape: EvaluationInferenceConfigSummary, location_name: "inferenceConfigSummary"))
     EvaluationSummary.add_member(:application_type, Shapes::ShapeRef.new(shape: ApplicationType, location_name: "applicationType"))
     EvaluationSummary.struct_class = Types::EvaluationSummary
@@ -1823,6 +1865,20 @@ module Aws::Bedrock
     RAGStopSequences.member = Shapes::ShapeRef.new(shape: RAGStopSequencesMemberString)
 
     RagConfigs.member = Shapes::ShapeRef.new(shape: RAGConfig)
+
+    RatingScale.member = Shapes::ShapeRef.new(shape: RatingScaleItem)
+
+    RatingScaleItem.add_member(:definition, Shapes::ShapeRef.new(shape: RatingScaleItemDefinition, required: true, location_name: "definition"))
+    RatingScaleItem.add_member(:value, Shapes::ShapeRef.new(shape: RatingScaleItemValue, required: true, location_name: "value"))
+    RatingScaleItem.struct_class = Types::RatingScaleItem
+
+    RatingScaleItemValue.add_member(:string_value, Shapes::ShapeRef.new(shape: RatingScaleItemValueStringValueString, location_name: "stringValue"))
+    RatingScaleItemValue.add_member(:float_value, Shapes::ShapeRef.new(shape: Float, location_name: "floatValue"))
+    RatingScaleItemValue.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    RatingScaleItemValue.add_member_subclass(:string_value, Types::RatingScaleItemValue::StringValue)
+    RatingScaleItemValue.add_member_subclass(:float_value, Types::RatingScaleItemValue::FloatValue)
+    RatingScaleItemValue.add_member_subclass(:unknown, Types::RatingScaleItemValue::Unknown)
+    RatingScaleItemValue.struct_class = Types::RatingScaleItemValue
 
     RegisterMarketplaceModelEndpointRequest.add_member(:endpoint_identifier, Shapes::ShapeRef.new(shape: Arn, required: true, location: "uri", location_name: "endpointIdentifier"))
     RegisterMarketplaceModelEndpointRequest.add_member(:model_source_identifier, Shapes::ShapeRef.new(shape: ModelSourceIdentifier, required: true, location_name: "modelSourceIdentifier"))

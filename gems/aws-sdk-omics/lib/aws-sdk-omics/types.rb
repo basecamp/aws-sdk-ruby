@@ -912,8 +912,8 @@ module Aws::Omics
     #   CACHE\_ON\_FAILURE. When you start a run that uses this cache, you
     #   can override the default cache behavior.
     #
-    #   For more information, see [Run cache behavior][1] in the AWS
-    #   HealthOmics User Guide.
+    #   For more information, see [Run cache behavior][1] in the Amazon Web
+    #   Services HealthOmics User Guide.
     #
     #
     #
@@ -935,8 +935,8 @@ module Aws::Omics
     #
     # @!attribute [rw] request_id
     #   A unique request token, to ensure idempotency. If you don't specify
-    #   a token, HealthOmics automatically generates a universally unique
-    #   identifier (UUID) for the request.
+    #   a token, Amazon Web Services HealthOmics automatically generates a
+    #   universally unique identifier (UUID) for the request.
     #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.
@@ -947,9 +947,9 @@ module Aws::Omics
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] cache_bucket_owner_id
-    #   The AWS account ID of the expected owner of the S3 bucket for the
-    #   run cache. If not provided, your account ID is set as the owner of
-    #   the bucket.
+    #   The Amazon Web Services account ID of the expected owner of the S3
+    #   bucket for the run cache. If not provided, your account ID is set as
+    #   the owner of the bucket.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateRunCacheRequest AWS API Documentation
@@ -1309,7 +1309,7 @@ module Aws::Omics
     #   @return [String]
     #
     # @!attribute [rw] engine
-    #   An engine for the workflow.
+    #   The workflow engine for the workflow.
     #   @return [String]
     #
     # @!attribute [rw] definition_zip
@@ -1329,7 +1329,8 @@ module Aws::Omics
     #   @return [Hash<String,Types::WorkflowParameter>]
     #
     # @!attribute [rw] storage_capacity
-    #   The default storage capacity for the workflow runs, in gibibytes.
+    #   The default static storage capacity (in gibibytes) for runs that use
+    #   this workflow or workflow version.
     #   @return [Integer]
     #
     # @!attribute [rw] tags
@@ -1348,6 +1349,19 @@ module Aws::Omics
     #   The computational accelerator specified to run the workflow.
     #   @return [String]
     #
+    # @!attribute [rw] storage_type
+    #   The default storage type for runs that use this workflow. STATIC
+    #   storage allocates a fixed amount of storage. DYNAMIC storage
+    #   dynamically scales the storage up or down, based on file system
+    #   utilization. For more information about static and dynamic storage,
+    #   see [Running workflows][1] in the *Amazon Web Services HealthOmics
+    #   User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/omics/latest/dev/Using-workflows.html
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateWorkflowRequest AWS API Documentation
     #
     class CreateWorkflowRequest < Struct.new(
@@ -1361,7 +1375,8 @@ module Aws::Omics
       :storage_capacity,
       :tags,
       :request_id,
-      :accelerators)
+      :accelerators,
+      :storage_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1382,13 +1397,161 @@ module Aws::Omics
     #   The workflow's tags.
     #   @return [Hash<String,String>]
     #
+    # @!attribute [rw] uuid
+    #   The universally unique identifier (UUID) value for this workflow.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateWorkflowResponse AWS API Documentation
     #
     class CreateWorkflowResponse < Struct.new(
       :arn,
       :id,
       :status,
-      :tags)
+      :tags,
+      :uuid)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] workflow_id
+    #   The ID of the workflow where you are creating the new version.
+    #   @return [String]
+    #
+    # @!attribute [rw] version_name
+    #   A name for the workflow version. Provide a version name that is
+    #   unique for this workflow. You cannot change the name after
+    #   HealthOmics creates the version.
+    #
+    #   The version name must start with a letter or number and it can
+    #   include upper-case and lower-case letters, numbers, hyphens, periods
+    #   and underscores. The maximum length is 64 characters. You can use a
+    #   simple naming scheme, such as version1, version2, version3. You can
+    #   also match your workflow versions with your own internal versioning
+    #   conventions, such as 2.7.0, 2.7.1, 2.7.2.
+    #   @return [String]
+    #
+    # @!attribute [rw] definition_zip
+    #   A zip archive containing the workflow definition for this workflow
+    #   version.
+    #   @return [String]
+    #
+    # @!attribute [rw] definition_uri
+    #   The URI specifies the location of the workflow definition for this
+    #   workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] accelerators
+    #   The computational accelerator for this workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description for this workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] engine
+    #   The workflow engine for this workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] main
+    #   The path of the main definition file for this workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] parameter_template
+    #   The parameter template defines the input parameters for runs that
+    #   use this workflow version.
+    #   @return [Hash<String,Types::WorkflowParameter>]
+    #
+    # @!attribute [rw] request_id
+    #   To ensure that requests don't run multiple times, specify a unique
+    #   ID for each request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] storage_type
+    #   The default storage type for runs that use this workflow. STATIC
+    #   storage allocates a fixed amount of storage. DYNAMIC storage
+    #   dynamically scales the storage up or down, based on file system
+    #   utilization. For more information about static and dynamic storage,
+    #   see [Running workflows][1] in the *Amazon Web Services HealthOmics
+    #   User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/omics/latest/dev/Using-workflows.html
+    #   @return [String]
+    #
+    # @!attribute [rw] storage_capacity
+    #   The default static storage capacity (in gibibytes) for runs that use
+    #   this workflow or workflow version.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] tags
+    #   Optional tags to associate with this workflow version.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] workflow_bucket_owner_id
+    #   Amazon Web Services Id of the owner of the S3 bucket that contains
+    #   the workflow definition. You need to specify this parameter if your
+    #   account is not the bucket owner.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateWorkflowVersionRequest AWS API Documentation
+    #
+    class CreateWorkflowVersionRequest < Struct.new(
+      :workflow_id,
+      :version_name,
+      :definition_zip,
+      :definition_uri,
+      :accelerators,
+      :description,
+      :engine,
+      :main,
+      :parameter_template,
+      :request_id,
+      :storage_type,
+      :storage_capacity,
+      :tags,
+      :workflow_bucket_owner_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   ARN of the workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] workflow_id
+    #   The workflow's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] version_name
+    #   The workflow version name.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The workflow version status.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The workflow version's tags.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] uuid
+    #   The universally unique identifier (UUID) value for this workflow
+    #   version.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateWorkflowVersionResponse AWS API Documentation
+    #
+    class CreateWorkflowVersionResponse < Struct.new(
+      :arn,
+      :workflow_id,
+      :version_name,
+      :status,
+      :tags,
+      :uuid)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1625,6 +1788,23 @@ module Aws::Omics
     #
     class DeleteWorkflowRequest < Struct.new(
       :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] workflow_id
+    #   The workflow's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] version_name
+    #   The workflow version name.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/DeleteWorkflowVersionRequest AWS API Documentation
+    #
+    class DeleteWorkflowVersionRequest < Struct.new(
+      :workflow_id,
+      :version_name)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2857,7 +3037,9 @@ module Aws::Omics
     #   @return [String]
     #
     # @!attribute [rw] engine_version
-    #   The workflow engine version.
+    #   The actual Nextflow engine version that Amazon Web Services
+    #   HealthOmics used for the run. The other workflow definition
+    #   languages don't provide a value for this field.
     #   @return [String]
     #
     # @!attribute [rw] status
@@ -2978,6 +3160,14 @@ module Aws::Omics
     #   The ID of the workflow owner.
     #   @return [String]
     #
+    # @!attribute [rw] workflow_version_name
+    #   The workflow version name.
+    #   @return [String]
+    #
+    # @!attribute [rw] workflow_uuid
+    #   The universally unique identifier (UUID) value for the workflow.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetRunResponse AWS API Documentation
     #
     class GetRunResponse < Struct.new(
@@ -3014,7 +3204,9 @@ module Aws::Omics
       :uuid,
       :run_output_uri,
       :storage_type,
-      :workflow_owner_id)
+      :workflow_owner_id,
+      :workflow_version_name,
+      :workflow_uuid)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3053,8 +3245,8 @@ module Aws::Omics
     #   @return [Integer]
     #
     # @!attribute [rw] cache_hit
-    #   Set to true if AWS HealthOmics found a matching entry in the run
-    #   cache for this task.
+    #   Set to true if Amazon Web Services HealthOmics found a matching
+    #   entry in the run cache for this task.
     #   @return [Boolean]
     #
     # @!attribute [rw] cache_s3_uri
@@ -3136,7 +3328,8 @@ module Aws::Omics
     #   @return [String]
     #
     # @!attribute [rw] store_id
-    #   The AWS-generated Sequence Store or Reference Store ID.
+    #   The Amazon Web Services-generated Sequence Store or Reference Store
+    #   ID.
     #   @return [String]
     #
     # @!attribute [rw] store_type
@@ -3500,7 +3693,8 @@ module Aws::Omics
     #   @return [Hash<String,Types::WorkflowParameter>]
     #
     # @!attribute [rw] storage_capacity
-    #   The workflow's default run storage capacity in gibibytes.
+    #   The default static storage capacity (in gibibytes) for runs that use
+    #   this workflow or workflow version.
     #   @return [Integer]
     #
     # @!attribute [rw] creation_time
@@ -3516,11 +3710,19 @@ module Aws::Omics
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] metadata
-    #   Gets metadata for workflow.
+    #   Gets metadata for the workflow.
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] accelerators
     #   The computational accelerator specified to run the workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] storage_type
+    #   The default storage type for runs using this workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] uuid
+    #   The universally unique identifier (UUID) value for this workflow.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetWorkflowResponse AWS API Documentation
@@ -3542,7 +3744,149 @@ module Aws::Omics
       :status_message,
       :tags,
       :metadata,
-      :accelerators)
+      :accelerators,
+      :storage_type,
+      :uuid)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] workflow_id
+    #   The workflow's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] version_name
+    #   The workflow version name.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The workflow's type.
+    #   @return [String]
+    #
+    # @!attribute [rw] export
+    #   The export format for the workflow.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] workflow_owner_id
+    #   Amazon Web Services Id of the owner of the workflow.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetWorkflowVersionRequest AWS API Documentation
+    #
+    class GetWorkflowVersionRequest < Struct.new(
+      :workflow_id,
+      :version_name,
+      :type,
+      :export,
+      :workflow_owner_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   ARN of the workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] workflow_id
+    #   The workflow's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] version_name
+    #   The workflow version name.
+    #   @return [String]
+    #
+    # @!attribute [rw] accelerators
+    #   The accelerator for this workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_time
+    #   When the workflow version was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] description
+    #   Description of the workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] definition
+    #   Definition of the workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] digest
+    #   The workflow version's digest.
+    #   @return [String]
+    #
+    # @!attribute [rw] engine
+    #   The workflow engine for this workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] main
+    #   The path of the main definition file for the workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] metadata
+    #   The metadata for the workflow version.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] parameter_template
+    #   The parameter template for the workflow version.
+    #   @return [Hash<String,Types::WorkflowParameter>]
+    #
+    # @!attribute [rw] status
+    #   The workflow version status
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   The workflow version status message
+    #   @return [String]
+    #
+    # @!attribute [rw] storage_type
+    #   The default storage type for the run.
+    #   @return [String]
+    #
+    # @!attribute [rw] storage_capacity
+    #   The default run storage capacity for static storage.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] type
+    #   The workflow version type
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The workflow version tags
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] uuid
+    #   The universally unique identifier (UUID) value for this workflow
+    #   version
+    #   @return [String]
+    #
+    # @!attribute [rw] workflow_bucket_owner_id
+    #   Amazon Web Services Id of the owner of the bucket.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetWorkflowVersionResponse AWS API Documentation
+    #
+    class GetWorkflowVersionResponse < Struct.new(
+      :arn,
+      :workflow_id,
+      :version_name,
+      :accelerators,
+      :creation_time,
+      :description,
+      :definition,
+      :digest,
+      :engine,
+      :main,
+      :metadata,
+      :parameter_template,
+      :status,
+      :status_message,
+      :storage_type,
+      :storage_capacity,
+      :type,
+      :tags,
+      :uuid,
+      :workflow_bucket_owner_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4804,6 +5148,56 @@ module Aws::Omics
       include Aws::Structure
     end
 
+    # @!attribute [rw] workflow_id
+    #   The workflow's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The workflow type.
+    #   @return [String]
+    #
+    # @!attribute [rw] workflow_owner_id
+    #   Amazon Web Services Id of the owner of the workflow.
+    #   @return [String]
+    #
+    # @!attribute [rw] starting_token
+    #   Specify the pagination token from a previous request to retrieve the
+    #   next page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of workflows to return in one page of results.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/ListWorkflowVersionsRequest AWS API Documentation
+    #
+    class ListWorkflowVersionsRequest < Struct.new(
+      :workflow_id,
+      :type,
+      :workflow_owner_id,
+      :starting_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] items
+    #   A list of workflow version items.
+    #   @return [Array<Types::WorkflowVersionListItem>]
+    #
+    # @!attribute [rw] next_token
+    #   A pagination token that's included if more results are available.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/ListWorkflowVersionsResponse AWS API Documentation
+    #
+    class ListWorkflowVersionsResponse < Struct.new(
+      :items,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] type
     #   Filter the list by workflow type.
     #   @return [String]
@@ -4950,7 +5344,8 @@ module Aws::Omics
     #   @return [String]
     #
     # @!attribute [rw] store_id
-    #   The AWS-generated Sequence Store or Reference Store ID.
+    #   The Amazon Web Services-generated Sequence Store or Reference Store
+    #   ID.
     #   @return [String]
     #
     # @!attribute [rw] store_type
@@ -5654,6 +6049,10 @@ module Aws::Omics
     #   The run's storage type.
     #   @return [String]
     #
+    # @!attribute [rw] workflow_version_name
+    #   The name of the workflow version.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/RunListItem AWS API Documentation
     #
     class RunListItem < Struct.new(
@@ -5667,7 +6066,8 @@ module Aws::Omics
       :creation_time,
       :start_time,
       :stop_time,
-      :storage_type)
+      :storage_type,
+      :workflow_version_name)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6391,7 +6791,8 @@ module Aws::Omics
     #   The cache behavior for the run. You specify this value if you want
     #   to override the default behavior for the cache. You had set the
     #   default value when you created the cache. For more information, see
-    #   [Run cache behavior][1] in the AWS HealthOmics User Guide.
+    #   [Run cache behavior][1] in the Amazon Web Services HealthOmics User
+    #   Guide.
     #
     #
     #
@@ -6411,9 +6812,9 @@ module Aws::Omics
     #   @return [Hash,Array,String,Numeric,Boolean]
     #
     # @!attribute [rw] storage_capacity
-    #   A storage capacity for the run in gibibytes. This field is not
-    #   required if the storage type is dynamic (the system ignores any
-    #   value that you enter).
+    #   The static storage capacity (in gibibytes) for this run. This field
+    #   is not required if the storage type is dynamic (the system ignores
+    #   any value that you enter).
     #   @return [Integer]
     #
     # @!attribute [rw] output_uri
@@ -6439,16 +6840,18 @@ module Aws::Omics
     # @!attribute [rw] retention_mode
     #   The retention mode for the run. The default value is RETAIN.
     #
-    #   HealthOmics stores a fixed number of runs that are available to the
-    #   console and API. In the default mode (RETAIN), you need to remove
-    #   runs manually when the number of run exceeds the maximum. If you set
-    #   the retention mode to `REMOVE`, HealthOmics automatically removes
-    #   runs (that have mode set to REMOVE) when the number of run exceeds
-    #   the maximum. All run logs are available in CloudWatch logs, if you
-    #   need information about a run that is no longer available to the API.
+    #   Amazon Web Services HealthOmics stores a fixed number of runs that
+    #   are available to the console and API. In the default mode (RETAIN),
+    #   you need to remove runs manually when the number of run exceeds the
+    #   maximum. If you set the retention mode to `REMOVE`, Amazon Web
+    #   Services HealthOmics automatically removes runs (that have mode set
+    #   to REMOVE) when the number of run exceeds the maximum. All run logs
+    #   are available in CloudWatch logs, if you need information about a
+    #   run that is no longer available to the API.
     #
     #   For more information about retention mode, see [Specifying run
-    #   retention mode][1] in the *AWS HealthOmics User Guide*.
+    #   retention mode][1] in the *Amazon Web Services HealthOmics User
+    #   Guide*.
     #
     #
     #
@@ -6456,14 +6859,25 @@ module Aws::Omics
     #   @return [String]
     #
     # @!attribute [rw] storage_type
-    #   The run's storage type. By default, the run uses STATIC storage
-    #   type, which allocates a fixed amount of storage. If you set the
-    #   storage type to DYNAMIC, HealthOmics dynamically scales the storage
-    #   up or down, based on file system utilization.
+    #   The storage type for the run. By default, the run uses STATIC
+    #   storage type, which allocates a fixed amount of storage. If you set
+    #   the storage type to DYNAMIC, Amazon Web Services HealthOmics
+    #   dynamically scales the storage up or down, based on file system
+    #   utilization. For more information about static and dynamic storage,
+    #   see [Running workflows][1] in the *Amazon Web Services HealthOmics
+    #   User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/omics/latest/dev/Using-workflows.html
     #   @return [String]
     #
     # @!attribute [rw] workflow_owner_id
     #   The ID of the workflow owner.
+    #   @return [String]
+    #
+    # @!attribute [rw] workflow_version_name
+    #   The name of the workflow version.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/StartRunRequest AWS API Documentation
@@ -6486,7 +6900,8 @@ module Aws::Omics
       :request_id,
       :retention_mode,
       :storage_type,
-      :workflow_owner_id)
+      :workflow_owner_id,
+      :workflow_version_name)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6635,8 +7050,8 @@ module Aws::Omics
     #   @return [Integer]
     #
     # @!attribute [rw] cache_hit
-    #   Set to true if AWS HealthOmics found a matching entry in the run
-    #   cache for this task.
+    #   Set to true if Amazon Web Services HealthOmics found a matching
+    #   entry in the run cache for this task.
     #   @return [Boolean]
     #
     # @!attribute [rw] cache_s3_uri
@@ -7178,12 +7593,74 @@ module Aws::Omics
     #   A description for the workflow.
     #   @return [String]
     #
+    # @!attribute [rw] storage_type
+    #   The default storage type for runs that use this workflow. STATIC
+    #   storage allocates a fixed amount of storage. DYNAMIC storage
+    #   dynamically scales the storage up or down, based on file system
+    #   utilization. For more information about static and dynamic storage,
+    #   see [Running workflows][1] in the *Amazon Web Services HealthOmics
+    #   User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/omics/latest/dev/Using-workflows.html
+    #   @return [String]
+    #
+    # @!attribute [rw] storage_capacity
+    #   The default static storage capacity (in gibibytes) for runs that use
+    #   this workflow or workflow version.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/UpdateWorkflowRequest AWS API Documentation
     #
     class UpdateWorkflowRequest < Struct.new(
       :id,
       :name,
-      :description)
+      :description,
+      :storage_type,
+      :storage_capacity)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] workflow_id
+    #   The workflow's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] version_name
+    #   The name of the workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   Description of the workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] storage_type
+    #   The default storage type for runs that use this workflow. STATIC
+    #   storage allocates a fixed amount of storage. DYNAMIC storage
+    #   dynamically scales the storage up or down, based on file system
+    #   utilization. For more information about static and dynamic storage,
+    #   see [Running workflows][1] in the *Amazon Web Services HealthOmics
+    #   User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/omics/latest/dev/Using-workflows.html
+    #   @return [String]
+    #
+    # @!attribute [rw] storage_capacity
+    #   The default static storage capacity (in gibibytes) for runs that use
+    #   this workflow or workflow version.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/UpdateWorkflowVersionRequest AWS API Documentation
+    #
+    class UpdateWorkflowVersionRequest < Struct.new(
+      :workflow_id,
+      :version_name,
+      :description,
+      :storage_type,
+      :storage_capacity)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7530,6 +8007,60 @@ module Aws::Omics
     class WorkflowParameter < Struct.new(
       :description,
       :optional)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A list of workflow version items.
+    #
+    # @!attribute [rw] arn
+    #   ARN of the workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] workflow_id
+    #   The workflow's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] version_name
+    #   The name of the workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of the workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] digest
+    #   The digist of the workflow version.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_time
+    #   The creation time of the workflow version.
+    #   @return [Time]
+    #
+    # @!attribute [rw] metadata
+    #   Metadata for the workflow version.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/WorkflowVersionListItem AWS API Documentation
+    #
+    class WorkflowVersionListItem < Struct.new(
+      :arn,
+      :workflow_id,
+      :version_name,
+      :description,
+      :status,
+      :type,
+      :digest,
+      :creation_time,
+      :metadata)
       SENSITIVE = []
       include Aws::Structure
     end
