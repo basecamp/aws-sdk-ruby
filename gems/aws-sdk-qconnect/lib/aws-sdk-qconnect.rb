@@ -49,12 +49,13 @@ module Aws::QConnect
   end
   autoload :Client, 'aws-sdk-qconnect/client'
   autoload :Errors, 'aws-sdk-qconnect/errors'
+  autoload :Waiters, 'aws-sdk-qconnect/waiters'
   autoload :Resource, 'aws-sdk-qconnect/resource'
   autoload :EndpointParameters, 'aws-sdk-qconnect/endpoint_parameters'
   autoload :EndpointProvider, 'aws-sdk-qconnect/endpoint_provider'
   autoload :Endpoints, 'aws-sdk-qconnect/endpoints'
 
-  GEM_VERSION = '1.30.0'
+  GEM_VERSION = '1.31.0'
 
 end
 

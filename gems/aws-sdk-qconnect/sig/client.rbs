@@ -97,17 +97,25 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_ai_agent-instance_method
       def create_ai_agent: (
-                             assistant_id: ::String,
                              ?client_token: ::String,
+                             assistant_id: ::String,
+                             name: ::String,
+                             type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"),
                              configuration: {
-                               answer_recommendation_ai_agent_configuration: {
-                                 answer_generation_ai_guardrail_id: ::String?,
+                               manual_search_ai_agent_configuration: {
                                  answer_generation_ai_prompt_id: ::String?,
+                                 answer_generation_ai_guardrail_id: ::String?,
                                  association_configurations: Array[
                                    {
+                                     association_id: ::String?,
+                                     association_type: ("KNOWLEDGE_BASE")?,
                                      association_configuration_data: {
                                        knowledge_base_association_configuration_data: {
                                          content_tag_filter: {
+                                           tag_condition: {
+                                             key: ::String,
+                                             value: ::String?
+                                           }?,
                                            and_conditions: Array[
                                              {
                                                key: ::String,
@@ -127,32 +135,32 @@ module Aws
                                                  value: ::String?
                                                }?
                                              },
-                                           ]?,
-                                           tag_condition: {
-                                             key: ::String,
-                                             value: ::String?
-                                           }?
+                                           ]?
                                          }?,
                                          max_results: ::Integer?,
                                          override_knowledge_base_search_type: ("HYBRID" | "SEMANTIC")?
                                        }?
-                                     }?,
-                                     association_id: ::String?,
-                                     association_type: ("KNOWLEDGE_BASE")?
+                                     }?
                                    },
                                  ]?,
-                                 intent_labeling_generation_ai_prompt_id: ::String?,
-                                 locale: ::String?,
-                                 query_reformulation_ai_prompt_id: ::String?
+                                 locale: ::String?
                                }?,
-                               manual_search_ai_agent_configuration: {
-                                 answer_generation_ai_guardrail_id: ::String?,
+                               answer_recommendation_ai_agent_configuration: {
+                                 intent_labeling_generation_ai_prompt_id: ::String?,
+                                 query_reformulation_ai_prompt_id: ::String?,
                                  answer_generation_ai_prompt_id: ::String?,
+                                 answer_generation_ai_guardrail_id: ::String?,
                                  association_configurations: Array[
                                    {
+                                     association_id: ::String?,
+                                     association_type: ("KNOWLEDGE_BASE")?,
                                      association_configuration_data: {
                                        knowledge_base_association_configuration_data: {
                                          content_tag_filter: {
+                                           tag_condition: {
+                                             key: ::String,
+                                             value: ::String?
+                                           }?,
                                            and_conditions: Array[
                                              {
                                                key: ::String,
@@ -172,28 +180,31 @@ module Aws
                                                  value: ::String?
                                                }?
                                              },
-                                           ]?,
-                                           tag_condition: {
-                                             key: ::String,
-                                             value: ::String?
-                                           }?
+                                           ]?
                                          }?,
                                          max_results: ::Integer?,
                                          override_knowledge_base_search_type: ("HYBRID" | "SEMANTIC")?
                                        }?
-                                     }?,
-                                     association_id: ::String?,
-                                     association_type: ("KNOWLEDGE_BASE")?
+                                     }?
                                    },
                                  ]?,
                                  locale: ::String?
                                }?,
                                self_service_ai_agent_configuration: {
+                                 self_service_pre_processing_ai_prompt_id: ::String?,
+                                 self_service_answer_generation_ai_prompt_id: ::String?,
+                                 self_service_ai_guardrail_id: ::String?,
                                  association_configurations: Array[
                                    {
+                                     association_id: ::String?,
+                                     association_type: ("KNOWLEDGE_BASE")?,
                                      association_configuration_data: {
                                        knowledge_base_association_configuration_data: {
                                          content_tag_filter: {
+                                           tag_condition: {
+                                             key: ::String,
+                                             value: ::String?
+                                           }?,
                                            and_conditions: Array[
                                              {
                                                key: ::String,
@@ -213,30 +224,19 @@ module Aws
                                                  value: ::String?
                                                }?
                                              },
-                                           ]?,
-                                           tag_condition: {
-                                             key: ::String,
-                                             value: ::String?
-                                           }?
+                                           ]?
                                          }?,
                                          max_results: ::Integer?,
                                          override_knowledge_base_search_type: ("HYBRID" | "SEMANTIC")?
                                        }?
-                                     }?,
-                                     association_id: ::String?,
-                                     association_type: ("KNOWLEDGE_BASE")?
+                                     }?
                                    },
-                                 ]?,
-                                 self_service_ai_guardrail_id: ::String?,
-                                 self_service_answer_generation_ai_prompt_id: ::String?,
-                                 self_service_pre_processing_ai_prompt_id: ::String?
+                                 ]?
                                }?
                              },
-                             ?description: ::String,
-                             name: ::String,
+                             visibility_status: ("SAVED" | "PUBLISHED"),
                              ?tags: Hash[::String, ::String],
-                             type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"),
-                             visibility_status: ("SAVED" | "PUBLISHED")
+                             ?description: ::String
                            ) -> _CreateAIAgentResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAIAgentResponseSuccess
 
@@ -247,10 +247,10 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_ai_agent_version-instance_method
       def create_ai_agent_version: (
-                                     ai_agent_id: ::String,
                                      assistant_id: ::String,
-                                     ?client_token: ::String,
-                                     ?modified_time: ::Time
+                                     ai_agent_id: ::String,
+                                     ?modified_time: ::Time,
+                                     ?client_token: ::String
                                    ) -> _CreateAIAgentVersionResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAIAgentVersionResponseSuccess
 
@@ -260,69 +260,69 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_ai_guardrail-instance_method
       def create_ai_guardrail: (
+                                 ?client_token: ::String,
                                  assistant_id: ::String,
+                                 name: ::String,
                                  blocked_input_messaging: ::String,
                                  blocked_outputs_messaging: ::String,
-                                 ?client_token: ::String,
-                                 ?content_policy_config: {
-                                   filters_config: Array[
-                                     {
-                                       input_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
-                                       output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
-                                       type: ("SEXUAL" | "VIOLENCE" | "HATE" | "INSULTS" | "MISCONDUCT" | "PROMPT_ATTACK")
-                                     },
-                                   ]
-                                 },
-                                 ?contextual_grounding_policy_config: {
-                                   filters_config: Array[
-                                     {
-                                       threshold: ::Float,
-                                       type: ("GROUNDING" | "RELEVANCE")
-                                     },
-                                   ]
-                                 },
+                                 visibility_status: ("SAVED" | "PUBLISHED"),
                                  ?description: ::String,
-                                 name: ::String,
-                                 ?sensitive_information_policy_config: {
-                                   pii_entities_config: Array[
-                                     {
-                                       action: ("BLOCK" | "ANONYMIZE"),
-                                       type: ("ADDRESS" | "AGE" | "AWS_ACCESS_KEY" | "AWS_SECRET_KEY" | "CA_HEALTH_NUMBER" | "CA_SOCIAL_INSURANCE_NUMBER" | "CREDIT_DEBIT_CARD_CVV" | "CREDIT_DEBIT_CARD_EXPIRY" | "CREDIT_DEBIT_CARD_NUMBER" | "DRIVER_ID" | "EMAIL" | "INTERNATIONAL_BANK_ACCOUNT_NUMBER" | "IP_ADDRESS" | "LICENSE_PLATE" | "MAC_ADDRESS" | "NAME" | "PASSWORD" | "PHONE" | "PIN" | "SWIFT_CODE" | "UK_NATIONAL_HEALTH_SERVICE_NUMBER" | "UK_NATIONAL_INSURANCE_NUMBER" | "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER" | "URL" | "USERNAME" | "US_BANK_ACCOUNT_NUMBER" | "US_BANK_ROUTING_NUMBER" | "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER" | "US_PASSPORT_NUMBER" | "US_SOCIAL_SECURITY_NUMBER" | "VEHICLE_IDENTIFICATION_NUMBER")
-                                     },
-                                   ]?,
-                                   regexes_config: Array[
-                                     {
-                                       action: ("BLOCK" | "ANONYMIZE"),
-                                       description: ::String?,
-                                       name: ::String,
-                                       pattern: ::String
-                                     },
-                                   ]?
-                                 },
-                                 ?tags: Hash[::String, ::String],
                                  ?topic_policy_config: {
                                    topics_config: Array[
                                      {
+                                       name: ::String,
                                        definition: ::String,
                                        examples: Array[::String]?,
-                                       name: ::String,
                                        type: ("DENY")
                                      },
                                    ]
                                  },
-                                 visibility_status: ("SAVED" | "PUBLISHED"),
-                                 ?word_policy_config: {
-                                   managed_word_lists_config: Array[
+                                 ?content_policy_config: {
+                                   filters_config: Array[
                                      {
-                                       type: ("PROFANITY")
+                                       type: ("SEXUAL" | "VIOLENCE" | "HATE" | "INSULTS" | "MISCONDUCT" | "PROMPT_ATTACK"),
+                                       input_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
+                                       output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
                                      },
-                                   ]?,
+                                   ]
+                                 },
+                                 ?word_policy_config: {
                                    words_config: Array[
                                      {
                                        text: ::String
                                      },
+                                   ]?,
+                                   managed_word_lists_config: Array[
+                                     {
+                                       type: ("PROFANITY")
+                                     },
                                    ]?
-                                 }
+                                 },
+                                 ?sensitive_information_policy_config: {
+                                   pii_entities_config: Array[
+                                     {
+                                       type: ("ADDRESS" | "AGE" | "AWS_ACCESS_KEY" | "AWS_SECRET_KEY" | "CA_HEALTH_NUMBER" | "CA_SOCIAL_INSURANCE_NUMBER" | "CREDIT_DEBIT_CARD_CVV" | "CREDIT_DEBIT_CARD_EXPIRY" | "CREDIT_DEBIT_CARD_NUMBER" | "DRIVER_ID" | "EMAIL" | "INTERNATIONAL_BANK_ACCOUNT_NUMBER" | "IP_ADDRESS" | "LICENSE_PLATE" | "MAC_ADDRESS" | "NAME" | "PASSWORD" | "PHONE" | "PIN" | "SWIFT_CODE" | "UK_NATIONAL_HEALTH_SERVICE_NUMBER" | "UK_NATIONAL_INSURANCE_NUMBER" | "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER" | "URL" | "USERNAME" | "US_BANK_ACCOUNT_NUMBER" | "US_BANK_ROUTING_NUMBER" | "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER" | "US_PASSPORT_NUMBER" | "US_SOCIAL_SECURITY_NUMBER" | "VEHICLE_IDENTIFICATION_NUMBER"),
+                                       action: ("BLOCK" | "ANONYMIZE")
+                                     },
+                                   ]?,
+                                   regexes_config: Array[
+                                     {
+                                       name: ::String,
+                                       description: ::String?,
+                                       pattern: ::String,
+                                       action: ("BLOCK" | "ANONYMIZE")
+                                     },
+                                   ]?
+                                 },
+                                 ?contextual_grounding_policy_config: {
+                                   filters_config: Array[
+                                     {
+                                       type: ("GROUNDING" | "RELEVANCE"),
+                                       threshold: ::Float
+                                     },
+                                   ]
+                                 },
+                                 ?tags: Hash[::String, ::String]
                                ) -> _CreateAIGuardrailResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAIGuardrailResponseSuccess
 
@@ -333,10 +333,10 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_ai_guardrail_version-instance_method
       def create_ai_guardrail_version: (
-                                         ai_guardrail_id: ::String,
                                          assistant_id: ::String,
-                                         ?client_token: ::String,
-                                         ?modified_time: ::Time
+                                         ai_guardrail_id: ::String,
+                                         ?modified_time: ::Time,
+                                         ?client_token: ::String
                                        ) -> _CreateAIGuardrailVersionResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAIGuardrailVersionResponseSuccess
 
@@ -346,21 +346,21 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_ai_prompt-instance_method
       def create_ai_prompt: (
-                              api_format: ("ANTHROPIC_CLAUDE_MESSAGES" | "ANTHROPIC_CLAUDE_TEXT_COMPLETIONS"),
-                              assistant_id: ::String,
                               ?client_token: ::String,
-                              ?description: ::String,
-                              model_id: ::String,
+                              assistant_id: ::String,
                               name: ::String,
-                              ?tags: Hash[::String, ::String],
+                              type: ("ANSWER_GENERATION" | "INTENT_LABELING_GENERATION" | "QUERY_REFORMULATION" | "SELF_SERVICE_PRE_PROCESSING" | "SELF_SERVICE_ANSWER_GENERATION"),
                               template_configuration: {
                                 text_full_ai_prompt_edit_template_configuration: {
                                   text: ::String
                                 }?
                               },
+                              visibility_status: ("SAVED" | "PUBLISHED"),
                               template_type: ("TEXT"),
-                              type: ("ANSWER_GENERATION" | "INTENT_LABELING_GENERATION" | "QUERY_REFORMULATION" | "SELF_SERVICE_PRE_PROCESSING" | "SELF_SERVICE_ANSWER_GENERATION"),
-                              visibility_status: ("SAVED" | "PUBLISHED")
+                              model_id: ::String,
+                              api_format: ("ANTHROPIC_CLAUDE_MESSAGES" | "ANTHROPIC_CLAUDE_TEXT_COMPLETIONS" | "MESSAGES" | "TEXT_COMPLETIONS"),
+                              ?tags: Hash[::String, ::String],
+                              ?description: ::String
                             ) -> _CreateAIPromptResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAIPromptResponseSuccess
 
@@ -371,10 +371,10 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_ai_prompt_version-instance_method
       def create_ai_prompt_version: (
-                                      ai_prompt_id: ::String,
                                       assistant_id: ::String,
-                                      ?client_token: ::String,
-                                      ?modified_time: ::Time
+                                      ai_prompt_id: ::String,
+                                      ?modified_time: ::Time,
+                                      ?client_token: ::String
                                     ) -> _CreateAIPromptVersionResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAIPromptVersionResponseSuccess
 
@@ -385,13 +385,13 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_assistant-instance_method
       def create_assistant: (
                               ?client_token: ::String,
-                              ?description: ::String,
                               name: ::String,
+                              type: ("AGENT"),
+                              ?description: ::String,
+                              ?tags: Hash[::String, ::String],
                               ?server_side_encryption_configuration: {
                                 kms_key_id: ::String?
-                              },
-                              ?tags: Hash[::String, ::String],
-                              type: ("AGENT")
+                              }
                             ) -> _CreateAssistantResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAssistantResponseSuccess
 
@@ -402,10 +402,10 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_assistant_association-instance_method
       def create_assistant_association: (
                                           assistant_id: ::String,
+                                          association_type: ("KNOWLEDGE_BASE"),
                                           association: {
                                             knowledge_base_id: ::String?
                                           },
-                                          association_type: ("KNOWLEDGE_BASE"),
                                           ?client_token: ::String,
                                           ?tags: Hash[::String, ::String]
                                         ) -> _CreateAssistantAssociationResponseSuccess
@@ -417,14 +417,14 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_content-instance_method
       def create_content: (
-                            ?client_token: ::String,
                             knowledge_base_id: ::String,
-                            ?metadata: Hash[::String, ::String],
                             name: ::String,
-                            ?override_link_out_uri: ::String,
-                            ?tags: Hash[::String, ::String],
                             ?title: ::String,
-                            upload_id: ::String
+                            ?override_link_out_uri: ::String,
+                            ?metadata: Hash[::String, ::String],
+                            upload_id: ::String,
+                            ?client_token: ::String,
+                            ?tags: Hash[::String, ::String]
                           ) -> _CreateContentResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateContentResponseSuccess
 
@@ -434,15 +434,15 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_content_association-instance_method
       def create_content_association: (
+                                        ?client_token: ::String,
+                                        knowledge_base_id: ::String,
+                                        content_id: ::String,
+                                        association_type: ("AMAZON_CONNECT_GUIDE"),
                                         association: {
                                           amazon_connect_guide_association: {
                                             flow_id: ::String?
                                           }?
                                         },
-                                        association_type: ("AMAZON_CONNECT_GUIDE"),
-                                        ?client_token: ::String,
-                                        content_id: ::String,
-                                        knowledge_base_id: ::String,
                                         ?tags: Hash[::String, ::String]
                                       ) -> _CreateContentAssociationResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateContentAssociationResponseSuccess
@@ -454,15 +454,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_knowledge_base-instance_method
       def create_knowledge_base: (
                                    ?client_token: ::String,
-                                   ?description: ::String,
-                                   knowledge_base_type: ("EXTERNAL" | "CUSTOM" | "QUICK_RESPONSES" | "MESSAGE_TEMPLATES" | "MANAGED"),
                                    name: ::String,
-                                   ?rendering_configuration: {
-                                     template_uri: ::String?
-                                   },
-                                   ?server_side_encryption_configuration: {
-                                     kms_key_id: ::String?
-                                   },
+                                   knowledge_base_type: ("EXTERNAL" | "CUSTOM" | "QUICK_RESPONSES" | "MESSAGE_TEMPLATES" | "MANAGED"),
                                    ?source_configuration: {
                                      app_integrations: {
                                        app_integration_arn: ::String,
@@ -470,23 +463,25 @@ module Aws
                                      }?,
                                      managed_source_configuration: {
                                        web_crawler_configuration: {
-                                         crawler_limits: {
-                                           rate_limit: ::Integer?
-                                         }?,
-                                         exclusion_filters: Array[::String]?,
-                                         inclusion_filters: Array[::String]?,
-                                         scope: ("HOST_ONLY" | "SUBDOMAINS")?,
                                          url_configuration: {
                                            seed_urls: Array[
                                              {
                                                url: ::String?
                                              },
                                            ]?
-                                         }
+                                         },
+                                         crawler_limits: {
+                                           rate_limit: ::Integer?
+                                         }?,
+                                         inclusion_filters: Array[::String]?,
+                                         exclusion_filters: Array[::String]?,
+                                         scope: ("HOST_ONLY" | "SUBDOMAINS")?
                                        }?
                                      }?
                                    },
-                                   ?tags: Hash[::String, ::String],
+                                   ?rendering_configuration: {
+                                     template_uri: ::String?
+                                   },
                                    ?vector_ingestion_configuration: {
                                      chunking_configuration: {
                                        chunking_strategy: ("FIXED_SIZE" | "NONE" | "HIERARCHICAL" | "SEMANTIC"),
@@ -503,21 +498,26 @@ module Aws
                                          overlap_tokens: ::Integer
                                        }?,
                                        semantic_chunking_configuration: {
-                                         breakpoint_percentile_threshold: ::Integer,
+                                         max_tokens: ::Integer,
                                          buffer_size: ::Integer,
-                                         max_tokens: ::Integer
+                                         breakpoint_percentile_threshold: ::Integer
                                        }?
                                      }?,
                                      parsing_configuration: {
+                                       parsing_strategy: ("BEDROCK_FOUNDATION_MODEL"),
                                        bedrock_foundation_model_configuration: {
                                          model_arn: ::String,
                                          parsing_prompt: {
                                            parsing_prompt_text: ::String
                                          }?
-                                       }?,
-                                       parsing_strategy: ("BEDROCK_FOUNDATION_MODEL")
+                                       }?
                                      }?
-                                   }
+                                   },
+                                   ?server_side_encryption_configuration: {
+                                     kms_key_id: ::String?
+                                   },
+                                   ?description: ::String,
+                                   ?tags: Hash[::String, ::String]
                                  ) -> _CreateKnowledgeBaseResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateKnowledgeBaseResponseSuccess
 
@@ -527,15 +527,16 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_message_template-instance_method
       def create_message_template: (
-                                     channel_subtype: ("EMAIL" | "SMS"),
-                                     ?client_token: ::String,
+                                     knowledge_base_id: ::String,
+                                     name: ::String,
                                      content: {
                                        email: {
+                                         subject: ::String?,
                                          body: {
-                                           html: {
+                                           plain_text: {
                                              content: ::String?
                                            }?,
-                                           plain_text: {
+                                           html: {
                                              content: ::String?
                                            }?
                                          }?,
@@ -544,8 +545,7 @@ module Aws
                                              name: ::String?,
                                              value: ::String?
                                            },
-                                         ]?,
-                                         subject: ::String?
+                                         ]?
                                        }?,
                                        sms: {
                                          body: {
@@ -555,90 +555,90 @@ module Aws
                                          }?
                                        }?
                                      },
+                                     ?description: ::String,
+                                     channel_subtype: ("EMAIL" | "SMS"),
+                                     ?language: ::String,
                                      ?default_attributes: {
+                                       system_attributes: {
+                                         name: ::String?,
+                                         customer_endpoint: {
+                                           address: ::String?
+                                         }?,
+                                         system_endpoint: {
+                                           address: ::String?
+                                         }?
+                                       }?,
                                        agent_attributes: {
                                          first_name: ::String?,
                                          last_name: ::String?
                                        }?,
-                                       custom_attributes: Hash[::String, ::String]?,
                                        customer_profile_attributes: {
+                                         profile_id: ::String?,
+                                         profile_arn: ::String?,
+                                         first_name: ::String?,
+                                         middle_name: ::String?,
+                                         last_name: ::String?,
                                          account_number: ::String?,
+                                         email_address: ::String?,
+                                         phone_number: ::String?,
                                          additional_information: ::String?,
+                                         party_type: ::String?,
+                                         business_name: ::String?,
+                                         birth_date: ::String?,
+                                         gender: ::String?,
+                                         mobile_phone_number: ::String?,
+                                         home_phone_number: ::String?,
+                                         business_phone_number: ::String?,
+                                         business_email_address: ::String?,
                                          address1: ::String?,
                                          address2: ::String?,
                                          address3: ::String?,
                                          address4: ::String?,
-                                         billing_address_1: ::String?,
-                                         billing_address_2: ::String?,
-                                         billing_address_3: ::String?,
-                                         billing_address_4: ::String?,
-                                         billing_city: ::String?,
-                                         billing_country: ::String?,
-                                         billing_county: ::String?,
-                                         billing_postal_code: ::String?,
-                                         billing_province: ::String?,
-                                         billing_state: ::String?,
-                                         birth_date: ::String?,
-                                         business_email_address: ::String?,
-                                         business_name: ::String?,
-                                         business_phone_number: ::String?,
                                          city: ::String?,
-                                         country: ::String?,
                                          county: ::String?,
-                                         custom: Hash[::String, ::String]?,
-                                         email_address: ::String?,
-                                         first_name: ::String?,
-                                         gender: ::String?,
-                                         home_phone_number: ::String?,
-                                         last_name: ::String?,
-                                         mailing_address_1: ::String?,
-                                         mailing_address_2: ::String?,
-                                         mailing_address_3: ::String?,
-                                         mailing_address_4: ::String?,
-                                         mailing_city: ::String?,
-                                         mailing_country: ::String?,
-                                         mailing_county: ::String?,
-                                         mailing_postal_code: ::String?,
-                                         mailing_province: ::String?,
-                                         mailing_state: ::String?,
-                                         middle_name: ::String?,
-                                         mobile_phone_number: ::String?,
-                                         party_type: ::String?,
-                                         phone_number: ::String?,
+                                         country: ::String?,
                                          postal_code: ::String?,
-                                         profile_arn: ::String?,
-                                         profile_id: ::String?,
                                          province: ::String?,
+                                         state: ::String?,
                                          shipping_address_1: ::String?,
                                          shipping_address_2: ::String?,
                                          shipping_address_3: ::String?,
                                          shipping_address_4: ::String?,
                                          shipping_city: ::String?,
-                                         shipping_country: ::String?,
                                          shipping_county: ::String?,
+                                         shipping_country: ::String?,
                                          shipping_postal_code: ::String?,
                                          shipping_province: ::String?,
                                          shipping_state: ::String?,
-                                         state: ::String?
+                                         mailing_address_1: ::String?,
+                                         mailing_address_2: ::String?,
+                                         mailing_address_3: ::String?,
+                                         mailing_address_4: ::String?,
+                                         mailing_city: ::String?,
+                                         mailing_county: ::String?,
+                                         mailing_country: ::String?,
+                                         mailing_postal_code: ::String?,
+                                         mailing_province: ::String?,
+                                         mailing_state: ::String?,
+                                         billing_address_1: ::String?,
+                                         billing_address_2: ::String?,
+                                         billing_address_3: ::String?,
+                                         billing_address_4: ::String?,
+                                         billing_city: ::String?,
+                                         billing_county: ::String?,
+                                         billing_country: ::String?,
+                                         billing_postal_code: ::String?,
+                                         billing_province: ::String?,
+                                         billing_state: ::String?,
+                                         custom: Hash[::String, ::String]?
                                        }?,
-                                       system_attributes: {
-                                         customer_endpoint: {
-                                           address: ::String?
-                                         }?,
-                                         name: ::String?,
-                                         system_endpoint: {
-                                           address: ::String?
-                                         }?
-                                       }?
+                                       custom_attributes: Hash[::String, ::String]?
                                      },
-                                     ?description: ::String,
                                      ?grouping_configuration: {
                                        criteria: ::String?,
                                        values: Array[::String]?
                                      },
-                                     knowledge_base_id: ::String,
-                                     ?language: ::String,
-                                     name: ::String,
+                                     ?client_token: ::String,
                                      ?tags: Hash[::String, ::String]
                                    ) -> _CreateMessageTemplateResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateMessageTemplateResponseSuccess
@@ -649,12 +649,12 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_message_template_attachment-instance_method
       def create_message_template_attachment: (
-                                                body: ::String,
-                                                ?client_token: ::String,
-                                                content_disposition: ("ATTACHMENT"),
                                                 knowledge_base_id: ::String,
                                                 message_template_id: ::String,
-                                                name: ::String
+                                                content_disposition: ("ATTACHMENT"),
+                                                name: ::String,
+                                                body: ::String,
+                                                ?client_token: ::String
                                               ) -> _CreateMessageTemplateAttachmentResponseSuccess
                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateMessageTemplateAttachmentResponseSuccess
 
@@ -665,8 +665,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_message_template_version-instance_method
       def create_message_template_version: (
                                              knowledge_base_id: ::String,
-                                             ?message_template_content_sha_256: ::String,
-                                             message_template_id: ::String
+                                             message_template_id: ::String,
+                                             ?message_template_content_sha_256: ::String
                                            ) -> _CreateMessageTemplateVersionResponseSuccess
                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateMessageTemplateVersionResponseSuccess
 
@@ -676,22 +676,22 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_quick_response-instance_method
       def create_quick_response: (
-                                   ?channels: Array[::String],
-                                   ?client_token: ::String,
+                                   knowledge_base_id: ::String,
+                                   name: ::String,
                                    content: {
                                      content: ::String?
                                    },
                                    ?content_type: ::String,
-                                   ?description: ::String,
                                    ?grouping_configuration: {
                                      criteria: ::String?,
                                      values: Array[::String]?
                                    },
-                                   ?is_active: bool,
-                                   knowledge_base_id: ::String,
-                                   ?language: ::String,
-                                   name: ::String,
+                                   ?description: ::String,
                                    ?shortcut_key: ::String,
+                                   ?is_active: bool,
+                                   ?channels: Array[::String],
+                                   ?language: ::String,
+                                   ?client_token: ::String,
                                    ?tags: Hash[::String, ::String]
                                  ) -> _CreateQuickResponseResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateQuickResponseResponseSuccess
@@ -702,14 +702,16 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_session-instance_method
       def create_session: (
-                            ?ai_agent_configuration: Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"), {
-                                ai_agent_id: ::String
-                              }],
-                            assistant_id: ::String,
                             ?client_token: ::String,
-                            ?description: ::String,
+                            assistant_id: ::String,
                             name: ::String,
+                            ?description: ::String,
+                            ?tags: Hash[::String, ::String],
                             ?tag_filter: {
+                              tag_condition: {
+                                key: ::String,
+                                value: ::String?
+                              }?,
                               and_conditions: Array[
                                 {
                                   key: ::String,
@@ -729,13 +731,11 @@ module Aws
                                     value: ::String?
                                   }?
                                 },
-                              ]?,
-                              tag_condition: {
-                                key: ::String,
-                                value: ::String?
-                              }?
+                              ]?
                             },
-                            ?tags: Hash[::String, ::String]
+                            ?ai_agent_configuration: Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"), {
+                                ai_agent_id: ::String
+                              }]
                           ) -> _CreateSessionResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateSessionResponseSuccess
 
@@ -758,8 +758,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#delete_ai_agent-instance_method
       def delete_ai_agent: (
-                             ai_agent_id: ::String,
-                             assistant_id: ::String
+                             assistant_id: ::String,
+                             ai_agent_id: ::String
                            ) -> _DeleteAIAgentResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteAIAgentResponseSuccess
 
@@ -768,8 +768,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#delete_ai_agent_version-instance_method
       def delete_ai_agent_version: (
-                                     ai_agent_id: ::String,
                                      assistant_id: ::String,
+                                     ai_agent_id: ::String,
                                      version_number: ::Integer
                                    ) -> _DeleteAIAgentVersionResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteAIAgentVersionResponseSuccess
@@ -779,8 +779,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#delete_ai_guardrail-instance_method
       def delete_ai_guardrail: (
-                                 ai_guardrail_id: ::String,
-                                 assistant_id: ::String
+                                 assistant_id: ::String,
+                                 ai_guardrail_id: ::String
                                ) -> _DeleteAIGuardrailResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteAIGuardrailResponseSuccess
 
@@ -789,8 +789,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#delete_ai_guardrail_version-instance_method
       def delete_ai_guardrail_version: (
-                                         ai_guardrail_id: ::String,
                                          assistant_id: ::String,
+                                         ai_guardrail_id: ::String,
                                          version_number: ::Integer
                                        ) -> _DeleteAIGuardrailVersionResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteAIGuardrailVersionResponseSuccess
@@ -800,8 +800,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#delete_ai_prompt-instance_method
       def delete_ai_prompt: (
-                              ai_prompt_id: ::String,
-                              assistant_id: ::String
+                              assistant_id: ::String,
+                              ai_prompt_id: ::String
                             ) -> _DeleteAIPromptResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteAIPromptResponseSuccess
 
@@ -810,8 +810,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#delete_ai_prompt_version-instance_method
       def delete_ai_prompt_version: (
-                                      ai_prompt_id: ::String,
                                       assistant_id: ::String,
+                                      ai_prompt_id: ::String,
                                       version_number: ::Integer
                                     ) -> _DeleteAIPromptVersionResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteAIPromptVersionResponseSuccess
@@ -840,8 +840,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#delete_content-instance_method
       def delete_content: (
-                            content_id: ::String,
-                            knowledge_base_id: ::String
+                            knowledge_base_id: ::String,
+                            content_id: ::String
                           ) -> _DeleteContentResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteContentResponseSuccess
 
@@ -850,9 +850,9 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#delete_content_association-instance_method
       def delete_content_association: (
-                                        content_association_id: ::String,
+                                        knowledge_base_id: ::String,
                                         content_id: ::String,
-                                        knowledge_base_id: ::String
+                                        content_association_id: ::String
                                       ) -> _DeleteContentAssociationResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteContentAssociationResponseSuccess
 
@@ -861,8 +861,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#delete_import_job-instance_method
       def delete_import_job: (
-                               import_job_id: ::String,
-                               knowledge_base_id: ::String
+                               knowledge_base_id: ::String,
+                               import_job_id: ::String
                              ) -> _DeleteImportJobResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteImportJobResponseSuccess
 
@@ -890,9 +890,9 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#delete_message_template_attachment-instance_method
       def delete_message_template_attachment: (
-                                                attachment_id: ::String,
                                                 knowledge_base_id: ::String,
-                                                message_template_id: ::String
+                                                message_template_id: ::String,
+                                                attachment_id: ::String
                                               ) -> _DeleteMessageTemplateAttachmentResponseSuccess
                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteMessageTemplateAttachmentResponseSuccess
 
@@ -913,8 +913,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#get_ai_agent-instance_method
       def get_ai_agent: (
-                          ai_agent_id: ::String,
-                          assistant_id: ::String
+                          assistant_id: ::String,
+                          ai_agent_id: ::String
                         ) -> _GetAIAgentResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAIAgentResponseSuccess
 
@@ -925,8 +925,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#get_ai_guardrail-instance_method
       def get_ai_guardrail: (
-                              ai_guardrail_id: ::String,
-                              assistant_id: ::String
+                              assistant_id: ::String,
+                              ai_guardrail_id: ::String
                             ) -> _GetAIGuardrailResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAIGuardrailResponseSuccess
 
@@ -937,8 +937,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#get_ai_prompt-instance_method
       def get_ai_prompt: (
-                           ai_prompt_id: ::String,
-                           assistant_id: ::String
+                           assistant_id: ::String,
+                           ai_prompt_id: ::String
                          ) -> _GetAIPromptResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAIPromptResponseSuccess
 
@@ -980,9 +980,9 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#get_content_association-instance_method
       def get_content_association: (
-                                     content_association_id: ::String,
+                                     knowledge_base_id: ::String,
                                      content_id: ::String,
-                                     knowledge_base_id: ::String
+                                     content_association_id: ::String
                                    ) -> _GetContentAssociationResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetContentAssociationResponseSuccess
 
@@ -1024,25 +1024,25 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#get_message_template-instance_method
       def get_message_template: (
-                                  knowledge_base_id: ::String,
-                                  message_template_id: ::String
+                                  message_template_id: ::String,
+                                  knowledge_base_id: ::String
                                 ) -> _GetMessageTemplateResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetMessageTemplateResponseSuccess
 
       interface _GetNextMessageResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetNextMessageResponse]
-        def conversation_session_data: () -> ::Array[Types::RuntimeSessionData]
+        def type: () -> ("TEXT")
+        def response: () -> Types::MessageOutput
+        def request_message_id: () -> ::String
         def conversation_state: () -> Types::ConversationState
         def next_message_token: () -> ::String
-        def request_message_id: () -> ::String
-        def response: () -> Types::MessageOutput
-        def type: () -> ("TEXT")
+        def conversation_session_data: () -> ::Array[Types::RuntimeSessionData]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#get_next_message-instance_method
       def get_next_message: (
                               assistant_id: ::String,
-                              next_message_token: ::String,
-                              session_id: ::String
+                              session_id: ::String,
+                              next_message_token: ::String
                             ) -> _GetNextMessageResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetNextMessageResponseSuccess
 
@@ -1052,8 +1052,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#get_quick_response-instance_method
       def get_quick_response: (
-                                knowledge_base_id: ::String,
-                                quick_response_id: ::String
+                                quick_response_id: ::String,
+                                knowledge_base_id: ::String
                               ) -> _GetQuickResponseResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetQuickResponseResponseSuccess
 
@@ -1065,9 +1065,10 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#get_recommendations-instance_method
       def get_recommendations: (
                                  assistant_id: ::String,
-                                 ?max_results: ::Integer,
                                  session_id: ::String,
-                                 ?wait_time_seconds: ::Integer
+                                 ?max_results: ::Integer,
+                                 ?wait_time_seconds: ::Integer,
+                                 ?next_chunk_token: ::String
                                ) -> _GetRecommendationsResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetRecommendationsResponseSuccess
 
@@ -1089,10 +1090,10 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_ai_agent_versions-instance_method
       def list_ai_agent_versions: (
-                                    ai_agent_id: ::String,
                                     assistant_id: ::String,
-                                    ?max_results: ::Integer,
+                                    ai_agent_id: ::String,
                                     ?next_token: ::String,
+                                    ?max_results: ::Integer,
                                     ?origin: ("SYSTEM" | "CUSTOMER")
                                   ) -> _ListAIAgentVersionsResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAIAgentVersionsResponseSuccess
@@ -1105,8 +1106,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_ai_agents-instance_method
       def list_ai_agents: (
                             assistant_id: ::String,
-                            ?max_results: ::Integer,
                             ?next_token: ::String,
+                            ?max_results: ::Integer,
                             ?origin: ("SYSTEM" | "CUSTOMER")
                           ) -> _ListAIAgentsResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAIAgentsResponseSuccess
@@ -1118,10 +1119,10 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_ai_guardrail_versions-instance_method
       def list_ai_guardrail_versions: (
-                                        ai_guardrail_id: ::String,
                                         assistant_id: ::String,
-                                        ?max_results: ::Integer,
-                                        ?next_token: ::String
+                                        ai_guardrail_id: ::String,
+                                        ?next_token: ::String,
+                                        ?max_results: ::Integer
                                       ) -> _ListAIGuardrailVersionsResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAIGuardrailVersionsResponseSuccess
 
@@ -1133,8 +1134,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_ai_guardrails-instance_method
       def list_ai_guardrails: (
                                 assistant_id: ::String,
-                                ?max_results: ::Integer,
-                                ?next_token: ::String
+                                ?next_token: ::String,
+                                ?max_results: ::Integer
                               ) -> _ListAIGuardrailsResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAIGuardrailsResponseSuccess
 
@@ -1145,10 +1146,10 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_ai_prompt_versions-instance_method
       def list_ai_prompt_versions: (
-                                     ai_prompt_id: ::String,
                                      assistant_id: ::String,
-                                     ?max_results: ::Integer,
+                                     ai_prompt_id: ::String,
                                      ?next_token: ::String,
+                                     ?max_results: ::Integer,
                                      ?origin: ("SYSTEM" | "CUSTOMER")
                                    ) -> _ListAIPromptVersionsResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAIPromptVersionsResponseSuccess
@@ -1161,8 +1162,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_ai_prompts-instance_method
       def list_ai_prompts: (
                              assistant_id: ::String,
-                             ?max_results: ::Integer,
                              ?next_token: ::String,
+                             ?max_results: ::Integer,
                              ?origin: ("SYSTEM" | "CUSTOMER")
                            ) -> _ListAIPromptsResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAIPromptsResponseSuccess
@@ -1174,9 +1175,9 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_assistant_associations-instance_method
       def list_assistant_associations: (
-                                         assistant_id: ::String,
+                                         ?next_token: ::String,
                                          ?max_results: ::Integer,
-                                         ?next_token: ::String
+                                         assistant_id: ::String
                                        ) -> _ListAssistantAssociationsResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAssistantAssociationsResponseSuccess
 
@@ -1187,8 +1188,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_assistants-instance_method
       def list_assistants: (
-                             ?max_results: ::Integer,
-                             ?next_token: ::String
+                             ?next_token: ::String,
+                             ?max_results: ::Integer
                            ) -> _ListAssistantsResponseSuccess
                          | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAssistantsResponseSuccess
 
@@ -1199,10 +1200,10 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_content_associations-instance_method
       def list_content_associations: (
-                                       content_id: ::String,
-                                       knowledge_base_id: ::String,
+                                       ?next_token: ::String,
                                        ?max_results: ::Integer,
-                                       ?next_token: ::String
+                                       knowledge_base_id: ::String,
+                                       content_id: ::String
                                      ) -> _ListContentAssociationsResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListContentAssociationsResponseSuccess
 
@@ -1213,9 +1214,9 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_contents-instance_method
       def list_contents: (
-                           knowledge_base_id: ::String,
+                           ?next_token: ::String,
                            ?max_results: ::Integer,
-                           ?next_token: ::String
+                           knowledge_base_id: ::String
                          ) -> _ListContentsResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListContentsResponseSuccess
 
@@ -1226,9 +1227,9 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_import_jobs-instance_method
       def list_import_jobs: (
-                              knowledge_base_id: ::String,
+                              ?next_token: ::String,
                               ?max_results: ::Integer,
-                              ?next_token: ::String
+                              knowledge_base_id: ::String
                             ) -> _ListImportJobsResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListImportJobsResponseSuccess
 
@@ -1239,8 +1240,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_knowledge_bases-instance_method
       def list_knowledge_bases: (
-                                  ?max_results: ::Integer,
-                                  ?next_token: ::String
+                                  ?next_token: ::String,
+                                  ?max_results: ::Integer
                                 ) -> _ListKnowledgeBasesResponseSuccess
                               | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListKnowledgeBasesResponseSuccess
 
@@ -1252,9 +1253,9 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_message_template_versions-instance_method
       def list_message_template_versions: (
                                             knowledge_base_id: ::String,
-                                            ?max_results: ::Integer,
                                             message_template_id: ::String,
-                                            ?next_token: ::String
+                                            ?next_token: ::String,
+                                            ?max_results: ::Integer
                                           ) -> _ListMessageTemplateVersionsResponseSuccess
                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListMessageTemplateVersionsResponseSuccess
 
@@ -1265,9 +1266,9 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_message_templates-instance_method
       def list_message_templates: (
-                                    knowledge_base_id: ::String,
+                                    ?next_token: ::String,
                                     ?max_results: ::Integer,
-                                    ?next_token: ::String
+                                    knowledge_base_id: ::String
                                   ) -> _ListMessageTemplatesResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListMessageTemplatesResponseSuccess
 
@@ -1279,22 +1280,22 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_messages-instance_method
       def list_messages: (
                            assistant_id: ::String,
-                           ?max_results: ::Integer,
+                           session_id: ::String,
                            ?next_token: ::String,
-                           session_id: ::String
+                           ?max_results: ::Integer
                          ) -> _ListMessagesResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListMessagesResponseSuccess
 
       interface _ListQuickResponsesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListQuickResponsesResponse]
-        def next_token: () -> ::String
         def quick_response_summaries: () -> ::Array[Types::QuickResponseSummary]
+        def next_token: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_quick_responses-instance_method
       def list_quick_responses: (
-                                  knowledge_base_id: ::String,
+                                  ?next_token: ::String,
                                   ?max_results: ::Integer,
-                                  ?next_token: ::String
+                                  knowledge_base_id: ::String
                                 ) -> _ListQuickResponsesResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListQuickResponsesResponseSuccess
 
@@ -1310,68 +1311,68 @@ module Aws
 
       interface _NotifyRecommendationsReceivedResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::NotifyRecommendationsReceivedResponse]
-        def errors: () -> ::Array[Types::NotifyRecommendationsReceivedError]
         def recommendation_ids: () -> ::Array[::String]
+        def errors: () -> ::Array[Types::NotifyRecommendationsReceivedError]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#notify_recommendations_received-instance_method
       def notify_recommendations_received: (
                                              assistant_id: ::String,
-                                             recommendation_ids: Array[::String],
-                                             session_id: ::String
+                                             session_id: ::String,
+                                             recommendation_ids: Array[::String]
                                            ) -> _NotifyRecommendationsReceivedResponseSuccess
                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _NotifyRecommendationsReceivedResponseSuccess
 
       interface _PutFeedbackResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::PutFeedbackResponse]
-        def assistant_arn: () -> ::String
         def assistant_id: () -> ::String
-        def content_feedback: () -> Types::ContentFeedbackData
+        def assistant_arn: () -> ::String
         def target_id: () -> ::String
         def target_type: () -> ("RECOMMENDATION" | "RESULT")
+        def content_feedback: () -> Types::ContentFeedbackData
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#put_feedback-instance_method
       def put_feedback: (
                           assistant_id: ::String,
+                          target_id: ::String,
+                          target_type: ("RECOMMENDATION" | "RESULT"),
                           content_feedback: {
                             generative_content_feedback_data: {
                               relevance: ("HELPFUL" | "NOT_HELPFUL")
                             }?
-                          },
-                          target_id: ::String,
-                          target_type: ("RECOMMENDATION" | "RESULT")
+                          }
                         ) -> _PutFeedbackResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutFeedbackResponseSuccess
 
       interface _QueryAssistantResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::QueryAssistantResponse]
-        def next_token: () -> ::String
         def results: () -> ::Array[Types::ResultData]
+        def next_token: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#query_assistant-instance_method
       def query_assistant: (
                              assistant_id: ::String,
-                             ?max_results: ::Integer,
+                             ?query_text: ::String,
                              ?next_token: ::String,
-                             ?override_knowledge_base_search_type: ("HYBRID" | "SEMANTIC"),
+                             ?max_results: ::Integer,
+                             ?session_id: ::String,
                              ?query_condition: Array[
                                {
                                  single: {
-                                   comparator: ("EQUALS"),
                                    field: ("RESULT_TYPE"),
+                                   comparator: ("EQUALS"),
                                    value: ::String
                                  }?
                                },
                              ],
                              ?query_input_data: {
-                               intent_input_data: {
-                                 intent_id: ::String
-                               }?,
                                query_text_input_data: {
                                  text: ::String
+                               }?,
+                               intent_input_data: {
+                                 intent_id: ::String
                                }?
                              },
-                             ?query_text: ::String,
-                             ?session_id: ::String
+                             ?override_knowledge_base_search_type: ("HYBRID" | "SEMANTIC")
                            ) -> _QueryAssistantResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _QueryAssistantResponseSuccess
 
@@ -1380,8 +1381,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#remove_assistant_ai_agent-instance_method
       def remove_assistant_ai_agent: (
-                                       ai_agent_type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"),
-                                       assistant_id: ::String
+                                       assistant_id: ::String,
+                                       ai_agent_type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE")
                                      ) -> _RemoveAssistantAIAgentResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RemoveAssistantAIAgentResponseSuccess
 
@@ -1396,90 +1397,90 @@ module Aws
 
       interface _RenderMessageTemplateResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::RenderMessageTemplateResponse]
-        def attachments: () -> ::Array[Types::MessageTemplateAttachment]
-        def attributes_not_interpolated: () -> ::Array[::String]
         def content: () -> Types::MessageTemplateContentProvider
+        def attributes_not_interpolated: () -> ::Array[::String]
+        def attachments: () -> ::Array[Types::MessageTemplateAttachment]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#render_message_template-instance_method
       def render_message_template: (
+                                     knowledge_base_id: ::String,
+                                     message_template_id: ::String,
                                      attributes: {
+                                       system_attributes: {
+                                         name: ::String?,
+                                         customer_endpoint: {
+                                           address: ::String?
+                                         }?,
+                                         system_endpoint: {
+                                           address: ::String?
+                                         }?
+                                       }?,
                                        agent_attributes: {
                                          first_name: ::String?,
                                          last_name: ::String?
                                        }?,
-                                       custom_attributes: Hash[::String, ::String]?,
                                        customer_profile_attributes: {
+                                         profile_id: ::String?,
+                                         profile_arn: ::String?,
+                                         first_name: ::String?,
+                                         middle_name: ::String?,
+                                         last_name: ::String?,
                                          account_number: ::String?,
+                                         email_address: ::String?,
+                                         phone_number: ::String?,
                                          additional_information: ::String?,
+                                         party_type: ::String?,
+                                         business_name: ::String?,
+                                         birth_date: ::String?,
+                                         gender: ::String?,
+                                         mobile_phone_number: ::String?,
+                                         home_phone_number: ::String?,
+                                         business_phone_number: ::String?,
+                                         business_email_address: ::String?,
                                          address1: ::String?,
                                          address2: ::String?,
                                          address3: ::String?,
                                          address4: ::String?,
-                                         billing_address_1: ::String?,
-                                         billing_address_2: ::String?,
-                                         billing_address_3: ::String?,
-                                         billing_address_4: ::String?,
-                                         billing_city: ::String?,
-                                         billing_country: ::String?,
-                                         billing_county: ::String?,
-                                         billing_postal_code: ::String?,
-                                         billing_province: ::String?,
-                                         billing_state: ::String?,
-                                         birth_date: ::String?,
-                                         business_email_address: ::String?,
-                                         business_name: ::String?,
-                                         business_phone_number: ::String?,
                                          city: ::String?,
-                                         country: ::String?,
                                          county: ::String?,
-                                         custom: Hash[::String, ::String]?,
-                                         email_address: ::String?,
-                                         first_name: ::String?,
-                                         gender: ::String?,
-                                         home_phone_number: ::String?,
-                                         last_name: ::String?,
-                                         mailing_address_1: ::String?,
-                                         mailing_address_2: ::String?,
-                                         mailing_address_3: ::String?,
-                                         mailing_address_4: ::String?,
-                                         mailing_city: ::String?,
-                                         mailing_country: ::String?,
-                                         mailing_county: ::String?,
-                                         mailing_postal_code: ::String?,
-                                         mailing_province: ::String?,
-                                         mailing_state: ::String?,
-                                         middle_name: ::String?,
-                                         mobile_phone_number: ::String?,
-                                         party_type: ::String?,
-                                         phone_number: ::String?,
+                                         country: ::String?,
                                          postal_code: ::String?,
-                                         profile_arn: ::String?,
-                                         profile_id: ::String?,
                                          province: ::String?,
+                                         state: ::String?,
                                          shipping_address_1: ::String?,
                                          shipping_address_2: ::String?,
                                          shipping_address_3: ::String?,
                                          shipping_address_4: ::String?,
                                          shipping_city: ::String?,
-                                         shipping_country: ::String?,
                                          shipping_county: ::String?,
+                                         shipping_country: ::String?,
                                          shipping_postal_code: ::String?,
                                          shipping_province: ::String?,
                                          shipping_state: ::String?,
-                                         state: ::String?
+                                         mailing_address_1: ::String?,
+                                         mailing_address_2: ::String?,
+                                         mailing_address_3: ::String?,
+                                         mailing_address_4: ::String?,
+                                         mailing_city: ::String?,
+                                         mailing_county: ::String?,
+                                         mailing_country: ::String?,
+                                         mailing_postal_code: ::String?,
+                                         mailing_province: ::String?,
+                                         mailing_state: ::String?,
+                                         billing_address_1: ::String?,
+                                         billing_address_2: ::String?,
+                                         billing_address_3: ::String?,
+                                         billing_address_4: ::String?,
+                                         billing_city: ::String?,
+                                         billing_county: ::String?,
+                                         billing_country: ::String?,
+                                         billing_postal_code: ::String?,
+                                         billing_province: ::String?,
+                                         billing_state: ::String?,
+                                         custom: Hash[::String, ::String]?
                                        }?,
-                                       system_attributes: {
-                                         customer_endpoint: {
-                                           address: ::String?
-                                         }?,
-                                         name: ::String?,
-                                         system_endpoint: {
-                                           address: ::String?
-                                         }?
-                                       }?
-                                     },
-                                     knowledge_base_id: ::String,
-                                     message_template_id: ::String
+                                       custom_attributes: Hash[::String, ::String]?
+                                     }
                                    ) -> _RenderMessageTemplateResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RenderMessageTemplateResponseSuccess
 
@@ -1490,9 +1491,9 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#search_content-instance_method
       def search_content: (
-                            knowledge_base_id: ::String,
-                            ?max_results: ::Integer,
                             ?next_token: ::String,
+                            ?max_results: ::Integer,
+                            knowledge_base_id: ::String,
                             search_expression: {
                               filters: Array[
                                 {
@@ -1507,87 +1508,87 @@ module Aws
 
       interface _SearchMessageTemplatesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::SearchMessageTemplatesResponse]
-        def next_token: () -> ::String
         def results: () -> ::Array[Types::MessageTemplateSearchResultData]
+        def next_token: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#search_message_templates-instance_method
       def search_message_templates: (
                                       knowledge_base_id: ::String,
-                                      ?max_results: ::Integer,
-                                      ?next_token: ::String,
                                       search_expression: {
+                                        queries: Array[
+                                          {
+                                            name: ::String,
+                                            values: Array[::String],
+                                            operator: ("CONTAINS" | "CONTAINS_AND_PREFIX"),
+                                            allow_fuzziness: bool?,
+                                            priority: ("HIGH" | "MEDIUM" | "LOW")?
+                                          },
+                                        ]?,
                                         filters: Array[
                                           {
-                                            include_no_existence: bool?,
                                             name: ::String,
+                                            values: Array[::String]?,
                                             operator: ("EQUALS" | "PREFIX"),
-                                            values: Array[::String]?
+                                            include_no_existence: bool?
                                           },
                                         ]?,
                                         order_on_field: {
                                           name: ::String,
                                           order: ("ASC" | "DESC")?
-                                        }?,
-                                        queries: Array[
-                                          {
-                                            allow_fuzziness: bool?,
-                                            name: ::String,
-                                            operator: ("CONTAINS" | "CONTAINS_AND_PREFIX"),
-                                            priority: ("HIGH" | "MEDIUM" | "LOW")?,
-                                            values: Array[::String]
-                                          },
-                                        ]?
-                                      }
+                                        }?
+                                      },
+                                      ?next_token: ::String,
+                                      ?max_results: ::Integer
                                     ) -> _SearchMessageTemplatesResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _SearchMessageTemplatesResponseSuccess
 
       interface _SearchQuickResponsesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::SearchQuickResponsesResponse]
-        def next_token: () -> ::String
         def results: () -> ::Array[Types::QuickResponseSearchResultData]
+        def next_token: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#search_quick_responses-instance_method
       def search_quick_responses: (
-                                    ?attributes: Hash[::String, ::String],
                                     knowledge_base_id: ::String,
-                                    ?max_results: ::Integer,
-                                    ?next_token: ::String,
                                     search_expression: {
+                                      queries: Array[
+                                        {
+                                          name: ::String,
+                                          values: Array[::String],
+                                          operator: ("CONTAINS" | "CONTAINS_AND_PREFIX"),
+                                          allow_fuzziness: bool?,
+                                          priority: ("HIGH" | "MEDIUM" | "LOW")?
+                                        },
+                                      ]?,
                                       filters: Array[
                                         {
-                                          include_no_existence: bool?,
                                           name: ::String,
+                                          values: Array[::String]?,
                                           operator: ("EQUALS" | "PREFIX"),
-                                          values: Array[::String]?
+                                          include_no_existence: bool?
                                         },
                                       ]?,
                                       order_on_field: {
                                         name: ::String,
                                         order: ("ASC" | "DESC")?
-                                      }?,
-                                      queries: Array[
-                                        {
-                                          allow_fuzziness: bool?,
-                                          name: ::String,
-                                          operator: ("CONTAINS" | "CONTAINS_AND_PREFIX"),
-                                          priority: ("HIGH" | "MEDIUM" | "LOW")?,
-                                          values: Array[::String]
-                                        },
-                                      ]?
-                                    }
+                                      }?
+                                    },
+                                    ?next_token: ::String,
+                                    ?max_results: ::Integer,
+                                    ?attributes: Hash[::String, ::String]
                                   ) -> _SearchQuickResponsesResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _SearchQuickResponsesResponseSuccess
 
       interface _SearchSessionsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::SearchSessionsResponse]
-        def next_token: () -> ::String
         def session_summaries: () -> ::Array[Types::SessionSummary]
+        def next_token: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#search_sessions-instance_method
       def search_sessions: (
-                             assistant_id: ::String,
-                             ?max_results: ::Integer,
                              ?next_token: ::String,
+                             ?max_results: ::Integer,
+                             assistant_id: ::String,
                              search_expression: {
                                filters: Array[
                                  {
@@ -1602,22 +1603,15 @@ module Aws
 
       interface _SendMessageResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::SendMessageResponse]
-        def next_message_token: () -> ::String
         def request_message_id: () -> ::String
+        def configuration: () -> Types::MessageConfiguration
+        def next_message_token: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#send_message-instance_method
       def send_message: (
                           assistant_id: ::String,
-                          ?client_token: ::String,
-                          ?conversation_context: {
-                            self_service_conversation_history: Array[
-                              {
-                                bot_response: ::String?,
-                                input_transcript: ::String?,
-                                turn_number: ::Integer
-                              },
-                            ]
-                          },
+                          session_id: ::String,
+                          type: ("TEXT"),
                           message: {
                             value: {
                               text: {
@@ -1625,22 +1619,33 @@ module Aws
                               }?
                             }
                           },
-                          session_id: ::String,
-                          type: ("TEXT")
+                          ?conversation_context: {
+                            self_service_conversation_history: Array[
+                              {
+                                turn_number: ::Integer,
+                                input_transcript: ::String?,
+                                bot_response: ::String?
+                              },
+                            ]
+                          },
+                          ?configuration: {
+                            generate_filler_message: bool?
+                          },
+                          ?client_token: ::String
                         ) -> _SendMessageResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _SendMessageResponseSuccess
 
       interface _StartContentUploadResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StartContentUploadResponse]
-        def headers_to_include: () -> ::Hash[::String, ::String]
         def upload_id: () -> ::String
         def url: () -> ::String
         def url_expiry: () -> ::Time
+        def headers_to_include: () -> ::Hash[::String, ::String]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#start_content_upload-instance_method
       def start_content_upload: (
-                                  content_type: ::String,
                                   knowledge_base_id: ::String,
+                                  content_type: ::String,
                                   ?presigned_url_time_to_live: ::Integer
                                 ) -> _StartContentUploadResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartContentUploadResponseSuccess
@@ -1651,19 +1656,19 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#start_import_job-instance_method
       def start_import_job: (
+                              knowledge_base_id: ::String,
+                              import_job_type: ("QUICK_RESPONSES"),
+                              upload_id: ::String,
                               ?client_token: ::String,
+                              ?metadata: Hash[::String, ::String],
                               ?external_source_configuration: {
+                                source: ("AMAZON_CONNECT"),
                                 configuration: {
                                   connect_configuration: {
                                     instance_id: ::String?
                                   }?
-                                },
-                                source: ("AMAZON_CONNECT")
-                              },
-                              import_job_type: ("QUICK_RESPONSES"),
-                              knowledge_base_id: ::String,
-                              ?metadata: Hash[::String, ::String],
-                              upload_id: ::String
+                                }
+                              }
                             ) -> _StartImportJobResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartImportJobResponseSuccess
 
@@ -1693,18 +1698,25 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#update_ai_agent-instance_method
       def update_ai_agent: (
-                             ai_agent_id: ::String,
-                             assistant_id: ::String,
                              ?client_token: ::String,
+                             assistant_id: ::String,
+                             ai_agent_id: ::String,
+                             visibility_status: ("SAVED" | "PUBLISHED"),
                              ?configuration: {
-                               answer_recommendation_ai_agent_configuration: {
-                                 answer_generation_ai_guardrail_id: ::String?,
+                               manual_search_ai_agent_configuration: {
                                  answer_generation_ai_prompt_id: ::String?,
+                                 answer_generation_ai_guardrail_id: ::String?,
                                  association_configurations: Array[
                                    {
+                                     association_id: ::String?,
+                                     association_type: ("KNOWLEDGE_BASE")?,
                                      association_configuration_data: {
                                        knowledge_base_association_configuration_data: {
                                          content_tag_filter: {
+                                           tag_condition: {
+                                             key: ::String,
+                                             value: ::String?
+                                           }?,
                                            and_conditions: Array[
                                              {
                                                key: ::String,
@@ -1724,32 +1736,32 @@ module Aws
                                                  value: ::String?
                                                }?
                                              },
-                                           ]?,
-                                           tag_condition: {
-                                             key: ::String,
-                                             value: ::String?
-                                           }?
+                                           ]?
                                          }?,
                                          max_results: ::Integer?,
                                          override_knowledge_base_search_type: ("HYBRID" | "SEMANTIC")?
                                        }?
-                                     }?,
-                                     association_id: ::String?,
-                                     association_type: ("KNOWLEDGE_BASE")?
+                                     }?
                                    },
                                  ]?,
-                                 intent_labeling_generation_ai_prompt_id: ::String?,
-                                 locale: ::String?,
-                                 query_reformulation_ai_prompt_id: ::String?
+                                 locale: ::String?
                                }?,
-                               manual_search_ai_agent_configuration: {
-                                 answer_generation_ai_guardrail_id: ::String?,
+                               answer_recommendation_ai_agent_configuration: {
+                                 intent_labeling_generation_ai_prompt_id: ::String?,
+                                 query_reformulation_ai_prompt_id: ::String?,
                                  answer_generation_ai_prompt_id: ::String?,
+                                 answer_generation_ai_guardrail_id: ::String?,
                                  association_configurations: Array[
                                    {
+                                     association_id: ::String?,
+                                     association_type: ("KNOWLEDGE_BASE")?,
                                      association_configuration_data: {
                                        knowledge_base_association_configuration_data: {
                                          content_tag_filter: {
+                                           tag_condition: {
+                                             key: ::String,
+                                             value: ::String?
+                                           }?,
                                            and_conditions: Array[
                                              {
                                                key: ::String,
@@ -1769,28 +1781,31 @@ module Aws
                                                  value: ::String?
                                                }?
                                              },
-                                           ]?,
-                                           tag_condition: {
-                                             key: ::String,
-                                             value: ::String?
-                                           }?
+                                           ]?
                                          }?,
                                          max_results: ::Integer?,
                                          override_knowledge_base_search_type: ("HYBRID" | "SEMANTIC")?
                                        }?
-                                     }?,
-                                     association_id: ::String?,
-                                     association_type: ("KNOWLEDGE_BASE")?
+                                     }?
                                    },
                                  ]?,
                                  locale: ::String?
                                }?,
                                self_service_ai_agent_configuration: {
+                                 self_service_pre_processing_ai_prompt_id: ::String?,
+                                 self_service_answer_generation_ai_prompt_id: ::String?,
+                                 self_service_ai_guardrail_id: ::String?,
                                  association_configurations: Array[
                                    {
+                                     association_id: ::String?,
+                                     association_type: ("KNOWLEDGE_BASE")?,
                                      association_configuration_data: {
                                        knowledge_base_association_configuration_data: {
                                          content_tag_filter: {
+                                           tag_condition: {
+                                             key: ::String,
+                                             value: ::String?
+                                           }?,
                                            and_conditions: Array[
                                              {
                                                key: ::String,
@@ -1810,27 +1825,17 @@ module Aws
                                                  value: ::String?
                                                }?
                                              },
-                                           ]?,
-                                           tag_condition: {
-                                             key: ::String,
-                                             value: ::String?
-                                           }?
+                                           ]?
                                          }?,
                                          max_results: ::Integer?,
                                          override_knowledge_base_search_type: ("HYBRID" | "SEMANTIC")?
                                        }?
-                                     }?,
-                                     association_id: ::String?,
-                                     association_type: ("KNOWLEDGE_BASE")?
+                                     }?
                                    },
-                                 ]?,
-                                 self_service_ai_guardrail_id: ::String?,
-                                 self_service_answer_generation_ai_prompt_id: ::String?,
-                                 self_service_pre_processing_ai_prompt_id: ::String?
+                                 ]?
                                }?
                              },
-                             ?description: ::String,
-                             visibility_status: ("SAVED" | "PUBLISHED")
+                             ?description: ::String
                            ) -> _UpdateAIAgentResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateAIAgentResponseSuccess
 
@@ -1840,67 +1845,67 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#update_ai_guardrail-instance_method
       def update_ai_guardrail: (
-                                 ai_guardrail_id: ::String,
+                                 ?client_token: ::String,
                                  assistant_id: ::String,
+                                 ai_guardrail_id: ::String,
+                                 visibility_status: ("SAVED" | "PUBLISHED"),
                                  blocked_input_messaging: ::String,
                                  blocked_outputs_messaging: ::String,
-                                 ?client_token: ::String,
-                                 ?content_policy_config: {
-                                   filters_config: Array[
-                                     {
-                                       input_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
-                                       output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
-                                       type: ("SEXUAL" | "VIOLENCE" | "HATE" | "INSULTS" | "MISCONDUCT" | "PROMPT_ATTACK")
-                                     },
-                                   ]
-                                 },
-                                 ?contextual_grounding_policy_config: {
-                                   filters_config: Array[
-                                     {
-                                       threshold: ::Float,
-                                       type: ("GROUNDING" | "RELEVANCE")
-                                     },
-                                   ]
-                                 },
                                  ?description: ::String,
-                                 ?sensitive_information_policy_config: {
-                                   pii_entities_config: Array[
-                                     {
-                                       action: ("BLOCK" | "ANONYMIZE"),
-                                       type: ("ADDRESS" | "AGE" | "AWS_ACCESS_KEY" | "AWS_SECRET_KEY" | "CA_HEALTH_NUMBER" | "CA_SOCIAL_INSURANCE_NUMBER" | "CREDIT_DEBIT_CARD_CVV" | "CREDIT_DEBIT_CARD_EXPIRY" | "CREDIT_DEBIT_CARD_NUMBER" | "DRIVER_ID" | "EMAIL" | "INTERNATIONAL_BANK_ACCOUNT_NUMBER" | "IP_ADDRESS" | "LICENSE_PLATE" | "MAC_ADDRESS" | "NAME" | "PASSWORD" | "PHONE" | "PIN" | "SWIFT_CODE" | "UK_NATIONAL_HEALTH_SERVICE_NUMBER" | "UK_NATIONAL_INSURANCE_NUMBER" | "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER" | "URL" | "USERNAME" | "US_BANK_ACCOUNT_NUMBER" | "US_BANK_ROUTING_NUMBER" | "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER" | "US_PASSPORT_NUMBER" | "US_SOCIAL_SECURITY_NUMBER" | "VEHICLE_IDENTIFICATION_NUMBER")
-                                     },
-                                   ]?,
-                                   regexes_config: Array[
-                                     {
-                                       action: ("BLOCK" | "ANONYMIZE"),
-                                       description: ::String?,
-                                       name: ::String,
-                                       pattern: ::String
-                                     },
-                                   ]?
-                                 },
                                  ?topic_policy_config: {
                                    topics_config: Array[
                                      {
+                                       name: ::String,
                                        definition: ::String,
                                        examples: Array[::String]?,
-                                       name: ::String,
                                        type: ("DENY")
                                      },
                                    ]
                                  },
-                                 visibility_status: ("SAVED" | "PUBLISHED"),
-                                 ?word_policy_config: {
-                                   managed_word_lists_config: Array[
+                                 ?content_policy_config: {
+                                   filters_config: Array[
                                      {
-                                       type: ("PROFANITY")
+                                       type: ("SEXUAL" | "VIOLENCE" | "HATE" | "INSULTS" | "MISCONDUCT" | "PROMPT_ATTACK"),
+                                       input_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
+                                       output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
                                      },
-                                   ]?,
+                                   ]
+                                 },
+                                 ?word_policy_config: {
                                    words_config: Array[
                                      {
                                        text: ::String
                                      },
+                                   ]?,
+                                   managed_word_lists_config: Array[
+                                     {
+                                       type: ("PROFANITY")
+                                     },
                                    ]?
+                                 },
+                                 ?sensitive_information_policy_config: {
+                                   pii_entities_config: Array[
+                                     {
+                                       type: ("ADDRESS" | "AGE" | "AWS_ACCESS_KEY" | "AWS_SECRET_KEY" | "CA_HEALTH_NUMBER" | "CA_SOCIAL_INSURANCE_NUMBER" | "CREDIT_DEBIT_CARD_CVV" | "CREDIT_DEBIT_CARD_EXPIRY" | "CREDIT_DEBIT_CARD_NUMBER" | "DRIVER_ID" | "EMAIL" | "INTERNATIONAL_BANK_ACCOUNT_NUMBER" | "IP_ADDRESS" | "LICENSE_PLATE" | "MAC_ADDRESS" | "NAME" | "PASSWORD" | "PHONE" | "PIN" | "SWIFT_CODE" | "UK_NATIONAL_HEALTH_SERVICE_NUMBER" | "UK_NATIONAL_INSURANCE_NUMBER" | "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER" | "URL" | "USERNAME" | "US_BANK_ACCOUNT_NUMBER" | "US_BANK_ROUTING_NUMBER" | "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER" | "US_PASSPORT_NUMBER" | "US_SOCIAL_SECURITY_NUMBER" | "VEHICLE_IDENTIFICATION_NUMBER"),
+                                       action: ("BLOCK" | "ANONYMIZE")
+                                     },
+                                   ]?,
+                                   regexes_config: Array[
+                                     {
+                                       name: ::String,
+                                       description: ::String?,
+                                       pattern: ::String,
+                                       action: ("BLOCK" | "ANONYMIZE")
+                                     },
+                                   ]?
+                                 },
+                                 ?contextual_grounding_policy_config: {
+                                   filters_config: Array[
+                                     {
+                                       type: ("GROUNDING" | "RELEVANCE"),
+                                       threshold: ::Float
+                                     },
+                                   ]
                                  }
                                ) -> _UpdateAIGuardrailResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateAIGuardrailResponseSuccess
@@ -1911,16 +1916,16 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#update_ai_prompt-instance_method
       def update_ai_prompt: (
-                              ai_prompt_id: ::String,
-                              assistant_id: ::String,
                               ?client_token: ::String,
-                              ?description: ::String,
+                              assistant_id: ::String,
+                              ai_prompt_id: ::String,
+                              visibility_status: ("SAVED" | "PUBLISHED"),
                               ?template_configuration: {
                                 text_full_ai_prompt_edit_template_configuration: {
                                   text: ::String
                                 }?
                               },
-                              visibility_status: ("SAVED" | "PUBLISHED")
+                              ?description: ::String
                             ) -> _UpdateAIPromptResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateAIPromptResponseSuccess
 
@@ -1930,8 +1935,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#update_assistant_ai_agent-instance_method
       def update_assistant_ai_agent: (
-                                       ai_agent_type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"),
                                        assistant_id: ::String,
+                                       ai_agent_type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"),
                                        configuration: {
                                          ai_agent_id: ::String
                                        }
@@ -1944,13 +1949,13 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#update_content-instance_method
       def update_content: (
-                            content_id: ::String,
                             knowledge_base_id: ::String,
-                            ?metadata: Hash[::String, ::String],
-                            ?override_link_out_uri: ::String,
-                            ?remove_override_link_out_uri: bool,
+                            content_id: ::String,
                             ?revision_id: ::String,
                             ?title: ::String,
+                            ?override_link_out_uri: ::String,
+                            ?remove_override_link_out_uri: bool,
+                            ?metadata: Hash[::String, ::String],
                             ?upload_id: ::String
                           ) -> _UpdateContentResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateContentResponseSuccess
@@ -1972,13 +1977,16 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#update_message_template-instance_method
       def update_message_template: (
+                                     knowledge_base_id: ::String,
+                                     message_template_id: ::String,
                                      ?content: {
                                        email: {
+                                         subject: ::String?,
                                          body: {
-                                           html: {
+                                           plain_text: {
                                              content: ::String?
                                            }?,
-                                           plain_text: {
+                                           html: {
                                              content: ::String?
                                            }?
                                          }?,
@@ -1987,8 +1995,7 @@ module Aws
                                              name: ::String?,
                                              value: ::String?
                                            },
-                                         ]?,
-                                         subject: ::String?
+                                         ]?
                                        }?,
                                        sms: {
                                          body: {
@@ -1998,85 +2005,83 @@ module Aws
                                          }?
                                        }?
                                      },
+                                     ?language: ::String,
                                      ?default_attributes: {
+                                       system_attributes: {
+                                         name: ::String?,
+                                         customer_endpoint: {
+                                           address: ::String?
+                                         }?,
+                                         system_endpoint: {
+                                           address: ::String?
+                                         }?
+                                       }?,
                                        agent_attributes: {
                                          first_name: ::String?,
                                          last_name: ::String?
                                        }?,
-                                       custom_attributes: Hash[::String, ::String]?,
                                        customer_profile_attributes: {
+                                         profile_id: ::String?,
+                                         profile_arn: ::String?,
+                                         first_name: ::String?,
+                                         middle_name: ::String?,
+                                         last_name: ::String?,
                                          account_number: ::String?,
+                                         email_address: ::String?,
+                                         phone_number: ::String?,
                                          additional_information: ::String?,
+                                         party_type: ::String?,
+                                         business_name: ::String?,
+                                         birth_date: ::String?,
+                                         gender: ::String?,
+                                         mobile_phone_number: ::String?,
+                                         home_phone_number: ::String?,
+                                         business_phone_number: ::String?,
+                                         business_email_address: ::String?,
                                          address1: ::String?,
                                          address2: ::String?,
                                          address3: ::String?,
                                          address4: ::String?,
-                                         billing_address_1: ::String?,
-                                         billing_address_2: ::String?,
-                                         billing_address_3: ::String?,
-                                         billing_address_4: ::String?,
-                                         billing_city: ::String?,
-                                         billing_country: ::String?,
-                                         billing_county: ::String?,
-                                         billing_postal_code: ::String?,
-                                         billing_province: ::String?,
-                                         billing_state: ::String?,
-                                         birth_date: ::String?,
-                                         business_email_address: ::String?,
-                                         business_name: ::String?,
-                                         business_phone_number: ::String?,
                                          city: ::String?,
-                                         country: ::String?,
                                          county: ::String?,
-                                         custom: Hash[::String, ::String]?,
-                                         email_address: ::String?,
-                                         first_name: ::String?,
-                                         gender: ::String?,
-                                         home_phone_number: ::String?,
-                                         last_name: ::String?,
-                                         mailing_address_1: ::String?,
-                                         mailing_address_2: ::String?,
-                                         mailing_address_3: ::String?,
-                                         mailing_address_4: ::String?,
-                                         mailing_city: ::String?,
-                                         mailing_country: ::String?,
-                                         mailing_county: ::String?,
-                                         mailing_postal_code: ::String?,
-                                         mailing_province: ::String?,
-                                         mailing_state: ::String?,
-                                         middle_name: ::String?,
-                                         mobile_phone_number: ::String?,
-                                         party_type: ::String?,
-                                         phone_number: ::String?,
+                                         country: ::String?,
                                          postal_code: ::String?,
-                                         profile_arn: ::String?,
-                                         profile_id: ::String?,
                                          province: ::String?,
+                                         state: ::String?,
                                          shipping_address_1: ::String?,
                                          shipping_address_2: ::String?,
                                          shipping_address_3: ::String?,
                                          shipping_address_4: ::String?,
                                          shipping_city: ::String?,
-                                         shipping_country: ::String?,
                                          shipping_county: ::String?,
+                                         shipping_country: ::String?,
                                          shipping_postal_code: ::String?,
                                          shipping_province: ::String?,
                                          shipping_state: ::String?,
-                                         state: ::String?
+                                         mailing_address_1: ::String?,
+                                         mailing_address_2: ::String?,
+                                         mailing_address_3: ::String?,
+                                         mailing_address_4: ::String?,
+                                         mailing_city: ::String?,
+                                         mailing_county: ::String?,
+                                         mailing_country: ::String?,
+                                         mailing_postal_code: ::String?,
+                                         mailing_province: ::String?,
+                                         mailing_state: ::String?,
+                                         billing_address_1: ::String?,
+                                         billing_address_2: ::String?,
+                                         billing_address_3: ::String?,
+                                         billing_address_4: ::String?,
+                                         billing_city: ::String?,
+                                         billing_county: ::String?,
+                                         billing_country: ::String?,
+                                         billing_postal_code: ::String?,
+                                         billing_province: ::String?,
+                                         billing_state: ::String?,
+                                         custom: Hash[::String, ::String]?
                                        }?,
-                                       system_attributes: {
-                                         customer_endpoint: {
-                                           address: ::String?
-                                         }?,
-                                         name: ::String?,
-                                         system_endpoint: {
-                                           address: ::String?
-                                         }?
-                                       }?
-                                     },
-                                     knowledge_base_id: ::String,
-                                     ?language: ::String,
-                                     message_template_id: ::String
+                                       custom_attributes: Hash[::String, ::String]?
+                                     }
                                    ) -> _UpdateMessageTemplateResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateMessageTemplateResponseSuccess
 
@@ -2086,14 +2091,14 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#update_message_template_metadata-instance_method
       def update_message_template_metadata: (
+                                              knowledge_base_id: ::String,
+                                              message_template_id: ::String,
+                                              ?name: ::String,
                                               ?description: ::String,
                                               ?grouping_configuration: {
                                                 criteria: ::String?,
                                                 values: Array[::String]?
-                                              },
-                                              knowledge_base_id: ::String,
-                                              message_template_id: ::String,
-                                              ?name: ::String
+                                              }
                                             ) -> _UpdateMessageTemplateMetadataResponseSuccess
                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateMessageTemplateMetadataResponseSuccess
 
@@ -2103,25 +2108,25 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#update_quick_response-instance_method
       def update_quick_response: (
-                                   ?channels: Array[::String],
+                                   knowledge_base_id: ::String,
+                                   quick_response_id: ::String,
+                                   ?name: ::String,
                                    ?content: {
                                      content: ::String?
                                    },
                                    ?content_type: ::String,
-                                   ?description: ::String,
                                    ?grouping_configuration: {
                                      criteria: ::String?,
                                      values: Array[::String]?
                                    },
-                                   ?is_active: bool,
-                                   knowledge_base_id: ::String,
-                                   ?language: ::String,
-                                   ?name: ::String,
-                                   quick_response_id: ::String,
-                                   ?remove_description: bool,
                                    ?remove_grouping_configuration: bool,
+                                   ?description: ::String,
+                                   ?remove_description: bool,
+                                   ?shortcut_key: ::String,
                                    ?remove_shortcut_key: bool,
-                                   ?shortcut_key: ::String
+                                   ?is_active: bool,
+                                   ?channels: Array[::String],
+                                   ?language: ::String
                                  ) -> _UpdateQuickResponseResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateQuickResponseResponseSuccess
 
@@ -2131,13 +2136,14 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#update_session-instance_method
       def update_session: (
-                            ?ai_agent_configuration: Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"), {
-                                ai_agent_id: ::String
-                              }],
                             assistant_id: ::String,
-                            ?description: ::String,
                             session_id: ::String,
+                            ?description: ::String,
                             ?tag_filter: {
+                              tag_condition: {
+                                key: ::String,
+                                value: ::String?
+                              }?,
                               and_conditions: Array[
                                 {
                                   key: ::String,
@@ -2157,24 +2163,25 @@ module Aws
                                     value: ::String?
                                   }?
                                 },
-                              ]?,
-                              tag_condition: {
-                                key: ::String,
-                                value: ::String?
-                              }?
-                            }
+                              ]?
+                            },
+                            ?ai_agent_configuration: Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"), {
+                                ai_agent_id: ::String
+                              }]
                           ) -> _UpdateSessionResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateSessionResponseSuccess
 
       interface _UpdateSessionDataResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateSessionDataResponse]
-        def namespace: () -> ("Custom")
         def session_arn: () -> ::String
         def session_id: () -> ::String
+        def namespace: () -> ("Custom")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#update_session_data-instance_method
       def update_session_data: (
                                  assistant_id: ::String,
+                                 session_id: ::String,
+                                 ?namespace: ("Custom"),
                                  data: Array[
                                    {
                                      key: ::String,
@@ -2182,9 +2189,7 @@ module Aws
                                        string_value: ::String?
                                      }
                                    },
-                                 ],
-                                 ?namespace: ("Custom"),
-                                 session_id: ::String
+                                 ]
                                ) -> _UpdateSessionDataResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateSessionDataResponseSuccess
     end

@@ -273,6 +273,7 @@ module Aws::ServiceQuotas
       attr_accessor quota_code: ::String
       attr_accessor desired_value: ::Float
       attr_accessor context_id: ::String
+      attr_accessor support_case_allowed: bool
       SENSITIVE: []
     end
 
@@ -332,6 +333,7 @@ module Aws::ServiceQuotas
       attr_accessor error_reason: Types::ErrorReason
       attr_accessor quota_applied_at_level: ("ACCOUNT" | "RESOURCE" | "ALL")
       attr_accessor quota_context: Types::QuotaContextInfo
+      attr_accessor description: ::String
       SENSITIVE: []
     end
 

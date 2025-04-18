@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.53.0 (2025-04-18)
+------------------
+
+* Feature - Add new optional SupportCaseAllowed query parameter to the RequestServiceQuotaIncrease API
+
 1.52.0 (2025-02-18)
 ------------------
 

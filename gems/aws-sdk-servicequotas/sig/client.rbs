@@ -276,7 +276,8 @@ module Aws
                                             service_code: ::String,
                                             quota_code: ::String,
                                             desired_value: ::Float,
-                                            ?context_id: ::String
+                                            ?context_id: ::String,
+                                            ?support_case_allowed: bool
                                           ) -> _RequestServiceQuotaIncreaseResponseSuccess
                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RequestServiceQuotaIncreaseResponseSuccess
 

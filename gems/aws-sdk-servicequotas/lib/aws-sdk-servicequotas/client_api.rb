@@ -83,6 +83,7 @@ module Aws::ServiceQuotas
     QuotaContextInfo = Shapes::StructureShape.new(name: 'QuotaContextInfo')
     QuotaContextScope = Shapes::StringShape.new(name: 'QuotaContextScope')
     QuotaContextScopeType = Shapes::StringShape.new(name: 'QuotaContextScopeType')
+    QuotaDescription = Shapes::StringShape.new(name: 'QuotaDescription')
     QuotaExceededException = Shapes::StructureShape.new(name: 'QuotaExceededException')
     QuotaMetricName = Shapes::StringShape.new(name: 'QuotaMetricName')
     QuotaMetricNamespace = Shapes::StringShape.new(name: 'QuotaMetricNamespace')
@@ -110,6 +111,7 @@ module Aws::ServiceQuotas
     ServiceQuotaTemplateAssociationStatus = Shapes::StringShape.new(name: 'ServiceQuotaTemplateAssociationStatus')
     ServiceQuotaTemplateNotInUseException = Shapes::StructureShape.new(name: 'ServiceQuotaTemplateNotInUseException')
     Statistic = Shapes::StringShape.new(name: 'Statistic')
+    SupportCaseAllowed = Shapes::BooleanShape.new(name: 'SupportCaseAllowed')
     Tag = Shapes::StructureShape.new(name: 'Tag')
     TagKey = Shapes::StringShape.new(name: 'TagKey')
     TagPolicyViolationException = Shapes::StructureShape.new(name: 'TagPolicyViolationException')
@@ -309,6 +311,7 @@ module Aws::ServiceQuotas
     RequestServiceQuotaIncreaseRequest.add_member(:quota_code, Shapes::ShapeRef.new(shape: QuotaCode, required: true, location_name: "QuotaCode"))
     RequestServiceQuotaIncreaseRequest.add_member(:desired_value, Shapes::ShapeRef.new(shape: QuotaValue, required: true, location_name: "DesiredValue"))
     RequestServiceQuotaIncreaseRequest.add_member(:context_id, Shapes::ShapeRef.new(shape: QuotaContextId, location_name: "ContextId"))
+    RequestServiceQuotaIncreaseRequest.add_member(:support_case_allowed, Shapes::ShapeRef.new(shape: SupportCaseAllowed, location_name: "SupportCaseAllowed"))
     RequestServiceQuotaIncreaseRequest.struct_class = Types::RequestServiceQuotaIncreaseRequest
 
     RequestServiceQuotaIncreaseResponse.add_member(:requested_quota, Shapes::ShapeRef.new(shape: RequestedServiceQuotaChange, location_name: "RequestedQuota"))
@@ -360,6 +363,7 @@ module Aws::ServiceQuotas
     ServiceQuota.add_member(:error_reason, Shapes::ShapeRef.new(shape: ErrorReason, location_name: "ErrorReason"))
     ServiceQuota.add_member(:quota_applied_at_level, Shapes::ShapeRef.new(shape: AppliedLevelEnum, location_name: "QuotaAppliedAtLevel"))
     ServiceQuota.add_member(:quota_context, Shapes::ShapeRef.new(shape: QuotaContextInfo, location_name: "QuotaContext"))
+    ServiceQuota.add_member(:description, Shapes::ShapeRef.new(shape: QuotaDescription, location_name: "Description"))
     ServiceQuota.struct_class = Types::ServiceQuota
 
     ServiceQuotaIncreaseRequestInTemplate.add_member(:service_code, Shapes::ShapeRef.new(shape: ServiceCode, location_name: "ServiceCode"))

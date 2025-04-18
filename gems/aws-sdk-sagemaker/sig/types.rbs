@@ -7468,6 +7468,7 @@ module Aws::SageMaker
       attr_accessor creation_time: ::Time
       attr_accessor model_package_status: ("Pending" | "InProgress" | "Completed" | "Failed" | "Deleting")
       attr_accessor model_approval_status: ("Approved" | "Rejected" | "PendingManualApproval")
+      attr_accessor model_life_cycle: Types::ModelLifeCycle
       SENSITIVE: []
     end
 
@@ -8299,7 +8300,7 @@ module Aws::SageMaker
       attr_accessor enable_ssm_access: bool
       attr_accessor managed_instance_scaling: Types::ProductionVariantManagedInstanceScaling
       attr_accessor routing_config: Types::ProductionVariantRoutingConfig
-      attr_accessor inference_ami_version: ("al2-ami-sagemaker-inference-gpu-2" | "al2-ami-sagemaker-inference-gpu-2-1" | "al2-ami-sagemaker-inference-gpu-3-1")
+      attr_accessor inference_ami_version: ("al2-ami-sagemaker-inference-gpu-2" | "al2-ami-sagemaker-inference-gpu-2-1" | "al2-ami-sagemaker-inference-gpu-3-1" | "al2-ami-sagemaker-inference-neuron-2")
       SENSITIVE: []
     end
 

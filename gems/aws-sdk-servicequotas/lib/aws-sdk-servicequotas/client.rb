@@ -592,6 +592,7 @@ module Aws::ServiceQuotas
     #   resp.quota.quota_context.context_scope #=> String, one of "RESOURCE", "ACCOUNT"
     #   resp.quota.quota_context.context_scope_type #=> String
     #   resp.quota.quota_context.context_id #=> String
+    #   resp.quota.description #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/service-quotas-2019-06-24/GetAWSDefaultServiceQuota AWS API Documentation
     #
@@ -667,9 +668,10 @@ module Aws::ServiceQuotas
       req.send_request(options)
     end
 
-    # Retrieves the applied quota value for the specified quota. For some
-    # quotas, only the default values are available. If the applied quota
-    # value is not available for a quota, the quota is not retrieved.
+    # Retrieves the applied quota value for the specified account-level or
+    # resource-level quota. For some quotas, only the default values are
+    # available. If the applied quota value is not available for a quota,
+    # the quota is not retrieved.
     #
     # @option params [required, String] :service_code
     #   Specifies the service identifier. To find the service code value for
@@ -681,9 +683,7 @@ module Aws::ServiceQuotas
     #   `QuotaCode` response in the output for the quota you want.
     #
     # @option params [String] :context_id
-    #   Specifies the Amazon Web Services account or resource to which the
-    #   quota applies. The value in this field depends on the context scope
-    #   associated with the specified service quota.
+    #   Specifies the resource with an Amazon Resource Name (ARN).
     #
     # @return [Types::GetServiceQuotaResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -721,6 +721,7 @@ module Aws::ServiceQuotas
     #   resp.quota.quota_context.context_scope #=> String, one of "RESOURCE", "ACCOUNT"
     #   resp.quota.quota_context.context_scope_type #=> String
     #   resp.quota.quota_context.context_id #=> String
+    #   resp.quota.description #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/service-quotas-2019-06-24/GetServiceQuota AWS API Documentation
     #
@@ -780,7 +781,8 @@ module Aws::ServiceQuotas
     end
 
     # Lists the default values for the quotas for the specified Amazon Web
-    # Service. A default value does not reflect any quota increases.
+    # Services service. A default value does not reflect any quota
+    # increases.
     #
     # @option params [required, String] :service_code
     #   Specifies the service identifier. To find the service code value for
@@ -849,6 +851,7 @@ module Aws::ServiceQuotas
     #   resp.quotas[0].quota_context.context_scope #=> String, one of "RESOURCE", "ACCOUNT"
     #   resp.quotas[0].quota_context.context_scope_type #=> String
     #   resp.quotas[0].quota_context.context_id #=> String
+    #   resp.quotas[0].description #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/service-quotas-2019-06-24/ListAWSDefaultServiceQuotas AWS API Documentation
     #
@@ -860,7 +863,9 @@ module Aws::ServiceQuotas
     end
 
     # Retrieves the quota increase requests for the specified Amazon Web
-    # Service.
+    # Services service. Filter responses to return quota requests at either
+    # the account level, resource level, or all levels. Responses include
+    # any open or closed requests within 90 days.
     #
     # @option params [String] :service_code
     #   Specifies the service identifier. To find the service code value for
@@ -893,8 +898,8 @@ module Aws::ServiceQuotas
     #    </note>
     #
     # @option params [String] :quota_requested_at_level
-    #   Specifies at which level within the Amazon Web Services account the
-    #   quota request applies to.
+    #   Filters the response to return quota requests for the `ACCOUNT`,
+    #   `RESOURCE`, or `ALL` levels. `ACCOUNT` is the default.
     #
     # @return [Types::ListRequestedServiceQuotaChangeHistoryResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -945,7 +950,9 @@ module Aws::ServiceQuotas
       req.send_request(options)
     end
 
-    # Retrieves the quota increase requests for the specified quota.
+    # Retrieves the quota increase requests for the specified quota. Filter
+    # responses to return quota requests at either the account level,
+    # resource level, or all levels.
     #
     # @option params [required, String] :service_code
     #   Specifies the service identifier. To find the service code value for
@@ -983,8 +990,8 @@ module Aws::ServiceQuotas
     #    </note>
     #
     # @option params [String] :quota_requested_at_level
-    #   Specifies at which level within the Amazon Web Services account the
-    #   quota request applies to.
+    #   Filters the response to return quota requests for the `ACCOUNT`,
+    #   `RESOURCE`, or `ALL` levels. `ACCOUNT` is the default.
     #
     # @return [Types::ListRequestedServiceQuotaChangeHistoryByQuotaResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1107,9 +1114,11 @@ module Aws::ServiceQuotas
       req.send_request(options)
     end
 
-    # Lists the applied quota values for the specified Amazon Web Service.
-    # For some quotas, only the default values are available. If the applied
-    # quota value is not available for a quota, the quota is not retrieved.
+    # Lists the applied quota values for the specified Amazon Web Services
+    # service. For some quotas, only the default values are available. If
+    # the applied quota value is not available for a quota, the quota is not
+    # retrieved. Filter responses to return applied quota values at either
+    # the account level, resource level, or all levels.
     #
     # @option params [required, String] :service_code
     #   Specifies the service identifier. To find the service code value for
@@ -1143,8 +1152,8 @@ module Aws::ServiceQuotas
     #   `QuotaCode` response in the output for the quota you want.
     #
     # @option params [String] :quota_applied_at_level
-    #   Specifies at which level of granularity that the quota value is
-    #   applied.
+    #   Filters the response to return applied quota values for the `ACCOUNT`,
+    #   `RESOURCE`, or `ALL` levels. `ACCOUNT` is the default.
     #
     # @return [Types::ListServiceQuotasResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1189,6 +1198,7 @@ module Aws::ServiceQuotas
     #   resp.quotas[0].quota_context.context_scope #=> String, one of "RESOURCE", "ACCOUNT"
     #   resp.quotas[0].quota_context.context_scope_type #=> String
     #   resp.quotas[0].quota_context.context_id #=> String
+    #   resp.quotas[0].description #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/service-quotas-2019-06-24/ListServiceQuotas AWS API Documentation
     #
@@ -1199,8 +1209,8 @@ module Aws::ServiceQuotas
       req.send_request(options)
     end
 
-    # Lists the names and codes for the Amazon Web Services integrated with
-    # Service Quotas.
+    # Lists the names and codes for the Amazon Web Services services
+    # integrated with Service Quotas.
     #
     # @option params [String] :next_token
     #   Specifies a value for receiving additional results after you receive a
@@ -1344,7 +1354,8 @@ module Aws::ServiceQuotas
       req.send_request(options)
     end
 
-    # Submits a quota increase request for the specified quota.
+    # Submits a quota increase request for the specified quota at the
+    # account or resource level.
     #
     # @option params [required, String] :service_code
     #   Specifies the service identifier. To find the service code value for
@@ -1359,9 +1370,18 @@ module Aws::ServiceQuotas
     #   Specifies the new, increased value for the quota.
     #
     # @option params [String] :context_id
-    #   Specifies the Amazon Web Services account or resource to which the
-    #   quota applies. The value in this field depends on the context scope
-    #   associated with the specified service quota.
+    #   Specifies the resource with an Amazon Resource Name (ARN).
+    #
+    # @option params [Boolean] :support_case_allowed
+    #   Specifies if an Amazon Web Services Support case can be opened for the
+    #   quota increase request. This parameter is optional.
+    #
+    #   By default, this flag is set to `True` and Amazon Web Services may
+    #   create a support case for some quota increase requests. You can set
+    #   this flag to `False` if you do not want a support case created when
+    #   you request a quota increase. If you set the flag to `False`, Amazon
+    #   Web Services does not open a support case and updates the request
+    #   status to `Not approved`.
     #
     # @return [Types::RequestServiceQuotaIncreaseResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1374,6 +1394,7 @@ module Aws::ServiceQuotas
     #     quota_code: "QuotaCode", # required
     #     desired_value: 1.0, # required
     #     context_id: "QuotaContextId",
+    #     support_case_allowed: false,
     #   })
     #
     # @example Response structure
@@ -1500,7 +1521,7 @@ module Aws::ServiceQuotas
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-servicequotas'
-      context[:gem_version] = '1.52.0'
+      context[:gem_version] = '1.53.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

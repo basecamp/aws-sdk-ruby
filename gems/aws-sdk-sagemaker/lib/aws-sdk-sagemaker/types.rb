@@ -35359,6 +35359,11 @@ module Aws::SageMaker
     #     approval.
     #   @return [String]
     #
+    # @!attribute [rw] model_life_cycle
+    #   A structure describing the current state of the model in its life
+    #   cycle.
+    #   @return [Types::ModelLifeCycle]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ModelPackageSummary AWS API Documentation
     #
     class ModelPackageSummary < Struct.new(
@@ -35369,7 +35374,8 @@ module Aws::SageMaker
       :model_package_description,
       :creation_time,
       :model_package_status,
-      :model_approval_status)
+      :model_approval_status,
+      :model_life_cycle)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -39318,6 +39324,11 @@ module Aws::SageMaker
     #     * CUDA version: 12.4
     #
     #     * NVIDIA Container Toolkit with disabled CUDA-compat mounting
+    #
+    #   al2-ami-sagemaker-inference-neuron-2
+    #   : * Accelerator: Inferentia2 and Trainium
+    #
+    #     * Neuron driver version: 2.19
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ProductionVariant AWS API Documentation
@@ -44184,6 +44195,27 @@ module Aws::SageMaker
     # @!attribute [rw] max_pending_time_in_seconds
     #   The maximum length of time, in seconds, that a training or
     #   compilation job can be pending before it is stopped.
+    #
+    #   <note markdown="1"> When working with training jobs that use capacity from [training
+    #   plans][1], not all `Pending` job states count against the
+    #   `MaxPendingTimeInSeconds` limit. The following scenarios do not
+    #   increment the `MaxPendingTimeInSeconds` counter:
+    #
+    #    * The plan is in a `Scheduled` state: Jobs queued (in `Pending`
+    #     status) before a plan's start date (waiting for scheduled start
+    #     time)
+    #
+    #   * Between capacity reservations: Jobs temporarily back to `Pending`
+    #     status between two capacity reservation periods
+    #
+    #    `MaxPendingTimeInSeconds` only increments when jobs are actively
+    #   waiting for capacity in an `Active` plan.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/sagemaker/latest/dg/reserve-capacity-with-training-plans.html
     #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/StoppingCondition AWS API Documentation

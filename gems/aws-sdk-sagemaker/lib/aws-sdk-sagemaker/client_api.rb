@@ -8563,6 +8563,7 @@ module Aws::SageMaker
     ModelPackageSummary.add_member(:creation_time, Shapes::ShapeRef.new(shape: CreationTime, required: true, location_name: "CreationTime"))
     ModelPackageSummary.add_member(:model_package_status, Shapes::ShapeRef.new(shape: ModelPackageStatus, required: true, location_name: "ModelPackageStatus"))
     ModelPackageSummary.add_member(:model_approval_status, Shapes::ShapeRef.new(shape: ModelApprovalStatus, location_name: "ModelApprovalStatus"))
+    ModelPackageSummary.add_member(:model_life_cycle, Shapes::ShapeRef.new(shape: ModelLifeCycle, location_name: "ModelLifeCycle"))
     ModelPackageSummary.struct_class = Types::ModelPackageSummary
 
     ModelPackageSummaryList.member = Shapes::ShapeRef.new(shape: ModelPackageSummary)
