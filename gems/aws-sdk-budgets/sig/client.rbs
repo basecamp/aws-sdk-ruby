@@ -132,7 +132,32 @@ module Aws
                                  look_back_available_periods: ::Integer?
                                }?,
                                last_auto_adjust_time: ::Time?
-                             }?
+                             }?,
+                             filter_expression: {
+                               or: Array[
+                                 untyped,
+                               ]?,
+                               and: Array[
+                                 untyped,
+                               ]?,
+                               not: untyped?,
+                               dimensions: {
+                                 key: ("AZ" | "INSTANCE_TYPE" | "LINKED_ACCOUNT" | "LINKED_ACCOUNT_NAME" | "OPERATION" | "PURCHASE_TYPE" | "REGION" | "SERVICE" | "SERVICE_CODE" | "USAGE_TYPE" | "USAGE_TYPE_GROUP" | "RECORD_TYPE" | "OPERATING_SYSTEM" | "TENANCY" | "SCOPE" | "PLATFORM" | "SUBSCRIPTION_ID" | "LEGAL_ENTITY_NAME" | "INVOICING_ENTITY" | "DEPLOYMENT_OPTION" | "DATABASE_ENGINE" | "CACHE_ENGINE" | "INSTANCE_TYPE_FAMILY" | "BILLING_ENTITY" | "RESERVATION_ID" | "RESOURCE_ID" | "RIGHTSIZING_TYPE" | "SAVINGS_PLANS_TYPE" | "SAVINGS_PLAN_ARN" | "PAYMENT_OPTION" | "RESERVATION_MODIFIED" | "TAG_KEY" | "COST_CATEGORY_NAME"),
+                                 values: Array[::String],
+                                 match_options: Array[("EQUALS" | "ABSENT" | "STARTS_WITH" | "ENDS_WITH" | "CONTAINS" | "GREATER_THAN_OR_EQUAL" | "CASE_SENSITIVE" | "CASE_INSENSITIVE")]?
+                               }?,
+                               tags: {
+                                 key: ::String?,
+                                 values: Array[::String]?,
+                                 match_options: Array[("EQUALS" | "ABSENT" | "STARTS_WITH" | "ENDS_WITH" | "CONTAINS" | "GREATER_THAN_OR_EQUAL" | "CASE_SENSITIVE" | "CASE_INSENSITIVE")]?
+                               }?,
+                               cost_categories: {
+                                 key: ::String?,
+                                 values: Array[::String]?,
+                                 match_options: Array[("EQUALS" | "ABSENT" | "STARTS_WITH" | "ENDS_WITH" | "CONTAINS" | "GREATER_THAN_OR_EQUAL" | "CASE_SENSITIVE" | "CASE_INSENSITIVE")]?
+                               }?
+                             }?,
+                             metrics: Array[("BlendedCost" | "UnblendedCost" | "AmortizedCost" | "NetUnblendedCost" | "NetAmortizedCost" | "UsageQuantity" | "NormalizedUsageAmount" | "Hours")]?
                            },
                            ?notifications_with_subscribers: Array[
                              {
@@ -323,7 +348,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Budgets/Client.html#describe_budget-instance_method
       def describe_budget: (
                              account_id: ::String,
-                             budget_name: ::String
+                             budget_name: ::String,
+                             ?show_filter_expression: bool
                            ) -> _DescribeBudgetResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeBudgetResponseSuccess
 
@@ -427,7 +453,8 @@ module Aws
       def describe_budgets: (
                               account_id: ::String,
                               ?max_results: ::Integer,
-                              ?next_token: ::String
+                              ?next_token: ::String,
+                              ?show_filter_expression: bool
                             ) -> _DescribeBudgetsResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeBudgetsResponseSuccess
 
@@ -571,7 +598,32 @@ module Aws
                                  look_back_available_periods: ::Integer?
                                }?,
                                last_auto_adjust_time: ::Time?
-                             }?
+                             }?,
+                             filter_expression: {
+                               or: Array[
+                                 untyped,
+                               ]?,
+                               and: Array[
+                                 untyped,
+                               ]?,
+                               not: untyped?,
+                               dimensions: {
+                                 key: ("AZ" | "INSTANCE_TYPE" | "LINKED_ACCOUNT" | "LINKED_ACCOUNT_NAME" | "OPERATION" | "PURCHASE_TYPE" | "REGION" | "SERVICE" | "SERVICE_CODE" | "USAGE_TYPE" | "USAGE_TYPE_GROUP" | "RECORD_TYPE" | "OPERATING_SYSTEM" | "TENANCY" | "SCOPE" | "PLATFORM" | "SUBSCRIPTION_ID" | "LEGAL_ENTITY_NAME" | "INVOICING_ENTITY" | "DEPLOYMENT_OPTION" | "DATABASE_ENGINE" | "CACHE_ENGINE" | "INSTANCE_TYPE_FAMILY" | "BILLING_ENTITY" | "RESERVATION_ID" | "RESOURCE_ID" | "RIGHTSIZING_TYPE" | "SAVINGS_PLANS_TYPE" | "SAVINGS_PLAN_ARN" | "PAYMENT_OPTION" | "RESERVATION_MODIFIED" | "TAG_KEY" | "COST_CATEGORY_NAME"),
+                                 values: Array[::String],
+                                 match_options: Array[("EQUALS" | "ABSENT" | "STARTS_WITH" | "ENDS_WITH" | "CONTAINS" | "GREATER_THAN_OR_EQUAL" | "CASE_SENSITIVE" | "CASE_INSENSITIVE")]?
+                               }?,
+                               tags: {
+                                 key: ::String?,
+                                 values: Array[::String]?,
+                                 match_options: Array[("EQUALS" | "ABSENT" | "STARTS_WITH" | "ENDS_WITH" | "CONTAINS" | "GREATER_THAN_OR_EQUAL" | "CASE_SENSITIVE" | "CASE_INSENSITIVE")]?
+                               }?,
+                               cost_categories: {
+                                 key: ::String?,
+                                 values: Array[::String]?,
+                                 match_options: Array[("EQUALS" | "ABSENT" | "STARTS_WITH" | "ENDS_WITH" | "CONTAINS" | "GREATER_THAN_OR_EQUAL" | "CASE_SENSITIVE" | "CASE_INSENSITIVE")]?
+                               }?
+                             }?,
+                             metrics: Array[("BlendedCost" | "UnblendedCost" | "AmortizedCost" | "NetUnblendedCost" | "NetAmortizedCost" | "UsageQuantity" | "NormalizedUsageAmount" | "Hours")]?
                            }
                          ) -> _UpdateBudgetResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateBudgetResponseSuccess

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.133.0 (2025-04-21)
+------------------
+
+* Feature - Minor documentation update for the GetConfigurationPolicyAssociation example
+
 1.132.0 (2025-04-08)
 ------------------
 

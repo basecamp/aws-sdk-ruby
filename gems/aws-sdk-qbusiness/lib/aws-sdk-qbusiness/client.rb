@@ -1072,6 +1072,88 @@ module Aws::QBusiness
       req.send_request(options)
     end
 
+    # Verifies if a user has access permissions for a specified document and
+    # returns the actual ACL attached to the document. Resolves user access
+    # on the document via user aliases and groups when verifying user
+    # access.
+    #
+    # @option params [required, String] :application_id
+    #   The unique identifier of the application. This is required to identify
+    #   the specific Amazon Q Business application context for the document
+    #   access check.
+    #
+    # @option params [required, String] :index_id
+    #   The unique identifier of the index. Used to locate the correct index
+    #   within the application where the document is stored.
+    #
+    # @option params [required, String] :user_id
+    #   The unique identifier of the user. Used to check the access
+    #   permissions for this specific user against the document's ACL.
+    #
+    # @option params [required, String] :document_id
+    #   The unique identifier of the document. Specifies which document's
+    #   access permissions are being checked.
+    #
+    # @option params [String] :data_source_id
+    #   The unique identifier of the data source. Identifies the specific data
+    #   source from which the document originates. Should not be used when a
+    #   document is uploaded directly with BatchPutDocument, as no
+    #   dataSourceId is available or necessary.
+    #
+    # @return [Types::CheckDocumentAccessResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CheckDocumentAccessResponse#user_groups #user_groups} => Array&lt;Types::AssociatedGroup&gt;
+    #   * {Types::CheckDocumentAccessResponse#user_aliases #user_aliases} => Array&lt;Types::AssociatedUser&gt;
+    #   * {Types::CheckDocumentAccessResponse#has_access #has_access} => Boolean
+    #   * {Types::CheckDocumentAccessResponse#document_acl #document_acl} => Types::DocumentAcl
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.check_document_access({
+    #     application_id: "ApplicationId", # required
+    #     index_id: "IndexId", # required
+    #     user_id: "String", # required
+    #     document_id: "DocumentId", # required
+    #     data_source_id: "DataSourceId",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.user_groups #=> Array
+    #   resp.user_groups[0].name #=> String
+    #   resp.user_groups[0].type #=> String, one of "INDEX", "DATASOURCE"
+    #   resp.user_aliases #=> Array
+    #   resp.user_aliases[0].id #=> String
+    #   resp.user_aliases[0].type #=> String, one of "INDEX", "DATASOURCE"
+    #   resp.has_access #=> Boolean
+    #   resp.document_acl.allowlist.member_relation #=> String, one of "AND", "OR"
+    #   resp.document_acl.allowlist.conditions #=> Array
+    #   resp.document_acl.allowlist.conditions[0].member_relation #=> String, one of "AND", "OR"
+    #   resp.document_acl.allowlist.conditions[0].users #=> Array
+    #   resp.document_acl.allowlist.conditions[0].users[0].id #=> String
+    #   resp.document_acl.allowlist.conditions[0].users[0].type #=> String, one of "INDEX", "DATASOURCE"
+    #   resp.document_acl.allowlist.conditions[0].groups #=> Array
+    #   resp.document_acl.allowlist.conditions[0].groups[0].name #=> String
+    #   resp.document_acl.allowlist.conditions[0].groups[0].type #=> String, one of "INDEX", "DATASOURCE"
+    #   resp.document_acl.deny_list.member_relation #=> String, one of "AND", "OR"
+    #   resp.document_acl.deny_list.conditions #=> Array
+    #   resp.document_acl.deny_list.conditions[0].member_relation #=> String, one of "AND", "OR"
+    #   resp.document_acl.deny_list.conditions[0].users #=> Array
+    #   resp.document_acl.deny_list.conditions[0].users[0].id #=> String
+    #   resp.document_acl.deny_list.conditions[0].users[0].type #=> String, one of "INDEX", "DATASOURCE"
+    #   resp.document_acl.deny_list.conditions[0].groups #=> Array
+    #   resp.document_acl.deny_list.conditions[0].groups[0].name #=> String
+    #   resp.document_acl.deny_list.conditions[0].groups[0].type #=> String, one of "INDEX", "DATASOURCE"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CheckDocumentAccess AWS API Documentation
+    #
+    # @overload check_document_access(params = {})
+    # @param [Hash] params ({})
+    def check_document_access(params = {}, options = {})
+      req = build_request(:check_document_access, params)
+      req.send_request(options)
+    end
+
     # Creates an Amazon Q Business application.
     #
     # <note markdown="1"> There are new tiers for Amazon Q Business. Not all features in Amazon
@@ -2017,12 +2099,14 @@ module Aws::QBusiness
     #
     # @option params [Array<String>] :origins
     #   Sets the website domain origins that are allowed to embed the Amazon Q
-    #   Business web experience.      The <i>domain origin</i> refers to the
-    #   base URL for accessing a website including the protocol
-    #   (<code>http/https</code>), the domain name, and the port number (if
-    #   specified). </p> <note> <p>You must only submit a <i>base URL</i> and
-    #   not a full path. For example,
-    #   <code>https://docs.aws.amazon.com</code>.</p> </note>
+    #   Business web experience. The *domain origin* refers to the base URL
+    #   for accessing a website including the protocol (`http/https`), the
+    #   domain name, and the port number (if specified).
+    #
+    #   <note markdown="1"> You must only submit a *base URL* and not a full path. For example,
+    #   `https://docs.aws.amazon.com`.
+    #
+    #    </note>
     #
     # @option params [String] :role_arn
     #   The Amazon Resource Name (ARN) of the service role attached to your
@@ -5601,14 +5685,17 @@ module Aws::QBusiness
     #
     # @option params [Array<String>] :origins
     #   Updates the website domain origins that are allowed to embed the
-    #   Amazon Q Business web experience.      The <i>domain origin</i> refers
-    #   to the <i>base URL</i> for accessing a website including the protocol
-    #   (<code>http/https</code>), the domain name, and the port number (if
-    #   specified).</p> <note> <ul> <li> <p>Any values except
-    #   <code>null</code> submitted as part of this update will replace all
-    #   previous values.</p> </li> <li> <p>You must only submit a <i>base
-    #   URL</i> and not a full path. For example,
-    #   <code>https://docs.aws.amazon.com</code>.</p> </li> </ul> </note>
+    #   Amazon Q Business web experience. The *domain origin* refers to the
+    #   *base URL* for accessing a website including the protocol
+    #   (`http/https`), the domain name, and the port number (if specified).
+    #
+    #   <note markdown="1"> * Any values except `null` submitted as part of this update will
+    #     replace all previous values.
+    #
+    #   * You must only submit a *base URL* and not a full path. For example,
+    #     `https://docs.aws.amazon.com`.
+    #
+    #    </note>
     #
     # @option params [Types::BrowserExtensionConfiguration] :browser_extension_configuration
     #   The browser extension configuration for an Amazon Q Business web
@@ -5698,7 +5785,7 @@ module Aws::QBusiness
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qbusiness'
-      context[:gem_version] = '1.34.0'
+      context[:gem_version] = '1.35.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -206,6 +206,8 @@ module Aws::MediaTailor
       attr_accessor name: ::String
       attr_accessor playback_configuration_name: ::String
       attr_accessor retrieval: Types::PrefetchRetrieval
+      attr_accessor recurring_prefetch_configuration: Types::RecurringPrefetchConfiguration
+      attr_accessor schedule_type: ("SINGLE" | "RECURRING")
       attr_accessor stream_id: ::String
       SENSITIVE: []
     end
@@ -216,6 +218,8 @@ module Aws::MediaTailor
       attr_accessor name: ::String
       attr_accessor playback_configuration_name: ::String
       attr_accessor retrieval: Types::PrefetchRetrieval
+      attr_accessor recurring_prefetch_configuration: Types::RecurringPrefetchConfiguration
+      attr_accessor schedule_type: ("SINGLE" | "RECURRING")
       attr_accessor stream_id: ::String
       SENSITIVE: []
     end
@@ -548,6 +552,8 @@ module Aws::MediaTailor
       attr_accessor name: ::String
       attr_accessor playback_configuration_name: ::String
       attr_accessor retrieval: Types::PrefetchRetrieval
+      attr_accessor schedule_type: ("SINGLE" | "RECURRING")
+      attr_accessor recurring_prefetch_configuration: Types::RecurringPrefetchConfiguration
       attr_accessor stream_id: ::String
       SENSITIVE: []
     end
@@ -635,6 +641,7 @@ module Aws::MediaTailor
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
       attr_accessor playback_configuration_name: ::String
+      attr_accessor schedule_type: ("SINGLE" | "RECURRING" | "ALL")
       attr_accessor stream_id: ::String
       SENSITIVE: []
     end
@@ -756,6 +763,8 @@ module Aws::MediaTailor
       attr_accessor dynamic_variables: ::Hash[::String, ::String]
       attr_accessor end_time: ::Time
       attr_accessor start_time: ::Time
+      attr_accessor traffic_shaping_type: ("RETRIEVAL_WINDOW")
+      attr_accessor traffic_shaping_retrieval_window: Types::TrafficShapingRetrievalWindow
       SENSITIVE: []
     end
 
@@ -765,6 +774,8 @@ module Aws::MediaTailor
       attr_accessor name: ::String
       attr_accessor playback_configuration_name: ::String
       attr_accessor retrieval: Types::PrefetchRetrieval
+      attr_accessor schedule_type: ("SINGLE" | "RECURRING")
+      attr_accessor recurring_prefetch_configuration: Types::RecurringPrefetchConfiguration
       attr_accessor stream_id: ::String
       SENSITIVE: []
     end
@@ -820,6 +831,28 @@ module Aws::MediaTailor
       attr_accessor transcode_profile_name: ::String
       attr_accessor video_content_source_url: ::String
       attr_accessor ad_conditioning_configuration: Types::AdConditioningConfiguration
+      SENSITIVE: []
+    end
+
+    class RecurringConsumption
+      attr_accessor retrieved_ad_expiration_seconds: ::Integer
+      attr_accessor avail_matching_criteria: ::Array[Types::AvailMatchingCriteria]
+      SENSITIVE: []
+    end
+
+    class RecurringPrefetchConfiguration
+      attr_accessor start_time: ::Time
+      attr_accessor end_time: ::Time
+      attr_accessor recurring_consumption: Types::RecurringConsumption
+      attr_accessor recurring_retrieval: Types::RecurringRetrieval
+      SENSITIVE: []
+    end
+
+    class RecurringRetrieval
+      attr_accessor dynamic_variables: ::Hash[::String, ::String]
+      attr_accessor delay_after_avail_end_seconds: ::Integer
+      attr_accessor traffic_shaping_type: ("RETRIEVAL_WINDOW")
+      attr_accessor traffic_shaping_retrieval_window: Types::TrafficShapingRetrievalWindow
       SENSITIVE: []
     end
 
@@ -950,6 +983,11 @@ module Aws::MediaTailor
 
     class TimeSignalMessage
       attr_accessor segmentation_descriptors: ::Array[Types::SegmentationDescriptor]
+      SENSITIVE: []
+    end
+
+    class TrafficShapingRetrievalWindow
+      attr_accessor retrieval_window_duration_seconds: ::Integer
       SENSITIVE: []
     end
 

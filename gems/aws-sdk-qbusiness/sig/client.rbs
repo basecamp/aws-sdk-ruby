@@ -391,6 +391,23 @@ module Aws
                      ) -> _ChatSyncResponseSuccess
                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ChatSyncResponseSuccess
 
+      interface _CheckDocumentAccessResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CheckDocumentAccessResponse]
+        def user_groups: () -> ::Array[Types::AssociatedGroup]
+        def user_aliases: () -> ::Array[Types::AssociatedUser]
+        def has_access: () -> bool
+        def document_acl: () -> Types::DocumentAcl
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#check_document_access-instance_method
+      def check_document_access: (
+                                   application_id: ::String,
+                                   index_id: ::String,
+                                   user_id: ::String,
+                                   document_id: ::String,
+                                   ?data_source_id: ::String
+                                 ) -> _CheckDocumentAccessResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CheckDocumentAccessResponseSuccess
+
       interface _CreateApplicationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateApplicationResponse]
         def application_id: () -> ::String

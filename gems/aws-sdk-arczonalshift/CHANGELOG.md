@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.31.0 (2025-04-21)
+------------------
+
+* Feature - Updates to documentation and exception types for Zonal Autoshift
+
 1.30.0 (2025-03-26)
 ------------------
 

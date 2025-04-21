@@ -479,7 +479,7 @@ module Aws::Firehose
 
     # Creates a Firehose stream.
     #
-    # By default, you can create up to 50 Firehose streams per Amazon Web
+    # By default, you can create up to 5,000 Firehose streams per Amazon Web
     # Services Region.
     #
     # This is an asynchronous operation that immediately returns. The
@@ -3320,7 +3320,7 @@ module Aws::Firehose
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-firehose'
-      context[:gem_version] = '1.89.0'
+      context[:gem_version] = '1.90.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

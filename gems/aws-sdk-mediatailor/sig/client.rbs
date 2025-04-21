@@ -192,11 +192,13 @@ module Aws
         def name: () -> ::String
         def playback_configuration_name: () -> ::String
         def retrieval: () -> Types::PrefetchRetrieval
+        def recurring_prefetch_configuration: () -> Types::RecurringPrefetchConfiguration
+        def schedule_type: () -> ("SINGLE" | "RECURRING")
         def stream_id: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaTailor/Client.html#create_prefetch_schedule-instance_method
       def create_prefetch_schedule: (
-                                      consumption: {
+                                      ?consumption: {
                                         avail_matching_criteria: Array[
                                           {
                                             dynamic_variable: ::String,
@@ -208,11 +210,37 @@ module Aws
                                       },
                                       name: ::String,
                                       playback_configuration_name: ::String,
-                                      retrieval: {
+                                      ?retrieval: {
                                         dynamic_variables: Hash[::String, ::String]?,
                                         end_time: ::Time,
-                                        start_time: ::Time?
+                                        start_time: ::Time?,
+                                        traffic_shaping_type: ("RETRIEVAL_WINDOW")?,
+                                        traffic_shaping_retrieval_window: {
+                                          retrieval_window_duration_seconds: ::Integer?
+                                        }?
                                       },
+                                      ?recurring_prefetch_configuration: {
+                                        start_time: ::Time?,
+                                        end_time: ::Time,
+                                        recurring_consumption: {
+                                          retrieved_ad_expiration_seconds: ::Integer?,
+                                          avail_matching_criteria: Array[
+                                            {
+                                              dynamic_variable: ::String,
+                                              operator: ("EQUALS")
+                                            },
+                                          ]?
+                                        },
+                                        recurring_retrieval: {
+                                          dynamic_variables: Hash[::String, ::String]?,
+                                          delay_after_avail_end_seconds: ::Integer?,
+                                          traffic_shaping_type: ("RETRIEVAL_WINDOW")?,
+                                          traffic_shaping_retrieval_window: {
+                                            retrieval_window_duration_seconds: ::Integer?
+                                          }?
+                                        }
+                                      },
+                                      ?schedule_type: ("SINGLE" | "RECURRING"),
                                       ?stream_id: ::String
                                     ) -> _CreatePrefetchScheduleResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreatePrefetchScheduleResponseSuccess
@@ -644,6 +672,8 @@ module Aws
         def name: () -> ::String
         def playback_configuration_name: () -> ::String
         def retrieval: () -> Types::PrefetchRetrieval
+        def schedule_type: () -> ("SINGLE" | "RECURRING")
+        def recurring_prefetch_configuration: () -> Types::RecurringPrefetchConfiguration
         def stream_id: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaTailor/Client.html#get_prefetch_schedule-instance_method
@@ -713,6 +743,7 @@ module Aws
                                      ?max_results: ::Integer,
                                      ?next_token: ::String,
                                      playback_configuration_name: ::String,
+                                     ?schedule_type: ("SINGLE" | "RECURRING" | "ALL"),
                                      ?stream_id: ::String
                                    ) -> _ListPrefetchSchedulesResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListPrefetchSchedulesResponseSuccess

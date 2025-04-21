@@ -52,6 +52,10 @@ module Aws::QBusiness
     AppliedOrchestrationConfiguration = Shapes::StructureShape.new(name: 'AppliedOrchestrationConfiguration')
     AssociatePermissionRequest = Shapes::StructureShape.new(name: 'AssociatePermissionRequest')
     AssociatePermissionResponse = Shapes::StructureShape.new(name: 'AssociatePermissionResponse')
+    AssociatedGroup = Shapes::StructureShape.new(name: 'AssociatedGroup')
+    AssociatedGroups = Shapes::ListShape.new(name: 'AssociatedGroups')
+    AssociatedUser = Shapes::StructureShape.new(name: 'AssociatedUser')
+    AssociatedUsers = Shapes::ListShape.new(name: 'AssociatedUsers')
     Attachment = Shapes::StructureShape.new(name: 'Attachment')
     AttachmentId = Shapes::StringShape.new(name: 'AttachmentId')
     AttachmentInput = Shapes::StructureShape.new(name: 'AttachmentInput')
@@ -106,6 +110,8 @@ module Aws::QBusiness
     ChatOutputStream = Shapes::StructureShape.new(name: 'ChatOutputStream')
     ChatSyncInput = Shapes::StructureShape.new(name: 'ChatSyncInput')
     ChatSyncOutput = Shapes::StructureShape.new(name: 'ChatSyncOutput')
+    CheckDocumentAccessRequest = Shapes::StructureShape.new(name: 'CheckDocumentAccessRequest')
+    CheckDocumentAccessResponse = Shapes::StructureShape.new(name: 'CheckDocumentAccessResponse')
     ClientIdForOIDC = Shapes::StringShape.new(name: 'ClientIdForOIDC')
     ClientIdsForOIDC = Shapes::ListShape.new(name: 'ClientIdsForOIDC')
     ClientNamespace = Shapes::StringShape.new(name: 'ClientNamespace')
@@ -196,6 +202,14 @@ module Aws::QBusiness
     DisassociatePermissionRequest = Shapes::StructureShape.new(name: 'DisassociatePermissionRequest')
     DisassociatePermissionResponse = Shapes::StructureShape.new(name: 'DisassociatePermissionResponse')
     Document = Shapes::StructureShape.new(name: 'Document')
+    DocumentAcl = Shapes::StructureShape.new(name: 'DocumentAcl')
+    DocumentAclCondition = Shapes::StructureShape.new(name: 'DocumentAclCondition')
+    DocumentAclConditions = Shapes::ListShape.new(name: 'DocumentAclConditions')
+    DocumentAclGroup = Shapes::StructureShape.new(name: 'DocumentAclGroup')
+    DocumentAclGroups = Shapes::ListShape.new(name: 'DocumentAclGroups')
+    DocumentAclMembership = Shapes::StructureShape.new(name: 'DocumentAclMembership')
+    DocumentAclUser = Shapes::StructureShape.new(name: 'DocumentAclUser')
+    DocumentAclUsers = Shapes::ListShape.new(name: 'DocumentAclUsers')
     DocumentAttribute = Shapes::StructureShape.new(name: 'DocumentAttribute')
     DocumentAttributeBoostingConfiguration = Shapes::UnionShape.new(name: 'DocumentAttributeBoostingConfiguration')
     DocumentAttributeBoostingLevel = Shapes::StringShape.new(name: 'DocumentAttributeBoostingLevel')
@@ -672,6 +686,18 @@ module Aws::QBusiness
     AssociatePermissionResponse.add_member(:statement, Shapes::ShapeRef.new(shape: String, location_name: "statement"))
     AssociatePermissionResponse.struct_class = Types::AssociatePermissionResponse
 
+    AssociatedGroup.add_member(:name, Shapes::ShapeRef.new(shape: GroupName, location_name: "name"))
+    AssociatedGroup.add_member(:type, Shapes::ShapeRef.new(shape: MembershipType, location_name: "type"))
+    AssociatedGroup.struct_class = Types::AssociatedGroup
+
+    AssociatedGroups.member = Shapes::ShapeRef.new(shape: AssociatedGroup)
+
+    AssociatedUser.add_member(:id, Shapes::ShapeRef.new(shape: String, location_name: "id"))
+    AssociatedUser.add_member(:type, Shapes::ShapeRef.new(shape: MembershipType, location_name: "type"))
+    AssociatedUser.struct_class = Types::AssociatedUser
+
+    AssociatedUsers.member = Shapes::ShapeRef.new(shape: AssociatedUser)
+
     Attachment.add_member(:attachment_id, Shapes::ShapeRef.new(shape: AttachmentId, location_name: "attachmentId"))
     Attachment.add_member(:conversation_id, Shapes::ShapeRef.new(shape: ConversationId, location_name: "conversationId"))
     Attachment.add_member(:name, Shapes::ShapeRef.new(shape: AttachmentName, location_name: "name"))
@@ -860,6 +886,19 @@ module Aws::QBusiness
     ChatSyncOutput.add_member(:source_attributions, Shapes::ShapeRef.new(shape: SourceAttributions, location_name: "sourceAttributions"))
     ChatSyncOutput.add_member(:failed_attachments, Shapes::ShapeRef.new(shape: AttachmentsOutput, location_name: "failedAttachments"))
     ChatSyncOutput.struct_class = Types::ChatSyncOutput
+
+    CheckDocumentAccessRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    CheckDocumentAccessRequest.add_member(:index_id, Shapes::ShapeRef.new(shape: IndexId, required: true, location: "uri", location_name: "indexId"))
+    CheckDocumentAccessRequest.add_member(:user_id, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "userId"))
+    CheckDocumentAccessRequest.add_member(:document_id, Shapes::ShapeRef.new(shape: DocumentId, required: true, location: "uri", location_name: "documentId"))
+    CheckDocumentAccessRequest.add_member(:data_source_id, Shapes::ShapeRef.new(shape: DataSourceId, location: "querystring", location_name: "dataSourceId"))
+    CheckDocumentAccessRequest.struct_class = Types::CheckDocumentAccessRequest
+
+    CheckDocumentAccessResponse.add_member(:user_groups, Shapes::ShapeRef.new(shape: AssociatedGroups, location_name: "userGroups"))
+    CheckDocumentAccessResponse.add_member(:user_aliases, Shapes::ShapeRef.new(shape: AssociatedUsers, location_name: "userAliases"))
+    CheckDocumentAccessResponse.add_member(:has_access, Shapes::ShapeRef.new(shape: Boolean, location_name: "hasAccess"))
+    CheckDocumentAccessResponse.add_member(:document_acl, Shapes::ShapeRef.new(shape: DocumentAcl, location_name: "documentAcl"))
+    CheckDocumentAccessResponse.struct_class = Types::CheckDocumentAccessResponse
 
     ClientIdsForOIDC.member = Shapes::ShapeRef.new(shape: ClientIdForOIDC)
 
@@ -1193,6 +1232,33 @@ module Aws::QBusiness
     Document.add_member(:document_enrichment_configuration, Shapes::ShapeRef.new(shape: DocumentEnrichmentConfiguration, location_name: "documentEnrichmentConfiguration"))
     Document.add_member(:media_extraction_configuration, Shapes::ShapeRef.new(shape: MediaExtractionConfiguration, location_name: "mediaExtractionConfiguration"))
     Document.struct_class = Types::Document
+
+    DocumentAcl.add_member(:allowlist, Shapes::ShapeRef.new(shape: DocumentAclMembership, location_name: "allowlist"))
+    DocumentAcl.add_member(:deny_list, Shapes::ShapeRef.new(shape: DocumentAclMembership, location_name: "denyList"))
+    DocumentAcl.struct_class = Types::DocumentAcl
+
+    DocumentAclCondition.add_member(:member_relation, Shapes::ShapeRef.new(shape: MemberRelation, location_name: "memberRelation"))
+    DocumentAclCondition.add_member(:users, Shapes::ShapeRef.new(shape: DocumentAclUsers, location_name: "users"))
+    DocumentAclCondition.add_member(:groups, Shapes::ShapeRef.new(shape: DocumentAclGroups, location_name: "groups"))
+    DocumentAclCondition.struct_class = Types::DocumentAclCondition
+
+    DocumentAclConditions.member = Shapes::ShapeRef.new(shape: DocumentAclCondition)
+
+    DocumentAclGroup.add_member(:name, Shapes::ShapeRef.new(shape: GroupName, location_name: "name"))
+    DocumentAclGroup.add_member(:type, Shapes::ShapeRef.new(shape: MembershipType, location_name: "type"))
+    DocumentAclGroup.struct_class = Types::DocumentAclGroup
+
+    DocumentAclGroups.member = Shapes::ShapeRef.new(shape: DocumentAclGroup)
+
+    DocumentAclMembership.add_member(:member_relation, Shapes::ShapeRef.new(shape: MemberRelation, location_name: "memberRelation"))
+    DocumentAclMembership.add_member(:conditions, Shapes::ShapeRef.new(shape: DocumentAclConditions, location_name: "conditions"))
+    DocumentAclMembership.struct_class = Types::DocumentAclMembership
+
+    DocumentAclUser.add_member(:id, Shapes::ShapeRef.new(shape: String, location_name: "id"))
+    DocumentAclUser.add_member(:type, Shapes::ShapeRef.new(shape: MembershipType, location_name: "type"))
+    DocumentAclUser.struct_class = Types::DocumentAclUser
+
+    DocumentAclUsers.member = Shapes::ShapeRef.new(shape: DocumentAclUser)
 
     DocumentAttribute.add_member(:name, Shapes::ShapeRef.new(shape: DocumentAttributeKey, required: true, location_name: "name"))
     DocumentAttribute.add_member(:value, Shapes::ShapeRef.new(shape: DocumentAttributeValue, required: true, location_name: "value"))
@@ -2298,8 +2364,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/policy"
         o.input = Shapes::ShapeRef.new(shape: AssociatePermissionRequest)
         o.output = Shapes::ShapeRef.new(shape: AssociatePermissionResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2313,8 +2379,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/documents/delete"
         o.input = Shapes::ShapeRef.new(shape: BatchDeleteDocumentRequest)
         o.output = Shapes::ShapeRef.new(shape: BatchDeleteDocumentResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2327,8 +2393,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/documents"
         o.input = Shapes::ShapeRef.new(shape: BatchPutDocumentRequest)
         o.output = Shapes::ShapeRef.new(shape: BatchPutDocumentResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2342,8 +2408,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/subscriptions/{subscriptionId}"
         o.input = Shapes::ShapeRef.new(shape: CancelSubscriptionRequest)
         o.output = Shapes::ShapeRef.new(shape: CancelSubscriptionResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2355,10 +2421,10 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/conversations"
         o.input = Shapes::ShapeRef.new(shape: ChatInput)
         o.output = Shapes::ShapeRef.new(shape: ChatOutput)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
-        o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ExternalResourceException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2372,11 +2438,24 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/conversations?sync"
         o.input = Shapes::ShapeRef.new(shape: ChatSyncInput)
         o.output = Shapes::ShapeRef.new(shape: ChatSyncOutput)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
-        o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ExternalResourceException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
+      api.add_operation(:check_document_access, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CheckDocumentAccess"
+        o.http_method = "GET"
+        o.http_request_uri = "/applications/{applicationId}/index/{indexId}/users/{userId}/documents/{documentId}/check-document-access"
+        o.input = Shapes::ShapeRef.new(shape: CheckDocumentAccessRequest)
+        o.output = Shapes::ShapeRef.new(shape: CheckDocumentAccessResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2388,8 +2467,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications"
         o.input = Shapes::ShapeRef.new(shape: CreateApplicationRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateApplicationResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2403,8 +2482,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/dataaccessors"
         o.input = Shapes::ShapeRef.new(shape: CreateDataAccessorRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateDataAccessorResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2418,8 +2497,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/datasources"
         o.input = Shapes::ShapeRef.new(shape: CreateDataSourceRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateDataSourceResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2433,8 +2512,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices"
         o.input = Shapes::ShapeRef.new(shape: CreateIndexRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateIndexResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2448,8 +2527,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/plugins"
         o.input = Shapes::ShapeRef.new(shape: CreatePluginRequest)
         o.output = Shapes::ShapeRef.new(shape: CreatePluginResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2463,8 +2542,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/retrievers"
         o.input = Shapes::ShapeRef.new(shape: CreateRetrieverRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateRetrieverResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2478,8 +2557,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/subscriptions"
         o.input = Shapes::ShapeRef.new(shape: CreateSubscriptionRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateSubscriptionResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2492,8 +2571,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/users"
         o.input = Shapes::ShapeRef.new(shape: CreateUserRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateUserResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2507,8 +2586,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/experiences"
         o.input = Shapes::ShapeRef.new(shape: CreateWebExperienceRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateWebExperienceResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2522,8 +2601,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}"
         o.input = Shapes::ShapeRef.new(shape: DeleteApplicationRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteApplicationResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2536,8 +2615,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/conversations/{conversationId}/attachments/{attachmentId}"
         o.input = Shapes::ShapeRef.new(shape: DeleteAttachmentRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteAttachmentResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2550,8 +2629,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/chatcontrols"
         o.input = Shapes::ShapeRef.new(shape: DeleteChatControlsConfigurationRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteChatControlsConfigurationResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2563,8 +2642,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/conversations/{conversationId}"
         o.input = Shapes::ShapeRef.new(shape: DeleteConversationRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteConversationResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2577,8 +2656,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/dataaccessors/{dataAccessorId}"
         o.input = Shapes::ShapeRef.new(shape: DeleteDataAccessorRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteDataAccessorResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2591,8 +2670,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/datasources/{dataSourceId}"
         o.input = Shapes::ShapeRef.new(shape: DeleteDataSourceRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteDataSourceResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2605,8 +2684,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/groups/{groupName}"
         o.input = Shapes::ShapeRef.new(shape: DeleteGroupRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteGroupResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2619,8 +2698,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}"
         o.input = Shapes::ShapeRef.new(shape: DeleteIndexRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteIndexResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2633,8 +2712,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/plugins/{pluginId}"
         o.input = Shapes::ShapeRef.new(shape: DeletePluginRequest)
         o.output = Shapes::ShapeRef.new(shape: DeletePluginResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2647,8 +2726,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/retrievers/{retrieverId}"
         o.input = Shapes::ShapeRef.new(shape: DeleteRetrieverRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteRetrieverResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2661,8 +2740,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/users/{userId}"
         o.input = Shapes::ShapeRef.new(shape: DeleteUserRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteUserResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2675,8 +2754,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/experiences/{webExperienceId}"
         o.input = Shapes::ShapeRef.new(shape: DeleteWebExperienceRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteWebExperienceResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2689,8 +2768,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/policy/{statementId}"
         o.input = Shapes::ShapeRef.new(shape: DisassociatePermissionRequest)
         o.output = Shapes::ShapeRef.new(shape: DisassociatePermissionResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2703,8 +2782,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}"
         o.input = Shapes::ShapeRef.new(shape: GetApplicationRequest)
         o.output = Shapes::ShapeRef.new(shape: GetApplicationResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2716,8 +2795,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/chatcontrols"
         o.input = Shapes::ShapeRef.new(shape: GetChatControlsConfigurationRequest)
         o.output = Shapes::ShapeRef.new(shape: GetChatControlsConfigurationResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2735,8 +2814,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/dataaccessors/{dataAccessorId}"
         o.input = Shapes::ShapeRef.new(shape: GetDataAccessorRequest)
         o.output = Shapes::ShapeRef.new(shape: GetDataAccessorResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2748,8 +2827,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/datasources/{dataSourceId}"
         o.input = Shapes::ShapeRef.new(shape: GetDataSourceRequest)
         o.output = Shapes::ShapeRef.new(shape: GetDataSourceResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2761,8 +2840,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/groups/{groupName}"
         o.input = Shapes::ShapeRef.new(shape: GetGroupRequest)
         o.output = Shapes::ShapeRef.new(shape: GetGroupResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2775,8 +2854,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}"
         o.input = Shapes::ShapeRef.new(shape: GetIndexRequest)
         o.output = Shapes::ShapeRef.new(shape: GetIndexResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2788,8 +2867,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/conversations/{conversationId}/messages/{messageId}/media/{mediaId}"
         o.input = Shapes::ShapeRef.new(shape: GetMediaRequest)
         o.output = Shapes::ShapeRef.new(shape: GetMediaResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: MediaTooLargeException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
@@ -2803,8 +2882,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/plugins/{pluginId}"
         o.input = Shapes::ShapeRef.new(shape: GetPluginRequest)
         o.output = Shapes::ShapeRef.new(shape: GetPluginResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2816,8 +2895,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/policy"
         o.input = Shapes::ShapeRef.new(shape: GetPolicyRequest)
         o.output = Shapes::ShapeRef.new(shape: GetPolicyResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2829,8 +2908,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/retrievers/{retrieverId}"
         o.input = Shapes::ShapeRef.new(shape: GetRetrieverRequest)
         o.output = Shapes::ShapeRef.new(shape: GetRetrieverResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2842,8 +2921,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/users/{userId}"
         o.input = Shapes::ShapeRef.new(shape: GetUserRequest)
         o.output = Shapes::ShapeRef.new(shape: GetUserResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2856,8 +2935,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/experiences/{webExperienceId}"
         o.input = Shapes::ShapeRef.new(shape: GetWebExperienceRequest)
         o.output = Shapes::ShapeRef.new(shape: GetWebExperienceResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2887,8 +2966,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/attachments"
         o.input = Shapes::ShapeRef.new(shape: ListAttachmentsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListAttachmentsResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2907,8 +2986,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/conversations"
         o.input = Shapes::ShapeRef.new(shape: ListConversationsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListConversationsResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2927,8 +3006,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/dataaccessors"
         o.input = Shapes::ShapeRef.new(shape: ListDataAccessorsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListDataAccessorsResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2946,8 +3025,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/datasources/{dataSourceId}/syncjobs"
         o.input = Shapes::ShapeRef.new(shape: ListDataSourceSyncJobsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListDataSourceSyncJobsResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -2966,8 +3045,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/datasources"
         o.input = Shapes::ShapeRef.new(shape: ListDataSourcesRequest)
         o.output = Shapes::ShapeRef.new(shape: ListDataSourcesResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2985,8 +3064,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/index/{indexId}/documents"
         o.input = Shapes::ShapeRef.new(shape: ListDocumentsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListDocumentsResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -3004,8 +3083,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/groups"
         o.input = Shapes::ShapeRef.new(shape: ListGroupsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListGroupsResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3024,8 +3103,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices"
         o.input = Shapes::ShapeRef.new(shape: ListIndicesRequest)
         o.output = Shapes::ShapeRef.new(shape: ListIndicesResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -3043,8 +3122,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/conversations/{conversationId}"
         o.input = Shapes::ShapeRef.new(shape: ListMessagesRequest)
         o.output = Shapes::ShapeRef.new(shape: ListMessagesResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3063,8 +3142,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/plugins/{pluginId}/actions"
         o.input = Shapes::ShapeRef.new(shape: ListPluginActionsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListPluginActionsResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -3118,8 +3197,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/plugins"
         o.input = Shapes::ShapeRef.new(shape: ListPluginsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListPluginsResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -3137,8 +3216,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/retrievers"
         o.input = Shapes::ShapeRef.new(shape: ListRetrieversRequest)
         o.output = Shapes::ShapeRef.new(shape: ListRetrieversResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -3156,8 +3235,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/subscriptions"
         o.input = Shapes::ShapeRef.new(shape: ListSubscriptionsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListSubscriptionsResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3176,8 +3255,8 @@ module Aws::QBusiness
         o.http_request_uri = "/v1/tags/{resourceARN}"
         o.input = Shapes::ShapeRef.new(shape: ListTagsForResourceRequest)
         o.output = Shapes::ShapeRef.new(shape: ListTagsForResourceResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -3189,8 +3268,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/experiences"
         o.input = Shapes::ShapeRef.new(shape: ListWebExperiencesRequest)
         o.output = Shapes::ShapeRef.new(shape: ListWebExperiencesResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -3208,8 +3287,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/conversations/{conversationId}/messages/{messageId}/feedback"
         o.input = Shapes::ShapeRef.new(shape: PutFeedbackRequest)
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -3221,8 +3300,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/groups"
         o.input = Shapes::ShapeRef.new(shape: PutGroupRequest)
         o.output = Shapes::ShapeRef.new(shape: PutGroupResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3236,8 +3315,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/relevant-content"
         o.input = Shapes::ShapeRef.new(shape: SearchRelevantContentRequest)
         o.output = Shapes::ShapeRef.new(shape: SearchRelevantContentResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3256,8 +3335,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/datasources/{dataSourceId}/startsync"
         o.input = Shapes::ShapeRef.new(shape: StartDataSourceSyncJobRequest)
         o.output = Shapes::ShapeRef.new(shape: StartDataSourceSyncJobResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3271,8 +3350,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/datasources/{dataSourceId}/stopsync"
         o.input = Shapes::ShapeRef.new(shape: StopDataSourceSyncJobRequest)
         o.output = Shapes::ShapeRef.new(shape: StopDataSourceSyncJobResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3285,8 +3364,8 @@ module Aws::QBusiness
         o.http_request_uri = "/v1/tags/{resourceARN}"
         o.input = Shapes::ShapeRef.new(shape: TagResourceRequest)
         o.output = Shapes::ShapeRef.new(shape: TagResourceResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3299,8 +3378,8 @@ module Aws::QBusiness
         o.http_request_uri = "/v1/tags/{resourceARN}"
         o.input = Shapes::ShapeRef.new(shape: UntagResourceRequest)
         o.output = Shapes::ShapeRef.new(shape: UntagResourceResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -3312,8 +3391,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}"
         o.input = Shapes::ShapeRef.new(shape: UpdateApplicationRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateApplicationResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3326,8 +3405,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/chatcontrols"
         o.input = Shapes::ShapeRef.new(shape: UpdateChatControlsConfigurationRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateChatControlsConfigurationResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3341,8 +3420,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/dataaccessors/{dataAccessorId}"
         o.input = Shapes::ShapeRef.new(shape: UpdateDataAccessorRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateDataAccessorResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3355,8 +3434,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}/datasources/{dataSourceId}"
         o.input = Shapes::ShapeRef.new(shape: UpdateDataSourceRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateDataSourceResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3369,8 +3448,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/indices/{indexId}"
         o.input = Shapes::ShapeRef.new(shape: UpdateIndexRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateIndexResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3384,8 +3463,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/plugins/{pluginId}"
         o.input = Shapes::ShapeRef.new(shape: UpdatePluginRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdatePluginResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3399,8 +3478,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/retrievers/{retrieverId}"
         o.input = Shapes::ShapeRef.new(shape: UpdateRetrieverRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateRetrieverResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3414,8 +3493,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/subscriptions/{subscriptionId}"
         o.input = Shapes::ShapeRef.new(shape: UpdateSubscriptionRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateSubscriptionResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3428,8 +3507,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/users/{userId}"
         o.input = Shapes::ShapeRef.new(shape: UpdateUserRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateUserResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3443,8 +3522,8 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/experiences/{webExperienceId}"
         o.input = Shapes::ShapeRef.new(shape: UpdateWebExperienceRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateWebExperienceResponse)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)

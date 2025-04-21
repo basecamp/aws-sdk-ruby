@@ -96,8 +96,6 @@ module Aws::ARCZonalShift
     # Web Services ends the autoshift, and traffic for the resource is no
     # longer directed to the other Availability Zones in the Region.
     #
-    # You can stop an autoshift for a resource by disabling zonal autoshift.
-    #
     # @!attribute [rw] away_from
     #   The Availability Zone (for example, `use1-az1`) that traffic is
     #   shifted away from for a resource when Amazon Web Services starts an

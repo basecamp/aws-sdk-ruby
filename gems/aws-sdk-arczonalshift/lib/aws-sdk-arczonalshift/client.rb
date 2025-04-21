@@ -892,16 +892,7 @@ module Aws::ARCZonalShift
 
     # Lists all active and completed zonal shifts in Amazon Route 53
     # Application Recovery Controller in your Amazon Web Services account in
-    # this Amazon Web Services Region. `ListZonalShifts` returns
-    # customer-initiated zonal shifts, as well as practice run zonal shifts
-    # that ARC started on your behalf for zonal autoshift.
-    #
-    # For more information about listing autoshifts, see
-    # ["&gt;ListAutoshifts][1].
-    #
-    #
-    #
-    # [1]: https://docs.aws.amazon.com/arc-zonal-shift/latest/api/API_ListAutoshifts.html
+    # this Amazon Web Services Region.
     #
     # @option params [Integer] :max_results
     #   The number of objects that you want to return with this call.
@@ -1360,7 +1351,7 @@ module Aws::ARCZonalShift
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-arczonalshift'
-      context[:gem_version] = '1.30.0'
+      context[:gem_version] = '1.31.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -480,9 +480,17 @@ module Aws::Budgets
     # Creates a budget and, if included, notifications and subscribers.
     #
     # Only one of `BudgetLimit` or `PlannedBudgetLimits` can be present in
-    # the syntax at one time. Use the syntax that matches your case. The
+    # the syntax at one time. Use the syntax that matches your use case. The
     # Request Syntax section shows the `BudgetLimit` syntax. For
     # `PlannedBudgetLimits`, see the [Examples][1] section.
+    #
+    #  Similarly, only one set of filter and metric selections can be
+    # present
+    # in the syntax at one time. Either `FilterExpression` and `Metrics` or
+    # `CostFilters` and `CostTypes`, not both or a different combination. We
+    # recommend using `FilterExpression` and `Metrics` as they provide more
+    # flexible and powerful filtering capabilities. The Request Syntax
+    # section shows the `FilterExpression`/`Metrics` syntax.
     #
     #
     #
@@ -565,6 +573,37 @@ module Aws::Budgets
     #         },
     #         last_auto_adjust_time: Time.now,
     #       },
+    #       filter_expression: {
+    #         or: [
+    #           {
+    #             # recursive Expression
+    #           },
+    #         ],
+    #         and: [
+    #           {
+    #             # recursive Expression
+    #           },
+    #         ],
+    #         not: {
+    #           # recursive Expression
+    #         },
+    #         dimensions: {
+    #           key: "AZ", # required, accepts AZ, INSTANCE_TYPE, LINKED_ACCOUNT, LINKED_ACCOUNT_NAME, OPERATION, PURCHASE_TYPE, REGION, SERVICE, SERVICE_CODE, USAGE_TYPE, USAGE_TYPE_GROUP, RECORD_TYPE, OPERATING_SYSTEM, TENANCY, SCOPE, PLATFORM, SUBSCRIPTION_ID, LEGAL_ENTITY_NAME, INVOICING_ENTITY, DEPLOYMENT_OPTION, DATABASE_ENGINE, CACHE_ENGINE, INSTANCE_TYPE_FAMILY, BILLING_ENTITY, RESERVATION_ID, RESOURCE_ID, RIGHTSIZING_TYPE, SAVINGS_PLANS_TYPE, SAVINGS_PLAN_ARN, PAYMENT_OPTION, RESERVATION_MODIFIED, TAG_KEY, COST_CATEGORY_NAME
+    #           values: ["Value"], # required
+    #           match_options: ["EQUALS"], # accepts EQUALS, ABSENT, STARTS_WITH, ENDS_WITH, CONTAINS, GREATER_THAN_OR_EQUAL, CASE_SENSITIVE, CASE_INSENSITIVE
+    #         },
+    #         tags: {
+    #           key: "TagKey",
+    #           values: ["Value"],
+    #           match_options: ["EQUALS"], # accepts EQUALS, ABSENT, STARTS_WITH, ENDS_WITH, CONTAINS, GREATER_THAN_OR_EQUAL, CASE_SENSITIVE, CASE_INSENSITIVE
+    #         },
+    #         cost_categories: {
+    #           key: "CostCategoryName",
+    #           values: ["Value"],
+    #           match_options: ["EQUALS"], # accepts EQUALS, ABSENT, STARTS_WITH, ENDS_WITH, CONTAINS, GREATER_THAN_OR_EQUAL, CASE_SENSITIVE, CASE_INSENSITIVE
+    #         },
+    #       },
+    #       metrics: ["BlendedCost"], # accepts BlendedCost, UnblendedCost, AmortizedCost, NetUnblendedCost, NetAmortizedCost, UsageQuantity, NormalizedUsageAmount, Hours
     #     },
     #     notifications_with_subscribers: [
     #       {
@@ -983,6 +1022,12 @@ module Aws::Budgets
     # @option params [required, String] :budget_name
     #   The name of the budget that you want a description of.
     #
+    # @option params [Boolean] :show_filter_expression
+    #   Specifies whether the response includes the filter expression
+    #   associated with the budget. By showing the filter expression, you can
+    #   see detailed filtering logic applied to the budget, such as Amazon Web
+    #   Services services or tags that are being tracked.
+    #
     # @return [Types::DescribeBudgetResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::DescribeBudgetResponse#budget #budget} => Types::Budget
@@ -992,6 +1037,7 @@ module Aws::Budgets
     #   resp = client.describe_budget({
     #     account_id: "AccountId", # required
     #     budget_name: "BudgetName", # required
+    #     show_filter_expression: false,
     #   })
     #
     # @example Response structure
@@ -1029,6 +1075,28 @@ module Aws::Budgets
     #   resp.budget.auto_adjust_data.historical_options.budget_adjustment_period #=> Integer
     #   resp.budget.auto_adjust_data.historical_options.look_back_available_periods #=> Integer
     #   resp.budget.auto_adjust_data.last_auto_adjust_time #=> Time
+    #   resp.budget.filter_expression.or #=> Array
+    #   resp.budget.filter_expression.or[0] #=> Types::Expression
+    #   resp.budget.filter_expression.and #=> Array
+    #   resp.budget.filter_expression.and[0] #=> Types::Expression
+    #   resp.budget.filter_expression.not #=> Types::Expression
+    #   resp.budget.filter_expression.dimensions.key #=> String, one of "AZ", "INSTANCE_TYPE", "LINKED_ACCOUNT", "LINKED_ACCOUNT_NAME", "OPERATION", "PURCHASE_TYPE", "REGION", "SERVICE", "SERVICE_CODE", "USAGE_TYPE", "USAGE_TYPE_GROUP", "RECORD_TYPE", "OPERATING_SYSTEM", "TENANCY", "SCOPE", "PLATFORM", "SUBSCRIPTION_ID", "LEGAL_ENTITY_NAME", "INVOICING_ENTITY", "DEPLOYMENT_OPTION", "DATABASE_ENGINE", "CACHE_ENGINE", "INSTANCE_TYPE_FAMILY", "BILLING_ENTITY", "RESERVATION_ID", "RESOURCE_ID", "RIGHTSIZING_TYPE", "SAVINGS_PLANS_TYPE", "SAVINGS_PLAN_ARN", "PAYMENT_OPTION", "RESERVATION_MODIFIED", "TAG_KEY", "COST_CATEGORY_NAME"
+    #   resp.budget.filter_expression.dimensions.values #=> Array
+    #   resp.budget.filter_expression.dimensions.values[0] #=> String
+    #   resp.budget.filter_expression.dimensions.match_options #=> Array
+    #   resp.budget.filter_expression.dimensions.match_options[0] #=> String, one of "EQUALS", "ABSENT", "STARTS_WITH", "ENDS_WITH", "CONTAINS", "GREATER_THAN_OR_EQUAL", "CASE_SENSITIVE", "CASE_INSENSITIVE"
+    #   resp.budget.filter_expression.tags.key #=> String
+    #   resp.budget.filter_expression.tags.values #=> Array
+    #   resp.budget.filter_expression.tags.values[0] #=> String
+    #   resp.budget.filter_expression.tags.match_options #=> Array
+    #   resp.budget.filter_expression.tags.match_options[0] #=> String, one of "EQUALS", "ABSENT", "STARTS_WITH", "ENDS_WITH", "CONTAINS", "GREATER_THAN_OR_EQUAL", "CASE_SENSITIVE", "CASE_INSENSITIVE"
+    #   resp.budget.filter_expression.cost_categories.key #=> String
+    #   resp.budget.filter_expression.cost_categories.values #=> Array
+    #   resp.budget.filter_expression.cost_categories.values[0] #=> String
+    #   resp.budget.filter_expression.cost_categories.match_options #=> Array
+    #   resp.budget.filter_expression.cost_categories.match_options[0] #=> String, one of "EQUALS", "ABSENT", "STARTS_WITH", "ENDS_WITH", "CONTAINS", "GREATER_THAN_OR_EQUAL", "CASE_SENSITIVE", "CASE_INSENSITIVE"
+    #   resp.budget.metrics #=> Array
+    #   resp.budget.metrics[0] #=> String, one of "BlendedCost", "UnblendedCost", "AmortizedCost", "NetUnblendedCost", "NetAmortizedCost", "UsageQuantity", "NormalizedUsageAmount", "Hours"
     #
     # @overload describe_budget(params = {})
     # @param [Hash] params ({})
@@ -1469,6 +1537,12 @@ module Aws::Budgets
     #   The pagination token that you include in your request to indicate the
     #   next set of results that you want to retrieve.
     #
+    # @option params [Boolean] :show_filter_expression
+    #   Specifies whether the response includes the filter expression
+    #   associated with the budgets. By showing the filter expression, you can
+    #   see detailed filtering logic applied to the budgets, such as Amazon
+    #   Web Services services or tags that are being tracked.
+    #
     # @return [Types::DescribeBudgetsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::DescribeBudgetsResponse#budgets #budgets} => Array&lt;Types::Budget&gt;
@@ -1482,6 +1556,7 @@ module Aws::Budgets
     #     account_id: "AccountId", # required
     #     max_results: 1,
     #     next_token: "GenericString",
+    #     show_filter_expression: false,
     #   })
     #
     # @example Response structure
@@ -1520,6 +1595,28 @@ module Aws::Budgets
     #   resp.budgets[0].auto_adjust_data.historical_options.budget_adjustment_period #=> Integer
     #   resp.budgets[0].auto_adjust_data.historical_options.look_back_available_periods #=> Integer
     #   resp.budgets[0].auto_adjust_data.last_auto_adjust_time #=> Time
+    #   resp.budgets[0].filter_expression.or #=> Array
+    #   resp.budgets[0].filter_expression.or[0] #=> Types::Expression
+    #   resp.budgets[0].filter_expression.and #=> Array
+    #   resp.budgets[0].filter_expression.and[0] #=> Types::Expression
+    #   resp.budgets[0].filter_expression.not #=> Types::Expression
+    #   resp.budgets[0].filter_expression.dimensions.key #=> String, one of "AZ", "INSTANCE_TYPE", "LINKED_ACCOUNT", "LINKED_ACCOUNT_NAME", "OPERATION", "PURCHASE_TYPE", "REGION", "SERVICE", "SERVICE_CODE", "USAGE_TYPE", "USAGE_TYPE_GROUP", "RECORD_TYPE", "OPERATING_SYSTEM", "TENANCY", "SCOPE", "PLATFORM", "SUBSCRIPTION_ID", "LEGAL_ENTITY_NAME", "INVOICING_ENTITY", "DEPLOYMENT_OPTION", "DATABASE_ENGINE", "CACHE_ENGINE", "INSTANCE_TYPE_FAMILY", "BILLING_ENTITY", "RESERVATION_ID", "RESOURCE_ID", "RIGHTSIZING_TYPE", "SAVINGS_PLANS_TYPE", "SAVINGS_PLAN_ARN", "PAYMENT_OPTION", "RESERVATION_MODIFIED", "TAG_KEY", "COST_CATEGORY_NAME"
+    #   resp.budgets[0].filter_expression.dimensions.values #=> Array
+    #   resp.budgets[0].filter_expression.dimensions.values[0] #=> String
+    #   resp.budgets[0].filter_expression.dimensions.match_options #=> Array
+    #   resp.budgets[0].filter_expression.dimensions.match_options[0] #=> String, one of "EQUALS", "ABSENT", "STARTS_WITH", "ENDS_WITH", "CONTAINS", "GREATER_THAN_OR_EQUAL", "CASE_SENSITIVE", "CASE_INSENSITIVE"
+    #   resp.budgets[0].filter_expression.tags.key #=> String
+    #   resp.budgets[0].filter_expression.tags.values #=> Array
+    #   resp.budgets[0].filter_expression.tags.values[0] #=> String
+    #   resp.budgets[0].filter_expression.tags.match_options #=> Array
+    #   resp.budgets[0].filter_expression.tags.match_options[0] #=> String, one of "EQUALS", "ABSENT", "STARTS_WITH", "ENDS_WITH", "CONTAINS", "GREATER_THAN_OR_EQUAL", "CASE_SENSITIVE", "CASE_INSENSITIVE"
+    #   resp.budgets[0].filter_expression.cost_categories.key #=> String
+    #   resp.budgets[0].filter_expression.cost_categories.values #=> Array
+    #   resp.budgets[0].filter_expression.cost_categories.values[0] #=> String
+    #   resp.budgets[0].filter_expression.cost_categories.match_options #=> Array
+    #   resp.budgets[0].filter_expression.cost_categories.match_options[0] #=> String, one of "EQUALS", "ABSENT", "STARTS_WITH", "ENDS_WITH", "CONTAINS", "GREATER_THAN_OR_EQUAL", "CASE_SENSITIVE", "CASE_INSENSITIVE"
+    #   resp.budgets[0].metrics #=> Array
+    #   resp.budgets[0].metrics[0] #=> String, one of "BlendedCost", "UnblendedCost", "AmortizedCost", "NetUnblendedCost", "NetAmortizedCost", "UsageQuantity", "NormalizedUsageAmount", "Hours"
     #   resp.next_token #=> String
     #
     # @overload describe_budgets(params = {})
@@ -1773,6 +1870,14 @@ module Aws::Budgets
     # Request Syntax section shows the `BudgetLimit` syntax. For
     # `PlannedBudgetLimits`, see the [Examples][1] section.
     #
+    #  Similarly, only one set of filter and metric selections can be
+    # present
+    # in the syntax at one time. Either `FilterExpression` and `Metrics` or
+    # `CostFilters` and `CostTypes`, not both or a different combination. We
+    # recommend using `FilterExpression` and `Metrics` as they provide more
+    # flexible and powerful filtering capabilities. The Request Syntax
+    # section shows the `FilterExpression`/`Metrics` syntax.
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_budgets_UpdateBudget.html#API_UpdateBudget_Examples
@@ -1843,6 +1948,37 @@ module Aws::Budgets
     #         },
     #         last_auto_adjust_time: Time.now,
     #       },
+    #       filter_expression: {
+    #         or: [
+    #           {
+    #             # recursive Expression
+    #           },
+    #         ],
+    #         and: [
+    #           {
+    #             # recursive Expression
+    #           },
+    #         ],
+    #         not: {
+    #           # recursive Expression
+    #         },
+    #         dimensions: {
+    #           key: "AZ", # required, accepts AZ, INSTANCE_TYPE, LINKED_ACCOUNT, LINKED_ACCOUNT_NAME, OPERATION, PURCHASE_TYPE, REGION, SERVICE, SERVICE_CODE, USAGE_TYPE, USAGE_TYPE_GROUP, RECORD_TYPE, OPERATING_SYSTEM, TENANCY, SCOPE, PLATFORM, SUBSCRIPTION_ID, LEGAL_ENTITY_NAME, INVOICING_ENTITY, DEPLOYMENT_OPTION, DATABASE_ENGINE, CACHE_ENGINE, INSTANCE_TYPE_FAMILY, BILLING_ENTITY, RESERVATION_ID, RESOURCE_ID, RIGHTSIZING_TYPE, SAVINGS_PLANS_TYPE, SAVINGS_PLAN_ARN, PAYMENT_OPTION, RESERVATION_MODIFIED, TAG_KEY, COST_CATEGORY_NAME
+    #           values: ["Value"], # required
+    #           match_options: ["EQUALS"], # accepts EQUALS, ABSENT, STARTS_WITH, ENDS_WITH, CONTAINS, GREATER_THAN_OR_EQUAL, CASE_SENSITIVE, CASE_INSENSITIVE
+    #         },
+    #         tags: {
+    #           key: "TagKey",
+    #           values: ["Value"],
+    #           match_options: ["EQUALS"], # accepts EQUALS, ABSENT, STARTS_WITH, ENDS_WITH, CONTAINS, GREATER_THAN_OR_EQUAL, CASE_SENSITIVE, CASE_INSENSITIVE
+    #         },
+    #         cost_categories: {
+    #           key: "CostCategoryName",
+    #           values: ["Value"],
+    #           match_options: ["EQUALS"], # accepts EQUALS, ABSENT, STARTS_WITH, ENDS_WITH, CONTAINS, GREATER_THAN_OR_EQUAL, CASE_SENSITIVE, CASE_INSENSITIVE
+    #         },
+    #       },
+    #       metrics: ["BlendedCost"], # accepts BlendedCost, UnblendedCost, AmortizedCost, NetUnblendedCost, NetAmortizedCost, UsageQuantity, NormalizedUsageAmount, Hours
     #     },
     #   })
     #
@@ -2106,7 +2242,7 @@ module Aws::Budgets
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-budgets'
-      context[:gem_version] = '1.82.0'
+      context[:gem_version] = '1.83.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

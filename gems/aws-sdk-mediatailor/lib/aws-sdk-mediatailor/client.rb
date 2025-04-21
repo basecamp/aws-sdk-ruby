@@ -812,12 +812,13 @@ module Aws::MediaTailor
     #
     # [1]: https://docs.aws.amazon.com/mediatailor/latest/ug/prefetching-ads.html
     #
-    # @option params [required, Types::PrefetchConsumption] :consumption
-    #   The configuration settings for MediaTailor's *consumption* of the
-    #   prefetched ads from the ad decision server. Each consumption
-    #   configuration contains an end time and an optional start time that
-    #   define the *consumption window*. Prefetch schedules automatically
-    #   expire no earlier than seven days after the end time.
+    # @option params [Types::PrefetchConsumption] :consumption
+    #   The configuration settings for how and when MediaTailor consumes
+    #   prefetched ads from the ad decision server for single prefetch
+    #   schedules. Each consumption configuration contains an end time and an
+    #   optional start time that define the *consumption window*. Prefetch
+    #   schedules automatically expire no earlier than seven days after the
+    #   end time.
     #
     # @option params [required, String] :name
     #   The name to assign to the schedule request.
@@ -825,10 +826,27 @@ module Aws::MediaTailor
     # @option params [required, String] :playback_configuration_name
     #   The name to assign to the playback configuration.
     #
-    # @option params [required, Types::PrefetchRetrieval] :retrieval
+    # @option params [Types::PrefetchRetrieval] :retrieval
     #   The configuration settings for retrieval of prefetched ads from the ad
     #   decision server. Only one set of prefetched ads will be retrieved and
     #   subsequently consumed for each ad break.
+    #
+    # @option params [Types::RecurringPrefetchConfiguration] :recurring_prefetch_configuration
+    #   The configuration that defines how and when MediaTailor performs ad
+    #   prefetching in a live event.
+    #
+    # @option params [String] :schedule_type
+    #   The frequency that MediaTailor creates prefetch schedules. `SINGLE`
+    #   indicates that this schedule applies to one ad break. `RECURRING`
+    #   indicates that MediaTailor automatically creates a schedule for each
+    #   ad avail in a live event.
+    #
+    #   For more information about the prefetch types and when you might use
+    #   each, see [Prefetching ads in Elemental MediaTailor.][1]
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/mediatailor/latest/ug/prefetching-ads.html
     #
     # @option params [String] :stream_id
     #   An optional stream identifier that MediaTailor uses to prefetch ads
@@ -845,12 +863,14 @@ module Aws::MediaTailor
     #   * {Types::CreatePrefetchScheduleResponse#name #name} => String
     #   * {Types::CreatePrefetchScheduleResponse#playback_configuration_name #playback_configuration_name} => String
     #   * {Types::CreatePrefetchScheduleResponse#retrieval #retrieval} => Types::PrefetchRetrieval
+    #   * {Types::CreatePrefetchScheduleResponse#recurring_prefetch_configuration #recurring_prefetch_configuration} => Types::RecurringPrefetchConfiguration
+    #   * {Types::CreatePrefetchScheduleResponse#schedule_type #schedule_type} => String
     #   * {Types::CreatePrefetchScheduleResponse#stream_id #stream_id} => String
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.create_prefetch_schedule({
-    #     consumption: { # required
+    #     consumption: {
     #       avail_matching_criteria: [
     #         {
     #           dynamic_variable: "__string", # required
@@ -862,13 +882,41 @@ module Aws::MediaTailor
     #     },
     #     name: "__string", # required
     #     playback_configuration_name: "__string", # required
-    #     retrieval: { # required
+    #     retrieval: {
     #       dynamic_variables: {
     #         "__string" => "__string",
     #       },
     #       end_time: Time.now, # required
     #       start_time: Time.now,
+    #       traffic_shaping_type: "RETRIEVAL_WINDOW", # accepts RETRIEVAL_WINDOW
+    #       traffic_shaping_retrieval_window: {
+    #         retrieval_window_duration_seconds: 1,
+    #       },
     #     },
+    #     recurring_prefetch_configuration: {
+    #       start_time: Time.now,
+    #       end_time: Time.now, # required
+    #       recurring_consumption: { # required
+    #         retrieved_ad_expiration_seconds: 1,
+    #         avail_matching_criteria: [
+    #           {
+    #             dynamic_variable: "__string", # required
+    #             operator: "EQUALS", # required, accepts EQUALS
+    #           },
+    #         ],
+    #       },
+    #       recurring_retrieval: { # required
+    #         dynamic_variables: {
+    #           "__string" => "__string",
+    #         },
+    #         delay_after_avail_end_seconds: 1,
+    #         traffic_shaping_type: "RETRIEVAL_WINDOW", # accepts RETRIEVAL_WINDOW
+    #         traffic_shaping_retrieval_window: {
+    #           retrieval_window_duration_seconds: 1,
+    #         },
+    #       },
+    #     },
+    #     schedule_type: "SINGLE", # accepts SINGLE, RECURRING
     #     stream_id: "__string",
     #   })
     #
@@ -886,6 +934,20 @@ module Aws::MediaTailor
     #   resp.retrieval.dynamic_variables["__string"] #=> String
     #   resp.retrieval.end_time #=> Time
     #   resp.retrieval.start_time #=> Time
+    #   resp.retrieval.traffic_shaping_type #=> String, one of "RETRIEVAL_WINDOW"
+    #   resp.retrieval.traffic_shaping_retrieval_window.retrieval_window_duration_seconds #=> Integer
+    #   resp.recurring_prefetch_configuration.start_time #=> Time
+    #   resp.recurring_prefetch_configuration.end_time #=> Time
+    #   resp.recurring_prefetch_configuration.recurring_consumption.retrieved_ad_expiration_seconds #=> Integer
+    #   resp.recurring_prefetch_configuration.recurring_consumption.avail_matching_criteria #=> Array
+    #   resp.recurring_prefetch_configuration.recurring_consumption.avail_matching_criteria[0].dynamic_variable #=> String
+    #   resp.recurring_prefetch_configuration.recurring_consumption.avail_matching_criteria[0].operator #=> String, one of "EQUALS"
+    #   resp.recurring_prefetch_configuration.recurring_retrieval.dynamic_variables #=> Hash
+    #   resp.recurring_prefetch_configuration.recurring_retrieval.dynamic_variables["__string"] #=> String
+    #   resp.recurring_prefetch_configuration.recurring_retrieval.delay_after_avail_end_seconds #=> Integer
+    #   resp.recurring_prefetch_configuration.recurring_retrieval.traffic_shaping_type #=> String, one of "RETRIEVAL_WINDOW"
+    #   resp.recurring_prefetch_configuration.recurring_retrieval.traffic_shaping_retrieval_window.retrieval_window_duration_seconds #=> Integer
+    #   resp.schedule_type #=> String, one of "SINGLE", "RECURRING"
     #   resp.stream_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/CreatePrefetchSchedule AWS API Documentation
@@ -2092,6 +2154,8 @@ module Aws::MediaTailor
     #   * {Types::GetPrefetchScheduleResponse#name #name} => String
     #   * {Types::GetPrefetchScheduleResponse#playback_configuration_name #playback_configuration_name} => String
     #   * {Types::GetPrefetchScheduleResponse#retrieval #retrieval} => Types::PrefetchRetrieval
+    #   * {Types::GetPrefetchScheduleResponse#schedule_type #schedule_type} => String
+    #   * {Types::GetPrefetchScheduleResponse#recurring_prefetch_configuration #recurring_prefetch_configuration} => Types::RecurringPrefetchConfiguration
     #   * {Types::GetPrefetchScheduleResponse#stream_id #stream_id} => String
     #
     # @example Request syntax with placeholder values
@@ -2115,6 +2179,20 @@ module Aws::MediaTailor
     #   resp.retrieval.dynamic_variables["__string"] #=> String
     #   resp.retrieval.end_time #=> Time
     #   resp.retrieval.start_time #=> Time
+    #   resp.retrieval.traffic_shaping_type #=> String, one of "RETRIEVAL_WINDOW"
+    #   resp.retrieval.traffic_shaping_retrieval_window.retrieval_window_duration_seconds #=> Integer
+    #   resp.schedule_type #=> String, one of "SINGLE", "RECURRING"
+    #   resp.recurring_prefetch_configuration.start_time #=> Time
+    #   resp.recurring_prefetch_configuration.end_time #=> Time
+    #   resp.recurring_prefetch_configuration.recurring_consumption.retrieved_ad_expiration_seconds #=> Integer
+    #   resp.recurring_prefetch_configuration.recurring_consumption.avail_matching_criteria #=> Array
+    #   resp.recurring_prefetch_configuration.recurring_consumption.avail_matching_criteria[0].dynamic_variable #=> String
+    #   resp.recurring_prefetch_configuration.recurring_consumption.avail_matching_criteria[0].operator #=> String, one of "EQUALS"
+    #   resp.recurring_prefetch_configuration.recurring_retrieval.dynamic_variables #=> Hash
+    #   resp.recurring_prefetch_configuration.recurring_retrieval.dynamic_variables["__string"] #=> String
+    #   resp.recurring_prefetch_configuration.recurring_retrieval.delay_after_avail_end_seconds #=> Integer
+    #   resp.recurring_prefetch_configuration.recurring_retrieval.traffic_shaping_type #=> String, one of "RETRIEVAL_WINDOW"
+    #   resp.recurring_prefetch_configuration.recurring_retrieval.traffic_shaping_retrieval_window.retrieval_window_duration_seconds #=> Integer
     #   resp.stream_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/GetPrefetchSchedule AWS API Documentation
@@ -2413,6 +2491,13 @@ module Aws::MediaTailor
     #   Retrieves the prefetch schedule(s) for a specific playback
     #   configuration.
     #
+    # @option params [String] :schedule_type
+    #   The type of prefetch schedules that you want to list. `SINGLE`
+    #   indicates that you want to list the configured single prefetch
+    #   schedules. `RECURRING` indicates that you want to list the configured
+    #   recurring prefetch schedules. `ALL` indicates that you want to list
+    #   all configured prefetch schedules.
+    #
     # @option params [String] :stream_id
     #   An optional filtering parameter whereby MediaTailor filters the
     #   prefetch schedules to include only specific streams.
@@ -2430,6 +2515,7 @@ module Aws::MediaTailor
     #     max_results: 1,
     #     next_token: "__string",
     #     playback_configuration_name: "__string", # required
+    #     schedule_type: "SINGLE", # accepts SINGLE, RECURRING, ALL
     #     stream_id: "__string",
     #   })
     #
@@ -2448,6 +2534,20 @@ module Aws::MediaTailor
     #   resp.items[0].retrieval.dynamic_variables["__string"] #=> String
     #   resp.items[0].retrieval.end_time #=> Time
     #   resp.items[0].retrieval.start_time #=> Time
+    #   resp.items[0].retrieval.traffic_shaping_type #=> String, one of "RETRIEVAL_WINDOW"
+    #   resp.items[0].retrieval.traffic_shaping_retrieval_window.retrieval_window_duration_seconds #=> Integer
+    #   resp.items[0].schedule_type #=> String, one of "SINGLE", "RECURRING"
+    #   resp.items[0].recurring_prefetch_configuration.start_time #=> Time
+    #   resp.items[0].recurring_prefetch_configuration.end_time #=> Time
+    #   resp.items[0].recurring_prefetch_configuration.recurring_consumption.retrieved_ad_expiration_seconds #=> Integer
+    #   resp.items[0].recurring_prefetch_configuration.recurring_consumption.avail_matching_criteria #=> Array
+    #   resp.items[0].recurring_prefetch_configuration.recurring_consumption.avail_matching_criteria[0].dynamic_variable #=> String
+    #   resp.items[0].recurring_prefetch_configuration.recurring_consumption.avail_matching_criteria[0].operator #=> String, one of "EQUALS"
+    #   resp.items[0].recurring_prefetch_configuration.recurring_retrieval.dynamic_variables #=> Hash
+    #   resp.items[0].recurring_prefetch_configuration.recurring_retrieval.dynamic_variables["__string"] #=> String
+    #   resp.items[0].recurring_prefetch_configuration.recurring_retrieval.delay_after_avail_end_seconds #=> Integer
+    #   resp.items[0].recurring_prefetch_configuration.recurring_retrieval.traffic_shaping_type #=> String, one of "RETRIEVAL_WINDOW"
+    #   resp.items[0].recurring_prefetch_configuration.recurring_retrieval.traffic_shaping_retrieval_window.retrieval_window_duration_seconds #=> Integer
     #   resp.items[0].stream_id #=> String
     #   resp.next_token #=> String
     #
@@ -3545,7 +3645,7 @@ module Aws::MediaTailor
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mediatailor'
-      context[:gem_version] = '1.97.0'
+      context[:gem_version] = '1.98.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

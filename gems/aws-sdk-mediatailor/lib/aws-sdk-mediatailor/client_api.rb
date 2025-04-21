@@ -112,6 +112,7 @@ module Aws::MediaTailor
     ListLiveSourcesResponse = Shapes::StructureShape.new(name: 'ListLiveSourcesResponse')
     ListPlaybackConfigurationsRequest = Shapes::StructureShape.new(name: 'ListPlaybackConfigurationsRequest')
     ListPlaybackConfigurationsResponse = Shapes::StructureShape.new(name: 'ListPlaybackConfigurationsResponse')
+    ListPrefetchScheduleType = Shapes::StringShape.new(name: 'ListPrefetchScheduleType')
     ListPrefetchSchedulesRequest = Shapes::StructureShape.new(name: 'ListPrefetchSchedulesRequest')
     ListPrefetchSchedulesResponse = Shapes::StructureShape.new(name: 'ListPrefetchSchedulesResponse')
     ListSourceLocationsRequest = Shapes::StructureShape.new(name: 'ListSourceLocationsRequest')
@@ -141,10 +142,14 @@ module Aws::MediaTailor
     PrefetchConsumption = Shapes::StructureShape.new(name: 'PrefetchConsumption')
     PrefetchRetrieval = Shapes::StructureShape.new(name: 'PrefetchRetrieval')
     PrefetchSchedule = Shapes::StructureShape.new(name: 'PrefetchSchedule')
+    PrefetchScheduleType = Shapes::StringShape.new(name: 'PrefetchScheduleType')
     PutChannelPolicyRequest = Shapes::StructureShape.new(name: 'PutChannelPolicyRequest')
     PutChannelPolicyResponse = Shapes::StructureShape.new(name: 'PutChannelPolicyResponse')
     PutPlaybackConfigurationRequest = Shapes::StructureShape.new(name: 'PutPlaybackConfigurationRequest')
     PutPlaybackConfigurationResponse = Shapes::StructureShape.new(name: 'PutPlaybackConfigurationResponse')
+    RecurringConsumption = Shapes::StructureShape.new(name: 'RecurringConsumption')
+    RecurringPrefetchConfiguration = Shapes::StructureShape.new(name: 'RecurringPrefetchConfiguration')
+    RecurringRetrieval = Shapes::StructureShape.new(name: 'RecurringRetrieval')
     RelativePosition = Shapes::StringShape.new(name: 'RelativePosition')
     RequestOutputItem = Shapes::StructureShape.new(name: 'RequestOutputItem')
     RequestOutputs = Shapes::ListShape.new(name: 'RequestOutputs')
@@ -171,6 +176,8 @@ module Aws::MediaTailor
     Tier = Shapes::StringShape.new(name: 'Tier')
     TimeShiftConfiguration = Shapes::StructureShape.new(name: 'TimeShiftConfiguration')
     TimeSignalMessage = Shapes::StructureShape.new(name: 'TimeSignalMessage')
+    TrafficShapingRetrievalWindow = Shapes::StructureShape.new(name: 'TrafficShapingRetrievalWindow')
+    TrafficShapingType = Shapes::StringShape.new(name: 'TrafficShapingType')
     Transition = Shapes::StructureShape.new(name: 'Transition')
     Type = Shapes::StringShape.new(name: 'Type')
     UntagResourceRequest = Shapes::StructureShape.new(name: 'UntagResourceRequest')
@@ -373,10 +380,12 @@ module Aws::MediaTailor
     CreateLiveSourceResponse.add_member(:tags, Shapes::ShapeRef.new(shape: __mapOf__string, location_name: "tags"))
     CreateLiveSourceResponse.struct_class = Types::CreateLiveSourceResponse
 
-    CreatePrefetchScheduleRequest.add_member(:consumption, Shapes::ShapeRef.new(shape: PrefetchConsumption, required: true, location_name: "Consumption"))
+    CreatePrefetchScheduleRequest.add_member(:consumption, Shapes::ShapeRef.new(shape: PrefetchConsumption, location_name: "Consumption"))
     CreatePrefetchScheduleRequest.add_member(:name, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "Name"))
     CreatePrefetchScheduleRequest.add_member(:playback_configuration_name, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "PlaybackConfigurationName"))
-    CreatePrefetchScheduleRequest.add_member(:retrieval, Shapes::ShapeRef.new(shape: PrefetchRetrieval, required: true, location_name: "Retrieval"))
+    CreatePrefetchScheduleRequest.add_member(:retrieval, Shapes::ShapeRef.new(shape: PrefetchRetrieval, location_name: "Retrieval"))
+    CreatePrefetchScheduleRequest.add_member(:recurring_prefetch_configuration, Shapes::ShapeRef.new(shape: RecurringPrefetchConfiguration, location_name: "RecurringPrefetchConfiguration"))
+    CreatePrefetchScheduleRequest.add_member(:schedule_type, Shapes::ShapeRef.new(shape: PrefetchScheduleType, location_name: "ScheduleType"))
     CreatePrefetchScheduleRequest.add_member(:stream_id, Shapes::ShapeRef.new(shape: __string, location_name: "StreamId"))
     CreatePrefetchScheduleRequest.struct_class = Types::CreatePrefetchScheduleRequest
 
@@ -385,6 +394,8 @@ module Aws::MediaTailor
     CreatePrefetchScheduleResponse.add_member(:name, Shapes::ShapeRef.new(shape: __string, location_name: "Name"))
     CreatePrefetchScheduleResponse.add_member(:playback_configuration_name, Shapes::ShapeRef.new(shape: __string, location_name: "PlaybackConfigurationName"))
     CreatePrefetchScheduleResponse.add_member(:retrieval, Shapes::ShapeRef.new(shape: PrefetchRetrieval, location_name: "Retrieval"))
+    CreatePrefetchScheduleResponse.add_member(:recurring_prefetch_configuration, Shapes::ShapeRef.new(shape: RecurringPrefetchConfiguration, location_name: "RecurringPrefetchConfiguration"))
+    CreatePrefetchScheduleResponse.add_member(:schedule_type, Shapes::ShapeRef.new(shape: PrefetchScheduleType, location_name: "ScheduleType"))
     CreatePrefetchScheduleResponse.add_member(:stream_id, Shapes::ShapeRef.new(shape: __string, location_name: "StreamId"))
     CreatePrefetchScheduleResponse.struct_class = Types::CreatePrefetchScheduleResponse
 
@@ -637,6 +648,8 @@ module Aws::MediaTailor
     GetPrefetchScheduleResponse.add_member(:name, Shapes::ShapeRef.new(shape: __string, location_name: "Name"))
     GetPrefetchScheduleResponse.add_member(:playback_configuration_name, Shapes::ShapeRef.new(shape: __string, location_name: "PlaybackConfigurationName"))
     GetPrefetchScheduleResponse.add_member(:retrieval, Shapes::ShapeRef.new(shape: PrefetchRetrieval, location_name: "Retrieval"))
+    GetPrefetchScheduleResponse.add_member(:schedule_type, Shapes::ShapeRef.new(shape: PrefetchScheduleType, location_name: "ScheduleType"))
+    GetPrefetchScheduleResponse.add_member(:recurring_prefetch_configuration, Shapes::ShapeRef.new(shape: RecurringPrefetchConfiguration, location_name: "RecurringPrefetchConfiguration"))
     GetPrefetchScheduleResponse.add_member(:stream_id, Shapes::ShapeRef.new(shape: __string, location_name: "StreamId"))
     GetPrefetchScheduleResponse.struct_class = Types::GetPrefetchScheduleResponse
 
@@ -698,6 +711,7 @@ module Aws::MediaTailor
     ListPrefetchSchedulesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: __integerMin1Max100, location_name: "MaxResults"))
     ListPrefetchSchedulesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: __string, location_name: "NextToken"))
     ListPrefetchSchedulesRequest.add_member(:playback_configuration_name, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "PlaybackConfigurationName"))
+    ListPrefetchSchedulesRequest.add_member(:schedule_type, Shapes::ShapeRef.new(shape: ListPrefetchScheduleType, location_name: "ScheduleType"))
     ListPrefetchSchedulesRequest.add_member(:stream_id, Shapes::ShapeRef.new(shape: __string, location_name: "StreamId"))
     ListPrefetchSchedulesRequest.struct_class = Types::ListPrefetchSchedulesRequest
 
@@ -789,13 +803,17 @@ module Aws::MediaTailor
     PrefetchRetrieval.add_member(:dynamic_variables, Shapes::ShapeRef.new(shape: __mapOf__string, location_name: "DynamicVariables"))
     PrefetchRetrieval.add_member(:end_time, Shapes::ShapeRef.new(shape: __timestampUnix, required: true, location_name: "EndTime"))
     PrefetchRetrieval.add_member(:start_time, Shapes::ShapeRef.new(shape: __timestampUnix, location_name: "StartTime"))
+    PrefetchRetrieval.add_member(:traffic_shaping_type, Shapes::ShapeRef.new(shape: TrafficShapingType, location_name: "TrafficShapingType"))
+    PrefetchRetrieval.add_member(:traffic_shaping_retrieval_window, Shapes::ShapeRef.new(shape: TrafficShapingRetrievalWindow, location_name: "TrafficShapingRetrievalWindow"))
     PrefetchRetrieval.struct_class = Types::PrefetchRetrieval
 
     PrefetchSchedule.add_member(:arn, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "Arn"))
-    PrefetchSchedule.add_member(:consumption, Shapes::ShapeRef.new(shape: PrefetchConsumption, required: true, location_name: "Consumption"))
+    PrefetchSchedule.add_member(:consumption, Shapes::ShapeRef.new(shape: PrefetchConsumption, location_name: "Consumption"))
     PrefetchSchedule.add_member(:name, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "Name"))
     PrefetchSchedule.add_member(:playback_configuration_name, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "PlaybackConfigurationName"))
-    PrefetchSchedule.add_member(:retrieval, Shapes::ShapeRef.new(shape: PrefetchRetrieval, required: true, location_name: "Retrieval"))
+    PrefetchSchedule.add_member(:retrieval, Shapes::ShapeRef.new(shape: PrefetchRetrieval, location_name: "Retrieval"))
+    PrefetchSchedule.add_member(:schedule_type, Shapes::ShapeRef.new(shape: PrefetchScheduleType, location_name: "ScheduleType"))
+    PrefetchSchedule.add_member(:recurring_prefetch_configuration, Shapes::ShapeRef.new(shape: RecurringPrefetchConfiguration, location_name: "RecurringPrefetchConfiguration"))
     PrefetchSchedule.add_member(:stream_id, Shapes::ShapeRef.new(shape: __string, location_name: "StreamId"))
     PrefetchSchedule.struct_class = Types::PrefetchSchedule
 
@@ -845,6 +863,22 @@ module Aws::MediaTailor
     PutPlaybackConfigurationResponse.add_member(:video_content_source_url, Shapes::ShapeRef.new(shape: __string, location_name: "VideoContentSourceUrl"))
     PutPlaybackConfigurationResponse.add_member(:ad_conditioning_configuration, Shapes::ShapeRef.new(shape: AdConditioningConfiguration, location_name: "AdConditioningConfiguration"))
     PutPlaybackConfigurationResponse.struct_class = Types::PutPlaybackConfigurationResponse
+
+    RecurringConsumption.add_member(:retrieved_ad_expiration_seconds, Shapes::ShapeRef.new(shape: __integer, location_name: "RetrievedAdExpirationSeconds"))
+    RecurringConsumption.add_member(:avail_matching_criteria, Shapes::ShapeRef.new(shape: __listOfAvailMatchingCriteria, location_name: "AvailMatchingCriteria"))
+    RecurringConsumption.struct_class = Types::RecurringConsumption
+
+    RecurringPrefetchConfiguration.add_member(:start_time, Shapes::ShapeRef.new(shape: __timestampUnix, location_name: "StartTime"))
+    RecurringPrefetchConfiguration.add_member(:end_time, Shapes::ShapeRef.new(shape: __timestampUnix, required: true, location_name: "EndTime"))
+    RecurringPrefetchConfiguration.add_member(:recurring_consumption, Shapes::ShapeRef.new(shape: RecurringConsumption, required: true, location_name: "RecurringConsumption"))
+    RecurringPrefetchConfiguration.add_member(:recurring_retrieval, Shapes::ShapeRef.new(shape: RecurringRetrieval, required: true, location_name: "RecurringRetrieval"))
+    RecurringPrefetchConfiguration.struct_class = Types::RecurringPrefetchConfiguration
+
+    RecurringRetrieval.add_member(:dynamic_variables, Shapes::ShapeRef.new(shape: __mapOf__string, location_name: "DynamicVariables"))
+    RecurringRetrieval.add_member(:delay_after_avail_end_seconds, Shapes::ShapeRef.new(shape: __integer, location_name: "DelayAfterAvailEndSeconds"))
+    RecurringRetrieval.add_member(:traffic_shaping_type, Shapes::ShapeRef.new(shape: TrafficShapingType, location_name: "TrafficShapingType"))
+    RecurringRetrieval.add_member(:traffic_shaping_retrieval_window, Shapes::ShapeRef.new(shape: TrafficShapingRetrievalWindow, location_name: "TrafficShapingRetrievalWindow"))
+    RecurringRetrieval.struct_class = Types::RecurringRetrieval
 
     RequestOutputItem.add_member(:dash_playlist_settings, Shapes::ShapeRef.new(shape: DashPlaylistSettings, location_name: "DashPlaylistSettings"))
     RequestOutputItem.add_member(:hls_playlist_settings, Shapes::ShapeRef.new(shape: HlsPlaylistSettings, location_name: "HlsPlaylistSettings"))
@@ -947,6 +981,9 @@ module Aws::MediaTailor
 
     TimeSignalMessage.add_member(:segmentation_descriptors, Shapes::ShapeRef.new(shape: SegmentationDescriptorList, location_name: "SegmentationDescriptors"))
     TimeSignalMessage.struct_class = Types::TimeSignalMessage
+
+    TrafficShapingRetrievalWindow.add_member(:retrieval_window_duration_seconds, Shapes::ShapeRef.new(shape: __integer, location_name: "RetrievalWindowDurationSeconds"))
+    TrafficShapingRetrievalWindow.struct_class = Types::TrafficShapingRetrievalWindow
 
     Transition.add_member(:duration_millis, Shapes::ShapeRef.new(shape: __long, location_name: "DurationMillis"))
     Transition.add_member(:relative_position, Shapes::ShapeRef.new(shape: RelativePosition, required: true, location_name: "RelativePosition"))

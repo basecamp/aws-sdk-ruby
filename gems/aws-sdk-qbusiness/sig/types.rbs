@@ -156,6 +156,18 @@ module Aws::QBusiness
       SENSITIVE: []
     end
 
+    class AssociatedGroup
+      attr_accessor name: ::String
+      attr_accessor type: ("INDEX" | "DATASOURCE")
+      SENSITIVE: []
+    end
+
+    class AssociatedUser
+      attr_accessor id: ::String
+      attr_accessor type: ("INDEX" | "DATASOURCE")
+      SENSITIVE: []
+    end
+
     class Attachment
       attr_accessor attachment_id: ::String
       attr_accessor conversation_id: ::String
@@ -370,6 +382,23 @@ module Aws::QBusiness
       attr_accessor auth_challenge_request: Types::AuthChallengeRequest
       attr_accessor source_attributions: ::Array[Types::SourceAttribution]
       attr_accessor failed_attachments: ::Array[Types::AttachmentOutput]
+      SENSITIVE: []
+    end
+
+    class CheckDocumentAccessRequest
+      attr_accessor application_id: ::String
+      attr_accessor index_id: ::String
+      attr_accessor user_id: ::String
+      attr_accessor document_id: ::String
+      attr_accessor data_source_id: ::String
+      SENSITIVE: []
+    end
+
+    class CheckDocumentAccessResponse
+      attr_accessor user_groups: ::Array[Types::AssociatedGroup]
+      attr_accessor user_aliases: ::Array[Types::AssociatedUser]
+      attr_accessor has_access: bool
+      attr_accessor document_acl: Types::DocumentAcl
       SENSITIVE: []
     end
 
@@ -806,6 +835,37 @@ module Aws::QBusiness
       attr_accessor access_configuration: Types::AccessConfiguration
       attr_accessor document_enrichment_configuration: Types::DocumentEnrichmentConfiguration
       attr_accessor media_extraction_configuration: Types::MediaExtractionConfiguration
+      SENSITIVE: []
+    end
+
+    class DocumentAcl
+      attr_accessor allowlist: Types::DocumentAclMembership
+      attr_accessor deny_list: Types::DocumentAclMembership
+      SENSITIVE: []
+    end
+
+    class DocumentAclCondition
+      attr_accessor member_relation: ("AND" | "OR")
+      attr_accessor users: ::Array[Types::DocumentAclUser]
+      attr_accessor groups: ::Array[Types::DocumentAclGroup]
+      SENSITIVE: []
+    end
+
+    class DocumentAclGroup
+      attr_accessor name: ::String
+      attr_accessor type: ("INDEX" | "DATASOURCE")
+      SENSITIVE: []
+    end
+
+    class DocumentAclMembership
+      attr_accessor member_relation: ("AND" | "OR")
+      attr_accessor conditions: ::Array[Types::DocumentAclCondition]
+      SENSITIVE: []
+    end
+
+    class DocumentAclUser
+      attr_accessor id: ::String
+      attr_accessor type: ("INDEX" | "DATASOURCE")
       SENSITIVE: []
     end
 

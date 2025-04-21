@@ -270,7 +270,7 @@ module Aws::Budgets
     #   @return [String]
     #
     # @!attribute [rw] time_period
-    #   The period of time that's covered by a budget. You setthe start
+    #   The period of time that's covered by a budget. You set the start
     #   date and end date. The start date must come before the end date. The
     #   end date must come before `06/15/87 00:00 UTC`.
     #
@@ -309,6 +309,15 @@ module Aws::Budgets
     #   auto-adjusting budget.
     #   @return [Types::AutoAdjustData]
     #
+    # @!attribute [rw] filter_expression
+    #   The filtering dimensions for the budget and their corresponding
+    #   values.
+    #   @return [Types::Expression]
+    #
+    # @!attribute [rw] metrics
+    #   The definition for how the budget data is aggregated.
+    #   @return [Array<String>]
+    #
     class Budget < Struct.new(
       :budget_name,
       :budget_limit,
@@ -320,7 +329,9 @@ module Aws::Budgets
       :calculated_spend,
       :budget_type,
       :last_updated_time,
-      :auto_adjust_data)
+      :auto_adjust_data,
+      :filter_expression,
+      :metrics)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -433,6 +444,28 @@ module Aws::Budgets
     class CalculatedSpend < Struct.new(
       :actual_spend,
       :forecasted_spend)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The cost category values used for filtering the costs.
+    #
+    # @!attribute [rw] key
+    #   The unique name of the cost category.
+    #   @return [String]
+    #
+    # @!attribute [rw] values
+    #   The specific value of the cost category.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] match_options
+    #   The match options that you can use to filter your results.
+    #   @return [Array<String>]
+    #
+    class CostCategoryValues < Struct.new(
+      :key,
+      :values,
+      :match_options)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1151,9 +1184,17 @@ module Aws::Budgets
     #   The name of the budget that you want a description of.
     #   @return [String]
     #
+    # @!attribute [rw] show_filter_expression
+    #   Specifies whether the response includes the filter expression
+    #   associated with the budget. By showing the filter expression, you
+    #   can see detailed filtering logic applied to the budget, such as
+    #   Amazon Web Services services or tags that are being tracked.
+    #   @return [Boolean]
+    #
     class DescribeBudgetRequest < Struct.new(
       :account_id,
-      :budget_name)
+      :budget_name,
+      :show_filter_expression)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1187,10 +1228,18 @@ module Aws::Budgets
     #   the next set of results that you want to retrieve.
     #   @return [String]
     #
+    # @!attribute [rw] show_filter_expression
+    #   Specifies whether the response includes the filter expression
+    #   associated with the budgets. By showing the filter expression, you
+    #   can see detailed filtering logic applied to the budgets, such as
+    #   Amazon Web Services services or tags that are being tracked.
+    #   @return [Boolean]
+    #
     class DescribeBudgetsRequest < Struct.new(
       :account_id,
       :max_results,
-      :next_token)
+      :next_token,
+      :show_filter_expression)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1389,6 +1438,67 @@ module Aws::Budgets
     #
     class ExpiredNextTokenException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Use Expression to filter in various Budgets APIs.
+    #
+    # @!attribute [rw] or
+    #   Return results that match either Dimension object.
+    #   @return [Array<Types::Expression>]
+    #
+    # @!attribute [rw] and
+    #   Return results that match both Dimension objects.
+    #   @return [Array<Types::Expression>]
+    #
+    # @!attribute [rw] not
+    #   Return results that don't match a Dimension object.
+    #   @return [Types::Expression]
+    #
+    # @!attribute [rw] dimensions
+    #   The specific Dimension to use for Expression.
+    #   @return [Types::ExpressionDimensionValues]
+    #
+    # @!attribute [rw] tags
+    #   The specific Tag to use for Expression.
+    #   @return [Types::TagValues]
+    #
+    # @!attribute [rw] cost_categories
+    #   The filter that's based on CostCategoryValues.
+    #   @return [Types::CostCategoryValues]
+    #
+    class Expression < Struct.new(
+      :or,
+      :and,
+      :not,
+      :dimensions,
+      :tags,
+      :cost_categories)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains the specifications for the filters to use for your request.
+    #
+    # @!attribute [rw] key
+    #   The name of the dimension that you want to filter on.
+    #   @return [String]
+    #
+    # @!attribute [rw] values
+    #   The metadata values you can specify to filter upon, so that the
+    #   results all match at least one of the specified values.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] match_options
+    #   The match options that you can use to filter your results. You can
+    #   specify only one of these values in the array.
+    #   @return [Array<String>]
+    #
+    class ExpressionDimensionValues < Struct.new(
+      :key,
+      :values,
+      :match_options)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1774,6 +1884,28 @@ module Aws::Budgets
     end
 
     class TagResourceResponse < Aws::EmptyStructure; end
+
+    # The values that are available for a tag.
+    #
+    # @!attribute [rw] key
+    #   The key for the tag.
+    #   @return [String]
+    #
+    # @!attribute [rw] values
+    #   The specific value of the tag.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] match_options
+    #   The match options that you can use to filter your results.
+    #   @return [Array<String>]
+    #
+    class TagValues < Struct.new(
+      :key,
+      :values,
+      :match_options)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # The number of API requests has exceeded the maximum allowed API
     # request throttling limit for the account.

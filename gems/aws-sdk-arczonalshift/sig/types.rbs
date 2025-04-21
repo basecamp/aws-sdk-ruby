@@ -229,7 +229,7 @@ module Aws::ARCZonalShift
 
     class ValidationException
       attr_accessor message: ::String
-      attr_accessor reason: ("InvalidExpiresIn" | "InvalidStatus" | "MissingValue" | "InvalidToken" | "InvalidResourceIdentifier" | "InvalidAz" | "UnsupportedAz" | "InvalidAlarmCondition" | "InvalidConditionType" | "InvalidPracticeBlocker" | "FISExperimentUpdateNotAllowed")
+      attr_accessor reason: ("InvalidExpiresIn" | "InvalidStatus" | "MissingValue" | "InvalidToken" | "InvalidResourceIdentifier" | "InvalidAz" | "UnsupportedAz" | "InvalidAlarmCondition" | "InvalidConditionType" | "InvalidPracticeBlocker" | "FISExperimentUpdateNotAllowed" | "AutoshiftUpdateNotAllowed")
       SENSITIVE: []
     end
 

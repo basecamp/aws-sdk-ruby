@@ -576,6 +576,49 @@ module Aws::QBusiness
       include Aws::Structure
     end
 
+    # Represents a group associated with a given user in the access control
+    # system.
+    #
+    # @!attribute [rw] name
+    #   The name of the group associated with the user. This is used to
+    #   identify the group in access control decisions.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of the associated group. This indicates the scope of the
+    #   group's applicability.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/AssociatedGroup AWS API Documentation
+    #
+    class AssociatedGroup < Struct.new(
+      :name,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents an associated user in the access control system.
+    #
+    # @!attribute [rw] id
+    #   The unique identifier of the associated user. This is used to
+    #   identify the user in access control decisions.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of the associated user. This indicates the scope of the
+    #   user's association.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/AssociatedUser AWS API Documentation
+    #
+    class AssociatedUser < Struct.new(
+      :id,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # An attachment in an Amazon Q Business conversation.
     #
     # @!attribute [rw] attachment_id
@@ -1466,6 +1509,78 @@ module Aws::QBusiness
       include Aws::Structure
     end
 
+    # @!attribute [rw] application_id
+    #   The unique identifier of the application. This is required to
+    #   identify the specific Amazon Q Business application context for the
+    #   document access check.
+    #   @return [String]
+    #
+    # @!attribute [rw] index_id
+    #   The unique identifier of the index. Used to locate the correct index
+    #   within the application where the document is stored.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_id
+    #   The unique identifier of the user. Used to check the access
+    #   permissions for this specific user against the document's ACL.
+    #   @return [String]
+    #
+    # @!attribute [rw] document_id
+    #   The unique identifier of the document. Specifies which document's
+    #   access permissions are being checked.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_source_id
+    #   The unique identifier of the data source. Identifies the specific
+    #   data source from which the document originates. Should not be used
+    #   when a document is uploaded directly with BatchPutDocument, as no
+    #   dataSourceId is available or necessary.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CheckDocumentAccessRequest AWS API Documentation
+    #
+    class CheckDocumentAccessRequest < Struct.new(
+      :application_id,
+      :index_id,
+      :user_id,
+      :document_id,
+      :data_source_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] user_groups
+    #   An array of groups the user is part of for the specified data
+    #   source. Each group has a name and type.
+    #   @return [Array<Types::AssociatedGroup>]
+    #
+    # @!attribute [rw] user_aliases
+    #   An array of aliases associated with the user. This includes both
+    #   global and local aliases, each with a name and type.
+    #   @return [Array<Types::AssociatedUser>]
+    #
+    # @!attribute [rw] has_access
+    #   A boolean value indicating whether the specified user has access to
+    #   the document, either direct access or transitive access via groups
+    #   and aliases attached to the document.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] document_acl
+    #   The Access Control List (ACL) associated with the document. Includes
+    #   allowlist and denylist conditions that determine user access.
+    #   @return [Types::DocumentAcl]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CheckDocumentAccessResponse AWS API Documentation
+    #
+    class CheckDocumentAccessResponse < Struct.new(
+      :user_groups,
+      :user_aliases,
+      :has_access,
+      :document_acl)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A configuration event activated by an end user request to select a
     # specific chat mode.
     #
@@ -2351,12 +2466,14 @@ module Aws::QBusiness
     #
     # @!attribute [rw] origins
     #   Sets the website domain origins that are allowed to embed the Amazon
-    #   Q Business web experience.      The <i>domain origin</i> refers to
-    #   the base URL for accessing a website including the protocol
-    #   (<code>http/https</code>), the domain name, and the port number (if
-    #   specified). </p> <note> <p>You must only submit a <i>base URL</i>
-    #   and not a full path. For example,
-    #   <code>https://docs.aws.amazon.com</code>.</p> </note>
+    #   Q Business web experience. The *domain origin* refers to the base
+    #   URL for accessing a website including the protocol (`http/https`),
+    #   the domain name, and the port number (if specified).
+    #
+    #   <note markdown="1"> You must only submit a *base URL* and not a full path. For example,
+    #   `https://docs.aws.amazon.com`.
+    #
+    #    </note>
     #   @return [Array<String>]
     #
     # @!attribute [rw] role_arn
@@ -3148,6 +3265,126 @@ module Aws::QBusiness
       :access_configuration,
       :document_enrichment_configuration,
       :media_extraction_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents the Access Control List (ACL) for a document, containing
+    # both allowlist and denylist conditions.
+    #
+    # @!attribute [rw] allowlist
+    #   The allowlist conditions for the document. Users or groups matching
+    #   these conditions are granted access to the document.
+    #   @return [Types::DocumentAclMembership]
+    #
+    # @!attribute [rw] deny_list
+    #   The denylist conditions for the document. Users or groups matching
+    #   these conditions are denied access to the document, overriding
+    #   allowlist permissions.
+    #   @return [Types::DocumentAclMembership]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DocumentAcl AWS API Documentation
+    #
+    class DocumentAcl < Struct.new(
+      :allowlist,
+      :deny_list)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents a condition in the document's ACL, specifying access rules
+    # for users and groups.
+    #
+    # @!attribute [rw] member_relation
+    #   The logical relation between members in the condition, determining
+    #   how multiple user or group conditions are combined.
+    #   @return [String]
+    #
+    # @!attribute [rw] users
+    #   An array of user identifiers that this condition applies to. Users
+    #   listed here are subject to the access rule defined by this
+    #   condition.
+    #   @return [Array<Types::DocumentAclUser>]
+    #
+    # @!attribute [rw] groups
+    #   An array of group identifiers that this condition applies to. Groups
+    #   listed here are subject to the access rule defined by this
+    #   condition.
+    #   @return [Array<Types::DocumentAclGroup>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DocumentAclCondition AWS API Documentation
+    #
+    class DocumentAclCondition < Struct.new(
+      :member_relation,
+      :users,
+      :groups)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents a group in the document's ACL, used to define access
+    # permissions for multiple users collectively.
+    #
+    # @!attribute [rw] name
+    #   The name of the group in the document's ACL. This is used to
+    #   identify the group when applying access rules.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of the group. This indicates the scope of the group's
+    #   applicability in access control.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DocumentAclGroup AWS API Documentation
+    #
+    class DocumentAclGroup < Struct.new(
+      :name,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents membership rules in the document's ACL, defining how users
+    # or groups are associated with access permissions.
+    #
+    # @!attribute [rw] member_relation
+    #   The logical relation between members in the membership rule,
+    #   determining how multiple conditions are combined.
+    #   @return [String]
+    #
+    # @!attribute [rw] conditions
+    #   An array of conditions that define the membership rules. Each
+    #   condition specifies criteria for users or groups to be included in
+    #   this membership.
+    #   @return [Array<Types::DocumentAclCondition>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DocumentAclMembership AWS API Documentation
+    #
+    class DocumentAclMembership < Struct.new(
+      :member_relation,
+      :conditions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents a user in the document's ACL, used to define access
+    # permissions for individual users.
+    #
+    # @!attribute [rw] id
+    #   The unique identifier of the user in the document's ACL. This is
+    #   used to identify the user when applying access rules.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of the user. This indicates the scope of the user's
+    #   applicability in access control.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DocumentAclUser AWS API Documentation
+    #
+    class DocumentAclUser < Struct.new(
+      :id,
+      :type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4610,10 +4847,9 @@ module Aws::QBusiness
     #
     # @!attribute [rw] origins
     #   Gets the website domain origins that are allowed to embed the Amazon
-    #   Q Business web experience.      The <i>domain origin</i> refers to
-    #   the base URL for accessing a website including the protocol
-    #   (<code>http/https</code>), the domain name, and the port number (if
-    #   specified). </p>
+    #   Q Business web experience. The *domain origin* refers to the base
+    #   URL for accessing a website including the protocol (`http/https`),
+    #   the domain name, and the port number (if specified).
     #   @return [Array<String>]
     #
     # @!attribute [rw] role_arn
@@ -4793,13 +5029,13 @@ module Aws::QBusiness
     #   @return [Types::DocumentAttributeCondition]
     #
     # @!attribute [rw] lambda_arn
-    #   The Amazon Resource Name (ARN) of a role with permission to run a
-    #   Lambda function during ingestion. For more information, see [IAM
-    #   roles for Custom Document Enrichment (CDE)][1].
+    #   The Amazon Resource Name (ARN) of the Lambda function sduring
+    #   ingestion. For more information, see [Using Lambda functions for
+    #   Amazon Q Business document enrichment][1].
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/amazonq/latest/business-use-dg/iam-roles.html#cde-iam-role
+    #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cde-lambda-operations.html
     #   @return [String]
     #
     # @!attribute [rw] s3_bucket_name
@@ -8175,14 +8411,17 @@ module Aws::QBusiness
     #
     # @!attribute [rw] origins
     #   Updates the website domain origins that are allowed to embed the
-    #   Amazon Q Business web experience.      The <i>domain origin</i>
-    #   refers to the <i>base URL</i> for accessing a website including the
-    #   protocol (<code>http/https</code>), the domain name, and the port
-    #   number (if specified).</p> <note> <ul> <li> <p>Any values except
-    #   <code>null</code> submitted as part of this update will replace all
-    #   previous values.</p> </li> <li> <p>You must only submit a <i>base
-    #   URL</i> and not a full path. For example,
-    #   <code>https://docs.aws.amazon.com</code>.</p> </li> </ul> </note>
+    #   Amazon Q Business web experience. The *domain origin* refers to the
+    #   *base URL* for accessing a website including the protocol
+    #   (`http/https`), the domain name, and the port number (if specified).
+    #
+    #   <note markdown="1"> * Any values except `null` submitted as part of this update will
+    #     replace all previous values.
+    #
+    #   * You must only submit a *base URL* and not a full path. For
+    #     example, `https://docs.aws.amazon.com`.
+    #
+    #    </note>
     #   @return [Array<String>]
     #
     # @!attribute [rw] browser_extension_configuration

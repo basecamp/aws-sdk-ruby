@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.90.0 (2025-04-21)
+------------------
+
+* Feature - Documentation update regarding the number of streams you can create using the CreateDeliveryStream API.
+
 1.89.0 (2025-02-18)
 ------------------
 

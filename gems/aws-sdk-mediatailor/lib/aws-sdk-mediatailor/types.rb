@@ -987,11 +987,12 @@ module Aws::MediaTailor
     end
 
     # @!attribute [rw] consumption
-    #   The configuration settings for MediaTailor's *consumption* of the
-    #   prefetched ads from the ad decision server. Each consumption
-    #   configuration contains an end time and an optional start time that
-    #   define the *consumption window*. Prefetch schedules automatically
-    #   expire no earlier than seven days after the end time.
+    #   The configuration settings for how and when MediaTailor consumes
+    #   prefetched ads from the ad decision server for single prefetch
+    #   schedules. Each consumption configuration contains an end time and
+    #   an optional start time that define the *consumption window*.
+    #   Prefetch schedules automatically expire no earlier than seven days
+    #   after the end time.
     #   @return [Types::PrefetchConsumption]
     #
     # @!attribute [rw] name
@@ -1007,6 +1008,25 @@ module Aws::MediaTailor
     #   ad decision server. Only one set of prefetched ads will be retrieved
     #   and subsequently consumed for each ad break.
     #   @return [Types::PrefetchRetrieval]
+    #
+    # @!attribute [rw] recurring_prefetch_configuration
+    #   The configuration that defines how and when MediaTailor performs ad
+    #   prefetching in a live event.
+    #   @return [Types::RecurringPrefetchConfiguration]
+    #
+    # @!attribute [rw] schedule_type
+    #   The frequency that MediaTailor creates prefetch schedules. `SINGLE`
+    #   indicates that this schedule applies to one ad break. `RECURRING`
+    #   indicates that MediaTailor automatically creates a schedule for each
+    #   ad avail in a live event.
+    #
+    #   For more information about the prefetch types and when you might use
+    #   each, see [Prefetching ads in Elemental MediaTailor.][1]
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/mediatailor/latest/ug/prefetching-ads.html
+    #   @return [String]
     #
     # @!attribute [rw] stream_id
     #   An optional stream identifier that MediaTailor uses to prefetch ads
@@ -1024,6 +1044,8 @@ module Aws::MediaTailor
       :name,
       :playback_configuration_name,
       :retrieval,
+      :recurring_prefetch_configuration,
+      :schedule_type,
       :stream_id)
       SENSITIVE = []
       include Aws::Structure
@@ -1034,11 +1056,12 @@ module Aws::MediaTailor
     #   @return [String]
     #
     # @!attribute [rw] consumption
-    #   The configuration settings for MediaTailor's *consumption* of the
-    #   prefetched ads from the ad decision server. Each consumption
-    #   configuration contains an end time and an optional start time that
-    #   define the *consumption window*. Prefetch schedules automatically
-    #   expire no earlier than seven days after the end time.
+    #   The configuration settings for how and when MediaTailor consumes
+    #   prefetched ads from the ad decision server for single prefetch
+    #   schedules. Each consumption configuration contains an end time and
+    #   an optional start time that define the *consumption window*.
+    #   Prefetch schedules automatically expire no earlier than seven days
+    #   after the end time.
     #   @return [Types::PrefetchConsumption]
     #
     # @!attribute [rw] name
@@ -1054,6 +1077,18 @@ module Aws::MediaTailor
     #   ad decision server. Only one set of prefetched ads will be retrieved
     #   and subsequently consumed for each ad break.
     #   @return [Types::PrefetchRetrieval]
+    #
+    # @!attribute [rw] recurring_prefetch_configuration
+    #   The configuration that defines how MediaTailor performs recurring
+    #   prefetch.
+    #   @return [Types::RecurringPrefetchConfiguration]
+    #
+    # @!attribute [rw] schedule_type
+    #   The frequency that MediaTailor creates prefetch schedules. `SINGLE`
+    #   indicates that this schedule applies to one ad break. `RECURRING`
+    #   indicates that MediaTailor automatically creates a schedule for each
+    #   ad avail in a live event.
+    #   @return [String]
     #
     # @!attribute [rw] stream_id
     #   An optional stream identifier that MediaTailor uses to prefetch ads
@@ -1072,6 +1107,8 @@ module Aws::MediaTailor
       :name,
       :playback_configuration_name,
       :retrieval,
+      :recurring_prefetch_configuration,
+      :schedule_type,
       :stream_id)
       SENSITIVE = []
       include Aws::Structure
@@ -2358,11 +2395,12 @@ module Aws::MediaTailor
     #   @return [String]
     #
     # @!attribute [rw] consumption
-    #   Consumption settings determine how, and when, MediaTailor places the
-    #   prefetched ads into ad breaks. Ad consumption occurs within a span
-    #   of time that you define, called a *consumption window*. You can
-    #   designate which ad breaks that MediaTailor fills with prefetch ads
-    #   by setting avail matching criteria.
+    #   The configuration settings for how and when MediaTailor consumes
+    #   prefetched ads from the ad decision server for single prefetch
+    #   schedules. Each consumption configuration contains an end time and
+    #   an optional start time that define the *consumption window*.
+    #   Prefetch schedules automatically expire no earlier than seven days
+    #   after the end time.
     #   @return [Types::PrefetchConsumption]
     #
     # @!attribute [rw] name
@@ -2381,6 +2419,18 @@ module Aws::MediaTailor
     #   the ad decision server (ADS).
     #   @return [Types::PrefetchRetrieval]
     #
+    # @!attribute [rw] schedule_type
+    #   The frequency that MediaTailor creates prefetch schedules. `SINGLE`
+    #   indicates that this schedule applies to one ad break. `RECURRING`
+    #   indicates that MediaTailor automatically creates a schedule for each
+    #   ad avail in a live event.
+    #   @return [String]
+    #
+    # @!attribute [rw] recurring_prefetch_configuration
+    #   The configuration that defines how and when MediaTailor performs ad
+    #   prefetching in a live event.
+    #   @return [Types::RecurringPrefetchConfiguration]
+    #
     # @!attribute [rw] stream_id
     #   An optional stream identifier that you can specify in order to
     #   prefetch for multiple streams that use the same playback
@@ -2395,6 +2445,8 @@ module Aws::MediaTailor
       :name,
       :playback_configuration_name,
       :retrieval,
+      :schedule_type,
+      :recurring_prefetch_configuration,
       :stream_id)
       SENSITIVE = []
       include Aws::Structure
@@ -2713,6 +2765,14 @@ module Aws::MediaTailor
     #   configuration.
     #   @return [String]
     #
+    # @!attribute [rw] schedule_type
+    #   The type of prefetch schedules that you want to list. `SINGLE`
+    #   indicates that you want to list the configured single prefetch
+    #   schedules. `RECURRING` indicates that you want to list the
+    #   configured recurring prefetch schedules. `ALL` indicates that you
+    #   want to list all configured prefetch schedules.
+    #   @return [String]
+    #
     # @!attribute [rw] stream_id
     #   An optional filtering parameter whereby MediaTailor filters the
     #   prefetch schedules to include only specific streams.
@@ -2724,6 +2784,7 @@ module Aws::MediaTailor
       :max_results,
       :next_token,
       :playback_configuration_name,
+      :schedule_type,
       :stream_id)
       SENSITIVE = []
       include Aws::Structure
@@ -3242,8 +3303,8 @@ module Aws::MediaTailor
       include Aws::Structure
     end
 
-    # A complex type that contains settings that determine how and when that
-    # MediaTailor places prefetched ads into upcoming ad breaks.
+    # For single prefetch, describes how and when that MediaTailor places
+    # prefetched ads into upcoming ad breaks.
     #
     # @!attribute [rw] avail_matching_criteria
     #   If you only want MediaTailor to insert prefetched ads into avails
@@ -3306,12 +3367,24 @@ module Aws::MediaTailor
     #   prefetch retrieval starts as soon as possible.
     #   @return [Time]
     #
+    # @!attribute [rw] traffic_shaping_type
+    #   Indicates if this configuration uses a retrieval window for traffic
+    #   shaping and limiting the number of requests to the ADS at one time.
+    #   @return [String]
+    #
+    # @!attribute [rw] traffic_shaping_retrieval_window
+    #   Configuration for spreading ADS traffic across a set window instead
+    #   of sending ADS requests for all sessions at the same time.
+    #   @return [Types::TrafficShapingRetrievalWindow]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/PrefetchRetrieval AWS API Documentation
     #
     class PrefetchRetrieval < Struct.new(
       :dynamic_variables,
       :end_time,
-      :start_time)
+      :start_time,
+      :traffic_shaping_type,
+      :traffic_shaping_retrieval_window)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3331,10 +3404,11 @@ module Aws::MediaTailor
     #
     # @!attribute [rw] consumption
     #   Consumption settings determine how, and when, MediaTailor places the
-    #   prefetched ads into ad breaks. Ad consumption occurs within a span
-    #   of time that you define, called a *consumption window*. You can
-    #   designate which ad breaks that MediaTailor fills with prefetch ads
-    #   by setting avail matching criteria.
+    #   prefetched ads into ad breaks for single prefetch schedules. Ad
+    #   consumption occurs within a span of time that you define, called a
+    #   *consumption window*. You can designate which ad breaks that
+    #   MediaTailor fills with prefetch ads by setting avail matching
+    #   criteria.
     #   @return [Types::PrefetchConsumption]
     #
     # @!attribute [rw] name
@@ -3353,6 +3427,25 @@ module Aws::MediaTailor
     #   the ad decision server (ADS).
     #   @return [Types::PrefetchRetrieval]
     #
+    # @!attribute [rw] schedule_type
+    #   The frequency that MediaTailor creates prefetch schedules. `SINGLE`
+    #   indicates that this schedule applies to one ad break. `RECURRING`
+    #   indicates that MediaTailor automatically creates a schedule for each
+    #   ad avail in a live event.
+    #
+    #   For more information about the prefetch types and when you might use
+    #   each, see [Prefetching ads in Elemental MediaTailor.][1]
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/mediatailor/latest/ug/prefetching-ads.html
+    #   @return [String]
+    #
+    # @!attribute [rw] recurring_prefetch_configuration
+    #   The settings that determine how and when MediaTailor prefetches ads
+    #   and inserts them into ad breaks.
+    #   @return [Types::RecurringPrefetchConfiguration]
+    #
     # @!attribute [rw] stream_id
     #   An optional stream identifier that you can specify in order to
     #   prefetch for multiple streams that use the same playback
@@ -3367,6 +3460,8 @@ module Aws::MediaTailor
       :name,
       :playback_configuration_name,
       :retrieval,
+      :schedule_type,
+      :recurring_prefetch_configuration,
       :stream_id)
       SENSITIVE = []
       include Aws::Structure
@@ -3716,6 +3811,99 @@ module Aws::MediaTailor
       :transcode_profile_name,
       :video_content_source_url,
       :ad_conditioning_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The settings that determine how and when MediaTailor places prefetched
+    # ads into upcoming ad breaks for recurring prefetch scedules.
+    #
+    # @!attribute [rw] retrieved_ad_expiration_seconds
+    #   The number of seconds that an ad is available for insertion after it
+    #   was prefetched.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] avail_matching_criteria
+    #   The configuration for the dynamic variables that determine which ad
+    #   breaks that MediaTailor inserts prefetched ads in.
+    #   @return [Array<Types::AvailMatchingCriteria>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/RecurringConsumption AWS API Documentation
+    #
+    class RecurringConsumption < Struct.new(
+      :retrieved_ad_expiration_seconds,
+      :avail_matching_criteria)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration that defines how MediaTailor performs recurring
+    # prefetch.
+    #
+    # @!attribute [rw] start_time
+    #   The start time for the window that MediaTailor prefetches and
+    #   inserts ads in a live event.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The end time for the window that MediaTailor prefetches and inserts
+    #   ads in a live event.
+    #   @return [Time]
+    #
+    # @!attribute [rw] recurring_consumption
+    #   The settings that determine how and when MediaTailor places
+    #   prefetched ads into upcoming ad breaks for recurring prefetch
+    #   scedules.
+    #   @return [Types::RecurringConsumption]
+    #
+    # @!attribute [rw] recurring_retrieval
+    #   The configuration for prefetch ad retrieval from the ADS.
+    #   @return [Types::RecurringRetrieval]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/RecurringPrefetchConfiguration AWS API Documentation
+    #
+    class RecurringPrefetchConfiguration < Struct.new(
+      :start_time,
+      :end_time,
+      :recurring_consumption,
+      :recurring_retrieval)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # With recurring prefetch, MediaTailor automatically prefetches ads for
+    # every avail that occurs during the retrieval window. The following
+    # configurations describe the MediaTailor behavior when prefetching ads
+    # for a live event.
+    #
+    # @!attribute [rw] dynamic_variables
+    #   The dynamic variables to use for substitution during prefetch
+    #   requests to the ADS.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] delay_after_avail_end_seconds
+    #   The number of seconds that MediaTailor waits after an ad avail
+    #   before prefetching ads for the next avail. If not set, the default
+    #   is 0 (no delay).
+    #   @return [Integer]
+    #
+    # @!attribute [rw] traffic_shaping_type
+    #   Indicates if this configuration uses a retrieval window for traffic
+    #   shaping and limiting the number of requests to the ADS at one time.
+    #   @return [String]
+    #
+    # @!attribute [rw] traffic_shaping_retrieval_window
+    #   Configuration for spreading ADS traffic across a set window instead
+    #   of sending ADS requests for all sessions at the same time.
+    #   @return [Types::TrafficShapingRetrievalWindow]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/RecurringRetrieval AWS API Documentation
+    #
+    class RecurringRetrieval < Struct.new(
+      :dynamic_variables,
+      :delay_after_avail_end_seconds,
+      :traffic_shaping_type,
+      :traffic_shaping_retrieval_window)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4267,6 +4455,24 @@ module Aws::MediaTailor
     #
     class TimeSignalMessage < Struct.new(
       :segmentation_descriptors)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration that tells Elemental MediaTailor how to spread out
+    # requests to the ad decision server (ADS). Instead of sending ADS
+    # requests for all sessions at the same time, MediaTailor spreads the
+    # requests across the amount of time specified in the retrieval window.
+    #
+    # @!attribute [rw] retrieval_window_duration_seconds
+    #   The amount of time, in seconds, that MediaTailor spreads prefetch
+    #   requests to the ADS.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/TrafficShapingRetrievalWindow AWS API Documentation
+    #
+    class TrafficShapingRetrievalWindow < Struct.new(
+      :retrieval_window_duration_seconds)
       SENSITIVE = []
       include Aws::Structure
     end
