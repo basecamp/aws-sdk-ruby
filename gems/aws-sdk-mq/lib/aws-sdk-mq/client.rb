@@ -809,6 +809,33 @@ module Aws::MQ
       req.send_request(options)
     end
 
+    # Deletes the specified configuration.
+    #
+    # @option params [required, String] :configuration_id
+    #
+    # @return [Types::DeleteConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteConfigurationResponse#configuration_id #configuration_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_configuration({
+    #     configuration_id: "__string", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.configuration_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mq-2017-11-27/DeleteConfiguration AWS API Documentation
+    #
+    # @overload delete_configuration(params = {})
+    # @param [Hash] params ({})
+    def delete_configuration(params = {}, options = {})
+      req = build_request(:delete_configuration, params)
+      req.send_request(options)
+    end
+
     # Removes a tag from a resource.
     #
     # @option params [required, String] :resource_arn
@@ -1709,7 +1736,7 @@ module Aws::MQ
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mq'
-      context[:gem_version] = '1.77.0'
+      context[:gem_version] = '1.78.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

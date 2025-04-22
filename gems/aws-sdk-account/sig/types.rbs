@@ -21,6 +21,7 @@ module Aws::Account
     end
 
     class AccessDeniedException
+      attr_accessor error_type: ::String
       attr_accessor message: ::String
       SENSITIVE: []
     end
@@ -35,6 +36,7 @@ module Aws::Account
     end
 
     class ConflictException
+      attr_accessor error_type: ::String
       attr_accessor message: ::String
       SENSITIVE: []
     end
@@ -71,6 +73,18 @@ module Aws::Account
       attr_accessor account_id: ::String
       attr_accessor region_name: ::String
       SENSITIVE: []
+    end
+
+    class GetAccountInformationRequest
+      attr_accessor account_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetAccountInformationResponse
+      attr_accessor account_created_date: ::Time
+      attr_accessor account_id: ::String
+      attr_accessor account_name: ::String
+      SENSITIVE: [:account_name]
     end
 
     class GetAlternateContactRequest
@@ -117,6 +131,7 @@ module Aws::Account
     end
 
     class InternalServerException
+      attr_accessor error_type: ::String
       attr_accessor message: ::String
       SENSITIVE: []
     end
@@ -133,6 +148,12 @@ module Aws::Account
       attr_accessor next_token: ::String
       attr_accessor regions: ::Array[Types::Region]
       SENSITIVE: []
+    end
+
+    class PutAccountNameRequest
+      attr_accessor account_id: ::String
+      attr_accessor account_name: ::String
+      SENSITIVE: [:account_name]
     end
 
     class PutAlternateContactRequest
@@ -158,6 +179,7 @@ module Aws::Account
     end
 
     class ResourceNotFoundException
+      attr_accessor error_type: ::String
       attr_accessor message: ::String
       SENSITIVE: []
     end
@@ -174,6 +196,7 @@ module Aws::Account
     end
 
     class TooManyRequestsException
+      attr_accessor error_type: ::String
       attr_accessor message: ::String
       SENSITIVE: []
     end

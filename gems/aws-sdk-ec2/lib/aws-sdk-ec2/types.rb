@@ -6092,6 +6092,53 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # Client route enforcement is a feature of the Client VPN service that
+    # helps enforce administrator defined routes on devices connected
+    # through the VPN. T his feature helps improve your security posture by
+    # ensuring that network traffic originating from a connected client is
+    # not inadvertently sent outside the VPN tunnel.
+    #
+    # Client route enforcement works by monitoring the route table of a
+    # connected device for routing policy changes to the VPN connection. If
+    # the feature detects any VPN routing policy modifications, it will
+    # automatically force an update to the route table, reverting it back to
+    # the expected route configurations.
+    #
+    # @!attribute [rw] enforced
+    #   Enable or disable the client route enforcement feature.
+    #
+    #   Valid values: `true | false`
+    #
+    #   Default value: `false`
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ClientRouteEnforcementOptions AWS API Documentation
+    #
+    class ClientRouteEnforcementOptions < Struct.new(
+      :enforced)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The current status of client route enforcement. The state will either
+    # be `true` (enabled) or `false` (disabled).
+    #
+    # @!attribute [rw] enforced
+    #   Status of the client route enforcement feature.
+    #
+    #   Valid values: `true | false`
+    #
+    #   Default value: `false`
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ClientRouteEnforcementResponseOptions AWS API Documentation
+    #
+    class ClientRouteEnforcementResponseOptions < Struct.new(
+      :enforced)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes the authentication methods used by a Client VPN endpoint.
     # For more information, see [Authentication][1] in the *Client VPN
     # Administrator Guide*.
@@ -6404,6 +6451,20 @@ module Aws::EC2
     #   is established.
     #   @return [Types::ClientLoginBannerResponseOptions]
     #
+    # @!attribute [rw] client_route_enforcement_options
+    #   Client route enforcement is a feature of the Client VPN service that
+    #   helps enforce administrator defined routes on devices connected
+    #   through the VPN. T his feature helps improve your security posture
+    #   by ensuring that network traffic originating from a connected client
+    #   is not inadvertently sent outside the VPN tunnel.
+    #
+    #   Client route enforcement works by monitoring the route table of a
+    #   connected device for routing policy changes to the VPN connection.
+    #   If the feature detects any VPN routing policy modifications, it will
+    #   automatically force an update to the route table, reverting it back
+    #   to the expected route configurations.
+    #   @return [Types::ClientRouteEnforcementResponseOptions]
+    #
     # @!attribute [rw] disconnect_on_session_timeout
     #   Indicates whether the client VPN session is disconnected after the
     #   maximum `sessionTimeoutHours` is reached. If `true`, users are
@@ -6437,6 +6498,7 @@ module Aws::EC2
       :client_connect_options,
       :session_timeout_hours,
       :client_login_banner_options,
+      :client_route_enforcement_options,
       :disconnect_on_session_timeout)
       SENSITIVE = []
       include Aws::Structure
@@ -8253,6 +8315,20 @@ module Aws::EC2
     #   is established.
     #   @return [Types::ClientLoginBannerOptions]
     #
+    # @!attribute [rw] client_route_enforcement_options
+    #   Client route enforcement is a feature of the Client VPN service that
+    #   helps enforce administrator defined routes on devices connected
+    #   through the VPN. T his feature helps improve your security posture
+    #   by ensuring that network traffic originating from a connected client
+    #   is not inadvertently sent outside the VPN tunnel.
+    #
+    #   Client route enforcement works by monitoring the route table of a
+    #   connected device for routing policy changes to the VPN connection.
+    #   If the feature detects any VPN routing policy modifications, it will
+    #   automatically force an update to the route table, reverting it back
+    #   to the expected route configurations.
+    #   @return [Types::ClientRouteEnforcementOptions]
+    #
     # @!attribute [rw] disconnect_on_session_timeout
     #   Indicates whether the client VPN session is disconnected after the
     #   maximum timeout specified in `SessionTimeoutHours` is reached. If
@@ -8282,6 +8358,7 @@ module Aws::EC2
       :client_connect_options,
       :session_timeout_hours,
       :client_login_banner_options,
+      :client_route_enforcement_options,
       :disconnect_on_session_timeout)
       SENSITIVE = []
       include Aws::Structure
@@ -51885,6 +51962,20 @@ module Aws::EC2
     #   is established.
     #   @return [Types::ClientLoginBannerOptions]
     #
+    # @!attribute [rw] client_route_enforcement_options
+    #   Client route enforcement is a feature of the Client VPN service that
+    #   helps enforce administrator defined routes on devices connected
+    #   through the VPN. T his feature helps improve your security posture
+    #   by ensuring that network traffic originating from a connected client
+    #   is not inadvertently sent outside the VPN tunnel.
+    #
+    #   Client route enforcement works by monitoring the route table of a
+    #   connected device for routing policy changes to the VPN connection.
+    #   If the feature detects any VPN routing policy modifications, it will
+    #   automatically force an update to the route table, reverting it back
+    #   to the expected route configurations.
+    #   @return [Types::ClientRouteEnforcementOptions]
+    #
     # @!attribute [rw] disconnect_on_session_timeout
     #   Indicates whether the client VPN session is disconnected after the
     #   maximum timeout specified in `sessionTimeoutHours` is reached. If
@@ -51910,6 +52001,7 @@ module Aws::EC2
       :client_connect_options,
       :session_timeout_hours,
       :client_login_banner_options,
+      :client_route_enforcement_options,
       :disconnect_on_session_timeout)
       SENSITIVE = []
       include Aws::Structure
@@ -71708,7 +71800,10 @@ module Aws::EC2
     #
     # @!attribute [rw] default_route_table_association
     #   Indicates whether resource attachments are automatically associated
-    #   with the default association route table.
+    #   with the default association route table. Enabled by default. If
+    #   `defaultRouteTableAssociation` is set to `enable`, Amazon Web
+    #   Services Transit Gateway will create the default transit gateway
+    #   route table.
     #   @return [String]
     #
     # @!attribute [rw] association_default_route_table_id
@@ -71717,7 +71812,10 @@ module Aws::EC2
     #
     # @!attribute [rw] default_route_table_propagation
     #   Indicates whether resource attachments automatically propagate
-    #   routes to the default propagation route table.
+    #   routes to the default propagation route table. Enabled by default.
+    #   If `defaultRouteTablePropagation` is set to `enable`, Amazon Web
+    #   Services Transit Gateway will create the default transit gateway
+    #   route table.
     #   @return [String]
     #
     # @!attribute [rw] propagation_default_route_table_id

@@ -679,7 +679,7 @@ module Aws::EntityResolution
 
     class ProviderSchemaAttribute
       attr_accessor field_name: ::String
-      attr_accessor type: ("NAME" | "NAME_FIRST" | "NAME_MIDDLE" | "NAME_LAST" | "ADDRESS" | "ADDRESS_STREET1" | "ADDRESS_STREET2" | "ADDRESS_STREET3" | "ADDRESS_CITY" | "ADDRESS_STATE" | "ADDRESS_COUNTRY" | "ADDRESS_POSTALCODE" | "PHONE" | "PHONE_NUMBER" | "PHONE_COUNTRYCODE" | "EMAIL_ADDRESS" | "UNIQUE_ID" | "DATE" | "STRING" | "PROVIDER_ID")
+      attr_accessor type: ("NAME" | "NAME_FIRST" | "NAME_MIDDLE" | "NAME_LAST" | "ADDRESS" | "ADDRESS_STREET1" | "ADDRESS_STREET2" | "ADDRESS_STREET3" | "ADDRESS_CITY" | "ADDRESS_STATE" | "ADDRESS_COUNTRY" | "ADDRESS_POSTALCODE" | "PHONE" | "PHONE_NUMBER" | "PHONE_COUNTRYCODE" | "EMAIL_ADDRESS" | "UNIQUE_ID" | "DATE" | "STRING" | "PROVIDER_ID" | "IPV4" | "IPV6" | "MAID")
       attr_accessor sub_type: ::String
       attr_accessor hashing: bool
       SENSITIVE: []
@@ -735,7 +735,7 @@ module Aws::EntityResolution
 
     class SchemaInputAttribute
       attr_accessor field_name: ::String
-      attr_accessor type: ("NAME" | "NAME_FIRST" | "NAME_MIDDLE" | "NAME_LAST" | "ADDRESS" | "ADDRESS_STREET1" | "ADDRESS_STREET2" | "ADDRESS_STREET3" | "ADDRESS_CITY" | "ADDRESS_STATE" | "ADDRESS_COUNTRY" | "ADDRESS_POSTALCODE" | "PHONE" | "PHONE_NUMBER" | "PHONE_COUNTRYCODE" | "EMAIL_ADDRESS" | "UNIQUE_ID" | "DATE" | "STRING" | "PROVIDER_ID")
+      attr_accessor type: ("NAME" | "NAME_FIRST" | "NAME_MIDDLE" | "NAME_LAST" | "ADDRESS" | "ADDRESS_STREET1" | "ADDRESS_STREET2" | "ADDRESS_STREET3" | "ADDRESS_CITY" | "ADDRESS_STATE" | "ADDRESS_COUNTRY" | "ADDRESS_POSTALCODE" | "PHONE" | "PHONE_NUMBER" | "PHONE_COUNTRYCODE" | "EMAIL_ADDRESS" | "UNIQUE_ID" | "DATE" | "STRING" | "PROVIDER_ID" | "IPV4" | "IPV6" | "MAID")
       attr_accessor group_name: ::String
       attr_accessor match_key: ::String
       attr_accessor sub_type: ::String

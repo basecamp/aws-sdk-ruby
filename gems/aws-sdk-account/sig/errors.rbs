@@ -12,18 +12,23 @@ module Aws
       end
 
       class AccessDeniedException < ::Aws::Errors::ServiceError
+        def error_type: () -> ::String
         def message: () -> ::String
       end
       class ConflictException < ::Aws::Errors::ServiceError
+        def error_type: () -> ::String
         def message: () -> ::String
       end
       class InternalServerException < ::Aws::Errors::ServiceError
+        def error_type: () -> ::String
         def message: () -> ::String
       end
       class ResourceNotFoundException < ::Aws::Errors::ServiceError
+        def error_type: () -> ::String
         def message: () -> ::String
       end
       class TooManyRequestsException < ::Aws::Errors::ServiceError
+        def error_type: () -> ::String
         def message: () -> ::String
       end
       class ValidationException < ::Aws::Errors::ServiceError

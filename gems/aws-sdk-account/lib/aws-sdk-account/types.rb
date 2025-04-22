@@ -33,8 +33,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #   @return [String]
     #
     # @!attribute [rw] otp
@@ -73,12 +73,18 @@ module Aws::Account
     # The operation failed because the calling identity doesn't have the
     # minimum required permissions.
     #
+    # @!attribute [rw] error_type
+    #   The value populated to the `x-amzn-ErrorType` response header by API
+    #   Gateway.
+    #   @return [String]
+    #
     # @!attribute [rw] message
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/account-2021-02-01/AccessDeniedException AWS API Documentation
     #
     class AccessDeniedException < Struct.new(
+      :error_type,
       :message)
       SENSITIVE = []
       include Aws::Structure
@@ -122,7 +128,13 @@ module Aws::Account
     # The request could not be processed because of a conflict in the
     # current status of the resource. For example, this happens if you try
     # to enable a Region that is currently being disabled (in a status of
-    # DISABLING).
+    # DISABLING) or if you try to change an account’s root user email to an
+    # email address which is already in use.
+    #
+    # @!attribute [rw] error_type
+    #   The value populated to the `x-amzn-ErrorType` response header by API
+    #   Gateway.
+    #   @return [String]
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -130,6 +142,7 @@ module Aws::Account
     # @see http://docs.aws.amazon.com/goto/WebAPI/account-2021-02-01/ConflictException AWS API Documentation
     #
     class ConflictException < Struct.new(
+      :error_type,
       :message)
       SENSITIVE = []
       include Aws::Structure
@@ -289,8 +302,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #   @return [String]
     #
     # @!attribute [rw] region_name
@@ -340,8 +353,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #   @return [String]
     #
     # @!attribute [rw] region_name
@@ -361,6 +374,93 @@ module Aws::Account
       :account_id,
       :region_name)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] account_id
+    #   Specifies the 12 digit account ID number of the Amazon Web Services
+    #   account that you want to access or modify with this operation.
+    #
+    #   If you do not specify this parameter, it defaults to the Amazon Web
+    #   Services account of the identity used to call the operation.
+    #
+    #   To use this parameter, the caller must be an identity in the
+    #   [organization's management account][1] or a delegated administrator
+    #   account, and the specified account ID must be a member account in
+    #   the same organization. The organization must have [all features
+    #   enabled][2], and the organization must have [trusted access][3]
+    #   enabled for the Account Management service, and optionally a
+    #   [delegated admin][4] account assigned.
+    #
+    #   <note markdown="1"> The management account can't specify its own `AccountId`; it must
+    #   call the operation in standalone context by not including the
+    #   `AccountId` parameter.
+    #
+    #    </note>
+    #
+    #   To call this operation on an account that is not a member of an
+    #   organization, then don't specify this parameter, and call the
+    #   operation using an identity belonging to the account whose contacts
+    #   you wish to retrieve or modify.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
+    #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/account-2021-02-01/GetAccountInformationRequest AWS API Documentation
+    #
+    class GetAccountInformationRequest < Struct.new(
+      :account_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] account_created_date
+    #   The date and time the account was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] account_id
+    #   Specifies the 12-digit account ID number of the Amazon Web Services
+    #   account that you want to access or modify with this operation. To
+    #   use this parameter, the caller must be an identity in the
+    #   [organization's management account][1] or a delegated administrator
+    #   account. The specified account ID must be a member account in the
+    #   same organization. The organization must have [all features
+    #   enabled][2], and the organization must have [trusted access][3]
+    #   enabled for the Account Management service, and optionally a
+    #   [delegated admin][4] account assigned.
+    #
+    #   This operation can only be called from the management account or the
+    #   delegated administrator account of an organization for a member
+    #   account.
+    #
+    #   <note markdown="1"> The management account can't specify its own `AccountId`.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
+    #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
+    #   @return [String]
+    #
+    # @!attribute [rw] account_name
+    #   The name of the account.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/account-2021-02-01/GetAccountInformationResponse AWS API Documentation
+    #
+    class GetAccountInformationResponse < Struct.new(
+      :account_created_date,
+      :account_id,
+      :account_name)
+      SENSITIVE = [:account_name]
       include Aws::Structure
     end
 
@@ -452,8 +552,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/account-2021-02-01/GetContactInformationRequest AWS API Documentation
@@ -500,8 +600,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/account-2021-02-01/GetPrimaryEmailRequest AWS API Documentation
@@ -553,8 +653,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #   @return [String]
     #
     # @!attribute [rw] region_name
@@ -593,12 +693,18 @@ module Aws::Account
     # The operation failed because of an error internal to Amazon Web
     # Services. Try your operation again later.
     #
+    # @!attribute [rw] error_type
+    #   The value populated to the `x-amzn-ErrorType` response header by API
+    #   Gateway.
+    #   @return [String]
+    #
     # @!attribute [rw] message
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/account-2021-02-01/InternalServerException AWS API Documentation
     #
     class InternalServerException < Struct.new(
+      :error_type,
       :message)
       SENSITIVE = []
       include Aws::Structure
@@ -632,8 +738,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #   @return [String]
     #
     # @!attribute [rw] max_results
@@ -735,6 +841,53 @@ module Aws::Account
     #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
     #   @return [String]
     #
+    # @!attribute [rw] account_name
+    #   The name of the account.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/account-2021-02-01/PutAccountNameRequest AWS API Documentation
+    #
+    class PutAccountNameRequest < Struct.new(
+      :account_id,
+      :account_name)
+      SENSITIVE = [:account_name]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] account_id
+    #   Specifies the 12 digit account ID number of the Amazon Web Services
+    #   account that you want to access or modify with this operation.
+    #
+    #   If you do not specify this parameter, it defaults to the Amazon Web
+    #   Services account of the identity used to call the operation.
+    #
+    #   To use this parameter, the caller must be an identity in the
+    #   [organization's management account][1] or a delegated administrator
+    #   account, and the specified account ID must be a member account in
+    #   the same organization. The organization must have [all features
+    #   enabled][2], and the organization must have [trusted access][3]
+    #   enabled for the Account Management service, and optionally a
+    #   [delegated admin][4] account assigned.
+    #
+    #   <note markdown="1"> The management account can't specify its own `AccountId`; it must
+    #   call the operation in standalone context by not including the
+    #   `AccountId` parameter.
+    #
+    #    </note>
+    #
+    #   To call this operation on an account that is not a member of an
+    #   organization, then don't specify this parameter, and call the
+    #   operation using an identity belonging to the account whose contacts
+    #   you wish to retrieve or modify.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
+    #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   @return [String]
+    #
     # @!attribute [rw] alternate_contact_type
     #   Specifies which alternate contact you want to create or update.
     #   @return [String]
@@ -796,8 +949,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #   @return [String]
     #
     # @!attribute [rw] contact_information
@@ -838,12 +991,18 @@ module Aws::Account
     # The operation failed because it specified a resource that can't be
     # found.
     #
+    # @!attribute [rw] error_type
+    #   The value populated to the `x-amzn-ErrorType` response header by API
+    #   Gateway.
+    #   @return [String]
+    #
     # @!attribute [rw] message
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/account-2021-02-01/ResourceNotFoundException AWS API Documentation
     #
     class ResourceNotFoundException < Struct.new(
+      :error_type,
       :message)
       SENSITIVE = []
       include Aws::Structure
@@ -872,8 +1031,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #   @return [String]
     #
     # @!attribute [rw] primary_email
@@ -905,12 +1064,18 @@ module Aws::Account
     # The operation failed because it was called too frequently and exceeded
     # a throttle limit.
     #
+    # @!attribute [rw] error_type
+    #   The value populated to the `x-amzn-ErrorType` response header by API
+    #   Gateway.
+    #   @return [String]
+    #
     # @!attribute [rw] message
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/account-2021-02-01/TooManyRequestsException AWS API Documentation
     #
     class TooManyRequestsException < Struct.new(
+      :error_type,
       :message)
       SENSITIVE = []
       include Aws::Structure

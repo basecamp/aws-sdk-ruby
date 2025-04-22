@@ -335,6 +335,52 @@ module Aws::RedshiftServerless
       include Aws::Structure
     end
 
+    # @!attribute [rw] capacity
+    #   The number of Redshift Processing Units (RPUs) to reserve.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. This token must be a valid UUIDv4 value.
+    #   For more information about idempotency, see [ Making retries safe
+    #   with idempotent APIs ][1].
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
+    #   @return [String]
+    #
+    # @!attribute [rw] offering_id
+    #   The ID of the offering associated with the reservation. The offering
+    #   determines the payment schedule for the reservation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/CreateReservationRequest AWS API Documentation
+    #
+    class CreateReservationRequest < Struct.new(
+      :capacity,
+      :client_token,
+      :offering_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] reservation
+    #   The reservation object that the `CreateReservation` action created.
+    #   @return [Types::Reservation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/CreateReservationResponse AWS API Documentation
+    #
+    class CreateReservationResponse < Struct.new(
+      :reservation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] enabled
     #   Indicates whether the schedule is enabled. If false, the scheduled
     #   action does not trigger. For more information about `state` of the
@@ -1230,6 +1276,55 @@ module Aws::RedshiftServerless
       include Aws::Structure
     end
 
+    # @!attribute [rw] offering_id
+    #   The identifier for the offering..
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/GetReservationOfferingRequest AWS API Documentation
+    #
+    class GetReservationOfferingRequest < Struct.new(
+      :offering_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] reservation_offering
+    #   The returned reservation offering. The offering determines the
+    #   payment schedule for the reservation.
+    #   @return [Types::ReservationOffering]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/GetReservationOfferingResponse AWS API Documentation
+    #
+    class GetReservationOfferingResponse < Struct.new(
+      :reservation_offering)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] reservation_id
+    #   The ID of the reservation to retrieve.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/GetReservationRequest AWS API Documentation
+    #
+    class GetReservationRequest < Struct.new(
+      :reservation_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] reservation
+    #   The returned reservation object.
+    #   @return [Types::Reservation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/GetReservationResponse AWS API Documentation
+    #
+    class GetReservationResponse < Struct.new(
+      :reservation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] resource_arn
     #   The Amazon Resource Name (ARN) of the resource to return.
     #   @return [String]
@@ -1726,6 +1821,80 @@ module Aws::RedshiftServerless
     class ListRecoveryPointsResponse < Struct.new(
       :next_token,
       :recovery_points)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   The maximum number of items to return for this call. The call also
+    #   returns a token that you can specify in a subsequent call to get the
+    #   next set of results.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of items to return. (You received this
+    #   token from a previous call.)
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/ListReservationOfferingsRequest AWS API Documentation
+    #
+    class ListReservationOfferingsRequest < Struct.new(
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   The token to use when requesting the next set of items.
+    #   @return [String]
+    #
+    # @!attribute [rw] reservation_offerings_list
+    #   The returned list of reservation offerings.
+    #   @return [Array<Types::ReservationOffering>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/ListReservationOfferingsResponse AWS API Documentation
+    #
+    class ListReservationOfferingsResponse < Struct.new(
+      :next_token,
+      :reservation_offerings_list)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   The maximum number of items to return for this call. The call also
+    #   returns a token that you can specify in a subsequent call to get the
+    #   next set of results.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of items to return. (You received this
+    #   token from a previous call.)
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/ListReservationsRequest AWS API Documentation
+    #
+    class ListReservationsRequest < Struct.new(
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   The token to use when requesting the next set of items.
+    #   @return [String]
+    #
+    # @!attribute [rw] reservations_list
+    #   The serverless reservations returned by the request.
+    #   @return [Array<Types::Reservation>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/ListReservationsResponse AWS API Documentation
+    #
+    class ListReservationsResponse < Struct.new(
+      :next_token,
+      :reservations_list)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2371,6 +2540,108 @@ module Aws::RedshiftServerless
       include Aws::Structure
     end
 
+    # Represents an Amazon Redshift Serverless reservation, which gives you
+    # the option to commit to a specified number of Redshift Processing
+    # Units (RPUs) for a year at a discount from Serverless on-demand (OD)
+    # rates.
+    #
+    # @!attribute [rw] capacity
+    #   The number of Redshift Processing Units (RPUs) to reserve.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] end_date
+    #   The end date for the serverless reservation. This date is one year
+    #   after the start date that you specify.
+    #   @return [Time]
+    #
+    # @!attribute [rw] offering
+    #   The type of offering for the reservation. The offering class
+    #   determines the payment schedule for the reservation.
+    #   @return [Types::ReservationOffering]
+    #
+    # @!attribute [rw] reservation_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies the
+    #   serverless reservation.
+    #   @return [String]
+    #
+    # @!attribute [rw] reservation_id
+    #   The identifier that uniquely identifies the serverless reservation.
+    #   @return [String]
+    #
+    # @!attribute [rw] start_date
+    #   The start date for the serverless reservation. This is the date you
+    #   specified for the reservation to start when you created the
+    #   reservation.
+    #   @return [Time]
+    #
+    # @!attribute [rw] status
+    #   The status of the reservation. Possible values include the
+    #   following:
+    #
+    #   * `payment-pending`
+    #
+    #   * `active`
+    #
+    #   * `payment-failed`
+    #
+    #   * `retired`
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/Reservation AWS API Documentation
+    #
+    class Reservation < Struct.new(
+      :capacity,
+      :end_date,
+      :offering,
+      :reservation_arn,
+      :reservation_id,
+      :start_date,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The class of offering for the reservation. The offering class
+    # determines the payment schedule for the reservation.
+    #
+    # @!attribute [rw] currency_code
+    #   The currency code for the offering.
+    #   @return [String]
+    #
+    # @!attribute [rw] duration
+    #   The duration, in seconds, for which the reservation reserves the
+    #   RPUs.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] hourly_charge
+    #   The rate you are charged for each hour the reservation is active.
+    #   @return [Float]
+    #
+    # @!attribute [rw] offering_id
+    #   The offering identifier.
+    #   @return [String]
+    #
+    # @!attribute [rw] offering_type
+    #   Determines the payment schedule for the reservation.
+    #   @return [String]
+    #
+    # @!attribute [rw] upfront_charge
+    #   The up-front price you are charged for the reservation.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/ReservationOffering AWS API Documentation
+    #
+    class ReservationOffering < Struct.new(
+      :currency_code,
+      :duration,
+      :hourly_charge,
+      :offering_id,
+      :offering_type,
+      :upfront_charge)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The resource could not be found.
     #
     # @!attribute [rw] message
@@ -2470,8 +2741,8 @@ module Aws::RedshiftServerless
     #
     # @!attribute [rw] snapshot_arn
     #   The Amazon Resource Name (ARN) of the snapshot to restore from.
-    #   Required if restoring from Amazon Redshift Serverless to a
-    #   provisioned cluster. Must not be specified at the same time as
+    #   Required if restoring from a provisioned cluster to Amazon Redshift
+    #   Serverless. Must not be specified at the same time as
     #   `snapshotName`.
     #
     #   The format of the ARN is

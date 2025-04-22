@@ -2180,18 +2180,6 @@ module Aws::S3Control
           subject.resolve_endpoint(params)
         end.to raise_error(ArgumentError, expected['error'])
       end
-
-      it 'produces the correct output from the client when calling list_regional_buckets' do
-        client = Client.new(
-          region: 'us-east-1',
-          stub_responses: true
-        )
-        expect do
-          client.list_regional_buckets(
-            account_id: '/?invalid&not-host*label',
-          )
-        end.to raise_error(ArgumentError, expected['error'])
-      end
     end
 
     context "custom account id prefix with fips@us-east-1" do
@@ -2322,19 +2310,6 @@ module Aws::S3Control
           subject.resolve_endpoint(params)
         end.to raise_error(ArgumentError, expected['error'])
       end
-
-      it 'produces the correct output from the client when calling list_regional_buckets' do
-        client = Client.new(
-          region: 'us-east-1',
-          endpoint: 'https://beta.example.com',
-          stub_responses: true
-        )
-        expect do
-          client.list_regional_buckets(
-            account_id: '/?invalid&not-host*label',
-          )
-        end.to raise_error(ArgumentError, expected['error'])
-      end
     end
 
     context "account id with custom endpoint, fips" do
@@ -2457,19 +2432,6 @@ module Aws::S3Control
         params = EndpointParameters.new(**{:account_id=>"/?invalid&not-host*label", :outpost_id=>"op-123", :region=>"us-east-2", :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>false})
         expect do
           subject.resolve_endpoint(params)
-        end.to raise_error(ArgumentError, expected['error'])
-      end
-
-      it 'produces the correct output from the client when calling list_regional_buckets' do
-        client = Client.new(
-          region: 'us-east-2',
-          stub_responses: true
-        )
-        expect do
-          client.list_regional_buckets(
-            outpost_id: 'op-123',
-            account_id: '/?invalid&not-host*label',
-          )
         end.to raise_error(ArgumentError, expected['error'])
       end
     end
@@ -2620,7 +2582,7 @@ module Aws::S3Control
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:account_id=>"0123456789012", :outpost_id=>"op-123", :region=>"cn-north-1", :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>true})
+        params = EndpointParameters.new(**{:account_id=>"012345678912", :outpost_id=>"op-123", :region=>"cn-north-1", :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>true})
         expect do
           subject.resolve_endpoint(params)
         end.to raise_error(ArgumentError, expected['error'])
@@ -2635,7 +2597,7 @@ module Aws::S3Control
         expect do
           client.list_regional_buckets(
             outpost_id: 'op-123',
-            account_id: '0123456789012',
+            account_id: '012345678912',
           )
         end.to raise_error(ArgumentError, expected['error'])
       end
@@ -2647,7 +2609,7 @@ module Aws::S3Control
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:account_id=>"0123456789012", :outpost_id=>"?outpost/invalid+", :region=>"us-west-1", :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>false})
+        params = EndpointParameters.new(**{:account_id=>"012345678912", :outpost_id=>"?outpost/invalid+", :region=>"us-west-1", :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>false})
         expect do
           subject.resolve_endpoint(params)
         end.to raise_error(ArgumentError, expected['error'])
@@ -2661,7 +2623,7 @@ module Aws::S3Control
         expect do
           client.list_regional_buckets(
             outpost_id: '?outpost/invalid+',
-            account_id: '0123456789012',
+            account_id: '012345678912',
           )
         end.to raise_error(ArgumentError, expected['error'])
       end
@@ -2669,11 +2631,11 @@ module Aws::S3Control
 
     context "bucket ARN with mismatched accountId" do
       let(:expected) do
-        {"error"=>"Invalid ARN: the accountId specified in the ARN (`999999`) does not match the parameter (`0123456789012`)"}
+        {"error"=>"Invalid ARN: the accountId specified in the ARN (`999999`) does not match the parameter (`012345678912`)"}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{:bucket=>"arn:aws:s3-outposts:us-west-2:999999:outpost:op-01234567890123456:bucket:mybucket", :account_id=>"0123456789012", :region=>"us-west-2", :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>false})
+        params = EndpointParameters.new(**{:bucket=>"arn:aws:s3-outposts:us-west-2:999999:outpost:op-01234567890123456:bucket:mybucket", :account_id=>"012345678912", :region=>"us-west-2", :requires_account_id=>true, :use_dual_stack=>false, :use_fips=>false})
         expect do
           subject.resolve_endpoint(params)
         end.to raise_error(ArgumentError, expected['error'])

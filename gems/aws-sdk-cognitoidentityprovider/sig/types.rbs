@@ -631,6 +631,7 @@ module Aws::CognitoIdentityProvider
       attr_accessor enable_token_revocation: bool
       attr_accessor enable_propagate_additional_user_context_data: bool
       attr_accessor auth_session_validity: ::Integer
+      attr_accessor refresh_token_rotation: Types::RefreshTokenRotationType
       SENSITIVE: []
     end
 
@@ -1064,6 +1065,20 @@ module Aws::CognitoIdentityProvider
 
     class GetSigningCertificateResponse
       attr_accessor certificate: ::String
+      SENSITIVE: []
+    end
+
+    class GetTokensFromRefreshTokenRequest
+      attr_accessor refresh_token: ::String
+      attr_accessor client_id: ::String
+      attr_accessor client_secret: ::String
+      attr_accessor device_key: ::String
+      attr_accessor client_metadata: ::Hash[::String, ::String]
+      SENSITIVE: [:refresh_token, :client_id, :client_secret]
+    end
+
+    class GetTokensFromRefreshTokenResponse
+      attr_accessor authentication_result: Types::AuthenticationResultType
       SENSITIVE: []
     end
 
@@ -1540,6 +1555,17 @@ module Aws::CognitoIdentityProvider
       SENSITIVE: []
     end
 
+    class RefreshTokenReuseException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class RefreshTokenRotationType
+      attr_accessor feature: ("ENABLED" | "DISABLED")
+      attr_accessor retry_grace_period_seconds: ::Integer
+      SENSITIVE: []
+    end
+
     class ResendConfirmationCodeRequest
       attr_accessor client_id: ::String
       attr_accessor secret_hash: ::String
@@ -2009,6 +2035,7 @@ module Aws::CognitoIdentityProvider
       attr_accessor enable_token_revocation: bool
       attr_accessor enable_propagate_additional_user_context_data: bool
       attr_accessor auth_session_validity: ::Integer
+      attr_accessor refresh_token_rotation: Types::RefreshTokenRotationType
       SENSITIVE: [:client_id]
     end
 
@@ -2151,6 +2178,7 @@ module Aws::CognitoIdentityProvider
       attr_accessor enable_token_revocation: bool
       attr_accessor enable_propagate_additional_user_context_data: bool
       attr_accessor auth_session_validity: ::Integer
+      attr_accessor refresh_token_rotation: Types::RefreshTokenRotationType
       SENSITIVE: [:client_id, :client_secret]
     end
 

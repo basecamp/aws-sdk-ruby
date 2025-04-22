@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.119.0 (2025-04-22)
+------------------
+
+* Feature - This release adds refresh token rotation.
+
 1.118.0 (2025-03-14)
 ------------------
 

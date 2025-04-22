@@ -1273,6 +1273,9 @@ module Aws
                                           enabled: bool?,
                                           banner_text: ::String?
                                         },
+                                        ?client_route_enforcement_options: {
+                                          enforced: bool?
+                                        },
                                         ?disconnect_on_session_timeout: bool
                                       ) -> _CreateClientVpnEndpointResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateClientVpnEndpointResponseSuccess
@@ -10593,6 +10596,9 @@ module Aws
                                         ?client_login_banner_options: {
                                           enabled: bool?,
                                           banner_text: ::String?
+                                        },
+                                        ?client_route_enforcement_options: {
+                                          enforced: bool?
                                         },
                                         ?disconnect_on_session_timeout: bool
                                       ) -> _ModifyClientVpnEndpointResponseSuccess

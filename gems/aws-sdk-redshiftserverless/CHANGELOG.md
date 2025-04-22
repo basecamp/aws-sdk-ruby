@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.48.0 (2025-04-22)
+------------------
+
+* Feature - Provides new and updated API members to support the Redshift Serverless reservations feature.
+
 1.47.0 (2025-02-27)
 ------------------
 

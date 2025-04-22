@@ -110,6 +110,18 @@ module Aws
                          ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
+      interface _GetAccountInformationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetAccountInformationResponse]
+        def account_created_date: () -> ::Time
+        def account_id: () -> ::String
+        def account_name: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Account/Client.html#get_account_information-instance_method
+      def get_account_information: (
+                                     ?account_id: ::String
+                                   ) -> _GetAccountInformationResponseSuccess
+                                 | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAccountInformationResponseSuccess
+
       interface _GetAlternateContactResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetAlternateContactResponse]
         def alternate_contact: () -> Types::AlternateContact
@@ -166,6 +178,13 @@ module Aws
                           ?region_opt_status_contains: Array[("ENABLED" | "ENABLING" | "DISABLING" | "DISABLED" | "ENABLED_BY_DEFAULT")]
                         ) -> _ListRegionsResponseSuccess
                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListRegionsResponseSuccess
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Account/Client.html#put_account_name-instance_method
+      def put_account_name: (
+                              ?account_id: ::String,
+                              account_name: ::String
+                            ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Account/Client.html#put_alternate_contact-instance_method
       def put_alternate_contact: (

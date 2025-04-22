@@ -1000,7 +1000,7 @@ module Aws::EntityResolution
     #     mapped_input_fields: [ # required
     #       {
     #         field_name: "AttributeName", # required
-    #         type: "NAME", # required, accepts NAME, NAME_FIRST, NAME_MIDDLE, NAME_LAST, ADDRESS, ADDRESS_STREET1, ADDRESS_STREET2, ADDRESS_STREET3, ADDRESS_CITY, ADDRESS_STATE, ADDRESS_COUNTRY, ADDRESS_POSTALCODE, PHONE, PHONE_NUMBER, PHONE_COUNTRYCODE, EMAIL_ADDRESS, UNIQUE_ID, DATE, STRING, PROVIDER_ID
+    #         type: "NAME", # required, accepts NAME, NAME_FIRST, NAME_MIDDLE, NAME_LAST, ADDRESS, ADDRESS_STREET1, ADDRESS_STREET2, ADDRESS_STREET3, ADDRESS_CITY, ADDRESS_STATE, ADDRESS_COUNTRY, ADDRESS_POSTALCODE, PHONE, PHONE_NUMBER, PHONE_COUNTRYCODE, EMAIL_ADDRESS, UNIQUE_ID, DATE, STRING, PROVIDER_ID, IPV4, IPV6, MAID
     #         group_name: "AttributeName",
     #         match_key: "AttributeName",
     #         sub_type: "AttributeName",
@@ -1019,7 +1019,7 @@ module Aws::EntityResolution
     #   resp.description #=> String
     #   resp.mapped_input_fields #=> Array
     #   resp.mapped_input_fields[0].field_name #=> String
-    #   resp.mapped_input_fields[0].type #=> String, one of "NAME", "NAME_FIRST", "NAME_MIDDLE", "NAME_LAST", "ADDRESS", "ADDRESS_STREET1", "ADDRESS_STREET2", "ADDRESS_STREET3", "ADDRESS_CITY", "ADDRESS_STATE", "ADDRESS_COUNTRY", "ADDRESS_POSTALCODE", "PHONE", "PHONE_NUMBER", "PHONE_COUNTRYCODE", "EMAIL_ADDRESS", "UNIQUE_ID", "DATE", "STRING", "PROVIDER_ID"
+    #   resp.mapped_input_fields[0].type #=> String, one of "NAME", "NAME_FIRST", "NAME_MIDDLE", "NAME_LAST", "ADDRESS", "ADDRESS_STREET1", "ADDRESS_STREET2", "ADDRESS_STREET3", "ADDRESS_CITY", "ADDRESS_STATE", "ADDRESS_COUNTRY", "ADDRESS_POSTALCODE", "PHONE", "PHONE_NUMBER", "PHONE_COUNTRYCODE", "EMAIL_ADDRESS", "UNIQUE_ID", "DATE", "STRING", "PROVIDER_ID", "IPV4", "IPV6", "MAID"
     #   resp.mapped_input_fields[0].group_name #=> String
     #   resp.mapped_input_fields[0].match_key #=> String
     #   resp.mapped_input_fields[0].sub_type #=> String
@@ -1615,7 +1615,7 @@ module Aws::EntityResolution
     #   resp.provider_component_schema.schemas[0][0] #=> String
     #   resp.provider_component_schema.provider_schema_attributes #=> Array
     #   resp.provider_component_schema.provider_schema_attributes[0].field_name #=> String
-    #   resp.provider_component_schema.provider_schema_attributes[0].type #=> String, one of "NAME", "NAME_FIRST", "NAME_MIDDLE", "NAME_LAST", "ADDRESS", "ADDRESS_STREET1", "ADDRESS_STREET2", "ADDRESS_STREET3", "ADDRESS_CITY", "ADDRESS_STATE", "ADDRESS_COUNTRY", "ADDRESS_POSTALCODE", "PHONE", "PHONE_NUMBER", "PHONE_COUNTRYCODE", "EMAIL_ADDRESS", "UNIQUE_ID", "DATE", "STRING", "PROVIDER_ID"
+    #   resp.provider_component_schema.provider_schema_attributes[0].type #=> String, one of "NAME", "NAME_FIRST", "NAME_MIDDLE", "NAME_LAST", "ADDRESS", "ADDRESS_STREET1", "ADDRESS_STREET2", "ADDRESS_STREET3", "ADDRESS_CITY", "ADDRESS_STATE", "ADDRESS_COUNTRY", "ADDRESS_POSTALCODE", "PHONE", "PHONE_NUMBER", "PHONE_COUNTRYCODE", "EMAIL_ADDRESS", "UNIQUE_ID", "DATE", "STRING", "PROVIDER_ID", "IPV4", "IPV6", "MAID"
     #   resp.provider_component_schema.provider_schema_attributes[0].sub_type #=> String
     #   resp.provider_component_schema.provider_schema_attributes[0].hashing #=> Boolean
     #
@@ -1657,7 +1657,7 @@ module Aws::EntityResolution
     #   resp.description #=> String
     #   resp.mapped_input_fields #=> Array
     #   resp.mapped_input_fields[0].field_name #=> String
-    #   resp.mapped_input_fields[0].type #=> String, one of "NAME", "NAME_FIRST", "NAME_MIDDLE", "NAME_LAST", "ADDRESS", "ADDRESS_STREET1", "ADDRESS_STREET2", "ADDRESS_STREET3", "ADDRESS_CITY", "ADDRESS_STATE", "ADDRESS_COUNTRY", "ADDRESS_POSTALCODE", "PHONE", "PHONE_NUMBER", "PHONE_COUNTRYCODE", "EMAIL_ADDRESS", "UNIQUE_ID", "DATE", "STRING", "PROVIDER_ID"
+    #   resp.mapped_input_fields[0].type #=> String, one of "NAME", "NAME_FIRST", "NAME_MIDDLE", "NAME_LAST", "ADDRESS", "ADDRESS_STREET1", "ADDRESS_STREET2", "ADDRESS_STREET3", "ADDRESS_CITY", "ADDRESS_STATE", "ADDRESS_COUNTRY", "ADDRESS_POSTALCODE", "PHONE", "PHONE_NUMBER", "PHONE_COUNTRYCODE", "EMAIL_ADDRESS", "UNIQUE_ID", "DATE", "STRING", "PROVIDER_ID", "IPV4", "IPV6", "MAID"
     #   resp.mapped_input_fields[0].group_name #=> String
     #   resp.mapped_input_fields[0].match_key #=> String
     #   resp.mapped_input_fields[0].sub_type #=> String
@@ -2578,7 +2578,7 @@ module Aws::EntityResolution
     #     mapped_input_fields: [ # required
     #       {
     #         field_name: "AttributeName", # required
-    #         type: "NAME", # required, accepts NAME, NAME_FIRST, NAME_MIDDLE, NAME_LAST, ADDRESS, ADDRESS_STREET1, ADDRESS_STREET2, ADDRESS_STREET3, ADDRESS_CITY, ADDRESS_STATE, ADDRESS_COUNTRY, ADDRESS_POSTALCODE, PHONE, PHONE_NUMBER, PHONE_COUNTRYCODE, EMAIL_ADDRESS, UNIQUE_ID, DATE, STRING, PROVIDER_ID
+    #         type: "NAME", # required, accepts NAME, NAME_FIRST, NAME_MIDDLE, NAME_LAST, ADDRESS, ADDRESS_STREET1, ADDRESS_STREET2, ADDRESS_STREET3, ADDRESS_CITY, ADDRESS_STATE, ADDRESS_COUNTRY, ADDRESS_POSTALCODE, PHONE, PHONE_NUMBER, PHONE_COUNTRYCODE, EMAIL_ADDRESS, UNIQUE_ID, DATE, STRING, PROVIDER_ID, IPV4, IPV6, MAID
     #         group_name: "AttributeName",
     #         match_key: "AttributeName",
     #         sub_type: "AttributeName",
@@ -2594,7 +2594,7 @@ module Aws::EntityResolution
     #   resp.description #=> String
     #   resp.mapped_input_fields #=> Array
     #   resp.mapped_input_fields[0].field_name #=> String
-    #   resp.mapped_input_fields[0].type #=> String, one of "NAME", "NAME_FIRST", "NAME_MIDDLE", "NAME_LAST", "ADDRESS", "ADDRESS_STREET1", "ADDRESS_STREET2", "ADDRESS_STREET3", "ADDRESS_CITY", "ADDRESS_STATE", "ADDRESS_COUNTRY", "ADDRESS_POSTALCODE", "PHONE", "PHONE_NUMBER", "PHONE_COUNTRYCODE", "EMAIL_ADDRESS", "UNIQUE_ID", "DATE", "STRING", "PROVIDER_ID"
+    #   resp.mapped_input_fields[0].type #=> String, one of "NAME", "NAME_FIRST", "NAME_MIDDLE", "NAME_LAST", "ADDRESS", "ADDRESS_STREET1", "ADDRESS_STREET2", "ADDRESS_STREET3", "ADDRESS_CITY", "ADDRESS_STATE", "ADDRESS_COUNTRY", "ADDRESS_POSTALCODE", "PHONE", "PHONE_NUMBER", "PHONE_COUNTRYCODE", "EMAIL_ADDRESS", "UNIQUE_ID", "DATE", "STRING", "PROVIDER_ID", "IPV4", "IPV6", "MAID"
     #   resp.mapped_input_fields[0].group_name #=> String
     #   resp.mapped_input_fields[0].match_key #=> String
     #   resp.mapped_input_fields[0].sub_type #=> String
@@ -2627,7 +2627,7 @@ module Aws::EntityResolution
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-entityresolution'
-      context[:gem_version] = '1.27.0'
+      context[:gem_version] = '1.28.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

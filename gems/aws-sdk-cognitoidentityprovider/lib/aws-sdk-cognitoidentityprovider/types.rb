@@ -4251,6 +4251,13 @@ module Aws::CognitoIdentityProvider
     #   respond to each authentication challenge before the session expires.
     #   @return [Integer]
     #
+    # @!attribute [rw] refresh_token_rotation
+    #   The configuration of your app client for refresh token rotation.
+    #   When enabled, your app client issues new ID, access, and refresh
+    #   tokens when users renew their sessions with refresh tokens. When
+    #   disabled, token refresh issues only ID and access tokens.
+    #   @return [Types::RefreshTokenRotationType]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/CreateUserPoolClientRequest AWS API Documentation
     #
     class CreateUserPoolClientRequest < Struct.new(
@@ -4275,7 +4282,8 @@ module Aws::CognitoIdentityProvider
       :prevent_user_existence_errors,
       :enable_token_revocation,
       :enable_propagate_additional_user_context_data,
-      :auth_session_validity)
+      :auth_session_validity,
+      :refresh_token_rotation)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6154,6 +6162,98 @@ module Aws::CognitoIdentityProvider
     #
     class GetSigningCertificateResponse < Struct.new(
       :certificate)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] refresh_token
+    #   A valid refresh token that can authorize the request for new tokens.
+    #   When refresh token rotation is active in the requested app client,
+    #   this token is invalidated after the request is complete.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_id
+    #   The app client that issued the refresh token to the user who wants
+    #   to request new tokens.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_secret
+    #   The client secret of the requested app client, if the client has a
+    #   secret.
+    #   @return [String]
+    #
+    # @!attribute [rw] device_key
+    #   When you enable device remembering, Amazon Cognito issues a device
+    #   key that you can use for device authentication that bypasses
+    #   multi-factor authentication (MFA). To implement
+    #   `GetTokensFromRefreshToken` in a user pool with device remembering,
+    #   you must capture the device key from the initial authentication
+    #   request. If your application doesn't provide the key of a
+    #   registered device, Amazon Cognito issues a new one. You must provide
+    #   the confirmed device key in this request if device remembering is
+    #   enabled in your user pool.
+    #
+    #   For more information about device remembering, see [Working with
+    #   devices][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html
+    #   @return [String]
+    #
+    # @!attribute [rw] client_metadata
+    #   A map of custom key-value pairs that you can provide as input for
+    #   certain custom workflows that this action triggers.
+    #
+    #   You create custom workflows by assigning Lambda functions to user
+    #   pool triggers. When you use the `GetTokensFromRefreshToken` API
+    #   action, Amazon Cognito invokes the Lambda function the pre token
+    #   generation trigger.
+    #
+    #   For more information, see [ Using Lambda triggers][1] in the *Amazon
+    #   Cognito Developer Guide*.
+    #
+    #   <note markdown="1"> When you use the `ClientMetadata` parameter, note that Amazon
+    #   Cognito won't do the following:
+    #
+    #    * Store the `ClientMetadata` value. This data is available only to
+    #     Lambda triggers that are assigned to a user pool to support custom
+    #     workflows. If your user pool configuration doesn't include
+    #     triggers, the `ClientMetadata` parameter serves no purpose.
+    #
+    #   * Validate the `ClientMetadata` value.
+    #
+    #   * Encrypt the `ClientMetadata` value. Don't send sensitive
+    #     information in this parameter.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/GetTokensFromRefreshTokenRequest AWS API Documentation
+    #
+    class GetTokensFromRefreshTokenRequest < Struct.new(
+      :refresh_token,
+      :client_id,
+      :client_secret,
+      :device_key,
+      :client_metadata)
+      SENSITIVE = [:refresh_token, :client_id, :client_secret]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] authentication_result
+    #   The object that your application receives after authentication.
+    #   Contains tokens and information for device authentication.
+    #   @return [Types::AuthenticationResultType]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/GetTokensFromRefreshTokenResponse AWS API Documentation
+    #
+    class GetTokensFromRefreshTokenResponse < Struct.new(
+      :authentication_result)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -8689,6 +8789,48 @@ module Aws::CognitoIdentityProvider
     class RecoveryOptionType < Struct.new(
       :priority,
       :name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This exception is throw when your application requests token refresh
+    # with a refresh token that has been invalidated by refresh-token
+    # rotation.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/RefreshTokenReuseException AWS API Documentation
+    #
+    class RefreshTokenReuseException < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration of your app client for refresh token rotation. When
+    # enabled, your app client issues new ID, access, and refresh tokens
+    # when users renew their sessions with refresh tokens. When disabled,
+    # token refresh issues only ID and access tokens.
+    #
+    # @!attribute [rw] feature
+    #   The state of refresh token rotation for the current app client.
+    #   @return [String]
+    #
+    # @!attribute [rw] retry_grace_period_seconds
+    #   When you request a token refresh with `GetTokensFromRefreshToken`,
+    #   the original refresh token that you're rotating out can remain
+    #   valid for a period of time of up to 60 seconds. This allows for
+    #   client-side retries. When `RetryGracePeriodSeconds` is `0`, the
+    #   grace period is disabled and a successful request immediately
+    #   invalidates the submitted refresh token.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/RefreshTokenRotationType AWS API Documentation
+    #
+    class RefreshTokenRotationType < Struct.new(
+      :feature,
+      :retry_grace_period_seconds)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -11570,6 +11712,13 @@ module Aws::CognitoIdentityProvider
     #   respond to each authentication challenge before the session expires.
     #   @return [Integer]
     #
+    # @!attribute [rw] refresh_token_rotation
+    #   The configuration of your app client for refresh token rotation.
+    #   When enabled, your app client issues new ID, access, and refresh
+    #   tokens when users renew their sessions with refresh tokens. When
+    #   disabled, token refresh issues only ID and access tokens.
+    #   @return [Types::RefreshTokenRotationType]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/UpdateUserPoolClientRequest AWS API Documentation
     #
     class UpdateUserPoolClientRequest < Struct.new(
@@ -11594,7 +11743,8 @@ module Aws::CognitoIdentityProvider
       :prevent_user_existence_errors,
       :enable_token_revocation,
       :enable_propagate_additional_user_context_data,
-      :auth_session_validity)
+      :auth_session_validity,
+      :refresh_token_rotation)
       SENSITIVE = [:client_id]
       include Aws::Structure
     end
@@ -12618,6 +12768,13 @@ module Aws::CognitoIdentityProvider
     #   respond to each authentication challenge before the session expires.
     #   @return [Integer]
     #
+    # @!attribute [rw] refresh_token_rotation
+    #   The configuration of your app client for refresh token rotation.
+    #   When enabled, your app client issues new ID, access, and refresh
+    #   tokens when users renew their sessions with refresh tokens. When
+    #   disabled, token refresh issues only ID and access tokens.
+    #   @return [Types::RefreshTokenRotationType]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/UserPoolClientType AWS API Documentation
     #
     class UserPoolClientType < Struct.new(
@@ -12645,7 +12802,8 @@ module Aws::CognitoIdentityProvider
       :prevent_user_existence_errors,
       :enable_token_revocation,
       :enable_propagate_additional_user_context_data,
-      :auth_session_validity)
+      :auth_session_validity,
+      :refresh_token_rotation)
       SENSITIVE = [:client_id, :client_secret]
       include Aws::Structure
     end

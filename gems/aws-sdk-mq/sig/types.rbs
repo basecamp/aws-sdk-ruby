@@ -268,6 +268,21 @@ module Aws::MQ
       SENSITIVE: []
     end
 
+    class DeleteConfigurationOutput
+      attr_accessor configuration_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteConfigurationRequest
+      attr_accessor configuration_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteConfigurationResponse
+      attr_accessor configuration_id: ::String
+      SENSITIVE: []
+    end
+
     class DeleteTagsRequest
       attr_accessor resource_arn: ::String
       attr_accessor tag_keys: ::Array[::String]

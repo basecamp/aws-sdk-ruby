@@ -497,8 +497,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #
     # @option params [required, String] :otp
     #   The OTP code sent to the `PrimaryEmail` specified on the
@@ -642,8 +642,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #
     # @option params [required, String] :region_name
     #   Specifies the Region-code for a given Region name (for example,
@@ -701,8 +701,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #
     # @option params [required, String] :region_name
     #   Specifies the Region-code for a given Region name (for example,
@@ -728,6 +728,71 @@ module Aws::Account
     # @param [Hash] params ({})
     def enable_region(params = {}, options = {})
       req = build_request(:enable_region, params)
+      req.send_request(options)
+    end
+
+    # Retrieves information about the specified account including its
+    # account name, account ID, and account creation date and time. To use
+    # this API, an IAM user or role must have the
+    # `account:GetAccountInformation` IAM permission.
+    #
+    # @option params [String] :account_id
+    #   Specifies the 12 digit account ID number of the Amazon Web Services
+    #   account that you want to access or modify with this operation.
+    #
+    #   If you do not specify this parameter, it defaults to the Amazon Web
+    #   Services account of the identity used to call the operation.
+    #
+    #   To use this parameter, the caller must be an identity in the
+    #   [organization's management account][1] or a delegated administrator
+    #   account, and the specified account ID must be a member account in the
+    #   same organization. The organization must have [all features
+    #   enabled][2], and the organization must have [trusted access][3]
+    #   enabled for the Account Management service, and optionally a
+    #   [delegated admin][4] account assigned.
+    #
+    #   <note markdown="1"> The management account can't specify its own `AccountId`; it must
+    #   call the operation in standalone context by not including the
+    #   `AccountId` parameter.
+    #
+    #    </note>
+    #
+    #   To call this operation on an account that is not a member of an
+    #   organization, then don't specify this parameter, and call the
+    #   operation using an identity belonging to the account whose contacts
+    #   you wish to retrieve or modify.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
+    #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #
+    # @return [Types::GetAccountInformationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetAccountInformationResponse#account_created_date #account_created_date} => Time
+    #   * {Types::GetAccountInformationResponse#account_id #account_id} => String
+    #   * {Types::GetAccountInformationResponse#account_name #account_name} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_account_information({
+    #     account_id: "AccountId",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.account_created_date #=> Time
+    #   resp.account_id #=> String
+    #   resp.account_name #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/account-2021-02-01/GetAccountInformation AWS API Documentation
+    #
+    # @overload get_account_information(params = {})
+    # @param [Hash] params ({})
+    def get_account_information(params = {}, options = {})
+      req = build_request(:get_account_information, params)
       req.send_request(options)
     end
 
@@ -852,8 +917,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #
     # @return [Types::GetContactInformationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -914,8 +979,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #
     # @return [Types::GetPrimaryEmailResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -970,8 +1035,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #
     # @option params [required, String] :region_name
     #   Specifies the Region-code for a given Region name (for example,
@@ -1036,8 +1101,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #
     # @option params [Integer] :max_results
     #   The total number of items to return in the command’s output. If the
@@ -1098,6 +1163,63 @@ module Aws::Account
     # @param [Hash] params ({})
     def list_regions(params = {}, options = {})
       req = build_request(:list_regions, params)
+      req.send_request(options)
+    end
+
+    # Updates the account name of the specified account. To use this API,
+    # IAM principals must have the `account:PutAccountName` IAM permission.
+    #
+    # @option params [String] :account_id
+    #   Specifies the 12 digit account ID number of the Amazon Web Services
+    #   account that you want to access or modify with this operation.
+    #
+    #   If you do not specify this parameter, it defaults to the Amazon Web
+    #   Services account of the identity used to call the operation.
+    #
+    #   To use this parameter, the caller must be an identity in the
+    #   [organization's management account][1] or a delegated administrator
+    #   account, and the specified account ID must be a member account in the
+    #   same organization. The organization must have [all features
+    #   enabled][2], and the organization must have [trusted access][3]
+    #   enabled for the Account Management service, and optionally a
+    #   [delegated admin][4] account assigned.
+    #
+    #   <note markdown="1"> The management account can't specify its own `AccountId`; it must
+    #   call the operation in standalone context by not including the
+    #   `AccountId` parameter.
+    #
+    #    </note>
+    #
+    #   To call this operation on an account that is not a member of an
+    #   organization, then don't specify this parameter, and call the
+    #   operation using an identity belonging to the account whose contacts
+    #   you wish to retrieve or modify.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
+    #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #
+    # @option params [required, String] :account_name
+    #   The name of the account.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_account_name({
+    #     account_id: "AccountId",
+    #     account_name: "AccountName", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/account-2021-02-01/PutAccountName AWS API Documentation
+    #
+    # @overload put_account_name(params = {})
+    # @param [Hash] params ({})
+    def put_account_name(params = {}, options = {})
+      req = build_request(:put_account_name, params)
       req.send_request(options)
     end
 
@@ -1228,8 +1350,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #
     # @option params [required, Types::ContactInformation] :contact_information
     #   Contains the details of the primary contact information associated
@@ -1292,8 +1414,8 @@ module Aws::Account
     #
     #   [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account
     #   [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html
-    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html
-    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html
+    #   [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    #   [4]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin
     #
     # @option params [required, String] :primary_email
     #   The new primary email address (also known as the root user email
@@ -1341,7 +1463,7 @@ module Aws::Account
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-account'
-      context[:gem_version] = '1.39.0'
+      context[:gem_version] = '1.40.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

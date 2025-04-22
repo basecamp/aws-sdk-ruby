@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.107.0 (2025-04-22)
+------------------
+
+* Feature - Fix endpoint resolution test cases
+
 1.106.0 (2025-04-04)
 ------------------
 

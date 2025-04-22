@@ -54,6 +54,7 @@ module Aws::CognitoIdentityProvider
   # * {PasswordHistoryPolicyViolationException}
   # * {PasswordResetRequiredException}
   # * {PreconditionNotMetException}
+  # * {RefreshTokenReuseException}
   # * {ResourceNotFoundException}
   # * {ScopeDoesNotExistException}
   # * {SoftwareTokenMFANotFoundException}
@@ -487,6 +488,21 @@ module Aws::CognitoIdentityProvider
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::CognitoIdentityProvider::Types::PreconditionNotMetException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class RefreshTokenReuseException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::CognitoIdentityProvider::Types::RefreshTokenReuseException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

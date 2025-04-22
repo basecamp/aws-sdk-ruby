@@ -93,6 +93,9 @@ module Aws
       class PreconditionNotMetException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
+      class RefreshTokenReuseException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
       class ResourceNotFoundException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end

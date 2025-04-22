@@ -51,6 +51,9 @@ module Aws::MQ
     DeleteBrokerOutput = Shapes::StructureShape.new(name: 'DeleteBrokerOutput')
     DeleteBrokerRequest = Shapes::StructureShape.new(name: 'DeleteBrokerRequest')
     DeleteBrokerResponse = Shapes::StructureShape.new(name: 'DeleteBrokerResponse')
+    DeleteConfigurationOutput = Shapes::StructureShape.new(name: 'DeleteConfigurationOutput')
+    DeleteConfigurationRequest = Shapes::StructureShape.new(name: 'DeleteConfigurationRequest')
+    DeleteConfigurationResponse = Shapes::StructureShape.new(name: 'DeleteConfigurationResponse')
     DeleteTagsRequest = Shapes::StructureShape.new(name: 'DeleteTagsRequest')
     DeleteUserRequest = Shapes::StructureShape.new(name: 'DeleteUserRequest')
     DeleteUserResponse = Shapes::StructureShape.new(name: 'DeleteUserResponse')
@@ -346,6 +349,15 @@ module Aws::MQ
 
     DeleteBrokerResponse.add_member(:broker_id, Shapes::ShapeRef.new(shape: __string, location_name: "brokerId"))
     DeleteBrokerResponse.struct_class = Types::DeleteBrokerResponse
+
+    DeleteConfigurationOutput.add_member(:configuration_id, Shapes::ShapeRef.new(shape: __string, location_name: "configurationId"))
+    DeleteConfigurationOutput.struct_class = Types::DeleteConfigurationOutput
+
+    DeleteConfigurationRequest.add_member(:configuration_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "configuration-id"))
+    DeleteConfigurationRequest.struct_class = Types::DeleteConfigurationRequest
+
+    DeleteConfigurationResponse.add_member(:configuration_id, Shapes::ShapeRef.new(shape: __string, location_name: "configurationId"))
+    DeleteConfigurationResponse.struct_class = Types::DeleteConfigurationResponse
 
     DeleteTagsRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "resource-arn"))
     DeleteTagsRequest.add_member(:tag_keys, Shapes::ShapeRef.new(shape: __listOf__string, required: true, location: "querystring", location_name: "tagKeys"))
@@ -892,6 +904,19 @@ module Aws::MQ
         o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+      end)
+
+      api.add_operation(:delete_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteConfiguration"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/v1/configurations/{configuration-id}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteConfigurationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
       end)
 

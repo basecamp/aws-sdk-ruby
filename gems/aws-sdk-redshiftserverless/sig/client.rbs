@@ -151,6 +151,18 @@ module Aws
                             ) -> _CreateNamespaceResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateNamespaceResponseSuccess
 
+      interface _CreateReservationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateReservationResponse]
+        def reservation: () -> Types::Reservation
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RedshiftServerless/Client.html#create_reservation-instance_method
+      def create_reservation: (
+                                capacity: ::Integer,
+                                ?client_token: ::String,
+                                offering_id: ::String
+                              ) -> _CreateReservationResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateReservationResponseSuccess
+
       interface _CreateScheduledActionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateScheduledActionResponse]
         def scheduled_action: () -> Types::ScheduledActionResponse
@@ -416,6 +428,26 @@ module Aws
                               ) -> _GetRecoveryPointResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetRecoveryPointResponseSuccess
 
+      interface _GetReservationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetReservationResponse]
+        def reservation: () -> Types::Reservation
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RedshiftServerless/Client.html#get_reservation-instance_method
+      def get_reservation: (
+                             reservation_id: ::String
+                           ) -> _GetReservationResponseSuccess
+                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetReservationResponseSuccess
+
+      interface _GetReservationOfferingResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetReservationOfferingResponse]
+        def reservation_offering: () -> Types::ReservationOffering
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RedshiftServerless/Client.html#get_reservation_offering-instance_method
+      def get_reservation_offering: (
+                                      offering_id: ::String
+                                    ) -> _GetReservationOfferingResponseSuccess
+                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetReservationOfferingResponseSuccess
+
       interface _GetResourcePolicyResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetResourcePolicyResponse]
         def resource_policy: () -> Types::ResourcePolicy
@@ -557,6 +589,30 @@ module Aws
                                   ?start_time: ::Time
                                 ) -> _ListRecoveryPointsResponseSuccess
                               | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListRecoveryPointsResponseSuccess
+
+      interface _ListReservationOfferingsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListReservationOfferingsResponse]
+        def next_token: () -> ::String
+        def reservation_offerings_list: () -> ::Array[Types::ReservationOffering]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RedshiftServerless/Client.html#list_reservation_offerings-instance_method
+      def list_reservation_offerings: (
+                                        ?max_results: ::Integer,
+                                        ?next_token: ::String
+                                      ) -> _ListReservationOfferingsResponseSuccess
+                                    | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListReservationOfferingsResponseSuccess
+
+      interface _ListReservationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListReservationsResponse]
+        def next_token: () -> ::String
+        def reservations_list: () -> ::Array[Types::Reservation]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RedshiftServerless/Client.html#list_reservations-instance_method
+      def list_reservations: (
+                               ?max_results: ::Integer,
+                               ?next_token: ::String
+                             ) -> _ListReservationsResponseSuccess
+                           | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListReservationsResponseSuccess
 
       interface _ListScheduledActionsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListScheduledActionsResponse]

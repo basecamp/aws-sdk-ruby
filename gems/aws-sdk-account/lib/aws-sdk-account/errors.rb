@@ -50,6 +50,11 @@ module Aws::Account
       end
 
       # @return [String]
+      def error_type
+        @data[:error_type]
+      end
+
+      # @return [String]
       def message
         @message || @data[:message]
       end
@@ -65,6 +70,11 @@ module Aws::Account
       end
 
       # @return [String]
+      def error_type
+        @data[:error_type]
+      end
+
+      # @return [String]
       def message
         @message || @data[:message]
       end
@@ -77,6 +87,11 @@ module Aws::Account
       # @param [Aws::Account::Types::InternalServerException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
+      end
+
+      # @return [String]
+      def error_type
+        @data[:error_type]
       end
 
       # @return [String]
@@ -99,6 +114,11 @@ module Aws::Account
       end
 
       # @return [String]
+      def error_type
+        @data[:error_type]
+      end
+
+      # @return [String]
       def message
         @message || @data[:message]
       end
@@ -111,6 +131,11 @@ module Aws::Account
       # @param [Aws::Account::Types::TooManyRequestsException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
+      end
+
+      # @return [String]
+      def error_type
+        @data[:error_type]
       end
 
       # @return [String]

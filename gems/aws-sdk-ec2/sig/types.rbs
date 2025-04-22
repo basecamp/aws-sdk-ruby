@@ -215,7 +215,7 @@ module Aws::EC2
       attr_accessor customer_owned_ip: ::String
       attr_accessor customer_owned_ipv_4_pool: ::String
       attr_accessor carrier_ip: ::String
-      attr_accessor service_managed: ("alb" | "nlb")
+      attr_accessor service_managed: ("alb" | "nlb" | "rnat")
       attr_accessor instance_id: ::String
       attr_accessor public_ip: ::String
       SENSITIVE: []
@@ -1458,6 +1458,16 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class ClientRouteEnforcementOptions
+      attr_accessor enforced: bool
+      SENSITIVE: []
+    end
+
+    class ClientRouteEnforcementResponseOptions
+      attr_accessor enforced: bool
+      SENSITIVE: []
+    end
+
     class ClientVpnAuthentication
       attr_accessor type: ("certificate-authentication" | "directory-service-authentication" | "federated-authentication")
       attr_accessor active_directory: Types::DirectoryServiceAuthentication
@@ -1528,6 +1538,7 @@ module Aws::EC2
       attr_accessor client_connect_options: Types::ClientConnectResponseOptions
       attr_accessor session_timeout_hours: ::Integer
       attr_accessor client_login_banner_options: Types::ClientLoginBannerResponseOptions
+      attr_accessor client_route_enforcement_options: Types::ClientRouteEnforcementResponseOptions
       attr_accessor disconnect_on_session_timeout: bool
       SENSITIVE: []
     end
@@ -1862,6 +1873,7 @@ module Aws::EC2
       attr_accessor client_connect_options: Types::ClientConnectOptions
       attr_accessor session_timeout_hours: ::Integer
       attr_accessor client_login_banner_options: Types::ClientLoginBannerOptions
+      attr_accessor client_route_enforcement_options: Types::ClientRouteEnforcementOptions
       attr_accessor disconnect_on_session_timeout: bool
       SENSITIVE: []
     end
@@ -11264,6 +11276,7 @@ module Aws::EC2
       attr_accessor client_connect_options: Types::ClientConnectOptions
       attr_accessor session_timeout_hours: ::Integer
       attr_accessor client_login_banner_options: Types::ClientLoginBannerOptions
+      attr_accessor client_route_enforcement_options: Types::ClientRouteEnforcementOptions
       attr_accessor disconnect_on_session_timeout: bool
       SENSITIVE: []
     end

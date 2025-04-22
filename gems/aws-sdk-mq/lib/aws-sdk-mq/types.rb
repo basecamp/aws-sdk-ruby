@@ -1054,6 +1054,42 @@ module Aws::MQ
       include Aws::Structure
     end
 
+    # Returns information about the deleted configuration.
+    #
+    # @!attribute [rw] configuration_id
+    #   The unique ID that Amazon MQ generates for the configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mq-2017-11-27/DeleteConfigurationOutput AWS API Documentation
+    #
+    class DeleteConfigurationOutput < Struct.new(
+      :configuration_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] configuration_id
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mq-2017-11-27/DeleteConfigurationRequest AWS API Documentation
+    #
+    class DeleteConfigurationRequest < Struct.new(
+      :configuration_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] configuration_id
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mq-2017-11-27/DeleteConfigurationResponse AWS API Documentation
+    #
+    class DeleteConfigurationResponse < Struct.new(
+      :configuration_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] resource_arn
     #   @return [String]
     #

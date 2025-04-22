@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.28.0 (2025-04-22)
+------------------
+
+* Feature - To expand support for matching records using digital identifiers with TransUnion
+
 1.27.0 (2025-04-14)
 ------------------
 

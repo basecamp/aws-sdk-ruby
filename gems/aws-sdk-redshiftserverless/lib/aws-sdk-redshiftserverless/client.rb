@@ -483,7 +483,7 @@ module Aws::RedshiftServerless
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-snapshots-recovery.html
+    # [1]: https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-snapshots-recovery-points.html
     #
     # @option params [required, String] :recovery_point_id
     #   The unique identifier of the recovery point.
@@ -772,6 +772,67 @@ module Aws::RedshiftServerless
       req.send_request(options)
     end
 
+    # Creates an Amazon Redshift Serverless reservation, which gives you the
+    # option to commit to a specified number of Redshift Processing Units
+    # (RPUs) for a year at a discount from Serverless on-demand (OD) rates.
+    #
+    # @option params [required, Integer] :capacity
+    #   The number of Redshift Processing Units (RPUs) to reserve.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. This token must be a valid UUIDv4 value. For
+    #   more information about idempotency, see [ Making retries safe with
+    #   idempotent APIs ][1].
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
+    #
+    # @option params [required, String] :offering_id
+    #   The ID of the offering associated with the reservation. The offering
+    #   determines the payment schedule for the reservation.
+    #
+    # @return [Types::CreateReservationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateReservationResponse#reservation #reservation} => Types::Reservation
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_reservation({
+    #     capacity: 1, # required
+    #     client_token: "String",
+    #     offering_id: "CreateReservationRequestOfferingIdString", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.reservation.capacity #=> Integer
+    #   resp.reservation.end_date #=> Time
+    #   resp.reservation.offering.currency_code #=> String
+    #   resp.reservation.offering.duration #=> Integer
+    #   resp.reservation.offering.hourly_charge #=> Float
+    #   resp.reservation.offering.offering_id #=> String
+    #   resp.reservation.offering.offering_type #=> String, one of "ALL_UPFRONT", "NO_UPFRONT"
+    #   resp.reservation.offering.upfront_charge #=> Float
+    #   resp.reservation.reservation_arn #=> String
+    #   resp.reservation.reservation_id #=> String
+    #   resp.reservation.start_date #=> Time
+    #   resp.reservation.status #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/CreateReservation AWS API Documentation
+    #
+    # @overload create_reservation(params = {})
+    # @param [Hash] params ({})
+    def create_reservation(params = {}, options = {})
+      req = build_request(:create_reservation, params)
+      req.send_request(options)
+    end
+
     # Creates a scheduled action. A scheduled action contains a schedule and
     # an Amazon Redshift API action. For example, you can create a schedule
     # of when to run the `CreateSnapshot` API operation.
@@ -910,7 +971,7 @@ module Aws::RedshiftServerless
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-snapshots-recovery.html
+    # [1]: https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-snapshots-recovery-points.html
     #
     # @option params [required, String] :namespace_name
     #   The namespace to create a snapshot for.
@@ -1880,6 +1941,82 @@ module Aws::RedshiftServerless
       req.send_request(options)
     end
 
+    # Gets an Amazon Redshift Serverless reservation. A reservation gives
+    # you the option to commit to a specified number of Redshift Processing
+    # Units (RPUs) for a year at a discount from Serverless on-demand (OD)
+    # rates.
+    #
+    # @option params [required, String] :reservation_id
+    #   The ID of the reservation to retrieve.
+    #
+    # @return [Types::GetReservationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetReservationResponse#reservation #reservation} => Types::Reservation
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_reservation({
+    #     reservation_id: "GetReservationRequestReservationIdString", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.reservation.capacity #=> Integer
+    #   resp.reservation.end_date #=> Time
+    #   resp.reservation.offering.currency_code #=> String
+    #   resp.reservation.offering.duration #=> Integer
+    #   resp.reservation.offering.hourly_charge #=> Float
+    #   resp.reservation.offering.offering_id #=> String
+    #   resp.reservation.offering.offering_type #=> String, one of "ALL_UPFRONT", "NO_UPFRONT"
+    #   resp.reservation.offering.upfront_charge #=> Float
+    #   resp.reservation.reservation_arn #=> String
+    #   resp.reservation.reservation_id #=> String
+    #   resp.reservation.start_date #=> Time
+    #   resp.reservation.status #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/GetReservation AWS API Documentation
+    #
+    # @overload get_reservation(params = {})
+    # @param [Hash] params ({})
+    def get_reservation(params = {}, options = {})
+      req = build_request(:get_reservation, params)
+      req.send_request(options)
+    end
+
+    # Returns the reservation offering. The offering determines the payment
+    # schedule for the reservation.
+    #
+    # @option params [required, String] :offering_id
+    #   The identifier for the offering..
+    #
+    # @return [Types::GetReservationOfferingResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetReservationOfferingResponse#reservation_offering #reservation_offering} => Types::ReservationOffering
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_reservation_offering({
+    #     offering_id: "GetReservationOfferingRequestOfferingIdString", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.reservation_offering.currency_code #=> String
+    #   resp.reservation_offering.duration #=> Integer
+    #   resp.reservation_offering.hourly_charge #=> Float
+    #   resp.reservation_offering.offering_id #=> String
+    #   resp.reservation_offering.offering_type #=> String, one of "ALL_UPFRONT", "NO_UPFRONT"
+    #   resp.reservation_offering.upfront_charge #=> Float
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/GetReservationOffering AWS API Documentation
+    #
+    # @overload get_reservation_offering(params = {})
+    # @param [Hash] params ({})
+    def get_reservation_offering(params = {}, options = {})
+      req = build_request(:get_reservation_offering, params)
+      req.send_request(options)
+    end
+
     # Returns a resource policy.
     #
     # @option params [required, String] :resource_arn
@@ -2484,6 +2621,102 @@ module Aws::RedshiftServerless
       req.send_request(options)
     end
 
+    # Returns the current reservation offerings in your account.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of items to return for this call. The call also
+    #   returns a token that you can specify in a subsequent call to get the
+    #   next set of results.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of items to return. (You received this
+    #   token from a previous call.)
+    #
+    # @return [Types::ListReservationOfferingsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListReservationOfferingsResponse#next_token #next_token} => String
+    #   * {Types::ListReservationOfferingsResponse#reservation_offerings_list #reservation_offerings_list} => Array&lt;Types::ReservationOffering&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_reservation_offerings({
+    #     max_results: 1,
+    #     next_token: "PaginationToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.reservation_offerings_list #=> Array
+    #   resp.reservation_offerings_list[0].currency_code #=> String
+    #   resp.reservation_offerings_list[0].duration #=> Integer
+    #   resp.reservation_offerings_list[0].hourly_charge #=> Float
+    #   resp.reservation_offerings_list[0].offering_id #=> String
+    #   resp.reservation_offerings_list[0].offering_type #=> String, one of "ALL_UPFRONT", "NO_UPFRONT"
+    #   resp.reservation_offerings_list[0].upfront_charge #=> Float
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/ListReservationOfferings AWS API Documentation
+    #
+    # @overload list_reservation_offerings(params = {})
+    # @param [Hash] params ({})
+    def list_reservation_offerings(params = {}, options = {})
+      req = build_request(:list_reservation_offerings, params)
+      req.send_request(options)
+    end
+
+    # Returns a list of Reservation objects.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of items to return for this call. The call also
+    #   returns a token that you can specify in a subsequent call to get the
+    #   next set of results.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of items to return. (You received this
+    #   token from a previous call.)
+    #
+    # @return [Types::ListReservationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListReservationsResponse#next_token #next_token} => String
+    #   * {Types::ListReservationsResponse#reservations_list #reservations_list} => Array&lt;Types::Reservation&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_reservations({
+    #     max_results: 1,
+    #     next_token: "PaginationToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.reservations_list #=> Array
+    #   resp.reservations_list[0].capacity #=> Integer
+    #   resp.reservations_list[0].end_date #=> Time
+    #   resp.reservations_list[0].offering.currency_code #=> String
+    #   resp.reservations_list[0].offering.duration #=> Integer
+    #   resp.reservations_list[0].offering.hourly_charge #=> Float
+    #   resp.reservations_list[0].offering.offering_id #=> String
+    #   resp.reservations_list[0].offering.offering_type #=> String, one of "ALL_UPFRONT", "NO_UPFRONT"
+    #   resp.reservations_list[0].offering.upfront_charge #=> Float
+    #   resp.reservations_list[0].reservation_arn #=> String
+    #   resp.reservations_list[0].reservation_id #=> String
+    #   resp.reservations_list[0].start_date #=> Time
+    #   resp.reservations_list[0].status #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/ListReservations AWS API Documentation
+    #
+    # @overload list_reservations(params = {})
+    # @param [Hash] params ({})
+    def list_reservations(params = {}, options = {})
+      req = build_request(:list_reservations, params)
+      req.send_request(options)
+    end
+
     # Returns a list of scheduled actions. You can use the flags to filter
     # the list of returned scheduled actions.
     #
@@ -3063,8 +3296,8 @@ module Aws::RedshiftServerless
     #
     # @option params [String] :snapshot_arn
     #   The Amazon Resource Name (ARN) of the snapshot to restore from.
-    #   Required if restoring from Amazon Redshift Serverless to a provisioned
-    #   cluster. Must not be specified at the same time as `snapshotName`.
+    #   Required if restoring from a provisioned cluster to Amazon Redshift
+    #   Serverless. Must not be specified at the same time as `snapshotName`.
     #
     #   The format of the ARN is
     #   arn:aws:redshift:&lt;region&gt;:&lt;account\_id&gt;:snapshot:&lt;cluster\_identifier&gt;/&lt;snapshot\_identifier&gt;.
@@ -3984,7 +4217,7 @@ module Aws::RedshiftServerless
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-redshiftserverless'
-      context[:gem_version] = '1.47.0'
+      context[:gem_version] = '1.48.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

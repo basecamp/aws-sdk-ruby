@@ -251,6 +251,7 @@ module Aws::CognitoIdentityProvider
     ExpiredCodeException = Shapes::StructureShape.new(name: 'ExpiredCodeException')
     ExplicitAuthFlowsListType = Shapes::ListShape.new(name: 'ExplicitAuthFlowsListType')
     ExplicitAuthFlowsType = Shapes::StringShape.new(name: 'ExplicitAuthFlowsType')
+    FeatureType = Shapes::StringShape.new(name: 'FeatureType')
     FeatureUnavailableInTierException = Shapes::StructureShape.new(name: 'FeatureUnavailableInTierException')
     FeedbackValueType = Shapes::StringShape.new(name: 'FeedbackValueType')
     FirehoseConfigurationType = Shapes::StructureShape.new(name: 'FirehoseConfigurationType')
@@ -272,6 +273,8 @@ module Aws::CognitoIdentityProvider
     GetLogDeliveryConfigurationResponse = Shapes::StructureShape.new(name: 'GetLogDeliveryConfigurationResponse')
     GetSigningCertificateRequest = Shapes::StructureShape.new(name: 'GetSigningCertificateRequest')
     GetSigningCertificateResponse = Shapes::StructureShape.new(name: 'GetSigningCertificateResponse')
+    GetTokensFromRefreshTokenRequest = Shapes::StructureShape.new(name: 'GetTokensFromRefreshTokenRequest')
+    GetTokensFromRefreshTokenResponse = Shapes::StructureShape.new(name: 'GetTokensFromRefreshTokenResponse')
     GetUICustomizationRequest = Shapes::StructureShape.new(name: 'GetUICustomizationRequest')
     GetUICustomizationResponse = Shapes::StructureShape.new(name: 'GetUICustomizationResponse')
     GetUserAttributeVerificationCodeRequest = Shapes::StructureShape.new(name: 'GetUserAttributeVerificationCodeRequest')
@@ -388,6 +391,8 @@ module Aws::CognitoIdentityProvider
     RecoveryOptionNameType = Shapes::StringShape.new(name: 'RecoveryOptionNameType')
     RecoveryOptionType = Shapes::StructureShape.new(name: 'RecoveryOptionType')
     RedirectUrlType = Shapes::StringShape.new(name: 'RedirectUrlType')
+    RefreshTokenReuseException = Shapes::StructureShape.new(name: 'RefreshTokenReuseException')
+    RefreshTokenRotationType = Shapes::StructureShape.new(name: 'RefreshTokenRotationType')
     RefreshTokenValidityType = Shapes::IntegerShape.new(name: 'RefreshTokenValidityType')
     RegionCodeType = Shapes::StringShape.new(name: 'RegionCodeType')
     RelyingPartyIdType = Shapes::StringShape.new(name: 'RelyingPartyIdType')
@@ -405,6 +410,7 @@ module Aws::CognitoIdentityProvider
     ResourceServersListType = Shapes::ListShape.new(name: 'ResourceServersListType')
     RespondToAuthChallengeRequest = Shapes::StructureShape.new(name: 'RespondToAuthChallengeRequest')
     RespondToAuthChallengeResponse = Shapes::StructureShape.new(name: 'RespondToAuthChallengeResponse')
+    RetryGracePeriodSecondsType = Shapes::IntegerShape.new(name: 'RetryGracePeriodSecondsType')
     RevokeTokenRequest = Shapes::StructureShape.new(name: 'RevokeTokenRequest')
     RevokeTokenResponse = Shapes::StructureShape.new(name: 'RevokeTokenResponse')
     RiskConfigurationType = Shapes::StructureShape.new(name: 'RiskConfigurationType')
@@ -1058,6 +1064,7 @@ module Aws::CognitoIdentityProvider
     CreateUserPoolClientRequest.add_member(:enable_token_revocation, Shapes::ShapeRef.new(shape: WrappedBooleanType, location_name: "EnableTokenRevocation"))
     CreateUserPoolClientRequest.add_member(:enable_propagate_additional_user_context_data, Shapes::ShapeRef.new(shape: WrappedBooleanType, location_name: "EnablePropagateAdditionalUserContextData"))
     CreateUserPoolClientRequest.add_member(:auth_session_validity, Shapes::ShapeRef.new(shape: AuthSessionValidityType, location_name: "AuthSessionValidity"))
+    CreateUserPoolClientRequest.add_member(:refresh_token_rotation, Shapes::ShapeRef.new(shape: RefreshTokenRotationType, location_name: "RefreshTokenRotation"))
     CreateUserPoolClientRequest.struct_class = Types::CreateUserPoolClientRequest
 
     CreateUserPoolClientResponse.add_member(:user_pool_client, Shapes::ShapeRef.new(shape: UserPoolClientType, location_name: "UserPoolClient"))
@@ -1363,6 +1370,16 @@ module Aws::CognitoIdentityProvider
 
     GetSigningCertificateResponse.add_member(:certificate, Shapes::ShapeRef.new(shape: StringType, location_name: "Certificate"))
     GetSigningCertificateResponse.struct_class = Types::GetSigningCertificateResponse
+
+    GetTokensFromRefreshTokenRequest.add_member(:refresh_token, Shapes::ShapeRef.new(shape: TokenModelType, required: true, location_name: "RefreshToken"))
+    GetTokensFromRefreshTokenRequest.add_member(:client_id, Shapes::ShapeRef.new(shape: ClientIdType, required: true, location_name: "ClientId"))
+    GetTokensFromRefreshTokenRequest.add_member(:client_secret, Shapes::ShapeRef.new(shape: ClientSecretType, location_name: "ClientSecret"))
+    GetTokensFromRefreshTokenRequest.add_member(:device_key, Shapes::ShapeRef.new(shape: DeviceKeyType, location_name: "DeviceKey"))
+    GetTokensFromRefreshTokenRequest.add_member(:client_metadata, Shapes::ShapeRef.new(shape: ClientMetadataType, location_name: "ClientMetadata"))
+    GetTokensFromRefreshTokenRequest.struct_class = Types::GetTokensFromRefreshTokenRequest
+
+    GetTokensFromRefreshTokenResponse.add_member(:authentication_result, Shapes::ShapeRef.new(shape: AuthenticationResultType, location_name: "AuthenticationResult"))
+    GetTokensFromRefreshTokenResponse.struct_class = Types::GetTokensFromRefreshTokenResponse
 
     GetUICustomizationRequest.add_member(:user_pool_id, Shapes::ShapeRef.new(shape: UserPoolIdType, required: true, location_name: "UserPoolId"))
     GetUICustomizationRequest.add_member(:client_id, Shapes::ShapeRef.new(shape: ClientIdType, location_name: "ClientId"))
@@ -1719,6 +1736,13 @@ module Aws::CognitoIdentityProvider
     RecoveryOptionType.add_member(:name, Shapes::ShapeRef.new(shape: RecoveryOptionNameType, required: true, location_name: "Name"))
     RecoveryOptionType.struct_class = Types::RecoveryOptionType
 
+    RefreshTokenReuseException.add_member(:message, Shapes::ShapeRef.new(shape: MessageType, location_name: "message"))
+    RefreshTokenReuseException.struct_class = Types::RefreshTokenReuseException
+
+    RefreshTokenRotationType.add_member(:feature, Shapes::ShapeRef.new(shape: FeatureType, required: true, location_name: "Feature"))
+    RefreshTokenRotationType.add_member(:retry_grace_period_seconds, Shapes::ShapeRef.new(shape: RetryGracePeriodSecondsType, location_name: "RetryGracePeriodSeconds"))
+    RefreshTokenRotationType.struct_class = Types::RefreshTokenRotationType
+
     ResendConfirmationCodeRequest.add_member(:client_id, Shapes::ShapeRef.new(shape: ClientIdType, required: true, location_name: "ClientId"))
     ResendConfirmationCodeRequest.add_member(:secret_hash, Shapes::ShapeRef.new(shape: SecretHashType, location_name: "SecretHash"))
     ResendConfirmationCodeRequest.add_member(:user_context_data, Shapes::ShapeRef.new(shape: UserContextDataType, location_name: "UserContextData"))
@@ -2066,6 +2090,7 @@ module Aws::CognitoIdentityProvider
     UpdateUserPoolClientRequest.add_member(:enable_token_revocation, Shapes::ShapeRef.new(shape: WrappedBooleanType, location_name: "EnableTokenRevocation"))
     UpdateUserPoolClientRequest.add_member(:enable_propagate_additional_user_context_data, Shapes::ShapeRef.new(shape: WrappedBooleanType, location_name: "EnablePropagateAdditionalUserContextData"))
     UpdateUserPoolClientRequest.add_member(:auth_session_validity, Shapes::ShapeRef.new(shape: AuthSessionValidityType, location_name: "AuthSessionValidity"))
+    UpdateUserPoolClientRequest.add_member(:refresh_token_rotation, Shapes::ShapeRef.new(shape: RefreshTokenRotationType, location_name: "RefreshTokenRotation"))
     UpdateUserPoolClientRequest.struct_class = Types::UpdateUserPoolClientRequest
 
     UpdateUserPoolClientResponse.add_member(:user_pool_client, Shapes::ShapeRef.new(shape: UserPoolClientType, location_name: "UserPoolClient"))
@@ -2183,6 +2208,7 @@ module Aws::CognitoIdentityProvider
     UserPoolClientType.add_member(:enable_token_revocation, Shapes::ShapeRef.new(shape: WrappedBooleanType, location_name: "EnableTokenRevocation"))
     UserPoolClientType.add_member(:enable_propagate_additional_user_context_data, Shapes::ShapeRef.new(shape: WrappedBooleanType, location_name: "EnablePropagateAdditionalUserContextData"))
     UserPoolClientType.add_member(:auth_session_validity, Shapes::ShapeRef.new(shape: AuthSessionValidityType, location_name: "AuthSessionValidity"))
+    UserPoolClientType.add_member(:refresh_token_rotation, Shapes::ShapeRef.new(shape: RefreshTokenRotationType, location_name: "RefreshTokenRotation"))
     UserPoolClientType.struct_class = Types::UserPoolClientType
 
     UserPoolDescriptionType.add_member(:id, Shapes::ShapeRef.new(shape: UserPoolIdType, location_name: "Id"))
@@ -2538,6 +2564,7 @@ module Aws::CognitoIdentityProvider
         o.input = Shapes::ShapeRef.new(shape: AdminInitiateAuthRequest)
         o.output = Shapes::ShapeRef.new(shape: AdminInitiateAuthResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperationException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
         o.errors << Shapes::ShapeRef.new(shape: NotAuthorizedException)
         o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
@@ -3045,6 +3072,7 @@ module Aws::CognitoIdentityProvider
         o.errors << Shapes::ShapeRef.new(shape: ScopeDoesNotExistException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidOAuthFlowException)
         o.errors << Shapes::ShapeRef.new(shape: InternalErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: FeatureUnavailableInTierException)
       end)
 
       api.add_operation(:create_user_pool_domain, Seahorse::Model::Operation.new.tap do |o|
@@ -3055,6 +3083,7 @@ module Aws::CognitoIdentityProvider
         o.output = Shapes::ShapeRef.new(shape: CreateUserPoolDomainResponse)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
         o.errors << Shapes::ShapeRef.new(shape: NotAuthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: InternalErrorException)
@@ -3190,6 +3219,7 @@ module Aws::CognitoIdentityProvider
         o.output = Shapes::ShapeRef.new(shape: DeleteUserPoolDomainResponse)
         o.errors << Shapes::ShapeRef.new(shape: NotAuthorizedException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalErrorException)
       end)
@@ -3455,6 +3485,25 @@ module Aws::CognitoIdentityProvider
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
+      api.add_operation(:get_tokens_from_refresh_token, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetTokensFromRefreshToken"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetTokensFromRefreshTokenRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetTokensFromRefreshTokenResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: NotAuthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o.errors << Shapes::ShapeRef.new(shape: UserNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: UnexpectedLambdaException)
+        o.errors << Shapes::ShapeRef.new(shape: UserLambdaValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidLambdaResponseException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: RefreshTokenReuseException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalErrorException)
+      end)
+
       api.add_operation(:get_ui_customization, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetUICustomization"
         o.http_method = "POST"
@@ -3572,6 +3621,7 @@ module Aws::CognitoIdentityProvider
         o['auth'] = ["smithy.api#noAuth"]
         o.input = Shapes::ShapeRef.new(shape: InitiateAuthRequest)
         o.output = Shapes::ShapeRef.new(shape: InitiateAuthResponse)
+        o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperationException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
         o.errors << Shapes::ShapeRef.new(shape: NotAuthorizedException)
@@ -4207,6 +4257,7 @@ module Aws::CognitoIdentityProvider
         o.errors << Shapes::ShapeRef.new(shape: ScopeDoesNotExistException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidOAuthFlowException)
         o.errors << Shapes::ShapeRef.new(shape: InternalErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: FeatureUnavailableInTierException)
       end)
 
       api.add_operation(:update_user_pool_domain, Seahorse::Model::Operation.new.tap do |o|
@@ -4217,6 +4268,7 @@ module Aws::CognitoIdentityProvider
         o.output = Shapes::ShapeRef.new(shape: UpdateUserPoolDomainResponse)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
         o.errors << Shapes::ShapeRef.new(shape: NotAuthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
         o.errors << Shapes::ShapeRef.new(shape: InternalErrorException)

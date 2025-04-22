@@ -96,6 +96,18 @@ module Aws::RedshiftServerless
       SENSITIVE: []
     end
 
+    class CreateReservationRequest
+      attr_accessor capacity: ::Integer
+      attr_accessor client_token: ::String
+      attr_accessor offering_id: ::String
+      SENSITIVE: []
+    end
+
+    class CreateReservationResponse
+      attr_accessor reservation: Types::Reservation
+      SENSITIVE: []
+    end
+
     class CreateScheduledActionRequest
       attr_accessor enabled: bool
       attr_accessor end_time: ::Time
@@ -355,6 +367,26 @@ module Aws::RedshiftServerless
       SENSITIVE: []
     end
 
+    class GetReservationOfferingRequest
+      attr_accessor offering_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetReservationOfferingResponse
+      attr_accessor reservation_offering: Types::ReservationOffering
+      SENSITIVE: []
+    end
+
+    class GetReservationRequest
+      attr_accessor reservation_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetReservationResponse
+      attr_accessor reservation: Types::Reservation
+      SENSITIVE: []
+    end
+
     class GetResourcePolicyRequest
       attr_accessor resource_arn: ::String
       SENSITIVE: []
@@ -514,6 +546,30 @@ module Aws::RedshiftServerless
     class ListRecoveryPointsResponse
       attr_accessor next_token: ::String
       attr_accessor recovery_points: ::Array[Types::RecoveryPoint]
+      SENSITIVE: []
+    end
+
+    class ListReservationOfferingsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListReservationOfferingsResponse
+      attr_accessor next_token: ::String
+      attr_accessor reservation_offerings_list: ::Array[Types::ReservationOffering]
+      SENSITIVE: []
+    end
+
+    class ListReservationsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListReservationsResponse
+      attr_accessor next_token: ::String
+      attr_accessor reservations_list: ::Array[Types::Reservation]
       SENSITIVE: []
     end
 
@@ -682,6 +738,27 @@ module Aws::RedshiftServerless
       attr_accessor recovery_point_id: ::String
       attr_accessor total_size_in_mega_bytes: ::Float
       attr_accessor workgroup_name: ::String
+      SENSITIVE: []
+    end
+
+    class Reservation
+      attr_accessor capacity: ::Integer
+      attr_accessor end_date: ::Time
+      attr_accessor offering: Types::ReservationOffering
+      attr_accessor reservation_arn: ::String
+      attr_accessor reservation_id: ::String
+      attr_accessor start_date: ::Time
+      attr_accessor status: ::String
+      SENSITIVE: []
+    end
+
+    class ReservationOffering
+      attr_accessor currency_code: ::String
+      attr_accessor duration: ::Integer
+      attr_accessor hourly_charge: ::Float
+      attr_accessor offering_id: ::String
+      attr_accessor offering_type: ("ALL_UPFRONT" | "NO_UPFRONT")
+      attr_accessor upfront_charge: ::Float
       SENSITIVE: []
     end
 

@@ -6090,6 +6090,19 @@ module Aws::EC2
     #   on Amazon Web Services provided clients when a VPN session is
     #   established.
     #
+    # @option params [Types::ClientRouteEnforcementOptions] :client_route_enforcement_options
+    #   Client route enforcement is a feature of the Client VPN service that
+    #   helps enforce administrator defined routes on devices connected
+    #   through the VPN. T his feature helps improve your security posture by
+    #   ensuring that network traffic originating from a connected client is
+    #   not inadvertently sent outside the VPN tunnel.
+    #
+    #   Client route enforcement works by monitoring the route table of a
+    #   connected device for routing policy changes to the VPN connection. If
+    #   the feature detects any VPN routing policy modifications, it will
+    #   automatically force an update to the route table, reverting it back to
+    #   the expected route configurations.
+    #
     # @option params [Boolean] :disconnect_on_session_timeout
     #   Indicates whether the client VPN session is disconnected after the
     #   maximum timeout specified in `SessionTimeoutHours` is reached. If
@@ -6156,6 +6169,9 @@ module Aws::EC2
     #     client_login_banner_options: {
     #       enabled: false,
     #       banner_text: "String",
+    #     },
+    #     client_route_enforcement_options: {
+    #       enforced: false,
     #     },
     #     disconnect_on_session_timeout: false,
     #   })
@@ -21578,7 +21594,7 @@ module Aws::EC2
     #   resp.addresses[0].customer_owned_ip #=> String
     #   resp.addresses[0].customer_owned_ipv_4_pool #=> String
     #   resp.addresses[0].carrier_ip #=> String
-    #   resp.addresses[0].service_managed #=> String, one of "alb", "nlb"
+    #   resp.addresses[0].service_managed #=> String, one of "alb", "nlb", "rnat"
     #   resp.addresses[0].instance_id #=> String
     #   resp.addresses[0].public_ip #=> String
     #
@@ -23155,6 +23171,7 @@ module Aws::EC2
     #   resp.client_vpn_endpoints[0].session_timeout_hours #=> Integer
     #   resp.client_vpn_endpoints[0].client_login_banner_options.enabled #=> Boolean
     #   resp.client_vpn_endpoints[0].client_login_banner_options.banner_text #=> String
+    #   resp.client_vpn_endpoints[0].client_route_enforcement_options.enforced #=> Boolean
     #   resp.client_vpn_endpoints[0].disconnect_on_session_timeout #=> Boolean
     #   resp.next_token #=> String
     #
@@ -40298,7 +40315,8 @@ module Aws::EC2
     end
 
     # Describes the principals (service consumers) that are permitted to
-    # discover your VPC endpoint service.
+    # discover your VPC endpoint service. Principal ARNs with path
+    # components aren't supported.
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -50482,6 +50500,19 @@ module Aws::EC2
     #   on Amazon Web Services provided clients when a VPN session is
     #   established.
     #
+    # @option params [Types::ClientRouteEnforcementOptions] :client_route_enforcement_options
+    #   Client route enforcement is a feature of the Client VPN service that
+    #   helps enforce administrator defined routes on devices connected
+    #   through the VPN. T his feature helps improve your security posture by
+    #   ensuring that network traffic originating from a connected client is
+    #   not inadvertently sent outside the VPN tunnel.
+    #
+    #   Client route enforcement works by monitoring the route table of a
+    #   connected device for routing policy changes to the VPN connection. If
+    #   the feature detects any VPN routing policy modifications, it will
+    #   automatically force an update to the route table, reverting it back to
+    #   the expected route configurations.
+    #
     # @option params [Boolean] :disconnect_on_session_timeout
     #   Indicates whether the client VPN session is disconnected after the
     #   maximum timeout specified in `sessionTimeoutHours` is reached. If
@@ -50521,6 +50552,9 @@ module Aws::EC2
     #     client_login_banner_options: {
     #       enabled: false,
     #       banner_text: "String",
+    #     },
+    #     client_route_enforcement_options: {
+    #       enforced: false,
     #     },
     #     disconnect_on_session_timeout: false,
     #   })
@@ -55923,6 +55957,7 @@ module Aws::EC2
     # Modifies the permissions for your VPC endpoint service. You can add or
     # remove permissions for service consumers (Amazon Web Services
     # accounts, users, and IAM roles) to connect to your endpoint service.
+    # Principal ARNs with path components aren't supported.
     #
     # If you grant permissions to all principals, the service is public. Any
     # users who know the name of a public service can send a request to
@@ -64739,7 +64774,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.515.0'
+      context[:gem_version] = '1.516.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

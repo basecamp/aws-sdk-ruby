@@ -191,6 +191,16 @@ module Aws
                          ) -> _DeleteBrokerResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteBrokerResponseSuccess
 
+      interface _DeleteConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteConfigurationResponse]
+        def configuration_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MQ/Client.html#delete_configuration-instance_method
+      def delete_configuration: (
+                                  configuration_id: ::String
+                                ) -> _DeleteConfigurationResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteConfigurationResponseSuccess
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MQ/Client.html#delete_tags-instance_method
       def delete_tags: (
                          resource_arn: ::String,

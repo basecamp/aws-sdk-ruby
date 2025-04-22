@@ -5890,6 +5890,12 @@ module Aws::CognitoIdentityProvider
     #   minutes, of that session token. Your user pool native user must
     #   respond to each authentication challenge before the session expires.
     #
+    # @option params [Types::RefreshTokenRotationType] :refresh_token_rotation
+    #   The configuration of your app client for refresh token rotation. When
+    #   enabled, your app client issues new ID, access, and refresh tokens
+    #   when users renew their sessions with refresh tokens. When disabled,
+    #   token refresh issues only ID and access tokens.
+    #
     # @return [Types::CreateUserPoolClientResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateUserPoolClientResponse#user_pool_client #user_pool_client} => Types::UserPoolClientType
@@ -6057,6 +6063,10 @@ module Aws::CognitoIdentityProvider
     #     enable_token_revocation: false,
     #     enable_propagate_additional_user_context_data: false,
     #     auth_session_validity: 1,
+    #     refresh_token_rotation: {
+    #       feature: "ENABLED", # required, accepts ENABLED, DISABLED
+    #       retry_grace_period_seconds: 1,
+    #     },
     #   })
     #
     # @example Response structure
@@ -6100,6 +6110,8 @@ module Aws::CognitoIdentityProvider
     #   resp.user_pool_client.enable_token_revocation #=> Boolean
     #   resp.user_pool_client.enable_propagate_additional_user_context_data #=> Boolean
     #   resp.user_pool_client.auth_session_validity #=> Integer
+    #   resp.user_pool_client.refresh_token_rotation.feature #=> String, one of "ENABLED", "DISABLED"
+    #   resp.user_pool_client.refresh_token_rotation.retry_grace_period_seconds #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/CreateUserPoolClient AWS API Documentation
     #
@@ -7182,6 +7194,8 @@ module Aws::CognitoIdentityProvider
     #   resp.user_pool_client.enable_token_revocation #=> Boolean
     #   resp.user_pool_client.enable_propagate_additional_user_context_data #=> Boolean
     #   resp.user_pool_client.auth_session_validity #=> Integer
+    #   resp.user_pool_client.refresh_token_rotation.feature #=> String, one of "ENABLED", "DISABLED"
+    #   resp.user_pool_client.refresh_token_rotation.retry_grace_period_seconds #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/DescribeUserPoolClient AWS API Documentation
     #
@@ -7798,6 +7812,109 @@ module Aws::CognitoIdentityProvider
     # @param [Hash] params ({})
     def get_signing_certificate(params = {}, options = {})
       req = build_request(:get_signing_certificate, params)
+      req.send_request(options)
+    end
+
+    # Given a refresh token, issues new ID, access, and optionally refresh
+    # tokens for the user who owns the submitted token. This operation
+    # issues a new refresh token and invalidates the original refresh token
+    # after an optional grace period when refresh token rotation is enabled.
+    # If refresh token rotation is disabled, issues new ID and access tokens
+    # only.
+    #
+    # @option params [required, String] :refresh_token
+    #   A valid refresh token that can authorize the request for new tokens.
+    #   When refresh token rotation is active in the requested app client,
+    #   this token is invalidated after the request is complete.
+    #
+    # @option params [required, String] :client_id
+    #   The app client that issued the refresh token to the user who wants to
+    #   request new tokens.
+    #
+    # @option params [String] :client_secret
+    #   The client secret of the requested app client, if the client has a
+    #   secret.
+    #
+    # @option params [String] :device_key
+    #   When you enable device remembering, Amazon Cognito issues a device key
+    #   that you can use for device authentication that bypasses multi-factor
+    #   authentication (MFA). To implement `GetTokensFromRefreshToken` in a
+    #   user pool with device remembering, you must capture the device key
+    #   from the initial authentication request. If your application doesn't
+    #   provide the key of a registered device, Amazon Cognito issues a new
+    #   one. You must provide the confirmed device key in this request if
+    #   device remembering is enabled in your user pool.
+    #
+    #   For more information about device remembering, see [Working with
+    #   devices][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html
+    #
+    # @option params [Hash<String,String>] :client_metadata
+    #   A map of custom key-value pairs that you can provide as input for
+    #   certain custom workflows that this action triggers.
+    #
+    #   You create custom workflows by assigning Lambda functions to user pool
+    #   triggers. When you use the `GetTokensFromRefreshToken` API action,
+    #   Amazon Cognito invokes the Lambda function the pre token generation
+    #   trigger.
+    #
+    #   For more information, see [ Using Lambda triggers][1] in the *Amazon
+    #   Cognito Developer Guide*.
+    #
+    #   <note markdown="1"> When you use the `ClientMetadata` parameter, note that Amazon Cognito
+    #   won't do the following:
+    #
+    #    * Store the `ClientMetadata` value. This data is available only to
+    #     Lambda triggers that are assigned to a user pool to support custom
+    #     workflows. If your user pool configuration doesn't include
+    #     triggers, the `ClientMetadata` parameter serves no purpose.
+    #
+    #   * Validate the `ClientMetadata` value.
+    #
+    #   * Encrypt the `ClientMetadata` value. Don't send sensitive
+    #     information in this parameter.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html
+    #
+    # @return [Types::GetTokensFromRefreshTokenResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetTokensFromRefreshTokenResponse#authentication_result #authentication_result} => Types::AuthenticationResultType
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_tokens_from_refresh_token({
+    #     refresh_token: "TokenModelType", # required
+    #     client_id: "ClientIdType", # required
+    #     client_secret: "ClientSecretType",
+    #     device_key: "DeviceKeyType",
+    #     client_metadata: {
+    #       "StringType" => "StringType",
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.authentication_result.access_token #=> String
+    #   resp.authentication_result.expires_in #=> Integer
+    #   resp.authentication_result.token_type #=> String
+    #   resp.authentication_result.refresh_token #=> String
+    #   resp.authentication_result.id_token #=> String
+    #   resp.authentication_result.new_device_metadata.device_key #=> String
+    #   resp.authentication_result.new_device_metadata.device_group_key #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/GetTokensFromRefreshToken AWS API Documentation
+    #
+    # @overload get_tokens_from_refresh_token(params = {})
+    # @param [Hash] params ({})
+    def get_tokens_from_refresh_token(params = {}, options = {})
+      req = build_request(:get_tokens_from_refresh_token, params)
       req.send_request(options)
     end
 
@@ -12555,6 +12672,12 @@ module Aws::CognitoIdentityProvider
     #   minutes, of that session token. Your user pool native user must
     #   respond to each authentication challenge before the session expires.
     #
+    # @option params [Types::RefreshTokenRotationType] :refresh_token_rotation
+    #   The configuration of your app client for refresh token rotation. When
+    #   enabled, your app client issues new ID, access, and refresh tokens
+    #   when users renew their sessions with refresh tokens. When disabled,
+    #   token refresh issues only ID and access tokens.
+    #
     # @return [Types::UpdateUserPoolClientResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateUserPoolClientResponse#user_pool_client #user_pool_client} => Types::UserPoolClientType
@@ -12594,6 +12717,10 @@ module Aws::CognitoIdentityProvider
     #     enable_token_revocation: false,
     #     enable_propagate_additional_user_context_data: false,
     #     auth_session_validity: 1,
+    #     refresh_token_rotation: {
+    #       feature: "ENABLED", # required, accepts ENABLED, DISABLED
+    #       retry_grace_period_seconds: 1,
+    #     },
     #   })
     #
     # @example Response structure
@@ -12637,6 +12764,8 @@ module Aws::CognitoIdentityProvider
     #   resp.user_pool_client.enable_token_revocation #=> Boolean
     #   resp.user_pool_client.enable_propagate_additional_user_context_data #=> Boolean
     #   resp.user_pool_client.auth_session_validity #=> Integer
+    #   resp.user_pool_client.refresh_token_rotation.feature #=> String, one of "ENABLED", "DISABLED"
+    #   resp.user_pool_client.refresh_token_rotation.retry_grace_period_seconds #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/UpdateUserPoolClient AWS API Documentation
     #
@@ -12890,7 +13019,7 @@ module Aws::CognitoIdentityProvider
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cognitoidentityprovider'
-      context[:gem_version] = '1.118.0'
+      context[:gem_version] = '1.119.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

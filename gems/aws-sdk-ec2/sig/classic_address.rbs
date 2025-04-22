@@ -54,7 +54,7 @@ module Aws
       def carrier_ip: () -> ::String
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/ClassicAddress.html#service_managed-instance_method
-      def service_managed: () -> ("alb" | "nlb")
+      def service_managed: () -> ("alb" | "nlb" | "rnat")
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/ClassicAddress.html#instance_id-instance_method
       def instance_id: () -> ::String
