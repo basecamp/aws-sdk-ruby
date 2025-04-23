@@ -705,7 +705,7 @@ module Aws
       def list_service_deployments: (
                                       service: ::String,
                                       ?cluster: ::String,
-                                      ?status: Array[("PENDING" | "SUCCESSFUL" | "STOPPED" | "STOP_REQUESTED" | "IN_PROGRESS" | "ROLLBACK_IN_PROGRESS" | "ROLLBACK_SUCCESSFUL" | "ROLLBACK_FAILED")],
+                                      ?status: Array[("PENDING" | "SUCCESSFUL" | "STOPPED" | "STOP_REQUESTED" | "IN_PROGRESS" | "ROLLBACK_REQUESTED" | "ROLLBACK_IN_PROGRESS" | "ROLLBACK_SUCCESSFUL" | "ROLLBACK_FAILED")],
                                       ?created_at: {
                                         before: ::Time?,
                                         after: ::Time?
@@ -1382,6 +1382,17 @@ module Aws
                         ]
                       ) -> _StartTaskResponseSuccess
                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartTaskResponseSuccess
+
+      interface _StopServiceDeploymentResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StopServiceDeploymentResponse]
+        def service_deployment_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ECS/Client.html#stop_service_deployment-instance_method
+      def stop_service_deployment: (
+                                     service_deployment_arn: ::String,
+                                     ?stop_type: ("ABORT" | "ROLLBACK")
+                                   ) -> _StopServiceDeploymentResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StopServiceDeploymentResponseSuccess
 
       interface _StopTaskResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StopTaskResponse]

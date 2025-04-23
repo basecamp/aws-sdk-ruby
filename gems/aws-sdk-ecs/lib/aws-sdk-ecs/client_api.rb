@@ -325,6 +325,7 @@ module Aws::ECS
     ServiceDeploymentAlarms = Shapes::StructureShape.new(name: 'ServiceDeploymentAlarms')
     ServiceDeploymentBrief = Shapes::StructureShape.new(name: 'ServiceDeploymentBrief')
     ServiceDeploymentCircuitBreaker = Shapes::StructureShape.new(name: 'ServiceDeploymentCircuitBreaker')
+    ServiceDeploymentNotFoundException = Shapes::StructureShape.new(name: 'ServiceDeploymentNotFoundException')
     ServiceDeploymentRollbackMonitorsStatus = Shapes::StringShape.new(name: 'ServiceDeploymentRollbackMonitorsStatus')
     ServiceDeploymentStatus = Shapes::StringShape.new(name: 'ServiceDeploymentStatus')
     ServiceDeploymentStatusList = Shapes::ListShape.new(name: 'ServiceDeploymentStatusList')
@@ -356,6 +357,9 @@ module Aws::ECS
     StartTaskRequest = Shapes::StructureShape.new(name: 'StartTaskRequest')
     StartTaskResponse = Shapes::StructureShape.new(name: 'StartTaskResponse')
     Statistics = Shapes::ListShape.new(name: 'Statistics')
+    StopServiceDeploymentRequest = Shapes::StructureShape.new(name: 'StopServiceDeploymentRequest')
+    StopServiceDeploymentResponse = Shapes::StructureShape.new(name: 'StopServiceDeploymentResponse')
+    StopServiceDeploymentStopType = Shapes::StringShape.new(name: 'StopServiceDeploymentStopType')
     StopTaskRequest = Shapes::StructureShape.new(name: 'StopTaskRequest')
     StopTaskResponse = Shapes::StructureShape.new(name: 'StopTaskResponse')
     String = Shapes::StringShape.new(name: 'String')
@@ -1627,6 +1631,8 @@ module Aws::ECS
     ServiceDeploymentCircuitBreaker.add_member(:threshold, Shapes::ShapeRef.new(shape: Integer, location_name: "threshold"))
     ServiceDeploymentCircuitBreaker.struct_class = Types::ServiceDeploymentCircuitBreaker
 
+    ServiceDeploymentNotFoundException.struct_class = Types::ServiceDeploymentNotFoundException
+
     ServiceDeploymentStatusList.member = Shapes::ShapeRef.new(shape: ServiceDeploymentStatus)
 
     ServiceDeployments.member = Shapes::ShapeRef.new(shape: ServiceDeployment)
@@ -1737,6 +1743,13 @@ module Aws::ECS
     StartTaskResponse.struct_class = Types::StartTaskResponse
 
     Statistics.member = Shapes::ShapeRef.new(shape: KeyValuePair)
+
+    StopServiceDeploymentRequest.add_member(:service_deployment_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "serviceDeploymentArn"))
+    StopServiceDeploymentRequest.add_member(:stop_type, Shapes::ShapeRef.new(shape: StopServiceDeploymentStopType, location_name: "stopType"))
+    StopServiceDeploymentRequest.struct_class = Types::StopServiceDeploymentRequest
+
+    StopServiceDeploymentResponse.add_member(:service_deployment_arn, Shapes::ShapeRef.new(shape: String, location_name: "serviceDeploymentArn"))
+    StopServiceDeploymentResponse.struct_class = Types::StopServiceDeploymentResponse
 
     StopTaskRequest.add_member(:cluster, Shapes::ShapeRef.new(shape: String, location_name: "cluster"))
     StopTaskRequest.add_member(:task, Shapes::ShapeRef.new(shape: String, required: true, location_name: "task"))
@@ -2737,6 +2750,21 @@ module Aws::ECS
         o.errors << Shapes::ShapeRef.new(shape: ClientException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
         o.errors << Shapes::ShapeRef.new(shape: ClusterNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: UnsupportedFeatureException)
+      end)
+
+      api.add_operation(:stop_service_deployment, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StopServiceDeployment"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: StopServiceDeploymentRequest)
+        o.output = Shapes::ShapeRef.new(shape: StopServiceDeploymentResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ClientException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceDeploymentNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedFeatureException)
       end)
 

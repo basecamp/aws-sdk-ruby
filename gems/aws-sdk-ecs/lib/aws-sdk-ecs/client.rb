@@ -4188,7 +4188,7 @@ module Aws::ECS
     #   resp.service_deployments[0].target_service_revision.requested_task_count #=> Integer
     #   resp.service_deployments[0].target_service_revision.running_task_count #=> Integer
     #   resp.service_deployments[0].target_service_revision.pending_task_count #=> Integer
-    #   resp.service_deployments[0].status #=> String, one of "PENDING", "SUCCESSFUL", "STOPPED", "STOP_REQUESTED", "IN_PROGRESS", "ROLLBACK_IN_PROGRESS", "ROLLBACK_SUCCESSFUL", "ROLLBACK_FAILED"
+    #   resp.service_deployments[0].status #=> String, one of "PENDING", "SUCCESSFUL", "STOPPED", "STOP_REQUESTED", "IN_PROGRESS", "ROLLBACK_REQUESTED", "ROLLBACK_IN_PROGRESS", "ROLLBACK_SUCCESSFUL", "ROLLBACK_FAILED"
     #   resp.service_deployments[0].status_reason #=> String
     #   resp.service_deployments[0].deployment_configuration.deployment_circuit_breaker.enable #=> Boolean
     #   resp.service_deployments[0].deployment_configuration.deployment_circuit_breaker.rollback #=> Boolean
@@ -6054,7 +6054,7 @@ module Aws::ECS
     #   resp = client.list_service_deployments({
     #     service: "String", # required
     #     cluster: "String",
-    #     status: ["PENDING"], # accepts PENDING, SUCCESSFUL, STOPPED, STOP_REQUESTED, IN_PROGRESS, ROLLBACK_IN_PROGRESS, ROLLBACK_SUCCESSFUL, ROLLBACK_FAILED
+    #     status: ["PENDING"], # accepts PENDING, SUCCESSFUL, STOPPED, STOP_REQUESTED, IN_PROGRESS, ROLLBACK_REQUESTED, ROLLBACK_IN_PROGRESS, ROLLBACK_SUCCESSFUL, ROLLBACK_FAILED
     #     created_at: {
     #       before: Time.now,
     #       after: Time.now,
@@ -6073,7 +6073,7 @@ module Aws::ECS
     #   resp.service_deployments[0].created_at #=> Time
     #   resp.service_deployments[0].finished_at #=> Time
     #   resp.service_deployments[0].target_service_revision_arn #=> String
-    #   resp.service_deployments[0].status #=> String, one of "PENDING", "SUCCESSFUL", "STOPPED", "STOP_REQUESTED", "IN_PROGRESS", "ROLLBACK_IN_PROGRESS", "ROLLBACK_SUCCESSFUL", "ROLLBACK_FAILED"
+    #   resp.service_deployments[0].status #=> String, one of "PENDING", "SUCCESSFUL", "STOPPED", "STOP_REQUESTED", "IN_PROGRESS", "ROLLBACK_REQUESTED", "ROLLBACK_IN_PROGRESS", "ROLLBACK_SUCCESSFUL", "ROLLBACK_FAILED"
     #   resp.service_deployments[0].status_reason #=> String
     #   resp.next_token #=> String
     #
@@ -8682,6 +8682,9 @@ module Aws::ECS
     #   run your task on. If you do not specify a cluster, the default cluster
     #   is assumed.
     #
+    #   Each account receives a default cluster the first time you use the
+    #   service, but you may also create other clusters.
+    #
     # @option params [Integer] :count
     #   The number of instantiations of the specified task to place on your
     #   cluster. You can specify up to 10 tasks for each call.
@@ -9617,6 +9620,70 @@ module Aws::ECS
     # @param [Hash] params ({})
     def start_task(params = {}, options = {})
       req = build_request(:start_task, params)
+      req.send_request(options)
+    end
+
+    # Stops an ongoing service deployment.
+    #
+    # The following stop types are avaiable:
+    #
+    # * ROLLBACK - This option rolls back the service deployment to the
+    #   previous service revision.
+    #
+    #   You can use this option even if you didn't configure the service
+    #   deployment for the rollback option.
+    #
+    # For more information, see [Stopping Amazon ECS service deployments][1]
+    # in the *Amazon Elastic Container Service Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/stop-service-deployment.html
+    #
+    # @option params [required, String] :service_deployment_arn
+    #   The ARN of the service deployment that you want to stop.
+    #
+    # @option params [String] :stop_type
+    #   How you want Amazon ECS to stop the task.
+    #
+    #   The valid values are `ROLLBACK`.
+    #
+    # @return [Types::StopServiceDeploymentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StopServiceDeploymentResponse#service_deployment_arn #service_deployment_arn} => String
+    #
+    #
+    # @example Example: To stop a service deployment
+    #
+    #   # This example stops the service deployment using the ROLLBACK option.
+    #
+    #   resp = client.stop_service_deployment({
+    #     service_deployment_arn: "arn:aws:ecs:us-east-1:123456789012:service-deployment/MyCluster/MyService/r9i43YFjvgF_xlg7m2eJ1r", 
+    #     stop_type: "ROLLBACK", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     service_deployment_arn: "arn:aws:ecs:us-east-1:123456789012:service-deployment/MyCluster/MyService/r9i43YFjvgF_xlg7m2eJ1r", 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.stop_service_deployment({
+    #     service_deployment_arn: "String", # required
+    #     stop_type: "ABORT", # accepts ABORT, ROLLBACK
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.service_deployment_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/StopServiceDeployment AWS API Documentation
+    #
+    # @overload stop_service_deployment(params = {})
+    # @param [Hash] params ({})
+    def stop_service_deployment(params = {}, options = {})
+      req = build_request(:stop_service_deployment, params)
       req.send_request(options)
     end
 
@@ -12466,7 +12533,7 @@ module Aws::ECS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ecs'
-      context[:gem_version] = '1.184.0'
+      context[:gem_version] = '1.185.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

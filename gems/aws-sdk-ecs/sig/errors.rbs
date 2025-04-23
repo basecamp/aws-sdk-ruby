@@ -52,6 +52,8 @@ module Aws
       class ServerException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
+      class ServiceDeploymentNotFoundException < ::Aws::Errors::ServiceError
+      end
       class ServiceNotActiveException < ::Aws::Errors::ServiceError
       end
       class ServiceNotFoundException < ::Aws::Errors::ServiceError

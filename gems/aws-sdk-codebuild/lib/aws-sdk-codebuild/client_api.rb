@@ -606,6 +606,7 @@ module Aws::CodeBuild
     ComputeConfiguration.add_member(:memory, Shapes::ShapeRef.new(shape: WrapperLong, location_name: "memory"))
     ComputeConfiguration.add_member(:disk, Shapes::ShapeRef.new(shape: WrapperLong, location_name: "disk"))
     ComputeConfiguration.add_member(:machine_type, Shapes::ShapeRef.new(shape: MachineType, location_name: "machineType"))
+    ComputeConfiguration.add_member(:instance_type, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "instanceType"))
     ComputeConfiguration.struct_class = Types::ComputeConfiguration
 
     ComputeTypesAllowed.member = Shapes::ShapeRef.new(shape: NonEmptyString)

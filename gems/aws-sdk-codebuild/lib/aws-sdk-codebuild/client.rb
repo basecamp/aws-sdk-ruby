@@ -597,11 +597,12 @@ module Aws::CodeBuild
     #   resp.build_batches[0].cache.cache_namespace #=> String
     #   resp.build_batches[0].environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.build_batches[0].environment.image #=> String
-    #   resp.build_batches[0].environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.build_batches[0].environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.build_batches[0].environment.compute_configuration.v_cpu #=> Integer
     #   resp.build_batches[0].environment.compute_configuration.memory #=> Integer
     #   resp.build_batches[0].environment.compute_configuration.disk #=> Integer
     #   resp.build_batches[0].environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.build_batches[0].environment.compute_configuration.instance_type #=> String
     #   resp.build_batches[0].environment.fleet.fleet_arn #=> String
     #   resp.build_batches[0].environment.environment_variables #=> Array
     #   resp.build_batches[0].environment.environment_variables[0].name #=> String
@@ -775,11 +776,12 @@ module Aws::CodeBuild
     #   resp.builds[0].cache.cache_namespace #=> String
     #   resp.builds[0].environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.builds[0].environment.image #=> String
-    #   resp.builds[0].environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.builds[0].environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.builds[0].environment.compute_configuration.v_cpu #=> Integer
     #   resp.builds[0].environment.compute_configuration.memory #=> Integer
     #   resp.builds[0].environment.compute_configuration.disk #=> Integer
     #   resp.builds[0].environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.builds[0].environment.compute_configuration.instance_type #=> String
     #   resp.builds[0].environment.fleet.fleet_arn #=> String
     #   resp.builds[0].environment.environment_variables #=> Array
     #   resp.builds[0].environment.environment_variables[0].name #=> String
@@ -935,11 +937,12 @@ module Aws::CodeBuild
     #   resp.fleets[0].status.message #=> String
     #   resp.fleets[0].base_capacity #=> Integer
     #   resp.fleets[0].environment_type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
-    #   resp.fleets[0].compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.fleets[0].compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.fleets[0].compute_configuration.v_cpu #=> Integer
     #   resp.fleets[0].compute_configuration.memory #=> Integer
     #   resp.fleets[0].compute_configuration.disk #=> Integer
     #   resp.fleets[0].compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.fleets[0].compute_configuration.instance_type #=> String
     #   resp.fleets[0].scaling_configuration.scaling_type #=> String, one of "TARGET_TRACKING_SCALING"
     #   resp.fleets[0].scaling_configuration.target_tracking_scaling_configs #=> Array
     #   resp.fleets[0].scaling_configuration.target_tracking_scaling_configs[0].metric_type #=> String, one of "FLEET_UTILIZATION_RATE"
@@ -1056,11 +1059,12 @@ module Aws::CodeBuild
     #   resp.projects[0].cache.cache_namespace #=> String
     #   resp.projects[0].environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.projects[0].environment.image #=> String
-    #   resp.projects[0].environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.projects[0].environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.projects[0].environment.compute_configuration.v_cpu #=> Integer
     #   resp.projects[0].environment.compute_configuration.memory #=> Integer
     #   resp.projects[0].environment.compute_configuration.disk #=> Integer
     #   resp.projects[0].environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.projects[0].environment.compute_configuration.instance_type #=> String
     #   resp.projects[0].environment.fleet.fleet_arn #=> String
     #   resp.projects[0].environment.environment_variables #=> Array
     #   resp.projects[0].environment.environment_variables[0].name #=> String
@@ -1305,11 +1309,12 @@ module Aws::CodeBuild
     #   resp.sandboxes[0].secondary_source_versions[0].source_version #=> String
     #   resp.sandboxes[0].environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.sandboxes[0].environment.image #=> String
-    #   resp.sandboxes[0].environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.sandboxes[0].environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.sandboxes[0].environment.compute_configuration.v_cpu #=> Integer
     #   resp.sandboxes[0].environment.compute_configuration.memory #=> Integer
     #   resp.sandboxes[0].environment.compute_configuration.disk #=> Integer
     #   resp.sandboxes[0].environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.sandboxes[0].environment.compute_configuration.instance_type #=> String
     #   resp.sandboxes[0].environment.fleet.fleet_arn #=> String
     #   resp.sandboxes[0].environment.environment_variables #=> Array
     #   resp.sandboxes[0].environment.environment_variables[0].name #=> String
@@ -1601,12 +1606,13 @@ module Aws::CodeBuild
     #     name: "FleetName", # required
     #     base_capacity: 1, # required
     #     environment_type: "WINDOWS_CONTAINER", # required, accepts WINDOWS_CONTAINER, LINUX_CONTAINER, LINUX_GPU_CONTAINER, ARM_CONTAINER, WINDOWS_SERVER_2019_CONTAINER, WINDOWS_SERVER_2022_CONTAINER, LINUX_LAMBDA_CONTAINER, ARM_LAMBDA_CONTAINER, LINUX_EC2, ARM_EC2, WINDOWS_EC2, MAC_ARM
-    #     compute_type: "BUILD_GENERAL1_SMALL", # required, accepts BUILD_GENERAL1_SMALL, BUILD_GENERAL1_MEDIUM, BUILD_GENERAL1_LARGE, BUILD_GENERAL1_XLARGE, BUILD_GENERAL1_2XLARGE, BUILD_LAMBDA_1GB, BUILD_LAMBDA_2GB, BUILD_LAMBDA_4GB, BUILD_LAMBDA_8GB, BUILD_LAMBDA_10GB, ATTRIBUTE_BASED_COMPUTE
+    #     compute_type: "BUILD_GENERAL1_SMALL", # required, accepts BUILD_GENERAL1_SMALL, BUILD_GENERAL1_MEDIUM, BUILD_GENERAL1_LARGE, BUILD_GENERAL1_XLARGE, BUILD_GENERAL1_2XLARGE, BUILD_LAMBDA_1GB, BUILD_LAMBDA_2GB, BUILD_LAMBDA_4GB, BUILD_LAMBDA_8GB, BUILD_LAMBDA_10GB, ATTRIBUTE_BASED_COMPUTE, CUSTOM_INSTANCE_TYPE
     #     compute_configuration: {
     #       v_cpu: 1,
     #       memory: 1,
     #       disk: 1,
     #       machine_type: "GENERAL", # accepts GENERAL, NVME
+    #       instance_type: "NonEmptyString",
     #     },
     #     scaling_configuration: {
     #       scaling_type: "TARGET_TRACKING_SCALING", # accepts TARGET_TRACKING_SCALING
@@ -1656,11 +1662,12 @@ module Aws::CodeBuild
     #   resp.fleet.status.message #=> String
     #   resp.fleet.base_capacity #=> Integer
     #   resp.fleet.environment_type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
-    #   resp.fleet.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.fleet.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.fleet.compute_configuration.v_cpu #=> Integer
     #   resp.fleet.compute_configuration.memory #=> Integer
     #   resp.fleet.compute_configuration.disk #=> Integer
     #   resp.fleet.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.fleet.compute_configuration.instance_type #=> String
     #   resp.fleet.scaling_configuration.scaling_type #=> String, one of "TARGET_TRACKING_SCALING"
     #   resp.fleet.scaling_configuration.target_tracking_scaling_configs #=> Array
     #   resp.fleet.scaling_configuration.target_tracking_scaling_configs[0].metric_type #=> String, one of "FLEET_UTILIZATION_RATE"
@@ -1927,12 +1934,13 @@ module Aws::CodeBuild
     #     environment: { # required
     #       type: "WINDOWS_CONTAINER", # required, accepts WINDOWS_CONTAINER, LINUX_CONTAINER, LINUX_GPU_CONTAINER, ARM_CONTAINER, WINDOWS_SERVER_2019_CONTAINER, WINDOWS_SERVER_2022_CONTAINER, LINUX_LAMBDA_CONTAINER, ARM_LAMBDA_CONTAINER, LINUX_EC2, ARM_EC2, WINDOWS_EC2, MAC_ARM
     #       image: "NonEmptyString", # required
-    #       compute_type: "BUILD_GENERAL1_SMALL", # required, accepts BUILD_GENERAL1_SMALL, BUILD_GENERAL1_MEDIUM, BUILD_GENERAL1_LARGE, BUILD_GENERAL1_XLARGE, BUILD_GENERAL1_2XLARGE, BUILD_LAMBDA_1GB, BUILD_LAMBDA_2GB, BUILD_LAMBDA_4GB, BUILD_LAMBDA_8GB, BUILD_LAMBDA_10GB, ATTRIBUTE_BASED_COMPUTE
+    #       compute_type: "BUILD_GENERAL1_SMALL", # required, accepts BUILD_GENERAL1_SMALL, BUILD_GENERAL1_MEDIUM, BUILD_GENERAL1_LARGE, BUILD_GENERAL1_XLARGE, BUILD_GENERAL1_2XLARGE, BUILD_LAMBDA_1GB, BUILD_LAMBDA_2GB, BUILD_LAMBDA_4GB, BUILD_LAMBDA_8GB, BUILD_LAMBDA_10GB, ATTRIBUTE_BASED_COMPUTE, CUSTOM_INSTANCE_TYPE
     #       compute_configuration: {
     #         v_cpu: 1,
     #         memory: 1,
     #         disk: 1,
     #         machine_type: "GENERAL", # accepts GENERAL, NVME
+    #         instance_type: "NonEmptyString",
     #       },
     #       fleet: {
     #         fleet_arn: "String",
@@ -2067,11 +2075,12 @@ module Aws::CodeBuild
     #   resp.project.cache.cache_namespace #=> String
     #   resp.project.environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.project.environment.image #=> String
-    #   resp.project.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.project.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.project.environment.compute_configuration.v_cpu #=> Integer
     #   resp.project.environment.compute_configuration.memory #=> Integer
     #   resp.project.environment.compute_configuration.disk #=> Integer
     #   resp.project.environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.project.environment.compute_configuration.instance_type #=> String
     #   resp.project.environment.fleet.fleet_arn #=> String
     #   resp.project.environment.environment_variables #=> Array
     #   resp.project.environment.environment_variables[0].name #=> String
@@ -3935,11 +3944,12 @@ module Aws::CodeBuild
     #   resp.build.cache.cache_namespace #=> String
     #   resp.build.environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.build.environment.image #=> String
-    #   resp.build.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.build.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.build.environment.compute_configuration.v_cpu #=> Integer
     #   resp.build.environment.compute_configuration.memory #=> Integer
     #   resp.build.environment.compute_configuration.disk #=> Integer
     #   resp.build.environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.build.environment.compute_configuration.instance_type #=> String
     #   resp.build.environment.fleet.fleet_arn #=> String
     #   resp.build.environment.environment_variables #=> Array
     #   resp.build.environment.environment_variables[0].name #=> String
@@ -4102,11 +4112,12 @@ module Aws::CodeBuild
     #   resp.build_batch.cache.cache_namespace #=> String
     #   resp.build_batch.environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.build_batch.environment.image #=> String
-    #   resp.build_batch.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.build_batch.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.build_batch.environment.compute_configuration.v_cpu #=> Integer
     #   resp.build_batch.environment.compute_configuration.memory #=> Integer
     #   resp.build_batch.environment.compute_configuration.disk #=> Integer
     #   resp.build_batch.environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.build_batch.environment.compute_configuration.instance_type #=> String
     #   resp.build_batch.environment.fleet.fleet_arn #=> String
     #   resp.build_batch.environment.environment_variables #=> Array
     #   resp.build_batch.environment.environment_variables[0].name #=> String
@@ -4537,7 +4548,7 @@ module Aws::CodeBuild
     #     },
     #     environment_type_override: "WINDOWS_CONTAINER", # accepts WINDOWS_CONTAINER, LINUX_CONTAINER, LINUX_GPU_CONTAINER, ARM_CONTAINER, WINDOWS_SERVER_2019_CONTAINER, WINDOWS_SERVER_2022_CONTAINER, LINUX_LAMBDA_CONTAINER, ARM_LAMBDA_CONTAINER, LINUX_EC2, ARM_EC2, WINDOWS_EC2, MAC_ARM
     #     image_override: "NonEmptyString",
-    #     compute_type_override: "BUILD_GENERAL1_SMALL", # accepts BUILD_GENERAL1_SMALL, BUILD_GENERAL1_MEDIUM, BUILD_GENERAL1_LARGE, BUILD_GENERAL1_XLARGE, BUILD_GENERAL1_2XLARGE, BUILD_LAMBDA_1GB, BUILD_LAMBDA_2GB, BUILD_LAMBDA_4GB, BUILD_LAMBDA_8GB, BUILD_LAMBDA_10GB, ATTRIBUTE_BASED_COMPUTE
+    #     compute_type_override: "BUILD_GENERAL1_SMALL", # accepts BUILD_GENERAL1_SMALL, BUILD_GENERAL1_MEDIUM, BUILD_GENERAL1_LARGE, BUILD_GENERAL1_XLARGE, BUILD_GENERAL1_2XLARGE, BUILD_LAMBDA_1GB, BUILD_LAMBDA_2GB, BUILD_LAMBDA_4GB, BUILD_LAMBDA_8GB, BUILD_LAMBDA_10GB, ATTRIBUTE_BASED_COMPUTE, CUSTOM_INSTANCE_TYPE
     #     certificate_override: "String",
     #     cache_override: {
     #       type: "NO_CACHE", # required, accepts NO_CACHE, S3, LOCAL
@@ -4647,11 +4658,12 @@ module Aws::CodeBuild
     #   resp.build.cache.cache_namespace #=> String
     #   resp.build.environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.build.environment.image #=> String
-    #   resp.build.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.build.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.build.environment.compute_configuration.v_cpu #=> Integer
     #   resp.build.environment.compute_configuration.memory #=> Integer
     #   resp.build.environment.compute_configuration.disk #=> Integer
     #   resp.build.environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.build.environment.compute_configuration.instance_type #=> String
     #   resp.build.environment.fleet.fleet_arn #=> String
     #   resp.build.environment.environment_variables #=> Array
     #   resp.build.environment.environment_variables[0].name #=> String
@@ -5018,7 +5030,7 @@ module Aws::CodeBuild
     #     report_build_batch_status_override: false,
     #     environment_type_override: "WINDOWS_CONTAINER", # accepts WINDOWS_CONTAINER, LINUX_CONTAINER, LINUX_GPU_CONTAINER, ARM_CONTAINER, WINDOWS_SERVER_2019_CONTAINER, WINDOWS_SERVER_2022_CONTAINER, LINUX_LAMBDA_CONTAINER, ARM_LAMBDA_CONTAINER, LINUX_EC2, ARM_EC2, WINDOWS_EC2, MAC_ARM
     #     image_override: "NonEmptyString",
-    #     compute_type_override: "BUILD_GENERAL1_SMALL", # accepts BUILD_GENERAL1_SMALL, BUILD_GENERAL1_MEDIUM, BUILD_GENERAL1_LARGE, BUILD_GENERAL1_XLARGE, BUILD_GENERAL1_2XLARGE, BUILD_LAMBDA_1GB, BUILD_LAMBDA_2GB, BUILD_LAMBDA_4GB, BUILD_LAMBDA_8GB, BUILD_LAMBDA_10GB, ATTRIBUTE_BASED_COMPUTE
+    #     compute_type_override: "BUILD_GENERAL1_SMALL", # accepts BUILD_GENERAL1_SMALL, BUILD_GENERAL1_MEDIUM, BUILD_GENERAL1_LARGE, BUILD_GENERAL1_XLARGE, BUILD_GENERAL1_2XLARGE, BUILD_LAMBDA_1GB, BUILD_LAMBDA_2GB, BUILD_LAMBDA_4GB, BUILD_LAMBDA_8GB, BUILD_LAMBDA_10GB, ATTRIBUTE_BASED_COMPUTE, CUSTOM_INSTANCE_TYPE
     #     certificate_override: "String",
     #     cache_override: {
     #       type: "NO_CACHE", # required, accepts NO_CACHE, S3, LOCAL
@@ -5134,11 +5146,12 @@ module Aws::CodeBuild
     #   resp.build_batch.cache.cache_namespace #=> String
     #   resp.build_batch.environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.build_batch.environment.image #=> String
-    #   resp.build_batch.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.build_batch.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.build_batch.environment.compute_configuration.v_cpu #=> Integer
     #   resp.build_batch.environment.compute_configuration.memory #=> Integer
     #   resp.build_batch.environment.compute_configuration.disk #=> Integer
     #   resp.build_batch.environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.build_batch.environment.compute_configuration.instance_type #=> String
     #   resp.build_batch.environment.fleet.fleet_arn #=> String
     #   resp.build_batch.environment.environment_variables #=> Array
     #   resp.build_batch.environment.environment_variables[0].name #=> String
@@ -5341,11 +5354,12 @@ module Aws::CodeBuild
     #   resp.sandbox.secondary_source_versions[0].source_version #=> String
     #   resp.sandbox.environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.sandbox.environment.image #=> String
-    #   resp.sandbox.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.sandbox.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.sandbox.environment.compute_configuration.v_cpu #=> Integer
     #   resp.sandbox.environment.compute_configuration.memory #=> Integer
     #   resp.sandbox.environment.compute_configuration.disk #=> Integer
     #   resp.sandbox.environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.sandbox.environment.compute_configuration.instance_type #=> String
     #   resp.sandbox.environment.fleet.fleet_arn #=> String
     #   resp.sandbox.environment.environment_variables #=> Array
     #   resp.sandbox.environment.environment_variables[0].name #=> String
@@ -5534,11 +5548,12 @@ module Aws::CodeBuild
     #   resp.build.cache.cache_namespace #=> String
     #   resp.build.environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.build.environment.image #=> String
-    #   resp.build.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.build.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.build.environment.compute_configuration.v_cpu #=> Integer
     #   resp.build.environment.compute_configuration.memory #=> Integer
     #   resp.build.environment.compute_configuration.disk #=> Integer
     #   resp.build.environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.build.environment.compute_configuration.instance_type #=> String
     #   resp.build.environment.fleet.fleet_arn #=> String
     #   resp.build.environment.environment_variables #=> Array
     #   resp.build.environment.environment_variables[0].name #=> String
@@ -5688,11 +5703,12 @@ module Aws::CodeBuild
     #   resp.build_batch.cache.cache_namespace #=> String
     #   resp.build_batch.environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.build_batch.environment.image #=> String
-    #   resp.build_batch.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.build_batch.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.build_batch.environment.compute_configuration.v_cpu #=> Integer
     #   resp.build_batch.environment.compute_configuration.memory #=> Integer
     #   resp.build_batch.environment.compute_configuration.disk #=> Integer
     #   resp.build_batch.environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.build_batch.environment.compute_configuration.instance_type #=> String
     #   resp.build_batch.environment.fleet.fleet_arn #=> String
     #   resp.build_batch.environment.environment_variables #=> Array
     #   resp.build_batch.environment.environment_variables[0].name #=> String
@@ -5831,11 +5847,12 @@ module Aws::CodeBuild
     #   resp.sandbox.secondary_source_versions[0].source_version #=> String
     #   resp.sandbox.environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.sandbox.environment.image #=> String
-    #   resp.sandbox.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.sandbox.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.sandbox.environment.compute_configuration.v_cpu #=> Integer
     #   resp.sandbox.environment.compute_configuration.memory #=> Integer
     #   resp.sandbox.environment.compute_configuration.disk #=> Integer
     #   resp.sandbox.environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.sandbox.environment.compute_configuration.instance_type #=> String
     #   resp.sandbox.environment.fleet.fleet_arn #=> String
     #   resp.sandbox.environment.environment_variables #=> Array
     #   resp.sandbox.environment.environment_variables[0].name #=> String
@@ -6125,12 +6142,13 @@ module Aws::CodeBuild
     #     arn: "NonEmptyString", # required
     #     base_capacity: 1,
     #     environment_type: "WINDOWS_CONTAINER", # accepts WINDOWS_CONTAINER, LINUX_CONTAINER, LINUX_GPU_CONTAINER, ARM_CONTAINER, WINDOWS_SERVER_2019_CONTAINER, WINDOWS_SERVER_2022_CONTAINER, LINUX_LAMBDA_CONTAINER, ARM_LAMBDA_CONTAINER, LINUX_EC2, ARM_EC2, WINDOWS_EC2, MAC_ARM
-    #     compute_type: "BUILD_GENERAL1_SMALL", # accepts BUILD_GENERAL1_SMALL, BUILD_GENERAL1_MEDIUM, BUILD_GENERAL1_LARGE, BUILD_GENERAL1_XLARGE, BUILD_GENERAL1_2XLARGE, BUILD_LAMBDA_1GB, BUILD_LAMBDA_2GB, BUILD_LAMBDA_4GB, BUILD_LAMBDA_8GB, BUILD_LAMBDA_10GB, ATTRIBUTE_BASED_COMPUTE
+    #     compute_type: "BUILD_GENERAL1_SMALL", # accepts BUILD_GENERAL1_SMALL, BUILD_GENERAL1_MEDIUM, BUILD_GENERAL1_LARGE, BUILD_GENERAL1_XLARGE, BUILD_GENERAL1_2XLARGE, BUILD_LAMBDA_1GB, BUILD_LAMBDA_2GB, BUILD_LAMBDA_4GB, BUILD_LAMBDA_8GB, BUILD_LAMBDA_10GB, ATTRIBUTE_BASED_COMPUTE, CUSTOM_INSTANCE_TYPE
     #     compute_configuration: {
     #       v_cpu: 1,
     #       memory: 1,
     #       disk: 1,
     #       machine_type: "GENERAL", # accepts GENERAL, NVME
+    #       instance_type: "NonEmptyString",
     #     },
     #     scaling_configuration: {
     #       scaling_type: "TARGET_TRACKING_SCALING", # accepts TARGET_TRACKING_SCALING
@@ -6180,11 +6198,12 @@ module Aws::CodeBuild
     #   resp.fleet.status.message #=> String
     #   resp.fleet.base_capacity #=> Integer
     #   resp.fleet.environment_type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
-    #   resp.fleet.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.fleet.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.fleet.compute_configuration.v_cpu #=> Integer
     #   resp.fleet.compute_configuration.memory #=> Integer
     #   resp.fleet.compute_configuration.disk #=> Integer
     #   resp.fleet.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.fleet.compute_configuration.instance_type #=> String
     #   resp.fleet.scaling_configuration.scaling_type #=> String, one of "TARGET_TRACKING_SCALING"
     #   resp.fleet.scaling_configuration.target_tracking_scaling_configs #=> Array
     #   resp.fleet.scaling_configuration.target_tracking_scaling_configs[0].metric_type #=> String, one of "FLEET_UTILIZATION_RATE"
@@ -6454,12 +6473,13 @@ module Aws::CodeBuild
     #     environment: {
     #       type: "WINDOWS_CONTAINER", # required, accepts WINDOWS_CONTAINER, LINUX_CONTAINER, LINUX_GPU_CONTAINER, ARM_CONTAINER, WINDOWS_SERVER_2019_CONTAINER, WINDOWS_SERVER_2022_CONTAINER, LINUX_LAMBDA_CONTAINER, ARM_LAMBDA_CONTAINER, LINUX_EC2, ARM_EC2, WINDOWS_EC2, MAC_ARM
     #       image: "NonEmptyString", # required
-    #       compute_type: "BUILD_GENERAL1_SMALL", # required, accepts BUILD_GENERAL1_SMALL, BUILD_GENERAL1_MEDIUM, BUILD_GENERAL1_LARGE, BUILD_GENERAL1_XLARGE, BUILD_GENERAL1_2XLARGE, BUILD_LAMBDA_1GB, BUILD_LAMBDA_2GB, BUILD_LAMBDA_4GB, BUILD_LAMBDA_8GB, BUILD_LAMBDA_10GB, ATTRIBUTE_BASED_COMPUTE
+    #       compute_type: "BUILD_GENERAL1_SMALL", # required, accepts BUILD_GENERAL1_SMALL, BUILD_GENERAL1_MEDIUM, BUILD_GENERAL1_LARGE, BUILD_GENERAL1_XLARGE, BUILD_GENERAL1_2XLARGE, BUILD_LAMBDA_1GB, BUILD_LAMBDA_2GB, BUILD_LAMBDA_4GB, BUILD_LAMBDA_8GB, BUILD_LAMBDA_10GB, ATTRIBUTE_BASED_COMPUTE, CUSTOM_INSTANCE_TYPE
     #       compute_configuration: {
     #         v_cpu: 1,
     #         memory: 1,
     #         disk: 1,
     #         machine_type: "GENERAL", # accepts GENERAL, NVME
+    #         instance_type: "NonEmptyString",
     #       },
     #       fleet: {
     #         fleet_arn: "String",
@@ -6594,11 +6614,12 @@ module Aws::CodeBuild
     #   resp.project.cache.cache_namespace #=> String
     #   resp.project.environment.type #=> String, one of "WINDOWS_CONTAINER", "LINUX_CONTAINER", "LINUX_GPU_CONTAINER", "ARM_CONTAINER", "WINDOWS_SERVER_2019_CONTAINER", "WINDOWS_SERVER_2022_CONTAINER", "LINUX_LAMBDA_CONTAINER", "ARM_LAMBDA_CONTAINER", "LINUX_EC2", "ARM_EC2", "WINDOWS_EC2", "MAC_ARM"
     #   resp.project.environment.image #=> String
-    #   resp.project.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE"
+    #   resp.project.environment.compute_type #=> String, one of "BUILD_GENERAL1_SMALL", "BUILD_GENERAL1_MEDIUM", "BUILD_GENERAL1_LARGE", "BUILD_GENERAL1_XLARGE", "BUILD_GENERAL1_2XLARGE", "BUILD_LAMBDA_1GB", "BUILD_LAMBDA_2GB", "BUILD_LAMBDA_4GB", "BUILD_LAMBDA_8GB", "BUILD_LAMBDA_10GB", "ATTRIBUTE_BASED_COMPUTE", "CUSTOM_INSTANCE_TYPE"
     #   resp.project.environment.compute_configuration.v_cpu #=> Integer
     #   resp.project.environment.compute_configuration.memory #=> Integer
     #   resp.project.environment.compute_configuration.disk #=> Integer
     #   resp.project.environment.compute_configuration.machine_type #=> String, one of "GENERAL", "NVME"
+    #   resp.project.environment.compute_configuration.instance_type #=> String
     #   resp.project.environment.fleet.fleet_arn #=> String
     #   resp.project.environment.environment_variables #=> Array
     #   resp.project.environment.environment_variables[0].name #=> String
@@ -6951,7 +6972,7 @@ module Aws::CodeBuild
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-codebuild'
-      context[:gem_version] = '1.151.0'
+      context[:gem_version] = '1.152.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

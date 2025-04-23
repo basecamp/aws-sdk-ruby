@@ -46,6 +46,7 @@ module Aws::ECS
   # * {ResourceInUseException}
   # * {ResourceNotFoundException}
   # * {ServerException}
+  # * {ServiceDeploymentNotFoundException}
   # * {ServiceNotActiveException}
   # * {ServiceNotFoundException}
   # * {TargetNotConnectedException}
@@ -262,6 +263,16 @@ module Aws::ECS
       # @return [String]
       def message
         @message || @data[:message]
+      end
+    end
+
+    class ServiceDeploymentNotFoundException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::ECS::Types::ServiceDeploymentNotFoundException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
       end
     end
 

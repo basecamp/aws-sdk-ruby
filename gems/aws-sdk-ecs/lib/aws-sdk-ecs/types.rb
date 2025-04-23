@@ -9012,6 +9012,9 @@ module Aws::ECS
     #   The short name or full Amazon Resource Name (ARN) of the cluster to
     #   run your task on. If you do not specify a cluster, the default
     #   cluster is assumed.
+    #
+    #   Each account receives a default cluster the first time you use the
+    #   service, but you may also create other clusters.
     #   @return [String]
     #
     # @!attribute [rw] count
@@ -10322,6 +10325,14 @@ module Aws::ECS
       include Aws::Structure
     end
 
+    # The service deploy ARN that you specified in the
+    # `StopServiceDeployment` doesn't exist. You can use
+    # `ListServiceDeployments` to retrieve the service deployment ARNs.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/ServiceDeploymentNotFoundException AWS API Documentation
+    #
+    class ServiceDeploymentNotFoundException < Aws::EmptyStructure; end
+
     # The details for an event that's associated with a service.
     #
     # @!attribute [rw] id
@@ -11050,6 +11061,37 @@ module Aws::ECS
     class StartTaskResponse < Struct.new(
       :tasks,
       :failures)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] service_deployment_arn
+    #   The ARN of the service deployment that you want to stop.
+    #   @return [String]
+    #
+    # @!attribute [rw] stop_type
+    #   How you want Amazon ECS to stop the task.
+    #
+    #   The valid values are `ROLLBACK`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/StopServiceDeploymentRequest AWS API Documentation
+    #
+    class StopServiceDeploymentRequest < Struct.new(
+      :service_deployment_arn,
+      :stop_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] service_deployment_arn
+    #   The ARN of the stopped service deployment.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/StopServiceDeploymentResponse AWS API Documentation
+    #
+    class StopServiceDeploymentResponse < Struct.new(
+      :service_deployment_arn)
       SENSITIVE = []
       include Aws::Structure
     end

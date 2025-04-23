@@ -1605,7 +1605,7 @@ module Aws::CodeBuild
 
     # Contains compute attributes. These attributes only need be specified
     # when your project's or fleet's `computeType` is set to
-    # `ATTRIBUTE_BASED_COMPUTE`.
+    # `ATTRIBUTE_BASED_COMPUTE` or `CUSTOM_INSTANCE_TYPE`.
     #
     # @!attribute [rw] v_cpu
     #   The number of vCPUs of the instance type included in your fleet.
@@ -1624,13 +1624,18 @@ module Aws::CodeBuild
     #   The machine type of the instance type included in your fleet.
     #   @return [String]
     #
+    # @!attribute [rw] instance_type
+    #   The EC2 instance type to be launched in your fleet.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ComputeConfiguration AWS API Documentation
     #
     class ComputeConfiguration < Struct.new(
       :v_cpu,
       :memory,
       :disk,
-      :machine_type)
+      :machine_type,
+      :instance_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6312,7 +6317,8 @@ module Aws::CodeBuild
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   The type of scope for a GitHub or GitLab webhook.
+    #   The type of scope for a GitHub or GitLab webhook. The scope default
+    #   is GITHUB\_ORGANIZATION.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ScopeConfiguration AWS API Documentation

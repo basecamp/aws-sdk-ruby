@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.34.0 (2025-04-23)
+------------------
+
+* Feature - Documentation-only update for CreateView option correction
+
 1.33.0 (2025-02-18)
 ------------------
 

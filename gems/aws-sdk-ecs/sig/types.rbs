@@ -908,7 +908,7 @@ module Aws::ECS
     class ListServiceDeploymentsRequest
       attr_accessor service: ::String
       attr_accessor cluster: ::String
-      attr_accessor status: ::Array[("PENDING" | "SUCCESSFUL" | "STOPPED" | "STOP_REQUESTED" | "IN_PROGRESS" | "ROLLBACK_IN_PROGRESS" | "ROLLBACK_SUCCESSFUL" | "ROLLBACK_FAILED")]
+      attr_accessor status: ::Array[("PENDING" | "SUCCESSFUL" | "STOPPED" | "STOP_REQUESTED" | "IN_PROGRESS" | "ROLLBACK_REQUESTED" | "ROLLBACK_IN_PROGRESS" | "ROLLBACK_SUCCESSFUL" | "ROLLBACK_FAILED")]
       attr_accessor created_at: Types::CreatedAt
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
@@ -1406,7 +1406,7 @@ module Aws::ECS
       attr_accessor updated_at: ::Time
       attr_accessor source_service_revisions: ::Array[Types::ServiceRevisionSummary]
       attr_accessor target_service_revision: Types::ServiceRevisionSummary
-      attr_accessor status: ("PENDING" | "SUCCESSFUL" | "STOPPED" | "STOP_REQUESTED" | "IN_PROGRESS" | "ROLLBACK_IN_PROGRESS" | "ROLLBACK_SUCCESSFUL" | "ROLLBACK_FAILED")
+      attr_accessor status: ("PENDING" | "SUCCESSFUL" | "STOPPED" | "STOP_REQUESTED" | "IN_PROGRESS" | "ROLLBACK_REQUESTED" | "ROLLBACK_IN_PROGRESS" | "ROLLBACK_SUCCESSFUL" | "ROLLBACK_FAILED")
       attr_accessor status_reason: ::String
       attr_accessor deployment_configuration: Types::DeploymentConfiguration
       attr_accessor rollback: Types::Rollback
@@ -1430,7 +1430,7 @@ module Aws::ECS
       attr_accessor created_at: ::Time
       attr_accessor finished_at: ::Time
       attr_accessor target_service_revision_arn: ::String
-      attr_accessor status: ("PENDING" | "SUCCESSFUL" | "STOPPED" | "STOP_REQUESTED" | "IN_PROGRESS" | "ROLLBACK_IN_PROGRESS" | "ROLLBACK_SUCCESSFUL" | "ROLLBACK_FAILED")
+      attr_accessor status: ("PENDING" | "SUCCESSFUL" | "STOPPED" | "STOP_REQUESTED" | "IN_PROGRESS" | "ROLLBACK_REQUESTED" | "ROLLBACK_IN_PROGRESS" | "ROLLBACK_SUCCESSFUL" | "ROLLBACK_FAILED")
       attr_accessor status_reason: ::String
       SENSITIVE: []
     end
@@ -1440,6 +1440,9 @@ module Aws::ECS
       attr_accessor failure_count: ::Integer
       attr_accessor threshold: ::Integer
       SENSITIVE: []
+    end
+
+    class ServiceDeploymentNotFoundException < Aws::EmptyStructure
     end
 
     class ServiceEvent
@@ -1548,6 +1551,17 @@ module Aws::ECS
     class StartTaskResponse
       attr_accessor tasks: ::Array[Types::Task]
       attr_accessor failures: ::Array[Types::Failure]
+      SENSITIVE: []
+    end
+
+    class StopServiceDeploymentRequest
+      attr_accessor service_deployment_arn: ::String
+      attr_accessor stop_type: ("ABORT" | "ROLLBACK")
+      SENSITIVE: []
+    end
+
+    class StopServiceDeploymentResponse
+      attr_accessor service_deployment_arn: ::String
       SENSITIVE: []
     end
 

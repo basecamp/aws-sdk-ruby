@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.152.0 (2025-04-23)
+------------------
+
+* Feature - Add support for custom instance type for reserved capacity fleets
+
 1.151.0 (2025-04-07)
 ------------------
 

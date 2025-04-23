@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.185.0 (2025-04-23)
+------------------
+
+* Feature - Add support to roll back an In_Progress ECS Service Deployment
+
 1.184.0 (2025-04-17)
 ------------------
 
