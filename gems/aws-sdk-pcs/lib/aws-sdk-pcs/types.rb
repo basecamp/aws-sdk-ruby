@@ -1492,7 +1492,15 @@ module Aws::PCS
     #
     # @!attribute [rw] version
     #   The version of the specified scheduling software that Amazon Web
-    #   Services PCS uses to manage cluster scaling and job scheduling.
+    #   Services PCS uses to manage cluster scaling and job scheduling. For
+    #   more information, see [Slurm versions in Amazon Web Services PCS][1]
+    #   in the *Amazon Web Services PCS User Guide*.
+    #
+    #   Valid Values: `23.11 | 24.05`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/pcs/latest/userguide/slurm-versions.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/pcs-2023-02-10/Scheduler AWS API Documentation
@@ -1514,7 +1522,15 @@ module Aws::PCS
     #
     # @!attribute [rw] version
     #   The version of the specified scheduling software that Amazon Web
-    #   Services PCS uses to manage cluster scaling and job scheduling.
+    #   Services PCS uses to manage cluster scaling and job scheduling. For
+    #   more information, see [Slurm versions in Amazon Web Services PCS][1]
+    #   in the *Amazon Web Services PCS User Guide*.
+    #
+    #   Valid Values: `23.11 | 24.05`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/pcs/latest/userguide/slurm-versions.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/pcs-2023-02-10/SchedulerRequest AWS API Documentation

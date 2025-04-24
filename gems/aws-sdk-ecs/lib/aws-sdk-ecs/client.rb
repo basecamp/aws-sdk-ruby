@@ -8658,6 +8658,19 @@ module Aws::ECS
     #   algorithm starting with a couple of seconds of wait time, and
     #   increase gradually up to about five minutes of wait time.
     #
+    # If you get a `ConflictException` error, the `RunTask` request could
+    # not be processed due to conflicts. The provided `clientToken` is
+    # already in use with a different `RunTask` request. The `resourceIds`
+    # are the existing task ARNs which are already associated with the
+    # `clientToken`.
+    #
+    # To fix this issue:
+    #
+    # * Run `RunTask` with a unique `clientToken`.
+    #
+    # * Run `RunTask` with the `clientToken` and the original set of
+    #   parameters
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html
@@ -9625,28 +9638,17 @@ module Aws::ECS
 
     # Stops an ongoing service deployment.
     #
-    # The following stop types are avaiable:
+    # <note markdown="1"> StopServiceDeployment isn't currently supported.
     #
-    # * ROLLBACK - This option rolls back the service deployment to the
-    #   previous service revision.
-    #
-    #   You can use this option even if you didn't configure the service
-    #   deployment for the rollback option.
-    #
-    # For more information, see [Stopping Amazon ECS service deployments][1]
-    # in the *Amazon Elastic Container Service Developer Guide*.
-    #
-    #
-    #
-    # [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/stop-service-deployment.html
+    #  </note>
     #
     # @option params [required, String] :service_deployment_arn
     #   The ARN of the service deployment that you want to stop.
     #
     # @option params [String] :stop_type
-    #   How you want Amazon ECS to stop the task.
+    #   How you want Amazon ECS to stop the service.
     #
-    #   The valid values are `ROLLBACK`.
+    #   The ROLLBACK and ABORT stopType aren't supported.
     #
     # @return [Types::StopServiceDeploymentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -12533,7 +12535,7 @@ module Aws::ECS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ecs'
-      context[:gem_version] = '1.185.0'
+      context[:gem_version] = '1.186.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

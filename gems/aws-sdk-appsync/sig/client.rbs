@@ -219,7 +219,27 @@ module Aws
                                         },
                                       ],
                                       ?code_handlers: ::String,
-                                      ?tags: Hash[::String, ::String]
+                                      ?tags: Hash[::String, ::String],
+                                      ?handler_configs: {
+                                        on_publish: {
+                                          behavior: ("CODE" | "DIRECT"),
+                                          integration: {
+                                            data_source_name: ::String,
+                                            lambda_config: {
+                                              invoke_type: ("REQUEST_RESPONSE" | "EVENT")?
+                                            }?
+                                          }
+                                        }?,
+                                        on_subscribe: {
+                                          behavior: ("CODE" | "DIRECT"),
+                                          integration: {
+                                            data_source_name: ::String,
+                                            lambda_config: {
+                                              invoke_type: ("REQUEST_RESPONSE" | "EVENT")?
+                                            }?
+                                          }
+                                        }?
+                                      }
                                     ) -> _CreateChannelNamespaceResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateChannelNamespaceResponseSuccess
 
@@ -1117,7 +1137,27 @@ module Aws
                                           auth_type: ("API_KEY" | "AWS_IAM" | "AMAZON_COGNITO_USER_POOLS" | "OPENID_CONNECT" | "AWS_LAMBDA")
                                         },
                                       ],
-                                      ?code_handlers: ::String
+                                      ?code_handlers: ::String,
+                                      ?handler_configs: {
+                                        on_publish: {
+                                          behavior: ("CODE" | "DIRECT"),
+                                          integration: {
+                                            data_source_name: ::String,
+                                            lambda_config: {
+                                              invoke_type: ("REQUEST_RESPONSE" | "EVENT")?
+                                            }?
+                                          }
+                                        }?,
+                                        on_subscribe: {
+                                          behavior: ("CODE" | "DIRECT"),
+                                          integration: {
+                                            data_source_name: ::String,
+                                            lambda_config: {
+                                              invoke_type: ("REQUEST_RESPONSE" | "EVENT")?
+                                            }?
+                                          }
+                                        }?
+                                      }
                                     ) -> _UpdateChannelNamespaceResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateChannelNamespaceResponseSuccess
 

@@ -927,9 +927,11 @@ module Aws
                                     db_instance_identifier: ::String,
                                     tenant_db_name: ::String,
                                     master_username: ::String,
-                                    master_user_password: ::String,
+                                    ?master_user_password: ::String,
                                     ?character_set_name: ::String,
                                     ?nchar_character_set_name: ::String,
+                                    ?manage_master_user_password: bool,
+                                    ?master_user_secret_kms_key_id: ::String,
                                     ?tags: Array[
                                       {
                                         key: ::String?,
@@ -2724,7 +2726,10 @@ module Aws
                                     db_instance_identifier: ::String,
                                     tenant_db_name: ::String,
                                     ?master_user_password: ::String,
-                                    ?new_tenant_db_name: ::String
+                                    ?new_tenant_db_name: ::String,
+                                    ?manage_master_user_password: bool,
+                                    ?rotate_master_user_password: bool,
+                                    ?master_user_secret_kms_key_id: ::String
                                   ) -> _ModifyTenantDatabaseResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyTenantDatabaseResponseSuccess
 
@@ -3159,7 +3164,9 @@ module Aws
                                                   ?allocated_storage: ::Integer,
                                                   ?dedicated_log_volume: bool,
                                                   ?ca_certificate_identifier: ::String,
-                                                  ?engine_lifecycle_support: ::String
+                                                  ?engine_lifecycle_support: ::String,
+                                                  ?manage_master_user_password: bool,
+                                                  ?master_user_secret_kms_key_id: ::String
                                                 ) -> _RestoreDBInstanceFromDBSnapshotResponseSuccess
                                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RestoreDBInstanceFromDBSnapshotResponseSuccess
 
@@ -3295,7 +3302,9 @@ module Aws
                                                   ?allocated_storage: ::Integer,
                                                   ?dedicated_log_volume: bool,
                                                   ?ca_certificate_identifier: ::String,
-                                                  ?engine_lifecycle_support: ::String
+                                                  ?engine_lifecycle_support: ::String,
+                                                  ?manage_master_user_password: bool,
+                                                  ?master_user_secret_kms_key_id: ::String
                                                 ) -> _RestoreDBInstanceToPointInTimeResponseSuccess
                                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RestoreDBInstanceToPointInTimeResponseSuccess
 

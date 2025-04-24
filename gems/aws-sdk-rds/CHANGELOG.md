@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.274.0 (2025-04-24)
+------------------
+
+* Feature - This Amazon RDS release adds support for managed master user passwords for Oracle CDBs.
+
 1.273.0 (2025-03-26)
 ------------------
 

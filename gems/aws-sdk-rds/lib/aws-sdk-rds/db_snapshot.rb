@@ -720,6 +720,8 @@ module Aws::RDS
     #     dedicated_log_volume: false,
     #     ca_certificate_identifier: "String",
     #     engine_lifecycle_support: "String",
+    #     manage_master_user_password: false,
+    #     master_user_secret_kms_key_id: "String",
     #   })
     # @param [Hash] options ({})
     # @option options [required, String] :db_instance_identifier
@@ -800,6 +802,13 @@ module Aws::RDS
     #
     #   If you restore an RDS Custom DB instance, you must disable this
     #   parameter.
+    #
+    #   For more information about automatic minor version upgrades, see
+    #   [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
     # @option options [String] :license_model
     #   License model information for the restored DB instance.
     #
@@ -1247,6 +1256,44 @@ module Aws::RDS
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html
+    # @option options [Boolean] :manage_master_user_password
+    #   Specifies whether to manage the master user password with Amazon Web
+    #   Services Secrets Manager in the restored DB instance.
+    #
+    #   For more information, see [Password management with Amazon Web
+    #   Services Secrets Manager][1] in the *Amazon RDS User Guide*.
+    #
+    #   Constraints:
+    #
+    #   * Applies to RDS for Oracle only.
+    #
+    #   ^
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html
+    # @option options [String] :master_user_secret_kms_key_id
+    #   The Amazon Web Services KMS key identifier to encrypt a secret that is
+    #   automatically generated and managed in Amazon Web Services Secrets
+    #   Manager.
+    #
+    #   This setting is valid only if the master user password is managed by
+    #   RDS in Amazon Web Services Secrets Manager for the DB instance.
+    #
+    #   The Amazon Web Services KMS key identifier is the key ARN, key ID,
+    #   alias ARN, or alias name for the KMS key. To use a KMS key in a
+    #   different Amazon Web Services account, specify the key ARN or alias
+    #   ARN.
+    #
+    #   If you don't specify `MasterUserSecretKmsKeyId`, then the
+    #   `aws/secretsmanager` KMS key is used to encrypt the secret. If the
+    #   secret is in a different Amazon Web Services account, then you can't
+    #   use the `aws/secretsmanager` KMS key to encrypt the secret, and you
+    #   must use a customer managed KMS key.
+    #
+    #   There is a default KMS key for your Amazon Web Services account. Your
+    #   Amazon Web Services account has a different default KMS key for each
+    #   Amazon Web Services Region.
     # @return [DBInstance]
     def restore(options = {})
       options = options.merge(db_snapshot_identifier: @snapshot_id)

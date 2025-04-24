@@ -746,6 +746,10 @@ module Aws::AppSync
     #   The date and time that the `ChannelNamespace` was last changed.
     #   @return [Time]
     #
+    # @!attribute [rw] handler_configs
+    #   The configuration for the `OnPublish` and `OnSubscribe` handlers.
+    #   @return [Types::HandlerConfigs]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ChannelNamespace AWS API Documentation
     #
     class ChannelNamespace < Struct.new(
@@ -757,7 +761,8 @@ module Aws::AppSync
       :tags,
       :channel_namespace_arn,
       :created,
-      :last_modified)
+      :last_modified,
+      :handler_configs)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1130,6 +1135,10 @@ module Aws::AppSync
     #   objects.
     #   @return [Hash<String,String>]
     #
+    # @!attribute [rw] handler_configs
+    #   The configuration for the `OnPublish` and `OnSubscribe` handlers.
+    #   @return [Types::HandlerConfigs]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateChannelNamespaceRequest AWS API Documentation
     #
     class CreateChannelNamespaceRequest < Struct.new(
@@ -1138,7 +1147,8 @@ module Aws::AppSync
       :subscribe_auth_modes,
       :publish_auth_modes,
       :code_handlers,
-      :tags)
+      :tags,
+      :handler_configs)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3489,6 +3499,44 @@ module Aws::AppSync
       include Aws::Structure
     end
 
+    # The configuration for a handler.
+    #
+    # @!attribute [rw] behavior
+    #   The behavior for the handler.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration
+    #   The integration data source configuration for the handler.
+    #   @return [Types::Integration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/HandlerConfig AWS API Documentation
+    #
+    class HandlerConfig < Struct.new(
+      :behavior,
+      :integration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration for the `OnPublish` and `OnSubscribe` handlers.
+    #
+    # @!attribute [rw] on_publish
+    #   The configuration for the `OnPublish` handler.
+    #   @return [Types::HandlerConfig]
+    #
+    # @!attribute [rw] on_subscribe
+    #   The configuration for the `OnSubscribe` handler.
+    #   @return [Types::HandlerConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/HandlerConfigs AWS API Documentation
+    #
+    class HandlerConfigs < Struct.new(
+      :on_publish,
+      :on_subscribe)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes an HTTP data source configuration.
     #
     # @!attribute [rw] endpoint
@@ -3508,6 +3556,26 @@ module Aws::AppSync
     class HttpDataSourceConfig < Struct.new(
       :endpoint,
       :authorization_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The integration data source configuration for the handler.
+    #
+    # @!attribute [rw] data_source_name
+    #   The unique name of the data source that has been configured on the
+    #   API.
+    #   @return [String]
+    #
+    # @!attribute [rw] lambda_config
+    #   The configuration for a Lambda data source.
+    #   @return [Types::LambdaConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/Integration AWS API Documentation
+    #
+    class Integration < Struct.new(
+      :data_source_name,
+      :lambda_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3564,6 +3632,20 @@ module Aws::AppSync
       :authorizer_result_ttl_in_seconds,
       :authorizer_uri,
       :identity_validation_expression)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration for a Lambda data source.
+    #
+    # @!attribute [rw] invoke_type
+    #   The invocation type for a Lambda data source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/LambdaConfig AWS API Documentation
+    #
+    class LambdaConfig < Struct.new(
+      :invoke_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5165,6 +5247,10 @@ module Aws::AppSync
     #   process published events and subscribe requests.
     #   @return [String]
     #
+    # @!attribute [rw] handler_configs
+    #   The configuration for the `OnPublish` and `OnSubscribe` handlers.
+    #   @return [Types::HandlerConfigs]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateChannelNamespaceRequest AWS API Documentation
     #
     class UpdateChannelNamespaceRequest < Struct.new(
@@ -5172,7 +5258,8 @@ module Aws::AppSync
       :name,
       :subscribe_auth_modes,
       :publish_auth_modes,
-      :code_handlers)
+      :code_handlers,
+      :handler_configs)
       SENSITIVE = []
       include Aws::Structure
     end

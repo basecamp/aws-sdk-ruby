@@ -18,6 +18,7 @@ module Aws::BedrockDataAutomation
     AudioExtractionCategory = Shapes::StructureShape.new(name: 'AudioExtractionCategory')
     AudioExtractionCategoryType = Shapes::StringShape.new(name: 'AudioExtractionCategoryType')
     AudioExtractionCategoryTypes = Shapes::ListShape.new(name: 'AudioExtractionCategoryTypes')
+    AudioOverrideConfiguration = Shapes::StructureShape.new(name: 'AudioOverrideConfiguration')
     AudioStandardExtraction = Shapes::StructureShape.new(name: 'AudioStandardExtraction')
     AudioStandardGenerativeField = Shapes::StructureShape.new(name: 'AudioStandardGenerativeField')
     AudioStandardGenerativeFieldType = Shapes::StringShape.new(name: 'AudioStandardGenerativeFieldType')
@@ -59,6 +60,7 @@ module Aws::BedrockDataAutomation
     DeleteBlueprintResponse = Shapes::StructureShape.new(name: 'DeleteBlueprintResponse')
     DeleteDataAutomationProjectRequest = Shapes::StructureShape.new(name: 'DeleteDataAutomationProjectRequest')
     DeleteDataAutomationProjectResponse = Shapes::StructureShape.new(name: 'DeleteDataAutomationProjectResponse')
+    DesiredModality = Shapes::StringShape.new(name: 'DesiredModality')
     DocumentBoundingBox = Shapes::StructureShape.new(name: 'DocumentBoundingBox')
     DocumentExtractionGranularity = Shapes::StructureShape.new(name: 'DocumentExtractionGranularity')
     DocumentExtractionGranularityType = Shapes::StringShape.new(name: 'DocumentExtractionGranularityType')
@@ -83,6 +85,7 @@ module Aws::BedrockDataAutomation
     ImageExtractionCategory = Shapes::StructureShape.new(name: 'ImageExtractionCategory')
     ImageExtractionCategoryType = Shapes::StringShape.new(name: 'ImageExtractionCategoryType')
     ImageExtractionCategoryTypes = Shapes::ListShape.new(name: 'ImageExtractionCategoryTypes')
+    ImageOverrideConfiguration = Shapes::StructureShape.new(name: 'ImageOverrideConfiguration')
     ImageStandardExtraction = Shapes::StructureShape.new(name: 'ImageStandardExtraction')
     ImageStandardGenerativeField = Shapes::StructureShape.new(name: 'ImageStandardGenerativeField')
     ImageStandardGenerativeFieldType = Shapes::StringShape.new(name: 'ImageStandardGenerativeFieldType')
@@ -98,6 +101,8 @@ module Aws::BedrockDataAutomation
     ListTagsForResourceRequest = Shapes::StructureShape.new(name: 'ListTagsForResourceRequest')
     ListTagsForResourceResponse = Shapes::StructureShape.new(name: 'ListTagsForResourceResponse')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
+    ModalityProcessingConfiguration = Shapes::StructureShape.new(name: 'ModalityProcessingConfiguration')
+    ModalityRoutingConfiguration = Shapes::StructureShape.new(name: 'ModalityRoutingConfiguration')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
     NonBlankString = Shapes::StringShape.new(name: 'NonBlankString')
     OverrideConfiguration = Shapes::StructureShape.new(name: 'OverrideConfiguration')
@@ -130,6 +135,7 @@ module Aws::BedrockDataAutomation
     VideoExtractionCategory = Shapes::StructureShape.new(name: 'VideoExtractionCategory')
     VideoExtractionCategoryType = Shapes::StringShape.new(name: 'VideoExtractionCategoryType')
     VideoExtractionCategoryTypes = Shapes::ListShape.new(name: 'VideoExtractionCategoryTypes')
+    VideoOverrideConfiguration = Shapes::StructureShape.new(name: 'VideoOverrideConfiguration')
     VideoStandardExtraction = Shapes::StructureShape.new(name: 'VideoStandardExtraction')
     VideoStandardGenerativeField = Shapes::StructureShape.new(name: 'VideoStandardGenerativeField')
     VideoStandardGenerativeFieldType = Shapes::StringShape.new(name: 'VideoStandardGenerativeFieldType')
@@ -144,6 +150,9 @@ module Aws::BedrockDataAutomation
     AudioExtractionCategory.struct_class = Types::AudioExtractionCategory
 
     AudioExtractionCategoryTypes.member = Shapes::ShapeRef.new(shape: AudioExtractionCategoryType)
+
+    AudioOverrideConfiguration.add_member(:modality_processing, Shapes::ShapeRef.new(shape: ModalityProcessingConfiguration, location_name: "modalityProcessing"))
+    AudioOverrideConfiguration.struct_class = Types::AudioOverrideConfiguration
 
     AudioStandardExtraction.add_member(:category, Shapes::ShapeRef.new(shape: AudioExtractionCategory, required: true, location_name: "category"))
     AudioStandardExtraction.struct_class = Types::AudioStandardExtraction
@@ -293,6 +302,7 @@ module Aws::BedrockDataAutomation
     DocumentOutputTextFormatTypes.member = Shapes::ShapeRef.new(shape: DocumentOutputTextFormatType)
 
     DocumentOverrideConfiguration.add_member(:splitter, Shapes::ShapeRef.new(shape: SplitterConfiguration, location_name: "splitter"))
+    DocumentOverrideConfiguration.add_member(:modality_processing, Shapes::ShapeRef.new(shape: ModalityProcessingConfiguration, location_name: "modalityProcessing"))
     DocumentOverrideConfiguration.struct_class = Types::DocumentOverrideConfiguration
 
     DocumentStandardExtraction.add_member(:granularity, Shapes::ShapeRef.new(shape: DocumentExtractionGranularity, required: true, location_name: "granularity"))
@@ -334,6 +344,9 @@ module Aws::BedrockDataAutomation
     ImageExtractionCategory.struct_class = Types::ImageExtractionCategory
 
     ImageExtractionCategoryTypes.member = Shapes::ShapeRef.new(shape: ImageExtractionCategoryType)
+
+    ImageOverrideConfiguration.add_member(:modality_processing, Shapes::ShapeRef.new(shape: ModalityProcessingConfiguration, location_name: "modalityProcessing"))
+    ImageOverrideConfiguration.struct_class = Types::ImageOverrideConfiguration
 
     ImageStandardExtraction.add_member(:category, Shapes::ShapeRef.new(shape: ImageExtractionCategory, required: true, location_name: "category"))
     ImageStandardExtraction.add_member(:bounding_box, Shapes::ShapeRef.new(shape: ImageBoundingBox, required: true, location_name: "boundingBox"))
@@ -384,7 +397,20 @@ module Aws::BedrockDataAutomation
     ListTagsForResourceResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tags"))
     ListTagsForResourceResponse.struct_class = Types::ListTagsForResourceResponse
 
+    ModalityProcessingConfiguration.add_member(:state, Shapes::ShapeRef.new(shape: State, location_name: "state"))
+    ModalityProcessingConfiguration.struct_class = Types::ModalityProcessingConfiguration
+
+    ModalityRoutingConfiguration.add_member(:jpeg, Shapes::ShapeRef.new(shape: DesiredModality, location_name: "jpeg"))
+    ModalityRoutingConfiguration.add_member(:png, Shapes::ShapeRef.new(shape: DesiredModality, location_name: "png"))
+    ModalityRoutingConfiguration.add_member(:mp4, Shapes::ShapeRef.new(shape: DesiredModality, location_name: "mp4"))
+    ModalityRoutingConfiguration.add_member(:mov, Shapes::ShapeRef.new(shape: DesiredModality, location_name: "mov"))
+    ModalityRoutingConfiguration.struct_class = Types::ModalityRoutingConfiguration
+
     OverrideConfiguration.add_member(:document, Shapes::ShapeRef.new(shape: DocumentOverrideConfiguration, location_name: "document"))
+    OverrideConfiguration.add_member(:image, Shapes::ShapeRef.new(shape: ImageOverrideConfiguration, location_name: "image"))
+    OverrideConfiguration.add_member(:video, Shapes::ShapeRef.new(shape: VideoOverrideConfiguration, location_name: "video"))
+    OverrideConfiguration.add_member(:audio, Shapes::ShapeRef.new(shape: AudioOverrideConfiguration, location_name: "audio"))
+    OverrideConfiguration.add_member(:modality_routing, Shapes::ShapeRef.new(shape: ModalityRoutingConfiguration, location_name: "modalityRouting"))
     OverrideConfiguration.struct_class = Types::OverrideConfiguration
 
     ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
@@ -466,6 +492,9 @@ module Aws::BedrockDataAutomation
     VideoExtractionCategory.struct_class = Types::VideoExtractionCategory
 
     VideoExtractionCategoryTypes.member = Shapes::ShapeRef.new(shape: VideoExtractionCategoryType)
+
+    VideoOverrideConfiguration.add_member(:modality_processing, Shapes::ShapeRef.new(shape: ModalityProcessingConfiguration, location_name: "modalityProcessing"))
+    VideoOverrideConfiguration.struct_class = Types::VideoOverrideConfiguration
 
     VideoStandardExtraction.add_member(:category, Shapes::ShapeRef.new(shape: VideoExtractionCategory, required: true, location_name: "category"))
     VideoStandardExtraction.add_member(:bounding_box, Shapes::ShapeRef.new(shape: VideoBoundingBox, required: true, location_name: "boundingBox"))

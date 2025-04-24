@@ -19,6 +19,11 @@ module Aws::BedrockDataAutomation
       SENSITIVE: []
     end
 
+    class AudioOverrideConfiguration
+      attr_accessor modality_processing: Types::ModalityProcessingConfiguration
+      SENSITIVE: []
+    end
+
     class AudioStandardExtraction
       attr_accessor category: Types::AudioExtractionCategory
       SENSITIVE: []
@@ -209,6 +214,7 @@ module Aws::BedrockDataAutomation
 
     class DocumentOverrideConfiguration
       attr_accessor splitter: Types::SplitterConfiguration
+      attr_accessor modality_processing: Types::ModalityProcessingConfiguration
       SENSITIVE: []
     end
 
@@ -267,6 +273,11 @@ module Aws::BedrockDataAutomation
     class ImageExtractionCategory
       attr_accessor state: ("ENABLED" | "DISABLED")
       attr_accessor types: ::Array[("CONTENT_MODERATION" | "TEXT_DETECTION" | "LOGOS")]
+      SENSITIVE: []
+    end
+
+    class ImageOverrideConfiguration
+      attr_accessor modality_processing: Types::ModalityProcessingConfiguration
       SENSITIVE: []
     end
 
@@ -334,8 +345,25 @@ module Aws::BedrockDataAutomation
       SENSITIVE: []
     end
 
+    class ModalityProcessingConfiguration
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class ModalityRoutingConfiguration
+      attr_accessor jpeg: ("IMAGE" | "DOCUMENT" | "AUDIO" | "VIDEO")
+      attr_accessor png: ("IMAGE" | "DOCUMENT" | "AUDIO" | "VIDEO")
+      attr_accessor mp4: ("IMAGE" | "DOCUMENT" | "AUDIO" | "VIDEO")
+      attr_accessor mov: ("IMAGE" | "DOCUMENT" | "AUDIO" | "VIDEO")
+      SENSITIVE: []
+    end
+
     class OverrideConfiguration
       attr_accessor document: Types::DocumentOverrideConfiguration
+      attr_accessor image: Types::ImageOverrideConfiguration
+      attr_accessor video: Types::VideoOverrideConfiguration
+      attr_accessor audio: Types::AudioOverrideConfiguration
+      attr_accessor modality_routing: Types::ModalityRoutingConfiguration
       SENSITIVE: []
     end
 
@@ -442,6 +470,11 @@ module Aws::BedrockDataAutomation
     class VideoExtractionCategory
       attr_accessor state: ("ENABLED" | "DISABLED")
       attr_accessor types: ::Array[("CONTENT_MODERATION" | "TEXT_DETECTION" | "TRANSCRIPT" | "LOGOS")]
+      SENSITIVE: []
+    end
+
+    class VideoOverrideConfiguration
+      attr_accessor modality_processing: Types::ModalityProcessingConfiguration
       SENSITIVE: []
     end
 

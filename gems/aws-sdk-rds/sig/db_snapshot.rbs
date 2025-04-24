@@ -224,7 +224,9 @@ module Aws
                      ?allocated_storage: ::Integer,
                      ?dedicated_log_volume: bool,
                      ?ca_certificate_identifier: ::String,
-                     ?engine_lifecycle_support: ::String
+                     ?engine_lifecycle_support: ::String,
+                     ?manage_master_user_password: bool,
+                     ?master_user_secret_kms_key_id: ::String
                    ) -> DBInstance
                  | (?Hash[Symbol, untyped]) -> DBInstance
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.16.0 (2025-04-24)
+------------------
+
+* Feature - Documentation-only update: added valid values for the version property of the Scheduler and SchedulerRequest data types.
+
 1.15.0 (2025-04-11)
 ------------------
 

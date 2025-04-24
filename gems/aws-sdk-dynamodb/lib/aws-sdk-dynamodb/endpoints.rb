@@ -363,6 +363,15 @@ module Aws::DynamoDB
       end
     end
 
+    class TransactWriteItems
+      def self.build(context)
+        Aws::DynamoDB::EndpointParameters.create(
+          context.config,
+          resource_arn_list: JMESPath.search("transact_items[*].[condition_check.table_name, put.table_name, delete.table_name, update.table_name][]", context.params),
+        )
+      end
+    end
+
     class UntagResource
       def self.build(context)
         Aws::DynamoDB::EndpointParameters.create(
@@ -534,6 +543,8 @@ module Aws::DynamoDB
         TagResource.build(context)
       when :transact_get_items
         TransactGetItems.build(context)
+      when :transact_write_items
+        TransactWriteItems.build(context)
       when :untag_resource
         UntagResource.build(context)
       when :update_continuous_backups

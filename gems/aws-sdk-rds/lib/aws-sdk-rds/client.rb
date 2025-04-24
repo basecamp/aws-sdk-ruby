@@ -3342,7 +3342,14 @@ module Aws::RDS
     #   the DB cluster during the maintenance window. By default, minor engine
     #   upgrades are applied automatically.
     #
-    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB cluster
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB cluster.
+    #
+    #   For more information about automatic minor version upgrades, see
+    #   [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
     #
     # @option params [Integer] :monitoring_interval
     #   The interval, in seconds, between points when Enhanced Monitoring
@@ -5036,6 +5043,13 @@ module Aws::RDS
     #   If you create an RDS Custom DB instance, you must set
     #   `AutoMinorVersionUpgrade` to `false`.
     #
+    #   For more information about automatic minor version upgrades, see
+    #   [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
+    #
     # @option params [String] :license_model
     #   The license model information for this DB instance.
     #
@@ -6192,6 +6206,13 @@ module Aws::RDS
     #   This setting doesn't apply to RDS Custom DB instances.
     #
     #   Default: Inherits the value from the source DB instance.
+    #
+    #   For more information about automatic minor version upgrades, see
+    #   [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
     #
     # @option params [Integer] :iops
     #   The amount of Provisioned IOPS (input/output operations per second) to
@@ -8625,7 +8646,7 @@ module Aws::RDS
     #
     #   * Can't be a reserved word for the chosen database engine.
     #
-    # @option params [required, String] :master_user_password
+    # @option params [String] :master_user_password
     #   The password for the master user in your tenant database.
     #
     #   Constraints:
@@ -8636,12 +8657,55 @@ module Aws::RDS
     #     (`/`), double quote (`"`), at symbol (`@`), ampersand (`&`), or
     #     single quote (`'`).
     #
+    #   * Can't be specified when `ManageMasterUserPassword` is enabled.
+    #
     # @option params [String] :character_set_name
     #   The character set for your tenant database. If you don't specify a
     #   value, the character set name defaults to `AL32UTF8`.
     #
     # @option params [String] :nchar_character_set_name
     #   The `NCHAR` value for the tenant database.
+    #
+    # @option params [Boolean] :manage_master_user_password
+    #   Specifies whether to manage the master user password with Amazon Web
+    #   Services Secrets Manager.
+    #
+    #   For more information, see [Password management with Amazon Web
+    #   Services Secrets Manager][1] in the *Amazon RDS User Guide.*
+    #
+    #   Constraints:
+    #
+    #   * Can't manage the master user password with Amazon Web Services
+    #     Secrets Manager if `MasterUserPassword` is specified.
+    #
+    #   ^
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html
+    #
+    # @option params [String] :master_user_secret_kms_key_id
+    #   The Amazon Web Services KMS key identifier to encrypt a secret that is
+    #   automatically generated and managed in Amazon Web Services Secrets
+    #   Manager.
+    #
+    #   This setting is valid only if the master user password is managed by
+    #   RDS in Amazon Web Services Secrets Manager for the DB instance.
+    #
+    #   The Amazon Web Services KMS key identifier is the key ARN, key ID,
+    #   alias ARN, or alias name for the KMS key. To use a KMS key in a
+    #   different Amazon Web Services account, specify the key ARN or alias
+    #   ARN.
+    #
+    #   If you don't specify `MasterUserSecretKmsKeyId`, then the
+    #   `aws/secretsmanager` KMS key is used to encrypt the secret. If the
+    #   secret is in a different Amazon Web Services account, then you can't
+    #   use the `aws/secretsmanager` KMS key to encrypt the secret, and you
+    #   must use a customer managed KMS key.
+    #
+    #   There is a default KMS key for your Amazon Web Services account. Your
+    #   Amazon Web Services account has a different default KMS key for each
+    #   Amazon Web Services Region.
     #
     # @option params [Array<Types::Tag>] :tags
     #   A list of tags.
@@ -8665,9 +8729,11 @@ module Aws::RDS
     #     db_instance_identifier: "String", # required
     #     tenant_db_name: "String", # required
     #     master_username: "String", # required
-    #     master_user_password: "SensitiveString", # required
+    #     master_user_password: "SensitiveString",
     #     character_set_name: "String",
     #     nchar_character_set_name: "String",
+    #     manage_master_user_password: false,
+    #     master_user_secret_kms_key_id: "String",
     #     tags: [
     #       {
     #         key: "String",
@@ -8691,6 +8757,9 @@ module Aws::RDS
     #   resp.tenant_database.deletion_protection #=> Boolean
     #   resp.tenant_database.pending_modified_values.master_user_password #=> String
     #   resp.tenant_database.pending_modified_values.tenant_db_name #=> String
+    #   resp.tenant_database.master_user_secret.secret_arn #=> String
+    #   resp.tenant_database.master_user_secret.secret_status #=> String
+    #   resp.tenant_database.master_user_secret.kms_key_id #=> String
     #   resp.tenant_database.tag_list #=> Array
     #   resp.tenant_database.tag_list[0].key #=> String
     #   resp.tenant_database.tag_list[0].value #=> String
@@ -10783,6 +10852,9 @@ module Aws::RDS
     #   resp.tenant_database.deletion_protection #=> Boolean
     #   resp.tenant_database.pending_modified_values.master_user_password #=> String
     #   resp.tenant_database.pending_modified_values.tenant_db_name #=> String
+    #   resp.tenant_database.master_user_secret.secret_arn #=> String
+    #   resp.tenant_database.master_user_secret.secret_status #=> String
+    #   resp.tenant_database.master_user_secret.kms_key_id #=> String
     #   resp.tenant_database.tag_list #=> Array
     #   resp.tenant_database.tag_list[0].key #=> String
     #   resp.tenant_database.tag_list[0].value #=> String
@@ -17582,6 +17654,9 @@ module Aws::RDS
     #   resp.tenant_databases[0].deletion_protection #=> Boolean
     #   resp.tenant_databases[0].pending_modified_values.master_user_password #=> String
     #   resp.tenant_databases[0].pending_modified_values.tenant_db_name #=> String
+    #   resp.tenant_databases[0].master_user_secret.secret_arn #=> String
+    #   resp.tenant_databases[0].master_user_secret.secret_status #=> String
+    #   resp.tenant_databases[0].master_user_secret.kms_key_id #=> String
     #   resp.tenant_databases[0].tag_list #=> Array
     #   resp.tenant_databases[0].tag_list[0].key #=> String
     #   resp.tenant_databases[0].tag_list[0].value #=> String
@@ -19259,7 +19334,14 @@ module Aws::RDS
     #   the DB cluster during the maintenance window. By default, minor engine
     #   upgrades are applied automatically.
     #
-    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters.
+    #
+    #   For more information about automatic minor version upgrades, see
+    #   [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
     #
     # @option params [Integer] :monitoring_interval
     #   The interval, in seconds, between points when Enhanced Monitoring
@@ -20342,10 +20424,16 @@ module Aws::RDS
     #
     #   This setting doesn't apply to the following DB instances:
     #
-    #   * Amazon Aurora (The password for the master user is managed by the DB
-    #     cluster. For more information, see `ModifyDBCluster`.)
+    #   * Amazon Aurora
+    #
+    #     The password for the master user is managed by the DB cluster. For
+    #     more information, see `ModifyDBCluster`.
     #
     #   * RDS Custom
+    #
+    #   * RDS for Oracle CDBs in the multi-tenant configuration
+    #
+    #     Specify the master password in `ModifyTenantDatabase` instead.
     #
     #   Default: Uses existing setting
     #
@@ -20556,6 +20644,13 @@ module Aws::RDS
     #
     #   For an RDS Custom DB instance, don't enable this setting. Otherwise,
     #   the operation returns an error.
+    #
+    #   For more information about automatic minor version upgrades, see
+    #   [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
     #
     # @option params [String] :license_model
     #   The license model for the DB instance.
@@ -21188,7 +21283,11 @@ module Aws::RDS
     #   * Can't manage the master user password with Amazon Web Services
     #     Secrets Manager if `MasterUserPassword` is specified.
     #
-    #   ^
+    #   * Can't specify for RDS for Oracle CDB instances in the multi-tenant
+    #     configuration. Use `ModifyTenantDatabase` instead.
+    #
+    #   * Can't specify the parameters `ManageMasterUserPassword` and
+    #     `MultiTenant` in the same operation.
     #
     #
     #
@@ -21199,7 +21298,7 @@ module Aws::RDS
     #   Secrets Manager for the master user password.
     #
     #   This setting is valid only if the master user password is managed by
-    #   RDS in Amazon Web Services Secrets Manager for the DB cluster. The
+    #   RDS in Amazon Web Services Secrets Manager for the DB instance. The
     #   secret value contains the updated password.
     #
     #   For more information, see [Password management with Amazon Web
@@ -23108,6 +23207,99 @@ module Aws::RDS
     #
     #   * Can't be longer than 8 characters.
     #
+    # @option params [Boolean] :manage_master_user_password
+    #   Specifies whether to manage the master user password with Amazon Web
+    #   Services Secrets Manager.
+    #
+    #   If the tenant database doesn't manage the master user password with
+    #   Amazon Web Services Secrets Manager, you can turn on this management.
+    #   In this case, you can't specify `MasterUserPassword`.
+    #
+    #   If the tenant database already manages the master user password with
+    #   Amazon Web Services Secrets Manager, and you specify that the master
+    #   user password is not managed with Amazon Web Services Secrets Manager,
+    #   then you must specify `MasterUserPassword`. In this case, Amazon RDS
+    #   deletes the secret and uses the new password for the master user
+    #   specified by `MasterUserPassword`.
+    #
+    #   For more information, see [Password management with Amazon Web
+    #   Services Secrets Manager][1] in the *Amazon RDS User Guide.*
+    #
+    #   Constraints:
+    #
+    #   * Can't manage the master user password with Amazon Web Services
+    #     Secrets Manager if `MasterUserPassword` is specified.
+    #
+    #   ^
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html
+    #
+    # @option params [Boolean] :rotate_master_user_password
+    #   Specifies whether to rotate the secret managed by Amazon Web Services
+    #   Secrets Manager for the master user password.
+    #
+    #   This setting is valid only if the master user password is managed by
+    #   RDS in Amazon Web Services Secrets Manager for the DB instance. The
+    #   secret value contains the updated password.
+    #
+    #   For more information, see [Password management with Amazon Web
+    #   Services Secrets Manager][1] in the *Amazon RDS User Guide.*
+    #
+    #   Constraints:
+    #
+    #   * You must apply the change immediately when rotating the master user
+    #     password.
+    #
+    #   ^
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html
+    #
+    # @option params [String] :master_user_secret_kms_key_id
+    #   The Amazon Web Services KMS key identifier to encrypt a secret that is
+    #   automatically generated and managed in Amazon Web Services Secrets
+    #   Manager.
+    #
+    #   This setting is valid only if both of the following conditions are
+    #   met:
+    #
+    #   * The tenant database doesn't manage the master user password in
+    #     Amazon Web Services Secrets Manager.
+    #
+    #     If the tenant database already manages the master user password in
+    #     Amazon Web Services Secrets Manager, you can't change the KMS key
+    #     used to encrypt the secret.
+    #
+    #   * You're turning on `ManageMasterUserPassword` to manage the master
+    #     user password in Amazon Web Services Secrets Manager.
+    #
+    #     If you're turning on `ManageMasterUserPassword` and don't specify
+    #     `MasterUserSecretKmsKeyId`, then the `aws/secretsmanager` KMS key is
+    #     used to encrypt the secret. If the secret is in a different Amazon
+    #     Web Services account, then you can't use the `aws/secretsmanager`
+    #     KMS key to encrypt the secret, and you must use a self-managed KMS
+    #     key.
+    #
+    #   The Amazon Web Services KMS key identifier is any of the following:
+    #
+    #   * Key ARN
+    #
+    #   * Key ID
+    #
+    #   * Alias ARN
+    #
+    #   * Alias name for the KMS key
+    #
+    #   To use a KMS key in a different Amazon Web Services account, specify
+    #   the key ARN or alias ARN.
+    #
+    #   A default KMS key exists for your Amazon Web Services account. Your
+    #   Amazon Web Services account has a different default KMS key for each
+    #   Amazon Web Services Region.
+    #
     # @return [Types::ModifyTenantDatabaseResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ModifyTenantDatabaseResult#tenant_database #tenant_database} => Types::TenantDatabase
@@ -23119,6 +23311,9 @@ module Aws::RDS
     #     tenant_db_name: "String", # required
     #     master_user_password: "SensitiveString",
     #     new_tenant_db_name: "String",
+    #     manage_master_user_password: false,
+    #     rotate_master_user_password: false,
+    #     master_user_secret_kms_key_id: "String",
     #   })
     #
     # @example Response structure
@@ -23136,6 +23331,9 @@ module Aws::RDS
     #   resp.tenant_database.deletion_protection #=> Boolean
     #   resp.tenant_database.pending_modified_values.master_user_password #=> String
     #   resp.tenant_database.pending_modified_values.tenant_db_name #=> String
+    #   resp.tenant_database.master_user_secret.secret_arn #=> String
+    #   resp.tenant_database.master_user_secret.secret_status #=> String
+    #   resp.tenant_database.master_user_secret.kms_key_id #=> String
     #   resp.tenant_database.tag_list #=> Array
     #   resp.tenant_database.tag_list[0].key #=> String
     #   resp.tenant_database.tag_list[0].value #=> String
@@ -27272,6 +27470,13 @@ module Aws::RDS
     #   If you restore an RDS Custom DB instance, you must disable this
     #   parameter.
     #
+    #   For more information about automatic minor version upgrades, see
+    #   [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
+    #
     # @option params [String] :license_model
     #   License model information for the restored DB instance.
     #
@@ -27752,6 +27957,46 @@ module Aws::RDS
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html
     #
+    # @option params [Boolean] :manage_master_user_password
+    #   Specifies whether to manage the master user password with Amazon Web
+    #   Services Secrets Manager in the restored DB instance.
+    #
+    #   For more information, see [Password management with Amazon Web
+    #   Services Secrets Manager][1] in the *Amazon RDS User Guide*.
+    #
+    #   Constraints:
+    #
+    #   * Applies to RDS for Oracle only.
+    #
+    #   ^
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html
+    #
+    # @option params [String] :master_user_secret_kms_key_id
+    #   The Amazon Web Services KMS key identifier to encrypt a secret that is
+    #   automatically generated and managed in Amazon Web Services Secrets
+    #   Manager.
+    #
+    #   This setting is valid only if the master user password is managed by
+    #   RDS in Amazon Web Services Secrets Manager for the DB instance.
+    #
+    #   The Amazon Web Services KMS key identifier is the key ARN, key ID,
+    #   alias ARN, or alias name for the KMS key. To use a KMS key in a
+    #   different Amazon Web Services account, specify the key ARN or alias
+    #   ARN.
+    #
+    #   If you don't specify `MasterUserSecretKmsKeyId`, then the
+    #   `aws/secretsmanager` KMS key is used to encrypt the secret. If the
+    #   secret is in a different Amazon Web Services account, then you can't
+    #   use the `aws/secretsmanager` KMS key to encrypt the secret, and you
+    #   must use a customer managed KMS key.
+    #
+    #   There is a default KMS key for your Amazon Web Services account. Your
+    #   Amazon Web Services account has a different default KMS key for each
+    #   Amazon Web Services Region.
+    #
     # @return [Types::RestoreDBInstanceFromDBSnapshotResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::RestoreDBInstanceFromDBSnapshotResult#db_instance #db_instance} => Types::DBInstance
@@ -27849,6 +28094,8 @@ module Aws::RDS
     #     dedicated_log_volume: false,
     #     ca_certificate_identifier: "String",
     #     engine_lifecycle_support: "String",
+    #     manage_master_user_password: false,
+    #     master_user_secret_kms_key_id: "String",
     #   })
     #
     # @example Response structure
@@ -28234,6 +28481,13 @@ module Aws::RDS
     #   Specifies whether to automatically apply minor engine upgrades to the
     #   DB instance during the maintenance window. By default, minor engine
     #   upgrades are not applied automatically.
+    #
+    #   For more information about automatic minor version upgrades, see
+    #   [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
     #
     # @option params [String] :license_model
     #   The license model for this DB instance. Use `general-public-license`.
@@ -28982,6 +29236,13 @@ module Aws::RDS
     #
     #   This setting doesn't apply to RDS Custom.
     #
+    #   For more information about automatic minor version upgrades, see
+    #   [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
+    #
     # @option params [String] :license_model
     #   The license model information for the restored DB instance.
     #
@@ -29459,6 +29720,46 @@ module Aws::RDS
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html
     #
+    # @option params [Boolean] :manage_master_user_password
+    #   Specifies whether to manage the master user password with Amazon Web
+    #   Services Secrets Manager in the restored DB instance.
+    #
+    #   For more information, see [Password management with Amazon Web
+    #   Services Secrets Manager][1] in the *Amazon RDS User Guide*.
+    #
+    #   Constraints:
+    #
+    #   * Applies to RDS for Oracle only.
+    #
+    #   ^
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html
+    #
+    # @option params [String] :master_user_secret_kms_key_id
+    #   The Amazon Web Services KMS key identifier to encrypt a secret that is
+    #   automatically generated and managed in Amazon Web Services Secrets
+    #   Manager.
+    #
+    #   This setting is valid only if the master user password is managed by
+    #   RDS in Amazon Web Services Secrets Manager for the DB instance.
+    #
+    #   The Amazon Web Services KMS key identifier is the key ARN, key ID,
+    #   alias ARN, or alias name for the KMS key. To use a KMS key in a
+    #   different Amazon Web Services account, specify the key ARN or alias
+    #   ARN.
+    #
+    #   If you don't specify `MasterUserSecretKmsKeyId`, then the
+    #   `aws/secretsmanager` KMS key is used to encrypt the secret. If the
+    #   secret is in a different Amazon Web Services account, then you can't
+    #   use the `aws/secretsmanager` KMS key to encrypt the secret, and you
+    #   must use a customer managed KMS key.
+    #
+    #   There is a default KMS key for your Amazon Web Services account. Your
+    #   Amazon Web Services account has a different default KMS key for each
+    #   Amazon Web Services Region.
+    #
     # @return [Types::RestoreDBInstanceToPointInTimeResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::RestoreDBInstanceToPointInTimeResult#db_instance #db_instance} => Types::DBInstance
@@ -29619,6 +29920,8 @@ module Aws::RDS
     #     dedicated_log_volume: false,
     #     ca_certificate_identifier: "String",
     #     engine_lifecycle_support: "String",
+    #     manage_master_user_password: false,
+    #     master_user_secret_kms_key_id: "String",
     #   })
     #
     # @example Response structure
@@ -31899,7 +32202,7 @@ module Aws::RDS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-rds'
-      context[:gem_version] = '1.273.0'
+      context[:gem_version] = '1.274.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

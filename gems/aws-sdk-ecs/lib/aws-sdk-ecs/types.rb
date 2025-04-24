@@ -932,17 +932,8 @@ module Aws::ECS
       include Aws::Structure
     end
 
-    # The `RunTask` request could not be processed due to conflicts. The
-    # provided `clientToken` is already in use with a different `RunTask`
-    # request. The `resourceIds` are the existing task ARNs which are
-    # already associated with the `clientToken`.
-    #
-    # To fix this issue:
-    #
-    # * Run `RunTask` with a unique `clientToken`.
-    #
-    # * Run `RunTask` with the `clientToken` and the original set of
-    #   parameters
+    # The request could not be processed because of conflict in the current
+    # state of the resource.
     #
     # @!attribute [rw] resource_ids
     #   The existing task ARNs which are already associated with the
@@ -11070,9 +11061,9 @@ module Aws::ECS
     #   @return [String]
     #
     # @!attribute [rw] stop_type
-    #   How you want Amazon ECS to stop the task.
+    #   How you want Amazon ECS to stop the service.
     #
-    #   The valid values are `ROLLBACK`.
+    #   The ROLLBACK and ABORT stopType aren't supported.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/StopServiceDeploymentRequest AWS API Documentation

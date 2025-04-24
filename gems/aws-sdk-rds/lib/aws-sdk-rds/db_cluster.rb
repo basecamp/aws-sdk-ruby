@@ -552,6 +552,13 @@ module Aws::RDS
     # Indicates whether minor version patches are applied automatically.
     #
     # This setting is for Aurora DB clusters and Multi-AZ DB clusters.
+    #
+    # For more information about automatic minor version upgrades, see
+    # [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
     # @return [Boolean]
     def auto_minor_version_upgrade
       data[:auto_minor_version_upgrade]
@@ -1579,7 +1586,14 @@ module Aws::RDS
     #   the DB cluster during the maintenance window. By default, minor engine
     #   upgrades are applied automatically.
     #
-    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB cluster
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB cluster.
+    #
+    #   For more information about automatic minor version upgrades, see
+    #   [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
     # @option options [Integer] :monitoring_interval
     #   The interval, in seconds, between points when Enhanced Monitoring
     #   metrics are collected for the DB cluster. To turn off collecting
@@ -2413,7 +2427,14 @@ module Aws::RDS
     #   the DB cluster during the maintenance window. By default, minor engine
     #   upgrades are applied automatically.
     #
-    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters.
+    #
+    #   For more information about automatic minor version upgrades, see
+    #   [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
     # @option options [Integer] :monitoring_interval
     #   The interval, in seconds, between points when Enhanced Monitoring
     #   metrics are collected for the DB cluster. To turn off collecting

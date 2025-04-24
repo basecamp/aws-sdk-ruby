@@ -44,6 +44,20 @@ module Aws::BedrockDataAutomation
       include Aws::Structure
     end
 
+    # Override Configuration of Audio
+    #
+    # @!attribute [rw] modality_processing
+    #   Configuration to enable/disable processing of modality
+    #   @return [Types::ModalityProcessingConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-data-automation-2023-07-26/AudioOverrideConfiguration AWS API Documentation
+    #
+    class AudioOverrideConfiguration < Struct.new(
+      :modality_processing)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Standard Extraction Configuration of Audio
     #
     # @!attribute [rw] category
@@ -706,10 +720,15 @@ module Aws::BedrockDataAutomation
     #   Configuration of Splitter
     #   @return [Types::SplitterConfiguration]
     #
+    # @!attribute [rw] modality_processing
+    #   Configuration to enable/disable processing of modality
+    #   @return [Types::ModalityProcessingConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-data-automation-2023-07-26/DocumentOverrideConfiguration AWS API Documentation
     #
     class DocumentOverrideConfiguration < Struct.new(
-      :splitter)
+      :splitter,
+      :modality_processing)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -891,6 +910,20 @@ module Aws::BedrockDataAutomation
     class ImageExtractionCategory < Struct.new(
       :state,
       :types)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Override Configuration of Image
+    #
+    # @!attribute [rw] modality_processing
+    #   Configuration to enable/disable processing of modality
+    #   @return [Types::ModalityProcessingConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-data-automation-2023-07-26/ImageOverrideConfiguration AWS API Documentation
+    #
+    class ImageOverrideConfiguration < Struct.new(
+      :modality_processing)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1102,16 +1135,79 @@ module Aws::BedrockDataAutomation
       include Aws::Structure
     end
 
+    # Configuration to enable/disable processing of modality
+    #
+    # @!attribute [rw] state
+    #   State
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-data-automation-2023-07-26/ModalityProcessingConfiguration AWS API Documentation
+    #
+    class ModalityProcessingConfiguration < Struct.new(
+      :state)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Configuration for routing file type to desired modality
+    #
+    # @!attribute [rw] jpeg
+    #   Desired Modality types
+    #   @return [String]
+    #
+    # @!attribute [rw] png
+    #   Desired Modality types
+    #   @return [String]
+    #
+    # @!attribute [rw] mp4
+    #   Desired Modality types
+    #   @return [String]
+    #
+    # @!attribute [rw] mov
+    #   Desired Modality types
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-data-automation-2023-07-26/ModalityRoutingConfiguration AWS API Documentation
+    #
+    class ModalityRoutingConfiguration < Struct.new(
+      :jpeg,
+      :png,
+      :mp4,
+      :mov)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Override configuration
     #
     # @!attribute [rw] document
     #   Override Configuration of Document
     #   @return [Types::DocumentOverrideConfiguration]
     #
+    # @!attribute [rw] image
+    #   Override Configuration of Image
+    #   @return [Types::ImageOverrideConfiguration]
+    #
+    # @!attribute [rw] video
+    #   Override Configuration of Video
+    #   @return [Types::VideoOverrideConfiguration]
+    #
+    # @!attribute [rw] audio
+    #   Override Configuration of Audio
+    #   @return [Types::AudioOverrideConfiguration]
+    #
+    # @!attribute [rw] modality_routing
+    #   Configuration for routing file type to desired modality
+    #   @return [Types::ModalityRoutingConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-data-automation-2023-07-26/OverrideConfiguration AWS API Documentation
     #
     class OverrideConfiguration < Struct.new(
-      :document)
+      :document,
+      :image,
+      :video,
+      :audio,
+      :modality_routing)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1445,6 +1541,20 @@ module Aws::BedrockDataAutomation
     class VideoExtractionCategory < Struct.new(
       :state,
       :types)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Override Configuration of Video
+    #
+    # @!attribute [rw] modality_processing
+    #   Configuration to enable/disable processing of modality
+    #   @return [Types::ModalityProcessingConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-data-automation-2023-07-26/VideoOverrideConfiguration AWS API Documentation
+    #
+    class VideoOverrideConfiguration < Struct.new(
+      :modality_processing)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -894,7 +894,7 @@ module Aws::AppRunner
     #         code_configuration: {
     #           configuration_source: "REPOSITORY", # required, accepts REPOSITORY, API
     #           code_configuration_values: {
-    #             runtime: "PYTHON_3", # required, accepts PYTHON_3, NODEJS_12, NODEJS_14, CORRETTO_8, CORRETTO_11, NODEJS_16, GO_1, DOTNET_6, PHP_81, RUBY_31, PYTHON_311, NODEJS_18
+    #             runtime: "PYTHON_3", # required, accepts PYTHON_3, NODEJS_12, NODEJS_14, CORRETTO_8, CORRETTO_11, NODEJS_16, GO_1, DOTNET_6, PHP_81, RUBY_31, PYTHON_311, NODEJS_18, NODEJS_22
     #             build_command: "BuildCommand",
     #             start_command: "StartCommand",
     #             port: "String",
@@ -981,7 +981,7 @@ module Aws::AppRunner
     #   resp.service.source_configuration.code_repository.source_code_version.type #=> String, one of "BRANCH"
     #   resp.service.source_configuration.code_repository.source_code_version.value #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.configuration_source #=> String, one of "REPOSITORY", "API"
-    #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.runtime #=> String, one of "PYTHON_3", "NODEJS_12", "NODEJS_14", "CORRETTO_8", "CORRETTO_11", "NODEJS_16", "GO_1", "DOTNET_6", "PHP_81", "RUBY_31", "PYTHON_311", "NODEJS_18"
+    #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.runtime #=> String, one of "PYTHON_3", "NODEJS_12", "NODEJS_14", "CORRETTO_8", "CORRETTO_11", "NODEJS_16", "GO_1", "DOTNET_6", "PHP_81", "RUBY_31", "PYTHON_311", "NODEJS_18", "NODEJS_22"
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.build_command #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.start_command #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.port #=> String
@@ -1342,7 +1342,7 @@ module Aws::AppRunner
     #   resp.service.source_configuration.code_repository.source_code_version.type #=> String, one of "BRANCH"
     #   resp.service.source_configuration.code_repository.source_code_version.value #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.configuration_source #=> String, one of "REPOSITORY", "API"
-    #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.runtime #=> String, one of "PYTHON_3", "NODEJS_12", "NODEJS_14", "CORRETTO_8", "CORRETTO_11", "NODEJS_16", "GO_1", "DOTNET_6", "PHP_81", "RUBY_31", "PYTHON_311", "NODEJS_18"
+    #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.runtime #=> String, one of "PYTHON_3", "NODEJS_12", "NODEJS_14", "CORRETTO_8", "CORRETTO_11", "NODEJS_16", "GO_1", "DOTNET_6", "PHP_81", "RUBY_31", "PYTHON_311", "NODEJS_18", "NODEJS_22"
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.build_command #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.start_command #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.port #=> String
@@ -1670,7 +1670,7 @@ module Aws::AppRunner
     #   resp.service.source_configuration.code_repository.source_code_version.type #=> String, one of "BRANCH"
     #   resp.service.source_configuration.code_repository.source_code_version.value #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.configuration_source #=> String, one of "REPOSITORY", "API"
-    #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.runtime #=> String, one of "PYTHON_3", "NODEJS_12", "NODEJS_14", "CORRETTO_8", "CORRETTO_11", "NODEJS_16", "GO_1", "DOTNET_6", "PHP_81", "RUBY_31", "PYTHON_311", "NODEJS_18"
+    #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.runtime #=> String, one of "PYTHON_3", "NODEJS_12", "NODEJS_14", "CORRETTO_8", "CORRETTO_11", "NODEJS_16", "GO_1", "DOTNET_6", "PHP_81", "RUBY_31", "PYTHON_311", "NODEJS_18", "NODEJS_22"
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.build_command #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.start_command #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.port #=> String
@@ -2427,7 +2427,7 @@ module Aws::AppRunner
     #   resp.service.source_configuration.code_repository.source_code_version.type #=> String, one of "BRANCH"
     #   resp.service.source_configuration.code_repository.source_code_version.value #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.configuration_source #=> String, one of "REPOSITORY", "API"
-    #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.runtime #=> String, one of "PYTHON_3", "NODEJS_12", "NODEJS_14", "CORRETTO_8", "CORRETTO_11", "NODEJS_16", "GO_1", "DOTNET_6", "PHP_81", "RUBY_31", "PYTHON_311", "NODEJS_18"
+    #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.runtime #=> String, one of "PYTHON_3", "NODEJS_12", "NODEJS_14", "CORRETTO_8", "CORRETTO_11", "NODEJS_16", "GO_1", "DOTNET_6", "PHP_81", "RUBY_31", "PYTHON_311", "NODEJS_18", "NODEJS_22"
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.build_command #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.start_command #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.port #=> String
@@ -2517,7 +2517,7 @@ module Aws::AppRunner
     #   resp.service.source_configuration.code_repository.source_code_version.type #=> String, one of "BRANCH"
     #   resp.service.source_configuration.code_repository.source_code_version.value #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.configuration_source #=> String, one of "REPOSITORY", "API"
-    #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.runtime #=> String, one of "PYTHON_3", "NODEJS_12", "NODEJS_14", "CORRETTO_8", "CORRETTO_11", "NODEJS_16", "GO_1", "DOTNET_6", "PHP_81", "RUBY_31", "PYTHON_311", "NODEJS_18"
+    #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.runtime #=> String, one of "PYTHON_3", "NODEJS_12", "NODEJS_14", "CORRETTO_8", "CORRETTO_11", "NODEJS_16", "GO_1", "DOTNET_6", "PHP_81", "RUBY_31", "PYTHON_311", "NODEJS_18", "NODEJS_22"
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.build_command #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.start_command #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.port #=> String
@@ -2793,7 +2793,7 @@ module Aws::AppRunner
     #         code_configuration: {
     #           configuration_source: "REPOSITORY", # required, accepts REPOSITORY, API
     #           code_configuration_values: {
-    #             runtime: "PYTHON_3", # required, accepts PYTHON_3, NODEJS_12, NODEJS_14, CORRETTO_8, CORRETTO_11, NODEJS_16, GO_1, DOTNET_6, PHP_81, RUBY_31, PYTHON_311, NODEJS_18
+    #             runtime: "PYTHON_3", # required, accepts PYTHON_3, NODEJS_12, NODEJS_14, CORRETTO_8, CORRETTO_11, NODEJS_16, GO_1, DOTNET_6, PHP_81, RUBY_31, PYTHON_311, NODEJS_18, NODEJS_22
     #             build_command: "BuildCommand",
     #             start_command: "StartCommand",
     #             port: "String",
@@ -2871,7 +2871,7 @@ module Aws::AppRunner
     #   resp.service.source_configuration.code_repository.source_code_version.type #=> String, one of "BRANCH"
     #   resp.service.source_configuration.code_repository.source_code_version.value #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.configuration_source #=> String, one of "REPOSITORY", "API"
-    #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.runtime #=> String, one of "PYTHON_3", "NODEJS_12", "NODEJS_14", "CORRETTO_8", "CORRETTO_11", "NODEJS_16", "GO_1", "DOTNET_6", "PHP_81", "RUBY_31", "PYTHON_311", "NODEJS_18"
+    #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.runtime #=> String, one of "PYTHON_3", "NODEJS_12", "NODEJS_14", "CORRETTO_8", "CORRETTO_11", "NODEJS_16", "GO_1", "DOTNET_6", "PHP_81", "RUBY_31", "PYTHON_311", "NODEJS_18", "NODEJS_22"
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.build_command #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.start_command #=> String
     #   resp.service.source_configuration.code_repository.code_configuration.code_configuration_values.port #=> String
@@ -2998,7 +2998,7 @@ module Aws::AppRunner
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-apprunner'
-      context[:gem_version] = '1.54.0'
+      context[:gem_version] = '1.55.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

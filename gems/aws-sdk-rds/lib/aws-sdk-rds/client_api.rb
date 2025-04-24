@@ -1351,9 +1351,11 @@ module Aws::RDS
     CreateTenantDatabaseMessage.add_member(:db_instance_identifier, Shapes::ShapeRef.new(shape: String, required: true, location_name: "DBInstanceIdentifier"))
     CreateTenantDatabaseMessage.add_member(:tenant_db_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "TenantDBName"))
     CreateTenantDatabaseMessage.add_member(:master_username, Shapes::ShapeRef.new(shape: String, required: true, location_name: "MasterUsername"))
-    CreateTenantDatabaseMessage.add_member(:master_user_password, Shapes::ShapeRef.new(shape: SensitiveString, required: true, location_name: "MasterUserPassword"))
+    CreateTenantDatabaseMessage.add_member(:master_user_password, Shapes::ShapeRef.new(shape: SensitiveString, location_name: "MasterUserPassword"))
     CreateTenantDatabaseMessage.add_member(:character_set_name, Shapes::ShapeRef.new(shape: String, location_name: "CharacterSetName"))
     CreateTenantDatabaseMessage.add_member(:nchar_character_set_name, Shapes::ShapeRef.new(shape: String, location_name: "NcharCharacterSetName"))
+    CreateTenantDatabaseMessage.add_member(:manage_master_user_password, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "ManageMasterUserPassword"))
+    CreateTenantDatabaseMessage.add_member(:master_user_secret_kms_key_id, Shapes::ShapeRef.new(shape: String, location_name: "MasterUserSecretKmsKeyId"))
     CreateTenantDatabaseMessage.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CreateTenantDatabaseMessage.struct_class = Types::CreateTenantDatabaseMessage
 
@@ -3307,6 +3309,9 @@ module Aws::RDS
     ModifyTenantDatabaseMessage.add_member(:tenant_db_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "TenantDBName"))
     ModifyTenantDatabaseMessage.add_member(:master_user_password, Shapes::ShapeRef.new(shape: SensitiveString, location_name: "MasterUserPassword"))
     ModifyTenantDatabaseMessage.add_member(:new_tenant_db_name, Shapes::ShapeRef.new(shape: String, location_name: "NewTenantDBName"))
+    ModifyTenantDatabaseMessage.add_member(:manage_master_user_password, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "ManageMasterUserPassword"))
+    ModifyTenantDatabaseMessage.add_member(:rotate_master_user_password, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "RotateMasterUserPassword"))
+    ModifyTenantDatabaseMessage.add_member(:master_user_secret_kms_key_id, Shapes::ShapeRef.new(shape: String, location_name: "MasterUserSecretKmsKeyId"))
     ModifyTenantDatabaseMessage.struct_class = Types::ModifyTenantDatabaseMessage
 
     ModifyTenantDatabaseResult.add_member(:tenant_database, Shapes::ShapeRef.new(shape: TenantDatabase, location_name: "TenantDatabase"))
@@ -3923,6 +3928,8 @@ module Aws::RDS
     RestoreDBInstanceFromDBSnapshotMessage.add_member(:dedicated_log_volume, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "DedicatedLogVolume"))
     RestoreDBInstanceFromDBSnapshotMessage.add_member(:ca_certificate_identifier, Shapes::ShapeRef.new(shape: String, location_name: "CACertificateIdentifier"))
     RestoreDBInstanceFromDBSnapshotMessage.add_member(:engine_lifecycle_support, Shapes::ShapeRef.new(shape: String, location_name: "EngineLifecycleSupport"))
+    RestoreDBInstanceFromDBSnapshotMessage.add_member(:manage_master_user_password, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "ManageMasterUserPassword"))
+    RestoreDBInstanceFromDBSnapshotMessage.add_member(:master_user_secret_kms_key_id, Shapes::ShapeRef.new(shape: String, location_name: "MasterUserSecretKmsKeyId"))
     RestoreDBInstanceFromDBSnapshotMessage.struct_class = Types::RestoreDBInstanceFromDBSnapshotMessage
 
     RestoreDBInstanceFromDBSnapshotResult.add_member(:db_instance, Shapes::ShapeRef.new(shape: DBInstance, location_name: "DBInstance"))
@@ -4031,6 +4038,8 @@ module Aws::RDS
     RestoreDBInstanceToPointInTimeMessage.add_member(:dedicated_log_volume, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "DedicatedLogVolume"))
     RestoreDBInstanceToPointInTimeMessage.add_member(:ca_certificate_identifier, Shapes::ShapeRef.new(shape: String, location_name: "CACertificateIdentifier"))
     RestoreDBInstanceToPointInTimeMessage.add_member(:engine_lifecycle_support, Shapes::ShapeRef.new(shape: String, location_name: "EngineLifecycleSupport"))
+    RestoreDBInstanceToPointInTimeMessage.add_member(:manage_master_user_password, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "ManageMasterUserPassword"))
+    RestoreDBInstanceToPointInTimeMessage.add_member(:master_user_secret_kms_key_id, Shapes::ShapeRef.new(shape: String, location_name: "MasterUserSecretKmsKeyId"))
     RestoreDBInstanceToPointInTimeMessage.struct_class = Types::RestoreDBInstanceToPointInTimeMessage
 
     RestoreDBInstanceToPointInTimeResult.add_member(:db_instance, Shapes::ShapeRef.new(shape: DBInstance, location_name: "DBInstance"))
@@ -4274,6 +4283,7 @@ module Aws::RDS
     TenantDatabase.add_member(:nchar_character_set_name, Shapes::ShapeRef.new(shape: String, location_name: "NcharCharacterSetName"))
     TenantDatabase.add_member(:deletion_protection, Shapes::ShapeRef.new(shape: Boolean, location_name: "DeletionProtection"))
     TenantDatabase.add_member(:pending_modified_values, Shapes::ShapeRef.new(shape: TenantDatabasePendingModifiedValues, location_name: "PendingModifiedValues"))
+    TenantDatabase.add_member(:master_user_secret, Shapes::ShapeRef.new(shape: MasterUserSecret, location_name: "MasterUserSecret"))
     TenantDatabase.add_member(:tag_list, Shapes::ShapeRef.new(shape: TagList, location_name: "TagList"))
     TenantDatabase.struct_class = Types::TenantDatabase
 
@@ -4839,6 +4849,7 @@ module Aws::RDS
         o.errors << Shapes::ShapeRef.new(shape: InvalidDBInstanceStateFault)
         o.errors << Shapes::ShapeRef.new(shape: TenantDatabaseAlreadyExistsFault)
         o.errors << Shapes::ShapeRef.new(shape: TenantDatabaseQuotaExceededFault)
+        o.errors << Shapes::ShapeRef.new(shape: KMSKeyNotAccessibleFault)
       end)
 
       api.add_operation(:delete_blue_green_deployment, Seahorse::Model::Operation.new.tap do |o|
@@ -6068,6 +6079,7 @@ module Aws::RDS
         o.errors << Shapes::ShapeRef.new(shape: TenantDatabaseNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: TenantDatabaseAlreadyExistsFault)
         o.errors << Shapes::ShapeRef.new(shape: InvalidDBInstanceStateFault)
+        o.errors << Shapes::ShapeRef.new(shape: KMSKeyNotAccessibleFault)
       end)
 
       api.add_operation(:promote_read_replica, Seahorse::Model::Operation.new.tap do |o|

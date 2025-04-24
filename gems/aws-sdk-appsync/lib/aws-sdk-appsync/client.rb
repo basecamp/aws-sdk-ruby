@@ -935,6 +935,9 @@ module Aws::AppSync
     # @option params [Hash<String,String>] :tags
     #   A map with keys of `TagKey` objects and values of `TagValue` objects.
     #
+    # @option params [Types::HandlerConfigs] :handler_configs
+    #   The configuration for the `OnPublish` and `OnSubscribe` handlers.
+    #
     # @return [Types::CreateChannelNamespaceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateChannelNamespaceResponse#channel_namespace #channel_namespace} => Types::ChannelNamespace
@@ -958,6 +961,26 @@ module Aws::AppSync
     #     tags: {
     #       "TagKey" => "TagValue",
     #     },
+    #     handler_configs: {
+    #       on_publish: {
+    #         behavior: "CODE", # required, accepts CODE, DIRECT
+    #         integration: { # required
+    #           data_source_name: "String", # required
+    #           lambda_config: {
+    #             invoke_type: "REQUEST_RESPONSE", # accepts REQUEST_RESPONSE, EVENT
+    #           },
+    #         },
+    #       },
+    #       on_subscribe: {
+    #         behavior: "CODE", # required, accepts CODE, DIRECT
+    #         integration: { # required
+    #           data_source_name: "String", # required
+    #           lambda_config: {
+    #             invoke_type: "REQUEST_RESPONSE", # accepts REQUEST_RESPONSE, EVENT
+    #           },
+    #         },
+    #       },
+    #     },
     #   })
     #
     # @example Response structure
@@ -974,6 +997,12 @@ module Aws::AppSync
     #   resp.channel_namespace.channel_namespace_arn #=> String
     #   resp.channel_namespace.created #=> Time
     #   resp.channel_namespace.last_modified #=> Time
+    #   resp.channel_namespace.handler_configs.on_publish.behavior #=> String, one of "CODE", "DIRECT"
+    #   resp.channel_namespace.handler_configs.on_publish.integration.data_source_name #=> String
+    #   resp.channel_namespace.handler_configs.on_publish.integration.lambda_config.invoke_type #=> String, one of "REQUEST_RESPONSE", "EVENT"
+    #   resp.channel_namespace.handler_configs.on_subscribe.behavior #=> String, one of "CODE", "DIRECT"
+    #   resp.channel_namespace.handler_configs.on_subscribe.integration.data_source_name #=> String
+    #   resp.channel_namespace.handler_configs.on_subscribe.integration.lambda_config.invoke_type #=> String, one of "REQUEST_RESPONSE", "EVENT"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateChannelNamespace AWS API Documentation
     #
@@ -2356,6 +2385,12 @@ module Aws::AppSync
     #   resp.channel_namespace.channel_namespace_arn #=> String
     #   resp.channel_namespace.created #=> Time
     #   resp.channel_namespace.last_modified #=> Time
+    #   resp.channel_namespace.handler_configs.on_publish.behavior #=> String, one of "CODE", "DIRECT"
+    #   resp.channel_namespace.handler_configs.on_publish.integration.data_source_name #=> String
+    #   resp.channel_namespace.handler_configs.on_publish.integration.lambda_config.invoke_type #=> String, one of "REQUEST_RESPONSE", "EVENT"
+    #   resp.channel_namespace.handler_configs.on_subscribe.behavior #=> String, one of "CODE", "DIRECT"
+    #   resp.channel_namespace.handler_configs.on_subscribe.integration.data_source_name #=> String
+    #   resp.channel_namespace.handler_configs.on_subscribe.integration.lambda_config.invoke_type #=> String, one of "REQUEST_RESPONSE", "EVENT"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetChannelNamespace AWS API Documentation
     #
@@ -3069,6 +3104,12 @@ module Aws::AppSync
     #   resp.channel_namespaces[0].channel_namespace_arn #=> String
     #   resp.channel_namespaces[0].created #=> Time
     #   resp.channel_namespaces[0].last_modified #=> Time
+    #   resp.channel_namespaces[0].handler_configs.on_publish.behavior #=> String, one of "CODE", "DIRECT"
+    #   resp.channel_namespaces[0].handler_configs.on_publish.integration.data_source_name #=> String
+    #   resp.channel_namespaces[0].handler_configs.on_publish.integration.lambda_config.invoke_type #=> String, one of "REQUEST_RESPONSE", "EVENT"
+    #   resp.channel_namespaces[0].handler_configs.on_subscribe.behavior #=> String, one of "CODE", "DIRECT"
+    #   resp.channel_namespaces[0].handler_configs.on_subscribe.integration.data_source_name #=> String
+    #   resp.channel_namespaces[0].handler_configs.on_subscribe.integration.lambda_config.invoke_type #=> String, one of "REQUEST_RESPONSE", "EVENT"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListChannelNamespaces AWS API Documentation
@@ -4225,6 +4266,9 @@ module Aws::AppSync
     #   The event handler functions that run custom business logic to process
     #   published events and subscribe requests.
     #
+    # @option params [Types::HandlerConfigs] :handler_configs
+    #   The configuration for the `OnPublish` and `OnSubscribe` handlers.
+    #
     # @return [Types::UpdateChannelNamespaceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateChannelNamespaceResponse#channel_namespace #channel_namespace} => Types::ChannelNamespace
@@ -4245,6 +4289,26 @@ module Aws::AppSync
     #       },
     #     ],
     #     code_handlers: "Code",
+    #     handler_configs: {
+    #       on_publish: {
+    #         behavior: "CODE", # required, accepts CODE, DIRECT
+    #         integration: { # required
+    #           data_source_name: "String", # required
+    #           lambda_config: {
+    #             invoke_type: "REQUEST_RESPONSE", # accepts REQUEST_RESPONSE, EVENT
+    #           },
+    #         },
+    #       },
+    #       on_subscribe: {
+    #         behavior: "CODE", # required, accepts CODE, DIRECT
+    #         integration: { # required
+    #           data_source_name: "String", # required
+    #           lambda_config: {
+    #             invoke_type: "REQUEST_RESPONSE", # accepts REQUEST_RESPONSE, EVENT
+    #           },
+    #         },
+    #       },
+    #     },
     #   })
     #
     # @example Response structure
@@ -4261,6 +4325,12 @@ module Aws::AppSync
     #   resp.channel_namespace.channel_namespace_arn #=> String
     #   resp.channel_namespace.created #=> Time
     #   resp.channel_namespace.last_modified #=> Time
+    #   resp.channel_namespace.handler_configs.on_publish.behavior #=> String, one of "CODE", "DIRECT"
+    #   resp.channel_namespace.handler_configs.on_publish.integration.data_source_name #=> String
+    #   resp.channel_namespace.handler_configs.on_publish.integration.lambda_config.invoke_type #=> String, one of "REQUEST_RESPONSE", "EVENT"
+    #   resp.channel_namespace.handler_configs.on_subscribe.behavior #=> String, one of "CODE", "DIRECT"
+    #   resp.channel_namespace.handler_configs.on_subscribe.integration.data_source_name #=> String
+    #   resp.channel_namespace.handler_configs.on_subscribe.integration.lambda_config.invoke_type #=> String, one of "REQUEST_RESPONSE", "EVENT"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateChannelNamespace AWS API Documentation
     #
@@ -5039,7 +5109,7 @@ module Aws::AppSync
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-appsync'
-      context[:gem_version] = '1.102.0'
+      context[:gem_version] = '1.103.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

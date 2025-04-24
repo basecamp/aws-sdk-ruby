@@ -71,7 +71,7 @@ module Aws::AppRunner
     end
 
     class CodeConfigurationValues
-      attr_accessor runtime: ("PYTHON_3" | "NODEJS_12" | "NODEJS_14" | "CORRETTO_8" | "CORRETTO_11" | "NODEJS_16" | "GO_1" | "DOTNET_6" | "PHP_81" | "RUBY_31" | "PYTHON_311" | "NODEJS_18")
+      attr_accessor runtime: ("PYTHON_3" | "NODEJS_12" | "NODEJS_14" | "CORRETTO_8" | "CORRETTO_11" | "NODEJS_16" | "GO_1" | "DOTNET_6" | "PHP_81" | "RUBY_31" | "PYTHON_311" | "NODEJS_18" | "NODEJS_22")
       attr_accessor build_command: ::String
       attr_accessor start_command: ::String
       attr_accessor port: ::String

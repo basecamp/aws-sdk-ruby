@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.6.0 (2025-04-24)
+------------------
+
+* Feature - Added support for modality routing and modality enablement on CreateDataAutomationProject and UpdateDataAutomationProject APIs
+
 1.5.0 (2025-02-28)
 ------------------
 

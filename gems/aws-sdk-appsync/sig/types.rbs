@@ -173,6 +173,7 @@ module Aws::AppSync
       attr_accessor channel_namespace_arn: ::String
       attr_accessor created: ::Time
       attr_accessor last_modified: ::Time
+      attr_accessor handler_configs: Types::HandlerConfigs
       SENSITIVE: []
     end
 
@@ -262,6 +263,7 @@ module Aws::AppSync
       attr_accessor publish_auth_modes: ::Array[Types::AuthMode]
       attr_accessor code_handlers: ::String
       attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor handler_configs: Types::HandlerConfigs
       SENSITIVE: []
     end
 
@@ -882,9 +884,27 @@ module Aws::AppSync
       SENSITIVE: []
     end
 
+    class HandlerConfig
+      attr_accessor behavior: ("CODE" | "DIRECT")
+      attr_accessor integration: Types::Integration
+      SENSITIVE: []
+    end
+
+    class HandlerConfigs
+      attr_accessor on_publish: Types::HandlerConfig
+      attr_accessor on_subscribe: Types::HandlerConfig
+      SENSITIVE: []
+    end
+
     class HttpDataSourceConfig
       attr_accessor endpoint: ::String
       attr_accessor authorization_config: Types::AuthorizationConfig
+      SENSITIVE: []
+    end
+
+    class Integration
+      attr_accessor data_source_name: ::String
+      attr_accessor lambda_config: Types::LambdaConfig
       SENSITIVE: []
     end
 
@@ -897,6 +917,11 @@ module Aws::AppSync
       attr_accessor authorizer_result_ttl_in_seconds: ::Integer
       attr_accessor authorizer_uri: ::String
       attr_accessor identity_validation_expression: ::String
+      SENSITIVE: []
+    end
+
+    class LambdaConfig
+      attr_accessor invoke_type: ("REQUEST_RESPONSE" | "EVENT")
       SENSITIVE: []
     end
 
@@ -1322,6 +1347,7 @@ module Aws::AppSync
       attr_accessor subscribe_auth_modes: ::Array[Types::AuthMode]
       attr_accessor publish_auth_modes: ::Array[Types::AuthMode]
       attr_accessor code_handlers: ::String
+      attr_accessor handler_configs: Types::HandlerConfigs
       SENSITIVE: []
     end
 

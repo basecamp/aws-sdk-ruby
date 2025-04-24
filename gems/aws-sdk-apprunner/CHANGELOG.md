@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.55.0 (2025-04-24)
+------------------
+
+* Feature - AWS App Runner adds Node.js 22 runtime.
+
 1.54.0 (2025-02-18)
 ------------------
 

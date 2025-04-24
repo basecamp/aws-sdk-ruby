@@ -743,7 +743,14 @@ module Aws::RDS
     #   the DB cluster during the maintenance window. By default, minor engine
     #   upgrades are applied automatically.
     #
-    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB cluster
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB cluster.
+    #
+    #   For more information about automatic minor version upgrades, see
+    #   [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
     # @option options [Integer] :monitoring_interval
     #   The interval, in seconds, between points when Enhanced Monitoring
     #   metrics are collected for the DB cluster. To turn off collecting
@@ -1770,6 +1777,13 @@ module Aws::RDS
     #
     #   If you create an RDS Custom DB instance, you must set
     #   `AutoMinorVersionUpgrade` to `false`.
+    #
+    #   For more information about automatic minor version upgrades, see
+    #   [Automatically upgrading the minor engine version][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Upgrading.html#USER_UpgradeDBInstance.Upgrading.AutoMinorVersionUpgrades
     # @option options [String] :license_model
     #   The license model information for this DB instance.
     #

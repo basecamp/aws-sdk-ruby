@@ -201,7 +201,31 @@ module Aws
                                               document: {
                                                 splitter: {
                                                   state: ("ENABLED" | "DISABLED")?
+                                                }?,
+                                                modality_processing: {
+                                                  state: ("ENABLED" | "DISABLED")?
                                                 }?
+                                              }?,
+                                              image: {
+                                                modality_processing: {
+                                                  state: ("ENABLED" | "DISABLED")?
+                                                }?
+                                              }?,
+                                              video: {
+                                                modality_processing: {
+                                                  state: ("ENABLED" | "DISABLED")?
+                                                }?
+                                              }?,
+                                              audio: {
+                                                modality_processing: {
+                                                  state: ("ENABLED" | "DISABLED")?
+                                                }?
+                                              }?,
+                                              modality_routing: {
+                                                jpeg: ("IMAGE" | "DOCUMENT" | "AUDIO" | "VIDEO")?,
+                                                png: ("IMAGE" | "DOCUMENT" | "AUDIO" | "VIDEO")?,
+                                                mp4: ("IMAGE" | "DOCUMENT" | "AUDIO" | "VIDEO")?,
+                                                mov: ("IMAGE" | "DOCUMENT" | "AUDIO" | "VIDEO")?
                                               }?
                                             },
                                             ?client_token: ::String,
@@ -440,7 +464,31 @@ module Aws
                                               document: {
                                                 splitter: {
                                                   state: ("ENABLED" | "DISABLED")?
+                                                }?,
+                                                modality_processing: {
+                                                  state: ("ENABLED" | "DISABLED")?
                                                 }?
+                                              }?,
+                                              image: {
+                                                modality_processing: {
+                                                  state: ("ENABLED" | "DISABLED")?
+                                                }?
+                                              }?,
+                                              video: {
+                                                modality_processing: {
+                                                  state: ("ENABLED" | "DISABLED")?
+                                                }?
+                                              }?,
+                                              audio: {
+                                                modality_processing: {
+                                                  state: ("ENABLED" | "DISABLED")?
+                                                }?
+                                              }?,
+                                              modality_routing: {
+                                                jpeg: ("IMAGE" | "DOCUMENT" | "AUDIO" | "VIDEO")?,
+                                                png: ("IMAGE" | "DOCUMENT" | "AUDIO" | "VIDEO")?,
+                                                mp4: ("IMAGE" | "DOCUMENT" | "AUDIO" | "VIDEO")?,
+                                                mov: ("IMAGE" | "DOCUMENT" | "AUDIO" | "VIDEO")?
                                               }?
                                             },
                                             ?encryption_configuration: {

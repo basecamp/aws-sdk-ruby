@@ -714,6 +714,30 @@ module Aws::BedrockDataAutomation
     #         splitter: {
     #           state: "ENABLED", # accepts ENABLED, DISABLED
     #         },
+    #         modality_processing: {
+    #           state: "ENABLED", # accepts ENABLED, DISABLED
+    #         },
+    #       },
+    #       image: {
+    #         modality_processing: {
+    #           state: "ENABLED", # accepts ENABLED, DISABLED
+    #         },
+    #       },
+    #       video: {
+    #         modality_processing: {
+    #           state: "ENABLED", # accepts ENABLED, DISABLED
+    #         },
+    #       },
+    #       audio: {
+    #         modality_processing: {
+    #           state: "ENABLED", # accepts ENABLED, DISABLED
+    #         },
+    #       },
+    #       modality_routing: {
+    #         jpeg: "IMAGE", # accepts IMAGE, DOCUMENT, AUDIO, VIDEO
+    #         png: "IMAGE", # accepts IMAGE, DOCUMENT, AUDIO, VIDEO
+    #         mp4: "IMAGE", # accepts IMAGE, DOCUMENT, AUDIO, VIDEO
+    #         mov: "IMAGE", # accepts IMAGE, DOCUMENT, AUDIO, VIDEO
     #       },
     #     },
     #     client_token: "ClientToken",
@@ -909,6 +933,14 @@ module Aws::BedrockDataAutomation
     #   resp.project.custom_output_configuration.blueprints[0].blueprint_version #=> String
     #   resp.project.custom_output_configuration.blueprints[0].blueprint_stage #=> String, one of "DEVELOPMENT", "LIVE"
     #   resp.project.override_configuration.document.splitter.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.project.override_configuration.document.modality_processing.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.project.override_configuration.image.modality_processing.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.project.override_configuration.video.modality_processing.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.project.override_configuration.audio.modality_processing.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.project.override_configuration.modality_routing.jpeg #=> String, one of "IMAGE", "DOCUMENT", "AUDIO", "VIDEO"
+    #   resp.project.override_configuration.modality_routing.png #=> String, one of "IMAGE", "DOCUMENT", "AUDIO", "VIDEO"
+    #   resp.project.override_configuration.modality_routing.mp4 #=> String, one of "IMAGE", "DOCUMENT", "AUDIO", "VIDEO"
+    #   resp.project.override_configuration.modality_routing.mov #=> String, one of "IMAGE", "DOCUMENT", "AUDIO", "VIDEO"
     #   resp.project.status #=> String, one of "COMPLETED", "IN_PROGRESS", "FAILED"
     #   resp.project.kms_key_id #=> String
     #   resp.project.kms_encryption_context #=> Hash
@@ -1297,6 +1329,30 @@ module Aws::BedrockDataAutomation
     #         splitter: {
     #           state: "ENABLED", # accepts ENABLED, DISABLED
     #         },
+    #         modality_processing: {
+    #           state: "ENABLED", # accepts ENABLED, DISABLED
+    #         },
+    #       },
+    #       image: {
+    #         modality_processing: {
+    #           state: "ENABLED", # accepts ENABLED, DISABLED
+    #         },
+    #       },
+    #       video: {
+    #         modality_processing: {
+    #           state: "ENABLED", # accepts ENABLED, DISABLED
+    #         },
+    #       },
+    #       audio: {
+    #         modality_processing: {
+    #           state: "ENABLED", # accepts ENABLED, DISABLED
+    #         },
+    #       },
+    #       modality_routing: {
+    #         jpeg: "IMAGE", # accepts IMAGE, DOCUMENT, AUDIO, VIDEO
+    #         png: "IMAGE", # accepts IMAGE, DOCUMENT, AUDIO, VIDEO
+    #         mp4: "IMAGE", # accepts IMAGE, DOCUMENT, AUDIO, VIDEO
+    #         mov: "IMAGE", # accepts IMAGE, DOCUMENT, AUDIO, VIDEO
     #       },
     #     },
     #     encryption_configuration: {
@@ -1340,7 +1396,7 @@ module Aws::BedrockDataAutomation
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockdataautomation'
-      context[:gem_version] = '1.5.0'
+      context[:gem_version] = '1.6.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

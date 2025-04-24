@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.153.0 (2025-04-24)
+------------------
+
+* Feature - Remove redundant validation check.
+
 1.152.0 (2025-04-23)
 ------------------
 
