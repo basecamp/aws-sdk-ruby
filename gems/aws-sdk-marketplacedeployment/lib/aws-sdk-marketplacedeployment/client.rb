@@ -508,11 +508,16 @@ module Aws::MarketplaceDeployment
     #   The unique identifier of the agreement.
     #
     # @option params [required, String] :catalog
-    #   The catalog related to the request. Fixed value: `AWS Marketplace`
+    #   The catalog related to the request. Fixed value: `AWSMarketplace`
     #
     # @option params [String] :client_token
     #   The idempotency token for deployment parameters. A unique identifier
     #   for the new version.
+    #
+    #   <note markdown="1"> This field is not required if you're calling using an AWS SDK.
+    #   Otherwise, a `clientToken` must be provided with the request.
+    #
+    #    </note>
     #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.**
@@ -650,7 +655,7 @@ module Aws::MarketplaceDeployment
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-marketplacedeployment'
-      context[:gem_version] = '1.17.0'
+      context[:gem_version] = '1.18.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

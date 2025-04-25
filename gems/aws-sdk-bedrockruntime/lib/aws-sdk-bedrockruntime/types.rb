@@ -1018,16 +1018,28 @@ module Aws::BedrockRuntime
     #   SDK, you don't need to encode the bytes in base64.
     #   @return [String]
     #
+    # @!attribute [rw] s3_location
+    #   The location of a document object in an Amazon S3 bucket. To see
+    #   which models support S3 uploads, see [Supported models and features
+    #   for Converse][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html
+    #   @return [Types::S3Location]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/DocumentSource AWS API Documentation
     #
     class DocumentSource < Struct.new(
       :bytes,
+      :s3_location,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
       include Aws::Structure::Union
 
       class Bytes < DocumentSource; end
+      class S3Location < DocumentSource; end
       class Unknown < DocumentSource; end
     end
 
@@ -1899,16 +1911,28 @@ module Aws::BedrockRuntime
     #   need to encode the image bytes in base64.
     #   @return [String]
     #
+    # @!attribute [rw] s3_location
+    #   The location of an image object in an Amazon S3 bucket. To see which
+    #   models support S3 uploads, see [Supported models and features for
+    #   Converse][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html
+    #   @return [Types::S3Location]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ImageSource AWS API Documentation
     #
     class ImageSource < Struct.new(
       :bytes,
+      :s3_location,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
       include Aws::Structure::Union
 
       class Bytes < ImageSource; end
+      class S3Location < ImageSource; end
       class Unknown < ImageSource; end
     end
 
@@ -2712,7 +2736,7 @@ module Aws::BedrockRuntime
       include Aws::Structure
     end
 
-    # A storage location in an S3 bucket.
+    # A storage location in an Amazon S3 bucket.
     #
     # @!attribute [rw] uri
     #   An object URI starting with `s3://`.
@@ -3288,7 +3312,13 @@ module Aws::BedrockRuntime
     #   @return [String]
     #
     # @!attribute [rw] s3_location
-    #   The location of a video object in an S3 bucket.
+    #   The location of a video object in an Amazon S3 bucket. To see which
+    #   models support S3 uploads, see [Supported models and features for
+    #   Converse][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html
     #   @return [Types::S3Location]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/VideoSource AWS API Documentation

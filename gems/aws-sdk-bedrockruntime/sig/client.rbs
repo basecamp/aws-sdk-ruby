@@ -134,14 +134,22 @@ module Aws
                               image: {
                                 format: ("png" | "jpeg" | "gif" | "webp"),
                                 source: {
-                                  bytes: ::String?
+                                  bytes: ::String?,
+                                  s3_location: {
+                                    uri: ::String,
+                                    bucket_owner: ::String?
+                                  }?
                                 }
                               }?,
                               document: {
                                 format: ("pdf" | "csv" | "doc" | "docx" | "xls" | "xlsx" | "html" | "txt" | "md"),
                                 name: ::String,
                                 source: {
-                                  bytes: ::String?
+                                  bytes: ::String?,
+                                  s3_location: {
+                                    uri: ::String,
+                                    bucket_owner: ::String?
+                                  }?
                                 }
                               }?,
                               video: {
@@ -170,14 +178,22 @@ module Aws
                                     image: {
                                       format: ("png" | "jpeg" | "gif" | "webp"),
                                       source: {
-                                        bytes: ::String?
+                                        bytes: ::String?,
+                                        s3_location: {
+                                          uri: ::String,
+                                          bucket_owner: ::String?
+                                        }?
                                       }
                                     }?,
                                     document: {
                                       format: ("pdf" | "csv" | "doc" | "docx" | "xls" | "xlsx" | "html" | "txt" | "md"),
                                       name: ::String,
                                       source: {
-                                        bytes: ::String?
+                                        bytes: ::String?,
+                                        s3_location: {
+                                          uri: ::String,
+                                          bucket_owner: ::String?
+                                        }?
                                       }
                                     }?,
                                     video: {
@@ -306,14 +322,22 @@ module Aws
                                      image: {
                                        format: ("png" | "jpeg" | "gif" | "webp"),
                                        source: {
-                                         bytes: ::String?
+                                         bytes: ::String?,
+                                         s3_location: {
+                                           uri: ::String,
+                                           bucket_owner: ::String?
+                                         }?
                                        }
                                      }?,
                                      document: {
                                        format: ("pdf" | "csv" | "doc" | "docx" | "xls" | "xlsx" | "html" | "txt" | "md"),
                                        name: ::String,
                                        source: {
-                                         bytes: ::String?
+                                         bytes: ::String?,
+                                         s3_location: {
+                                           uri: ::String,
+                                           bucket_owner: ::String?
+                                         }?
                                        }
                                      }?,
                                      video: {
@@ -342,14 +366,22 @@ module Aws
                                            image: {
                                              format: ("png" | "jpeg" | "gif" | "webp"),
                                              source: {
-                                               bytes: ::String?
+                                               bytes: ::String?,
+                                               s3_location: {
+                                                 uri: ::String,
+                                                 bucket_owner: ::String?
+                                               }?
                                              }
                                            }?,
                                            document: {
                                              format: ("pdf" | "csv" | "doc" | "docx" | "xls" | "xlsx" | "html" | "txt" | "md"),
                                              name: ::String,
                                              source: {
-                                               bytes: ::String?
+                                               bytes: ::String?,
+                                               s3_location: {
+                                                 uri: ::String,
+                                                 bucket_owner: ::String?
+                                               }?
                                              }
                                            }?,
                                            video: {

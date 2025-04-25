@@ -455,8 +455,10 @@ module Aws::BedrockRuntime
     DocumentBlock.struct_class = Types::DocumentBlock
 
     DocumentSource.add_member(:bytes, Shapes::ShapeRef.new(shape: DocumentSourceBytesBlob, location_name: "bytes"))
+    DocumentSource.add_member(:s3_location, Shapes::ShapeRef.new(shape: S3Location, location_name: "s3Location"))
     DocumentSource.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     DocumentSource.add_member_subclass(:bytes, Types::DocumentSource::Bytes)
+    DocumentSource.add_member_subclass(:s3_location, Types::DocumentSource::S3Location)
     DocumentSource.add_member_subclass(:unknown, Types::DocumentSource::Unknown)
     DocumentSource.struct_class = Types::DocumentSource
 
@@ -668,8 +670,10 @@ module Aws::BedrockRuntime
     ImageBlock.struct_class = Types::ImageBlock
 
     ImageSource.add_member(:bytes, Shapes::ShapeRef.new(shape: ImageSourceBytesBlob, location_name: "bytes"))
+    ImageSource.add_member(:s3_location, Shapes::ShapeRef.new(shape: S3Location, location_name: "s3Location"))
     ImageSource.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     ImageSource.add_member_subclass(:bytes, Types::ImageSource::Bytes)
+    ImageSource.add_member_subclass(:s3_location, Types::ImageSource::S3Location)
     ImageSource.add_member_subclass(:unknown, Types::ImageSource::Unknown)
     ImageSource.struct_class = Types::ImageSource
 

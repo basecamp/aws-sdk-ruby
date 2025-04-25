@@ -121,9 +121,11 @@ module Aws::MarketplaceDeployment
 
       api.metadata = {
         "apiVersion" => "2023-01-25",
+        "auth" => ["aws.auth#sigv4"],
         "endpointPrefix" => "deployment-marketplace",
         "jsonVersion" => "1.1",
         "protocol" => "rest-json",
+        "protocols" => ["rest-json"],
         "serviceFullName" => "AWS Marketplace Deployment Service",
         "serviceId" => "Marketplace Deployment",
         "signatureVersion" => "v4",

@@ -45,6 +45,12 @@ module Aws::MarketplaceDeployment
     # The shape containing the requested deployment parameter name and
     # secretString.
     #
+    # <note markdown="1"> To support AWS CloudFormation dynamic references to this resource
+    # using Quick Launch, this value must match a parameter defined in the
+    # CloudFormation templated provided to buyers.
+    #
+    #  </note>
+    #
     # @!attribute [rw] name
     #   The desired name of the deployment parameter. This is the identifier
     #   on which deployment parameters are keyed for a given buyer and
@@ -109,12 +115,17 @@ module Aws::MarketplaceDeployment
     #   @return [String]
     #
     # @!attribute [rw] catalog
-    #   The catalog related to the request. Fixed value: `AWS Marketplace`
+    #   The catalog related to the request. Fixed value: `AWSMarketplace`
     #   @return [String]
     #
     # @!attribute [rw] client_token
     #   The idempotency token for deployment parameters. A unique identifier
     #   for the new version.
+    #
+    #   <note markdown="1"> This field is not required if you're calling using an AWS SDK.
+    #   Otherwise, a `clientToken` must be provided with the request.
+    #
+    #    </note>
     #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.

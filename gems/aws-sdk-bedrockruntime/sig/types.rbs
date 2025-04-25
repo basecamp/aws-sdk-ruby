@@ -271,10 +271,13 @@ module Aws::BedrockRuntime
 
     class DocumentSource
       attr_accessor bytes: ::String
+      attr_accessor s3_location: Types::S3Location
       attr_accessor unknown: untyped
       SENSITIVE: []
 
       class Bytes < DocumentSource
+      end
+      class S3Location < DocumentSource
       end
       class Unknown < DocumentSource
       end
@@ -539,10 +542,13 @@ module Aws::BedrockRuntime
 
     class ImageSource
       attr_accessor bytes: ::String
+      attr_accessor s3_location: Types::S3Location
       attr_accessor unknown: untyped
       SENSITIVE: []
 
       class Bytes < ImageSource
+      end
+      class S3Location < ImageSource
       end
       class Unknown < ImageSource
       end

@@ -818,6 +818,10 @@ module Aws::BedrockRuntime
     #               format: "png", # required, accepts png, jpeg, gif, webp
     #               source: { # required
     #                 bytes: "data",
+    #                 s3_location: {
+    #                   uri: "S3Uri", # required
+    #                   bucket_owner: "AccountId",
+    #                 },
     #               },
     #             },
     #             document: {
@@ -825,6 +829,10 @@ module Aws::BedrockRuntime
     #               name: "DocumentBlockNameString", # required
     #               source: { # required
     #                 bytes: "data",
+    #                 s3_location: {
+    #                   uri: "S3Uri", # required
+    #                   bucket_owner: "AccountId",
+    #                 },
     #               },
     #             },
     #             video: {
@@ -854,6 +862,10 @@ module Aws::BedrockRuntime
     #                     format: "png", # required, accepts png, jpeg, gif, webp
     #                     source: { # required
     #                       bytes: "data",
+    #                       s3_location: {
+    #                         uri: "S3Uri", # required
+    #                         bucket_owner: "AccountId",
+    #                       },
     #                     },
     #                   },
     #                   document: {
@@ -861,6 +873,10 @@ module Aws::BedrockRuntime
     #                     name: "DocumentBlockNameString", # required
     #                     source: { # required
     #                       bytes: "data",
+    #                       s3_location: {
+    #                         uri: "S3Uri", # required
+    #                         bucket_owner: "AccountId",
+    #                       },
     #                     },
     #                   },
     #                   video: {
@@ -983,9 +999,13 @@ module Aws::BedrockRuntime
     #   resp.output.message.content[0].text #=> String
     #   resp.output.message.content[0].image.format #=> String, one of "png", "jpeg", "gif", "webp"
     #   resp.output.message.content[0].image.source.bytes #=> String
+    #   resp.output.message.content[0].image.source.s3_location.uri #=> String
+    #   resp.output.message.content[0].image.source.s3_location.bucket_owner #=> String
     #   resp.output.message.content[0].document.format #=> String, one of "pdf", "csv", "doc", "docx", "xls", "xlsx", "html", "txt", "md"
     #   resp.output.message.content[0].document.name #=> String
     #   resp.output.message.content[0].document.source.bytes #=> String
+    #   resp.output.message.content[0].document.source.s3_location.uri #=> String
+    #   resp.output.message.content[0].document.source.s3_location.bucket_owner #=> String
     #   resp.output.message.content[0].video.format #=> String, one of "mkv", "mov", "mp4", "webm", "flv", "mpeg", "mpg", "wmv", "three_gp"
     #   resp.output.message.content[0].video.source.bytes #=> String
     #   resp.output.message.content[0].video.source.s3_location.uri #=> String
@@ -997,9 +1017,13 @@ module Aws::BedrockRuntime
     #   resp.output.message.content[0].tool_result.content[0].text #=> String
     #   resp.output.message.content[0].tool_result.content[0].image.format #=> String, one of "png", "jpeg", "gif", "webp"
     #   resp.output.message.content[0].tool_result.content[0].image.source.bytes #=> String
+    #   resp.output.message.content[0].tool_result.content[0].image.source.s3_location.uri #=> String
+    #   resp.output.message.content[0].tool_result.content[0].image.source.s3_location.bucket_owner #=> String
     #   resp.output.message.content[0].tool_result.content[0].document.format #=> String, one of "pdf", "csv", "doc", "docx", "xls", "xlsx", "html", "txt", "md"
     #   resp.output.message.content[0].tool_result.content[0].document.name #=> String
     #   resp.output.message.content[0].tool_result.content[0].document.source.bytes #=> String
+    #   resp.output.message.content[0].tool_result.content[0].document.source.s3_location.uri #=> String
+    #   resp.output.message.content[0].tool_result.content[0].document.source.s3_location.bucket_owner #=> String
     #   resp.output.message.content[0].tool_result.content[0].video.format #=> String, one of "mkv", "mov", "mp4", "webm", "flv", "mpeg", "mpg", "wmv", "three_gp"
     #   resp.output.message.content[0].tool_result.content[0].video.source.bytes #=> String
     #   resp.output.message.content[0].tool_result.content[0].video.source.s3_location.uri #=> String
@@ -1511,6 +1535,10 @@ module Aws::BedrockRuntime
     #               format: "png", # required, accepts png, jpeg, gif, webp
     #               source: { # required
     #                 bytes: "data",
+    #                 s3_location: {
+    #                   uri: "S3Uri", # required
+    #                   bucket_owner: "AccountId",
+    #                 },
     #               },
     #             },
     #             document: {
@@ -1518,6 +1546,10 @@ module Aws::BedrockRuntime
     #               name: "DocumentBlockNameString", # required
     #               source: { # required
     #                 bytes: "data",
+    #                 s3_location: {
+    #                   uri: "S3Uri", # required
+    #                   bucket_owner: "AccountId",
+    #                 },
     #               },
     #             },
     #             video: {
@@ -1547,6 +1579,10 @@ module Aws::BedrockRuntime
     #                     format: "png", # required, accepts png, jpeg, gif, webp
     #                     source: { # required
     #                       bytes: "data",
+    #                       s3_location: {
+    #                         uri: "S3Uri", # required
+    #                         bucket_owner: "AccountId",
+    #                       },
     #                     },
     #                   },
     #                   document: {
@@ -1554,6 +1590,10 @@ module Aws::BedrockRuntime
     #                     name: "DocumentBlockNameString", # required
     #                     source: { # required
     #                       bytes: "data",
+    #                       s3_location: {
+    #                         uri: "S3Uri", # required
+    #                         bucket_owner: "AccountId",
+    #                       },
     #                     },
     #                   },
     #                   video: {
@@ -2548,7 +2588,7 @@ module Aws::BedrockRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockruntime'
-      context[:gem_version] = '1.44.0'
+      context[:gem_version] = '1.45.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

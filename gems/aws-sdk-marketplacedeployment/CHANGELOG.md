@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.18.0 (2025-04-25)
+------------------
+
+* Feature - Doc only update for the AWS Marketplace Deployment Service that fixes several customer-reported issues.
+
 1.17.0 (2025-02-18)
 ------------------
 
