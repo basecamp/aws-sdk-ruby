@@ -77,7 +77,6 @@ module ApiHelper
             'StringWithConsecutiveSpaces' => { 'shape' => 'StringShape' },
             'StringWithLF' => { 'shape' => 'StringShape' },
             'Timestamp' => { 'shape' => 'TimestampShape' },
-            'EventStream' => { 'shape' => 'EventStream' },
             'DocumentType' => { 'shape' => 'DocumentShape' }
           }
         },
@@ -87,22 +86,6 @@ module ApiHelper
           'members' => {
             'StreamingBlob' => { 'shape' => 'BlobShape', 'streaming' => 'true' }
           }
-        },
-        'EventStream' => {
-          'type' => 'structure',
-          'members' => {
-            'EventA' => {
-              'shape' => 'EventA'
-            }
-          },
-          'eventstream' => true
-        },
-        'EventA' => {
-          'type' => 'structure',
-          'members' => {
-            'MemberA' => { 'shape' => 'StringShape' }
-          },
-          'event' => true
         },
         'StructureList' => {
           'type' => 'list',
@@ -140,7 +123,7 @@ module ApiHelper
     def sample_service(options = {})
       api_hash = options.fetch(:api, api(options))
       api_hash['metadata'] ||= metadata(options)
-      module_name = next_sample_module_name
+      module_name = options[:module_name] || next_sample_module_name
       code = AwsSdkCodeGenerator::CodeBuilder.new(
         aws_sdk_core_lib_path: File.expand_path('../../lib/', __FILE__),
         service: AwsSdkCodeGenerator::Service.new(
@@ -163,6 +146,11 @@ module ApiHelper
         raise err
       end
       Object.const_get(module_name)
+    end
+
+    def sample_client(options = {})
+      service = options[:service] || sample_service
+      service.const_get(:Client)
     end
 
     def sample_rest_service(options)

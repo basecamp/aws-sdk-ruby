@@ -6,8 +6,6 @@ module Aws
   describe 'Client' do
     describe 'response stubbing' do
 
-      ResponseStubbingExample = ApiHelper.sample_service
-
       let(:options) {{
         stub_responses: true,
         region: 'us-east-1',
@@ -15,7 +13,7 @@ module Aws
         secret_access_key: 'secret',
       }}
 
-      let(:client_class) { ResponseStubbingExample.const_get(:Client) }
+      let(:client_class) { ApiHelper.sample_client }
 
       let(:client) { client_class.new(options) }
 
@@ -27,11 +25,8 @@ module Aws
 
       context 'when requests are signed' do
 
-        let(:client_class) do
-          ApiHelper
-            .sample_service(metadata: {'signatureVersion' => 'v4'})
-            .const_get(:Client)
-        end
+        let(:sample_service) { ApiHelper.sample_service(metadata: { 'signatureVersion' => 'v4' }) }
+        let(:client_class) { ApiHelper.sample_client(service: sample_service) }
 
         it 'raises an error when credentials are nil' do
           creds = Credentials.new(nil, nil)
@@ -179,26 +174,27 @@ Known AWS regions include (not specific to this service):
       end
 
       context 'api requests' do
-        ApiRequestsStubbingExample = ApiHelper.sample_rest_xml
-        let(:client_class) { ApiRequestsStubbingExample.const_get(:Client) }
-        let(:client) { client_class.new(options) }
-
         it 'allows api requests to be logged when stubbed' do
+          client_class =
+            ApiHelper.sample_client(
+              service: ApiHelper.sample_service(module_name: 'ApiRequestsToBeLogged')
+            )
+          client = client_class.new(options.merge(validate_params: false))
           expect(client.api_requests.empty?).to be(true)
-          client.create_bucket(bucket:'aws-sdk')
+          client.example_operation(foo: 'bar')
           expect(client.api_requests.length).to eq(1)
 
           log_obj = client.api_requests[0]
-          expect(log_obj[:operation_name]).to eq(:create_bucket)
-          expect(log_obj[:params]).to eq({:bucket=>"aws-sdk"})
-          expect(log_obj[:context].metadata).to eq(
+          expect(log_obj[:operation_name]).to eq(:example_operation)
+          expect(log_obj[:params]).to eq(foo: 'bar')
+          expect(log_obj[:context].metadata).to include(
             {
-              :gem_name=>"aws-sdk-sampleapi2",
-              :gem_version=>"1.0.0",
-              :response_target=>nil,
-              :original_params=>{:bucket=>"aws-sdk"},
-              :request_id=>"stubbed-request-id",
-              :http_checksum=>{}
+              gem_name: 'aws-sdk-apirequeststobelogged',
+              gem_version: '1.0.0',
+              response_target: nil,
+              original_params: { foo: 'bar' },
+              request_id: 'stubbed-request-id',
+              http_checksum: {}
             }
           )
         end

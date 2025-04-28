@@ -3,17 +3,19 @@
 module AwsSdkCodeGenerator
   module Views
     module RBS
-      class ClientClass < View
+      class AsyncClientClass < View
         # Delegated methods on response/output
         # so would not be included in the rbs
-        SKIP_MEMBERS = Set.new(%w[
-          context
-          data
-          error
-          checksum_validated
-          on
-          on_success
-        ])
+        SKIP_MEMBERS = Set.new(
+          %w[
+            context
+            data
+            error
+            checksum_validated
+            on
+            on_success
+          ]
+        )
 
         def initialize(options)
           @options = options
@@ -22,7 +24,6 @@ module AwsSdkCodeGenerator
           @aws_sdk_core_lib_path = options.fetch(:aws_sdk_core_lib_path)
           @plugins = PluginList.new(options)
           @codegenerated_plugins = options.fetch(:codegenerated_plugins)
-          @waiters = AwsSdkCodeGenerator::RBS::Waiter.build_list(api: @api, waiters:options.fetch(:waiters))
           @protocol_settings = options.fetch(:protocol_settings, {})
         end
 
@@ -40,49 +41,57 @@ module AwsSdkCodeGenerator
           [
             '',
             "#{indent}  #{build_keyword_arguments(plugin_options).join(",\n#{indent}  ")}",
-            indent,
+            indent
           ].join("\n")
         end
 
         def operations
-          shapes = @api["shapes"]
-          @api["operations"].map do |name, body|
-            next if async_operation?(body)
+          shapes = @api['shapes']
+          @api['operations'].map do |name, body|
+            next unless async_operation?(body)
+
+
 
             method_name = Underscore.underscore(name)
-            indent = " " * (12 + method_name.length)
-            input_shape_name = body.dig("input", "shape")
+            indent = ' ' * (12 + method_name.length)
+            input_shape_name = body.dig('input', 'shape')
             arguments = nil
             include_required = false
             if input_shape_name
               input_shape = shapes[input_shape_name]
+              options =
+                if AwsSdkCodeGenerator::Helper.operation_bidirectional_eventstreaming?(body, @api)
+                  { bidirectional_eventstreaming: true }
+                else
+                  {}
+                end
+
               builder = AwsSdkCodeGenerator::RBS::KeywordArgumentBuilder.new(
                 api: @api,
                 shape: input_shape,
                 newline: true,
+                options: options
               )
               arguments = builder.format(indent: indent)
-              include_required = input_shape["required"]&.empty?&.!
+              include_required = input_shape['required']&.empty?&.!
             end
-            if AwsSdkCodeGenerator::Helper.operation_streaming?(body, @api)
-              block = " ?{ (*untyped) -> void }"
-            end
-            if output_shape_name = body.dig("output", "shape")
+            block = ' ?{ (*untyped) -> void }' if AwsSdkCodeGenerator::Helper.operation_streaming?(body, @api)
+            if (output_shape_name = body.dig('output', 'shape'))
               output_shape = shapes[output_shape_name]
-              data = AwsSdkCodeGenerator::RBS.to_type(body.fetch( "output"), @api)
+              data = AwsSdkCodeGenerator::RBS.to_type(body.fetch('output'), @api)
               interface = "_#{name}ResponseSuccess"
             else
               output_shape = nil
-              data = "::Aws::EmptyStructure"
-              interface = "::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]"
+              data = '::Aws::EmptyStructure'
+              interface = '::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]'
             end
-            returns_members = output_shape&.[]("members")&.inject([]) do |a, (member_name, member_ref)|
+            returns_members = output_shape&.[]('members')&.inject([]) do |a, (member_name, member_ref)|
               member_name_underscore = Underscore.underscore(member_name)
               next a if SKIP_MEMBERS.include?(member_name_underscore)
 
               a << {
                 method_name: member_name_underscore,
-                returns: AwsSdkCodeGenerator::RBS.to_type(member_ref, @api),
+                returns: AwsSdkCodeGenerator::RBS.to_type(member_ref, @api)
               }
             end
 
@@ -92,8 +101,9 @@ module AwsSdkCodeGenerator
                 method_name: method_name,
                 overloads: [
                   "(#{arguments})#{block} -> #{interface}",
-                  "(#{include_required ? "" : "?"}Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options)#{block} -> #{interface}",
-                ]).signature,
+                  "(#{include_required ? '' : '?'}Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options)#{block} -> #{interface}",
+                ]
+              ).signature,
               interface: interface,
               data: data,
               returns_members: returns_members,
@@ -102,25 +112,33 @@ module AwsSdkCodeGenerator
           end.compact
         end
 
-        def waiters?
-          @waiters.size > 0
-        end
+        def label_value(input, label, params)
+          name = nil
+          input.members.each do |member_name, member_shape|
+            next unless member_shape.traits.include?('smithy.api#hostLabel')
+            next unless member_shape.name == label
 
-        def waiters_first
-          [@waiters.first]
-        end
+            name = member_name
+          end
+          raise ArgumentError, "#{label} is not a valid host label" if name.nil?
+          raise ArgumentError, "params[#{name}] must not be nil or blank" if params[name].nil? || params[name].empty?
 
-        def waiters_others
-          @waiters[1..-1]
+          params[name]
         end
 
         private
 
         def async_operation?(operation)
-          # ensure that bidirectional eventstreaming operations are not added to client rbs
-          AwsSdkCodeGenerator::Helper.operation_bidirectional_eventstreaming?(operation, @api) ||
-            (@protocol_settings['h2'] == 'eventstream' &&
-              AwsSdkCodeGenerator::Helper.operation_eventstreaming?(operation, @api))
+          return unless (h2 = @protocol_settings['h2'])
+
+          case h2
+          when 'eventstream'
+            AwsSdkCodeGenerator::Helper.operation_eventstreaming?(operation, @api)
+          when 'optional'
+            AwsSdkCodeGenerator::Helper.operation_bidirectional_eventstreaming?(operation, @api)
+          else
+            raise 'Unsupported protocol setting'
+          end
         end
 
         def documented_plugin_options(plugins)
@@ -132,24 +150,23 @@ module AwsSdkCodeGenerator
 
         def build_keyword_arguments(plugins)
           buffer = plugins.map do |opt|
-            if opt.rbs_type
-              opt.rbs_type
-            else
-              case opt.doc_type
-              when "Boolean"
-                "bool"
-              when nil
-                "untyped"
-              else
-                opt.doc_type.to_s
-              end
-            end.yield_self do |type|
+            rbs_type =
+              opt.rbs_type ||
+              (
+                case opt.doc_type
+                when 'Boolean' then 'bool'
+                when nil then 'untyped'
+                else
+                  opt.doc_type.to_s
+                end
+              )
+            rbs_type.yield_self do |type|
               [opt.name, "?#{opt.name}: #{type}", opt.doc_type]
             end
           end
           # Find duplicated key
           grouped = buffer.group_by { |name, _| name }
-          grouped.transform_values(&:count).find_all { |_, c| 1 < c }.each do |name,|
+          grouped.transform_values(&:count).find_all { |_, c| c > 1 }.each do |name,|
             case name
             when :endpoint, :endpoint_provider, :retry_backoff, :retry_limit, :retry_base_delay, :disable_s3_express_session_auth, :account_id, :account_id_endpoint_mode
               # ok
@@ -159,24 +176,21 @@ module AwsSdkCodeGenerator
           end
           buffer.uniq! { |b| b[0] }
           buffer.map! { |b| b[1] }
-          buffer.concat([
-            # from mustache
-            "?http_proxy: String",
-            "?http_open_timeout: (Float | Integer)",
-            "?http_read_timeout: (Float | Integer)",
-            "?http_idle_timeout: (Float | Integer)",
-            "?http_continue_timeout: (Float | Integer)",
-            "?ssl_timeout: (Float | Integer | nil)",
-            "?http_wire_trace: bool",
-            "?ssl_verify_peer: bool",
-            "?ssl_ca_bundle: String",
-            "?ssl_ca_directory: String",
-            # from object
-            "?ssl_ca_store: String",
-            "?on_chunk_received: Proc",
-            "?on_chunk_sent: Proc",
-            "?raise_response_errors: bool",
-          ])
+          buffer.concat(
+            [
+              '?connection_read_timeout: (Float | Integer)',
+              '?connection_timeout: (Float | Integer)',
+              '?enable_alpn: bool',
+              '?max_concurrent_streams: (Float | Integer)',
+              '?read_chunk_size: (Float | Integer)',
+              '?http_wire_trace: bool',
+              '?ssl_verify_peer: bool',
+              '?ssl_ca_bundle: String',
+              '?ssl_ca_directory: String',
+              '?ssl_ca_store: String',
+              '?raise_response_errors: bool'
+            ]
+          )
           buffer
         end
       end

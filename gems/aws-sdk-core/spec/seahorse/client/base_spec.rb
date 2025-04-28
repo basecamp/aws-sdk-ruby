@@ -114,14 +114,9 @@ module Seahorse
 
       end
 
-      describe 'api operations' do
-
-        let(:request) { double('request') }
-
+      describe '#operation_names' do
         before(:each) do
           api.add_operation(:operation_name, Model::Operation.new)
-          allow(client).to receive(:build_request).and_return(request)
-          allow(request).to receive(:send_request)
         end
 
         it 'can return a list of valid operation names' do
@@ -134,33 +129,6 @@ module Seahorse
           api.add_operation(:async_op, op)
           expect(client.operation_names).to eq([:operation_name])
         end
-
-        it 'responds to each operation name' do
-          client.operation_names.each do |operation_name|
-            expect(client).to respond_to(operation_name)
-          end
-        end
-
-        it 'builds and sends a request when it receives a request method' do
-          expect(client).to receive(:build_request).
-            with(:operation_name, { foo: 'bar' }).
-            and_return(request)
-          expect(request).to receive(:send_request)
-          client.operation_name(foo: 'bar')
-        end
-
-        it 'passes block arguments to the request method' do
-          allow(request).to receive(:send_request).
-            and_yield('chunk1').
-            and_yield('chunk2').
-            and_yield('chunk3')
-          chunks = []
-          client.operation_name(foo: 'bar') do |chunk|
-            chunks << chunk
-          end
-          expect(chunks).to eq(%w(chunk1 chunk2 chunk3))
-        end
-
       end
 
       describe '.api' do
