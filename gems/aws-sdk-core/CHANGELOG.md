@@ -1,6 +1,9 @@
 Unreleased Changes
 ------------------
 
+3.222.3 (2025-04-28)
+------------------
+
 * Issue - Do not dynamically create operation methods from the API. (#3234)
 
 3.222.2 (2025-04-16)
