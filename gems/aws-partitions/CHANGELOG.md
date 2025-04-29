@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.1094.0 (2025-04-29)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::SSMGuiConnect`.
+
 1.1093.0 (2025-04-28)
 ------------------
 

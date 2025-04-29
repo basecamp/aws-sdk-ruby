@@ -4064,7 +4064,7 @@ module Aws::SageMaker
 
     CreateProjectInput.add_member(:project_name, Shapes::ShapeRef.new(shape: ProjectEntityName, required: true, location_name: "ProjectName"))
     CreateProjectInput.add_member(:project_description, Shapes::ShapeRef.new(shape: EntityDescription, location_name: "ProjectDescription"))
-    CreateProjectInput.add_member(:service_catalog_provisioning_details, Shapes::ShapeRef.new(shape: ServiceCatalogProvisioningDetails, required: true, location_name: "ServiceCatalogProvisioningDetails"))
+    CreateProjectInput.add_member(:service_catalog_provisioning_details, Shapes::ShapeRef.new(shape: ServiceCatalogProvisioningDetails, location_name: "ServiceCatalogProvisioningDetails"))
     CreateProjectInput.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CreateProjectInput.struct_class = Types::CreateProjectInput
 
@@ -5634,7 +5634,7 @@ module Aws::SageMaker
     DescribeProjectOutput.add_member(:project_name, Shapes::ShapeRef.new(shape: ProjectEntityName, required: true, location_name: "ProjectName"))
     DescribeProjectOutput.add_member(:project_id, Shapes::ShapeRef.new(shape: ProjectId, required: true, location_name: "ProjectId"))
     DescribeProjectOutput.add_member(:project_description, Shapes::ShapeRef.new(shape: EntityDescription, location_name: "ProjectDescription"))
-    DescribeProjectOutput.add_member(:service_catalog_provisioning_details, Shapes::ShapeRef.new(shape: ServiceCatalogProvisioningDetails, required: true, location_name: "ServiceCatalogProvisioningDetails"))
+    DescribeProjectOutput.add_member(:service_catalog_provisioning_details, Shapes::ShapeRef.new(shape: ServiceCatalogProvisioningDetails, location_name: "ServiceCatalogProvisioningDetails"))
     DescribeProjectOutput.add_member(:service_catalog_provisioned_product_details, Shapes::ShapeRef.new(shape: ServiceCatalogProvisionedProductDetails, location_name: "ServiceCatalogProvisionedProductDetails"))
     DescribeProjectOutput.add_member(:project_status, Shapes::ShapeRef.new(shape: ProjectStatus, required: true, location_name: "ProjectStatus"))
     DescribeProjectOutput.add_member(:created_by, Shapes::ShapeRef.new(shape: UserContext, location_name: "CreatedBy"))

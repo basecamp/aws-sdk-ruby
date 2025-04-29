@@ -80,6 +80,8 @@ module Aws::Kinesis
     ListStreamsInput = Shapes::StructureShape.new(name: 'ListStreamsInput')
     ListStreamsInputLimit = Shapes::IntegerShape.new(name: 'ListStreamsInputLimit')
     ListStreamsOutput = Shapes::StructureShape.new(name: 'ListStreamsOutput')
+    ListTagsForResourceInput = Shapes::StructureShape.new(name: 'ListTagsForResourceInput')
+    ListTagsForResourceOutput = Shapes::StructureShape.new(name: 'ListTagsForResourceOutput')
     ListTagsForStreamInput = Shapes::StructureShape.new(name: 'ListTagsForStreamInput')
     ListTagsForStreamInputLimit = Shapes::IntegerShape.new(name: 'ListTagsForStreamInputLimit')
     ListTagsForStreamOutput = Shapes::StructureShape.new(name: 'ListTagsForStreamOutput')
@@ -147,8 +149,10 @@ module Aws::Kinesis
     TagKeyList = Shapes::ListShape.new(name: 'TagKeyList')
     TagList = Shapes::ListShape.new(name: 'TagList')
     TagMap = Shapes::MapShape.new(name: 'TagMap')
+    TagResourceInput = Shapes::StructureShape.new(name: 'TagResourceInput')
     TagValue = Shapes::StringShape.new(name: 'TagValue')
     Timestamp = Shapes::TimestampShape.new(name: 'Timestamp')
+    UntagResourceInput = Shapes::StructureShape.new(name: 'UntagResourceInput')
     UpdateShardCountInput = Shapes::StructureShape.new(name: 'UpdateShardCountInput')
     UpdateShardCountOutput = Shapes::StructureShape.new(name: 'UpdateShardCountOutput')
     UpdateStreamModeInput = Shapes::StructureShape.new(name: 'UpdateStreamModeInput')
@@ -365,6 +369,12 @@ module Aws::Kinesis
     ListStreamsOutput.add_member(:stream_summaries, Shapes::ShapeRef.new(shape: StreamSummaryList, location_name: "StreamSummaries"))
     ListStreamsOutput.struct_class = Types::ListStreamsOutput
 
+    ListTagsForResourceInput.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceARN, location_name: "ResourceARN", metadata: {"contextParam"=>{"name"=>"ResourceARN"}}))
+    ListTagsForResourceInput.struct_class = Types::ListTagsForResourceInput
+
+    ListTagsForResourceOutput.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
+    ListTagsForResourceOutput.struct_class = Types::ListTagsForResourceOutput
+
     ListTagsForStreamInput.add_member(:stream_name, Shapes::ShapeRef.new(shape: StreamName, location_name: "StreamName"))
     ListTagsForStreamInput.add_member(:exclusive_start_tag_key, Shapes::ShapeRef.new(shape: TagKey, location_name: "ExclusiveStartTagKey"))
     ListTagsForStreamInput.add_member(:limit, Shapes::ShapeRef.new(shape: ListTagsForStreamInputLimit, location_name: "Limit"))
@@ -439,6 +449,7 @@ module Aws::Kinesis
 
     RegisterStreamConsumerInput.add_member(:stream_arn, Shapes::ShapeRef.new(shape: StreamARN, required: true, location_name: "StreamARN", metadata: {"contextParam"=>{"name"=>"StreamARN"}}))
     RegisterStreamConsumerInput.add_member(:consumer_name, Shapes::ShapeRef.new(shape: ConsumerName, required: true, location_name: "ConsumerName"))
+    RegisterStreamConsumerInput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
     RegisterStreamConsumerInput.struct_class = Types::RegisterStreamConsumerInput
 
     RegisterStreamConsumerOutput.add_member(:consumer, Shapes::ShapeRef.new(shape: Consumer, required: true, location_name: "Consumer"))
@@ -574,6 +585,14 @@ module Aws::Kinesis
 
     TagMap.key = Shapes::ShapeRef.new(shape: TagKey)
     TagMap.value = Shapes::ShapeRef.new(shape: TagValue)
+
+    TagResourceInput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, required: true, location_name: "Tags"))
+    TagResourceInput.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceARN, location_name: "ResourceARN", metadata: {"contextParam"=>{"name"=>"ResourceARN"}}))
+    TagResourceInput.struct_class = Types::TagResourceInput
+
+    UntagResourceInput.add_member(:tag_keys, Shapes::ShapeRef.new(shape: TagKeyList, required: true, location_name: "TagKeys"))
+    UntagResourceInput.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceARN, location_name: "ResourceARN", metadata: {"contextParam"=>{"name"=>"ResourceARN"}}))
+    UntagResourceInput.struct_class = Types::UntagResourceInput
 
     UpdateShardCountInput.add_member(:stream_name, Shapes::ShapeRef.new(shape: StreamName, location_name: "StreamName"))
     UpdateShardCountInput.add_member(:target_shard_count, Shapes::ShapeRef.new(shape: PositiveIntegerObject, required: true, location_name: "TargetShardCount"))
@@ -784,6 +803,7 @@ module Aws::Kinesis
         o.errors << Shapes::ShapeRef.new(shape: KMSOptInRequired)
         o.errors << Shapes::ShapeRef.new(shape: KMSThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
       end)
 
       api.add_operation(:get_resource_policy, Seahorse::Model::Operation.new.tap do |o|
@@ -809,6 +829,7 @@ module Aws::Kinesis
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgumentException)
         o.errors << Shapes::ShapeRef.new(shape: ProvisionedThroughputExceededException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
       end)
 
       api.add_operation(:increase_stream_retention_period, Seahorse::Model::Operation.new.tap do |o|
@@ -875,6 +896,19 @@ module Aws::Kinesis
         )
       end)
 
+      api.add_operation(:list_tags_for_resource, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListTagsForResource"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListTagsForResourceInput)
+        o.output = Shapes::ShapeRef.new(shape: ListTagsForResourceOutput)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceInUseException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgumentException)
+        o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
       api.add_operation(:list_tags_for_stream, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListTagsForStream"
         o.http_method = "POST"
@@ -917,6 +951,7 @@ module Aws::Kinesis
         o.errors << Shapes::ShapeRef.new(shape: KMSOptInRequired)
         o.errors << Shapes::ShapeRef.new(shape: KMSThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
       end)
 
       api.add_operation(:put_records, Seahorse::Model::Operation.new.tap do |o|
@@ -935,6 +970,7 @@ module Aws::Kinesis
         o.errors << Shapes::ShapeRef.new(shape: KMSOptInRequired)
         o.errors << Shapes::ShapeRef.new(shape: KMSThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
       end)
 
       api.add_operation(:put_resource_policy, Seahorse::Model::Operation.new.tap do |o|
@@ -1033,6 +1069,32 @@ module Aws::Kinesis
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.async = true
+      end)
+
+      api.add_operation(:tag_resource, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "TagResource"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: TagResourceInput)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceInUseException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgumentException)
+        o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
+      api.add_operation(:untag_resource, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UntagResource"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UntagResourceInput)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceInUseException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgumentException)
+        o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
       api.add_operation(:update_shard_count, Seahorse::Model::Operation.new.tap do |o|

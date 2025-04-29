@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.41.0 (2025-04-29)
+------------------
+
+* Feature - Introduces CustomEntity as part of the UserUnion data type. This field is used to indicate the entity who is performing the API action.
+
 1.40.0 (2025-04-16)
 ------------------
 

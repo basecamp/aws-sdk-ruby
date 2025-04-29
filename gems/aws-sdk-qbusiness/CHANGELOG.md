@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.37.0 (2025-04-29)
+------------------
+
+* Feature - Add support for anonymous user access for Q Business applications
+
 1.36.0 (2025-04-28)
 ------------------
 

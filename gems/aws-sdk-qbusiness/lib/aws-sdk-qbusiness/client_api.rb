@@ -128,6 +128,8 @@ module Aws::QBusiness
     ConversationTitle = Shapes::StringShape.new(name: 'ConversationTitle')
     Conversations = Shapes::ListShape.new(name: 'Conversations')
     CopyFromSource = Shapes::UnionShape.new(name: 'CopyFromSource')
+    CreateAnonymousWebExperienceUrlRequest = Shapes::StructureShape.new(name: 'CreateAnonymousWebExperienceUrlRequest')
+    CreateAnonymousWebExperienceUrlResponse = Shapes::StructureShape.new(name: 'CreateAnonymousWebExperienceUrlResponse')
     CreateApplicationRequest = Shapes::StructureShape.new(name: 'CreateApplicationRequest')
     CreateApplicationResponse = Shapes::StructureShape.new(name: 'CreateApplicationResponse')
     CreateDataAccessorRequest = Shapes::StructureShape.new(name: 'CreateDataAccessorRequest')
@@ -468,6 +470,7 @@ module Aws::QBusiness
     SecurityGroupId = Shapes::StringShape.new(name: 'SecurityGroupId')
     SecurityGroupIds = Shapes::ListShape.new(name: 'SecurityGroupIds')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
+    SessionDurationInMinutes = Shapes::IntegerShape.new(name: 'SessionDurationInMinutes')
     SnippetExcerpt = Shapes::StructureShape.new(name: 'SnippetExcerpt')
     SnippetExcerptText = Shapes::StringShape.new(name: 'SnippetExcerptText')
     SourceAttribution = Shapes::StructureShape.new(name: 'SourceAttribution')
@@ -940,6 +943,14 @@ module Aws::QBusiness
     CopyFromSource.add_member_subclass(:conversation, Types::CopyFromSource::Conversation)
     CopyFromSource.add_member_subclass(:unknown, Types::CopyFromSource::Unknown)
     CopyFromSource.struct_class = Types::CopyFromSource
+
+    CreateAnonymousWebExperienceUrlRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    CreateAnonymousWebExperienceUrlRequest.add_member(:web_experience_id, Shapes::ShapeRef.new(shape: WebExperienceId, required: true, location: "uri", location_name: "webExperienceId"))
+    CreateAnonymousWebExperienceUrlRequest.add_member(:session_duration_in_minutes, Shapes::ShapeRef.new(shape: SessionDurationInMinutes, location_name: "sessionDurationInMinutes"))
+    CreateAnonymousWebExperienceUrlRequest.struct_class = Types::CreateAnonymousWebExperienceUrlRequest
+
+    CreateAnonymousWebExperienceUrlResponse.add_member(:anonymous_url, Shapes::ShapeRef.new(shape: Url, location_name: "anonymousUrl"))
+    CreateAnonymousWebExperienceUrlResponse.struct_class = Types::CreateAnonymousWebExperienceUrlResponse
 
     CreateApplicationRequest.add_member(:display_name, Shapes::ShapeRef.new(shape: ApplicationName, required: true, location_name: "displayName"))
     CreateApplicationRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
@@ -2459,6 +2470,20 @@ module Aws::QBusiness
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
+      api.add_operation(:create_anonymous_web_experience_url, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateAnonymousWebExperienceUrl"
+        o.http_method = "POST"
+        o.http_request_uri = "/applications/{applicationId}/experiences/{webExperienceId}/anonymous-url"
+        o.input = Shapes::ShapeRef.new(shape: CreateAnonymousWebExperienceUrlRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateAnonymousWebExperienceUrlResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
       end)
 
       api.add_operation(:create_application, Seahorse::Model::Operation.new.tap do |o|

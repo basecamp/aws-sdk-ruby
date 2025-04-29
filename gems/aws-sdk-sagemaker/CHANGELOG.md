@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.302.0 (2025-04-29)
+------------------
+
+* Feature - Introduced support for P5en instance types on SageMaker Studio for JupyterLab and CodeEditor applications.
+
 1.301.0 (2025-04-18)
 ------------------
 

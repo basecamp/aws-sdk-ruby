@@ -14,6 +14,11 @@ module Aws::SSM
 
     include Seahorse::Model
 
+    AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
+    AccessKeyIdType = Shapes::StringShape.new(name: 'AccessKeyIdType')
+    AccessKeySecretType = Shapes::StringShape.new(name: 'AccessKeySecretType')
+    AccessRequestId = Shapes::StringShape.new(name: 'AccessRequestId')
+    AccessRequestStatus = Shapes::StringShape.new(name: 'AccessRequestStatus')
     Account = Shapes::StringShape.new(name: 'Account')
     AccountId = Shapes::StringShape.new(name: 'AccountId')
     AccountIdList = Shapes::ListShape.new(name: 'AccountIdList')
@@ -223,6 +228,7 @@ module Aws::SSM
     CreateResourceDataSyncRequest = Shapes::StructureShape.new(name: 'CreateResourceDataSyncRequest')
     CreateResourceDataSyncResult = Shapes::StructureShape.new(name: 'CreateResourceDataSyncResult')
     CreatedDate = Shapes::TimestampShape.new(name: 'CreatedDate')
+    Credentials = Shapes::StructureShape.new(name: 'Credentials')
     CustomSchemaCountLimitExceededException = Shapes::StructureShape.new(name: 'CustomSchemaCountLimitExceededException')
     DateTime = Shapes::TimestampShape.new(name: 'DateTime')
     DefaultBaseline = Shapes::BooleanShape.new(name: 'DefaultBaseline')
@@ -414,6 +420,8 @@ module Aws::SSM
     FailureDetails = Shapes::StructureShape.new(name: 'FailureDetails')
     Fault = Shapes::StringShape.new(name: 'Fault')
     FeatureNotAvailableException = Shapes::StructureShape.new(name: 'FeatureNotAvailableException')
+    GetAccessTokenRequest = Shapes::StructureShape.new(name: 'GetAccessTokenRequest')
+    GetAccessTokenResponse = Shapes::StructureShape.new(name: 'GetAccessTokenResponse')
     GetAutomationExecutionRequest = Shapes::StructureShape.new(name: 'GetAutomationExecutionRequest')
     GetAutomationExecutionResult = Shapes::StructureShape.new(name: 'GetAutomationExecutionResult')
     GetCalendarStateRequest = Shapes::StructureShape.new(name: 'GetCalendarStateRequest')
@@ -1145,6 +1153,7 @@ module Aws::SSM
     SendAutomationSignalResult = Shapes::StructureShape.new(name: 'SendAutomationSignalResult')
     SendCommandRequest = Shapes::StructureShape.new(name: 'SendCommandRequest')
     SendCommandResult = Shapes::StructureShape.new(name: 'SendCommandResult')
+    ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
     ServiceRole = Shapes::StringShape.new(name: 'ServiceRole')
     ServiceSetting = Shapes::StructureShape.new(name: 'ServiceSetting')
     ServiceSettingId = Shapes::StringShape.new(name: 'ServiceSettingId')
@@ -1171,6 +1180,7 @@ module Aws::SSM
     SessionState = Shapes::StringShape.new(name: 'SessionState')
     SessionStatus = Shapes::StringShape.new(name: 'SessionStatus')
     SessionTarget = Shapes::StringShape.new(name: 'SessionTarget')
+    SessionTokenType = Shapes::StringShape.new(name: 'SessionTokenType')
     SeveritySummary = Shapes::StructureShape.new(name: 'SeveritySummary')
     SharedDocumentVersion = Shapes::StringShape.new(name: 'SharedDocumentVersion')
     SignalType = Shapes::StringShape.new(name: 'SignalType')
@@ -1180,6 +1190,8 @@ module Aws::SSM
     SourceType = Shapes::StringShape.new(name: 'SourceType')
     StandardErrorContent = Shapes::StringShape.new(name: 'StandardErrorContent')
     StandardOutputContent = Shapes::StringShape.new(name: 'StandardOutputContent')
+    StartAccessRequestRequest = Shapes::StructureShape.new(name: 'StartAccessRequestRequest')
+    StartAccessRequestResponse = Shapes::StructureShape.new(name: 'StartAccessRequestResponse')
     StartAssociationsOnceRequest = Shapes::StructureShape.new(name: 'StartAssociationsOnceRequest')
     StartAssociationsOnceResult = Shapes::StructureShape.new(name: 'StartAssociationsOnceResult')
     StartAutomationExecutionRequest = Shapes::StructureShape.new(name: 'StartAutomationExecutionRequest')
@@ -1208,6 +1220,7 @@ module Aws::SSM
     StopType = Shapes::StringShape.new(name: 'StopType')
     StreamUrl = Shapes::StringShape.new(name: 'StreamUrl')
     String = Shapes::StringShape.new(name: 'String')
+    String1to256 = Shapes::StringShape.new(name: 'String1to256')
     StringDateTime = Shapes::StringShape.new(name: 'StringDateTime')
     StringList = Shapes::ListShape.new(name: 'StringList')
     SubTypeCountLimitExceededException = Shapes::StructureShape.new(name: 'SubTypeCountLimitExceededException')
@@ -1237,6 +1250,7 @@ module Aws::SSM
     Targets = Shapes::ListShape.new(name: 'Targets')
     TerminateSessionRequest = Shapes::StructureShape.new(name: 'TerminateSessionRequest')
     TerminateSessionResponse = Shapes::StructureShape.new(name: 'TerminateSessionResponse')
+    ThrottlingException = Shapes::StructureShape.new(name: 'ThrottlingException')
     TimeoutSeconds = Shapes::IntegerShape.new(name: 'TimeoutSeconds')
     TokenValue = Shapes::StringShape.new(name: 'TokenValue')
     TooManyTagsError = Shapes::StructureShape.new(name: 'TooManyTagsError')
@@ -1287,6 +1301,9 @@ module Aws::SSM
     ValidNextStepList = Shapes::ListShape.new(name: 'ValidNextStepList')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
     Version = Shapes::StringShape.new(name: 'Version')
+
+    AccessDeniedException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Message"))
+    AccessDeniedException.struct_class = Types::AccessDeniedException
 
     AccountIdList.member = Shapes::ShapeRef.new(shape: AccountId)
 
@@ -1959,6 +1976,12 @@ module Aws::SSM
 
     CreateResourceDataSyncResult.struct_class = Types::CreateResourceDataSyncResult
 
+    Credentials.add_member(:access_key_id, Shapes::ShapeRef.new(shape: AccessKeyIdType, required: true, location_name: "AccessKeyId"))
+    Credentials.add_member(:secret_access_key, Shapes::ShapeRef.new(shape: AccessKeySecretType, required: true, location_name: "SecretAccessKey"))
+    Credentials.add_member(:session_token, Shapes::ShapeRef.new(shape: SessionTokenType, required: true, location_name: "SessionToken"))
+    Credentials.add_member(:expiration_time, Shapes::ShapeRef.new(shape: DateTime, required: true, location_name: "ExpirationTime"))
+    Credentials.struct_class = Types::Credentials
+
     CustomSchemaCountLimitExceededException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
     CustomSchemaCountLimitExceededException.struct_class = Types::CustomSchemaCountLimitExceededException
 
@@ -2592,6 +2615,13 @@ module Aws::SSM
 
     FeatureNotAvailableException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
     FeatureNotAvailableException.struct_class = Types::FeatureNotAvailableException
+
+    GetAccessTokenRequest.add_member(:access_request_id, Shapes::ShapeRef.new(shape: AccessRequestId, required: true, location_name: "AccessRequestId"))
+    GetAccessTokenRequest.struct_class = Types::GetAccessTokenRequest
+
+    GetAccessTokenResponse.add_member(:credentials, Shapes::ShapeRef.new(shape: Credentials, location_name: "Credentials"))
+    GetAccessTokenResponse.add_member(:access_request_status, Shapes::ShapeRef.new(shape: AccessRequestStatus, location_name: "AccessRequestStatus"))
+    GetAccessTokenResponse.struct_class = Types::GetAccessTokenResponse
 
     GetAutomationExecutionRequest.add_member(:automation_execution_id, Shapes::ShapeRef.new(shape: AutomationExecutionId, required: true, location_name: "AutomationExecutionId"))
     GetAutomationExecutionRequest.struct_class = Types::GetAutomationExecutionRequest
@@ -4548,6 +4578,13 @@ module Aws::SSM
     SendCommandResult.add_member(:command, Shapes::ShapeRef.new(shape: Command, location_name: "Command"))
     SendCommandResult.struct_class = Types::SendCommandResult
 
+    ServiceQuotaExceededException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Message"))
+    ServiceQuotaExceededException.add_member(:resource_id, Shapes::ShapeRef.new(shape: String, location_name: "ResourceId"))
+    ServiceQuotaExceededException.add_member(:resource_type, Shapes::ShapeRef.new(shape: String, location_name: "ResourceType"))
+    ServiceQuotaExceededException.add_member(:quota_code, Shapes::ShapeRef.new(shape: String, required: true, location_name: "QuotaCode"))
+    ServiceQuotaExceededException.add_member(:service_code, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ServiceCode"))
+    ServiceQuotaExceededException.struct_class = Types::ServiceQuotaExceededException
+
     ServiceSetting.add_member(:setting_id, Shapes::ShapeRef.new(shape: ServiceSettingId, location_name: "SettingId"))
     ServiceSetting.add_member(:setting_value, Shapes::ShapeRef.new(shape: ServiceSettingValue, location_name: "SettingValue"))
     ServiceSetting.add_member(:last_modified_date, Shapes::ShapeRef.new(shape: DateTime, location_name: "LastModifiedDate"))
@@ -4596,6 +4633,14 @@ module Aws::SSM
     SeveritySummary.add_member(:informational_count, Shapes::ShapeRef.new(shape: ComplianceSummaryCount, location_name: "InformationalCount"))
     SeveritySummary.add_member(:unspecified_count, Shapes::ShapeRef.new(shape: ComplianceSummaryCount, location_name: "UnspecifiedCount"))
     SeveritySummary.struct_class = Types::SeveritySummary
+
+    StartAccessRequestRequest.add_member(:reason, Shapes::ShapeRef.new(shape: String1to256, required: true, location_name: "Reason"))
+    StartAccessRequestRequest.add_member(:targets, Shapes::ShapeRef.new(shape: Targets, required: true, location_name: "Targets"))
+    StartAccessRequestRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
+    StartAccessRequestRequest.struct_class = Types::StartAccessRequestRequest
+
+    StartAccessRequestResponse.add_member(:access_request_id, Shapes::ShapeRef.new(shape: AccessRequestId, location_name: "AccessRequestId"))
+    StartAccessRequestResponse.struct_class = Types::StartAccessRequestResponse
 
     StartAssociationsOnceRequest.add_member(:association_ids, Shapes::ShapeRef.new(shape: AssociationIdList, required: true, location_name: "AssociationIds"))
     StartAssociationsOnceRequest.struct_class = Types::StartAssociationsOnceRequest
@@ -4763,6 +4808,11 @@ module Aws::SSM
 
     TerminateSessionResponse.add_member(:session_id, Shapes::ShapeRef.new(shape: SessionId, location_name: "SessionId"))
     TerminateSessionResponse.struct_class = Types::TerminateSessionResponse
+
+    ThrottlingException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Message"))
+    ThrottlingException.add_member(:quota_code, Shapes::ShapeRef.new(shape: String, location_name: "QuotaCode"))
+    ThrottlingException.add_member(:service_code, Shapes::ShapeRef.new(shape: String, location_name: "ServiceCode"))
+    ThrottlingException.struct_class = Types::ThrottlingException
 
     TooManyTagsError.struct_class = Types::TooManyTagsError
 
@@ -5948,6 +5998,19 @@ module Aws::SSM
         o.errors << Shapes::ShapeRef.new(shape: OpsItemConflictException)
       end)
 
+      api.add_operation(:get_access_token, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetAccessToken"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetAccessTokenRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetAccessTokenResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+      end)
+
       api.add_operation(:get_automation_execution, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetAutomationExecution"
         o.http_method = "POST"
@@ -6780,6 +6843,20 @@ module Aws::SSM
         o.errors << Shapes::ShapeRef.new(shape: MaxDocumentSizeExceeded)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRole)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNotificationConfig)
+      end)
+
+      api.add_operation(:start_access_request, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartAccessRequest"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: StartAccessRequestRequest)
+        o.output = Shapes::ShapeRef.new(shape: StartAccessRequestResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
       end)
 
       api.add_operation(:start_associations_once, Seahorse::Model::Operation.new.tap do |o|
