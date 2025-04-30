@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.54.0 (2025-04-30)
+------------------
+
+* Feature - Features:    Add inline code node to prompt flow
+
 1.53.0 (2025-04-03)
 ------------------
 

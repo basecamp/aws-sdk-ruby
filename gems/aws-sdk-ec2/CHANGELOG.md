@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.517.0 (2025-04-30)
+------------------
+
+* Feature - Launch of cost distribution feature for IPAM owners to distribute costs to internal teams.
+
 1.516.0 (2025-04-22)
 ------------------
 

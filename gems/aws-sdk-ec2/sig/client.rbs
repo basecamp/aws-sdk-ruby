@@ -1851,7 +1851,8 @@ module Aws
                          ],
                          ?client_token: ::String,
                          ?tier: ("free" | "advanced"),
-                         ?enable_private_gua: bool
+                         ?enable_private_gua: bool,
+                         ?metered_account: ("ipam-owner" | "resource-owner")
                        ) -> _CreateIpamResponseSuccess
                      | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateIpamResponseSuccess
 
@@ -11078,7 +11079,8 @@ module Aws
                            },
                          ],
                          ?tier: ("free" | "advanced"),
-                         ?enable_private_gua: bool
+                         ?enable_private_gua: bool,
+                         ?metered_account: ("ipam-owner" | "resource-owner")
                        ) -> _ModifyIpamResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyIpamResponseSuccess
 

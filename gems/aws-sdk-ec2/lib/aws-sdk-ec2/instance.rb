@@ -1488,12 +1488,22 @@ module Aws::EC2
     #   If you have the required permissions, the error response is
     #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
     # @option options [Boolean] :force
-    #   Forces the instances to stop. The instances do not have an opportunity
-    #   to flush file system caches or file system metadata. If you use this
-    #   option, you must perform file system check and repair procedures. This
-    #   option is not recommended for Windows instances.
+    #   Forces the instance to stop. The instance will first attempt a
+    #   graceful shutdown, which includes flushing file system caches and
+    #   metadata. If the graceful shutdown fails to complete within the
+    #   timeout period, the instance shuts down forcibly without flushing the
+    #   file system caches and metadata.
+    #
+    #   After using this option, you must perform file system check and repair
+    #   procedures. This option is not recommended for Windows instances. For
+    #   more information, see [Troubleshoot Amazon EC2 instance stop
+    #   issues][1] in the *Amazon EC2 User Guide*.
     #
     #   Default: `false`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesStopping.html
     # @return [Types::StopInstancesResult]
     def stop(options = {})
       options = Aws::Util.deep_merge(options, instance_ids: [@id])
@@ -2055,12 +2065,22 @@ module Aws::EC2
       #   If you have the required permissions, the error response is
       #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
       # @option options [Boolean] :force
-      #   Forces the instances to stop. The instances do not have an opportunity
-      #   to flush file system caches or file system metadata. If you use this
-      #   option, you must perform file system check and repair procedures. This
-      #   option is not recommended for Windows instances.
+      #   Forces the instance to stop. The instance will first attempt a
+      #   graceful shutdown, which includes flushing file system caches and
+      #   metadata. If the graceful shutdown fails to complete within the
+      #   timeout period, the instance shuts down forcibly without flushing the
+      #   file system caches and metadata.
+      #
+      #   After using this option, you must perform file system check and repair
+      #   procedures. This option is not recommended for Windows instances. For
+      #   more information, see [Troubleshoot Amazon EC2 instance stop
+      #   issues][1] in the *Amazon EC2 User Guide*.
       #
       #   Default: `false`
+      #
+      #
+      #
+      #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesStopping.html
       # @return [void]
       def batch_stop(options = {})
         batch_enum.each do |batch|

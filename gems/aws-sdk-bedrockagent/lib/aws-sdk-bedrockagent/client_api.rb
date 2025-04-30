@@ -301,6 +301,8 @@ module Aws::BedrockAgent
     IngestionJobStatus = Shapes::StringShape.new(name: 'IngestionJobStatus')
     IngestionJobSummaries = Shapes::ListShape.new(name: 'IngestionJobSummaries')
     IngestionJobSummary = Shapes::StructureShape.new(name: 'IngestionJobSummary')
+    InlineCode = Shapes::StringShape.new(name: 'InlineCode')
+    InlineCodeFlowNodeConfiguration = Shapes::StructureShape.new(name: 'InlineCodeFlowNodeConfiguration')
     InlineContent = Shapes::StructureShape.new(name: 'InlineContent')
     InlineContentType = Shapes::StringShape.new(name: 'InlineContentType')
     InputFlowNodeConfiguration = Shapes::StructureShape.new(name: 'InputFlowNodeConfiguration')
@@ -570,6 +572,7 @@ module Aws::BedrockAgent
     SupplementalDataStorageLocation = Shapes::StructureShape.new(name: 'SupplementalDataStorageLocation')
     SupplementalDataStorageLocationType = Shapes::StringShape.new(name: 'SupplementalDataStorageLocationType')
     SupplementalDataStorageLocations = Shapes::ListShape.new(name: 'SupplementalDataStorageLocations')
+    SupportedLanguages = Shapes::StringShape.new(name: 'SupportedLanguages')
     SystemContentBlock = Shapes::UnionShape.new(name: 'SystemContentBlock')
     SystemContentBlocks = Shapes::ListShape.new(name: 'SystemContentBlocks')
     TagKey = Shapes::StringShape.new(name: 'TagKey')
@@ -1394,6 +1397,7 @@ module Aws::BedrockAgent
     FlowNodeConfiguration.add_member(:agent, Shapes::ShapeRef.new(shape: AgentFlowNodeConfiguration, location_name: "agent"))
     FlowNodeConfiguration.add_member(:collector, Shapes::ShapeRef.new(shape: CollectorFlowNodeConfiguration, location_name: "collector"))
     FlowNodeConfiguration.add_member(:condition, Shapes::ShapeRef.new(shape: ConditionFlowNodeConfiguration, location_name: "condition"))
+    FlowNodeConfiguration.add_member(:inline_code, Shapes::ShapeRef.new(shape: InlineCodeFlowNodeConfiguration, location_name: "inlineCode"))
     FlowNodeConfiguration.add_member(:input, Shapes::ShapeRef.new(shape: InputFlowNodeConfiguration, location_name: "input"))
     FlowNodeConfiguration.add_member(:iterator, Shapes::ShapeRef.new(shape: IteratorFlowNodeConfiguration, location_name: "iterator"))
     FlowNodeConfiguration.add_member(:knowledge_base, Shapes::ShapeRef.new(shape: KnowledgeBaseFlowNodeConfiguration, location_name: "knowledgeBase"))
@@ -1407,6 +1411,7 @@ module Aws::BedrockAgent
     FlowNodeConfiguration.add_member_subclass(:agent, Types::FlowNodeConfiguration::Agent)
     FlowNodeConfiguration.add_member_subclass(:collector, Types::FlowNodeConfiguration::Collector)
     FlowNodeConfiguration.add_member_subclass(:condition, Types::FlowNodeConfiguration::Condition)
+    FlowNodeConfiguration.add_member_subclass(:inline_code, Types::FlowNodeConfiguration::InlineCode)
     FlowNodeConfiguration.add_member_subclass(:input, Types::FlowNodeConfiguration::Input)
     FlowNodeConfiguration.add_member_subclass(:iterator, Types::FlowNodeConfiguration::Iterator)
     FlowNodeConfiguration.add_member_subclass(:knowledge_base, Types::FlowNodeConfiguration::KnowledgeBase)
@@ -1747,6 +1752,10 @@ module Aws::BedrockAgent
     IngestionJobSummary.add_member(:status, Shapes::ShapeRef.new(shape: IngestionJobStatus, required: true, location_name: "status"))
     IngestionJobSummary.add_member(:updated_at, Shapes::ShapeRef.new(shape: DateTimestamp, required: true, location_name: "updatedAt"))
     IngestionJobSummary.struct_class = Types::IngestionJobSummary
+
+    InlineCodeFlowNodeConfiguration.add_member(:code, Shapes::ShapeRef.new(shape: InlineCode, required: true, location_name: "code"))
+    InlineCodeFlowNodeConfiguration.add_member(:language, Shapes::ShapeRef.new(shape: SupportedLanguages, required: true, location_name: "language"))
+    InlineCodeFlowNodeConfiguration.struct_class = Types::InlineCodeFlowNodeConfiguration
 
     InlineContent.add_member(:byte_content, Shapes::ShapeRef.new(shape: ByteContentDoc, location_name: "byteContent"))
     InlineContent.add_member(:text_content, Shapes::ShapeRef.new(shape: TextContentDoc, location_name: "textContent"))

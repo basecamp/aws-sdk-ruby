@@ -555,6 +555,7 @@ module Aws::Deadline
     SyncInputJobAttachmentsSessionActionDefinition = Shapes::StructureShape.new(name: 'SyncInputJobAttachmentsSessionActionDefinition')
     SyncInputJobAttachmentsSessionActionDefinitionSummary = Shapes::StructureShape.new(name: 'SyncInputJobAttachmentsSessionActionDefinitionSummary')
     SyntheticTimestamp_date_time = Shapes::TimestampShape.new(name: 'SyntheticTimestamp_date_time', timestampFormat: "iso8601")
+    TagPropagationMode = Shapes::StringShape.new(name: 'TagPropagationMode')
     TagResourceRequest = Shapes::StructureShape.new(name: 'TagResourceRequest')
     TagResourceResponse = Shapes::StructureShape.new(name: 'TagResourceResponse')
     Tags = Shapes::MapShape.new(name: 'Tags')
@@ -1030,6 +1031,7 @@ module Aws::Deadline
     CreateWorkerRequest.add_member(:fleet_id, Shapes::ShapeRef.new(shape: FleetId, required: true, location: "uri", location_name: "fleetId"))
     CreateWorkerRequest.add_member(:host_properties, Shapes::ShapeRef.new(shape: HostPropertiesRequest, location_name: "hostProperties"))
     CreateWorkerRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location: "header", location_name: "X-Amz-Client-Token", metadata: {"idempotencyToken"=>true}))
+    CreateWorkerRequest.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     CreateWorkerRequest.struct_class = Types::CreateWorkerRequest
 
     CreateWorkerResponse.add_member(:worker_id, Shapes::ShapeRef.new(shape: WorkerId, required: true, location_name: "workerId"))
@@ -1042,6 +1044,7 @@ module Aws::Deadline
     CustomerManagedFleetConfiguration.add_member(:mode, Shapes::ShapeRef.new(shape: AutoScalingMode, required: true, location_name: "mode"))
     CustomerManagedFleetConfiguration.add_member(:worker_capabilities, Shapes::ShapeRef.new(shape: CustomerManagedWorkerCapabilities, required: true, location_name: "workerCapabilities"))
     CustomerManagedFleetConfiguration.add_member(:storage_profile_id, Shapes::ShapeRef.new(shape: StorageProfileId, location_name: "storageProfileId"))
+    CustomerManagedFleetConfiguration.add_member(:tag_propagation_mode, Shapes::ShapeRef.new(shape: TagPropagationMode, location_name: "tagPropagationMode"))
     CustomerManagedFleetConfiguration.struct_class = Types::CustomerManagedFleetConfiguration
 
     CustomerManagedWorkerCapabilities.add_member(:v_cpu_count, Shapes::ShapeRef.new(shape: VCpuCountRange, required: true, location_name: "vCpuCount"))

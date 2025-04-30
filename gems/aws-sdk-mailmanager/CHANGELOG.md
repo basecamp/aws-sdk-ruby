@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.24.0 (2025-04-30)
+------------------
+
+* Feature - Introducing new RuleSet rule PublishToSns action, which allows customers to publish email notifications to an Amazon SNS topic. New PublishToSns action enables customers to easily integrate their email workflows via Amazon SNS, allowing them to notify other systems about important email events.
+
 1.23.0 (2025-04-03)
 ------------------
 

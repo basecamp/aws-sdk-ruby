@@ -1982,6 +1982,7 @@ module Aws::EC2
     IpamId = Shapes::StringShape.new(name: 'IpamId')
     IpamManagementState = Shapes::StringShape.new(name: 'IpamManagementState')
     IpamMaxResults = Shapes::IntegerShape.new(name: 'IpamMaxResults')
+    IpamMeteredAccount = Shapes::StringShape.new(name: 'IpamMeteredAccount')
     IpamNetmaskLength = Shapes::IntegerShape.new(name: 'IpamNetmaskLength')
     IpamNetworkInterfaceAttachmentStatus = Shapes::StringShape.new(name: 'IpamNetworkInterfaceAttachmentStatus')
     IpamOperatingRegion = Shapes::StructureShape.new(name: 'IpamOperatingRegion')
@@ -5292,6 +5293,7 @@ module Aws::EC2
     CreateIpamRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
     CreateIpamRequest.add_member(:tier, Shapes::ShapeRef.new(shape: IpamTier, location_name: "Tier"))
     CreateIpamRequest.add_member(:enable_private_gua, Shapes::ShapeRef.new(shape: Boolean, location_name: "EnablePrivateGua"))
+    CreateIpamRequest.add_member(:metered_account, Shapes::ShapeRef.new(shape: IpamMeteredAccount, location_name: "MeteredAccount"))
     CreateIpamRequest.struct_class = Types::CreateIpamRequest
 
     CreateIpamResourceDiscoveryRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
@@ -9754,7 +9756,7 @@ module Aws::EC2
     FleetLaunchTemplateOverridesRequest.add_member(:placement, Shapes::ShapeRef.new(shape: Placement, location_name: "Placement"))
     FleetLaunchTemplateOverridesRequest.add_member(:block_device_mappings, Shapes::ShapeRef.new(shape: FleetBlockDeviceMappingRequestList, location_name: "BlockDeviceMapping"))
     FleetLaunchTemplateOverridesRequest.add_member(:instance_requirements, Shapes::ShapeRef.new(shape: InstanceRequirementsRequest, location_name: "InstanceRequirements"))
-    FleetLaunchTemplateOverridesRequest.add_member(:image_id, Shapes::ShapeRef.new(shape: String, location_name: "ImageId"))
+    FleetLaunchTemplateOverridesRequest.add_member(:image_id, Shapes::ShapeRef.new(shape: ImageId, location_name: "ImageId"))
     FleetLaunchTemplateOverridesRequest.struct_class = Types::FleetLaunchTemplateOverridesRequest
 
     FleetLaunchTemplateSpecification.add_member(:launch_template_id, Shapes::ShapeRef.new(shape: String, location_name: "launchTemplateId"))
@@ -11470,6 +11472,7 @@ module Aws::EC2
     Ipam.add_member(:state_message, Shapes::ShapeRef.new(shape: String, location_name: "stateMessage"))
     Ipam.add_member(:tier, Shapes::ShapeRef.new(shape: IpamTier, location_name: "tier"))
     Ipam.add_member(:enable_private_gua, Shapes::ShapeRef.new(shape: Boolean, location_name: "enablePrivateGua"))
+    Ipam.add_member(:metered_account, Shapes::ShapeRef.new(shape: IpamMeteredAccount, location_name: "meteredAccount"))
     Ipam.struct_class = Types::Ipam
 
     IpamAddressHistoryRecord.add_member(:resource_owner_id, Shapes::ShapeRef.new(shape: String, location_name: "resourceOwnerId"))
@@ -12677,6 +12680,7 @@ module Aws::EC2
     ModifyIpamRequest.add_member(:remove_operating_regions, Shapes::ShapeRef.new(shape: RemoveIpamOperatingRegionSet, location_name: "RemoveOperatingRegion"))
     ModifyIpamRequest.add_member(:tier, Shapes::ShapeRef.new(shape: IpamTier, location_name: "Tier"))
     ModifyIpamRequest.add_member(:enable_private_gua, Shapes::ShapeRef.new(shape: Boolean, location_name: "EnablePrivateGua"))
+    ModifyIpamRequest.add_member(:metered_account, Shapes::ShapeRef.new(shape: IpamMeteredAccount, location_name: "MeteredAccount"))
     ModifyIpamRequest.struct_class = Types::ModifyIpamRequest
 
     ModifyIpamResourceCidrRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))

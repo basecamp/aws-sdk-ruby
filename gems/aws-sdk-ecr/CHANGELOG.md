@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.100.0 (2025-04-30)
+------------------
+
+* Feature - Adds dualstack support for Amazon Elastic Container Registry (Amazon ECR).
+
 1.99.0 (2025-04-02)
 ------------------
 

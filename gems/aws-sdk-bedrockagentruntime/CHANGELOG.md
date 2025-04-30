@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.52.0 (2025-04-30)
+------------------
+
+* Feature - Support for Custom Orchestration within InlineAgents
+
 1.51.0 (2025-04-28)
 ------------------
 

@@ -6107,7 +6107,7 @@ module Aws::EC2
     #   Indicates whether the client VPN session is disconnected after the
     #   maximum timeout specified in `SessionTimeoutHours` is reached. If
     #   `true`, users are prompted to reconnect client VPN. If `false`, client
-    #   VPN attempts to reconnect automatically. The default value is `false`.
+    #   VPN attempts to reconnect automatically. The default value is `true`.
     #
     # @return [Types::CreateClientVpnEndpointResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -7165,7 +7165,7 @@ module Aws::EC2
     #                 },
     #               },
     #             },
-    #             image_id: "String",
+    #             image_id: "ImageId",
     #           },
     #         ],
     #       },
@@ -8288,6 +8288,23 @@ module Aws::EC2
     #   Enable this option to use your own GUA ranges as private IPv6
     #   addresses. This option is disabled by default.
     #
+    # @option params [String] :metered_account
+    #   A metered account is an Amazon Web Services account that is charged
+    #   for active IP addresses managed in IPAM. For more information, see
+    #   [Enable cost distribution][1] in the *Amazon VPC IPAM User Guide*.
+    #
+    #   Possible values:
+    #
+    #   * `ipam-owner` (default): The Amazon Web Services account which owns
+    #     the IPAM is charged for all active IP addresses managed in IPAM.
+    #
+    #   * `resource-owner`: The Amazon Web Services account that owns the IP
+    #     address is charged for the active IP address.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/vpc/latest/ipam/ipam-enable-cost-distro.html
+    #
     # @return [Types::CreateIpamResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateIpamResult#ipam #ipam} => Types::Ipam
@@ -8316,6 +8333,7 @@ module Aws::EC2
     #     client_token: "String",
     #     tier: "free", # accepts free, advanced
     #     enable_private_gua: false,
+    #     metered_account: "ipam-owner", # accepts ipam-owner, resource-owner
     #   })
     #
     # @example Response structure
@@ -8340,6 +8358,7 @@ module Aws::EC2
     #   resp.ipam.state_message #=> String
     #   resp.ipam.tier #=> String, one of "free", "advanced"
     #   resp.ipam.enable_private_gua #=> Boolean
+    #   resp.ipam.metered_account #=> String, one of "ipam-owner", "resource-owner"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateIpam AWS API Documentation
     #
@@ -16116,8 +16135,6 @@ module Aws::EC2
     #   attributes to `true`: `enableDnsHostnames` and `enableDnsSupport`. Use
     #   ModifyVpcAttribute to set the VPC attributes.
     #
-    #   Default: `true`
-    #
     # @option params [Array<Types::TagSpecification>] :tag_specifications
     #   The tags to associate with the endpoint.
     #
@@ -17628,6 +17645,7 @@ module Aws::EC2
     #   resp.ipam.state_message #=> String
     #   resp.ipam.tier #=> String, one of "free", "advanced"
     #   resp.ipam.enable_private_gua #=> Boolean
+    #   resp.ipam.metered_account #=> String, one of "ipam-owner", "resource-owner"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteIpam AWS API Documentation
     #
@@ -22279,13 +22297,7 @@ module Aws::EC2
     # Blocks, you purchase a specific instance type for a period of time.
     #
     # To search for an available Capacity Block offering, you specify a
-    # reservation duration and instance count. You must select one of the
-    # following options.
-    #
-    # * For reservation durations<b> 1-day increments up 14 days and 7-day
-    #   increments up to 182 days total</b>
-    #
-    # * For instance count<b> 1, 2, 4, 8, 16, 32, or 64 instances</b>
+    # reservation duration and instance count.
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -22298,7 +22310,9 @@ module Aws::EC2
     #   capacity.
     #
     # @option params [Integer] :instance_count
-    #   The number of instances for which to reserve capacity.
+    #   The number of instances for which to reserve capacity. Each Capacity
+    #   Block can have up to 64 instances, and you can have up to 256
+    #   instances across Capacity Blocks.
     #
     # @option params [Time,DateTime,Date,Integer,String] :start_date_range
     #   The earliest start date for the Capacity Block offering.
@@ -22307,7 +22321,9 @@ module Aws::EC2
     #   The latest end date for the Capacity Block offering.
     #
     # @option params [required, Integer] :capacity_duration_hours
-    #   The number of hours for which to reserve Capacity Block.
+    #   The reservation duration for the Capacity Block, in hours. You must
+    #   specify the duration in 1-day increments up 14 days, and in 7-day
+    #   increments up to 182 days.
     #
     # @option params [String] :next_token
     #   The token to use to retrieve the next page of results.
@@ -29172,6 +29188,7 @@ module Aws::EC2
     #   resp.ipams[0].state_message #=> String
     #   resp.ipams[0].tier #=> String, one of "free", "advanced"
     #   resp.ipams[0].enable_private_gua #=> Boolean
+    #   resp.ipams[0].metered_account #=> String, one of "ipam-owner", "resource-owner"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeIpams AWS API Documentation
     #
@@ -50517,7 +50534,7 @@ module Aws::EC2
     #   Indicates whether the client VPN session is disconnected after the
     #   maximum timeout specified in `sessionTimeoutHours` is reached. If
     #   `true`, users are prompted to reconnect client VPN. If `false`, client
-    #   VPN attempts to reconnect automatically. The default value is `false`.
+    #   VPN attempts to reconnect automatically. The default value is `true`.
     #
     # @return [Types::ModifyClientVpnEndpointResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -50882,7 +50899,7 @@ module Aws::EC2
     #                 },
     #               },
     #             },
-    #             image_id: "String",
+    #             image_id: "ImageId",
     #           },
     #         ],
     #       },
@@ -52445,6 +52462,23 @@ module Aws::EC2
     #   Enable this option to use your own GUA ranges as private IPv6
     #   addresses. This option is disabled by default.
     #
+    # @option params [String] :metered_account
+    #   A metered account is an Amazon Web Services account that is charged
+    #   for active IP addresses managed in IPAM. For more information, see
+    #   [Enable cost distribution][1] in the *Amazon VPC IPAM User Guide*.
+    #
+    #   Possible values:
+    #
+    #   * `ipam-owner` (default): The Amazon Web Services account which owns
+    #     the IPAM is charged for all active IP addresses managed in IPAM.
+    #
+    #   * `resource-owner`: The Amazon Web Services account that owns the IP
+    #     address is charged for the active IP address.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/vpc/latest/ipam/ipam-enable-cost-distro.html
+    #
     # @return [Types::ModifyIpamResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ModifyIpamResult#ipam #ipam} => Types::Ipam
@@ -52467,6 +52501,7 @@ module Aws::EC2
     #     ],
     #     tier: "free", # accepts free, advanced
     #     enable_private_gua: false,
+    #     metered_account: "ipam-owner", # accepts ipam-owner, resource-owner
     #   })
     #
     # @example Response structure
@@ -52491,6 +52526,7 @@ module Aws::EC2
     #   resp.ipam.state_message #=> String
     #   resp.ipam.tier #=> String, one of "free", "advanced"
     #   resp.ipam.enable_private_gua #=> Boolean
+    #   resp.ipam.metered_account #=> String, one of "ipam-owner", "resource-owner"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyIpam AWS API Documentation
     #
@@ -63886,45 +63922,38 @@ module Aws::EC2
     # Stops an Amazon EBS-backed instance. For more information, see [Stop
     # and start Amazon EC2 instances][1] in the *Amazon EC2 User Guide*.
     #
-    # You can use the Stop action to hibernate an instance if the instance
-    # is [enabled for hibernation][2] and it meets the [hibernation
-    # prerequisites][3]. For more information, see [Hibernate your Amazon
-    # EC2 instance][4] in the *Amazon EC2 User Guide*.
+    # When you stop an instance, we shut it down. You can restart your
+    # instance at any time.
     #
-    # We don't charge usage for a stopped instance, or data transfer fees;
-    # however, your root partition Amazon EBS volume remains and continues
-    # to persist your data, and you are charged for Amazon EBS volume usage.
-    # Every time you start your instance, Amazon EC2 charges a one-minute
-    # minimum for instance usage, and thereafter charges per second for
-    # instance usage.
+    # You can use the Stop operation together with the Hibernate parameter
+    # to hibernate an instance if the instance is [enabled for
+    # hibernation][2] and meets the [hibernation prerequisites][3]. Stopping
+    # an instance doesn't preserve data stored in RAM, while hibernation
+    # does. If hibernation fails, a normal shutdown occurs. For more
+    # information, see [Hibernate your Amazon EC2 instance][4] in the
+    # *Amazon EC2 User Guide*.
     #
-    # You can't stop or hibernate instance store-backed instances. You
-    # can't use the Stop action to hibernate Spot Instances, but you can
-    # specify that Amazon EC2 should hibernate Spot Instances when they are
-    # interrupted. For more information, see [Hibernating interrupted Spot
-    # Instances][5] in the *Amazon EC2 User Guide*.
+    # If your instance appears stuck in the `stopping` state, there might be
+    # an issue with the underlying host computer. You can use the Stop
+    # operation together with the Force parameter to force stop your
+    # instance. For more information, see [Troubleshoot Amazon EC2 instance
+    # stop issues][5] in the *Amazon EC2 User Guide*.
     #
-    # When you stop or hibernate an instance, we shut it down. You can
-    # restart your instance at any time. Before stopping or hibernating an
-    # instance, make sure it is in a state from which it can be restarted.
-    # Stopping an instance does not preserve data stored in RAM, but
-    # hibernating an instance does preserve data stored in RAM. If an
-    # instance cannot hibernate successfully, a normal shutdown occurs.
+    # Stopping and hibernating an instance differs from rebooting or
+    # terminating it. For example, a stopped or hibernated instance retains
+    # its root volume and any data volumes, unlike terminated instances
+    # where these volumes are automatically deleted. For more information
+    # about the differences between stopping, hibernating, rebooting, and
+    # terminating instances, see [Amazon EC2 instance state changes][6] in
+    # the *Amazon EC2 User Guide*.
     #
-    # Stopping and hibernating an instance is different to rebooting or
-    # terminating it. For example, when you stop or hibernate an instance,
-    # the root device and any other devices attached to the instance
-    # persist. When you terminate an instance, the root device and any other
-    # devices attached during the instance launch are automatically deleted.
-    # For more information about the differences between rebooting,
-    # stopping, hibernating, and terminating instances, see [Instance
-    # lifecycle][6] in the *Amazon EC2 User Guide*.
+    # We don't charge for instance usage or data transfer fees when an
+    # instance is stopped. However, the root volume and any data volumes
+    # remain and continue to persist your data, and you're charged for
+    # volume usage. Every time you start your instance, Amazon EC2 charges a
+    # one-minute minimum for instance usage, followed by per-second billing.
     #
-    # When you stop an instance, we attempt to shut it down forcibly after a
-    # short while. If your instance appears stuck in the stopping state
-    # after a period of time, there may be an issue with the underlying host
-    # computer. For more information, see [Troubleshoot stopping your
-    # instance][7] in the *Amazon EC2 User Guide*.
+    # You can't stop or hibernate instance store-backed instances.
     #
     #
     #
@@ -63932,9 +63961,8 @@ module Aws::EC2
     # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/enabling-hibernation.html
     # [3]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html
     # [4]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Hibernate.html
-    # [5]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html#hibernate-spot-instances
+    # [5]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesStopping.html
     # [6]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html
-    # [7]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesStopping.html
     #
     # @option params [required, Array<String>] :instance_ids
     #   The IDs of the instances.
@@ -63958,12 +63986,22 @@ module Aws::EC2
     #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
     #
     # @option params [Boolean] :force
-    #   Forces the instances to stop. The instances do not have an opportunity
-    #   to flush file system caches or file system metadata. If you use this
-    #   option, you must perform file system check and repair procedures. This
-    #   option is not recommended for Windows instances.
+    #   Forces the instance to stop. The instance will first attempt a
+    #   graceful shutdown, which includes flushing file system caches and
+    #   metadata. If the graceful shutdown fails to complete within the
+    #   timeout period, the instance shuts down forcibly without flushing the
+    #   file system caches and metadata.
+    #
+    #   After using this option, you must perform file system check and repair
+    #   procedures. This option is not recommended for Windows instances. For
+    #   more information, see [Troubleshoot Amazon EC2 instance stop
+    #   issues][1] in the *Amazon EC2 User Guide*.
     #
     #   Default: `false`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesStopping.html
     #
     # @return [Types::StopInstancesResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -64080,8 +64118,8 @@ module Aws::EC2
       req.send_request(options)
     end
 
-    # Shuts down the specified instances. This operation is idempotent; if
-    # you terminate an instance more than once, each call succeeds.
+    # Shuts down the specified instances. This operation is [idempotent][1];
+    # if you terminate an instance more than once, each call succeeds.
     #
     # If you specify multiple instances and the request fails (for example,
     # because of a single incorrect instance ID), none of the instances are
@@ -64128,21 +64166,22 @@ module Aws::EC2
     #
     # You can stop, start, and terminate EBS-backed instances. You can only
     # terminate instance store-backed instances. What happens to an instance
-    # differs if you stop it or terminate it. For example, when you stop an
+    # differs if you stop or terminate it. For example, when you stop an
     # instance, the root device and any other devices attached to the
     # instance persist. When you terminate an instance, any attached EBS
     # volumes with the `DeleteOnTermination` block device mapping parameter
     # set to `true` are automatically deleted. For more information about
     # the differences between stopping and terminating instances, see
-    # [Instance lifecycle][1] in the *Amazon EC2 User Guide*.
+    # [Amazon EC2 instance state changes][2] in the *Amazon EC2 User Guide*.
     #
-    # For more information about troubleshooting, see [Troubleshooting
-    # terminating your instance][2] in the *Amazon EC2 User Guide*.
+    # For information about troubleshooting, see [Troubleshooting
+    # terminating your instance][3] in the *Amazon EC2 User Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html
-    # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesShuttingDown.html
+    # [1]: https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html
+    # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html
+    # [3]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesShuttingDown.html
     #
     # @option params [required, Array<String>] :instance_ids
     #   The IDs of the instances.
@@ -64774,7 +64813,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.516.0'
+      context[:gem_version] = '1.517.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

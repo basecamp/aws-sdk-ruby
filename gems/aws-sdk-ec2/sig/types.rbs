@@ -2192,6 +2192,7 @@ module Aws::EC2
       attr_accessor client_token: ::String
       attr_accessor tier: ("free" | "advanced")
       attr_accessor enable_private_gua: bool
+      attr_accessor metered_account: ("ipam-owner" | "resource-owner")
       SENSITIVE: []
     end
 
@@ -10197,6 +10198,7 @@ module Aws::EC2
       attr_accessor state_message: ::String
       attr_accessor tier: ("free" | "advanced")
       attr_accessor enable_private_gua: bool
+      attr_accessor metered_account: ("ipam-owner" | "resource-owner")
       SENSITIVE: []
     end
 
@@ -11578,6 +11580,7 @@ module Aws::EC2
       attr_accessor remove_operating_regions: ::Array[Types::RemoveIpamOperatingRegion]
       attr_accessor tier: ("free" | "advanced")
       attr_accessor enable_private_gua: bool
+      attr_accessor metered_account: ("ipam-owner" | "resource-owner")
       SENSITIVE: []
     end
 

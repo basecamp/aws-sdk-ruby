@@ -6092,20 +6092,21 @@ module Aws::EC2
       include Aws::Structure
     end
 
-    # Client route enforcement is a feature of the Client VPN service that
-    # helps enforce administrator defined routes on devices connected
-    # through the VPN. T his feature helps improve your security posture by
-    # ensuring that network traffic originating from a connected client is
-    # not inadvertently sent outside the VPN tunnel.
+    # Client Route Enforcement is a feature of Client VPN that helps enforce
+    # administrator defined routes on devices connected through the VPN.
+    # This feature helps improve your security posture by ensuring that
+    # network traffic originating from a connected client is not
+    # inadvertently sent outside the VPN tunnel.
     #
-    # Client route enforcement works by monitoring the route table of a
+    # Client Route Enforcement works by monitoring the route table of a
     # connected device for routing policy changes to the VPN connection. If
     # the feature detects any VPN routing policy modifications, it will
     # automatically force an update to the route table, reverting it back to
     # the expected route configurations.
     #
     # @!attribute [rw] enforced
-    #   Enable or disable the client route enforcement feature.
+    #   Enable or disable Client Route Enforcement. The state can either be
+    #   `true` (enabled) or `false` (disabled). The default is `false`.
     #
     #   Valid values: `true | false`
     #
@@ -6120,11 +6121,11 @@ module Aws::EC2
       include Aws::Structure
     end
 
-    # The current status of client route enforcement. The state will either
-    # be `true` (enabled) or `false` (disabled).
+    # The current status of Client Route Enforcement.
     #
     # @!attribute [rw] enforced
-    #   Status of the client route enforcement feature.
+    #   Status of the client route enforcement feature, indicating whether
+    #   Client Route Enforcement is `true` (enabled) or `false` (disabled).
     #
     #   Valid values: `true | false`
     #
@@ -6469,7 +6470,7 @@ module Aws::EC2
     #   Indicates whether the client VPN session is disconnected after the
     #   maximum `sessionTimeoutHours` is reached. If `true`, users are
     #   prompted to reconnect client VPN. If `false`, client VPN attempts to
-    #   reconnect automatically. The default value is `false`.
+    #   reconnect automatically. The default value is `true`.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ClientVpnEndpoint AWS API Documentation
@@ -8334,7 +8335,7 @@ module Aws::EC2
     #   maximum timeout specified in `SessionTimeoutHours` is reached. If
     #   `true`, users are prompted to reconnect client VPN. If `false`,
     #   client VPN attempts to reconnect automatically. The default value is
-    #   `false`.
+    #   `true`.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateClientVpnEndpointRequest AWS API Documentation
@@ -9908,6 +9909,24 @@ module Aws::EC2
     #   addresses. This option is disabled by default.
     #   @return [Boolean]
     #
+    # @!attribute [rw] metered_account
+    #   A metered account is an Amazon Web Services account that is charged
+    #   for active IP addresses managed in IPAM. For more information, see
+    #   [Enable cost distribution][1] in the *Amazon VPC IPAM User Guide*.
+    #
+    #   Possible values:
+    #
+    #   * `ipam-owner` (default): The Amazon Web Services account which owns
+    #     the IPAM is charged for all active IP addresses managed in IPAM.
+    #
+    #   * `resource-owner`: The Amazon Web Services account that owns the IP
+    #     address is charged for the active IP address.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/vpc/latest/ipam/ipam-enable-cost-distro.html
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateIpamRequest AWS API Documentation
     #
     class CreateIpamRequest < Struct.new(
@@ -9917,7 +9936,8 @@ module Aws::EC2
       :tag_specifications,
       :client_token,
       :tier,
-      :enable_private_gua)
+      :enable_private_gua,
+      :metered_account)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -14430,8 +14450,6 @@ module Aws::EC2
     #   To use a private hosted zone, you must set the following VPC
     #   attributes to `true`: `enableDnsHostnames` and `enableDnsSupport`.
     #   Use ModifyVpcAttribute to set the VPC attributes.
-    #
-    #   Default: `true`
     #   @return [Boolean]
     #
     # @!attribute [rw] tag_specifications
@@ -18887,7 +18905,9 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] instance_count
-    #   The number of instances for which to reserve capacity.
+    #   The number of instances for which to reserve capacity. Each Capacity
+    #   Block can have up to 64 instances, and you can have up to 256
+    #   instances across Capacity Blocks.
     #   @return [Integer]
     #
     # @!attribute [rw] start_date_range
@@ -18899,7 +18919,9 @@ module Aws::EC2
     #   @return [Time]
     #
     # @!attribute [rw] capacity_duration_hours
-    #   The number of hours for which to reserve Capacity Block.
+    #   The reservation duration for the Capacity Block, in hours. You must
+    #   specify the duration in 1-day increments up 14 days, and in 7-day
+    #   increments up to 182 days.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
@@ -36586,11 +36608,11 @@ module Aws::EC2
     #   Amazon EBS encryption. For more information, see [Supported instance
     #   types][2].
     #
-    #   This parameter is not returned by .
+    #   This parameter is not returned by [DescribeImageAttribute][3].
     #
-    #   For and , whether you can include this parameter, and the allowed
-    #   values differ depending on the type of block device mapping you are
-    #   creating.
+    #   For [CreateImage][4] and [RegisterImage][5], whether you can include
+    #   this parameter, and the allowed values differ depending on the type
+    #   of block device mapping you are creating.
     #
     #   * If you are creating a block device mapping for a **new (empty)
     #     volume**, you can include this parameter, and specify either
@@ -36618,6 +36640,9 @@ module Aws::EC2
     #
     #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html
     #   [2]: https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption-requirements.html#ebs-encryption_supported_instances
+    #   [3]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeImageAttribute
+    #   [4]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage
+    #   [5]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RegisterImage
     #   @return [Boolean]
     #
     # @!attribute [rw] delete_on_termination
@@ -45203,6 +45228,9 @@ module Aws::EC2
     #
     #   * For instance types with GPU accelerators, specify `gpu`.
     #
+    #   * For instance types with Inference accelerators, specify
+    #     `inference`.
+    #
     #   Default: Any accelerator type
     #   @return [Array<String>]
     #
@@ -45685,6 +45713,9 @@ module Aws::EC2
     #   * For instance types with FPGA accelerators, specify `fpga`.
     #
     #   * For instance types with GPU accelerators, specify `gpu`.
+    #
+    #   * For instance types with Inference accelerators, specify
+    #     `inference`.
     #
     #   Default: Any accelerator type
     #   @return [Array<String>]
@@ -46757,6 +46788,24 @@ module Aws::EC2
     #   addresses. This option is disabled by default.
     #   @return [Boolean]
     #
+    # @!attribute [rw] metered_account
+    #   A metered account is an Amazon Web Services account that is charged
+    #   for active IP addresses managed in IPAM. For more information, see
+    #   [Enable cost distribution][1] in the *Amazon VPC IPAM User Guide*.
+    #
+    #   Possible values:
+    #
+    #   * `ipam-owner` (default): The Amazon Web Services account which owns
+    #     the IPAM is charged for all active IP addresses managed in IPAM.
+    #
+    #   * `resource-owner`: The Amazon Web Services account that owns the IP
+    #     address is charged for the active IP address.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/vpc/latest/ipam/ipam-enable-cost-distro.html
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/Ipam AWS API Documentation
     #
     class Ipam < Struct.new(
@@ -46776,7 +46825,8 @@ module Aws::EC2
       :resource_discovery_association_count,
       :state_message,
       :tier,
-      :enable_private_gua)
+      :enable_private_gua,
+      :metered_account)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -51981,7 +52031,7 @@ module Aws::EC2
     #   maximum timeout specified in `sessionTimeoutHours` is reached. If
     #   `true`, users are prompted to reconnect client VPN. If `false`,
     #   client VPN attempts to reconnect automatically. The default value is
-    #   `false`.
+    #   `true`.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyClientVpnEndpointRequest AWS API Documentation
@@ -53451,6 +53501,24 @@ module Aws::EC2
     #   addresses. This option is disabled by default.
     #   @return [Boolean]
     #
+    # @!attribute [rw] metered_account
+    #   A metered account is an Amazon Web Services account that is charged
+    #   for active IP addresses managed in IPAM. For more information, see
+    #   [Enable cost distribution][1] in the *Amazon VPC IPAM User Guide*.
+    #
+    #   Possible values:
+    #
+    #   * `ipam-owner` (default): The Amazon Web Services account which owns
+    #     the IPAM is charged for all active IP addresses managed in IPAM.
+    #
+    #   * `resource-owner`: The Amazon Web Services account that owns the IP
+    #     address is charged for the active IP address.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/vpc/latest/ipam/ipam-enable-cost-distro.html
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyIpamRequest AWS API Documentation
     #
     class ModifyIpamRequest < Struct.new(
@@ -53460,7 +53528,8 @@ module Aws::EC2
       :add_operating_regions,
       :remove_operating_regions,
       :tier,
-      :enable_private_gua)
+      :enable_private_gua,
+      :metered_account)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -59006,12 +59075,19 @@ module Aws::EC2
     #   unsupported instance families.
     #
     #   If you specify an unsupported instance family as a value for
-    #   baseline performance, the API returns an empty response for and an
-    #   exception for , , , and .
+    #   baseline performance, the API returns an empty response for
+    #   [GetInstanceTypesFromInstanceRequirements][2] and an exception for
+    #   [CreateFleet][3], [RequestSpotFleet][4], [ModifyFleet][5], and
+    #   [ModifySpotFleetRequest][6].
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-type-names.html
+    #   [2]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetInstanceTypesFromInstanceRequirements
+    #   [3]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFleet
+    #   [4]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet
+    #   [5]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyFleet
+    #   [6]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifySpotFleetRequest
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/PerformanceFactorReference AWS API Documentation
@@ -59069,12 +59145,19 @@ module Aws::EC2
     #   unsupported instance families.
     #
     #   If you specify an unsupported instance family as a value for
-    #   baseline performance, the API returns an empty response for and an
-    #   exception for , , , and .
+    #   baseline performance, the API returns an empty response for
+    #   [GetInstanceTypesFromInstanceRequirements][2] and an exception for
+    #   [CreateFleet][3], [RequestSpotFleet][4], [ModifyFleet][5], and
+    #   [ModifySpotFleetRequest][6].
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-type-names.html
+    #   [2]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetInstanceTypesFromInstanceRequirements
+    #   [3]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFleet
+    #   [4]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet
+    #   [5]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyFleet
+    #   [6]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifySpotFleetRequest
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/PerformanceFactorReferenceRequest AWS API Documentation
@@ -69792,12 +69875,22 @@ module Aws::EC2
     #   @return [Boolean]
     #
     # @!attribute [rw] force
-    #   Forces the instances to stop. The instances do not have an
-    #   opportunity to flush file system caches or file system metadata. If
-    #   you use this option, you must perform file system check and repair
-    #   procedures. This option is not recommended for Windows instances.
+    #   Forces the instance to stop. The instance will first attempt a
+    #   graceful shutdown, which includes flushing file system caches and
+    #   metadata. If the graceful shutdown fails to complete within the
+    #   timeout period, the instance shuts down forcibly without flushing
+    #   the file system caches and metadata.
+    #
+    #   After using this option, you must perform file system check and
+    #   repair procedures. This option is not recommended for Windows
+    #   instances. For more information, see [Troubleshoot Amazon EC2
+    #   instance stop issues][1] in the *Amazon EC2 User Guide*.
     #
     #   Default: `false`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesStopping.html
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/StopInstancesRequest AWS API Documentation

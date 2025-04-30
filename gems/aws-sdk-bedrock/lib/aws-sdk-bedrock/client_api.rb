@@ -81,6 +81,7 @@ module Aws::Bedrock
     CustomModelUnitsVersion = Shapes::StringShape.new(name: 'CustomModelUnitsVersion')
     CustomizationConfig = Shapes::UnionShape.new(name: 'CustomizationConfig')
     CustomizationType = Shapes::StringShape.new(name: 'CustomizationType')
+    DataProcessingDetails = Shapes::StructureShape.new(name: 'DataProcessingDetails')
     DeleteCustomModelRequest = Shapes::StructureShape.new(name: 'DeleteCustomModelRequest')
     DeleteCustomModelResponse = Shapes::StructureShape.new(name: 'DeleteCustomModelResponse')
     DeleteGuardrailRequest = Shapes::StructureShape.new(name: 'DeleteGuardrailRequest')
@@ -312,6 +313,7 @@ module Aws::Bedrock
     InvocationLogSource = Shapes::UnionShape.new(name: 'InvocationLogSource')
     InvocationLogsConfig = Shapes::StructureShape.new(name: 'InvocationLogsConfig')
     JobName = Shapes::StringShape.new(name: 'JobName')
+    JobStatusDetails = Shapes::StringShape.new(name: 'JobStatusDetails')
     KbInferenceConfig = Shapes::StructureShape.new(name: 'KbInferenceConfig')
     KeyPrefix = Shapes::StringShape.new(name: 'KeyPrefix')
     KmsKeyArn = Shapes::StringShape.new(name: 'KmsKeyArn')
@@ -470,6 +472,7 @@ module Aws::Bedrock
     SortModelsBy = Shapes::StringShape.new(name: 'SortModelsBy')
     SortOrder = Shapes::StringShape.new(name: 'SortOrder')
     Status = Shapes::StringShape.new(name: 'Status')
+    StatusDetails = Shapes::StructureShape.new(name: 'StatusDetails')
     StopEvaluationJobRequest = Shapes::StructureShape.new(name: 'StopEvaluationJobRequest')
     StopEvaluationJobResponse = Shapes::StructureShape.new(name: 'StopEvaluationJobResponse')
     StopModelCustomizationJobRequest = Shapes::StructureShape.new(name: 'StopModelCustomizationJobRequest')
@@ -497,6 +500,7 @@ module Aws::Bedrock
     TooManyTagsException = Shapes::StructureShape.new(name: 'TooManyTagsException')
     TopP = Shapes::FloatShape.new(name: 'TopP')
     TrainingDataConfig = Shapes::StructureShape.new(name: 'TrainingDataConfig')
+    TrainingDetails = Shapes::StructureShape.new(name: 'TrainingDetails')
     TrainingMetrics = Shapes::StructureShape.new(name: 'TrainingMetrics')
     UntagResourceRequest = Shapes::StructureShape.new(name: 'UntagResourceRequest')
     UntagResourceResponse = Shapes::StructureShape.new(name: 'UntagResourceResponse')
@@ -508,6 +512,7 @@ module Aws::Bedrock
     UpdateProvisionedModelThroughputResponse = Shapes::StructureShape.new(name: 'UpdateProvisionedModelThroughputResponse')
     UsePromptResponse = Shapes::BooleanShape.new(name: 'UsePromptResponse')
     ValidationDataConfig = Shapes::StructureShape.new(name: 'ValidationDataConfig')
+    ValidationDetails = Shapes::StructureShape.new(name: 'ValidationDetails')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
     ValidationMetrics = Shapes::ListShape.new(name: 'ValidationMetrics')
     Validator = Shapes::StructureShape.new(name: 'Validator')
@@ -757,6 +762,11 @@ module Aws::Bedrock
     CustomizationConfig.add_member_subclass(:distillation_config, Types::CustomizationConfig::DistillationConfig)
     CustomizationConfig.add_member_subclass(:unknown, Types::CustomizationConfig::Unknown)
     CustomizationConfig.struct_class = Types::CustomizationConfig
+
+    DataProcessingDetails.add_member(:status, Shapes::ShapeRef.new(shape: JobStatusDetails, location_name: "status"))
+    DataProcessingDetails.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "creationTime"))
+    DataProcessingDetails.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastModifiedTime"))
+    DataProcessingDetails.struct_class = Types::DataProcessingDetails
 
     DeleteCustomModelRequest.add_member(:model_identifier, Shapes::ShapeRef.new(shape: ModelIdentifier, required: true, location: "uri", location_name: "modelIdentifier"))
     DeleteCustomModelRequest.struct_class = Types::DeleteCustomModelRequest
@@ -1120,6 +1130,7 @@ module Aws::Bedrock
     GetModelCustomizationJobResponse.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
     GetModelCustomizationJobResponse.add_member(:status, Shapes::ShapeRef.new(shape: ModelCustomizationJobStatus, location_name: "status"))
     GetModelCustomizationJobResponse.add_member(:failure_message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "failureMessage"))
+    GetModelCustomizationJobResponse.add_member(:status_details, Shapes::ShapeRef.new(shape: StatusDetails, location_name: "statusDetails"))
     GetModelCustomizationJobResponse.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "creationTime"))
     GetModelCustomizationJobResponse.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastModifiedTime"))
     GetModelCustomizationJobResponse.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
@@ -1729,6 +1740,7 @@ module Aws::Bedrock
     ModelCustomizationJobSummary.add_member(:job_name, Shapes::ShapeRef.new(shape: JobName, required: true, location_name: "jobName"))
     ModelCustomizationJobSummary.add_member(:status, Shapes::ShapeRef.new(shape: ModelCustomizationJobStatus, required: true, location_name: "status"))
     ModelCustomizationJobSummary.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastModifiedTime"))
+    ModelCustomizationJobSummary.add_member(:status_details, Shapes::ShapeRef.new(shape: StatusDetails, location_name: "statusDetails"))
     ModelCustomizationJobSummary.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "creationTime"))
     ModelCustomizationJobSummary.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
     ModelCustomizationJobSummary.add_member(:custom_model_arn, Shapes::ShapeRef.new(shape: CustomModelArn, location_name: "customModelArn"))
@@ -1980,6 +1992,11 @@ module Aws::Bedrock
     ServiceUnavailableException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ServiceUnavailableException.struct_class = Types::ServiceUnavailableException
 
+    StatusDetails.add_member(:validation_details, Shapes::ShapeRef.new(shape: ValidationDetails, location_name: "validationDetails"))
+    StatusDetails.add_member(:data_processing_details, Shapes::ShapeRef.new(shape: DataProcessingDetails, location_name: "dataProcessingDetails"))
+    StatusDetails.add_member(:training_details, Shapes::ShapeRef.new(shape: TrainingDetails, location_name: "trainingDetails"))
+    StatusDetails.struct_class = Types::StatusDetails
+
     StopEvaluationJobRequest.add_member(:job_identifier, Shapes::ShapeRef.new(shape: EvaluationJobIdentifier, required: true, location: "uri", location_name: "jobIdentifier"))
     StopEvaluationJobRequest.struct_class = Types::StopEvaluationJobRequest
 
@@ -2032,6 +2049,11 @@ module Aws::Bedrock
     TrainingDataConfig.add_member(:invocation_logs_config, Shapes::ShapeRef.new(shape: InvocationLogsConfig, location_name: "invocationLogsConfig"))
     TrainingDataConfig.struct_class = Types::TrainingDataConfig
 
+    TrainingDetails.add_member(:status, Shapes::ShapeRef.new(shape: JobStatusDetails, location_name: "status"))
+    TrainingDetails.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "creationTime"))
+    TrainingDetails.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastModifiedTime"))
+    TrainingDetails.struct_class = Types::TrainingDetails
+
     TrainingMetrics.add_member(:training_loss, Shapes::ShapeRef.new(shape: MetricFloat, location_name: "trainingLoss"))
     TrainingMetrics.struct_class = Types::TrainingMetrics
 
@@ -2077,6 +2099,11 @@ module Aws::Bedrock
 
     ValidationDataConfig.add_member(:validators, Shapes::ShapeRef.new(shape: Validators, required: true, location_name: "validators"))
     ValidationDataConfig.struct_class = Types::ValidationDataConfig
+
+    ValidationDetails.add_member(:status, Shapes::ShapeRef.new(shape: JobStatusDetails, location_name: "status"))
+    ValidationDetails.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "creationTime"))
+    ValidationDetails.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastModifiedTime"))
+    ValidationDetails.struct_class = Types::ValidationDetails
 
     ValidationException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ValidationException.struct_class = Types::ValidationException

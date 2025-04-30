@@ -325,6 +325,10 @@ module Aws::MailManager
     SenderIpAddress = Shapes::StringShape.new(name: 'SenderIpAddress')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
     SmtpPassword = Shapes::StringShape.new(name: 'SmtpPassword')
+    SnsAction = Shapes::StructureShape.new(name: 'SnsAction')
+    SnsNotificationEncoding = Shapes::StringShape.new(name: 'SnsNotificationEncoding')
+    SnsNotificationPayloadType = Shapes::StringShape.new(name: 'SnsNotificationPayloadType')
+    SnsTopicArn = Shapes::StringShape.new(name: 'SnsTopicArn')
     StartAddressListImportJobRequest = Shapes::StructureShape.new(name: 'StartAddressListImportJobRequest')
     StartAddressListImportJobResponse = Shapes::StructureShape.new(name: 'StartAddressListImportJobResponse')
     StartArchiveExportRequest = Shapes::StructureShape.new(name: 'StartArchiveExportRequest')
@@ -1151,6 +1155,7 @@ module Aws::MailManager
     RuleAction.add_member(:deliver_to_mailbox, Shapes::ShapeRef.new(shape: DeliverToMailboxAction, location_name: "DeliverToMailbox"))
     RuleAction.add_member(:deliver_to_q_business, Shapes::ShapeRef.new(shape: DeliverToQBusinessAction, location_name: "DeliverToQBusiness"))
     RuleAction.add_member(:drop, Shapes::ShapeRef.new(shape: DropAction, location_name: "Drop"))
+    RuleAction.add_member(:publish_to_sns, Shapes::ShapeRef.new(shape: SnsAction, location_name: "PublishToSns"))
     RuleAction.add_member(:relay, Shapes::ShapeRef.new(shape: RelayAction, location_name: "Relay"))
     RuleAction.add_member(:replace_recipient, Shapes::ShapeRef.new(shape: ReplaceRecipientAction, location_name: "ReplaceRecipient"))
     RuleAction.add_member(:send, Shapes::ShapeRef.new(shape: SendAction, location_name: "Send"))
@@ -1161,6 +1166,7 @@ module Aws::MailManager
     RuleAction.add_member_subclass(:deliver_to_mailbox, Types::RuleAction::DeliverToMailbox)
     RuleAction.add_member_subclass(:deliver_to_q_business, Types::RuleAction::DeliverToQBusiness)
     RuleAction.add_member_subclass(:drop, Types::RuleAction::Drop)
+    RuleAction.add_member_subclass(:publish_to_sns, Types::RuleAction::PublishToSns)
     RuleAction.add_member_subclass(:relay, Types::RuleAction::Relay)
     RuleAction.add_member_subclass(:replace_recipient, Types::RuleAction::ReplaceRecipient)
     RuleAction.add_member_subclass(:send, Types::RuleAction::Send)
@@ -1313,6 +1319,13 @@ module Aws::MailManager
 
     ServiceQuotaExceededException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     ServiceQuotaExceededException.struct_class = Types::ServiceQuotaExceededException
+
+    SnsAction.add_member(:action_failure_policy, Shapes::ShapeRef.new(shape: ActionFailurePolicy, location_name: "ActionFailurePolicy"))
+    SnsAction.add_member(:encoding, Shapes::ShapeRef.new(shape: SnsNotificationEncoding, location_name: "Encoding"))
+    SnsAction.add_member(:payload_type, Shapes::ShapeRef.new(shape: SnsNotificationPayloadType, location_name: "PayloadType"))
+    SnsAction.add_member(:role_arn, Shapes::ShapeRef.new(shape: IamRoleArn, required: true, location_name: "RoleArn"))
+    SnsAction.add_member(:topic_arn, Shapes::ShapeRef.new(shape: SnsTopicArn, required: true, location_name: "TopicArn"))
+    SnsAction.struct_class = Types::SnsAction
 
     StartAddressListImportJobRequest.add_member(:job_id, Shapes::ShapeRef.new(shape: JobId, required: true, location_name: "JobId"))
     StartAddressListImportJobRequest.struct_class = Types::StartAddressListImportJobRequest
