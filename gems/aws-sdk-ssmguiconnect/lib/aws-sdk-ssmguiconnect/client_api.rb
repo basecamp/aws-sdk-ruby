@@ -46,7 +46,7 @@ module Aws::SSMGuiConnect
     ConnectionRecordingPreferences.add_member(:recording_destinations, Shapes::ShapeRef.new(shape: RecordingDestinations, required: true, location_name: "RecordingDestinations"))
     ConnectionRecordingPreferences.struct_class = Types::ConnectionRecordingPreferences
 
-    DeleteConnectionRecordingPreferencesRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    DeleteConnectionRecordingPreferencesRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     DeleteConnectionRecordingPreferencesRequest.struct_class = Types::DeleteConnectionRecordingPreferencesRequest
 
     DeleteConnectionRecordingPreferencesResponse.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken"))
@@ -77,7 +77,7 @@ module Aws::SSMGuiConnect
     ThrottlingException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, required: true, location_name: "message"))
     ThrottlingException.struct_class = Types::ThrottlingException
 
-    UpdateConnectionRecordingPreferencesRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    UpdateConnectionRecordingPreferencesRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     UpdateConnectionRecordingPreferencesRequest.add_member(:connection_recording_preferences, Shapes::ShapeRef.new(shape: ConnectionRecordingPreferences, required: true, location_name: "ConnectionRecordingPreferences"))
     UpdateConnectionRecordingPreferencesRequest.struct_class = Types::UpdateConnectionRecordingPreferencesRequest
 

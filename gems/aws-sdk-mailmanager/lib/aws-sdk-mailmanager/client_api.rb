@@ -472,7 +472,7 @@ module Aws::MailManager
     ConflictException.struct_class = Types::ConflictException
 
     CreateAddonInstanceRequest.add_member(:addon_subscription_id, Shapes::ShapeRef.new(shape: AddonSubscriptionId, required: true, location_name: "AddonSubscriptionId"))
-    CreateAddonInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateAddonInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateAddonInstanceRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CreateAddonInstanceRequest.struct_class = Types::CreateAddonInstanceRequest
 
@@ -480,7 +480,7 @@ module Aws::MailManager
     CreateAddonInstanceResponse.struct_class = Types::CreateAddonInstanceResponse
 
     CreateAddonSubscriptionRequest.add_member(:addon_name, Shapes::ShapeRef.new(shape: AddonName, required: true, location_name: "AddonName"))
-    CreateAddonSubscriptionRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateAddonSubscriptionRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateAddonSubscriptionRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CreateAddonSubscriptionRequest.struct_class = Types::CreateAddonSubscriptionRequest
 
@@ -488,7 +488,7 @@ module Aws::MailManager
     CreateAddonSubscriptionResponse.struct_class = Types::CreateAddonSubscriptionResponse
 
     CreateAddressListImportJobRequest.add_member(:address_list_id, Shapes::ShapeRef.new(shape: AddressListId, required: true, location_name: "AddressListId"))
-    CreateAddressListImportJobRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateAddressListImportJobRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateAddressListImportJobRequest.add_member(:import_data_format, Shapes::ShapeRef.new(shape: ImportDataFormat, required: true, location_name: "ImportDataFormat"))
     CreateAddressListImportJobRequest.add_member(:name, Shapes::ShapeRef.new(shape: JobName, required: true, location_name: "Name"))
     CreateAddressListImportJobRequest.struct_class = Types::CreateAddressListImportJobRequest
@@ -498,7 +498,7 @@ module Aws::MailManager
     CreateAddressListImportJobResponse.struct_class = Types::CreateAddressListImportJobResponse
 
     CreateAddressListRequest.add_member(:address_list_name, Shapes::ShapeRef.new(shape: AddressListName, required: true, location_name: "AddressListName"))
-    CreateAddressListRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateAddressListRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateAddressListRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CreateAddressListRequest.struct_class = Types::CreateAddressListRequest
 
@@ -506,7 +506,7 @@ module Aws::MailManager
     CreateAddressListResponse.struct_class = Types::CreateAddressListResponse
 
     CreateArchiveRequest.add_member(:archive_name, Shapes::ShapeRef.new(shape: ArchiveNameString, required: true, location_name: "ArchiveName"))
-    CreateArchiveRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateArchiveRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateArchiveRequest.add_member(:kms_key_arn, Shapes::ShapeRef.new(shape: KmsKeyArn, location_name: "KmsKeyArn"))
     CreateArchiveRequest.add_member(:retention, Shapes::ShapeRef.new(shape: ArchiveRetention, location_name: "Retention"))
     CreateArchiveRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
@@ -515,7 +515,7 @@ module Aws::MailManager
     CreateArchiveResponse.add_member(:archive_id, Shapes::ShapeRef.new(shape: ArchiveIdString, required: true, location_name: "ArchiveId"))
     CreateArchiveResponse.struct_class = Types::CreateArchiveResponse
 
-    CreateIngressPointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateIngressPointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateIngressPointRequest.add_member(:ingress_point_configuration, Shapes::ShapeRef.new(shape: IngressPointConfiguration, location_name: "IngressPointConfiguration"))
     CreateIngressPointRequest.add_member(:ingress_point_name, Shapes::ShapeRef.new(shape: IngressPointName, required: true, location_name: "IngressPointName"))
     CreateIngressPointRequest.add_member(:network_configuration, Shapes::ShapeRef.new(shape: NetworkConfiguration, location_name: "NetworkConfiguration"))
@@ -529,7 +529,7 @@ module Aws::MailManager
     CreateIngressPointResponse.struct_class = Types::CreateIngressPointResponse
 
     CreateRelayRequest.add_member(:authentication, Shapes::ShapeRef.new(shape: RelayAuthentication, required: true, location_name: "Authentication"))
-    CreateRelayRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateRelayRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateRelayRequest.add_member(:relay_name, Shapes::ShapeRef.new(shape: RelayName, required: true, location_name: "RelayName"))
     CreateRelayRequest.add_member(:server_name, Shapes::ShapeRef.new(shape: RelayServerName, required: true, location_name: "ServerName"))
     CreateRelayRequest.add_member(:server_port, Shapes::ShapeRef.new(shape: RelayServerPort, required: true, location_name: "ServerPort"))
@@ -539,7 +539,7 @@ module Aws::MailManager
     CreateRelayResponse.add_member(:relay_id, Shapes::ShapeRef.new(shape: RelayId, required: true, location_name: "RelayId"))
     CreateRelayResponse.struct_class = Types::CreateRelayResponse
 
-    CreateRuleSetRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateRuleSetRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateRuleSetRequest.add_member(:rule_set_name, Shapes::ShapeRef.new(shape: RuleSetName, required: true, location_name: "RuleSetName"))
     CreateRuleSetRequest.add_member(:rules, Shapes::ShapeRef.new(shape: Rules, required: true, location_name: "Rules"))
     CreateRuleSetRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
@@ -548,7 +548,7 @@ module Aws::MailManager
     CreateRuleSetResponse.add_member(:rule_set_id, Shapes::ShapeRef.new(shape: RuleSetId, required: true, location_name: "RuleSetId"))
     CreateRuleSetResponse.struct_class = Types::CreateRuleSetResponse
 
-    CreateTrafficPolicyRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateTrafficPolicyRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateTrafficPolicyRequest.add_member(:default_action, Shapes::ShapeRef.new(shape: AcceptAction, required: true, location_name: "DefaultAction"))
     CreateTrafficPolicyRequest.add_member(:max_message_size_bytes, Shapes::ShapeRef.new(shape: MaxMessageSizeBytes, location_name: "MaxMessageSizeBytes"))
     CreateTrafficPolicyRequest.add_member(:policy_statements, Shapes::ShapeRef.new(shape: PolicyStatementList, required: true, location_name: "PolicyStatements"))

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.303.0 (2025-05-01)
+------------------
+
+* Feature - Feature - Adding support for Scheduled and Rolling Update Software in Sagemaker Hyperpod.
+
 1.302.0 (2025-04-29)
 ------------------
 

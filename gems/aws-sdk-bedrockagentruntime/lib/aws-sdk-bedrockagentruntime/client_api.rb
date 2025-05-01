@@ -672,7 +672,7 @@ module Aws::BedrockAgentRuntime
     Citation.add_member(:retrieved_references, Shapes::ShapeRef.new(shape: RetrievedReferences, location_name: "retrievedReferences"))
     Citation.struct_class = Types::Citation
 
-    CitationEvent.add_member(:citation, Shapes::ShapeRef.new(shape: Citation, deprecated: true, location_name: "citation", metadata: {"deprecatedMessage"=>"Citation is deprecated. Please use GeneratedResponsePart and RetrievedReferences for citation event."}))
+    CitationEvent.add_member(:citation, Shapes::ShapeRef.new(shape: Citation, deprecated: true, location_name: "citation", metadata: {"deprecatedMessage" => "Citation is deprecated. Please use GeneratedResponsePart and RetrievedReferences for citation event."}))
     CitationEvent.add_member(:generated_response_part, Shapes::ShapeRef.new(shape: GeneratedResponsePart, location_name: "generatedResponsePart"))
     CitationEvent.add_member(:retrieved_references, Shapes::ShapeRef.new(shape: RetrievedReferences, location_name: "retrievedReferences"))
     CitationEvent.struct_class = Types::CitationEvent
@@ -1386,7 +1386,7 @@ module Aws::BedrockAgentRuntime
 
     KnowledgeBaseVectorSearchConfiguration.add_member(:filter, Shapes::ShapeRef.new(shape: RetrievalFilter, location_name: "filter"))
     KnowledgeBaseVectorSearchConfiguration.add_member(:implicit_filter_configuration, Shapes::ShapeRef.new(shape: ImplicitFilterConfiguration, location_name: "implicitFilterConfiguration"))
-    KnowledgeBaseVectorSearchConfiguration.add_member(:number_of_results, Shapes::ShapeRef.new(shape: KnowledgeBaseVectorSearchConfigurationNumberOfResultsInteger, location_name: "numberOfResults", metadata: {"box"=>true}))
+    KnowledgeBaseVectorSearchConfiguration.add_member(:number_of_results, Shapes::ShapeRef.new(shape: KnowledgeBaseVectorSearchConfigurationNumberOfResultsInteger, location_name: "numberOfResults", metadata: {"box" => true}))
     KnowledgeBaseVectorSearchConfiguration.add_member(:override_search_type, Shapes::ShapeRef.new(shape: SearchType, location_name: "overrideSearchType"))
     KnowledgeBaseVectorSearchConfiguration.add_member(:reranking_configuration, Shapes::ShapeRef.new(shape: VectorSearchRerankingConfiguration, location_name: "rerankingConfiguration"))
     KnowledgeBaseVectorSearchConfiguration.struct_class = Types::KnowledgeBaseVectorSearchConfiguration

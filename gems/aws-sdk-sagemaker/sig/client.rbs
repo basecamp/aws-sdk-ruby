@@ -748,6 +748,27 @@ module Aws
                                 override_vpc_config: {
                                   security_group_ids: Array[::String],
                                   subnets: Array[::String]
+                                }?,
+                                scheduled_update_config: {
+                                  schedule_expression: ::String,
+                                  deployment_config: {
+                                    rolling_update_policy: {
+                                      maximum_batch_size: {
+                                        type: ("INSTANCE_COUNT" | "CAPACITY_PERCENTAGE"),
+                                        value: ::Integer
+                                      },
+                                      rollback_maximum_batch_size: {
+                                        type: ("INSTANCE_COUNT" | "CAPACITY_PERCENTAGE"),
+                                        value: ::Integer
+                                      }?
+                                    }?,
+                                    wait_interval_in_seconds: ::Integer?,
+                                    auto_rollback_configuration: Array[
+                                      {
+                                        alarm_name: ::String
+                                      },
+                                    ]?
+                                  }?
                                 }?
                               },
                             ],
@@ -8566,6 +8587,27 @@ module Aws
                                 override_vpc_config: {
                                   security_group_ids: Array[::String],
                                   subnets: Array[::String]
+                                }?,
+                                scheduled_update_config: {
+                                  schedule_expression: ::String,
+                                  deployment_config: {
+                                    rolling_update_policy: {
+                                      maximum_batch_size: {
+                                        type: ("INSTANCE_COUNT" | "CAPACITY_PERCENTAGE"),
+                                        value: ::Integer
+                                      },
+                                      rollback_maximum_batch_size: {
+                                        type: ("INSTANCE_COUNT" | "CAPACITY_PERCENTAGE"),
+                                        value: ::Integer
+                                      }?
+                                    }?,
+                                    wait_interval_in_seconds: ::Integer?,
+                                    auto_rollback_configuration: Array[
+                                      {
+                                        alarm_name: ::String
+                                      },
+                                    ]?
+                                  }?
                                 }?
                               },
                             ],
@@ -8602,7 +8644,30 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SageMaker/Client.html#update_cluster_software-instance_method
       def update_cluster_software: (
-                                     cluster_name: ::String
+                                     cluster_name: ::String,
+                                     ?instance_groups: Array[
+                                       {
+                                         instance_group_name: ::String
+                                       },
+                                     ],
+                                     ?deployment_config: {
+                                       rolling_update_policy: {
+                                         maximum_batch_size: {
+                                           type: ("INSTANCE_COUNT" | "CAPACITY_PERCENTAGE"),
+                                           value: ::Integer
+                                         },
+                                         rollback_maximum_batch_size: {
+                                           type: ("INSTANCE_COUNT" | "CAPACITY_PERCENTAGE"),
+                                           value: ::Integer
+                                         }?
+                                       }?,
+                                       wait_interval_in_seconds: ::Integer?,
+                                       auto_rollback_configuration: Array[
+                                         {
+                                           alarm_name: ::String
+                                         },
+                                       ]?
+                                     }
                                    ) -> _UpdateClusterSoftwareResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateClusterSoftwareResponseSuccess
 

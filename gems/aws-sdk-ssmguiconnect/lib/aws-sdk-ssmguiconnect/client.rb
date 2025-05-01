@@ -597,7 +597,7 @@ module Aws::SSMGuiConnect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ssmguiconnect'
-      context[:gem_version] = '1.0.0'
+      context[:gem_version] = '1.1.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -584,7 +584,7 @@ module Aws::Bedrock
 
     CreateEvaluationJobRequest.add_member(:job_name, Shapes::ShapeRef.new(shape: EvaluationJobName, required: true, location_name: "jobName"))
     CreateEvaluationJobRequest.add_member(:job_description, Shapes::ShapeRef.new(shape: EvaluationJobDescription, location_name: "jobDescription"))
-    CreateEvaluationJobRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    CreateEvaluationJobRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken" => true}))
     CreateEvaluationJobRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
     CreateEvaluationJobRequest.add_member(:customer_encryption_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "customerEncryptionKeyId"))
     CreateEvaluationJobRequest.add_member(:job_tags, Shapes::ShapeRef.new(shape: TagList, location_name: "jobTags"))
@@ -608,7 +608,7 @@ module Aws::Bedrock
     CreateGuardrailRequest.add_member(:blocked_outputs_messaging, Shapes::ShapeRef.new(shape: GuardrailBlockedMessaging, required: true, location_name: "blockedOutputsMessaging"))
     CreateGuardrailRequest.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "kmsKeyId"))
     CreateGuardrailRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tags"))
-    CreateGuardrailRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    CreateGuardrailRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken" => true}))
     CreateGuardrailRequest.struct_class = Types::CreateGuardrailRequest
 
     CreateGuardrailResponse.add_member(:guardrail_id, Shapes::ShapeRef.new(shape: GuardrailId, required: true, location_name: "guardrailId"))
@@ -619,7 +619,7 @@ module Aws::Bedrock
 
     CreateGuardrailVersionRequest.add_member(:guardrail_identifier, Shapes::ShapeRef.new(shape: GuardrailIdentifier, required: true, location: "uri", location_name: "guardrailIdentifier"))
     CreateGuardrailVersionRequest.add_member(:description, Shapes::ShapeRef.new(shape: GuardrailDescription, location_name: "description"))
-    CreateGuardrailVersionRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    CreateGuardrailVersionRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken" => true}))
     CreateGuardrailVersionRequest.struct_class = Types::CreateGuardrailVersionRequest
 
     CreateGuardrailVersionResponse.add_member(:guardrail_id, Shapes::ShapeRef.new(shape: GuardrailId, required: true, location_name: "guardrailId"))
@@ -628,7 +628,7 @@ module Aws::Bedrock
 
     CreateInferenceProfileRequest.add_member(:inference_profile_name, Shapes::ShapeRef.new(shape: InferenceProfileName, required: true, location_name: "inferenceProfileName"))
     CreateInferenceProfileRequest.add_member(:description, Shapes::ShapeRef.new(shape: InferenceProfileDescription, location_name: "description"))
-    CreateInferenceProfileRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    CreateInferenceProfileRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken" => true}))
     CreateInferenceProfileRequest.add_member(:model_source, Shapes::ShapeRef.new(shape: InferenceProfileModelSource, required: true, location_name: "modelSource"))
     CreateInferenceProfileRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tags"))
     CreateInferenceProfileRequest.struct_class = Types::CreateInferenceProfileRequest
@@ -641,7 +641,7 @@ module Aws::Bedrock
     CreateMarketplaceModelEndpointRequest.add_member(:endpoint_config, Shapes::ShapeRef.new(shape: EndpointConfig, required: true, location_name: "endpointConfig"))
     CreateMarketplaceModelEndpointRequest.add_member(:accept_eula, Shapes::ShapeRef.new(shape: AcceptEula, location_name: "acceptEula"))
     CreateMarketplaceModelEndpointRequest.add_member(:endpoint_name, Shapes::ShapeRef.new(shape: EndpointName, required: true, location_name: "endpointName"))
-    CreateMarketplaceModelEndpointRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    CreateMarketplaceModelEndpointRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken" => true}))
     CreateMarketplaceModelEndpointRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tags"))
     CreateMarketplaceModelEndpointRequest.struct_class = Types::CreateMarketplaceModelEndpointRequest
 
@@ -652,7 +652,7 @@ module Aws::Bedrock
     CreateModelCopyJobRequest.add_member(:target_model_name, Shapes::ShapeRef.new(shape: CustomModelName, required: true, location_name: "targetModelName"))
     CreateModelCopyJobRequest.add_member(:model_kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "modelKmsKeyId"))
     CreateModelCopyJobRequest.add_member(:target_model_tags, Shapes::ShapeRef.new(shape: TagList, location_name: "targetModelTags"))
-    CreateModelCopyJobRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    CreateModelCopyJobRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken" => true}))
     CreateModelCopyJobRequest.struct_class = Types::CreateModelCopyJobRequest
 
     CreateModelCopyJobResponse.add_member(:job_arn, Shapes::ShapeRef.new(shape: ModelCopyJobArn, required: true, location_name: "jobArn"))
@@ -661,7 +661,7 @@ module Aws::Bedrock
     CreateModelCustomizationJobRequest.add_member(:job_name, Shapes::ShapeRef.new(shape: JobName, required: true, location_name: "jobName"))
     CreateModelCustomizationJobRequest.add_member(:custom_model_name, Shapes::ShapeRef.new(shape: CustomModelName, required: true, location_name: "customModelName"))
     CreateModelCustomizationJobRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
-    CreateModelCustomizationJobRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    CreateModelCustomizationJobRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken" => true}))
     CreateModelCustomizationJobRequest.add_member(:base_model_identifier, Shapes::ShapeRef.new(shape: BaseModelIdentifier, required: true, location_name: "baseModelIdentifier"))
     CreateModelCustomizationJobRequest.add_member(:customization_type, Shapes::ShapeRef.new(shape: CustomizationType, location_name: "customizationType"))
     CreateModelCustomizationJobRequest.add_member(:custom_model_kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "customModelKmsKeyId"))
@@ -694,7 +694,7 @@ module Aws::Bedrock
 
     CreateModelInvocationJobRequest.add_member(:job_name, Shapes::ShapeRef.new(shape: ModelInvocationJobName, required: true, location_name: "jobName"))
     CreateModelInvocationJobRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
-    CreateModelInvocationJobRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: ModelInvocationIdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    CreateModelInvocationJobRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: ModelInvocationIdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken" => true}))
     CreateModelInvocationJobRequest.add_member(:model_id, Shapes::ShapeRef.new(shape: ModelId, required: true, location_name: "modelId"))
     CreateModelInvocationJobRequest.add_member(:input_data_config, Shapes::ShapeRef.new(shape: ModelInvocationJobInputDataConfig, required: true, location_name: "inputDataConfig"))
     CreateModelInvocationJobRequest.add_member(:output_data_config, Shapes::ShapeRef.new(shape: ModelInvocationJobOutputDataConfig, required: true, location_name: "outputDataConfig"))
@@ -706,7 +706,7 @@ module Aws::Bedrock
     CreateModelInvocationJobResponse.add_member(:job_arn, Shapes::ShapeRef.new(shape: ModelInvocationJobArn, required: true, location_name: "jobArn"))
     CreateModelInvocationJobResponse.struct_class = Types::CreateModelInvocationJobResponse
 
-    CreatePromptRouterRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    CreatePromptRouterRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken" => true}))
     CreatePromptRouterRequest.add_member(:prompt_router_name, Shapes::ShapeRef.new(shape: PromptRouterName, required: true, location_name: "promptRouterName"))
     CreatePromptRouterRequest.add_member(:models, Shapes::ShapeRef.new(shape: PromptRouterTargetModels, required: true, location_name: "models"))
     CreatePromptRouterRequest.add_member(:description, Shapes::ShapeRef.new(shape: PromptRouterDescription, location_name: "description"))
@@ -718,7 +718,7 @@ module Aws::Bedrock
     CreatePromptRouterResponse.add_member(:prompt_router_arn, Shapes::ShapeRef.new(shape: PromptRouterArn, location_name: "promptRouterArn"))
     CreatePromptRouterResponse.struct_class = Types::CreatePromptRouterResponse
 
-    CreateProvisionedModelThroughputRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    CreateProvisionedModelThroughputRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken" => true}))
     CreateProvisionedModelThroughputRequest.add_member(:model_units, Shapes::ShapeRef.new(shape: PositiveInteger, required: true, location_name: "modelUnits"))
     CreateProvisionedModelThroughputRequest.add_member(:provisioned_model_name, Shapes::ShapeRef.new(shape: ProvisionedModelName, required: true, location_name: "provisionedModelName"))
     CreateProvisionedModelThroughputRequest.add_member(:model_id, Shapes::ShapeRef.new(shape: ModelIdentifier, required: true, location_name: "modelId"))
@@ -924,8 +924,8 @@ module Aws::Bedrock
     EvaluationSummary.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "creationTime"))
     EvaluationSummary.add_member(:job_type, Shapes::ShapeRef.new(shape: EvaluationJobType, required: true, location_name: "jobType"))
     EvaluationSummary.add_member(:evaluation_task_types, Shapes::ShapeRef.new(shape: EvaluationTaskTypes, required: true, location_name: "evaluationTaskTypes"))
-    EvaluationSummary.add_member(:model_identifiers, Shapes::ShapeRef.new(shape: EvaluationBedrockModelIdentifiers, deprecated: true, location_name: "modelIdentifiers", metadata: {"deprecatedMessage"=>"Inference identifiers should be retrieved from the inferenceConfigSummary", "deprecatedSince"=>"2025-03-07"}))
-    EvaluationSummary.add_member(:rag_identifiers, Shapes::ShapeRef.new(shape: EvaluationBedrockKnowledgeBaseIdentifiers, deprecated: true, location_name: "ragIdentifiers", metadata: {"deprecatedMessage"=>"Inference identifiers should be retrieved from the inferenceConfigSummary", "deprecatedSince"=>"2025-03-07"}))
+    EvaluationSummary.add_member(:model_identifiers, Shapes::ShapeRef.new(shape: EvaluationBedrockModelIdentifiers, deprecated: true, location_name: "modelIdentifiers", metadata: {"deprecatedMessage" => "Inference identifiers should be retrieved from the inferenceConfigSummary", "deprecatedSince" => "2025-03-07"}))
+    EvaluationSummary.add_member(:rag_identifiers, Shapes::ShapeRef.new(shape: EvaluationBedrockKnowledgeBaseIdentifiers, deprecated: true, location_name: "ragIdentifiers", metadata: {"deprecatedMessage" => "Inference identifiers should be retrieved from the inferenceConfigSummary", "deprecatedSince" => "2025-03-07"}))
     EvaluationSummary.add_member(:evaluator_model_identifiers, Shapes::ShapeRef.new(shape: EvaluatorModelIdentifiers, location_name: "evaluatorModelIdentifiers"))
     EvaluationSummary.add_member(:custom_metrics_evaluator_model_identifiers, Shapes::ShapeRef.new(shape: EvaluatorModelIdentifiers, location_name: "customMetricsEvaluatorModelIdentifiers"))
     EvaluationSummary.add_member(:inference_config_summary, Shapes::ShapeRef.new(shape: EvaluationInferenceConfigSummary, location_name: "inferenceConfigSummary"))
@@ -2084,7 +2084,7 @@ module Aws::Bedrock
 
     UpdateMarketplaceModelEndpointRequest.add_member(:endpoint_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location: "uri", location_name: "endpointArn"))
     UpdateMarketplaceModelEndpointRequest.add_member(:endpoint_config, Shapes::ShapeRef.new(shape: EndpointConfig, required: true, location_name: "endpointConfig"))
-    UpdateMarketplaceModelEndpointRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    UpdateMarketplaceModelEndpointRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken" => true}))
     UpdateMarketplaceModelEndpointRequest.struct_class = Types::UpdateMarketplaceModelEndpointRequest
 
     UpdateMarketplaceModelEndpointResponse.add_member(:marketplace_model_endpoint, Shapes::ShapeRef.new(shape: MarketplaceModelEndpoint, required: true, location_name: "marketplaceModelEndpoint"))

@@ -3752,7 +3752,7 @@ module Aws::EC2
     AllocateIpamPoolCidrRequest.add_member(:ipam_pool_id, Shapes::ShapeRef.new(shape: IpamPoolId, required: true, location_name: "IpamPoolId"))
     AllocateIpamPoolCidrRequest.add_member(:cidr, Shapes::ShapeRef.new(shape: String, location_name: "Cidr"))
     AllocateIpamPoolCidrRequest.add_member(:netmask_length, Shapes::ShapeRef.new(shape: Integer, location_name: "NetmaskLength"))
-    AllocateIpamPoolCidrRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    AllocateIpamPoolCidrRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     AllocateIpamPoolCidrRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     AllocateIpamPoolCidrRequest.add_member(:preview_next_cidr, Shapes::ShapeRef.new(shape: Boolean, location_name: "PreviewNextCidr"))
     AllocateIpamPoolCidrRequest.add_member(:allowed_cidrs, Shapes::ShapeRef.new(shape: IpamPoolAllocationAllowedCidrs, location_name: "AllowedCidr"))
@@ -3932,7 +3932,7 @@ module Aws::EC2
 
     AssociateClientVpnTargetNetworkRequest.add_member(:client_vpn_endpoint_id, Shapes::ShapeRef.new(shape: ClientVpnEndpointId, required: true, location_name: "ClientVpnEndpointId"))
     AssociateClientVpnTargetNetworkRequest.add_member(:subnet_id, Shapes::ShapeRef.new(shape: SubnetId, required: true, location_name: "SubnetId"))
-    AssociateClientVpnTargetNetworkRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    AssociateClientVpnTargetNetworkRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     AssociateClientVpnTargetNetworkRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     AssociateClientVpnTargetNetworkRequest.struct_class = Types::AssociateClientVpnTargetNetworkRequest
 
@@ -3982,7 +3982,7 @@ module Aws::EC2
     AssociateIpamResourceDiscoveryRequest.add_member(:ipam_id, Shapes::ShapeRef.new(shape: IpamId, required: true, location_name: "IpamId"))
     AssociateIpamResourceDiscoveryRequest.add_member(:ipam_resource_discovery_id, Shapes::ShapeRef.new(shape: IpamResourceDiscoveryId, required: true, location_name: "IpamResourceDiscoveryId"))
     AssociateIpamResourceDiscoveryRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    AssociateIpamResourceDiscoveryRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    AssociateIpamResourceDiscoveryRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     AssociateIpamResourceDiscoveryRequest.struct_class = Types::AssociateIpamResourceDiscoveryRequest
 
     AssociateIpamResourceDiscoveryResult.add_member(:ipam_resource_discovery_association, Shapes::ShapeRef.new(shape: IpamResourceDiscoveryAssociation, location_name: "ipamResourceDiscoveryAssociation"))
@@ -4063,7 +4063,7 @@ module Aws::EC2
     AssociateTrunkInterfaceRequest.add_member(:trunk_interface_id, Shapes::ShapeRef.new(shape: NetworkInterfaceId, required: true, location_name: "TrunkInterfaceId"))
     AssociateTrunkInterfaceRequest.add_member(:vlan_id, Shapes::ShapeRef.new(shape: Integer, location_name: "VlanId"))
     AssociateTrunkInterfaceRequest.add_member(:gre_key, Shapes::ShapeRef.new(shape: Integer, location_name: "GreKey"))
-    AssociateTrunkInterfaceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    AssociateTrunkInterfaceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     AssociateTrunkInterfaceRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     AssociateTrunkInterfaceRequest.struct_class = Types::AssociateTrunkInterfaceRequest
 
@@ -4144,7 +4144,7 @@ module Aws::EC2
 
     AttachVerifiedAccessTrustProviderRequest.add_member(:verified_access_instance_id, Shapes::ShapeRef.new(shape: VerifiedAccessInstanceId, required: true, location_name: "VerifiedAccessInstanceId"))
     AttachVerifiedAccessTrustProviderRequest.add_member(:verified_access_trust_provider_id, Shapes::ShapeRef.new(shape: VerifiedAccessTrustProviderId, required: true, location_name: "VerifiedAccessTrustProviderId"))
-    AttachVerifiedAccessTrustProviderRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    AttachVerifiedAccessTrustProviderRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     AttachVerifiedAccessTrustProviderRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     AttachVerifiedAccessTrustProviderRequest.struct_class = Types::AttachVerifiedAccessTrustProviderRequest
 
@@ -4203,7 +4203,7 @@ module Aws::EC2
     AuthorizeClientVpnIngressRequest.add_member(:access_group_id, Shapes::ShapeRef.new(shape: String, location_name: "AccessGroupId"))
     AuthorizeClientVpnIngressRequest.add_member(:authorize_all_groups, Shapes::ShapeRef.new(shape: Boolean, location_name: "AuthorizeAllGroups"))
     AuthorizeClientVpnIngressRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
-    AuthorizeClientVpnIngressRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    AuthorizeClientVpnIngressRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     AuthorizeClientVpnIngressRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     AuthorizeClientVpnIngressRequest.struct_class = Types::AuthorizeClientVpnIngressRequest
 
@@ -4758,7 +4758,7 @@ module Aws::EC2
     ClientVpnEndpoint.add_member(:vpn_protocol, Shapes::ShapeRef.new(shape: VpnProtocol, location_name: "vpnProtocol"))
     ClientVpnEndpoint.add_member(:transport_protocol, Shapes::ShapeRef.new(shape: TransportProtocol, location_name: "transportProtocol"))
     ClientVpnEndpoint.add_member(:vpn_port, Shapes::ShapeRef.new(shape: Integer, location_name: "vpnPort"))
-    ClientVpnEndpoint.add_member(:associated_target_networks, Shapes::ShapeRef.new(shape: AssociatedTargetNetworkSet, deprecated: true, location_name: "associatedTargetNetwork", metadata: {"deprecatedMessage"=>"This property is deprecated. To view the target networks associated with a Client VPN endpoint, call DescribeClientVpnTargetNetworks and inspect the clientVpnTargetNetworks response element."}))
+    ClientVpnEndpoint.add_member(:associated_target_networks, Shapes::ShapeRef.new(shape: AssociatedTargetNetworkSet, deprecated: true, location_name: "associatedTargetNetwork", metadata: {"deprecatedMessage" => "This property is deprecated. To view the target networks associated with a Client VPN endpoint, call DescribeClientVpnTargetNetworks and inspect the clientVpnTargetNetworks response element."}))
     ClientVpnEndpoint.add_member(:server_certificate_arn, Shapes::ShapeRef.new(shape: String, location_name: "serverCertificateArn"))
     ClientVpnEndpoint.add_member(:authentication_options, Shapes::ShapeRef.new(shape: ClientVpnAuthenticationList, location_name: "authenticationOptions"))
     ClientVpnEndpoint.add_member(:connection_log_options, Shapes::ShapeRef.new(shape: ConnectionLogResponseOptions, location_name: "connectionLogOptions"))
@@ -4909,7 +4909,7 @@ module Aws::EC2
     CopyFpgaImageResult.add_member(:fpga_image_id, Shapes::ShapeRef.new(shape: String, location_name: "fpgaImageId"))
     CopyFpgaImageResult.struct_class = Types::CopyFpgaImageResult
 
-    CopyImageRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CopyImageRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CopyImageRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CopyImageRequest.add_member(:encrypted, Shapes::ShapeRef.new(shape: Boolean, location_name: "encrypted"))
     CopyImageRequest.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "kmsKeyId"))
@@ -4964,7 +4964,7 @@ module Aws::EC2
     CpuPerformanceFactorRequest.struct_class = Types::CpuPerformanceFactorRequest
 
     CreateCapacityReservationBySplittingRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    CreateCapacityReservationBySplittingRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateCapacityReservationBySplittingRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateCapacityReservationBySplittingRequest.add_member(:source_capacity_reservation_id, Shapes::ShapeRef.new(shape: CapacityReservationId, required: true, location_name: "SourceCapacityReservationId"))
     CreateCapacityReservationBySplittingRequest.add_member(:instance_count, Shapes::ShapeRef.new(shape: Integer, required: true, location_name: "InstanceCount"))
     CreateCapacityReservationBySplittingRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
@@ -4976,7 +4976,7 @@ module Aws::EC2
     CreateCapacityReservationBySplittingResult.struct_class = Types::CreateCapacityReservationBySplittingResult
 
     CreateCapacityReservationFleetRequest.add_member(:allocation_strategy, Shapes::ShapeRef.new(shape: String, location_name: "AllocationStrategy"))
-    CreateCapacityReservationFleetRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateCapacityReservationFleetRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateCapacityReservationFleetRequest.add_member(:instance_type_specifications, Shapes::ShapeRef.new(shape: ReservationFleetInstanceSpecificationList, required: true, location_name: "InstanceTypeSpecification"))
     CreateCapacityReservationFleetRequest.add_member(:tenancy, Shapes::ShapeRef.new(shape: FleetCapacityReservationTenancy, location_name: "Tenancy"))
     CreateCapacityReservationFleetRequest.add_member(:total_target_capacity, Shapes::ShapeRef.new(shape: Integer, required: true, location_name: "TotalTargetCapacity"))
@@ -5026,7 +5026,7 @@ module Aws::EC2
     CreateCarrierGatewayRequest.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, required: true, location_name: "VpcId"))
     CreateCarrierGatewayRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateCarrierGatewayRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    CreateCarrierGatewayRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateCarrierGatewayRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateCarrierGatewayRequest.struct_class = Types::CreateCarrierGatewayRequest
 
     CreateCarrierGatewayResult.add_member(:carrier_gateway, Shapes::ShapeRef.new(shape: CarrierGateway, location_name: "carrierGateway"))
@@ -5042,7 +5042,7 @@ module Aws::EC2
     CreateClientVpnEndpointRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CreateClientVpnEndpointRequest.add_member(:split_tunnel, Shapes::ShapeRef.new(shape: Boolean, location_name: "SplitTunnel"))
     CreateClientVpnEndpointRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    CreateClientVpnEndpointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateClientVpnEndpointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateClientVpnEndpointRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateClientVpnEndpointRequest.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: ClientVpnSecurityGroupIdSet, location_name: "SecurityGroupId"))
     CreateClientVpnEndpointRequest.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, location_name: "VpcId"))
@@ -5063,7 +5063,7 @@ module Aws::EC2
     CreateClientVpnRouteRequest.add_member(:destination_cidr_block, Shapes::ShapeRef.new(shape: String, required: true, location_name: "DestinationCidrBlock"))
     CreateClientVpnRouteRequest.add_member(:target_vpc_subnet_id, Shapes::ShapeRef.new(shape: SubnetId, required: true, location_name: "TargetVpcSubnetId"))
     CreateClientVpnRouteRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
-    CreateClientVpnRouteRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateClientVpnRouteRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateClientVpnRouteRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateClientVpnRouteRequest.struct_class = Types::CreateClientVpnRouteRequest
 
@@ -5150,7 +5150,7 @@ module Aws::EC2
     CreateFleetInstancesSet.member = Shapes::ShapeRef.new(shape: CreateFleetInstance, location_name: "item")
 
     CreateFleetRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    CreateFleetRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateFleetRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateFleetRequest.add_member(:spot_options, Shapes::ShapeRef.new(shape: SpotOptionsRequest, location_name: "SpotOptions"))
     CreateFleetRequest.add_member(:on_demand_options, Shapes::ShapeRef.new(shape: OnDemandOptionsRequest, location_name: "OnDemandOptions"))
     CreateFleetRequest.add_member(:excess_capacity_termination_policy, Shapes::ShapeRef.new(shape: FleetExcessCapacityTerminationPolicy, location_name: "ExcessCapacityTerminationPolicy"))
@@ -5220,7 +5220,7 @@ module Aws::EC2
     CreateInstanceConnectEndpointRequest.add_member(:subnet_id, Shapes::ShapeRef.new(shape: SubnetId, required: true, location_name: "SubnetId"))
     CreateInstanceConnectEndpointRequest.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: SecurityGroupIdStringListRequest, location_name: "SecurityGroupId"))
     CreateInstanceConnectEndpointRequest.add_member(:preserve_client_ip, Shapes::ShapeRef.new(shape: Boolean, location_name: "PreserveClientIp"))
-    CreateInstanceConnectEndpointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateInstanceConnectEndpointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateInstanceConnectEndpointRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateInstanceConnectEndpointRequest.struct_class = Types::CreateInstanceConnectEndpointRequest
 
@@ -5258,7 +5258,7 @@ module Aws::EC2
     CreateIpamExternalResourceVerificationTokenRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateIpamExternalResourceVerificationTokenRequest.add_member(:ipam_id, Shapes::ShapeRef.new(shape: IpamId, required: true, location_name: "IpamId"))
     CreateIpamExternalResourceVerificationTokenRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    CreateIpamExternalResourceVerificationTokenRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateIpamExternalResourceVerificationTokenRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateIpamExternalResourceVerificationTokenRequest.struct_class = Types::CreateIpamExternalResourceVerificationTokenRequest
 
     CreateIpamExternalResourceVerificationTokenResult.add_member(:ipam_external_resource_verification_token, Shapes::ShapeRef.new(shape: IpamExternalResourceVerificationToken, location_name: "ipamExternalResourceVerificationToken"))
@@ -5277,7 +5277,7 @@ module Aws::EC2
     CreateIpamPoolRequest.add_member(:allocation_default_netmask_length, Shapes::ShapeRef.new(shape: IpamNetmaskLength, location_name: "AllocationDefaultNetmaskLength"))
     CreateIpamPoolRequest.add_member(:allocation_resource_tags, Shapes::ShapeRef.new(shape: RequestIpamResourceTagList, location_name: "AllocationResourceTag"))
     CreateIpamPoolRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    CreateIpamPoolRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateIpamPoolRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateIpamPoolRequest.add_member(:aws_service, Shapes::ShapeRef.new(shape: IpamPoolAwsService, location_name: "AwsService"))
     CreateIpamPoolRequest.add_member(:public_ip_source, Shapes::ShapeRef.new(shape: IpamPoolPublicIpSource, location_name: "PublicIpSource"))
     CreateIpamPoolRequest.add_member(:source_resource, Shapes::ShapeRef.new(shape: IpamPoolSourceResourceRequest, location_name: "SourceResource"))
@@ -5290,7 +5290,7 @@ module Aws::EC2
     CreateIpamRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CreateIpamRequest.add_member(:operating_regions, Shapes::ShapeRef.new(shape: AddIpamOperatingRegionSet, location_name: "OperatingRegion"))
     CreateIpamRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    CreateIpamRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateIpamRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateIpamRequest.add_member(:tier, Shapes::ShapeRef.new(shape: IpamTier, location_name: "Tier"))
     CreateIpamRequest.add_member(:enable_private_gua, Shapes::ShapeRef.new(shape: Boolean, location_name: "EnablePrivateGua"))
     CreateIpamRequest.add_member(:metered_account, Shapes::ShapeRef.new(shape: IpamMeteredAccount, location_name: "MeteredAccount"))
@@ -5300,7 +5300,7 @@ module Aws::EC2
     CreateIpamResourceDiscoveryRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CreateIpamResourceDiscoveryRequest.add_member(:operating_regions, Shapes::ShapeRef.new(shape: AddIpamOperatingRegionSet, location_name: "OperatingRegion"))
     CreateIpamResourceDiscoveryRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    CreateIpamResourceDiscoveryRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateIpamResourceDiscoveryRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateIpamResourceDiscoveryRequest.struct_class = Types::CreateIpamResourceDiscoveryRequest
 
     CreateIpamResourceDiscoveryResult.add_member(:ipam_resource_discovery, Shapes::ShapeRef.new(shape: IpamResourceDiscovery, location_name: "ipamResourceDiscovery"))
@@ -5313,7 +5313,7 @@ module Aws::EC2
     CreateIpamScopeRequest.add_member(:ipam_id, Shapes::ShapeRef.new(shape: IpamId, required: true, location_name: "IpamId"))
     CreateIpamScopeRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CreateIpamScopeRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    CreateIpamScopeRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateIpamScopeRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateIpamScopeRequest.struct_class = Types::CreateIpamScopeRequest
 
     CreateIpamScopeResult.add_member(:ipam_scope, Shapes::ShapeRef.new(shape: IpamScope, location_name: "ipamScope"))
@@ -5327,7 +5327,7 @@ module Aws::EC2
     CreateKeyPairRequest.struct_class = Types::CreateKeyPairRequest
 
     CreateLaunchTemplateRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    CreateLaunchTemplateRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateLaunchTemplateRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateLaunchTemplateRequest.add_member(:launch_template_name, Shapes::ShapeRef.new(shape: LaunchTemplateName, required: true, location_name: "LaunchTemplateName"))
     CreateLaunchTemplateRequest.add_member(:version_description, Shapes::ShapeRef.new(shape: VersionDescription, location_name: "VersionDescription"))
     CreateLaunchTemplateRequest.add_member(:launch_template_data, Shapes::ShapeRef.new(shape: RequestLaunchTemplateData, required: true, location_name: "LaunchTemplateData"))
@@ -5340,7 +5340,7 @@ module Aws::EC2
     CreateLaunchTemplateResult.struct_class = Types::CreateLaunchTemplateResult
 
     CreateLaunchTemplateVersionRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    CreateLaunchTemplateVersionRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateLaunchTemplateVersionRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateLaunchTemplateVersionRequest.add_member(:launch_template_id, Shapes::ShapeRef.new(shape: LaunchTemplateId, location_name: "LaunchTemplateId"))
     CreateLaunchTemplateVersionRequest.add_member(:launch_template_name, Shapes::ShapeRef.new(shape: LaunchTemplateName, location_name: "LaunchTemplateName"))
     CreateLaunchTemplateVersionRequest.add_member(:source_version, Shapes::ShapeRef.new(shape: String, location_name: "SourceVersion"))
@@ -5397,14 +5397,14 @@ module Aws::EC2
     CreateManagedPrefixListRequest.add_member(:max_entries, Shapes::ShapeRef.new(shape: Integer, required: true, location_name: "MaxEntries"))
     CreateManagedPrefixListRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateManagedPrefixListRequest.add_member(:address_family, Shapes::ShapeRef.new(shape: String, required: true, location_name: "AddressFamily"))
-    CreateManagedPrefixListRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateManagedPrefixListRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateManagedPrefixListRequest.struct_class = Types::CreateManagedPrefixListRequest
 
     CreateManagedPrefixListResult.add_member(:prefix_list, Shapes::ShapeRef.new(shape: ManagedPrefixList, location_name: "prefixList"))
     CreateManagedPrefixListResult.struct_class = Types::CreateManagedPrefixListResult
 
     CreateNatGatewayRequest.add_member(:allocation_id, Shapes::ShapeRef.new(shape: AllocationId, location_name: "AllocationId"))
-    CreateNatGatewayRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateNatGatewayRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateNatGatewayRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateNatGatewayRequest.add_member(:subnet_id, Shapes::ShapeRef.new(shape: SubnetId, required: true, location_name: "SubnetId"))
     CreateNatGatewayRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
@@ -5432,7 +5432,7 @@ module Aws::EC2
     CreateNetworkAclEntryRequest.struct_class = Types::CreateNetworkAclEntryRequest
 
     CreateNetworkAclRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    CreateNetworkAclRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateNetworkAclRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateNetworkAclRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     CreateNetworkAclRequest.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, required: true, location_name: "vpcId"))
     CreateNetworkAclRequest.struct_class = Types::CreateNetworkAclRequest
@@ -5443,7 +5443,7 @@ module Aws::EC2
 
     CreateNetworkInsightsAccessScopeRequest.add_member(:match_paths, Shapes::ShapeRef.new(shape: AccessScopePathListRequest, location_name: "MatchPath"))
     CreateNetworkInsightsAccessScopeRequest.add_member(:exclude_paths, Shapes::ShapeRef.new(shape: AccessScopePathListRequest, location_name: "ExcludePath"))
-    CreateNetworkInsightsAccessScopeRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateNetworkInsightsAccessScopeRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateNetworkInsightsAccessScopeRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateNetworkInsightsAccessScopeRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateNetworkInsightsAccessScopeRequest.struct_class = Types::CreateNetworkInsightsAccessScopeRequest
@@ -5460,7 +5460,7 @@ module Aws::EC2
     CreateNetworkInsightsPathRequest.add_member(:destination_port, Shapes::ShapeRef.new(shape: Port, location_name: "DestinationPort"))
     CreateNetworkInsightsPathRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateNetworkInsightsPathRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    CreateNetworkInsightsPathRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateNetworkInsightsPathRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateNetworkInsightsPathRequest.add_member(:filter_at_source, Shapes::ShapeRef.new(shape: PathRequestFilter, location_name: "FilterAtSource"))
     CreateNetworkInsightsPathRequest.add_member(:filter_at_destination, Shapes::ShapeRef.new(shape: PathRequestFilter, location_name: "FilterAtDestination"))
     CreateNetworkInsightsPathRequest.struct_class = Types::CreateNetworkInsightsPathRequest
@@ -5484,7 +5484,7 @@ module Aws::EC2
     CreateNetworkInterfaceRequest.add_member(:ipv_6_prefix_count, Shapes::ShapeRef.new(shape: Integer, location_name: "Ipv6PrefixCount"))
     CreateNetworkInterfaceRequest.add_member(:interface_type, Shapes::ShapeRef.new(shape: NetworkInterfaceCreationType, location_name: "InterfaceType"))
     CreateNetworkInterfaceRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    CreateNetworkInterfaceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateNetworkInterfaceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateNetworkInterfaceRequest.add_member(:enable_primary_ipv_6, Shapes::ShapeRef.new(shape: Boolean, location_name: "EnablePrimaryIpv6"))
     CreateNetworkInterfaceRequest.add_member(:connection_tracking_specification, Shapes::ShapeRef.new(shape: ConnectionTrackingSpecificationRequest, location_name: "ConnectionTrackingSpecification"))
     CreateNetworkInterfaceRequest.add_member(:operator, Shapes::ShapeRef.new(shape: OperatorRequest, location_name: "Operator"))
@@ -5524,7 +5524,7 @@ module Aws::EC2
 
     CreateReplaceRootVolumeTaskRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location_name: "InstanceId"))
     CreateReplaceRootVolumeTaskRequest.add_member(:snapshot_id, Shapes::ShapeRef.new(shape: SnapshotId, location_name: "SnapshotId"))
-    CreateReplaceRootVolumeTaskRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateReplaceRootVolumeTaskRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateReplaceRootVolumeTaskRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateReplaceRootVolumeTaskRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateReplaceRootVolumeTaskRequest.add_member(:image_id, Shapes::ShapeRef.new(shape: ImageId, location_name: "ImageId"))
@@ -5576,7 +5576,7 @@ module Aws::EC2
 
     CreateRouteServerEndpointRequest.add_member(:route_server_id, Shapes::ShapeRef.new(shape: RouteServerId, required: true, location_name: "RouteServerId"))
     CreateRouteServerEndpointRequest.add_member(:subnet_id, Shapes::ShapeRef.new(shape: SubnetId, required: true, location_name: "SubnetId"))
-    CreateRouteServerEndpointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateRouteServerEndpointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateRouteServerEndpointRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateRouteServerEndpointRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateRouteServerEndpointRequest.struct_class = Types::CreateRouteServerEndpointRequest
@@ -5595,7 +5595,7 @@ module Aws::EC2
     CreateRouteServerPeerResult.struct_class = Types::CreateRouteServerPeerResult
 
     CreateRouteServerRequest.add_member(:amazon_side_asn, Shapes::ShapeRef.new(shape: Long, required: true, location_name: "AmazonSideAsn"))
-    CreateRouteServerRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateRouteServerRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateRouteServerRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateRouteServerRequest.add_member(:persist_routes, Shapes::ShapeRef.new(shape: RouteServerPersistRoutesAction, location_name: "PersistRoutes"))
     CreateRouteServerRequest.add_member(:persist_routes_duration, Shapes::ShapeRef.new(shape: BoxedLong, location_name: "PersistRoutesDuration"))
@@ -5607,7 +5607,7 @@ module Aws::EC2
     CreateRouteServerResult.struct_class = Types::CreateRouteServerResult
 
     CreateRouteTableRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    CreateRouteTableRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateRouteTableRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateRouteTableRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     CreateRouteTableRequest.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, required: true, location_name: "vpcId"))
     CreateRouteTableRequest.struct_class = Types::CreateRouteTableRequest
@@ -5702,7 +5702,7 @@ module Aws::EC2
     CreateTrafficMirrorFilterRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CreateTrafficMirrorFilterRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateTrafficMirrorFilterRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    CreateTrafficMirrorFilterRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateTrafficMirrorFilterRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateTrafficMirrorFilterRequest.struct_class = Types::CreateTrafficMirrorFilterRequest
 
     CreateTrafficMirrorFilterResult.add_member(:traffic_mirror_filter, Shapes::ShapeRef.new(shape: TrafficMirrorFilter, location_name: "trafficMirrorFilter"))
@@ -5720,7 +5720,7 @@ module Aws::EC2
     CreateTrafficMirrorFilterRuleRequest.add_member(:source_cidr_block, Shapes::ShapeRef.new(shape: String, required: true, location_name: "SourceCidrBlock"))
     CreateTrafficMirrorFilterRuleRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CreateTrafficMirrorFilterRuleRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    CreateTrafficMirrorFilterRuleRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateTrafficMirrorFilterRuleRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateTrafficMirrorFilterRuleRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateTrafficMirrorFilterRuleRequest.struct_class = Types::CreateTrafficMirrorFilterRuleRequest
 
@@ -5737,7 +5737,7 @@ module Aws::EC2
     CreateTrafficMirrorSessionRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CreateTrafficMirrorSessionRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateTrafficMirrorSessionRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    CreateTrafficMirrorSessionRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateTrafficMirrorSessionRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateTrafficMirrorSessionRequest.struct_class = Types::CreateTrafficMirrorSessionRequest
 
     CreateTrafficMirrorSessionResult.add_member(:traffic_mirror_session, Shapes::ShapeRef.new(shape: TrafficMirrorSession, location_name: "trafficMirrorSession"))
@@ -5749,7 +5749,7 @@ module Aws::EC2
     CreateTrafficMirrorTargetRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CreateTrafficMirrorTargetRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateTrafficMirrorTargetRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    CreateTrafficMirrorTargetRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateTrafficMirrorTargetRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateTrafficMirrorTargetRequest.add_member(:gateway_load_balancer_endpoint_id, Shapes::ShapeRef.new(shape: VpcEndpointId, location_name: "GatewayLoadBalancerEndpointId"))
     CreateTrafficMirrorTargetRequest.struct_class = Types::CreateTrafficMirrorTargetRequest
 
@@ -5927,7 +5927,7 @@ module Aws::EC2
     CreateVerifiedAccessEndpointRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CreateVerifiedAccessEndpointRequest.add_member(:policy_document, Shapes::ShapeRef.new(shape: String, location_name: "PolicyDocument"))
     CreateVerifiedAccessEndpointRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    CreateVerifiedAccessEndpointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateVerifiedAccessEndpointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateVerifiedAccessEndpointRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateVerifiedAccessEndpointRequest.add_member(:sse_specification, Shapes::ShapeRef.new(shape: VerifiedAccessSseSpecificationRequest, location_name: "SseSpecification"))
     CreateVerifiedAccessEndpointRequest.add_member(:rds_options, Shapes::ShapeRef.new(shape: CreateVerifiedAccessEndpointRdsOptions, location_name: "RdsOptions"))
@@ -5943,7 +5943,7 @@ module Aws::EC2
     CreateVerifiedAccessGroupRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CreateVerifiedAccessGroupRequest.add_member(:policy_document, Shapes::ShapeRef.new(shape: String, location_name: "PolicyDocument"))
     CreateVerifiedAccessGroupRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    CreateVerifiedAccessGroupRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateVerifiedAccessGroupRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateVerifiedAccessGroupRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateVerifiedAccessGroupRequest.add_member(:sse_specification, Shapes::ShapeRef.new(shape: VerifiedAccessSseSpecificationRequest, location_name: "SseSpecification"))
     CreateVerifiedAccessGroupRequest.struct_class = Types::CreateVerifiedAccessGroupRequest
@@ -5953,7 +5953,7 @@ module Aws::EC2
 
     CreateVerifiedAccessInstanceRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CreateVerifiedAccessInstanceRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    CreateVerifiedAccessInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateVerifiedAccessInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateVerifiedAccessInstanceRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateVerifiedAccessInstanceRequest.add_member(:fips_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "FIPSEnabled"))
     CreateVerifiedAccessInstanceRequest.add_member(:cidr_endpoints_custom_sub_domain, Shapes::ShapeRef.new(shape: String, location_name: "CidrEndpointsCustomSubDomain"))
@@ -5993,7 +5993,7 @@ module Aws::EC2
     CreateVerifiedAccessTrustProviderRequest.add_member(:policy_reference_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "PolicyReferenceName"))
     CreateVerifiedAccessTrustProviderRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CreateVerifiedAccessTrustProviderRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    CreateVerifiedAccessTrustProviderRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateVerifiedAccessTrustProviderRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateVerifiedAccessTrustProviderRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateVerifiedAccessTrustProviderRequest.add_member(:sse_specification, Shapes::ShapeRef.new(shape: VerifiedAccessSseSpecificationRequest, location_name: "SseSpecification"))
     CreateVerifiedAccessTrustProviderRequest.add_member(:native_application_oidc_options, Shapes::ShapeRef.new(shape: CreateVerifiedAccessNativeApplicationOidcOptions, location_name: "NativeApplicationOidcOptions"))
@@ -6023,7 +6023,7 @@ module Aws::EC2
     CreateVolumeRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateVolumeRequest.add_member(:multi_attach_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "MultiAttachEnabled"))
     CreateVolumeRequest.add_member(:throughput, Shapes::ShapeRef.new(shape: Integer, location_name: "Throughput"))
-    CreateVolumeRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateVolumeRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateVolumeRequest.add_member(:operator, Shapes::ShapeRef.new(shape: OperatorRequest, location_name: "Operator"))
     CreateVolumeRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     CreateVolumeRequest.struct_class = Types::CreateVolumeRequest
@@ -6681,7 +6681,7 @@ module Aws::EC2
     DeleteTransitGatewayVpcAttachmentResult.struct_class = Types::DeleteTransitGatewayVpcAttachmentResult
 
     DeleteVerifiedAccessEndpointRequest.add_member(:verified_access_endpoint_id, Shapes::ShapeRef.new(shape: VerifiedAccessEndpointId, required: true, location_name: "VerifiedAccessEndpointId"))
-    DeleteVerifiedAccessEndpointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    DeleteVerifiedAccessEndpointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     DeleteVerifiedAccessEndpointRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     DeleteVerifiedAccessEndpointRequest.struct_class = Types::DeleteVerifiedAccessEndpointRequest
 
@@ -6689,7 +6689,7 @@ module Aws::EC2
     DeleteVerifiedAccessEndpointResult.struct_class = Types::DeleteVerifiedAccessEndpointResult
 
     DeleteVerifiedAccessGroupRequest.add_member(:verified_access_group_id, Shapes::ShapeRef.new(shape: VerifiedAccessGroupId, required: true, location_name: "VerifiedAccessGroupId"))
-    DeleteVerifiedAccessGroupRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    DeleteVerifiedAccessGroupRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     DeleteVerifiedAccessGroupRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     DeleteVerifiedAccessGroupRequest.struct_class = Types::DeleteVerifiedAccessGroupRequest
 
@@ -6698,7 +6698,7 @@ module Aws::EC2
 
     DeleteVerifiedAccessInstanceRequest.add_member(:verified_access_instance_id, Shapes::ShapeRef.new(shape: VerifiedAccessInstanceId, required: true, location_name: "VerifiedAccessInstanceId"))
     DeleteVerifiedAccessInstanceRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    DeleteVerifiedAccessInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    DeleteVerifiedAccessInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     DeleteVerifiedAccessInstanceRequest.struct_class = Types::DeleteVerifiedAccessInstanceRequest
 
     DeleteVerifiedAccessInstanceResult.add_member(:verified_access_instance, Shapes::ShapeRef.new(shape: VerifiedAccessInstance, location_name: "verifiedAccessInstance"))
@@ -6706,7 +6706,7 @@ module Aws::EC2
 
     DeleteVerifiedAccessTrustProviderRequest.add_member(:verified_access_trust_provider_id, Shapes::ShapeRef.new(shape: VerifiedAccessTrustProviderId, required: true, location_name: "VerifiedAccessTrustProviderId"))
     DeleteVerifiedAccessTrustProviderRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    DeleteVerifiedAccessTrustProviderRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    DeleteVerifiedAccessTrustProviderRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     DeleteVerifiedAccessTrustProviderRequest.struct_class = Types::DeleteVerifiedAccessTrustProviderRequest
 
     DeleteVerifiedAccessTrustProviderResult.add_member(:verified_access_trust_provider, Shapes::ShapeRef.new(shape: VerifiedAccessTrustProvider, location_name: "verifiedAccessTrustProvider"))
@@ -8672,7 +8672,7 @@ module Aws::EC2
 
     DetachVerifiedAccessTrustProviderRequest.add_member(:verified_access_instance_id, Shapes::ShapeRef.new(shape: VerifiedAccessInstanceId, required: true, location_name: "VerifiedAccessInstanceId"))
     DetachVerifiedAccessTrustProviderRequest.add_member(:verified_access_trust_provider_id, Shapes::ShapeRef.new(shape: VerifiedAccessTrustProviderId, required: true, location_name: "VerifiedAccessTrustProviderId"))
-    DetachVerifiedAccessTrustProviderRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    DetachVerifiedAccessTrustProviderRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     DetachVerifiedAccessTrustProviderRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     DetachVerifiedAccessTrustProviderRequest.struct_class = Types::DetachVerifiedAccessTrustProviderRequest
 
@@ -9010,7 +9010,7 @@ module Aws::EC2
     DisassociateTransitGatewayRouteTableResult.struct_class = Types::DisassociateTransitGatewayRouteTableResult
 
     DisassociateTrunkInterfaceRequest.add_member(:association_id, Shapes::ShapeRef.new(shape: TrunkInterfaceAssociationId, required: true, location_name: "AssociationId"))
-    DisassociateTrunkInterfaceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    DisassociateTrunkInterfaceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     DisassociateTrunkInterfaceRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     DisassociateTrunkInterfaceRequest.struct_class = Types::DisassociateTrunkInterfaceRequest
 
@@ -9503,7 +9503,7 @@ module Aws::EC2
     ExportClientVpnClientConfigurationResult.add_member(:client_configuration, Shapes::ShapeRef.new(shape: String, location_name: "clientConfiguration"))
     ExportClientVpnClientConfigurationResult.struct_class = Types::ExportClientVpnClientConfigurationResult
 
-    ExportImageRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    ExportImageRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     ExportImageRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     ExportImageRequest.add_member(:disk_image_format, Shapes::ShapeRef.new(shape: DiskImageFormat, required: true, location_name: "DiskImageFormat"))
     ExportImageRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
@@ -11188,10 +11188,10 @@ module Aws::EC2
     InstanceNetworkInterfaceSpecification.add_member(:device_index, Shapes::ShapeRef.new(shape: Integer, location_name: "deviceIndex"))
     InstanceNetworkInterfaceSpecification.add_member(:groups, Shapes::ShapeRef.new(shape: SecurityGroupIdStringList, location_name: "SecurityGroupId"))
     InstanceNetworkInterfaceSpecification.add_member(:ipv_6_address_count, Shapes::ShapeRef.new(shape: Integer, location_name: "ipv6AddressCount"))
-    InstanceNetworkInterfaceSpecification.add_member(:ipv_6_addresses, Shapes::ShapeRef.new(shape: InstanceIpv6AddressList, location_name: "ipv6AddressesSet", metadata: {"queryName"=>"Ipv6Addresses"}))
+    InstanceNetworkInterfaceSpecification.add_member(:ipv_6_addresses, Shapes::ShapeRef.new(shape: InstanceIpv6AddressList, location_name: "ipv6AddressesSet", metadata: {"queryName" => "Ipv6Addresses"}))
     InstanceNetworkInterfaceSpecification.add_member(:network_interface_id, Shapes::ShapeRef.new(shape: NetworkInterfaceId, location_name: "networkInterfaceId"))
     InstanceNetworkInterfaceSpecification.add_member(:private_ip_address, Shapes::ShapeRef.new(shape: String, location_name: "privateIpAddress"))
-    InstanceNetworkInterfaceSpecification.add_member(:private_ip_addresses, Shapes::ShapeRef.new(shape: PrivateIpAddressSpecificationList, location_name: "privateIpAddressesSet", metadata: {"queryName"=>"PrivateIpAddresses"}))
+    InstanceNetworkInterfaceSpecification.add_member(:private_ip_addresses, Shapes::ShapeRef.new(shape: PrivateIpAddressSpecificationList, location_name: "privateIpAddressesSet", metadata: {"queryName" => "PrivateIpAddresses"}))
     InstanceNetworkInterfaceSpecification.add_member(:secondary_private_ip_address_count, Shapes::ShapeRef.new(shape: Integer, location_name: "secondaryPrivateIpAddressCount"))
     InstanceNetworkInterfaceSpecification.add_member(:subnet_id, Shapes::ShapeRef.new(shape: String, location_name: "subnetId"))
     InstanceNetworkInterfaceSpecification.add_member(:associate_carrier_ip_address, Shapes::ShapeRef.new(shape: Boolean, location_name: "AssociateCarrierIpAddress"))
@@ -12719,7 +12719,7 @@ module Aws::EC2
     ModifyIpamScopeResult.struct_class = Types::ModifyIpamScopeResult
 
     ModifyLaunchTemplateRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    ModifyLaunchTemplateRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    ModifyLaunchTemplateRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     ModifyLaunchTemplateRequest.add_member(:launch_template_id, Shapes::ShapeRef.new(shape: LaunchTemplateId, location_name: "LaunchTemplateId"))
     ModifyLaunchTemplateRequest.add_member(:launch_template_name, Shapes::ShapeRef.new(shape: LaunchTemplateName, location_name: "LaunchTemplateName"))
     ModifyLaunchTemplateRequest.add_member(:default_version, Shapes::ShapeRef.new(shape: String, location_name: "SetDefaultVersion"))
@@ -12946,7 +12946,7 @@ module Aws::EC2
     ModifyVerifiedAccessEndpointPolicyRequest.add_member(:verified_access_endpoint_id, Shapes::ShapeRef.new(shape: VerifiedAccessEndpointId, required: true, location_name: "VerifiedAccessEndpointId"))
     ModifyVerifiedAccessEndpointPolicyRequest.add_member(:policy_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "PolicyEnabled"))
     ModifyVerifiedAccessEndpointPolicyRequest.add_member(:policy_document, Shapes::ShapeRef.new(shape: String, location_name: "PolicyDocument"))
-    ModifyVerifiedAccessEndpointPolicyRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    ModifyVerifiedAccessEndpointPolicyRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     ModifyVerifiedAccessEndpointPolicyRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     ModifyVerifiedAccessEndpointPolicyRequest.add_member(:sse_specification, Shapes::ShapeRef.new(shape: VerifiedAccessSseSpecificationRequest, location_name: "SseSpecification"))
     ModifyVerifiedAccessEndpointPolicyRequest.struct_class = Types::ModifyVerifiedAccessEndpointPolicyRequest
@@ -12972,7 +12972,7 @@ module Aws::EC2
     ModifyVerifiedAccessEndpointRequest.add_member(:load_balancer_options, Shapes::ShapeRef.new(shape: ModifyVerifiedAccessEndpointLoadBalancerOptions, location_name: "LoadBalancerOptions"))
     ModifyVerifiedAccessEndpointRequest.add_member(:network_interface_options, Shapes::ShapeRef.new(shape: ModifyVerifiedAccessEndpointEniOptions, location_name: "NetworkInterfaceOptions"))
     ModifyVerifiedAccessEndpointRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
-    ModifyVerifiedAccessEndpointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    ModifyVerifiedAccessEndpointRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     ModifyVerifiedAccessEndpointRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     ModifyVerifiedAccessEndpointRequest.add_member(:rds_options, Shapes::ShapeRef.new(shape: ModifyVerifiedAccessEndpointRdsOptions, location_name: "RdsOptions"))
     ModifyVerifiedAccessEndpointRequest.add_member(:cidr_options, Shapes::ShapeRef.new(shape: ModifyVerifiedAccessEndpointCidrOptions, location_name: "CidrOptions"))
@@ -12986,7 +12986,7 @@ module Aws::EC2
     ModifyVerifiedAccessGroupPolicyRequest.add_member(:verified_access_group_id, Shapes::ShapeRef.new(shape: VerifiedAccessGroupId, required: true, location_name: "VerifiedAccessGroupId"))
     ModifyVerifiedAccessGroupPolicyRequest.add_member(:policy_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "PolicyEnabled"))
     ModifyVerifiedAccessGroupPolicyRequest.add_member(:policy_document, Shapes::ShapeRef.new(shape: String, location_name: "PolicyDocument"))
-    ModifyVerifiedAccessGroupPolicyRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    ModifyVerifiedAccessGroupPolicyRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     ModifyVerifiedAccessGroupPolicyRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     ModifyVerifiedAccessGroupPolicyRequest.add_member(:sse_specification, Shapes::ShapeRef.new(shape: VerifiedAccessSseSpecificationRequest, location_name: "SseSpecification"))
     ModifyVerifiedAccessGroupPolicyRequest.struct_class = Types::ModifyVerifiedAccessGroupPolicyRequest
@@ -12999,7 +12999,7 @@ module Aws::EC2
     ModifyVerifiedAccessGroupRequest.add_member(:verified_access_group_id, Shapes::ShapeRef.new(shape: VerifiedAccessGroupId, required: true, location_name: "VerifiedAccessGroupId"))
     ModifyVerifiedAccessGroupRequest.add_member(:verified_access_instance_id, Shapes::ShapeRef.new(shape: VerifiedAccessInstanceId, location_name: "VerifiedAccessInstanceId"))
     ModifyVerifiedAccessGroupRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
-    ModifyVerifiedAccessGroupRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    ModifyVerifiedAccessGroupRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     ModifyVerifiedAccessGroupRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     ModifyVerifiedAccessGroupRequest.struct_class = Types::ModifyVerifiedAccessGroupRequest
 
@@ -13009,7 +13009,7 @@ module Aws::EC2
     ModifyVerifiedAccessInstanceLoggingConfigurationRequest.add_member(:verified_access_instance_id, Shapes::ShapeRef.new(shape: VerifiedAccessInstanceId, required: true, location_name: "VerifiedAccessInstanceId"))
     ModifyVerifiedAccessInstanceLoggingConfigurationRequest.add_member(:access_logs, Shapes::ShapeRef.new(shape: VerifiedAccessLogOptions, required: true, location_name: "AccessLogs"))
     ModifyVerifiedAccessInstanceLoggingConfigurationRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    ModifyVerifiedAccessInstanceLoggingConfigurationRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    ModifyVerifiedAccessInstanceLoggingConfigurationRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     ModifyVerifiedAccessInstanceLoggingConfigurationRequest.struct_class = Types::ModifyVerifiedAccessInstanceLoggingConfigurationRequest
 
     ModifyVerifiedAccessInstanceLoggingConfigurationResult.add_member(:logging_configuration, Shapes::ShapeRef.new(shape: VerifiedAccessInstanceLoggingConfiguration, location_name: "loggingConfiguration"))
@@ -13018,7 +13018,7 @@ module Aws::EC2
     ModifyVerifiedAccessInstanceRequest.add_member(:verified_access_instance_id, Shapes::ShapeRef.new(shape: VerifiedAccessInstanceId, required: true, location_name: "VerifiedAccessInstanceId"))
     ModifyVerifiedAccessInstanceRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     ModifyVerifiedAccessInstanceRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    ModifyVerifiedAccessInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    ModifyVerifiedAccessInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     ModifyVerifiedAccessInstanceRequest.add_member(:cidr_endpoints_custom_sub_domain, Shapes::ShapeRef.new(shape: String, location_name: "CidrEndpointsCustomSubDomain"))
     ModifyVerifiedAccessInstanceRequest.struct_class = Types::ModifyVerifiedAccessInstanceRequest
 
@@ -13052,7 +13052,7 @@ module Aws::EC2
     ModifyVerifiedAccessTrustProviderRequest.add_member(:device_options, Shapes::ShapeRef.new(shape: ModifyVerifiedAccessTrustProviderDeviceOptions, location_name: "DeviceOptions"))
     ModifyVerifiedAccessTrustProviderRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     ModifyVerifiedAccessTrustProviderRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    ModifyVerifiedAccessTrustProviderRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    ModifyVerifiedAccessTrustProviderRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     ModifyVerifiedAccessTrustProviderRequest.add_member(:sse_specification, Shapes::ShapeRef.new(shape: VerifiedAccessSseSpecificationRequest, location_name: "SseSpecification"))
     ModifyVerifiedAccessTrustProviderRequest.add_member(:native_application_oidc_options, Shapes::ShapeRef.new(shape: ModifyVerifiedAccessNativeApplicationOidcOptions, location_name: "NativeApplicationOidcOptions"))
     ModifyVerifiedAccessTrustProviderRequest.struct_class = Types::ModifyVerifiedAccessTrustProviderRequest
@@ -13269,7 +13269,7 @@ module Aws::EC2
     MoveByoipCidrToIpamResult.struct_class = Types::MoveByoipCidrToIpamResult
 
     MoveCapacityReservationInstancesRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
-    MoveCapacityReservationInstancesRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    MoveCapacityReservationInstancesRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     MoveCapacityReservationInstancesRequest.add_member(:source_capacity_reservation_id, Shapes::ShapeRef.new(shape: CapacityReservationId, required: true, location_name: "SourceCapacityReservationId"))
     MoveCapacityReservationInstancesRequest.add_member(:destination_capacity_reservation_id, Shapes::ShapeRef.new(shape: CapacityReservationId, required: true, location_name: "DestinationCapacityReservationId"))
     MoveCapacityReservationInstancesRequest.add_member(:instance_count, Shapes::ShapeRef.new(shape: Integer, required: true, location_name: "InstanceCount"))
@@ -13985,7 +13985,7 @@ module Aws::EC2
     ProvisionIpamPoolCidrRequest.add_member(:cidr, Shapes::ShapeRef.new(shape: String, location_name: "Cidr"))
     ProvisionIpamPoolCidrRequest.add_member(:cidr_authorization_context, Shapes::ShapeRef.new(shape: IpamCidrAuthorizationContext, location_name: "CidrAuthorizationContext"))
     ProvisionIpamPoolCidrRequest.add_member(:netmask_length, Shapes::ShapeRef.new(shape: Integer, location_name: "NetmaskLength"))
-    ProvisionIpamPoolCidrRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    ProvisionIpamPoolCidrRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     ProvisionIpamPoolCidrRequest.add_member(:verification_method, Shapes::ShapeRef.new(shape: VerificationMethod, location_name: "VerificationMethod"))
     ProvisionIpamPoolCidrRequest.add_member(:ipam_external_resource_verification_token_id, Shapes::ShapeRef.new(shape: IpamExternalResourceVerificationTokenId, location_name: "IpamExternalResourceVerificationTokenId"))
     ProvisionIpamPoolCidrRequest.struct_class = Types::ProvisionIpamPoolCidrRequest
@@ -14097,7 +14097,7 @@ module Aws::EC2
     PurchaseReservedInstancesOfferingResult.add_member(:reserved_instances_id, Shapes::ShapeRef.new(shape: String, location_name: "reservedInstancesId"))
     PurchaseReservedInstancesOfferingResult.struct_class = Types::PurchaseReservedInstancesOfferingResult
 
-    PurchaseScheduledInstancesRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    PurchaseScheduledInstancesRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     PurchaseScheduledInstancesRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     PurchaseScheduledInstancesRequest.add_member(:purchase_requests, Shapes::ShapeRef.new(shape: PurchaseRequestSet, required: true, location_name: "PurchaseRequest"))
     PurchaseScheduledInstancesRequest.struct_class = Types::PurchaseScheduledInstancesRequest
@@ -14382,7 +14382,7 @@ module Aws::EC2
     ReportInstanceStatusRequest.add_member(:start_time, Shapes::ShapeRef.new(shape: DateTime, location_name: "startTime"))
     ReportInstanceStatusRequest.add_member(:end_time, Shapes::ShapeRef.new(shape: DateTime, location_name: "endTime"))
     ReportInstanceStatusRequest.add_member(:reason_codes, Shapes::ShapeRef.new(shape: ReasonCodesList, required: true, location_name: "reasonCode"))
-    ReportInstanceStatusRequest.add_member(:description, Shapes::ShapeRef.new(shape: ReportInstanceStatusRequestDescription, deprecated: true, location_name: "description", metadata: {"deprecatedMessage"=>"This member has been deprecated"}))
+    ReportInstanceStatusRequest.add_member(:description, Shapes::ShapeRef.new(shape: ReportInstanceStatusRequestDescription, deprecated: true, location_name: "description", metadata: {"deprecatedMessage" => "This member has been deprecated"}))
     ReportInstanceStatusRequest.struct_class = Types::ReportInstanceStatusRequest
 
     RequestFilterPortRange.add_member(:from_port, Shapes::ShapeRef.new(shape: Port, location_name: "FromPort"))
@@ -15030,14 +15030,14 @@ module Aws::EC2
     RunInstancesRequest.add_member(:disable_api_termination, Shapes::ShapeRef.new(shape: Boolean, location_name: "disableApiTermination"))
     RunInstancesRequest.add_member(:instance_initiated_shutdown_behavior, Shapes::ShapeRef.new(shape: ShutdownBehavior, location_name: "instanceInitiatedShutdownBehavior"))
     RunInstancesRequest.add_member(:private_ip_address, Shapes::ShapeRef.new(shape: String, location_name: "privateIpAddress"))
-    RunInstancesRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    RunInstancesRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "clientToken", metadata: {"idempotencyToken" => true}))
     RunInstancesRequest.add_member(:additional_info, Shapes::ShapeRef.new(shape: String, location_name: "additionalInfo"))
     RunInstancesRequest.add_member(:network_interfaces, Shapes::ShapeRef.new(shape: InstanceNetworkInterfaceSpecificationList, location_name: "networkInterface"))
     RunInstancesRequest.add_member(:iam_instance_profile, Shapes::ShapeRef.new(shape: IamInstanceProfileSpecification, location_name: "iamInstanceProfile"))
     RunInstancesRequest.add_member(:ebs_optimized, Shapes::ShapeRef.new(shape: Boolean, location_name: "ebsOptimized"))
     RunInstancesRequest.struct_class = Types::RunInstancesRequest
 
-    RunScheduledInstancesRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    RunScheduledInstancesRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     RunScheduledInstancesRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     RunScheduledInstancesRequest.add_member(:instance_count, Shapes::ShapeRef.new(shape: Integer, location_name: "InstanceCount"))
     RunScheduledInstancesRequest.add_member(:launch_specification, Shapes::ShapeRef.new(shape: ScheduledInstancesLaunchSpecification, required: true, location_name: "LaunchSpecification"))
@@ -15677,7 +15677,7 @@ module Aws::EC2
     StartNetworkInsightsAccessScopeAnalysisRequest.add_member(:network_insights_access_scope_id, Shapes::ShapeRef.new(shape: NetworkInsightsAccessScopeId, required: true, location_name: "NetworkInsightsAccessScopeId"))
     StartNetworkInsightsAccessScopeAnalysisRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     StartNetworkInsightsAccessScopeAnalysisRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    StartNetworkInsightsAccessScopeAnalysisRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    StartNetworkInsightsAccessScopeAnalysisRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     StartNetworkInsightsAccessScopeAnalysisRequest.struct_class = Types::StartNetworkInsightsAccessScopeAnalysisRequest
 
     StartNetworkInsightsAccessScopeAnalysisResult.add_member(:network_insights_access_scope_analysis, Shapes::ShapeRef.new(shape: NetworkInsightsAccessScopeAnalysis, location_name: "networkInsightsAccessScopeAnalysis"))
@@ -15688,7 +15688,7 @@ module Aws::EC2
     StartNetworkInsightsAnalysisRequest.add_member(:filter_in_arns, Shapes::ShapeRef.new(shape: ArnList, location_name: "FilterInArn"))
     StartNetworkInsightsAnalysisRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     StartNetworkInsightsAnalysisRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
-    StartNetworkInsightsAnalysisRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    StartNetworkInsightsAnalysisRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     StartNetworkInsightsAnalysisRequest.struct_class = Types::StartNetworkInsightsAnalysisRequest
 
     StartNetworkInsightsAnalysisResult.add_member(:network_insights_analysis, Shapes::ShapeRef.new(shape: NetworkInsightsAnalysis, location_name: "networkInsightsAnalysis"))

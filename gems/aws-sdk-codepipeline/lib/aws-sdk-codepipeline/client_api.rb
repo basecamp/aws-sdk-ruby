@@ -1486,7 +1486,7 @@ module Aws::CodePipeline
 
     StartPipelineExecutionInput.add_member(:name, Shapes::ShapeRef.new(shape: PipelineName, required: true, location_name: "name"))
     StartPipelineExecutionInput.add_member(:variables, Shapes::ShapeRef.new(shape: PipelineVariableList, location_name: "variables"))
-    StartPipelineExecutionInput.add_member(:client_request_token, Shapes::ShapeRef.new(shape: ClientRequestToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    StartPipelineExecutionInput.add_member(:client_request_token, Shapes::ShapeRef.new(shape: ClientRequestToken, location_name: "clientRequestToken", metadata: {"idempotencyToken" => true}))
     StartPipelineExecutionInput.add_member(:source_revisions, Shapes::ShapeRef.new(shape: SourceRevisionOverrideList, location_name: "sourceRevisions"))
     StartPipelineExecutionInput.struct_class = Types::StartPipelineExecutionInput
 

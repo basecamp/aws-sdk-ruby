@@ -449,7 +449,7 @@ module Aws::SSOAdmin
     CreateApplicationAssignmentResponse.struct_class = Types::CreateApplicationAssignmentResponse
 
     CreateApplicationRequest.add_member(:application_provider_arn, Shapes::ShapeRef.new(shape: ApplicationProviderArn, required: true, location_name: "ApplicationProviderArn"))
-    CreateApplicationRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateApplicationRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateApplicationRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "Description"))
     CreateApplicationRequest.add_member(:instance_arn, Shapes::ShapeRef.new(shape: InstanceArn, required: true, location_name: "InstanceArn"))
     CreateApplicationRequest.add_member(:name, Shapes::ShapeRef.new(shape: NameType, required: true, location_name: "Name"))
@@ -467,7 +467,7 @@ module Aws::SSOAdmin
 
     CreateInstanceAccessControlAttributeConfigurationResponse.struct_class = Types::CreateInstanceAccessControlAttributeConfigurationResponse
 
-    CreateInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateInstanceRequest.add_member(:name, Shapes::ShapeRef.new(shape: NameType, location_name: "Name"))
     CreateInstanceRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CreateInstanceRequest.struct_class = Types::CreateInstanceRequest
@@ -486,7 +486,7 @@ module Aws::SSOAdmin
     CreatePermissionSetResponse.add_member(:permission_set, Shapes::ShapeRef.new(shape: PermissionSet, location_name: "PermissionSet"))
     CreatePermissionSetResponse.struct_class = Types::CreatePermissionSetResponse
 
-    CreateTrustedTokenIssuerRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateTrustedTokenIssuerRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
     CreateTrustedTokenIssuerRequest.add_member(:instance_arn, Shapes::ShapeRef.new(shape: InstanceArn, required: true, location_name: "InstanceArn"))
     CreateTrustedTokenIssuerRequest.add_member(:name, Shapes::ShapeRef.new(shape: TrustedTokenIssuerName, required: true, location_name: "Name"))
     CreateTrustedTokenIssuerRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
