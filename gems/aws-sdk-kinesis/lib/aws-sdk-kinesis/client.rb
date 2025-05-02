@@ -1907,7 +1907,7 @@ module Aws::Kinesis
     #
     # [1]: https://docs.aws.amazon.com/streams/latest/dev/tagging.html
     #
-    # @option params [String] :resource_arn
+    # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) of the Kinesis resource for which to
     #   list tags.
     #
@@ -1918,7 +1918,7 @@ module Aws::Kinesis
     # @example Request syntax with placeholder values
     #
     #   resp = client.list_tags_for_resource({
-    #     resource_arn: "ResourceARN",
+    #     resource_arn: "ResourceARN", # required
     #   })
     #
     # @example Response structure
@@ -2783,7 +2783,7 @@ module Aws::Kinesis
     #   Tags may only contain Unicode letters, digits, white space, or these
     #   symbols: \_ . : / = + - @.
     #
-    # @option params [String] :resource_arn
+    # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) of the Kinesis resource to which to add
     #   tags.
     #
@@ -2795,7 +2795,7 @@ module Aws::Kinesis
     #     tags: { # required
     #       "TagKey" => "TagValue",
     #     },
-    #     resource_arn: "ResourceARN",
+    #     resource_arn: "ResourceARN", # required
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kinesis-2013-12-02/TagResource AWS API Documentation
@@ -2816,7 +2816,7 @@ module Aws::Kinesis
     #   keys are members of this list will be removed from the Kinesis
     #   resource.
     #
-    # @option params [String] :resource_arn
+    # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) of the Kinesis resource from which to
     #   remove tags.
     #
@@ -2826,7 +2826,7 @@ module Aws::Kinesis
     #
     #   resp = client.untag_resource({
     #     tag_keys: ["TagKey"], # required
-    #     resource_arn: "ResourceARN",
+    #     resource_arn: "ResourceARN", # required
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kinesis-2013-12-02/UntagResource AWS API Documentation
@@ -3005,7 +3005,7 @@ module Aws::Kinesis
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-kinesis'
-      context[:gem_version] = '1.78.0'
+      context[:gem_version] = '1.79.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

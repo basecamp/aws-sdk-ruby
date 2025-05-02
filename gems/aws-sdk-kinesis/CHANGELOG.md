@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.79.0 (2025-05-02)
+------------------
+
+* Feature - Marking ResourceARN as required for Amazon Kinesis Data Streams APIs TagResource, UntagResource, and ListTagsForResource.
+
 1.78.0 (2025-05-01)
 ------------------
 

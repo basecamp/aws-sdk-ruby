@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.8.0 (2025-05-02)
+------------------
+
+* Feature - Added support for Custom output and blueprints for AUDIO data types.
+
 1.7.0 (2025-05-01)
 ------------------
 

@@ -369,7 +369,7 @@ module Aws::Kinesis
     ListStreamsOutput.add_member(:stream_summaries, Shapes::ShapeRef.new(shape: StreamSummaryList, location_name: "StreamSummaries"))
     ListStreamsOutput.struct_class = Types::ListStreamsOutput
 
-    ListTagsForResourceInput.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceARN, location_name: "ResourceARN", metadata: {"contextParam" => {"name" => "ResourceARN"}}))
+    ListTagsForResourceInput.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceARN, required: true, location_name: "ResourceARN", metadata: {"contextParam" => {"name" => "ResourceARN"}}))
     ListTagsForResourceInput.struct_class = Types::ListTagsForResourceInput
 
     ListTagsForResourceOutput.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
@@ -587,11 +587,11 @@ module Aws::Kinesis
     TagMap.value = Shapes::ShapeRef.new(shape: TagValue)
 
     TagResourceInput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, required: true, location_name: "Tags"))
-    TagResourceInput.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceARN, location_name: "ResourceARN", metadata: {"contextParam" => {"name" => "ResourceARN"}}))
+    TagResourceInput.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceARN, required: true, location_name: "ResourceARN", metadata: {"contextParam" => {"name" => "ResourceARN"}}))
     TagResourceInput.struct_class = Types::TagResourceInput
 
     UntagResourceInput.add_member(:tag_keys, Shapes::ShapeRef.new(shape: TagKeyList, required: true, location_name: "TagKeys"))
-    UntagResourceInput.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceARN, location_name: "ResourceARN", metadata: {"contextParam" => {"name" => "ResourceARN"}}))
+    UntagResourceInput.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceARN, required: true, location_name: "ResourceARN", metadata: {"contextParam" => {"name" => "ResourceARN"}}))
     UntagResourceInput.struct_class = Types::UntagResourceInput
 
     UpdateShardCountInput.add_member(:stream_name, Shapes::ShapeRef.new(shape: StreamName, location_name: "StreamName"))
