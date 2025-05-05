@@ -1011,6 +1011,7 @@ module Aws::DataZone
     UpdateUserProfileOutput = Shapes::StructureShape.new(name: 'UpdateUserProfileOutput')
     UpdatedAt = Shapes::TimestampShape.new(name: 'UpdatedAt')
     UpdatedBy = Shapes::StringShape.new(name: 'UpdatedBy')
+    UseAssetTypePolicyGrantDetail = Shapes::StructureShape.new(name: 'UseAssetTypePolicyGrantDetail')
     UserAssignment = Shapes::StringShape.new(name: 'UserAssignment')
     UserDesignation = Shapes::StringShape.new(name: 'UserDesignation')
     UserDetails = Shapes::StructureShape.new(name: 'UserDetails')
@@ -4144,6 +4145,7 @@ module Aws::DataZone
     PolicyGrantDetail.add_member(:delegate_create_environment_profile, Shapes::ShapeRef.new(shape: Unit, location_name: "delegateCreateEnvironmentProfile"))
     PolicyGrantDetail.add_member(:override_domain_unit_owners, Shapes::ShapeRef.new(shape: OverrideDomainUnitOwnersPolicyGrantDetail, location_name: "overrideDomainUnitOwners"))
     PolicyGrantDetail.add_member(:override_project_owners, Shapes::ShapeRef.new(shape: OverrideProjectOwnersPolicyGrantDetail, location_name: "overrideProjectOwners"))
+    PolicyGrantDetail.add_member(:use_asset_type, Shapes::ShapeRef.new(shape: UseAssetTypePolicyGrantDetail, location_name: "useAssetType"))
     PolicyGrantDetail.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     PolicyGrantDetail.add_member_subclass(:add_to_project_member_pool, Types::PolicyGrantDetail::AddToProjectMemberPool)
     PolicyGrantDetail.add_member_subclass(:create_asset_type, Types::PolicyGrantDetail::CreateAssetType)
@@ -4158,6 +4160,7 @@ module Aws::DataZone
     PolicyGrantDetail.add_member_subclass(:delegate_create_environment_profile, Types::PolicyGrantDetail::DelegateCreateEnvironmentProfile)
     PolicyGrantDetail.add_member_subclass(:override_domain_unit_owners, Types::PolicyGrantDetail::OverrideDomainUnitOwners)
     PolicyGrantDetail.add_member_subclass(:override_project_owners, Types::PolicyGrantDetail::OverrideProjectOwners)
+    PolicyGrantDetail.add_member_subclass(:use_asset_type, Types::PolicyGrantDetail::UseAssetType)
     PolicyGrantDetail.add_member_subclass(:unknown, Types::PolicyGrantDetail::Unknown)
     PolicyGrantDetail.struct_class = Types::PolicyGrantDetail
 
@@ -5469,6 +5472,9 @@ module Aws::DataZone
     UpdateUserProfileOutput.add_member(:status, Shapes::ShapeRef.new(shape: UserProfileStatus, location_name: "status"))
     UpdateUserProfileOutput.add_member(:type, Shapes::ShapeRef.new(shape: UserProfileType, location_name: "type"))
     UpdateUserProfileOutput.struct_class = Types::UpdateUserProfileOutput
+
+    UseAssetTypePolicyGrantDetail.add_member(:domain_unit_id, Shapes::ShapeRef.new(shape: DomainUnitId, location_name: "domainUnitId"))
+    UseAssetTypePolicyGrantDetail.struct_class = Types::UseAssetTypePolicyGrantDetail
 
     UserDetails.add_member(:user_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "userId"))
     UserDetails.struct_class = Types::UserDetails

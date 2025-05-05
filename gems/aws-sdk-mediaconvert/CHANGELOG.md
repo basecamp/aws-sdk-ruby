@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.157.0 (2025-05-05)
+------------------
+
+* Feature - This release adds an optional sidecar per-frame video quality metrics report and an ALL_PCM option for audio selectors. It also changes the data type for Probe API response fields related to video and audio bitrate from integer to double.
+
 1.156.0 (2025-05-01)
 ------------------
 

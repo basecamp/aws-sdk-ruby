@@ -515,6 +515,10 @@ module Aws::EC2
     CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociationResult = Shapes::StructureShape.new(name: 'CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociationResult')
     CreateLocalGatewayRouteTableVpcAssociationRequest = Shapes::StructureShape.new(name: 'CreateLocalGatewayRouteTableVpcAssociationRequest')
     CreateLocalGatewayRouteTableVpcAssociationResult = Shapes::StructureShape.new(name: 'CreateLocalGatewayRouteTableVpcAssociationResult')
+    CreateLocalGatewayVirtualInterfaceGroupRequest = Shapes::StructureShape.new(name: 'CreateLocalGatewayVirtualInterfaceGroupRequest')
+    CreateLocalGatewayVirtualInterfaceGroupResult = Shapes::StructureShape.new(name: 'CreateLocalGatewayVirtualInterfaceGroupResult')
+    CreateLocalGatewayVirtualInterfaceRequest = Shapes::StructureShape.new(name: 'CreateLocalGatewayVirtualInterfaceRequest')
+    CreateLocalGatewayVirtualInterfaceResult = Shapes::StructureShape.new(name: 'CreateLocalGatewayVirtualInterfaceResult')
     CreateManagedPrefixListRequest = Shapes::StructureShape.new(name: 'CreateManagedPrefixListRequest')
     CreateManagedPrefixListResult = Shapes::StructureShape.new(name: 'CreateManagedPrefixListResult')
     CreateNatGatewayRequest = Shapes::StructureShape.new(name: 'CreateNatGatewayRequest')
@@ -726,6 +730,10 @@ module Aws::EC2
     DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociationResult = Shapes::StructureShape.new(name: 'DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociationResult')
     DeleteLocalGatewayRouteTableVpcAssociationRequest = Shapes::StructureShape.new(name: 'DeleteLocalGatewayRouteTableVpcAssociationRequest')
     DeleteLocalGatewayRouteTableVpcAssociationResult = Shapes::StructureShape.new(name: 'DeleteLocalGatewayRouteTableVpcAssociationResult')
+    DeleteLocalGatewayVirtualInterfaceGroupRequest = Shapes::StructureShape.new(name: 'DeleteLocalGatewayVirtualInterfaceGroupRequest')
+    DeleteLocalGatewayVirtualInterfaceGroupResult = Shapes::StructureShape.new(name: 'DeleteLocalGatewayVirtualInterfaceGroupResult')
+    DeleteLocalGatewayVirtualInterfaceRequest = Shapes::StructureShape.new(name: 'DeleteLocalGatewayVirtualInterfaceRequest')
+    DeleteLocalGatewayVirtualInterfaceResult = Shapes::StructureShape.new(name: 'DeleteLocalGatewayVirtualInterfaceResult')
     DeleteManagedPrefixListRequest = Shapes::StructureShape.new(name: 'DeleteManagedPrefixListRequest')
     DeleteManagedPrefixListResult = Shapes::StructureShape.new(name: 'DeleteManagedPrefixListResult')
     DeleteNatGatewayRequest = Shapes::StructureShape.new(name: 'DeleteNatGatewayRequest')
@@ -1065,6 +1073,8 @@ module Aws::EC2
     DescribeNetworkInterfacesMaxResults = Shapes::IntegerShape.new(name: 'DescribeNetworkInterfacesMaxResults')
     DescribeNetworkInterfacesRequest = Shapes::StructureShape.new(name: 'DescribeNetworkInterfacesRequest')
     DescribeNetworkInterfacesResult = Shapes::StructureShape.new(name: 'DescribeNetworkInterfacesResult')
+    DescribeOutpostLagsRequest = Shapes::StructureShape.new(name: 'DescribeOutpostLagsRequest')
+    DescribeOutpostLagsResult = Shapes::StructureShape.new(name: 'DescribeOutpostLagsResult')
     DescribePlacementGroupsRequest = Shapes::StructureShape.new(name: 'DescribePlacementGroupsRequest')
     DescribePlacementGroupsResult = Shapes::StructureShape.new(name: 'DescribePlacementGroupsResult')
     DescribePrefixListsRequest = Shapes::StructureShape.new(name: 'DescribePrefixListsRequest')
@@ -1112,6 +1122,8 @@ module Aws::EC2
     DescribeSecurityGroupsMaxResults = Shapes::IntegerShape.new(name: 'DescribeSecurityGroupsMaxResults')
     DescribeSecurityGroupsRequest = Shapes::StructureShape.new(name: 'DescribeSecurityGroupsRequest')
     DescribeSecurityGroupsResult = Shapes::StructureShape.new(name: 'DescribeSecurityGroupsResult')
+    DescribeServiceLinkVirtualInterfacesRequest = Shapes::StructureShape.new(name: 'DescribeServiceLinkVirtualInterfacesRequest')
+    DescribeServiceLinkVirtualInterfacesResult = Shapes::StructureShape.new(name: 'DescribeServiceLinkVirtualInterfacesResult')
     DescribeSnapshotAttributeRequest = Shapes::StructureShape.new(name: 'DescribeSnapshotAttributeRequest')
     DescribeSnapshotAttributeResult = Shapes::StructureShape.new(name: 'DescribeSnapshotAttributeResult')
     DescribeSnapshotTierStatusMaxResults = Shapes::IntegerShape.new(name: 'DescribeSnapshotTierStatusMaxResults')
@@ -2204,7 +2216,9 @@ module Aws::EC2
     LocalGatewayRoutetableId = Shapes::StringShape.new(name: 'LocalGatewayRoutetableId')
     LocalGatewaySet = Shapes::ListShape.new(name: 'LocalGatewaySet')
     LocalGatewayVirtualInterface = Shapes::StructureShape.new(name: 'LocalGatewayVirtualInterface')
+    LocalGatewayVirtualInterfaceConfigurationState = Shapes::StringShape.new(name: 'LocalGatewayVirtualInterfaceConfigurationState')
     LocalGatewayVirtualInterfaceGroup = Shapes::StructureShape.new(name: 'LocalGatewayVirtualInterfaceGroup')
+    LocalGatewayVirtualInterfaceGroupConfigurationState = Shapes::StringShape.new(name: 'LocalGatewayVirtualInterfaceGroupConfigurationState')
     LocalGatewayVirtualInterfaceGroupId = Shapes::StringShape.new(name: 'LocalGatewayVirtualInterfaceGroupId')
     LocalGatewayVirtualInterfaceGroupIdSet = Shapes::ListShape.new(name: 'LocalGatewayVirtualInterfaceGroupIdSet')
     LocalGatewayVirtualInterfaceGroupSet = Shapes::ListShape.new(name: 'LocalGatewayVirtualInterfaceGroupSet')
@@ -2525,6 +2539,11 @@ module Aws::EC2
     OrganizationArnStringList = Shapes::ListShape.new(name: 'OrganizationArnStringList')
     OrganizationalUnitArnStringList = Shapes::ListShape.new(name: 'OrganizationalUnitArnStringList')
     OutpostArn = Shapes::StringShape.new(name: 'OutpostArn')
+    OutpostLag = Shapes::StructureShape.new(name: 'OutpostLag')
+    OutpostLagId = Shapes::StringShape.new(name: 'OutpostLagId')
+    OutpostLagIdSet = Shapes::ListShape.new(name: 'OutpostLagIdSet')
+    OutpostLagMaxResults = Shapes::IntegerShape.new(name: 'OutpostLagMaxResults')
+    OutpostLagSet = Shapes::ListShape.new(name: 'OutpostLagSet')
     OwnerStringList = Shapes::ListShape.new(name: 'OwnerStringList')
     PacketHeaderStatement = Shapes::StructureShape.new(name: 'PacketHeaderStatement')
     PacketHeaderStatementRequest = Shapes::StructureShape.new(name: 'PacketHeaderStatementRequest')
@@ -2977,6 +2996,12 @@ module Aws::EC2
     ServiceConnectivityType = Shapes::StringShape.new(name: 'ServiceConnectivityType')
     ServiceDetail = Shapes::StructureShape.new(name: 'ServiceDetail')
     ServiceDetailSet = Shapes::ListShape.new(name: 'ServiceDetailSet')
+    ServiceLinkMaxResults = Shapes::IntegerShape.new(name: 'ServiceLinkMaxResults')
+    ServiceLinkVirtualInterface = Shapes::StructureShape.new(name: 'ServiceLinkVirtualInterface')
+    ServiceLinkVirtualInterfaceConfigurationState = Shapes::StringShape.new(name: 'ServiceLinkVirtualInterfaceConfigurationState')
+    ServiceLinkVirtualInterfaceId = Shapes::StringShape.new(name: 'ServiceLinkVirtualInterfaceId')
+    ServiceLinkVirtualInterfaceIdSet = Shapes::ListShape.new(name: 'ServiceLinkVirtualInterfaceIdSet')
+    ServiceLinkVirtualInterfaceSet = Shapes::ListShape.new(name: 'ServiceLinkVirtualInterfaceSet')
     ServiceManaged = Shapes::StringShape.new(name: 'ServiceManaged')
     ServiceNetworkArn = Shapes::StringShape.new(name: 'ServiceNetworkArn')
     ServiceState = Shapes::StringShape.new(name: 'ServiceState')
@@ -5391,6 +5416,30 @@ module Aws::EC2
     CreateLocalGatewayRouteTableVpcAssociationResult.add_member(:local_gateway_route_table_vpc_association, Shapes::ShapeRef.new(shape: LocalGatewayRouteTableVpcAssociation, location_name: "localGatewayRouteTableVpcAssociation"))
     CreateLocalGatewayRouteTableVpcAssociationResult.struct_class = Types::CreateLocalGatewayRouteTableVpcAssociationResult
 
+    CreateLocalGatewayVirtualInterfaceGroupRequest.add_member(:local_gateway_id, Shapes::ShapeRef.new(shape: LocalGatewayId, required: true, location_name: "LocalGatewayId"))
+    CreateLocalGatewayVirtualInterfaceGroupRequest.add_member(:local_bgp_asn, Shapes::ShapeRef.new(shape: Integer, location_name: "LocalBgpAsn"))
+    CreateLocalGatewayVirtualInterfaceGroupRequest.add_member(:local_bgp_asn_extended, Shapes::ShapeRef.new(shape: Long, location_name: "LocalBgpAsnExtended"))
+    CreateLocalGatewayVirtualInterfaceGroupRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
+    CreateLocalGatewayVirtualInterfaceGroupRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    CreateLocalGatewayVirtualInterfaceGroupRequest.struct_class = Types::CreateLocalGatewayVirtualInterfaceGroupRequest
+
+    CreateLocalGatewayVirtualInterfaceGroupResult.add_member(:local_gateway_virtual_interface_group, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterfaceGroup, location_name: "localGatewayVirtualInterfaceGroup"))
+    CreateLocalGatewayVirtualInterfaceGroupResult.struct_class = Types::CreateLocalGatewayVirtualInterfaceGroupResult
+
+    CreateLocalGatewayVirtualInterfaceRequest.add_member(:local_gateway_virtual_interface_group_id, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterfaceGroupId, required: true, location_name: "LocalGatewayVirtualInterfaceGroupId"))
+    CreateLocalGatewayVirtualInterfaceRequest.add_member(:outpost_lag_id, Shapes::ShapeRef.new(shape: OutpostLagId, required: true, location_name: "OutpostLagId"))
+    CreateLocalGatewayVirtualInterfaceRequest.add_member(:vlan, Shapes::ShapeRef.new(shape: Integer, required: true, location_name: "Vlan"))
+    CreateLocalGatewayVirtualInterfaceRequest.add_member(:local_address, Shapes::ShapeRef.new(shape: String, required: true, location_name: "LocalAddress"))
+    CreateLocalGatewayVirtualInterfaceRequest.add_member(:peer_address, Shapes::ShapeRef.new(shape: String, required: true, location_name: "PeerAddress"))
+    CreateLocalGatewayVirtualInterfaceRequest.add_member(:peer_bgp_asn, Shapes::ShapeRef.new(shape: Integer, location_name: "PeerBgpAsn"))
+    CreateLocalGatewayVirtualInterfaceRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
+    CreateLocalGatewayVirtualInterfaceRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    CreateLocalGatewayVirtualInterfaceRequest.add_member(:peer_bgp_asn_extended, Shapes::ShapeRef.new(shape: Long, location_name: "PeerBgpAsnExtended"))
+    CreateLocalGatewayVirtualInterfaceRequest.struct_class = Types::CreateLocalGatewayVirtualInterfaceRequest
+
+    CreateLocalGatewayVirtualInterfaceResult.add_member(:local_gateway_virtual_interface, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterface, location_name: "localGatewayVirtualInterface"))
+    CreateLocalGatewayVirtualInterfaceResult.struct_class = Types::CreateLocalGatewayVirtualInterfaceResult
+
     CreateManagedPrefixListRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateManagedPrefixListRequest.add_member(:prefix_list_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "PrefixListName"))
     CreateManagedPrefixListRequest.add_member(:entries, Shapes::ShapeRef.new(shape: AddPrefixListEntries, location_name: "Entry"))
@@ -6418,6 +6467,20 @@ module Aws::EC2
 
     DeleteLocalGatewayRouteTableVpcAssociationResult.add_member(:local_gateway_route_table_vpc_association, Shapes::ShapeRef.new(shape: LocalGatewayRouteTableVpcAssociation, location_name: "localGatewayRouteTableVpcAssociation"))
     DeleteLocalGatewayRouteTableVpcAssociationResult.struct_class = Types::DeleteLocalGatewayRouteTableVpcAssociationResult
+
+    DeleteLocalGatewayVirtualInterfaceGroupRequest.add_member(:local_gateway_virtual_interface_group_id, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterfaceGroupId, required: true, location_name: "LocalGatewayVirtualInterfaceGroupId"))
+    DeleteLocalGatewayVirtualInterfaceGroupRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DeleteLocalGatewayVirtualInterfaceGroupRequest.struct_class = Types::DeleteLocalGatewayVirtualInterfaceGroupRequest
+
+    DeleteLocalGatewayVirtualInterfaceGroupResult.add_member(:local_gateway_virtual_interface_group, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterfaceGroup, location_name: "localGatewayVirtualInterfaceGroup"))
+    DeleteLocalGatewayVirtualInterfaceGroupResult.struct_class = Types::DeleteLocalGatewayVirtualInterfaceGroupResult
+
+    DeleteLocalGatewayVirtualInterfaceRequest.add_member(:local_gateway_virtual_interface_id, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterfaceId, required: true, location_name: "LocalGatewayVirtualInterfaceId"))
+    DeleteLocalGatewayVirtualInterfaceRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DeleteLocalGatewayVirtualInterfaceRequest.struct_class = Types::DeleteLocalGatewayVirtualInterfaceRequest
+
+    DeleteLocalGatewayVirtualInterfaceResult.add_member(:local_gateway_virtual_interface, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterface, location_name: "localGatewayVirtualInterface"))
+    DeleteLocalGatewayVirtualInterfaceResult.struct_class = Types::DeleteLocalGatewayVirtualInterfaceResult
 
     DeleteManagedPrefixListRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     DeleteManagedPrefixListRequest.add_member(:prefix_list_id, Shapes::ShapeRef.new(shape: PrefixListResourceId, required: true, location_name: "PrefixListId"))
@@ -7853,6 +7916,17 @@ module Aws::EC2
     DescribeNetworkInterfacesResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
     DescribeNetworkInterfacesResult.struct_class = Types::DescribeNetworkInterfacesResult
 
+    DescribeOutpostLagsRequest.add_member(:outpost_lag_ids, Shapes::ShapeRef.new(shape: OutpostLagIdSet, location_name: "OutpostLagId"))
+    DescribeOutpostLagsRequest.add_member(:filters, Shapes::ShapeRef.new(shape: FilterList, location_name: "Filter"))
+    DescribeOutpostLagsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: OutpostLagMaxResults, location_name: "MaxResults"))
+    DescribeOutpostLagsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    DescribeOutpostLagsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DescribeOutpostLagsRequest.struct_class = Types::DescribeOutpostLagsRequest
+
+    DescribeOutpostLagsResult.add_member(:outpost_lags, Shapes::ShapeRef.new(shape: OutpostLagSet, location_name: "outpostLagSet"))
+    DescribeOutpostLagsResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    DescribeOutpostLagsResult.struct_class = Types::DescribeOutpostLagsResult
+
     DescribePlacementGroupsRequest.add_member(:group_ids, Shapes::ShapeRef.new(shape: PlacementGroupIdStringList, location_name: "GroupId"))
     DescribePlacementGroupsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     DescribePlacementGroupsRequest.add_member(:group_names, Shapes::ShapeRef.new(shape: PlacementGroupStringList, location_name: "groupName"))
@@ -8070,6 +8144,17 @@ module Aws::EC2
     DescribeSecurityGroupsResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
     DescribeSecurityGroupsResult.add_member(:security_groups, Shapes::ShapeRef.new(shape: SecurityGroupList, location_name: "securityGroupInfo"))
     DescribeSecurityGroupsResult.struct_class = Types::DescribeSecurityGroupsResult
+
+    DescribeServiceLinkVirtualInterfacesRequest.add_member(:service_link_virtual_interface_ids, Shapes::ShapeRef.new(shape: ServiceLinkVirtualInterfaceIdSet, location_name: "ServiceLinkVirtualInterfaceId"))
+    DescribeServiceLinkVirtualInterfacesRequest.add_member(:filters, Shapes::ShapeRef.new(shape: FilterList, location_name: "Filter"))
+    DescribeServiceLinkVirtualInterfacesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ServiceLinkMaxResults, location_name: "MaxResults"))
+    DescribeServiceLinkVirtualInterfacesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    DescribeServiceLinkVirtualInterfacesRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DescribeServiceLinkVirtualInterfacesRequest.struct_class = Types::DescribeServiceLinkVirtualInterfacesRequest
+
+    DescribeServiceLinkVirtualInterfacesResult.add_member(:service_link_virtual_interfaces, Shapes::ShapeRef.new(shape: ServiceLinkVirtualInterfaceSet, location_name: "serviceLinkVirtualInterfaceSet"))
+    DescribeServiceLinkVirtualInterfacesResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    DescribeServiceLinkVirtualInterfacesResult.struct_class = Types::DescribeServiceLinkVirtualInterfacesResult
 
     DescribeSnapshotAttributeRequest.add_member(:attribute, Shapes::ShapeRef.new(shape: SnapshotAttributeName, required: true, location_name: "Attribute"))
     DescribeSnapshotAttributeRequest.add_member(:snapshot_id, Shapes::ShapeRef.new(shape: SnapshotId, required: true, location_name: "SnapshotId"))
@@ -12275,20 +12360,29 @@ module Aws::EC2
 
     LocalGatewayVirtualInterface.add_member(:local_gateway_virtual_interface_id, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterfaceId, location_name: "localGatewayVirtualInterfaceId"))
     LocalGatewayVirtualInterface.add_member(:local_gateway_id, Shapes::ShapeRef.new(shape: String, location_name: "localGatewayId"))
+    LocalGatewayVirtualInterface.add_member(:local_gateway_virtual_interface_group_id, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterfaceGroupId, location_name: "localGatewayVirtualInterfaceGroupId"))
+    LocalGatewayVirtualInterface.add_member(:local_gateway_virtual_interface_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "localGatewayVirtualInterfaceArn"))
+    LocalGatewayVirtualInterface.add_member(:outpost_lag_id, Shapes::ShapeRef.new(shape: String, location_name: "outpostLagId"))
     LocalGatewayVirtualInterface.add_member(:vlan, Shapes::ShapeRef.new(shape: Integer, location_name: "vlan"))
     LocalGatewayVirtualInterface.add_member(:local_address, Shapes::ShapeRef.new(shape: String, location_name: "localAddress"))
     LocalGatewayVirtualInterface.add_member(:peer_address, Shapes::ShapeRef.new(shape: String, location_name: "peerAddress"))
     LocalGatewayVirtualInterface.add_member(:local_bgp_asn, Shapes::ShapeRef.new(shape: Integer, location_name: "localBgpAsn"))
     LocalGatewayVirtualInterface.add_member(:peer_bgp_asn, Shapes::ShapeRef.new(shape: Integer, location_name: "peerBgpAsn"))
+    LocalGatewayVirtualInterface.add_member(:peer_bgp_asn_extended, Shapes::ShapeRef.new(shape: Long, location_name: "peerBgpAsnExtended"))
     LocalGatewayVirtualInterface.add_member(:owner_id, Shapes::ShapeRef.new(shape: String, location_name: "ownerId"))
     LocalGatewayVirtualInterface.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
+    LocalGatewayVirtualInterface.add_member(:configuration_state, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterfaceConfigurationState, location_name: "configurationState"))
     LocalGatewayVirtualInterface.struct_class = Types::LocalGatewayVirtualInterface
 
     LocalGatewayVirtualInterfaceGroup.add_member(:local_gateway_virtual_interface_group_id, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterfaceGroupId, location_name: "localGatewayVirtualInterfaceGroupId"))
     LocalGatewayVirtualInterfaceGroup.add_member(:local_gateway_virtual_interface_ids, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterfaceIdSet, location_name: "localGatewayVirtualInterfaceIdSet"))
     LocalGatewayVirtualInterfaceGroup.add_member(:local_gateway_id, Shapes::ShapeRef.new(shape: String, location_name: "localGatewayId"))
     LocalGatewayVirtualInterfaceGroup.add_member(:owner_id, Shapes::ShapeRef.new(shape: String, location_name: "ownerId"))
+    LocalGatewayVirtualInterfaceGroup.add_member(:local_bgp_asn, Shapes::ShapeRef.new(shape: Integer, location_name: "localBgpAsn"))
+    LocalGatewayVirtualInterfaceGroup.add_member(:local_bgp_asn_extended, Shapes::ShapeRef.new(shape: Long, location_name: "localBgpAsnExtended"))
+    LocalGatewayVirtualInterfaceGroup.add_member(:local_gateway_virtual_interface_group_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "localGatewayVirtualInterfaceGroupArn"))
     LocalGatewayVirtualInterfaceGroup.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
+    LocalGatewayVirtualInterfaceGroup.add_member(:configuration_state, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterfaceGroupConfigurationState, location_name: "configurationState"))
     LocalGatewayVirtualInterfaceGroup.struct_class = Types::LocalGatewayVirtualInterfaceGroup
 
     LocalGatewayVirtualInterfaceGroupIdSet.member = Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterfaceGroupId, location_name: "item")
@@ -13634,6 +13728,19 @@ module Aws::EC2
     OrganizationArnStringList.member = Shapes::ShapeRef.new(shape: String, location_name: "OrganizationArn")
 
     OrganizationalUnitArnStringList.member = Shapes::ShapeRef.new(shape: String, location_name: "OrganizationalUnitArn")
+
+    OutpostLag.add_member(:outpost_arn, Shapes::ShapeRef.new(shape: String, location_name: "outpostArn"))
+    OutpostLag.add_member(:owner_id, Shapes::ShapeRef.new(shape: String, location_name: "ownerId"))
+    OutpostLag.add_member(:state, Shapes::ShapeRef.new(shape: String, location_name: "state"))
+    OutpostLag.add_member(:outpost_lag_id, Shapes::ShapeRef.new(shape: OutpostLagId, location_name: "outpostLagId"))
+    OutpostLag.add_member(:local_gateway_virtual_interface_ids, Shapes::ShapeRef.new(shape: LocalGatewayVirtualInterfaceIdSet, location_name: "localGatewayVirtualInterfaceIdSet"))
+    OutpostLag.add_member(:service_link_virtual_interface_ids, Shapes::ShapeRef.new(shape: ServiceLinkVirtualInterfaceIdSet, location_name: "serviceLinkVirtualInterfaceIdSet"))
+    OutpostLag.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
+    OutpostLag.struct_class = Types::OutpostLag
+
+    OutpostLagIdSet.member = Shapes::ShapeRef.new(shape: OutpostLagId, location_name: "item")
+
+    OutpostLagSet.member = Shapes::ShapeRef.new(shape: OutpostLag, location_name: "item")
 
     OwnerStringList.member = Shapes::ShapeRef.new(shape: String, location_name: "Owner")
 
@@ -15354,6 +15461,24 @@ module Aws::EC2
     ServiceDetail.struct_class = Types::ServiceDetail
 
     ServiceDetailSet.member = Shapes::ShapeRef.new(shape: ServiceDetail, location_name: "item")
+
+    ServiceLinkVirtualInterface.add_member(:service_link_virtual_interface_id, Shapes::ShapeRef.new(shape: ServiceLinkVirtualInterfaceId, location_name: "serviceLinkVirtualInterfaceId"))
+    ServiceLinkVirtualInterface.add_member(:service_link_virtual_interface_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "serviceLinkVirtualInterfaceArn"))
+    ServiceLinkVirtualInterface.add_member(:outpost_id, Shapes::ShapeRef.new(shape: String, location_name: "outpostId"))
+    ServiceLinkVirtualInterface.add_member(:outpost_arn, Shapes::ShapeRef.new(shape: String, location_name: "outpostArn"))
+    ServiceLinkVirtualInterface.add_member(:owner_id, Shapes::ShapeRef.new(shape: String, location_name: "ownerId"))
+    ServiceLinkVirtualInterface.add_member(:local_address, Shapes::ShapeRef.new(shape: String, location_name: "localAddress"))
+    ServiceLinkVirtualInterface.add_member(:peer_address, Shapes::ShapeRef.new(shape: String, location_name: "peerAddress"))
+    ServiceLinkVirtualInterface.add_member(:peer_bgp_asn, Shapes::ShapeRef.new(shape: Long, location_name: "peerBgpAsn"))
+    ServiceLinkVirtualInterface.add_member(:vlan, Shapes::ShapeRef.new(shape: Integer, location_name: "vlan"))
+    ServiceLinkVirtualInterface.add_member(:outpost_lag_id, Shapes::ShapeRef.new(shape: OutpostLagId, location_name: "outpostLagId"))
+    ServiceLinkVirtualInterface.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
+    ServiceLinkVirtualInterface.add_member(:configuration_state, Shapes::ShapeRef.new(shape: ServiceLinkVirtualInterfaceConfigurationState, location_name: "configurationState"))
+    ServiceLinkVirtualInterface.struct_class = Types::ServiceLinkVirtualInterface
+
+    ServiceLinkVirtualInterfaceIdSet.member = Shapes::ShapeRef.new(shape: ServiceLinkVirtualInterfaceId, location_name: "item")
+
+    ServiceLinkVirtualInterfaceSet.member = Shapes::ShapeRef.new(shape: ServiceLinkVirtualInterface, location_name: "item")
 
     ServiceTypeDetail.add_member(:service_type, Shapes::ShapeRef.new(shape: ServiceType, location_name: "serviceType"))
     ServiceTypeDetail.struct_class = Types::ServiceTypeDetail
@@ -17982,6 +18107,22 @@ module Aws::EC2
         o.output = Shapes::ShapeRef.new(shape: CreateLocalGatewayRouteTableVpcAssociationResult)
       end)
 
+      api.add_operation(:create_local_gateway_virtual_interface, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateLocalGatewayVirtualInterface"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: CreateLocalGatewayVirtualInterfaceRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateLocalGatewayVirtualInterfaceResult)
+      end)
+
+      api.add_operation(:create_local_gateway_virtual_interface_group, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateLocalGatewayVirtualInterfaceGroup"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: CreateLocalGatewayVirtualInterfaceGroupRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateLocalGatewayVirtualInterfaceGroupResult)
+      end)
+
       api.add_operation(:create_managed_prefix_list, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateManagedPrefixList"
         o.http_method = "POST"
@@ -18628,6 +18769,22 @@ module Aws::EC2
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: DeleteLocalGatewayRouteTableVpcAssociationRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteLocalGatewayRouteTableVpcAssociationResult)
+      end)
+
+      api.add_operation(:delete_local_gateway_virtual_interface, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteLocalGatewayVirtualInterface"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DeleteLocalGatewayVirtualInterfaceRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteLocalGatewayVirtualInterfaceResult)
+      end)
+
+      api.add_operation(:delete_local_gateway_virtual_interface_group, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteLocalGatewayVirtualInterfaceGroup"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DeleteLocalGatewayVirtualInterfaceGroupRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteLocalGatewayVirtualInterfaceGroupResult)
       end)
 
       api.add_operation(:delete_managed_prefix_list, Seahorse::Model::Operation.new.tap do |o|
@@ -20254,6 +20411,14 @@ module Aws::EC2
         )
       end)
 
+      api.add_operation(:describe_outpost_lags, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeOutpostLags"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeOutpostLagsRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeOutpostLagsResult)
+      end)
+
       api.add_operation(:describe_placement_groups, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DescribePlacementGroups"
         o.http_method = "POST"
@@ -20501,6 +20666,14 @@ module Aws::EC2
             "next_token" => "next_token"
           }
         )
+      end)
+
+      api.add_operation(:describe_service_link_virtual_interfaces, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeServiceLinkVirtualInterfaces"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeServiceLinkVirtualInterfacesRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeServiceLinkVirtualInterfacesResult)
       end)
 
       api.add_operation(:describe_snapshot_attribute, Seahorse::Model::Operation.new.tap do |o|

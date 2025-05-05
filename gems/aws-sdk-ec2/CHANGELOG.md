@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.519.0 (2025-05-05)
+------------------
+
+* Feature - This update introduces API operations to manage and create local gateway VIF and VIF groups. It also includes API operations to describe Outpost LAGs and service link VIFs.
+
 1.518.0 (2025-05-01)
 ------------------
 
