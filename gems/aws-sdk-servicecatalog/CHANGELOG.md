@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.113.0 (2025-05-06)
+------------------
+
+* Feature - ServiceCatalog's APIs (DeleteServiceAction, DisassociateServiceActionFromProvisioningArtifact, AssociateServiceActionWithProvisioningArtifact) now throw InvalidParametersException when IdempotencyToken is invalid.
+
 1.112.0 (2025-05-01)
 ------------------
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.520.0 (2025-05-06)
+------------------
+
+* Feature - This release adds support for Amazon EBS Provisioned Rate for Volume Initialization, which lets you specify a volume initialization rate to ensure that your EBS volumes are initialized in a predictable amount of time.
+
 1.519.0 (2025-05-05)
 ------------------
 

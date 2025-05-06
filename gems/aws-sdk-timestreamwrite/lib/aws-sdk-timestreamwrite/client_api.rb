@@ -517,9 +517,11 @@ module Aws::TimestreamWrite
 
       api.metadata = {
         "apiVersion" => "2018-11-01",
+        "auth" => ["aws.auth#sigv4"],
         "endpointPrefix" => "ingest.timestream",
         "jsonVersion" => "1.0",
         "protocol" => "json",
+        "protocols" => ["json"],
         "serviceAbbreviation" => "Timestream Write",
         "serviceFullName" => "Amazon Timestream Write",
         "serviceId" => "Timestream Write",

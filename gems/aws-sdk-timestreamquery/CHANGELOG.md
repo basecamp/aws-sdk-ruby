@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.52.0 (2025-05-06)
+------------------
+
+* Feature - Add dualstack endpoints support and correct us-gov-west-1 FIPS endpoint.
+
 1.51.0 (2025-05-01)
 ------------------
 

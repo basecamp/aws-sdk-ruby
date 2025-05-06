@@ -6107,7 +6107,7 @@ module Aws::EC2
     #   Indicates whether the client VPN session is disconnected after the
     #   maximum timeout specified in `SessionTimeoutHours` is reached. If
     #   `true`, users are prompted to reconnect client VPN. If `false`, client
-    #   VPN attempts to reconnect automatically. The default value is `false`.
+    #   VPN attempts to reconnect automatically. The default value is `true`.
     #
     # @return [Types::CreateClientVpnEndpointResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -7165,7 +7165,7 @@ module Aws::EC2
     #                 },
     #               },
     #             },
-    #             image_id: "ImageId",
+    #             image_id: "String",
     #           },
     #         ],
     #       },
@@ -7796,6 +7796,7 @@ module Aws::EC2
     #           throughput: 1,
     #           outpost_arn: "String",
     #           encrypted: false,
+    #           volume_initialization_rate: 1,
     #         },
     #         no_device: "String",
     #         device_name: "String",
@@ -9099,6 +9100,7 @@ module Aws::EC2
     #             volume_size: 1,
     #             volume_type: "standard", # accepts standard, io1, io2, gp2, sc1, st1, gp3
     #             throughput: 1,
+    #             volume_initialization_rate: 1,
     #           },
     #           no_device: "String",
     #         },
@@ -9526,6 +9528,7 @@ module Aws::EC2
     #             volume_size: 1,
     #             volume_type: "standard", # accepts standard, io1, io2, gp2, sc1, st1, gp3
     #             throughput: 1,
+    #             volume_initialization_rate: 1,
     #           },
     #           no_device: "String",
     #         },
@@ -9775,6 +9778,7 @@ module Aws::EC2
     #   resp.launch_template_version.launch_template_data.block_device_mappings[0].ebs.volume_size #=> Integer
     #   resp.launch_template_version.launch_template_data.block_device_mappings[0].ebs.volume_type #=> String, one of "standard", "io1", "io2", "gp2", "sc1", "st1", "gp3"
     #   resp.launch_template_version.launch_template_data.block_device_mappings[0].ebs.throughput #=> Integer
+    #   resp.launch_template_version.launch_template_data.block_device_mappings[0].ebs.volume_initialization_rate #=> Integer
     #   resp.launch_template_version.launch_template_data.block_device_mappings[0].no_device #=> String
     #   resp.launch_template_version.launch_template_data.network_interfaces #=> Array
     #   resp.launch_template_version.launch_template_data.network_interfaces[0].associate_carrier_ip_address #=> Boolean
@@ -11941,6 +11945,37 @@ module Aws::EC2
     #   original root volume after the replacement task completes, you must
     #   manually delete it when you no longer need it.
     #
+    # @option params [Integer] :volume_initialization_rate
+    #   Specifies the Amazon EBS Provisioned Rate for Volume Initialization
+    #   (volume initialization rate), in MiB/s, at which to download the
+    #   snapshot blocks from Amazon S3 to the replacement root volume. This is
+    #   also known as *volume initialization*. Specifying a volume
+    #   initialization rate ensures that the volume is initialized at a
+    #   predictable and consistent rate after creation.
+    #
+    #   Omit this parameter if:
+    #
+    #   * You want to create the volume using fast snapshot restore. You must
+    #     specify a snapshot that is enabled for fast snapshot restore. In
+    #     this case, the volume is fully initialized at creation.
+    #
+    #     <note markdown="1"> If you specify a snapshot that is enabled for fast snapshot restore
+    #     and a volume initialization rate, the volume will be initialized at
+    #     the specified rate instead of fast snapshot restore.
+    #
+    #      </note>
+    #
+    #   * You want to create a volume that is initialized at the default rate.
+    #
+    #   For more information, see [ Initialize Amazon EBS volumes][1] in the
+    #   *Amazon EC2 User Guide*.
+    #
+    #   Valid range: 100 - 300 MiB/s
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/initalize-volume.html
+    #
     # @return [Types::CreateReplaceRootVolumeTaskResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateReplaceRootVolumeTaskResult#replace_root_volume_task #replace_root_volume_task} => Types::ReplaceRootVolumeTask
@@ -11965,6 +12000,7 @@ module Aws::EC2
     #     ],
     #     image_id: "ImageId",
     #     delete_replaced_root_volume: false,
+    #     volume_initialization_rate: 1,
     #   })
     #
     # @example Response structure
@@ -15756,6 +15792,38 @@ module Aws::EC2
     #
     #   [1]: https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html
     #
+    # @option params [Integer] :volume_initialization_rate
+    #   Specifies the Amazon EBS Provisioned Rate for Volume Initialization
+    #   (volume initialization rate), in MiB/s, at which to download the
+    #   snapshot blocks from Amazon S3 to the volume. This is also known as
+    #   *volume initialization*. Specifying a volume initialization rate
+    #   ensures that the volume is initialized at a predictable and consistent
+    #   rate after creation.
+    #
+    #   This parameter is supported only for volumes created from snapshots.
+    #   Omit this parameter if:
+    #
+    #   * You want to create the volume using fast snapshot restore. You must
+    #     specify a snapshot that is enabled for fast snapshot restore. In
+    #     this case, the volume is fully initialized at creation.
+    #
+    #     <note markdown="1"> If you specify a snapshot that is enabled for fast snapshot restore
+    #     and a volume initialization rate, the volume will be initialized at
+    #     the specified rate instead of fast snapshot restore.
+    #
+    #      </note>
+    #
+    #   * You want to create a volume that is initialized at the default rate.
+    #
+    #   For more information, see [ Initialize Amazon EBS volumes][1] in the
+    #   *Amazon EC2 User Guide*.
+    #
+    #   Valid range: 100 - 300 MiB/s
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/initalize-volume.html
+    #
     # @option params [Types::OperatorRequest] :operator
     #   Reserved for internal use.
     #
@@ -15776,6 +15844,7 @@ module Aws::EC2
     #   * {Types::Volume#throughput #throughput} => Integer
     #   * {Types::Volume#sse_type #sse_type} => String
     #   * {Types::Volume#operator #operator} => Types::OperatorResponse
+    #   * {Types::Volume#volume_initialization_rate #volume_initialization_rate} => Integer
     #   * {Types::Volume#volume_id #volume_id} => String
     #   * {Types::Volume#size #size} => Integer
     #   * {Types::Volume#snapshot_id #snapshot_id} => String
@@ -15863,6 +15932,7 @@ module Aws::EC2
     #     multi_attach_enabled: false,
     #     throughput: 1,
     #     client_token: "String",
+    #     volume_initialization_rate: 1,
     #     operator: {
     #       principal: "String",
     #     },
@@ -15883,6 +15953,7 @@ module Aws::EC2
     #   resp.sse_type #=> String, one of "sse-ebs", "sse-kms", "none"
     #   resp.operator.managed #=> Boolean
     #   resp.operator.principal #=> String
+    #   resp.volume_initialization_rate #=> Integer
     #   resp.volume_id #=> String
     #   resp.size #=> Integer
     #   resp.snapshot_id #=> String
@@ -25980,6 +26051,7 @@ module Aws::EC2
     #   resp.block_device_mappings[0].ebs.throughput #=> Integer
     #   resp.block_device_mappings[0].ebs.outpost_arn #=> String
     #   resp.block_device_mappings[0].ebs.encrypted #=> Boolean
+    #   resp.block_device_mappings[0].ebs.volume_initialization_rate #=> Integer
     #   resp.block_device_mappings[0].no_device #=> String
     #   resp.block_device_mappings[0].device_name #=> String
     #   resp.block_device_mappings[0].virtual_name #=> String
@@ -26285,6 +26357,7 @@ module Aws::EC2
     #   resp.images[0].block_device_mappings[0].ebs.throughput #=> Integer
     #   resp.images[0].block_device_mappings[0].ebs.outpost_arn #=> String
     #   resp.images[0].block_device_mappings[0].ebs.encrypted #=> Boolean
+    #   resp.images[0].block_device_mappings[0].ebs.volume_initialization_rate #=> Integer
     #   resp.images[0].block_device_mappings[0].no_device #=> String
     #   resp.images[0].block_device_mappings[0].device_name #=> String
     #   resp.images[0].block_device_mappings[0].virtual_name #=> String
@@ -29875,6 +29948,7 @@ module Aws::EC2
     #   resp.launch_template_versions[0].launch_template_data.block_device_mappings[0].ebs.volume_size #=> Integer
     #   resp.launch_template_versions[0].launch_template_data.block_device_mappings[0].ebs.volume_type #=> String, one of "standard", "io1", "io2", "gp2", "sc1", "st1", "gp3"
     #   resp.launch_template_versions[0].launch_template_data.block_device_mappings[0].ebs.throughput #=> Integer
+    #   resp.launch_template_versions[0].launch_template_data.block_device_mappings[0].ebs.volume_initialization_rate #=> Integer
     #   resp.launch_template_versions[0].launch_template_data.block_device_mappings[0].no_device #=> String
     #   resp.launch_template_versions[0].launch_template_data.network_interfaces #=> Array
     #   resp.launch_template_versions[0].launch_template_data.network_interfaces[0].associate_carrier_ip_address #=> Boolean
@@ -36350,6 +36424,7 @@ module Aws::EC2
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].ebs.throughput #=> Integer
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].ebs.outpost_arn #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].ebs.encrypted #=> Boolean
+    #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].ebs.volume_initialization_rate #=> Integer
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].no_device #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].device_name #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].virtual_name #=> String
@@ -36812,6 +36887,7 @@ module Aws::EC2
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.throughput #=> Integer
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.outpost_arn #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.encrypted #=> Boolean
+    #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.volume_initialization_rate #=> Integer
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].no_device #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].device_name #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].virtual_name #=> String
@@ -39898,6 +39974,7 @@ module Aws::EC2
     #   resp.volumes[0].sse_type #=> String, one of "sse-ebs", "sse-kms", "none"
     #   resp.volumes[0].operator.managed #=> Boolean
     #   resp.volumes[0].operator.principal #=> String
+    #   resp.volumes[0].volume_initialization_rate #=> Integer
     #   resp.volumes[0].volume_id #=> String
     #   resp.volumes[0].size #=> Integer
     #   resp.volumes[0].snapshot_id #=> String
@@ -47210,6 +47287,7 @@ module Aws::EC2
     #   resp.launch_template_data.block_device_mappings[0].ebs.volume_size #=> Integer
     #   resp.launch_template_data.block_device_mappings[0].ebs.volume_type #=> String, one of "standard", "io1", "io2", "gp2", "sc1", "st1", "gp3"
     #   resp.launch_template_data.block_device_mappings[0].ebs.throughput #=> Integer
+    #   resp.launch_template_data.block_device_mappings[0].ebs.volume_initialization_rate #=> Integer
     #   resp.launch_template_data.block_device_mappings[0].no_device #=> String
     #   resp.launch_template_data.network_interfaces #=> Array
     #   resp.launch_template_data.network_interfaces[0].associate_carrier_ip_address #=> Boolean
@@ -50986,7 +51064,7 @@ module Aws::EC2
     #   Indicates whether the client VPN session is disconnected after the
     #   maximum timeout specified in `sessionTimeoutHours` is reached. If
     #   `true`, users are prompted to reconnect client VPN. If `false`, client
-    #   VPN attempts to reconnect automatically. The default value is `false`.
+    #   VPN attempts to reconnect automatically. The default value is `true`.
     #
     # @return [Types::ModifyClientVpnEndpointResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -51351,7 +51429,7 @@ module Aws::EC2
     #                 },
     #               },
     #             },
-    #             image_id: "ImageId",
+    #             image_id: "String",
     #           },
     #         ],
     #       },
@@ -58584,6 +58662,7 @@ module Aws::EC2
     #           throughput: 1,
     #           outpost_arn: "String",
     #           encrypted: false,
+    #           volume_initialization_rate: 1,
     #         },
     #         no_device: "String",
     #         device_name: "String",
@@ -60107,6 +60186,7 @@ module Aws::EC2
     #                 throughput: 1,
     #                 outpost_arn: "String",
     #                 encrypted: false,
+    #                 volume_initialization_rate: 1,
     #               },
     #               no_device: "String",
     #               device_name: "String",
@@ -60603,6 +60683,7 @@ module Aws::EC2
     #             throughput: 1,
     #             outpost_arn: "String",
     #             encrypted: false,
+    #             volume_initialization_rate: 1,
     #           },
     #           no_device: "String",
     #           device_name: "String",
@@ -60730,6 +60811,7 @@ module Aws::EC2
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.throughput #=> Integer
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.outpost_arn #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.encrypted #=> Boolean
+    #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.volume_initialization_rate #=> Integer
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].no_device #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].device_name #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].virtual_name #=> String
@@ -62304,6 +62386,7 @@ module Aws::EC2
     #           throughput: 1,
     #           outpost_arn: "String",
     #           encrypted: false,
+    #           volume_initialization_rate: 1,
     #         },
     #         no_device: "String",
     #         device_name: "String",
@@ -65265,7 +65348,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.519.0'
+      context[:gem_version] = '1.520.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

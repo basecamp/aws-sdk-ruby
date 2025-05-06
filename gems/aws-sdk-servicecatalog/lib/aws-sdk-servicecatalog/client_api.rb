@@ -2221,6 +2221,7 @@ module Aws::ServiceCatalog
         o.output = Shapes::ShapeRef.new(shape: DeleteServiceActionOutput)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceInUseException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParametersException)
       end)
 
       api.add_operation(:delete_tag_option, Seahorse::Model::Operation.new.tap do |o|
@@ -2444,6 +2445,7 @@ module Aws::ServiceCatalog
         o.input = Shapes::ShapeRef.new(shape: DisassociateServiceActionFromProvisioningArtifactInput)
         o.output = Shapes::ShapeRef.new(shape: DisassociateServiceActionFromProvisioningArtifactOutput)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParametersException)
       end)
 
       api.add_operation(:disassociate_tag_option_from_resource, Seahorse::Model::Operation.new.tap do |o|

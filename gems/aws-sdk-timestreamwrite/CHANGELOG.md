@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.47.0 (2025-05-06)
+------------------
+
+* Feature - Add dualstack endpoints support.
+
 1.46.0 (2025-05-01)
 ------------------
 

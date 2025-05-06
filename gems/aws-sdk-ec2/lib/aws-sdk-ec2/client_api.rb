@@ -5578,6 +5578,7 @@ module Aws::EC2
     CreateReplaceRootVolumeTaskRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateReplaceRootVolumeTaskRequest.add_member(:image_id, Shapes::ShapeRef.new(shape: ImageId, location_name: "ImageId"))
     CreateReplaceRootVolumeTaskRequest.add_member(:delete_replaced_root_volume, Shapes::ShapeRef.new(shape: Boolean, location_name: "DeleteReplacedRootVolume"))
+    CreateReplaceRootVolumeTaskRequest.add_member(:volume_initialization_rate, Shapes::ShapeRef.new(shape: Long, location_name: "VolumeInitializationRate"))
     CreateReplaceRootVolumeTaskRequest.struct_class = Types::CreateReplaceRootVolumeTaskRequest
 
     CreateReplaceRootVolumeTaskResult.add_member(:replace_root_volume_task, Shapes::ShapeRef.new(shape: ReplaceRootVolumeTask, location_name: "replaceRootVolumeTask"))
@@ -6073,6 +6074,7 @@ module Aws::EC2
     CreateVolumeRequest.add_member(:multi_attach_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "MultiAttachEnabled"))
     CreateVolumeRequest.add_member(:throughput, Shapes::ShapeRef.new(shape: Integer, location_name: "Throughput"))
     CreateVolumeRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken" => true}))
+    CreateVolumeRequest.add_member(:volume_initialization_rate, Shapes::ShapeRef.new(shape: Integer, location_name: "VolumeInitializationRate"))
     CreateVolumeRequest.add_member(:operator, Shapes::ShapeRef.new(shape: OperatorRequest, location_name: "Operator"))
     CreateVolumeRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     CreateVolumeRequest.struct_class = Types::CreateVolumeRequest
@@ -9167,6 +9169,7 @@ module Aws::EC2
     EbsBlockDevice.add_member(:throughput, Shapes::ShapeRef.new(shape: Integer, location_name: "throughput"))
     EbsBlockDevice.add_member(:outpost_arn, Shapes::ShapeRef.new(shape: String, location_name: "outpostArn"))
     EbsBlockDevice.add_member(:encrypted, Shapes::ShapeRef.new(shape: Boolean, location_name: "encrypted"))
+    EbsBlockDevice.add_member(:volume_initialization_rate, Shapes::ShapeRef.new(shape: Integer, location_name: "VolumeInitializationRate"))
     EbsBlockDevice.struct_class = Types::EbsBlockDevice
 
     EbsBlockDeviceResponse.add_member(:encrypted, Shapes::ShapeRef.new(shape: Boolean, location_name: "encrypted"))
@@ -9841,7 +9844,7 @@ module Aws::EC2
     FleetLaunchTemplateOverridesRequest.add_member(:placement, Shapes::ShapeRef.new(shape: Placement, location_name: "Placement"))
     FleetLaunchTemplateOverridesRequest.add_member(:block_device_mappings, Shapes::ShapeRef.new(shape: FleetBlockDeviceMappingRequestList, location_name: "BlockDeviceMapping"))
     FleetLaunchTemplateOverridesRequest.add_member(:instance_requirements, Shapes::ShapeRef.new(shape: InstanceRequirementsRequest, location_name: "InstanceRequirements"))
-    FleetLaunchTemplateOverridesRequest.add_member(:image_id, Shapes::ShapeRef.new(shape: ImageId, location_name: "ImageId"))
+    FleetLaunchTemplateOverridesRequest.add_member(:image_id, Shapes::ShapeRef.new(shape: String, location_name: "ImageId"))
     FleetLaunchTemplateOverridesRequest.struct_class = Types::FleetLaunchTemplateOverridesRequest
 
     FleetLaunchTemplateSpecification.add_member(:launch_template_id, Shapes::ShapeRef.new(shape: String, location_name: "launchTemplateId"))
@@ -11992,6 +11995,7 @@ module Aws::EC2
     LaunchTemplateEbsBlockDevice.add_member(:volume_size, Shapes::ShapeRef.new(shape: Integer, location_name: "volumeSize"))
     LaunchTemplateEbsBlockDevice.add_member(:volume_type, Shapes::ShapeRef.new(shape: VolumeType, location_name: "volumeType"))
     LaunchTemplateEbsBlockDevice.add_member(:throughput, Shapes::ShapeRef.new(shape: Integer, location_name: "throughput"))
+    LaunchTemplateEbsBlockDevice.add_member(:volume_initialization_rate, Shapes::ShapeRef.new(shape: Integer, location_name: "volumeInitializationRate"))
     LaunchTemplateEbsBlockDevice.struct_class = Types::LaunchTemplateEbsBlockDevice
 
     LaunchTemplateEbsBlockDeviceRequest.add_member(:encrypted, Shapes::ShapeRef.new(shape: Boolean, location_name: "Encrypted"))
@@ -12002,6 +12006,7 @@ module Aws::EC2
     LaunchTemplateEbsBlockDeviceRequest.add_member(:volume_size, Shapes::ShapeRef.new(shape: Integer, location_name: "VolumeSize"))
     LaunchTemplateEbsBlockDeviceRequest.add_member(:volume_type, Shapes::ShapeRef.new(shape: VolumeType, location_name: "VolumeType"))
     LaunchTemplateEbsBlockDeviceRequest.add_member(:throughput, Shapes::ShapeRef.new(shape: Integer, location_name: "Throughput"))
+    LaunchTemplateEbsBlockDeviceRequest.add_member(:volume_initialization_rate, Shapes::ShapeRef.new(shape: Integer, location_name: "VolumeInitializationRate"))
     LaunchTemplateEbsBlockDeviceRequest.struct_class = Types::LaunchTemplateEbsBlockDeviceRequest
 
     LaunchTemplateElasticInferenceAccelerator.add_member(:type, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Type"))
@@ -16931,6 +16936,7 @@ module Aws::EC2
     Volume.add_member(:throughput, Shapes::ShapeRef.new(shape: Integer, location_name: "throughput"))
     Volume.add_member(:sse_type, Shapes::ShapeRef.new(shape: SSEType, location_name: "sseType"))
     Volume.add_member(:operator, Shapes::ShapeRef.new(shape: OperatorResponse, location_name: "operator"))
+    Volume.add_member(:volume_initialization_rate, Shapes::ShapeRef.new(shape: Integer, location_name: "volumeInitializationRate"))
     Volume.add_member(:volume_id, Shapes::ShapeRef.new(shape: String, location_name: "volumeId"))
     Volume.add_member(:size, Shapes::ShapeRef.new(shape: Integer, location_name: "size"))
     Volume.add_member(:snapshot_id, Shapes::ShapeRef.new(shape: String, location_name: "snapshotId"))

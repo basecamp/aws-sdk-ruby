@@ -794,6 +794,7 @@ module Aws::EC2
     #           throughput: 1,
     #           outpost_arn: "String",
     #           encrypted: false,
+    #           volume_initialization_rate: 1,
     #         },
     #         no_device: "String",
     #         device_name: "String",

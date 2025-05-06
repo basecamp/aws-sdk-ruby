@@ -94,6 +94,7 @@ module Aws::EC2
     #           throughput: 1,
     #           outpost_arn: "String",
     #           encrypted: false,
+    #           volume_initialization_rate: 1,
     #         },
     #         no_device: "String",
     #         device_name: "String",
@@ -1471,6 +1472,7 @@ module Aws::EC2
     #     multi_attach_enabled: false,
     #     throughput: 1,
     #     client_token: "String",
+    #     volume_initialization_rate: 1,
     #     operator: {
     #       principal: "String",
     #     },
@@ -1622,6 +1624,37 @@ module Aws::EC2
     #
     #
     #   [1]: https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html
+    # @option options [Integer] :volume_initialization_rate
+    #   Specifies the Amazon EBS Provisioned Rate for Volume Initialization
+    #   (volume initialization rate), in MiB/s, at which to download the
+    #   snapshot blocks from Amazon S3 to the volume. This is also known as
+    #   *volume initialization*. Specifying a volume initialization rate
+    #   ensures that the volume is initialized at a predictable and consistent
+    #   rate after creation.
+    #
+    #   This parameter is supported only for volumes created from snapshots.
+    #   Omit this parameter if:
+    #
+    #   * You want to create the volume using fast snapshot restore. You must
+    #     specify a snapshot that is enabled for fast snapshot restore. In
+    #     this case, the volume is fully initialized at creation.
+    #
+    #     <note markdown="1"> If you specify a snapshot that is enabled for fast snapshot restore
+    #     and a volume initialization rate, the volume will be initialized at
+    #     the specified rate instead of fast snapshot restore.
+    #
+    #      </note>
+    #
+    #   * You want to create a volume that is initialized at the default rate.
+    #
+    #   For more information, see [ Initialize Amazon EBS volumes][1] in the
+    #   *Amazon EC2 User Guide*.
+    #
+    #   Valid range: 100 - 300 MiB/s
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/initalize-volume.html
     # @option options [Types::OperatorRequest] :operator
     #   Reserved for internal use.
     # @option options [Boolean] :dry_run
@@ -1918,6 +1951,7 @@ module Aws::EC2
     #           throughput: 1,
     #           outpost_arn: "String",
     #           encrypted: false,
+    #           volume_initialization_rate: 1,
     #         },
     #         no_device: "String",
     #         device_name: "String",

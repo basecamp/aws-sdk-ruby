@@ -101,6 +101,15 @@ module Aws::EC2
       data[:operator]
     end
 
+    # The Amazon EBS Provisioned Rate for Volume Initialization (volume
+    # initialization rate) specified for the volume during creation, in
+    # MiB/s. If no volume initialization rate was specified, the value is
+    # `null`.
+    # @return [Integer]
+    def volume_initialization_rate
+      data[:volume_initialization_rate]
+    end
+
     # The size of the volume, in GiBs.
     # @return [Integer]
     def size

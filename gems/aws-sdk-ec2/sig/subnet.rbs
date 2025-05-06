@@ -107,7 +107,8 @@ module Aws
                                     kms_key_id: ::String?,
                                     throughput: ::Integer?,
                                     outpost_arn: ::String?,
-                                    encrypted: bool?
+                                    encrypted: bool?,
+                                    volume_initialization_rate: ::Integer?
                                   }?,
                                   no_device: ::String?,
                                   device_name: ::String?,

@@ -115,7 +115,8 @@ module Aws
                                     kms_key_id: ::String?,
                                     throughput: ::Integer?,
                                     outpost_arn: ::String?,
-                                    encrypted: bool?
+                                    encrypted: bool?,
+                                    volume_initialization_rate: ::Integer?
                                   }?,
                                   no_device: ::String?,
                                   device_name: ::String?,
@@ -605,6 +606,7 @@ module Aws
                            ?multi_attach_enabled: bool,
                            ?throughput: ::Integer,
                            ?client_token: ::String,
+                           ?volume_initialization_rate: ::Integer,
                            ?operator: {
                              principal: ::String?
                            },
@@ -723,7 +725,8 @@ module Aws
                                   kms_key_id: ::String?,
                                   throughput: ::Integer?,
                                   outpost_arn: ::String?,
-                                  encrypted: bool?
+                                  encrypted: bool?,
+                                  volume_initialization_rate: ::Integer?
                                 }?,
                                 no_device: ::String?,
                                 device_name: ::String?,

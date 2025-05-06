@@ -14,13 +14,13 @@ module Aws::TimestreamQuery
   describe EndpointProvider do
     subject { Aws::TimestreamQuery::EndpointProvider.new }
 
-    context "For region us-east-1 with FIPS enabled and DualStack enabled" do
+    context "For region ap-northeast-1 with FIPS disabled and DualStack disabled" do
       let(:expected) do
-        {"endpoint" => {"url" => "https://query.timestream-fips.us-east-1.api.aws"}}
+        {"endpoint" => {"url" => "https://query.timestream.ap-northeast-1.amazonaws.com"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{region: "us-east-1", use_fips: true, use_dual_stack: true})
+        params = EndpointParameters.new(**{region: "ap-northeast-1", use_fips: false, use_dual_stack: false})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -28,13 +28,13 @@ module Aws::TimestreamQuery
       end
     end
 
-    context "For region us-east-1 with FIPS enabled and DualStack disabled" do
+    context "For region ap-northeast-1 with FIPS disabled and DualStack enabled" do
       let(:expected) do
-        {"endpoint" => {"url" => "https://query.timestream-fips.us-east-1.amazonaws.com"}}
+        {"endpoint" => {"url" => "https://timestream-query.ap-northeast-1.api.aws"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{region: "us-east-1", use_fips: true, use_dual_stack: false})
+        params = EndpointParameters.new(**{region: "ap-northeast-1", use_fips: false, use_dual_stack: true})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -42,13 +42,111 @@ module Aws::TimestreamQuery
       end
     end
 
-    context "For region us-east-1 with FIPS disabled and DualStack enabled" do
+    context "For region ap-south-1 with FIPS disabled and DualStack disabled" do
       let(:expected) do
-        {"endpoint" => {"url" => "https://query.timestream.us-east-1.api.aws"}}
+        {"endpoint" => {"url" => "https://query.timestream.ap-south-1.amazonaws.com"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
-        params = EndpointParameters.new(**{region: "us-east-1", use_fips: false, use_dual_stack: true})
+        params = EndpointParameters.new(**{region: "ap-south-1", use_fips: false, use_dual_stack: false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region ap-south-1 with FIPS disabled and DualStack enabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://timestream-query.ap-south-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "ap-south-1", use_fips: false, use_dual_stack: true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region ap-southeast-2 with FIPS disabled and DualStack disabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://query.timestream.ap-southeast-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "ap-southeast-2", use_fips: false, use_dual_stack: false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region ap-southeast-2 with FIPS disabled and DualStack enabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://timestream-query.ap-southeast-2.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "ap-southeast-2", use_fips: false, use_dual_stack: true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region eu-central-1 with FIPS disabled and DualStack disabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://query.timestream.eu-central-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "eu-central-1", use_fips: false, use_dual_stack: false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region eu-central-1 with FIPS disabled and DualStack enabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://timestream-query.eu-central-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "eu-central-1", use_fips: false, use_dual_stack: true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region eu-west-1 with FIPS disabled and DualStack disabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://query.timestream.eu-west-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "eu-west-1", use_fips: false, use_dual_stack: false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region eu-west-1 with FIPS disabled and DualStack enabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://timestream-query.eu-west-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "eu-west-1", use_fips: false, use_dual_stack: true})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -63,6 +161,132 @@ module Aws::TimestreamQuery
 
       it 'produces the expected output from the EndpointProvider' do
         params = EndpointParameters.new(**{region: "us-east-1", use_fips: false, use_dual_stack: false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region us-east-1 with FIPS disabled and DualStack enabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://timestream-query.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "us-east-1", use_fips: false, use_dual_stack: true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region us-east-1 with FIPS enabled and DualStack enabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://timestream-query-fips.us-east-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "us-east-1", use_fips: true, use_dual_stack: true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region us-east-2 with FIPS disabled and DualStack disabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://query.timestream.us-east-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "us-east-2", use_fips: false, use_dual_stack: false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region us-east-2 with FIPS disabled and DualStack enabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://timestream-query.us-east-2.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "us-east-2", use_fips: false, use_dual_stack: true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region us-east-2 with FIPS enabled and DualStack enabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://timestream-query-fips.us-east-2.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "us-east-2", use_fips: true, use_dual_stack: true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region us-west-2 with FIPS disabled and DualStack disabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://query.timestream.us-west-2.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "us-west-2", use_fips: false, use_dual_stack: false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region us-west-2 with FIPS disabled and DualStack enabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://timestream-query.us-west-2.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "us-west-2", use_fips: false, use_dual_stack: true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region us-west-2 with FIPS enabled and DualStack enabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://timestream-query-fips.us-west-2.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "us-west-2", use_fips: true, use_dual_stack: true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region us-east-1 with FIPS enabled and DualStack disabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://query.timestream-fips.us-east-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "us-east-1", use_fips: true, use_dual_stack: false})
         endpoint = subject.resolve_endpoint(params)
         expect(endpoint.url).to eq(expected['endpoint']['url'])
         expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
@@ -126,9 +350,65 @@ module Aws::TimestreamQuery
       end
     end
 
+    context "For region us-gov-west-1 with FIPS disabled and DualStack disabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://query.timestream.us-gov-west-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "us-gov-west-1", use_fips: false, use_dual_stack: false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region us-gov-west-1 with FIPS enabled and DualStack disabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://query.timestream.us-gov-west-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "us-gov-west-1", use_fips: true, use_dual_stack: false})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region us-gov-west-1 with FIPS disabled and DualStack enabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://timestream-query.us-gov-west-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "us-gov-west-1", use_fips: false, use_dual_stack: true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "For region us-gov-west-1 with FIPS enabled and DualStack enabled" do
+      let(:expected) do
+        {"endpoint" => {"url" => "https://timestream-query.us-gov-west-1.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{region: "us-gov-west-1", use_fips: true, use_dual_stack: true})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
     context "For region us-gov-east-1 with FIPS enabled and DualStack enabled" do
       let(:expected) do
-        {"endpoint" => {"url" => "https://query.timestream-fips.us-gov-east-1.api.aws"}}
+        {"endpoint" => {"url" => "https://timestream-query.us-gov-east-1.api.aws"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
@@ -142,7 +422,7 @@ module Aws::TimestreamQuery
 
     context "For region us-gov-east-1 with FIPS enabled and DualStack disabled" do
       let(:expected) do
-        {"endpoint" => {"url" => "https://query.timestream-fips.us-gov-east-1.amazonaws.com"}}
+        {"endpoint" => {"url" => "https://query.timestream.us-gov-east-1.amazonaws.com"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do
@@ -156,7 +436,7 @@ module Aws::TimestreamQuery
 
     context "For region us-gov-east-1 with FIPS disabled and DualStack enabled" do
       let(:expected) do
-        {"endpoint" => {"url" => "https://query.timestream.us-gov-east-1.api.aws"}}
+        {"endpoint" => {"url" => "https://timestream-query.us-gov-east-1.api.aws"}}
       end
 
       it 'produces the expected output from the EndpointProvider' do

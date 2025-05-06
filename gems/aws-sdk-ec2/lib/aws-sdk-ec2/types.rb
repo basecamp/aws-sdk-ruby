@@ -6470,7 +6470,7 @@ module Aws::EC2
     #   Indicates whether the client VPN session is disconnected after the
     #   maximum `sessionTimeoutHours` is reached. If `true`, users are
     #   prompted to reconnect client VPN. If `false`, client VPN attempts to
-    #   reconnect automatically. The default value is `false`.
+    #   reconnect automatically. The default value is `true`.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ClientVpnEndpoint AWS API Documentation
@@ -8335,7 +8335,7 @@ module Aws::EC2
     #   maximum timeout specified in `SessionTimeoutHours` is reached. If
     #   `true`, users are prompted to reconnect client VPN. If `false`,
     #   client VPN attempts to reconnect automatically. The default value is
-    #   `false`.
+    #   `true`.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateClientVpnEndpointRequest AWS API Documentation
@@ -11508,6 +11508,40 @@ module Aws::EC2
     #   manually delete it when you no longer need it.
     #   @return [Boolean]
     #
+    # @!attribute [rw] volume_initialization_rate
+    #   Specifies the Amazon EBS Provisioned Rate for Volume Initialization
+    #   (volume initialization rate), in MiB/s, at which to download the
+    #   snapshot blocks from Amazon S3 to the replacement root volume. This
+    #   is also known as *volume initialization*. Specifying a volume
+    #   initialization rate ensures that the volume is initialized at a
+    #   predictable and consistent rate after creation.
+    #
+    #   Omit this parameter if:
+    #
+    #   * You want to create the volume using fast snapshot restore. You
+    #     must specify a snapshot that is enabled for fast snapshot restore.
+    #     In this case, the volume is fully initialized at creation.
+    #
+    #     <note markdown="1"> If you specify a snapshot that is enabled for fast snapshot
+    #     restore and a volume initialization rate, the volume will be
+    #     initialized at the specified rate instead of fast snapshot
+    #     restore.
+    #
+    #      </note>
+    #
+    #   * You want to create a volume that is initialized at the default
+    #     rate.
+    #
+    #   For more information, see [ Initialize Amazon EBS volumes][1] in the
+    #   *Amazon EC2 User Guide*.
+    #
+    #   Valid range: 100 - 300 MiB/s
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/initalize-volume.html
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateReplaceRootVolumeTaskRequest AWS API Documentation
     #
     class CreateReplaceRootVolumeTaskRequest < Struct.new(
@@ -11517,7 +11551,8 @@ module Aws::EC2
       :dry_run,
       :tag_specifications,
       :image_id,
-      :delete_replaced_root_volume)
+      :delete_replaced_root_volume,
+      :volume_initialization_rate)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -14342,6 +14377,41 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html
     #   @return [String]
     #
+    # @!attribute [rw] volume_initialization_rate
+    #   Specifies the Amazon EBS Provisioned Rate for Volume Initialization
+    #   (volume initialization rate), in MiB/s, at which to download the
+    #   snapshot blocks from Amazon S3 to the volume. This is also known as
+    #   *volume initialization*. Specifying a volume initialization rate
+    #   ensures that the volume is initialized at a predictable and
+    #   consistent rate after creation.
+    #
+    #   This parameter is supported only for volumes created from snapshots.
+    #   Omit this parameter if:
+    #
+    #   * You want to create the volume using fast snapshot restore. You
+    #     must specify a snapshot that is enabled for fast snapshot restore.
+    #     In this case, the volume is fully initialized at creation.
+    #
+    #     <note markdown="1"> If you specify a snapshot that is enabled for fast snapshot
+    #     restore and a volume initialization rate, the volume will be
+    #     initialized at the specified rate instead of fast snapshot
+    #     restore.
+    #
+    #      </note>
+    #
+    #   * You want to create a volume that is initialized at the default
+    #     rate.
+    #
+    #   For more information, see [ Initialize Amazon EBS volumes][1] in the
+    #   *Amazon EC2 User Guide*.
+    #
+    #   Valid range: 100 - 300 MiB/s
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/initalize-volume.html
+    #   @return [Integer]
+    #
     # @!attribute [rw] operator
     #   Reserved for internal use.
     #   @return [Types::OperatorRequest]
@@ -14368,6 +14438,7 @@ module Aws::EC2
       :multi_attach_enabled,
       :throughput,
       :client_token,
+      :volume_initialization_rate,
       :operator,
       :dry_run)
       SENSITIVE = []
@@ -33703,6 +33774,44 @@ module Aws::EC2
     #   [2]: https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption-requirements.html#ebs-encryption_supported_instances
     #   @return [Boolean]
     #
+    # @!attribute [rw] volume_initialization_rate
+    #   Specifies the Amazon EBS Provisioned Rate for Volume Initialization
+    #   (volume initialization rate), in MiB/s, at which to download the
+    #   snapshot blocks from Amazon S3 to the volume. This is also known as
+    #   *volume initialization*. Specifying a volume initialization rate
+    #   ensures that the volume is initialized at a predictable and
+    #   consistent rate after creation.
+    #
+    #   This parameter is supported only for volumes created from snapshots.
+    #   Omit this parameter if:
+    #
+    #   * You want to create the volume using fast snapshot restore. You
+    #     must specify a snapshot that is enabled for fast snapshot restore.
+    #     In this case, the volume is fully initialized at creation.
+    #
+    #     <note markdown="1"> If you specify a snapshot that is enabled for fast snapshot
+    #     restore and a volume initialization rate, the volume will be
+    #     initialized at the specified rate instead of fast snapshot
+    #     restore.
+    #
+    #      </note>
+    #
+    #   * You want to create a volume that is initialized at the default
+    #     rate.
+    #
+    #   For more information, see [ Initialize Amazon EBS volumes][1] in the
+    #   *Amazon EC2 User Guide*.
+    #
+    #   This parameter is not supported when using [CreateImage][2].
+    #
+    #   Valid range: 100 - 300 MiB/s
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/initalize-volume.html
+    #   [2]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EbsBlockDevice AWS API Documentation
     #
     class EbsBlockDevice < Struct.new(
@@ -33714,7 +33823,8 @@ module Aws::EC2
       :kms_key_id,
       :throughput,
       :outpost_arn,
-      :encrypted)
+      :encrypted,
+      :volume_initialization_rate)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -49361,6 +49471,12 @@ module Aws::EC2
     #   The throughput that the volume supports, in MiB/s.
     #   @return [Integer]
     #
+    # @!attribute [rw] volume_initialization_rate
+    #   The Amazon EBS Provisioned Rate for Volume Initialization (volume
+    #   initialization rate) specified for the volume, in MiB/s. If no
+    #   volume initialization rate was specified, the value is `null`.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/LaunchTemplateEbsBlockDevice AWS API Documentation
     #
     class LaunchTemplateEbsBlockDevice < Struct.new(
@@ -49371,7 +49487,8 @@ module Aws::EC2
       :snapshot_id,
       :volume_size,
       :volume_type,
-      :throughput)
+      :throughput,
+      :volume_initialization_rate)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -49457,6 +49574,41 @@ module Aws::EC2
     #   Valid Range: Minimum value of 125. Maximum value of 1000.
     #   @return [Integer]
     #
+    # @!attribute [rw] volume_initialization_rate
+    #   Specifies the Amazon EBS Provisioned Rate for Volume Initialization
+    #   (volume initialization rate), in MiB/s, at which to download the
+    #   snapshot blocks from Amazon S3 to the volume. This is also known as
+    #   *volume initialization*. Specifying a volume initialization rate
+    #   ensures that the volume is initialized at a predictable and
+    #   consistent rate after creation.
+    #
+    #   This parameter is supported only for volumes created from snapshots.
+    #   Omit this parameter if:
+    #
+    #   * You want to create the volume using fast snapshot restore. You
+    #     must specify a snapshot that is enabled for fast snapshot restore.
+    #     In this case, the volume is fully initialized at creation.
+    #
+    #     <note markdown="1"> If you specify a snapshot that is enabled for fast snapshot
+    #     restore and a volume initialization rate, the volume will be
+    #     initialized at the specified rate instead of fast snapshot
+    #     restore.
+    #
+    #      </note>
+    #
+    #   * You want to create a volume that is initialized at the default
+    #     rate.
+    #
+    #   For more information, see [ Initialize Amazon EBS volumes][1] in the
+    #   *Amazon EC2 User Guide*.
+    #
+    #   Valid range: 100 - 300 MiB/s
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/initalize-volume.html
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/LaunchTemplateEbsBlockDeviceRequest AWS API Documentation
     #
     class LaunchTemplateEbsBlockDeviceRequest < Struct.new(
@@ -49467,7 +49619,8 @@ module Aws::EC2
       :snapshot_id,
       :volume_size,
       :volume_type,
-      :throughput)
+      :throughput,
+      :volume_initialization_rate)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -52422,7 +52575,7 @@ module Aws::EC2
     #   maximum timeout specified in `sessionTimeoutHours` is reached. If
     #   `true`, users are prompted to reconnect client VPN. If `false`,
     #   client VPN attempts to reconnect automatically. The default value is
-    #   `false`.
+    #   `true`.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyClientVpnEndpointRequest AWS API Documentation
@@ -75092,6 +75245,13 @@ module Aws::EC2
     #   The service provider that manages the volume.
     #   @return [Types::OperatorResponse]
     #
+    # @!attribute [rw] volume_initialization_rate
+    #   The Amazon EBS Provisioned Rate for Volume Initialization (volume
+    #   initialization rate) specified for the volume during creation, in
+    #   MiB/s. If no volume initialization rate was specified, the value is
+    #   `null`.
+    #   @return [Integer]
+    #
     # @!attribute [rw] volume_id
     #   The ID of the volume.
     #   @return [String]
@@ -75145,6 +75305,7 @@ module Aws::EC2
       :throughput,
       :sse_type,
       :operator,
+      :volume_initialization_rate,
       :volume_id,
       :size,
       :snapshot_id,
