@@ -31609,6 +31609,8 @@ module Aws::EC2
     #   resp.network_insights_analyses[0].additional_accounts[0] #=> String
     #   resp.network_insights_analyses[0].filter_in_arns #=> Array
     #   resp.network_insights_analyses[0].filter_in_arns[0] #=> String
+    #   resp.network_insights_analyses[0].filter_out_arns #=> Array
+    #   resp.network_insights_analyses[0].filter_out_arns[0] #=> String
     #   resp.network_insights_analyses[0].start_date #=> Time
     #   resp.network_insights_analyses[0].status #=> String, one of "running", "succeeded", "failed"
     #   resp.network_insights_analyses[0].status_message #=> String
@@ -63510,6 +63512,10 @@ module Aws::EC2
     #   The Amazon Resource Names (ARN) of the resources that the path must
     #   traverse.
     #
+    # @option params [Array<String>] :filter_out_arns
+    #   The Amazon Resource Names (ARN) of the resources that the path will
+    #   ignore.
+    #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -63541,6 +63547,7 @@ module Aws::EC2
     #     network_insights_path_id: "NetworkInsightsPathId", # required
     #     additional_accounts: ["String"],
     #     filter_in_arns: ["ResourceArn"],
+    #     filter_out_arns: ["ResourceArn"],
     #     dry_run: false,
     #     tag_specifications: [
     #       {
@@ -63565,6 +63572,8 @@ module Aws::EC2
     #   resp.network_insights_analysis.additional_accounts[0] #=> String
     #   resp.network_insights_analysis.filter_in_arns #=> Array
     #   resp.network_insights_analysis.filter_in_arns[0] #=> String
+    #   resp.network_insights_analysis.filter_out_arns #=> Array
+    #   resp.network_insights_analysis.filter_out_arns[0] #=> String
     #   resp.network_insights_analysis.start_date #=> Time
     #   resp.network_insights_analysis.status #=> String, one of "running", "succeeded", "failed"
     #   resp.network_insights_analysis.status_message #=> String
@@ -65348,7 +65357,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.520.0'
+      context[:gem_version] = '1.521.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

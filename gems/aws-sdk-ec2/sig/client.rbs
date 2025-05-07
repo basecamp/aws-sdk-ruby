@@ -13928,6 +13928,7 @@ module Aws
                                              network_insights_path_id: ::String,
                                              ?additional_accounts: Array[::String],
                                              ?filter_in_arns: Array[::String],
+                                             ?filter_out_arns: Array[::String],
                                              ?dry_run: bool,
                                              ?tag_specifications: Array[
                                                {

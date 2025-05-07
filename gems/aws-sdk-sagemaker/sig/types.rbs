@@ -4288,6 +4288,7 @@ module Aws::SageMaker
       attr_accessor execution_role_identity_config: ("USER_PROFILE_NAME" | "DISABLED")
       attr_accessor docker_settings: Types::DockerSettings
       attr_accessor amazon_q_settings: Types::AmazonQSettings
+      attr_accessor unified_studio_settings: Types::UnifiedStudioSettings
       SENSITIVE: []
     end
 
@@ -4297,6 +4298,7 @@ module Aws::SageMaker
       attr_accessor security_group_ids: ::Array[::String]
       attr_accessor docker_settings: Types::DockerSettings
       attr_accessor amazon_q_settings: Types::AmazonQSettings
+      attr_accessor unified_studio_settings: Types::UnifiedStudioSettings
       SENSITIVE: []
     end
 
@@ -9132,6 +9134,7 @@ module Aws::SageMaker
       attr_accessor jupyter_lab_app_settings: Types::SpaceJupyterLabAppSettings
       attr_accessor app_type: ("JupyterServer" | "KernelGateway" | "DetailedProfiler" | "TensorBoard" | "CodeEditor" | "JupyterLab" | "RStudioServerPro" | "RSessionGateway" | "Canvas")
       attr_accessor space_storage_settings: Types::SpaceStorageSettings
+      attr_accessor space_managed_resources: ("ENABLED" | "DISABLED")
       attr_accessor custom_file_systems: ::Array[Types::CustomFileSystem]
       SENSITIVE: []
     end
@@ -9902,6 +9905,17 @@ module Aws::SageMaker
     class UiTemplateInfo
       attr_accessor url: ::String
       attr_accessor content_sha_256: ::String
+      SENSITIVE: []
+    end
+
+    class UnifiedStudioSettings
+      attr_accessor studio_web_portal_access: ("ENABLED" | "DISABLED")
+      attr_accessor domain_account_id: ::String
+      attr_accessor domain_region: ::String
+      attr_accessor domain_id: ::String
+      attr_accessor project_id: ::String
+      attr_accessor environment_id: ::String
+      attr_accessor project_s3_path: ::String
       SENSITIVE: []
     end
 

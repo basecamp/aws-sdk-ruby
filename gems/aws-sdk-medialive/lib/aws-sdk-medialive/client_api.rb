@@ -5106,6 +5106,7 @@ module Aws::MediaLive
     UpdateChannel.add_member(:role_arn, Shapes::ShapeRef.new(shape: __string, location_name: "roleArn"))
     UpdateChannel.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionRequest, location_name: "channelEngineVersion"))
     UpdateChannel.add_member(:dry_run, Shapes::ShapeRef.new(shape: __boolean, location_name: "dryRun"))
+    UpdateChannel.add_member(:anywhere_settings, Shapes::ShapeRef.new(shape: AnywhereSettings, location_name: "anywhereSettings"))
     UpdateChannel.struct_class = Types::UpdateChannel
 
     UpdateChannelClass.add_member(:channel_class, Shapes::ShapeRef.new(shape: ChannelClass, required: true, location_name: "channelClass"))
@@ -5147,6 +5148,7 @@ module Aws::MediaLive
     UpdateChannelRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: __string, location_name: "roleArn"))
     UpdateChannelRequest.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionRequest, location_name: "channelEngineVersion"))
     UpdateChannelRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: __boolean, location_name: "dryRun"))
+    UpdateChannelRequest.add_member(:anywhere_settings, Shapes::ShapeRef.new(shape: AnywhereSettings, location_name: "anywhereSettings"))
     UpdateChannelRequest.struct_class = Types::UpdateChannelRequest
 
     UpdateChannelResponse.add_member(:channel, Shapes::ShapeRef.new(shape: Channel, location_name: "channel"))

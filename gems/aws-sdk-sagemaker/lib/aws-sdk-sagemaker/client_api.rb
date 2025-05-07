@@ -1976,6 +1976,7 @@ module Aws::SageMaker
     RedshiftResultFormat = Shapes::StringShape.new(name: 'RedshiftResultFormat')
     RedshiftUserName = Shapes::StringShape.new(name: 'RedshiftUserName')
     ReferenceMinVersion = Shapes::StringShape.new(name: 'ReferenceMinVersion')
+    RegionName = Shapes::StringShape.new(name: 'RegionName')
     RegisterDevicesRequest = Shapes::StructureShape.new(name: 'RegisterDevicesRequest')
     RegisterModelStepMetadata = Shapes::StructureShape.new(name: 'RegisterModelStepMetadata')
     Relation = Shapes::StringShape.new(name: 'Relation')
@@ -2390,6 +2391,10 @@ module Aws::SageMaker
     UiTemplate = Shapes::StructureShape.new(name: 'UiTemplate')
     UiTemplateInfo = Shapes::StructureShape.new(name: 'UiTemplateInfo')
     Uid = Shapes::IntegerShape.new(name: 'Uid')
+    UnifiedStudioDomainId = Shapes::StringShape.new(name: 'UnifiedStudioDomainId')
+    UnifiedStudioEnvironmentId = Shapes::StringShape.new(name: 'UnifiedStudioEnvironmentId')
+    UnifiedStudioProjectId = Shapes::StringShape.new(name: 'UnifiedStudioProjectId')
+    UnifiedStudioSettings = Shapes::StructureShape.new(name: 'UnifiedStudioSettings')
     UpdateActionRequest = Shapes::StructureShape.new(name: 'UpdateActionRequest')
     UpdateActionResponse = Shapes::StructureShape.new(name: 'UpdateActionResponse')
     UpdateAppImageConfigRequest = Shapes::StructureShape.new(name: 'UpdateAppImageConfigRequest')
@@ -5970,6 +5975,7 @@ module Aws::SageMaker
     DomainSettings.add_member(:execution_role_identity_config, Shapes::ShapeRef.new(shape: ExecutionRoleIdentityConfig, location_name: "ExecutionRoleIdentityConfig"))
     DomainSettings.add_member(:docker_settings, Shapes::ShapeRef.new(shape: DockerSettings, location_name: "DockerSettings"))
     DomainSettings.add_member(:amazon_q_settings, Shapes::ShapeRef.new(shape: AmazonQSettings, location_name: "AmazonQSettings"))
+    DomainSettings.add_member(:unified_studio_settings, Shapes::ShapeRef.new(shape: UnifiedStudioSettings, location_name: "UnifiedStudioSettings"))
     DomainSettings.struct_class = Types::DomainSettings
 
     DomainSettingsForUpdate.add_member(:r_studio_server_pro_domain_settings_for_update, Shapes::ShapeRef.new(shape: RStudioServerProDomainSettingsForUpdate, location_name: "RStudioServerProDomainSettingsForUpdate"))
@@ -5977,6 +5983,7 @@ module Aws::SageMaker
     DomainSettingsForUpdate.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: DomainSecurityGroupIds, location_name: "SecurityGroupIds"))
     DomainSettingsForUpdate.add_member(:docker_settings, Shapes::ShapeRef.new(shape: DockerSettings, location_name: "DockerSettings"))
     DomainSettingsForUpdate.add_member(:amazon_q_settings, Shapes::ShapeRef.new(shape: AmazonQSettings, location_name: "AmazonQSettings"))
+    DomainSettingsForUpdate.add_member(:unified_studio_settings, Shapes::ShapeRef.new(shape: UnifiedStudioSettings, location_name: "UnifiedStudioSettings"))
     DomainSettingsForUpdate.struct_class = Types::DomainSettingsForUpdate
 
     DriftCheckBaselines.add_member(:bias, Shapes::ShapeRef.new(shape: DriftCheckBias, location_name: "Bias"))
@@ -9852,8 +9859,8 @@ module Aws::SageMaker
 
     SearchResultsList.member = Shapes::ShapeRef.new(shape: SearchRecord)
 
-    SearchTrainingPlanOfferingsRequest.add_member(:instance_type, Shapes::ShapeRef.new(shape: ReservedCapacityInstanceType, required: true, location_name: "InstanceType"))
-    SearchTrainingPlanOfferingsRequest.add_member(:instance_count, Shapes::ShapeRef.new(shape: ReservedCapacityInstanceCount, required: true, location_name: "InstanceCount"))
+    SearchTrainingPlanOfferingsRequest.add_member(:instance_type, Shapes::ShapeRef.new(shape: ReservedCapacityInstanceType, location_name: "InstanceType"))
+    SearchTrainingPlanOfferingsRequest.add_member(:instance_count, Shapes::ShapeRef.new(shape: ReservedCapacityInstanceCount, location_name: "InstanceCount"))
     SearchTrainingPlanOfferingsRequest.add_member(:start_time_after, Shapes::ShapeRef.new(shape: Timestamp, location_name: "StartTimeAfter"))
     SearchTrainingPlanOfferingsRequest.add_member(:end_time_before, Shapes::ShapeRef.new(shape: Timestamp, location_name: "EndTimeBefore"))
     SearchTrainingPlanOfferingsRequest.add_member(:duration_hours, Shapes::ShapeRef.new(shape: TrainingPlanDurationHoursInput, required: true, location_name: "DurationHours"))
@@ -9984,6 +9991,7 @@ module Aws::SageMaker
     SpaceSettings.add_member(:jupyter_lab_app_settings, Shapes::ShapeRef.new(shape: SpaceJupyterLabAppSettings, location_name: "JupyterLabAppSettings"))
     SpaceSettings.add_member(:app_type, Shapes::ShapeRef.new(shape: AppType, location_name: "AppType"))
     SpaceSettings.add_member(:space_storage_settings, Shapes::ShapeRef.new(shape: SpaceStorageSettings, location_name: "SpaceStorageSettings"))
+    SpaceSettings.add_member(:space_managed_resources, Shapes::ShapeRef.new(shape: FeatureStatus, location_name: "SpaceManagedResources"))
     SpaceSettings.add_member(:custom_file_systems, Shapes::ShapeRef.new(shape: CustomFileSystems, location_name: "CustomFileSystems"))
     SpaceSettings.struct_class = Types::SpaceSettings
 
@@ -10618,6 +10626,15 @@ module Aws::SageMaker
     UiTemplateInfo.add_member(:url, Shapes::ShapeRef.new(shape: TemplateUrl, location_name: "Url"))
     UiTemplateInfo.add_member(:content_sha_256, Shapes::ShapeRef.new(shape: TemplateContentSha256, location_name: "ContentSha256"))
     UiTemplateInfo.struct_class = Types::UiTemplateInfo
+
+    UnifiedStudioSettings.add_member(:studio_web_portal_access, Shapes::ShapeRef.new(shape: FeatureStatus, location_name: "StudioWebPortalAccess"))
+    UnifiedStudioSettings.add_member(:domain_account_id, Shapes::ShapeRef.new(shape: AccountId, location_name: "DomainAccountId"))
+    UnifiedStudioSettings.add_member(:domain_region, Shapes::ShapeRef.new(shape: RegionName, location_name: "DomainRegion"))
+    UnifiedStudioSettings.add_member(:domain_id, Shapes::ShapeRef.new(shape: UnifiedStudioDomainId, location_name: "DomainId"))
+    UnifiedStudioSettings.add_member(:project_id, Shapes::ShapeRef.new(shape: UnifiedStudioProjectId, location_name: "ProjectId"))
+    UnifiedStudioSettings.add_member(:environment_id, Shapes::ShapeRef.new(shape: UnifiedStudioEnvironmentId, location_name: "EnvironmentId"))
+    UnifiedStudioSettings.add_member(:project_s3_path, Shapes::ShapeRef.new(shape: S3Uri, location_name: "ProjectS3Path"))
+    UnifiedStudioSettings.struct_class = Types::UnifiedStudioSettings
 
     UpdateActionRequest.add_member(:action_name, Shapes::ShapeRef.new(shape: ExperimentEntityName, required: true, location_name: "ActionName"))
     UpdateActionRequest.add_member(:description, Shapes::ShapeRef.new(shape: ExperimentDescription, location_name: "Description"))

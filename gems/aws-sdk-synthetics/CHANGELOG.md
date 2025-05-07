@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.63.0 (2025-05-07)
+------------------
+
+* Feature - Add support to test a canary update by invoking a dry run of a canary. This behavior can be used via the new StartCanaryDryRun API along with new fields in UpdateCanary to apply dry run changes. Also includes changes in GetCanary and GetCanaryRuns to support retrieving dry run configurations.
+
 1.62.0 (2025-05-01)
 ------------------
 

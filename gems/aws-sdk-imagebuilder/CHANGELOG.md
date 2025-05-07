@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.81.0 (2025-05-07)
+------------------
+
+* Feature - Updated the CreateImageRecipeRequest ParentImage description to include all valid values as updated with the SSM Parameters project.
+
 1.80.0 (2025-05-01)
 ------------------
 

@@ -58188,6 +58188,11 @@ module Aws::EC2
     #   traverse.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] filter_out_arns
+    #   The Amazon Resource Names (ARN) of the resources that the path must
+    #   ignore.
+    #   @return [Array<String>]
+    #
     # @!attribute [rw] start_date
     #   The time the analysis started.
     #   @return [Time]
@@ -58245,6 +58250,7 @@ module Aws::EC2
       :network_insights_path_id,
       :additional_accounts,
       :filter_in_arns,
+      :filter_out_arns,
       :start_date,
       :status,
       :status_message,
@@ -70376,6 +70382,11 @@ module Aws::EC2
     #   traverse.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] filter_out_arns
+    #   The Amazon Resource Names (ARN) of the resources that the path will
+    #   ignore.
+    #   @return [Array<String>]
+    #
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -70406,6 +70417,7 @@ module Aws::EC2
       :network_insights_path_id,
       :additional_accounts,
       :filter_in_arns,
+      :filter_out_arns,
       :dry_run,
       :tag_specifications,
       :client_token)

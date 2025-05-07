@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.153.0 (2025-05-07)
+------------------
+
+* Feature - Enables Updating Anywhere Settings on a MediaLive Anywhere Channel.
+
 1.152.0 (2025-05-01)
 ------------------
 

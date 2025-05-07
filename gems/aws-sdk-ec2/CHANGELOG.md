@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.521.0 (2025-05-07)
+------------------
+
+* Feature - This release adds API support for Path Component Exclusion (Filter Out ARN) for Reachability Analyzer
+
 1.520.0 (2025-05-06)
 ------------------
 

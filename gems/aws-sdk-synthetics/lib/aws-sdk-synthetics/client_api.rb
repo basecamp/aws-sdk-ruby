@@ -14,6 +14,7 @@ module Aws::Synthetics
 
     include Seahorse::Model
 
+    AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
     ArtifactConfigInput = Shapes::StructureShape.new(name: 'ArtifactConfigInput')
     ArtifactConfigOutput = Shapes::StructureShape.new(name: 'ArtifactConfigOutput')
     AssociateResourceRequest = Shapes::StructureShape.new(name: 'AssociateResourceRequest')
@@ -30,6 +31,7 @@ module Aws::Synthetics
     CanaryArn = Shapes::StringShape.new(name: 'CanaryArn')
     CanaryCodeInput = Shapes::StructureShape.new(name: 'CanaryCodeInput')
     CanaryCodeOutput = Shapes::StructureShape.new(name: 'CanaryCodeOutput')
+    CanaryDryRunConfigOutput = Shapes::StructureShape.new(name: 'CanaryDryRunConfigOutput')
     CanaryLastRun = Shapes::StructureShape.new(name: 'CanaryLastRun')
     CanaryName = Shapes::StringShape.new(name: 'CanaryName')
     CanaryRun = Shapes::StructureShape.new(name: 'CanaryRun')
@@ -66,6 +68,7 @@ module Aws::Synthetics
     DescribeRuntimeVersionsResponse = Shapes::StructureShape.new(name: 'DescribeRuntimeVersionsResponse')
     DisassociateResourceRequest = Shapes::StructureShape.new(name: 'DisassociateResourceRequest')
     DisassociateResourceResponse = Shapes::StructureShape.new(name: 'DisassociateResourceResponse')
+    DryRunConfigOutput = Shapes::StructureShape.new(name: 'DryRunConfigOutput')
     EncryptionMode = Shapes::StringShape.new(name: 'EncryptionMode')
     EnvironmentVariableName = Shapes::StringShape.new(name: 'EnvironmentVariableName')
     EnvironmentVariableValue = Shapes::StringShape.new(name: 'EnvironmentVariableValue')
@@ -112,12 +115,15 @@ module Aws::Synthetics
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     ResourceToTag = Shapes::StringShape.new(name: 'ResourceToTag')
     RoleArn = Shapes::StringShape.new(name: 'RoleArn')
+    RunType = Shapes::StringShape.new(name: 'RunType')
     RuntimeVersion = Shapes::StructureShape.new(name: 'RuntimeVersion')
     RuntimeVersionList = Shapes::ListShape.new(name: 'RuntimeVersionList')
     S3EncryptionConfig = Shapes::StructureShape.new(name: 'S3EncryptionConfig')
     SecurityGroupId = Shapes::StringShape.new(name: 'SecurityGroupId')
     SecurityGroupIds = Shapes::ListShape.new(name: 'SecurityGroupIds')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
+    StartCanaryDryRunRequest = Shapes::StructureShape.new(name: 'StartCanaryDryRunRequest')
+    StartCanaryDryRunResponse = Shapes::StructureShape.new(name: 'StartCanaryDryRunResponse')
     StartCanaryRequest = Shapes::StructureShape.new(name: 'StartCanaryRequest')
     StartCanaryResponse = Shapes::StructureShape.new(name: 'StartCanaryResponse')
     StopCanaryRequest = Shapes::StructureShape.new(name: 'StopCanaryRequest')
@@ -147,6 +153,9 @@ module Aws::Synthetics
     VpcConfigOutput = Shapes::StructureShape.new(name: 'VpcConfigOutput')
     VpcId = Shapes::StringShape.new(name: 'VpcId')
     boolean = Shapes::BooleanShape.new(name: 'boolean')
+
+    AccessDeniedException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
+    AccessDeniedException.struct_class = Types::AccessDeniedException
 
     ArtifactConfigInput.add_member(:s3_encryption, Shapes::ShapeRef.new(shape: S3EncryptionConfig, location_name: "S3Encryption"))
     ArtifactConfigInput.struct_class = Types::ArtifactConfigInput
@@ -193,6 +202,7 @@ module Aws::Synthetics
     Canary.add_member(:provisioned_resource_cleanup, Shapes::ShapeRef.new(shape: ProvisionedResourceCleanupSetting, location_name: "ProvisionedResourceCleanup"))
     Canary.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
     Canary.add_member(:artifact_config, Shapes::ShapeRef.new(shape: ArtifactConfigOutput, location_name: "ArtifactConfig"))
+    Canary.add_member(:dry_run_config, Shapes::ShapeRef.new(shape: DryRunConfigOutput, location_name: "DryRunConfig"))
     Canary.struct_class = Types::Canary
 
     CanaryCodeInput.add_member(:s3_bucket, Shapes::ShapeRef.new(shape: String, location_name: "S3Bucket"))
@@ -206,6 +216,9 @@ module Aws::Synthetics
     CanaryCodeOutput.add_member(:handler, Shapes::ShapeRef.new(shape: String, location_name: "Handler"))
     CanaryCodeOutput.struct_class = Types::CanaryCodeOutput
 
+    CanaryDryRunConfigOutput.add_member(:dry_run_id, Shapes::ShapeRef.new(shape: UUID, location_name: "DryRunId"))
+    CanaryDryRunConfigOutput.struct_class = Types::CanaryDryRunConfigOutput
+
     CanaryLastRun.add_member(:canary_name, Shapes::ShapeRef.new(shape: CanaryName, location_name: "CanaryName"))
     CanaryLastRun.add_member(:last_run, Shapes::ShapeRef.new(shape: CanaryRun, location_name: "LastRun"))
     CanaryLastRun.struct_class = Types::CanaryLastRun
@@ -215,6 +228,7 @@ module Aws::Synthetics
     CanaryRun.add_member(:status, Shapes::ShapeRef.new(shape: CanaryRunStatus, location_name: "Status"))
     CanaryRun.add_member(:timeline, Shapes::ShapeRef.new(shape: CanaryRunTimeline, location_name: "Timeline"))
     CanaryRun.add_member(:artifact_s3_location, Shapes::ShapeRef.new(shape: String, location_name: "ArtifactS3Location"))
+    CanaryRun.add_member(:dry_run_config, Shapes::ShapeRef.new(shape: CanaryDryRunConfigOutput, location_name: "DryRunConfig"))
     CanaryRun.struct_class = Types::CanaryRun
 
     CanaryRunConfigInput.add_member(:timeout_in_seconds, Shapes::ShapeRef.new(shape: MaxFifteenMinutesInSeconds, location_name: "TimeoutInSeconds"))
@@ -334,10 +348,15 @@ module Aws::Synthetics
 
     DisassociateResourceResponse.struct_class = Types::DisassociateResourceResponse
 
+    DryRunConfigOutput.add_member(:dry_run_id, Shapes::ShapeRef.new(shape: UUID, location_name: "DryRunId"))
+    DryRunConfigOutput.add_member(:last_dry_run_execution_status, Shapes::ShapeRef.new(shape: String, location_name: "LastDryRunExecutionStatus"))
+    DryRunConfigOutput.struct_class = Types::DryRunConfigOutput
+
     EnvironmentVariablesMap.key = Shapes::ShapeRef.new(shape: EnvironmentVariableName)
     EnvironmentVariablesMap.value = Shapes::ShapeRef.new(shape: EnvironmentVariableValue)
 
     GetCanaryRequest.add_member(:name, Shapes::ShapeRef.new(shape: CanaryName, required: true, location: "uri", location_name: "name"))
+    GetCanaryRequest.add_member(:dry_run_id, Shapes::ShapeRef.new(shape: UUID, location: "querystring", location_name: "dryRunId"))
     GetCanaryRequest.struct_class = Types::GetCanaryRequest
 
     GetCanaryResponse.add_member(:canary, Shapes::ShapeRef.new(shape: Canary, location_name: "Canary"))
@@ -346,6 +365,8 @@ module Aws::Synthetics
     GetCanaryRunsRequest.add_member(:name, Shapes::ShapeRef.new(shape: CanaryName, required: true, location: "uri", location_name: "name"))
     GetCanaryRunsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
     GetCanaryRunsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxSize100, location_name: "MaxResults"))
+    GetCanaryRunsRequest.add_member(:dry_run_id, Shapes::ShapeRef.new(shape: UUID, location_name: "DryRunId"))
+    GetCanaryRunsRequest.add_member(:run_type, Shapes::ShapeRef.new(shape: RunType, location_name: "RunType"))
     GetCanaryRunsRequest.struct_class = Types::GetCanaryRunsRequest
 
     GetCanaryRunsResponse.add_member(:canary_runs, Shapes::ShapeRef.new(shape: CanaryRuns, location_name: "CanaryRuns"))
@@ -439,6 +460,23 @@ module Aws::Synthetics
     ServiceQuotaExceededException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     ServiceQuotaExceededException.struct_class = Types::ServiceQuotaExceededException
 
+    StartCanaryDryRunRequest.add_member(:name, Shapes::ShapeRef.new(shape: CanaryName, required: true, location: "uri", location_name: "name"))
+    StartCanaryDryRunRequest.add_member(:code, Shapes::ShapeRef.new(shape: CanaryCodeInput, location_name: "Code"))
+    StartCanaryDryRunRequest.add_member(:runtime_version, Shapes::ShapeRef.new(shape: String, location_name: "RuntimeVersion"))
+    StartCanaryDryRunRequest.add_member(:run_config, Shapes::ShapeRef.new(shape: CanaryRunConfigInput, location_name: "RunConfig"))
+    StartCanaryDryRunRequest.add_member(:vpc_config, Shapes::ShapeRef.new(shape: VpcConfigInput, location_name: "VpcConfig"))
+    StartCanaryDryRunRequest.add_member(:execution_role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "ExecutionRoleArn"))
+    StartCanaryDryRunRequest.add_member(:success_retention_period_in_days, Shapes::ShapeRef.new(shape: MaxSize1024, location_name: "SuccessRetentionPeriodInDays"))
+    StartCanaryDryRunRequest.add_member(:failure_retention_period_in_days, Shapes::ShapeRef.new(shape: MaxSize1024, location_name: "FailureRetentionPeriodInDays"))
+    StartCanaryDryRunRequest.add_member(:visual_reference, Shapes::ShapeRef.new(shape: VisualReferenceInput, location_name: "VisualReference"))
+    StartCanaryDryRunRequest.add_member(:artifact_s3_location, Shapes::ShapeRef.new(shape: String, location_name: "ArtifactS3Location"))
+    StartCanaryDryRunRequest.add_member(:artifact_config, Shapes::ShapeRef.new(shape: ArtifactConfigInput, location_name: "ArtifactConfig"))
+    StartCanaryDryRunRequest.add_member(:provisioned_resource_cleanup, Shapes::ShapeRef.new(shape: ProvisionedResourceCleanupSetting, location_name: "ProvisionedResourceCleanup"))
+    StartCanaryDryRunRequest.struct_class = Types::StartCanaryDryRunRequest
+
+    StartCanaryDryRunResponse.add_member(:dry_run_config, Shapes::ShapeRef.new(shape: DryRunConfigOutput, location_name: "DryRunConfig"))
+    StartCanaryDryRunResponse.struct_class = Types::StartCanaryDryRunResponse
+
     StartCanaryRequest.add_member(:name, Shapes::ShapeRef.new(shape: CanaryName, required: true, location: "uri", location_name: "name"))
     StartCanaryRequest.struct_class = Types::StartCanaryRequest
 
@@ -486,6 +524,7 @@ module Aws::Synthetics
     UpdateCanaryRequest.add_member(:artifact_s3_location, Shapes::ShapeRef.new(shape: String, location_name: "ArtifactS3Location"))
     UpdateCanaryRequest.add_member(:artifact_config, Shapes::ShapeRef.new(shape: ArtifactConfigInput, location_name: "ArtifactConfig"))
     UpdateCanaryRequest.add_member(:provisioned_resource_cleanup, Shapes::ShapeRef.new(shape: ProvisionedResourceCleanupSetting, location_name: "ProvisionedResourceCleanup"))
+    UpdateCanaryRequest.add_member(:dry_run_id, Shapes::ShapeRef.new(shape: UUID, location_name: "DryRunId"))
     UpdateCanaryRequest.struct_class = Types::UpdateCanaryRequest
 
     UpdateCanaryResponse.struct_class = Types::UpdateCanaryResponse
@@ -768,6 +807,19 @@ module Aws::Synthetics
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
       end)
 
+      api.add_operation(:start_canary_dry_run, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartCanaryDryRun"
+        o.http_method = "POST"
+        o.http_request_uri = "/canary/{name}/dry-run/start"
+        o.input = Shapes::ShapeRef.new(shape: StartCanaryDryRunRequest)
+        o.output = Shapes::ShapeRef.new(shape: StartCanaryDryRunResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
       api.add_operation(:stop_canary, Seahorse::Model::Operation.new.tap do |o|
         o.name = "StopCanary"
         o.http_method = "POST"
@@ -817,6 +869,7 @@ module Aws::Synthetics
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: RequestEntityTooLargeException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
     end
 

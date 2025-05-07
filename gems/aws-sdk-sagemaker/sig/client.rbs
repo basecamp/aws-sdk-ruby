@@ -1302,6 +1302,15 @@ module Aws
                              amazon_q_settings: {
                                status: ("ENABLED" | "DISABLED")?,
                                q_profile_arn: ::String?
+                             }?,
+                             unified_studio_settings: {
+                               studio_web_portal_access: ("ENABLED" | "DISABLED")?,
+                               domain_account_id: ::String?,
+                               domain_region: ::String?,
+                               domain_id: ::String?,
+                               project_id: ::String?,
+                               environment_id: ::String?,
+                               project_s3_path: ::String?
                              }?
                            },
                            subnet_ids: Array[::String],
@@ -3933,6 +3942,7 @@ module Aws
                                 ebs_volume_size_in_gb: ::Integer
                               }?
                             }?,
+                            space_managed_resources: ("ENABLED" | "DISABLED")?,
                             custom_file_systems: Array[
                               {
                                 efs_file_system: {
@@ -8250,8 +8260,8 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SageMaker/Client.html#search_training_plan_offerings-instance_method
       def search_training_plan_offerings: (
-                                            instance_type: ("ml.p4d.24xlarge" | "ml.p5.48xlarge" | "ml.p5e.48xlarge" | "ml.p5en.48xlarge" | "ml.trn1.32xlarge" | "ml.trn2.48xlarge"),
-                                            instance_count: ::Integer,
+                                            ?instance_type: ("ml.p4d.24xlarge" | "ml.p5.48xlarge" | "ml.p5e.48xlarge" | "ml.p5en.48xlarge" | "ml.trn1.32xlarge" | "ml.trn2.48xlarge"),
+                                            ?instance_count: ::Integer,
                                             ?start_time_after: ::Time,
                                             ?end_time_before: ::Time,
                                             duration_hours: ::Integer,
@@ -8986,6 +8996,15 @@ module Aws
                              amazon_q_settings: {
                                status: ("ENABLED" | "DISABLED")?,
                                q_profile_arn: ::String?
+                             }?,
+                             unified_studio_settings: {
+                               studio_web_portal_access: ("ENABLED" | "DISABLED")?,
+                               domain_account_id: ::String?,
+                               domain_region: ::String?,
+                               domain_id: ::String?,
+                               project_id: ::String?,
+                               environment_id: ::String?,
+                               project_s3_path: ::String?
                              }?
                            },
                            ?app_security_group_management: ("Service" | "Customer"),
@@ -9897,6 +9916,7 @@ module Aws
                                 ebs_volume_size_in_gb: ::Integer
                               }?
                             }?,
+                            space_managed_resources: ("ENABLED" | "DISABLED")?,
                             custom_file_systems: Array[
                               {
                                 efs_file_system: {

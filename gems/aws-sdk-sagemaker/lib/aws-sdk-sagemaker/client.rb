@@ -3146,6 +3146,15 @@ module Aws::SageMaker
     #         status: "ENABLED", # accepts ENABLED, DISABLED
     #         q_profile_arn: "QProfileArn",
     #       },
+    #       unified_studio_settings: {
+    #         studio_web_portal_access: "ENABLED", # accepts ENABLED, DISABLED
+    #         domain_account_id: "AccountId",
+    #         domain_region: "RegionName",
+    #         domain_id: "UnifiedStudioDomainId",
+    #         project_id: "UnifiedStudioProjectId",
+    #         environment_id: "UnifiedStudioEnvironmentId",
+    #         project_s3_path: "S3Uri",
+    #       },
     #     },
     #     subnet_ids: ["SubnetId"], # required
     #     vpc_id: "VpcId", # required
@@ -8887,6 +8896,7 @@ module Aws::SageMaker
     #           ebs_volume_size_in_gb: 1, # required
     #         },
     #       },
+    #       space_managed_resources: "ENABLED", # accepts ENABLED, DISABLED
     #       custom_file_systems: [
     #         {
     #           efs_file_system: {
@@ -13715,6 +13725,13 @@ module Aws::SageMaker
     #   resp.domain_settings.docker_settings.vpc_only_trusted_accounts[0] #=> String
     #   resp.domain_settings.amazon_q_settings.status #=> String, one of "ENABLED", "DISABLED"
     #   resp.domain_settings.amazon_q_settings.q_profile_arn #=> String
+    #   resp.domain_settings.unified_studio_settings.studio_web_portal_access #=> String, one of "ENABLED", "DISABLED"
+    #   resp.domain_settings.unified_studio_settings.domain_account_id #=> String
+    #   resp.domain_settings.unified_studio_settings.domain_region #=> String
+    #   resp.domain_settings.unified_studio_settings.domain_id #=> String
+    #   resp.domain_settings.unified_studio_settings.project_id #=> String
+    #   resp.domain_settings.unified_studio_settings.environment_id #=> String
+    #   resp.domain_settings.unified_studio_settings.project_s3_path #=> String
     #   resp.app_network_access_type #=> String, one of "PublicInternetOnly", "VpcOnly"
     #   resp.home_efs_file_system_kms_key_id #=> String
     #   resp.subnet_ids #=> Array
@@ -17215,6 +17232,7 @@ module Aws::SageMaker
     #   resp.space_settings.jupyter_lab_app_settings.app_lifecycle_management.idle_settings.idle_timeout_in_minutes #=> Integer
     #   resp.space_settings.app_type #=> String, one of "JupyterServer", "KernelGateway", "DetailedProfiler", "TensorBoard", "CodeEditor", "JupyterLab", "RStudioServerPro", "RSessionGateway", "Canvas"
     #   resp.space_settings.space_storage_settings.ebs_storage_settings.ebs_volume_size_in_gb #=> Integer
+    #   resp.space_settings.space_managed_resources #=> String, one of "ENABLED", "DISABLED"
     #   resp.space_settings.custom_file_systems #=> Array
     #   resp.space_settings.custom_file_systems[0].efs_file_system.file_system_id #=> String
     #   resp.space_settings.custom_file_systems[0].f_sx_lustre_file_system.file_system_id #=> String
@@ -25322,7 +25340,7 @@ module Aws::SageMaker
     # SageMaker training jobs or SageMaker HyperPod clusters using Amazon
     # SageMaker Training Plan , see ` CreateTrainingPlan `.
     #
-    # @option params [required, String] :instance_type
+    # @option params [String] :instance_type
     #   The type of instance you want to search for in the available training
     #   plan offerings. This field allows you to filter the search results
     #   based on the specific compute resources you require for your SageMaker
@@ -25330,7 +25348,7 @@ module Aws::SageMaker
     #   training plan offerings, specifying the instance type helps you find
     #   Reserved Instances that match your computational needs.
     #
-    # @option params [required, Integer] :instance_count
+    # @option params [Integer] :instance_count
     #   The number of instances you want to reserve in the training plan
     #   offerings. This allows you to specify the quantity of compute
     #   resources needed for your SageMaker training jobs or SageMaker
@@ -25367,8 +25385,8 @@ module Aws::SageMaker
     # @example Request syntax with placeholder values
     #
     #   resp = client.search_training_plan_offerings({
-    #     instance_type: "ml.p4d.24xlarge", # required, accepts ml.p4d.24xlarge, ml.p5.48xlarge, ml.p5e.48xlarge, ml.p5en.48xlarge, ml.trn1.32xlarge, ml.trn2.48xlarge
-    #     instance_count: 1, # required
+    #     instance_type: "ml.p4d.24xlarge", # accepts ml.p4d.24xlarge, ml.p5.48xlarge, ml.p5e.48xlarge, ml.p5en.48xlarge, ml.trn1.32xlarge, ml.trn2.48xlarge
+    #     instance_count: 1,
     #     start_time_after: Time.now,
     #     end_time_before: Time.now,
     #     duration_hours: 1, # required
@@ -27085,6 +27103,15 @@ module Aws::SageMaker
     #       amazon_q_settings: {
     #         status: "ENABLED", # accepts ENABLED, DISABLED
     #         q_profile_arn: "QProfileArn",
+    #       },
+    #       unified_studio_settings: {
+    #         studio_web_portal_access: "ENABLED", # accepts ENABLED, DISABLED
+    #         domain_account_id: "AccountId",
+    #         domain_region: "RegionName",
+    #         domain_id: "UnifiedStudioDomainId",
+    #         project_id: "UnifiedStudioProjectId",
+    #         environment_id: "UnifiedStudioEnvironmentId",
+    #         project_s3_path: "S3Uri",
     #       },
     #     },
     #     app_security_group_management: "Service", # accepts Service, Customer
@@ -29169,6 +29196,7 @@ module Aws::SageMaker
     #           ebs_volume_size_in_gb: 1, # required
     #         },
     #       },
+    #       space_managed_resources: "ENABLED", # accepts ENABLED, DISABLED
     #       custom_file_systems: [
     #         {
     #           efs_file_system: {
@@ -29911,7 +29939,7 @@ module Aws::SageMaker
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sagemaker'
-      context[:gem_version] = '1.303.0'
+      context[:gem_version] = '1.304.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -4609,7 +4609,7 @@ module Aws::SageMaker
     #   @return [Time]
     #
     # @!attribute [rw] last_software_update_time
-    #   The time of when the cluster was last updated.
+    #   The time when the cluster was last updated.
     #   @return [Time]
     #
     # @!attribute [rw] life_cycle_config
@@ -4694,8 +4694,8 @@ module Aws::SageMaker
     #   @return [Time]
     #
     # @!attribute [rw] last_software_update_time
-    #   The time of when SageMaker last updated the software of the
-    #   instances in the cluster.
+    #   The time when SageMaker last updated the software of the instances
+    #   in the cluster.
     #   @return [Time]
     #
     # @!attribute [rw] instance_status
@@ -20170,6 +20170,11 @@ module Aws::SageMaker
     #   must be `SSO`.
     #   @return [Types::AmazonQSettings]
     #
+    # @!attribute [rw] unified_studio_settings
+    #   The settings that apply to an SageMaker AI domain when you use it in
+    #   Amazon SageMaker Unified Studio.
+    #   @return [Types::UnifiedStudioSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DomainSettings AWS API Documentation
     #
     class DomainSettings < Struct.new(
@@ -20177,7 +20182,8 @@ module Aws::SageMaker
       :r_studio_server_pro_domain_settings,
       :execution_role_identity_config,
       :docker_settings,
-      :amazon_q_settings)
+      :amazon_q_settings,
+      :unified_studio_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -20217,6 +20223,11 @@ module Aws::SageMaker
     #   within the domain.
     #   @return [Types::AmazonQSettings]
     #
+    # @!attribute [rw] unified_studio_settings
+    #   The settings that apply to an SageMaker AI domain when you use it in
+    #   Amazon SageMaker Unified Studio.
+    #   @return [Types::UnifiedStudioSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DomainSettingsForUpdate AWS API Documentation
     #
     class DomainSettingsForUpdate < Struct.new(
@@ -20224,7 +20235,8 @@ module Aws::SageMaker
       :execution_role_identity_config,
       :security_group_ids,
       :docker_settings,
-      :amazon_q_settings)
+      :amazon_q_settings,
+      :unified_studio_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -43770,6 +43782,15 @@ module Aws::SageMaker
     #   The storage settings for a space.
     #   @return [Types::SpaceStorageSettings]
     #
+    # @!attribute [rw] space_managed_resources
+    #   If you enable this option, SageMaker AI creates the following
+    #   resources on your behalf when you create the space:
+    #
+    #   * The user profile that possesses the space.
+    #
+    #   * The app that the space contains.
+    #   @return [String]
+    #
     # @!attribute [rw] custom_file_systems
     #   A file system, created by you, that you assign to a space for an
     #   Amazon SageMaker AI Domain. Permitted users can access this file
@@ -43785,6 +43806,7 @@ module Aws::SageMaker
       :jupyter_lab_app_settings,
       :app_type,
       :space_storage_settings,
+      :space_managed_resources,
       :custom_file_systems)
       SENSITIVE = []
       include Aws::Structure
@@ -47779,6 +47801,77 @@ module Aws::SageMaker
     class UiTemplateInfo < Struct.new(
       :url,
       :content_sha_256)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The settings that apply to an Amazon SageMaker AI domain when you use
+    # it in Amazon SageMaker Unified Studio.
+    #
+    # @!attribute [rw] studio_web_portal_access
+    #   Sets whether you can access the domain in Amazon SageMaker Studio:
+    #
+    #   ENABLED
+    #
+    #   : You can access the domain in Amazon SageMaker Studio. If you
+    #     migrate the domain to Amazon SageMaker Unified Studio, you can
+    #     access it in both studio interfaces.
+    #
+    #   DISABLED
+    #
+    #   : You can't access the domain in Amazon SageMaker Studio. If you
+    #     migrate the domain to Amazon SageMaker Unified Studio, you can
+    #     access it only in that studio interface.
+    #
+    #   To migrate a domain to Amazon SageMaker Unified Studio, you specify
+    #   the UnifiedStudioSettings data type when you use the UpdateDomain
+    #   action.
+    #   @return [String]
+    #
+    # @!attribute [rw] domain_account_id
+    #   The ID of the Amazon Web Services account that has the Amazon
+    #   SageMaker Unified Studio domain. The default value, if you don't
+    #   specify an ID, is the ID of the account that has the Amazon
+    #   SageMaker AI domain.
+    #   @return [String]
+    #
+    # @!attribute [rw] domain_region
+    #   The Amazon Web Services Region where the domain is located in Amazon
+    #   SageMaker Unified Studio. The default value, if you don't specify a
+    #   Region, is the Region where the Amazon SageMaker AI domain is
+    #   located.
+    #   @return [String]
+    #
+    # @!attribute [rw] domain_id
+    #   The ID of the Amazon SageMaker Unified Studio domain associated with
+    #   this domain.
+    #   @return [String]
+    #
+    # @!attribute [rw] project_id
+    #   The ID of the Amazon SageMaker Unified Studio project that
+    #   corresponds to the domain.
+    #   @return [String]
+    #
+    # @!attribute [rw] environment_id
+    #   The ID of the environment that Amazon SageMaker Unified Studio
+    #   associates with the domain.
+    #   @return [String]
+    #
+    # @!attribute [rw] project_s3_path
+    #   The location where Amazon S3 stores temporary execution data and
+    #   other artifacts for the project that corresponds to the domain.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/UnifiedStudioSettings AWS API Documentation
+    #
+    class UnifiedStudioSettings < Struct.new(
+      :studio_web_portal_access,
+      :domain_account_id,
+      :domain_region,
+      :domain_id,
+      :project_id,
+      :environment_id,
+      :project_s3_path)
       SENSITIVE = []
       include Aws::Structure
     end

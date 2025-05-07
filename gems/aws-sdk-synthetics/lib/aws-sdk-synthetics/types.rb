@@ -10,6 +10,19 @@
 module Aws::Synthetics
   module Types
 
+    # You don't have permission to perform this operation on this resource.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/AccessDeniedException AWS API Documentation
+    #
+    class AccessDeniedException < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A structure that contains the configuration for canary artifacts,
     # including the encryption-at-rest settings for artifacts that the
     # canary uploads to Amazon S3.
@@ -150,10 +163,26 @@ module Aws::Synthetics
     # @!attribute [rw] success_retention_period_in_days
     #   The number of days to retain data about successful runs of this
     #   canary.
+    #
+    #   This setting affects the range of information returned by
+    #   [GetCanaryRuns][1], as well as the range of information displayed in
+    #   the Synthetics console.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html
     #   @return [Integer]
     #
     # @!attribute [rw] failure_retention_period_in_days
     #   The number of days to retain data about failed runs of this canary.
+    #
+    #   This setting affects the range of information returned by
+    #   [GetCanaryRuns][1], as well as the range of information displayed in
+    #   the Synthetics console.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html
     #   @return [Integer]
     #
     # @!attribute [rw] status
@@ -234,6 +263,10 @@ module Aws::Synthetics
     #   canary uploads to Amazon S3.
     #   @return [Types::ArtifactConfigOutput]
     #
+    # @!attribute [rw] dry_run_config
+    #   Returns the dry run configurations for a canary.
+    #   @return [Types::DryRunConfigOutput]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/Canary AWS API Documentation
     #
     class Canary < Struct.new(
@@ -254,7 +287,8 @@ module Aws::Synthetics
       :visual_reference,
       :provisioned_resource_cleanup,
       :tags,
-      :artifact_config)
+      :artifact_config,
+      :dry_run_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -275,8 +309,9 @@ module Aws::Synthetics
     #   [Packaging your Node.js canary files][1]
     #
     # * For Python canaries, the folder structure must be
-    #   `python/myCanaryFilename.p ` or `python/myFolder/myCanaryFilename.py
-    #   ` For more information, see [Packaging your Python canary files][2]
+    #   `python/myCanaryFilename.py ` or
+    #   `python/myFolder/myCanaryFilename.py ` For more information, see
+    #   [Packaging your Python canary files][2]
     #
     #
     #
@@ -355,6 +390,21 @@ module Aws::Synthetics
       include Aws::Structure
     end
 
+    # Returns the dry run configurations set for a canary.
+    #
+    # @!attribute [rw] dry_run_id
+    #   The DryRunId associated with an existing canary’s dry run. You can
+    #   use this DryRunId to retrieve information about the dry run.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/CanaryDryRunConfigOutput AWS API Documentation
+    #
+    class CanaryDryRunConfigOutput < Struct.new(
+      :dry_run_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # This structure contains information about the most recent run of a
     # single canary.
     #
@@ -398,6 +448,10 @@ module Aws::Synthetics
     #   Artifacts include the log file, screenshots, and HAR files.
     #   @return [String]
     #
+    # @!attribute [rw] dry_run_config
+    #   Returns the dry run configurations for a canary.
+    #   @return [Types::CanaryDryRunConfigOutput]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/CanaryRun AWS API Documentation
     #
     class CanaryRun < Struct.new(
@@ -405,7 +459,8 @@ module Aws::Synthetics
       :name,
       :status,
       :timeline,
-      :artifact_s3_location)
+      :artifact_s3_location,
+      :dry_run_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -454,8 +509,10 @@ module Aws::Synthetics
     #   for your environment variables. For more information about reserved
     #   keys, see [ Runtime environment variables][1].
     #
-    #   The environment variables keys and values are not encrypted. Do not
-    #   store sensitive information in this field.
+    #   Environment variable keys and values are encrypted at rest using
+    #   Amazon Web Services owned KMS keys. However, the environment
+    #   variables are not encrypted on the client side. Do not store
+    #   sensitive information in them.
     #
     #
     #
@@ -758,20 +815,38 @@ module Aws::Synthetics
     #   A structure that contains the configuration for individual canary
     #   runs, such as timeout value and environment variables.
     #
-    #   The environment variables keys and values are not encrypted. Do not
-    #   store sensitive information in this field.
+    #   Environment variable keys and values are encrypted at rest using
+    #   Amazon Web Services owned KMS keys. However, the environment
+    #   variables are not encrypted on the client side. Do not store
+    #   sensitive information in them.
     #   @return [Types::CanaryRunConfigInput]
     #
     # @!attribute [rw] success_retention_period_in_days
     #   The number of days to retain data about successful runs of this
     #   canary. If you omit this field, the default of 31 days is used. The
     #   valid range is 1 to 455 days.
+    #
+    #   This setting affects the range of information returned by
+    #   [GetCanaryRuns][1], as well as the range of information displayed in
+    #   the Synthetics console.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html
     #   @return [Integer]
     #
     # @!attribute [rw] failure_retention_period_in_days
     #   The number of days to retain data about failed runs of this canary.
     #   If you omit this field, the default of 31 days is used. The valid
     #   range is 1 to 455 days.
+    #
+    #   This setting affects the range of information returned by
+    #   [GetCanaryRuns][1], as well as the range of information displayed in
+    #   the Synthetics console.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html
     #   @return [Integer]
     #
     # @!attribute [rw] runtime_version
@@ -1148,14 +1223,40 @@ module Aws::Synthetics
     #
     class DisassociateResourceResponse < Aws::EmptyStructure; end
 
+    # Returns the dry run configurations set for a canary.
+    #
+    # @!attribute [rw] dry_run_id
+    #   The DryRunId associated with an existing canary’s dry run. You can
+    #   use this DryRunId to retrieve information about the dry run.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_dry_run_execution_status
+    #   Returns the last execution status for a canary's dry run.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/DryRunConfigOutput AWS API Documentation
+    #
+    class DryRunConfigOutput < Struct.new(
+      :dry_run_id,
+      :last_dry_run_execution_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] name
     #   The name of the canary that you want details for.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run_id
+    #   The DryRunId associated with an existing canary’s dry run. You can
+    #   use this DryRunId to retrieve information about the dry run.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/GetCanaryRequest AWS API Documentation
     #
     class GetCanaryRequest < Struct.new(
-      :name)
+      :name,
+      :dry_run_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1188,12 +1289,33 @@ module Aws::Synthetics
     #   the default of 100 is used.
     #   @return [Integer]
     #
+    # @!attribute [rw] dry_run_id
+    #   The DryRunId associated with an existing canary’s dry run. You can
+    #   use this DryRunId to retrieve information about the dry run.
+    #   @return [String]
+    #
+    # @!attribute [rw] run_type
+    #   * When you provide `RunType=CANARY_RUN` and `dryRunId`, you will get
+    #     an exception
+    #
+    #   * When a value is not provided for `RunType`, the default value is
+    #     `CANARY_RUN`
+    #
+    #   * When `CANARY_RUN` is provided, all canary runs excluding dry runs
+    #     are returned
+    #
+    #   * When `DRY_RUN` is provided, all dry runs excluding canary runs are
+    #     returned
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/GetCanaryRunsRequest AWS API Documentation
     #
     class GetCanaryRunsRequest < Struct.new(
       :name,
       :next_token,
-      :max_results)
+      :max_results,
+      :dry_run_id,
+      :run_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1624,6 +1746,175 @@ module Aws::Synthetics
     end
 
     # @!attribute [rw] name
+    #   The name of the canary that you want to dry run. To find canary
+    #   names, use [DescribeCanaries][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DescribeCanaries.html
+    #   @return [String]
+    #
+    # @!attribute [rw] code
+    #   Use this structure to input your script code for the canary. This
+    #   structure contains the Lambda handler with the location where the
+    #   canary should start running the script. If the script is stored in
+    #   an S3 bucket, the bucket name, key, and version are also included.
+    #   If the script was passed into the canary directly, the script code
+    #   is contained in the value of `Zipfile`.
+    #
+    #   If you are uploading your canary scripts with an Amazon S3 bucket,
+    #   your zip file should include your script in a certain folder
+    #   structure.
+    #
+    #   * For Node.js canaries, the folder structure must be
+    #     `nodejs/node_modules/myCanaryFilename.js ` For more information,
+    #     see [Packaging your Node.js canary files][1]
+    #
+    #   * For Python canaries, the folder structure must be
+    #     `python/myCanaryFilename.py ` or
+    #     `python/myFolder/myCanaryFilename.py ` For more information, see
+    #     [Packaging your Python canary files][2]
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_WritingCanary_Nodejs.html#CloudWatch_Synthetics_Canaries_package
+    #   [2]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_WritingCanary_Python.html#CloudWatch_Synthetics_Canaries_WritingCanary_Python_package
+    #   @return [Types::CanaryCodeInput]
+    #
+    # @!attribute [rw] runtime_version
+    #   Specifies the runtime version to use for the canary. For a list of
+    #   valid runtime versions and for more information about runtime
+    #   versions, see [ Canary Runtime Versions][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Library.html
+    #   @return [String]
+    #
+    # @!attribute [rw] run_config
+    #   A structure that contains input information for a canary run.
+    #   @return [Types::CanaryRunConfigInput]
+    #
+    # @!attribute [rw] vpc_config
+    #   If this canary is to test an endpoint in a VPC, this structure
+    #   contains information about the subnets and security groups of the
+    #   VPC endpoint. For more information, see [ Running a Canary in a
+    #   VPC][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_VPC.html
+    #   @return [Types::VpcConfigInput]
+    #
+    # @!attribute [rw] execution_role_arn
+    #   The ARN of the IAM role to be used to run the canary. This role must
+    #   already exist, and must include `lambda.amazonaws.com` as a
+    #   principal in the trust policy. The role must also have the following
+    #   permissions:
+    #   @return [String]
+    #
+    # @!attribute [rw] success_retention_period_in_days
+    #   The number of days to retain data on the failed runs for this
+    #   canary. The valid range is 1 to 455 days.
+    #
+    #   This setting affects the range of information returned by
+    #   [GetCanaryRuns][1], as well as the range of information displayed in
+    #   the Synthetics console.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html
+    #   @return [Integer]
+    #
+    # @!attribute [rw] failure_retention_period_in_days
+    #   The number of days to retain data on the failed runs for this
+    #   canary. The valid range is 1 to 455 days.
+    #
+    #   This setting affects the range of information returned by
+    #   [GetCanaryRuns][1], as well as the range of information displayed in
+    #   the Synthetics console.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html
+    #   @return [Integer]
+    #
+    # @!attribute [rw] visual_reference
+    #   An object that specifies what screenshots to use as a baseline for
+    #   visual monitoring by this canary. It can optionally also specify
+    #   parts of the screenshots to ignore during the visual monitoring
+    #   comparison.
+    #
+    #   Visual monitoring is supported only on canaries running the
+    #   **syn-puppeteer-node-3.2** runtime or later. For more information,
+    #   see [ Visual monitoring][1] and [ Visual monitoring blueprint][2]
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Library_SyntheticsLogger_VisualTesting.html
+    #   [2]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Blueprints_VisualTesting.html
+    #   @return [Types::VisualReferenceInput]
+    #
+    # @!attribute [rw] artifact_s3_location
+    #   The location in Amazon S3 where Synthetics stores artifacts from the
+    #   test runs of this canary. Artifacts include the log file,
+    #   screenshots, and HAR files. The name of the Amazon S3 bucket can't
+    #   include a period (.).
+    #   @return [String]
+    #
+    # @!attribute [rw] artifact_config
+    #   A structure that contains the configuration for canary artifacts,
+    #   including the encryption-at-rest settings for artifacts that the
+    #   canary uploads to Amazon S3.
+    #   @return [Types::ArtifactConfigInput]
+    #
+    # @!attribute [rw] provisioned_resource_cleanup
+    #   Specifies whether to also delete the Lambda functions and layers
+    #   used by this canary when the canary is deleted. If the value of this
+    #   parameter is `AUTOMATIC`, it means that the Lambda functions and
+    #   layers will be deleted when the canary is deleted.
+    #
+    #   If the value of this parameter is `OFF`, then the value of the
+    #   `DeleteLambda` parameter of the [DeleteCanary][1] operation
+    #   determines whether the Lambda functions and layers will be deleted.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DeleteCanary.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/StartCanaryDryRunRequest AWS API Documentation
+    #
+    class StartCanaryDryRunRequest < Struct.new(
+      :name,
+      :code,
+      :runtime_version,
+      :run_config,
+      :vpc_config,
+      :execution_role_arn,
+      :success_retention_period_in_days,
+      :failure_retention_period_in_days,
+      :visual_reference,
+      :artifact_s3_location,
+      :artifact_config,
+      :provisioned_resource_cleanup)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] dry_run_config
+    #   Returns the dry run configurations for a canary.
+    #   @return [Types::DryRunConfigOutput]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/StartCanaryDryRunResponse AWS API Documentation
+    #
+    class StartCanaryDryRunResponse < Struct.new(
+      :dry_run_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] name
     #   The name of the canary that you want to run. To find canary names,
     #   use [DescribeCanaries][1].
     #
@@ -1790,17 +2081,35 @@ module Aws::Synthetics
     #   A structure that contains the timeout value that is used for each
     #   individual run of the canary.
     #
-    #   The environment variables keys and values are not encrypted. Do not
-    #   store sensitive information in this field.
+    #   Environment variable keys and values are encrypted at rest using
+    #   Amazon Web Services owned KMS keys. However, the environment
+    #   variables are not encrypted on the client side. Do not store
+    #   sensitive information in them.
     #   @return [Types::CanaryRunConfigInput]
     #
     # @!attribute [rw] success_retention_period_in_days
     #   The number of days to retain data about successful runs of this
     #   canary.
+    #
+    #   This setting affects the range of information returned by
+    #   [GetCanaryRuns][1], as well as the range of information displayed in
+    #   the Synthetics console.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html
     #   @return [Integer]
     #
     # @!attribute [rw] failure_retention_period_in_days
     #   The number of days to retain data about failed runs of this canary.
+    #
+    #   This setting affects the range of information returned by
+    #   [GetCanaryRuns][1], as well as the range of information displayed in
+    #   the Synthetics console.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html
     #   @return [Integer]
     #
     # @!attribute [rw] vpc_config
@@ -1855,6 +2164,17 @@ module Aws::Synthetics
     #   [1]: https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DeleteCanary.html
     #   @return [String]
     #
+    # @!attribute [rw] dry_run_id
+    #   Update the existing canary using the updated configurations from the
+    #   DryRun associated with the DryRunId.
+    #
+    #   <note markdown="1"> When you use the `dryRunId` field when updating a canary, the only
+    #   other field you can provide is the `Schedule`. Adding any other
+    #   field will thrown an exception.
+    #
+    #    </note>
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/UpdateCanaryRequest AWS API Documentation
     #
     class UpdateCanaryRequest < Struct.new(
@@ -1870,7 +2190,8 @@ module Aws::Synthetics
       :visual_reference,
       :artifact_s3_location,
       :artifact_config,
-      :provisioned_resource_cleanup)
+      :provisioned_resource_cleanup,
+      :dry_run_id)
       SENSITIVE = []
       include Aws::Structure
     end

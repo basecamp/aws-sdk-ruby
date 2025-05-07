@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.304.0 (2025-05-07)
+------------------
+
+* Feature - SageMaker AI Studio users can now migrate to SageMaker Unified Studio, which offers a unified web-based development experience that integrates AWS data, analytics, artificial intelligence (AI), and machine learning (ML) services, as well as additional tools and resource
+
 1.303.0 (2025-05-01)
 ------------------
 
