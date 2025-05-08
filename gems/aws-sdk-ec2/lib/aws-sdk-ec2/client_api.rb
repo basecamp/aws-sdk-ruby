@@ -664,6 +664,7 @@ module Aws::EC2
     DedicatedHostFlag = Shapes::BooleanShape.new(name: 'DedicatedHostFlag')
     DedicatedHostId = Shapes::StringShape.new(name: 'DedicatedHostId')
     DedicatedHostIdList = Shapes::ListShape.new(name: 'DedicatedHostIdList')
+    DefaultEnaQueueCountPerInterface = Shapes::IntegerShape.new(name: 'DefaultEnaQueueCountPerInterface')
     DefaultInstanceMetadataEndpointState = Shapes::StringShape.new(name: 'DefaultInstanceMetadataEndpointState')
     DefaultInstanceMetadataTagsState = Shapes::StringShape.new(name: 'DefaultInstanceMetadataTagsState')
     DefaultNetworkCardIndex = Shapes::IntegerShape.new(name: 'DefaultNetworkCardIndex')
@@ -1563,6 +1564,7 @@ module Aws::EC2
     FleetSpotMaintenanceStrategiesRequest = Shapes::StructureShape.new(name: 'FleetSpotMaintenanceStrategiesRequest')
     FleetStateCode = Shapes::StringShape.new(name: 'FleetStateCode')
     FleetType = Shapes::StringShape.new(name: 'FleetType')
+    FlexibleEnaQueuesSupport = Shapes::StringShape.new(name: 'FlexibleEnaQueuesSupport')
     Float = Shapes::FloatShape.new(name: 'Float')
     FlowLog = Shapes::StructureShape.new(name: 'FlowLog')
     FlowLogIdList = Shapes::ListShape.new(name: 'FlowLogIdList')
@@ -2253,6 +2255,8 @@ module Aws::EC2
     MaxResultsParam = Shapes::IntegerShape.new(name: 'MaxResultsParam')
     MaximumBandwidthInMbps = Shapes::IntegerShape.new(name: 'MaximumBandwidthInMbps')
     MaximumEfaInterfaces = Shapes::IntegerShape.new(name: 'MaximumEfaInterfaces')
+    MaximumEnaQueueCount = Shapes::IntegerShape.new(name: 'MaximumEnaQueueCount')
+    MaximumEnaQueueCountPerInterface = Shapes::IntegerShape.new(name: 'MaximumEnaQueueCountPerInterface')
     MaximumIops = Shapes::IntegerShape.new(name: 'MaximumIops')
     MaximumNetworkCards = Shapes::IntegerShape.new(name: 'MaximumNetworkCards')
     MaximumThroughputInMBps = Shapes::FloatShape.new(name: 'MaximumThroughputInMBps')
@@ -4157,6 +4161,7 @@ module Aws::EC2
 
     AttachNetworkInterfaceRequest.add_member(:network_card_index, Shapes::ShapeRef.new(shape: Integer, location_name: "NetworkCardIndex"))
     AttachNetworkInterfaceRequest.add_member(:ena_srd_specification, Shapes::ShapeRef.new(shape: EnaSrdSpecification, location_name: "EnaSrdSpecification"))
+    AttachNetworkInterfaceRequest.add_member(:ena_queue_count, Shapes::ShapeRef.new(shape: Integer, location_name: "EnaQueueCount"))
     AttachNetworkInterfaceRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     AttachNetworkInterfaceRequest.add_member(:network_interface_id, Shapes::ShapeRef.new(shape: NetworkInterfaceId, required: true, location_name: "networkInterfaceId"))
     AttachNetworkInterfaceRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location_name: "instanceId"))
@@ -11266,6 +11271,7 @@ module Aws::EC2
     InstanceNetworkInterfaceAttachment.add_member(:status, Shapes::ShapeRef.new(shape: AttachmentStatus, location_name: "status"))
     InstanceNetworkInterfaceAttachment.add_member(:network_card_index, Shapes::ShapeRef.new(shape: Integer, location_name: "networkCardIndex"))
     InstanceNetworkInterfaceAttachment.add_member(:ena_srd_specification, Shapes::ShapeRef.new(shape: InstanceAttachmentEnaSrdSpecification, location_name: "enaSrdSpecification"))
+    InstanceNetworkInterfaceAttachment.add_member(:ena_queue_count, Shapes::ShapeRef.new(shape: Integer, location_name: "enaQueueCount"))
     InstanceNetworkInterfaceAttachment.struct_class = Types::InstanceNetworkInterfaceAttachment
 
     InstanceNetworkInterfaceList.member = Shapes::ShapeRef.new(shape: InstanceNetworkInterface, location_name: "item")
@@ -11292,6 +11298,7 @@ module Aws::EC2
     InstanceNetworkInterfaceSpecification.add_member(:primary_ipv_6, Shapes::ShapeRef.new(shape: Boolean, location_name: "PrimaryIpv6"))
     InstanceNetworkInterfaceSpecification.add_member(:ena_srd_specification, Shapes::ShapeRef.new(shape: EnaSrdSpecificationRequest, location_name: "EnaSrdSpecification"))
     InstanceNetworkInterfaceSpecification.add_member(:connection_tracking_specification, Shapes::ShapeRef.new(shape: ConnectionTrackingSpecificationRequest, location_name: "ConnectionTrackingSpecification"))
+    InstanceNetworkInterfaceSpecification.add_member(:ena_queue_count, Shapes::ShapeRef.new(shape: Integer, location_name: "EnaQueueCount"))
     InstanceNetworkInterfaceSpecification.struct_class = Types::InstanceNetworkInterfaceSpecification
 
     InstanceNetworkInterfaceSpecificationList.member = Shapes::ShapeRef.new(shape: InstanceNetworkInterfaceSpecification, location_name: "item")
@@ -12101,6 +12108,7 @@ module Aws::EC2
     LaunchTemplateInstanceNetworkInterfaceSpecification.add_member(:primary_ipv_6, Shapes::ShapeRef.new(shape: Boolean, location_name: "primaryIpv6"))
     LaunchTemplateInstanceNetworkInterfaceSpecification.add_member(:ena_srd_specification, Shapes::ShapeRef.new(shape: LaunchTemplateEnaSrdSpecification, location_name: "enaSrdSpecification"))
     LaunchTemplateInstanceNetworkInterfaceSpecification.add_member(:connection_tracking_specification, Shapes::ShapeRef.new(shape: ConnectionTrackingSpecification, location_name: "connectionTrackingSpecification"))
+    LaunchTemplateInstanceNetworkInterfaceSpecification.add_member(:ena_queue_count, Shapes::ShapeRef.new(shape: Integer, location_name: "enaQueueCount"))
     LaunchTemplateInstanceNetworkInterfaceSpecification.struct_class = Types::LaunchTemplateInstanceNetworkInterfaceSpecification
 
     LaunchTemplateInstanceNetworkInterfaceSpecificationList.member = Shapes::ShapeRef.new(shape: LaunchTemplateInstanceNetworkInterfaceSpecification, location_name: "item")
@@ -12127,6 +12135,7 @@ module Aws::EC2
     LaunchTemplateInstanceNetworkInterfaceSpecificationRequest.add_member(:primary_ipv_6, Shapes::ShapeRef.new(shape: Boolean, location_name: "PrimaryIpv6"))
     LaunchTemplateInstanceNetworkInterfaceSpecificationRequest.add_member(:ena_srd_specification, Shapes::ShapeRef.new(shape: EnaSrdSpecificationRequest, location_name: "EnaSrdSpecification"))
     LaunchTemplateInstanceNetworkInterfaceSpecificationRequest.add_member(:connection_tracking_specification, Shapes::ShapeRef.new(shape: ConnectionTrackingSpecificationRequest, location_name: "ConnectionTrackingSpecification"))
+    LaunchTemplateInstanceNetworkInterfaceSpecificationRequest.add_member(:ena_queue_count, Shapes::ShapeRef.new(shape: Integer, location_name: "EnaQueueCount"))
     LaunchTemplateInstanceNetworkInterfaceSpecificationRequest.struct_class = Types::LaunchTemplateInstanceNetworkInterfaceSpecificationRequest
 
     LaunchTemplateInstanceNetworkInterfaceSpecificationRequestList.member = Shapes::ShapeRef.new(shape: LaunchTemplateInstanceNetworkInterfaceSpecificationRequest, location_name: "InstanceNetworkInterfaceSpecification")
@@ -13469,6 +13478,9 @@ module Aws::EC2
     NetworkCardInfo.add_member(:maximum_network_interfaces, Shapes::ShapeRef.new(shape: MaxNetworkInterfaces, location_name: "maximumNetworkInterfaces"))
     NetworkCardInfo.add_member(:baseline_bandwidth_in_gbps, Shapes::ShapeRef.new(shape: BaselineBandwidthInGbps, location_name: "baselineBandwidthInGbps"))
     NetworkCardInfo.add_member(:peak_bandwidth_in_gbps, Shapes::ShapeRef.new(shape: PeakBandwidthInGbps, location_name: "peakBandwidthInGbps"))
+    NetworkCardInfo.add_member(:default_ena_queue_count_per_interface, Shapes::ShapeRef.new(shape: DefaultEnaQueueCountPerInterface, location_name: "defaultEnaQueueCountPerInterface"))
+    NetworkCardInfo.add_member(:maximum_ena_queue_count, Shapes::ShapeRef.new(shape: MaximumEnaQueueCount, location_name: "maximumEnaQueueCount"))
+    NetworkCardInfo.add_member(:maximum_ena_queue_count_per_interface, Shapes::ShapeRef.new(shape: MaximumEnaQueueCountPerInterface, location_name: "maximumEnaQueueCountPerInterface"))
     NetworkCardInfo.struct_class = Types::NetworkCardInfo
 
     NetworkCardInfoList.member = Shapes::ShapeRef.new(shape: NetworkCardInfo, location_name: "item")
@@ -13487,6 +13499,7 @@ module Aws::EC2
     NetworkInfo.add_member(:encryption_in_transit_supported, Shapes::ShapeRef.new(shape: EncryptionInTransitSupported, location_name: "encryptionInTransitSupported"))
     NetworkInfo.add_member(:ena_srd_supported, Shapes::ShapeRef.new(shape: EnaSrdSupported, location_name: "enaSrdSupported"))
     NetworkInfo.add_member(:bandwidth_weightings, Shapes::ShapeRef.new(shape: BandwidthWeightingTypeList, location_name: "bandwidthWeightings"))
+    NetworkInfo.add_member(:flexible_ena_queues_support, Shapes::ShapeRef.new(shape: FlexibleEnaQueuesSupport, location_name: "flexibleEnaQueuesSupport"))
     NetworkInfo.struct_class = Types::NetworkInfo
 
     NetworkInsightsAccessScope.add_member(:network_insights_access_scope_id, Shapes::ShapeRef.new(shape: NetworkInsightsAccessScopeId, location_name: "networkInsightsAccessScopeId"))
@@ -13613,8 +13626,11 @@ module Aws::EC2
     NetworkInterfaceAttachment.add_member(:instance_owner_id, Shapes::ShapeRef.new(shape: String, location_name: "instanceOwnerId"))
     NetworkInterfaceAttachment.add_member(:status, Shapes::ShapeRef.new(shape: AttachmentStatus, location_name: "status"))
     NetworkInterfaceAttachment.add_member(:ena_srd_specification, Shapes::ShapeRef.new(shape: AttachmentEnaSrdSpecification, location_name: "enaSrdSpecification"))
+    NetworkInterfaceAttachment.add_member(:ena_queue_count, Shapes::ShapeRef.new(shape: Integer, location_name: "enaQueueCount"))
     NetworkInterfaceAttachment.struct_class = Types::NetworkInterfaceAttachment
 
+    NetworkInterfaceAttachmentChanges.add_member(:default_ena_queue_count, Shapes::ShapeRef.new(shape: Boolean, location_name: "DefaultEnaQueueCount"))
+    NetworkInterfaceAttachmentChanges.add_member(:ena_queue_count, Shapes::ShapeRef.new(shape: Integer, location_name: "EnaQueueCount"))
     NetworkInterfaceAttachmentChanges.add_member(:attachment_id, Shapes::ShapeRef.new(shape: NetworkInterfaceAttachmentId, location_name: "attachmentId"))
     NetworkInterfaceAttachmentChanges.add_member(:delete_on_termination, Shapes::ShapeRef.new(shape: Boolean, location_name: "deleteOnTermination"))
     NetworkInterfaceAttachmentChanges.struct_class = Types::NetworkInterfaceAttachmentChanges

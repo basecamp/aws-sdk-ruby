@@ -650,6 +650,7 @@ module Aws
                                           ena_srd_udp_enabled: bool?
                                         }?
                                       },
+                                      ?ena_queue_count: ::Integer,
                                       ?dry_run: bool,
                                       network_interface_id: ::String,
                                       instance_id: ::String,
@@ -2091,7 +2092,8 @@ module Aws
                                             tcp_established_timeout: ::Integer?,
                                             udp_stream_timeout: ::Integer?,
                                             udp_timeout: ::Integer?
-                                          }?
+                                          }?,
+                                          ena_queue_count: ::Integer?
                                         },
                                       ]?,
                                       image_id: ::String?,
@@ -2364,7 +2366,8 @@ module Aws
                                                     tcp_established_timeout: ::Integer?,
                                                     udp_stream_timeout: ::Integer?,
                                                     udp_timeout: ::Integer?
-                                                  }?
+                                                  }?,
+                                                  ena_queue_count: ::Integer?
                                                 },
                                               ]?,
                                               image_id: ::String?,
@@ -11370,6 +11373,8 @@ module Aws
                                                 },
                                                 ?groups: Array[::String],
                                                 ?attachment: {
+                                                  default_ena_queue_count: bool?,
+                                                  ena_queue_count: ::Integer?,
                                                   attachment_id: ::String?,
                                                   delete_on_termination: bool?
                                                 }
@@ -12891,7 +12896,8 @@ module Aws
                                             tcp_established_timeout: ::Integer?,
                                             udp_stream_timeout: ::Integer?,
                                             udp_timeout: ::Integer?
-                                          }?
+                                          }?,
+                                          ena_queue_count: ::Integer?
                                         },
                                       ]?,
                                       placement: {
@@ -13202,7 +13208,8 @@ module Aws
                                             tcp_established_timeout: ::Integer?,
                                             udp_stream_timeout: ::Integer?,
                                             udp_timeout: ::Integer?
-                                          }?
+                                          }?,
+                                          ena_queue_count: ::Integer?
                                         },
                                       ]?,
                                       placement: {
@@ -13708,7 +13715,8 @@ module Aws
                                  tcp_established_timeout: ::Integer?,
                                  udp_stream_timeout: ::Integer?,
                                  udp_timeout: ::Integer?
-                               }?
+                               }?,
+                               ena_queue_count: ::Integer?
                              },
                            ],
                            ?iam_instance_profile: {

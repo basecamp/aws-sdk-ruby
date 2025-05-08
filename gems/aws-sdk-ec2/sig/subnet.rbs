@@ -288,7 +288,8 @@ module Aws
                                     tcp_established_timeout: ::Integer?,
                                     udp_stream_timeout: ::Integer?,
                                     udp_timeout: ::Integer?
-                                  }?
+                                  }?,
+                                  ena_queue_count: ::Integer?
                                 },
                               ],
                               ?iam_instance_profile: {

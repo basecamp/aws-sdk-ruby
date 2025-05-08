@@ -517,6 +517,7 @@ module Aws::EC2
     #           udp_stream_timeout: 1,
     #           udp_timeout: 1,
     #         },
+    #         ena_queue_count: 1,
     #       },
     #     ],
     #     iam_instance_profile: {

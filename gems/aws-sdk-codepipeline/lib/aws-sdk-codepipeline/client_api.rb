@@ -136,6 +136,7 @@ module Aws::CodePipeline
     EnvironmentVariable = Shapes::StructureShape.new(name: 'EnvironmentVariable')
     EnvironmentVariableList = Shapes::ListShape.new(name: 'EnvironmentVariableList')
     EnvironmentVariableName = Shapes::StringShape.new(name: 'EnvironmentVariableName')
+    EnvironmentVariableType = Shapes::StringShape.new(name: 'EnvironmentVariableType')
     EnvironmentVariableValue = Shapes::StringShape.new(name: 'EnvironmentVariableValue')
     ErrorDetails = Shapes::StructureShape.new(name: 'ErrorDetails')
     ExecutionDetails = Shapes::StructureShape.new(name: 'ExecutionDetails')
@@ -789,6 +790,7 @@ module Aws::CodePipeline
 
     EnvironmentVariable.add_member(:name, Shapes::ShapeRef.new(shape: EnvironmentVariableName, required: true, location_name: "name"))
     EnvironmentVariable.add_member(:value, Shapes::ShapeRef.new(shape: EnvironmentVariableValue, required: true, location_name: "value"))
+    EnvironmentVariable.add_member(:type, Shapes::ShapeRef.new(shape: EnvironmentVariableType, location_name: "type"))
     EnvironmentVariable.struct_class = Types::EnvironmentVariable
 
     EnvironmentVariableList.member = Shapes::ShapeRef.new(shape: EnvironmentVariable)

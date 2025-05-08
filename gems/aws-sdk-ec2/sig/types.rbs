@@ -779,6 +779,7 @@ module Aws::EC2
     class AttachNetworkInterfaceRequest
       attr_accessor network_card_index: ::Integer
       attr_accessor ena_srd_specification: Types::EnaSrdSpecification
+      attr_accessor ena_queue_count: ::Integer
       attr_accessor dry_run: bool
       attr_accessor network_interface_id: ::String
       attr_accessor instance_id: ::String
@@ -9987,6 +9988,7 @@ module Aws::EC2
       attr_accessor status: ("attaching" | "attached" | "detaching" | "detached")
       attr_accessor network_card_index: ::Integer
       attr_accessor ena_srd_specification: Types::InstanceAttachmentEnaSrdSpecification
+      attr_accessor ena_queue_count: ::Integer
       SENSITIVE: []
     end
 
@@ -10013,6 +10015,7 @@ module Aws::EC2
       attr_accessor primary_ipv_6: bool
       attr_accessor ena_srd_specification: Types::EnaSrdSpecificationRequest
       attr_accessor connection_tracking_specification: Types::ConnectionTrackingSpecificationRequest
+      attr_accessor ena_queue_count: ::Integer
       SENSITIVE: []
     end
 
@@ -10874,6 +10877,7 @@ module Aws::EC2
       attr_accessor primary_ipv_6: bool
       attr_accessor ena_srd_specification: Types::LaunchTemplateEnaSrdSpecification
       attr_accessor connection_tracking_specification: Types::ConnectionTrackingSpecification
+      attr_accessor ena_queue_count: ::Integer
       SENSITIVE: []
     end
 
@@ -10900,6 +10904,7 @@ module Aws::EC2
       attr_accessor primary_ipv_6: bool
       attr_accessor ena_srd_specification: Types::EnaSrdSpecificationRequest
       attr_accessor connection_tracking_specification: Types::ConnectionTrackingSpecificationRequest
+      attr_accessor ena_queue_count: ::Integer
       SENSITIVE: []
     end
 
@@ -12576,6 +12581,9 @@ module Aws::EC2
       attr_accessor maximum_network_interfaces: ::Integer
       attr_accessor baseline_bandwidth_in_gbps: ::Float
       attr_accessor peak_bandwidth_in_gbps: ::Float
+      attr_accessor default_ena_queue_count_per_interface: ::Integer
+      attr_accessor maximum_ena_queue_count: ::Integer
+      attr_accessor maximum_ena_queue_count_per_interface: ::Integer
       SENSITIVE: []
     end
 
@@ -12594,6 +12602,7 @@ module Aws::EC2
       attr_accessor encryption_in_transit_supported: bool
       attr_accessor ena_srd_supported: bool
       attr_accessor bandwidth_weightings: ::Array[("default" | "vpc-1" | "ebs-1")]
+      attr_accessor flexible_ena_queues_support: ("unsupported" | "supported")
       SENSITIVE: []
     end
 
@@ -12720,10 +12729,13 @@ module Aws::EC2
       attr_accessor instance_owner_id: ::String
       attr_accessor status: ("attaching" | "attached" | "detaching" | "detached")
       attr_accessor ena_srd_specification: Types::AttachmentEnaSrdSpecification
+      attr_accessor ena_queue_count: ::Integer
       SENSITIVE: []
     end
 
     class NetworkInterfaceAttachmentChanges
+      attr_accessor default_ena_queue_count: bool
+      attr_accessor ena_queue_count: ::Integer
       attr_accessor attachment_id: ::String
       attr_accessor delete_on_termination: bool
       SENSITIVE: []

@@ -3060,6 +3060,10 @@ module Aws::EC2
     #   attaches to the instance.
     #   @return [Types::EnaSrdSpecification]
     #
+    # @!attribute [rw] ena_queue_count
+    #   The number of ENA queues to be created with the instance.
+    #   @return [Integer]
+    #
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -3084,6 +3088,7 @@ module Aws::EC2
     class AttachNetworkInterfaceRequest < Struct.new(
       :network_card_index,
       :ena_srd_specification,
+      :ena_queue_count,
       :dry_run,
       :network_interface_id,
       :instance_id,
@@ -22893,6 +22898,10 @@ module Aws::EC2
     #   * `network-info.ena-support` - Indicates whether Elastic Network
     #     Adapter (ENA) is supported or required (`required` \| `supported`
     #     \| `unsupported`).
+    #
+    #   * `network-info.flexible-ena-queues-support` - Indicates whether an
+    #     instance supports flexible ENA queues (`supported` \|
+    #     `unsupported`).
     #
     #   * `network-info.encryption-in-transit-supported` - Indicates whether
     #     the instance type automatically encrypts in-transit traffic
@@ -45057,6 +45066,10 @@ module Aws::EC2
     #   attached to the instance.
     #   @return [Types::InstanceAttachmentEnaSrdSpecification]
     #
+    # @!attribute [rw] ena_queue_count
+    #   The number of ENA queues created with the instance.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceNetworkInterfaceAttachment AWS API Documentation
     #
     class InstanceNetworkInterfaceAttachment < Struct.new(
@@ -45066,7 +45079,8 @@ module Aws::EC2
       :device_index,
       :status,
       :network_card_index,
-      :ena_srd_specification)
+      :ena_srd_specification,
+      :ena_queue_count)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -45260,6 +45274,10 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-connection-tracking.html#connection-tracking-timeouts
     #   @return [Types::ConnectionTrackingSpecificationRequest]
     #
+    # @!attribute [rw] ena_queue_count
+    #   The number of ENA queues to be created with the instance.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceNetworkInterfaceSpecification AWS API Documentation
     #
     class InstanceNetworkInterfaceSpecification < Struct.new(
@@ -45284,7 +45302,8 @@ module Aws::EC2
       :ipv_6_prefix_count,
       :primary_ipv_6,
       :ena_srd_specification,
-      :connection_tracking_specification)
+      :connection_tracking_specification,
+      :ena_queue_count)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -50214,6 +50233,10 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-connection-tracking.html#connection-tracking-timeouts
     #   @return [Types::ConnectionTrackingSpecification]
     #
+    # @!attribute [rw] ena_queue_count
+    #   The number of ENA queues created with the instance.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/LaunchTemplateInstanceNetworkInterfaceSpecification AWS API Documentation
     #
     class LaunchTemplateInstanceNetworkInterfaceSpecification < Struct.new(
@@ -50238,7 +50261,8 @@ module Aws::EC2
       :ipv_6_prefix_count,
       :primary_ipv_6,
       :ena_srd_specification,
-      :connection_tracking_specification)
+      :connection_tracking_specification,
+      :ena_queue_count)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -50405,6 +50429,10 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-connection-tracking.html#connection-tracking-timeouts
     #   @return [Types::ConnectionTrackingSpecificationRequest]
     #
+    # @!attribute [rw] ena_queue_count
+    #   The number of ENA queues to be created with the instance.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/LaunchTemplateInstanceNetworkInterfaceSpecificationRequest AWS API Documentation
     #
     class LaunchTemplateInstanceNetworkInterfaceSpecificationRequest < Struct.new(
@@ -50429,7 +50457,8 @@ module Aws::EC2
       :ipv_6_prefix_count,
       :primary_ipv_6,
       :ena_srd_specification,
-      :connection_tracking_specification)
+      :connection_tracking_specification,
+      :ena_queue_count)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -57945,6 +57974,18 @@ module Aws::EC2
     #   The peak (burst) network performance of the network card, in Gbps.
     #   @return [Float]
     #
+    # @!attribute [rw] default_ena_queue_count_per_interface
+    #   The default number of the ENA queues for each interface.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] maximum_ena_queue_count
+    #   The maximum number of the ENA queues.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] maximum_ena_queue_count_per_interface
+    #   The maximum number of the ENA queues for each interface.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/NetworkCardInfo AWS API Documentation
     #
     class NetworkCardInfo < Struct.new(
@@ -57952,7 +57993,10 @@ module Aws::EC2
       :network_performance,
       :maximum_network_interfaces,
       :baseline_bandwidth_in_gbps,
-      :peak_bandwidth_in_gbps)
+      :peak_bandwidth_in_gbps,
+      :default_ena_queue_count_per_interface,
+      :maximum_ena_queue_count,
+      :maximum_ena_queue_count_per_interface)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -58021,6 +58065,10 @@ module Aws::EC2
     #   the instance type, if supported.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] flexible_ena_queues_support
+    #   Indicates whether changing the number of ENA queues is supported.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/NetworkInfo AWS API Documentation
     #
     class NetworkInfo < Struct.new(
@@ -58037,7 +58085,8 @@ module Aws::EC2
       :efa_info,
       :encryption_in_transit_supported,
       :ena_srd_supported,
-      :bandwidth_weightings)
+      :bandwidth_weightings,
+      :flexible_ena_queues_support)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -58604,6 +58653,10 @@ module Aws::EC2
     #   attaches to the instance.
     #   @return [Types::AttachmentEnaSrdSpecification]
     #
+    # @!attribute [rw] ena_queue_count
+    #   The number of ENA queues created with the instance.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/NetworkInterfaceAttachment AWS API Documentation
     #
     class NetworkInterfaceAttachment < Struct.new(
@@ -58615,12 +58668,21 @@ module Aws::EC2
       :instance_id,
       :instance_owner_id,
       :status,
-      :ena_srd_specification)
+      :ena_srd_specification,
+      :ena_queue_count)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # Describes an attachment change.
+    #
+    # @!attribute [rw] default_ena_queue_count
+    #   The default number of the ENA queues.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] ena_queue_count
+    #   The number of ENA queues to be created with the instance.
+    #   @return [Integer]
     #
     # @!attribute [rw] attachment_id
     #   The ID of the network interface attachment.
@@ -58634,6 +58696,8 @@ module Aws::EC2
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/NetworkInterfaceAttachmentChanges AWS API Documentation
     #
     class NetworkInterfaceAttachmentChanges < Struct.new(
+      :default_ena_queue_count,
+      :ena_queue_count,
       :attachment_id,
       :delete_on_termination)
       SENSITIVE = []

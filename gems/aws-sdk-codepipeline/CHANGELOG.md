@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.98.0 (2025-05-08)
+------------------
+
+* Feature - Add support for Secrets Manager and Plaintext environment variable types in Commands action
+
 1.97.0 (2025-05-01)
 ------------------
 

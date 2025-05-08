@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.115.0 (2025-05-08)
+------------------
+
+* Feature - Updated description of a data structure.
+
 1.114.0 (2025-05-01)
 ------------------
 

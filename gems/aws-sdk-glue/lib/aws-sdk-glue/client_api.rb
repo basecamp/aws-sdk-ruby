@@ -817,6 +817,7 @@ module Aws::Glue
     IntegerValue = Shapes::IntegerShape.new(name: 'IntegerValue')
     Integration = Shapes::StructureShape.new(name: 'Integration')
     IntegrationAdditionalEncryptionContextMap = Shapes::MapShape.new(name: 'IntegrationAdditionalEncryptionContextMap')
+    IntegrationConfig = Shapes::StructureShape.new(name: 'IntegrationConfig')
     IntegrationConflictOperationFault = Shapes::StructureShape.new(name: 'IntegrationConflictOperationFault')
     IntegrationDescription = Shapes::StringShape.new(name: 'IntegrationDescription')
     IntegrationError = Shapes::StructureShape.new(name: 'IntegrationError')
@@ -2696,6 +2697,7 @@ module Aws::Glue
     CreateIntegrationRequest.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: String2048, location_name: "KmsKeyId"))
     CreateIntegrationRequest.add_member(:additional_encryption_context, Shapes::ShapeRef.new(shape: IntegrationAdditionalEncryptionContextMap, location_name: "AdditionalEncryptionContext"))
     CreateIntegrationRequest.add_member(:tags, Shapes::ShapeRef.new(shape: IntegrationTagsList, location_name: "Tags"))
+    CreateIntegrationRequest.add_member(:integration_config, Shapes::ShapeRef.new(shape: IntegrationConfig, location_name: "IntegrationConfig"))
     CreateIntegrationRequest.struct_class = Types::CreateIntegrationRequest
 
     CreateIntegrationResourcePropertyRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "ResourceArn"))
@@ -2720,6 +2722,7 @@ module Aws::Glue
     CreateIntegrationResponse.add_member(:create_time, Shapes::ShapeRef.new(shape: IntegrationTimestamp, required: true, location_name: "CreateTime"))
     CreateIntegrationResponse.add_member(:errors, Shapes::ShapeRef.new(shape: IntegrationErrorList, location_name: "Errors"))
     CreateIntegrationResponse.add_member(:data_filter, Shapes::ShapeRef.new(shape: String2048, location_name: "DataFilter"))
+    CreateIntegrationResponse.add_member(:integration_config, Shapes::ShapeRef.new(shape: IntegrationConfig, location_name: "IntegrationConfig"))
     CreateIntegrationResponse.struct_class = Types::CreateIntegrationResponse
 
     CreateIntegrationTablePropertiesRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "ResourceArn"))
@@ -4699,6 +4702,7 @@ module Aws::Glue
     InboundIntegration.add_member(:integration_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "IntegrationArn"))
     InboundIntegration.add_member(:status, Shapes::ShapeRef.new(shape: IntegrationStatus, required: true, location_name: "Status"))
     InboundIntegration.add_member(:create_time, Shapes::ShapeRef.new(shape: IntegrationTimestamp, required: true, location_name: "CreateTime"))
+    InboundIntegration.add_member(:integration_config, Shapes::ShapeRef.new(shape: IntegrationConfig, location_name: "IntegrationConfig"))
     InboundIntegration.add_member(:errors, Shapes::ShapeRef.new(shape: IntegrationErrorList, location_name: "Errors"))
     InboundIntegration.struct_class = Types::InboundIntegration
 
@@ -4716,12 +4720,16 @@ module Aws::Glue
     Integration.add_member(:tags, Shapes::ShapeRef.new(shape: IntegrationTagsList, location_name: "Tags"))
     Integration.add_member(:status, Shapes::ShapeRef.new(shape: IntegrationStatus, required: true, location_name: "Status"))
     Integration.add_member(:create_time, Shapes::ShapeRef.new(shape: IntegrationTimestamp, required: true, location_name: "CreateTime"))
+    Integration.add_member(:integration_config, Shapes::ShapeRef.new(shape: IntegrationConfig, location_name: "IntegrationConfig"))
     Integration.add_member(:errors, Shapes::ShapeRef.new(shape: IntegrationErrorList, location_name: "Errors"))
     Integration.add_member(:data_filter, Shapes::ShapeRef.new(shape: String2048, location_name: "DataFilter"))
     Integration.struct_class = Types::Integration
 
     IntegrationAdditionalEncryptionContextMap.key = Shapes::ShapeRef.new(shape: IntegrationString)
     IntegrationAdditionalEncryptionContextMap.value = Shapes::ShapeRef.new(shape: IntegrationString)
+
+    IntegrationConfig.add_member(:refresh_interval, Shapes::ShapeRef.new(shape: String128, location_name: "RefreshInterval"))
+    IntegrationConfig.struct_class = Types::IntegrationConfig
 
     IntegrationConflictOperationFault.add_member(:message, Shapes::ShapeRef.new(shape: IntegrationErrorMessage, location_name: "Message"))
     IntegrationConflictOperationFault.struct_class = Types::IntegrationConflictOperationFault

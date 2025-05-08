@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.522.0 (2025-05-08)
+------------------
+
+* Feature - Launching the feature to support ENA queues offering flexibility to support multiple queues per Enhanced Network Interface (ENI)
+
 1.521.0 (2025-05-07)
 ------------------
 

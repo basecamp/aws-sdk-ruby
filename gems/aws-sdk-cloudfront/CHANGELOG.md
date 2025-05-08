@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.117.0 (2025-05-08)
+------------------
+
+* Feature - Doc-only update for CloudFront. These changes include customer-reported issues.
+
 1.116.0 (2025-05-01)
 ------------------
 

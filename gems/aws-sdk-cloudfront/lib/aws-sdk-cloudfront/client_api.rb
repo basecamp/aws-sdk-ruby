@@ -3899,9 +3899,9 @@ module Aws::CloudFront
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
         o.errors << Shapes::ShapeRef.new(shape: NoSuchDistribution)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: TooManyDistributionCNAMEs)
-        o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
       end)
 
       api.add_operation(:associate_distribution_tenant_web_acl, Seahorse::Model::Operation.new.tap do |o|
@@ -3916,8 +3916,8 @@ module Aws::CloudFront
         )
         o.output = Shapes::ShapeRef.new(shape: AssociateDistributionTenantWebACLResult)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
@@ -3934,8 +3934,8 @@ module Aws::CloudFront
         )
         o.output = Shapes::ShapeRef.new(shape: AssociateDistributionWebACLResult)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
@@ -4032,8 +4032,8 @@ module Aws::CloudFront
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
         o.errors << Shapes::ShapeRef.new(shape: EntityAlreadyExists)
         o.errors << Shapes::ShapeRef.new(shape: InvalidTagging)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: EntityLimitExceeded)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
 
       api.add_operation(:create_cache_policy, Seahorse::Model::Operation.new.tap do |o|
@@ -4061,8 +4061,8 @@ module Aws::CloudFront
         o.errors << Shapes::ShapeRef.new(shape: MissingBody)
         o.errors << Shapes::ShapeRef.new(shape: TooManyCloudFrontOriginAccessIdentities)
         o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: CloudFrontOriginAccessIdentityAlreadyExists)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
 
       api.add_operation(:create_connection_group, Seahorse::Model::Operation.new.tap do |o|
@@ -4076,12 +4076,12 @@ module Aws::CloudFront
           }
         )
         o.output = Shapes::ShapeRef.new(shape: CreateConnectionGroupResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: EntityAlreadyExists)
         o.errors << Shapes::ShapeRef.new(shape: InvalidTagging)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: EntityLimitExceeded)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
 
       api.add_operation(:create_continuous_deployment_policy, Seahorse::Model::Operation.new.tap do |o|
@@ -4184,14 +4184,14 @@ module Aws::CloudFront
           }
         )
         o.output = Shapes::ShapeRef.new(shape: CreateDistributionTenantResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: EntityAlreadyExists)
         o.errors << Shapes::ShapeRef.new(shape: CNAMEAlreadyExists)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidAssociation)
         o.errors << Shapes::ShapeRef.new(shape: InvalidTagging)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidAssociation)
         o.errors << Shapes::ShapeRef.new(shape: EntityLimitExceeded)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
 
       api.add_operation(:create_distribution_with_tags, Seahorse::Model::Operation.new.tap do |o|
@@ -4276,8 +4276,8 @@ module Aws::CloudFront
         o.input = Shapes::ShapeRef.new(shape: CreateFieldLevelEncryptionConfigRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateFieldLevelEncryptionConfigResult)
         o.errors << Shapes::ShapeRef.new(shape: QueryArgProfileEmpty)
-        o.errors << Shapes::ShapeRef.new(shape: TooManyFieldLevelEncryptionQueryArgProfiles)
         o.errors << Shapes::ShapeRef.new(shape: TooManyFieldLevelEncryptionContentTypeProfiles)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyFieldLevelEncryptionQueryArgProfiles)
         o.errors << Shapes::ShapeRef.new(shape: FieldLevelEncryptionConfigAlreadyExists)
         o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
         o.errors << Shapes::ShapeRef.new(shape: TooManyFieldLevelEncryptionConfigs)
@@ -4330,8 +4330,8 @@ module Aws::CloudFront
         o.errors << Shapes::ShapeRef.new(shape: TooManyInvalidationsInProgress)
         o.errors << Shapes::ShapeRef.new(shape: MissingBody)
         o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: BatchTooLarge)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
 
       api.add_operation(:create_invalidation_for_distribution_tenant, Seahorse::Model::Operation.new.tap do |o|
@@ -4340,13 +4340,13 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/distribution-tenant/{Id}/invalidation"
         o.input = Shapes::ShapeRef.new(shape: CreateInvalidationForDistributionTenantRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateInvalidationForDistributionTenantResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: TooManyInvalidationsInProgress)
         o.errors << Shapes::ShapeRef.new(shape: MissingBody)
         o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: BatchTooLarge)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
 
       api.add_operation(:create_key_group, Seahorse::Model::Operation.new.tap do |o|
@@ -4375,8 +4375,8 @@ module Aws::CloudFront
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
         o.errors << Shapes::ShapeRef.new(shape: EntityAlreadyExists)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: EntityLimitExceeded)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: EntitySizeLimitExceeded)
       end)
 
@@ -4519,11 +4519,11 @@ module Aws::CloudFront
         o.output = Shapes::ShapeRef.new(shape: CreateVpcOriginResult)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
-        o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
         o.errors << Shapes::ShapeRef.new(shape: EntityAlreadyExists)
+        o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
         o.errors << Shapes::ShapeRef.new(shape: InvalidTagging)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: EntityLimitExceeded)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
 
       api.add_operation(:delete_anycast_ip_list, Seahorse::Model::Operation.new.tap do |o|
@@ -4534,8 +4534,8 @@ module Aws::CloudFront
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
         o.errors << Shapes::ShapeRef.new(shape: CannotDeleteEntityWhileInUse)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: IllegalDelete)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
@@ -4564,9 +4564,9 @@ module Aws::CloudFront
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: CloudFrontOriginAccessIdentityInUse)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchCloudFrontOriginAccessIdentity)
-        o.errors << Shapes::ShapeRef.new(shape: CloudFrontOriginAccessIdentityInUse)
       end)
 
       api.add_operation(:delete_connection_group, Seahorse::Model::Operation.new.tap do |o|
@@ -4577,8 +4577,8 @@ module Aws::CloudFront
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
         o.errors << Shapes::ShapeRef.new(shape: CannotDeleteEntityWhileInUse)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotDisabled)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
@@ -4618,8 +4618,8 @@ module Aws::CloudFront
         o.input = Shapes::ShapeRef.new(shape: DeleteDistributionTenantRequest)
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotDisabled)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
@@ -4669,8 +4669,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/key-group/{Id}"
         o.input = Shapes::ShapeRef.new(shape: DeleteKeyGroupRequest)
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
-        o.errors << Shapes::ShapeRef.new(shape: ResourceInUse)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceInUse)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchResource)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
@@ -4683,8 +4683,8 @@ module Aws::CloudFront
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
         o.errors << Shapes::ShapeRef.new(shape: CannotDeleteEntityWhileInUse)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
@@ -4754,8 +4754,8 @@ module Aws::CloudFront
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
-        o.errors << Shapes::ShapeRef.new(shape: RealtimeLogConfigInUse)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchRealtimeLogConfig)
+        o.errors << Shapes::ShapeRef.new(shape: RealtimeLogConfigInUse)
       end)
 
       api.add_operation(:delete_response_headers_policy, Seahorse::Model::Operation.new.tap do |o|
@@ -4764,8 +4764,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/response-headers-policy/{Id}"
         o.input = Shapes::ShapeRef.new(shape: DeleteResponseHeadersPolicyRequest)
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
-        o.errors << Shapes::ShapeRef.new(shape: ResponseHeadersPolicyInUse)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
+        o.errors << Shapes::ShapeRef.new(shape: ResponseHeadersPolicyInUse)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
         o.errors << Shapes::ShapeRef.new(shape: IllegalDelete)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchResponseHeadersPolicy)
@@ -4780,8 +4780,8 @@ module Aws::CloudFront
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
-        o.errors << Shapes::ShapeRef.new(shape: StreamingDistributionNotDisabled)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchStreamingDistribution)
+        o.errors << Shapes::ShapeRef.new(shape: StreamingDistributionNotDisabled)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
 
@@ -4793,8 +4793,8 @@ module Aws::CloudFront
         o.output = Shapes::ShapeRef.new(shape: DeleteVpcOriginResult)
         o.errors << Shapes::ShapeRef.new(shape: CannotDeleteEntityWhileInUse)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: IllegalDelete)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
@@ -4817,8 +4817,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/key-value-store/{Name}"
         o.input = Shapes::ShapeRef.new(shape: DescribeKeyValueStoreRequest)
         o.output = Shapes::ShapeRef.new(shape: DescribeKeyValueStoreResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
@@ -4830,8 +4830,8 @@ module Aws::CloudFront
         o.input = Shapes::ShapeRef.new(shape: DisassociateDistributionTenantWebACLRequest)
         o.output = Shapes::ShapeRef.new(shape: DisassociateDistributionTenantWebACLResult)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
@@ -4843,8 +4843,8 @@ module Aws::CloudFront
         o.input = Shapes::ShapeRef.new(shape: DisassociateDistributionWebACLRequest)
         o.output = Shapes::ShapeRef.new(shape: DisassociateDistributionWebACLResult)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
@@ -4855,8 +4855,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/anycast-ip-list/{Id}"
         o.input = Shapes::ShapeRef.new(shape: GetAnycastIpListRequest)
         o.output = Shapes::ShapeRef.new(shape: GetAnycastIpListResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
@@ -4907,8 +4907,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/connection-group/{Identifier}"
         o.input = Shapes::ShapeRef.new(shape: GetConnectionGroupRequest)
         o.output = Shapes::ShapeRef.new(shape: GetConnectionGroupResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
       end)
 
       api.add_operation(:get_connection_group_by_routing_endpoint, Seahorse::Model::Operation.new.tap do |o|
@@ -4917,8 +4917,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/connection-group"
         o.input = Shapes::ShapeRef.new(shape: GetConnectionGroupByRoutingEndpointRequest)
         o.output = Shapes::ShapeRef.new(shape: GetConnectionGroupByRoutingEndpointResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
       end)
 
       api.add_operation(:get_continuous_deployment_policy, Seahorse::Model::Operation.new.tap do |o|
@@ -4967,8 +4967,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/distribution-tenant/{Identifier}"
         o.input = Shapes::ShapeRef.new(shape: GetDistributionTenantRequest)
         o.output = Shapes::ShapeRef.new(shape: GetDistributionTenantResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
       end)
 
       api.add_operation(:get_distribution_tenant_by_domain, Seahorse::Model::Operation.new.tap do |o|
@@ -4977,8 +4977,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/distribution-tenant"
         o.input = Shapes::ShapeRef.new(shape: GetDistributionTenantByDomainRequest)
         o.output = Shapes::ShapeRef.new(shape: GetDistributionTenantByDomainResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
       end)
 
       api.add_operation(:get_field_level_encryption, Seahorse::Model::Operation.new.tap do |o|
@@ -5048,8 +5048,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/distribution-tenant/{DistributionTenantId}/invalidation/{Id}"
         o.input = Shapes::ShapeRef.new(shape: GetInvalidationForDistributionTenantRequest)
         o.output = Shapes::ShapeRef.new(shape: GetInvalidationForDistributionTenantResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchInvalidation)
       end)
 
@@ -5077,8 +5077,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/managed-certificate/{Identifier}"
         o.input = Shapes::ShapeRef.new(shape: GetManagedCertificateDetailsRequest)
         o.output = Shapes::ShapeRef.new(shape: GetManagedCertificateDetailsResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
       end)
 
       api.add_operation(:get_monitoring_subscription, Seahorse::Model::Operation.new.tap do |o|
@@ -5215,8 +5215,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/vpc-origin/{Id}"
         o.input = Shapes::ShapeRef.new(shape: GetVpcOriginRequest)
         o.output = Shapes::ShapeRef.new(shape: GetVpcOriginResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
@@ -5227,8 +5227,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/anycast-ip-list"
         o.input = Shapes::ShapeRef.new(shape: ListAnycastIpListsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListAnycastIpListsResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
@@ -5280,8 +5280,8 @@ module Aws::CloudFront
           }
         )
         o.output = Shapes::ShapeRef.new(shape: ListConnectionGroupsResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_items",
@@ -5313,8 +5313,8 @@ module Aws::CloudFront
           }
         )
         o.output = Shapes::ShapeRef.new(shape: ListDistributionTenantsResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_items",
@@ -5335,8 +5335,8 @@ module Aws::CloudFront
           }
         )
         o.output = Shapes::ShapeRef.new(shape: ListDistributionTenantsByCustomizationResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_items",
@@ -5367,8 +5367,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/distributionsByAnycastIpListId/{AnycastIpListId}"
         o.input = Shapes::ShapeRef.new(shape: ListDistributionsByAnycastIpListIdRequest)
         o.output = Shapes::ShapeRef.new(shape: ListDistributionsByAnycastIpListIdResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
@@ -5452,8 +5452,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/distributionsByVpcOriginId/{VpcOriginId}"
         o.input = Shapes::ShapeRef.new(shape: ListDistributionsByVpcOriginIdRequest)
         o.output = Shapes::ShapeRef.new(shape: ListDistributionsByVpcOriginIdResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
@@ -5479,8 +5479,8 @@ module Aws::CloudFront
           }
         )
         o.output = Shapes::ShapeRef.new(shape: ListDomainConflictsResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_items",
@@ -5541,8 +5541,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/distribution-tenant/{Id}/invalidation"
         o.input = Shapes::ShapeRef.new(shape: ListInvalidationsForDistributionTenantRequest)
         o.output = Shapes::ShapeRef.new(shape: ListInvalidationsForDistributionTenantResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_items",
@@ -5668,8 +5668,8 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/vpc-origin"
         o.input = Shapes::ShapeRef.new(shape: ListVpcOriginsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListVpcOriginsResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
@@ -5742,8 +5742,8 @@ module Aws::CloudFront
         o.errors << Shapes::ShapeRef.new(shape: CachePolicyAlreadyExists)
         o.errors << Shapes::ShapeRef.new(shape: TooManyCookiesInCachePolicy)
         o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: TooManyQueryStringsInCachePolicy)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
@@ -5758,8 +5758,8 @@ module Aws::CloudFront
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
         o.errors << Shapes::ShapeRef.new(shape: MissingBody)
         o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchCloudFrontOriginAccessIdentity)
       end)
@@ -5775,13 +5775,13 @@ module Aws::CloudFront
           }
         )
         o.output = Shapes::ShapeRef.new(shape: UpdateConnectionGroupResult)
-        o.errors << Shapes::ShapeRef.new(shape: ResourceInUse)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceInUse)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: EntityAlreadyExists)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: EntityLimitExceeded)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
 
@@ -5887,13 +5887,13 @@ module Aws::CloudFront
         )
         o.output = Shapes::ShapeRef.new(shape: UpdateDistributionTenantResult)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: EntityAlreadyExists)
         o.errors << Shapes::ShapeRef.new(shape: CNAMEAlreadyExists)
         o.errors << Shapes::ShapeRef.new(shape: InvalidAssociation)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: EntityLimitExceeded)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
 
@@ -5924,9 +5924,9 @@ module Aws::CloudFront
         o.errors << Shapes::ShapeRef.new(shape: InvalidTTLOrder)
         o.errors << Shapes::ShapeRef.new(shape: IllegalFieldLevelEncryptionConfigAssociationWithCacheBehavior)
         o.errors << Shapes::ShapeRef.new(shape: InvalidOriginKeepaliveTimeout)
+        o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidOriginReadTimeout)
-        o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
         o.errors << Shapes::ShapeRef.new(shape: InvalidOriginAccessControl)
         o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: InvalidHeadersForS3Origin)
@@ -5945,21 +5945,21 @@ module Aws::CloudFront
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
         o.errors << Shapes::ShapeRef.new(shape: TooManyDistributionsAssociatedToOriginRequestPolicy)
         o.errors << Shapes::ShapeRef.new(shape: TooManyQueryStringParameters)
-        o.errors << Shapes::ShapeRef.new(shape: RealtimeLogConfigOwnerMismatch)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
+        o.errors << Shapes::ShapeRef.new(shape: RealtimeLogConfigOwnerMismatch)
         o.errors << Shapes::ShapeRef.new(shape: MissingBody)
         o.errors << Shapes::ShapeRef.new(shape: TooManyHeadersInForwardedValues)
         o.errors << Shapes::ShapeRef.new(shape: InvalidLambdaFunctionAssociation)
         o.errors << Shapes::ShapeRef.new(shape: CNAMEAlreadyExists)
         o.errors << Shapes::ShapeRef.new(shape: TooManyCertificates)
-        o.errors << Shapes::ShapeRef.new(shape: TrustedKeyGroupDoesNotExist)
         o.errors << Shapes::ShapeRef.new(shape: TooManyDistributionsAssociatedToResponseHeadersPolicy)
+        o.errors << Shapes::ShapeRef.new(shape: TrustedKeyGroupDoesNotExist)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchResponseHeadersPolicy)
-        o.errors << Shapes::ShapeRef.new(shape: NoSuchRealtimeLogConfig)
         o.errors << Shapes::ShapeRef.new(shape: InvalidResponseCode)
+        o.errors << Shapes::ShapeRef.new(shape: NoSuchRealtimeLogConfig)
         o.errors << Shapes::ShapeRef.new(shape: InvalidGeoRestrictionParameter)
-        o.errors << Shapes::ShapeRef.new(shape: TooManyOrigins)
         o.errors << Shapes::ShapeRef.new(shape: InvalidViewerCertificate)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyOrigins)
         o.errors << Shapes::ShapeRef.new(shape: InvalidFunctionAssociation)
         o.errors << Shapes::ShapeRef.new(shape: TooManyDistributionsWithLambdaAssociations)
         o.errors << Shapes::ShapeRef.new(shape: TooManyDistributionsAssociatedToKeyGroup)
@@ -5979,10 +5979,10 @@ module Aws::CloudFront
         )
         o.output = Shapes::ShapeRef.new(shape: UpdateDomainAssociationResult)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
 
@@ -5992,16 +5992,16 @@ module Aws::CloudFront
         o.http_request_uri = "/2020-05-31/field-level-encryption/{Id}/config"
         o.input = Shapes::ShapeRef.new(shape: UpdateFieldLevelEncryptionConfigRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateFieldLevelEncryptionConfigResult)
-        o.errors << Shapes::ShapeRef.new(shape: QueryArgProfileEmpty)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
+        o.errors << Shapes::ShapeRef.new(shape: QueryArgProfileEmpty)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
-        o.errors << Shapes::ShapeRef.new(shape: TooManyFieldLevelEncryptionQueryArgProfiles)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchFieldLevelEncryptionConfig)
         o.errors << Shapes::ShapeRef.new(shape: TooManyFieldLevelEncryptionContentTypeProfiles)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyFieldLevelEncryptionQueryArgProfiles)
         o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchFieldLevelEncryptionProfile)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
 
@@ -6020,8 +6020,8 @@ module Aws::CloudFront
         o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchFieldLevelEncryptionProfile)
         o.errors << Shapes::ShapeRef.new(shape: TooManyFieldLevelEncryptionEncryptionEntities)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
 
@@ -6070,8 +6070,8 @@ module Aws::CloudFront
         )
         o.output = Shapes::ShapeRef.new(shape: UpdateKeyValueStoreResult)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
@@ -6084,11 +6084,11 @@ module Aws::CloudFront
         o.input = Shapes::ShapeRef.new(shape: UpdateOriginAccessControlRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateOriginAccessControlResult)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: OriginAccessControlAlreadyExists)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: OriginAccessControlAlreadyExists)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchOriginAccessControl)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
 
@@ -6106,8 +6106,8 @@ module Aws::CloudFront
         o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
         o.errors << Shapes::ShapeRef.new(shape: OriginRequestPolicyAlreadyExists)
         o.errors << Shapes::ShapeRef.new(shape: TooManyQueryStringsInOriginRequestPolicy)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
 
@@ -6121,8 +6121,8 @@ module Aws::CloudFront
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchPublicKey)
         o.errors << Shapes::ShapeRef.new(shape: CannotChangeImmutablePublicKeyFields)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
 
@@ -6153,11 +6153,11 @@ module Aws::CloudFront
         o.errors << Shapes::ShapeRef.new(shape: TooManyCustomHeadersInResponseHeadersPolicy)
         o.errors << Shapes::ShapeRef.new(shape: ResponseHeadersPolicyAlreadyExists)
         o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
-        o.errors << Shapes::ShapeRef.new(shape: TooLongCSPInResponseHeadersPolicy)
         o.errors << Shapes::ShapeRef.new(shape: NoSuchResponseHeadersPolicy)
+        o.errors << Shapes::ShapeRef.new(shape: TooLongCSPInResponseHeadersPolicy)
+        o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: TooManyRemoveHeadersInResponseHeadersPolicy)
-        o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
 
@@ -6190,15 +6190,15 @@ module Aws::CloudFront
         o.input = Shapes::ShapeRef.new(shape: UpdateVpcOriginRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateVpcOriginResult)
         o.errors << Shapes::ShapeRef.new(shape: PreconditionFailed)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperation)
-        o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
         o.errors << Shapes::ShapeRef.new(shape: EntityAlreadyExists)
+        o.errors << Shapes::ShapeRef.new(shape: InconsistentQuantities)
         o.errors << Shapes::ShapeRef.new(shape: CannotUpdateEntityWhileInUse)
-        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: EntityLimitExceeded)
         o.errors << Shapes::ShapeRef.new(shape: IllegalUpdate)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
         o.errors << Shapes::ShapeRef.new(shape: InvalidIfMatchVersion)
       end)
 
@@ -6213,8 +6213,8 @@ module Aws::CloudFront
           }
         )
         o.output = Shapes::ShapeRef.new(shape: VerifyDnsConfigurationResult)
-        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: AccessDenied)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFound)
         o.errors << Shapes::ShapeRef.new(shape: InvalidArgument)
       end)
     end

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.215.0 (2025-05-08)
+------------------
+
+* Feature - This new release supports customizable RefreshInterval for all Saas ZETL integrations from 15 minutes to 6 days.
+
 1.214.0 (2025-05-01)
 ------------------
 
