@@ -102,6 +102,7 @@ module Aws::Synthetics
     MaxFifteenMinutesInSeconds = Shapes::IntegerShape.new(name: 'MaxFifteenMinutesInSeconds')
     MaxGroupResults = Shapes::IntegerShape.new(name: 'MaxGroupResults')
     MaxOneYearInSeconds = Shapes::IntegerShape.new(name: 'MaxOneYearInSeconds')
+    MaxRetries = Shapes::IntegerShape.new(name: 'MaxRetries')
     MaxSize100 = Shapes::IntegerShape.new(name: 'MaxSize100')
     MaxSize1024 = Shapes::IntegerShape.new(name: 'MaxSize1024')
     MaxSize3008 = Shapes::IntegerShape.new(name: 'MaxSize3008')
@@ -114,6 +115,9 @@ module Aws::Synthetics
     ResourceList = Shapes::ListShape.new(name: 'ResourceList')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     ResourceToTag = Shapes::StringShape.new(name: 'ResourceToTag')
+    RetryAttempt = Shapes::IntegerShape.new(name: 'RetryAttempt')
+    RetryConfigInput = Shapes::StructureShape.new(name: 'RetryConfigInput')
+    RetryConfigOutput = Shapes::StructureShape.new(name: 'RetryConfigOutput')
     RoleArn = Shapes::StringShape.new(name: 'RoleArn')
     RunType = Shapes::StringShape.new(name: 'RunType')
     RuntimeVersion = Shapes::StructureShape.new(name: 'RuntimeVersion')
@@ -224,6 +228,8 @@ module Aws::Synthetics
     CanaryLastRun.struct_class = Types::CanaryLastRun
 
     CanaryRun.add_member(:id, Shapes::ShapeRef.new(shape: UUID, location_name: "Id"))
+    CanaryRun.add_member(:scheduled_run_id, Shapes::ShapeRef.new(shape: UUID, location_name: "ScheduledRunId"))
+    CanaryRun.add_member(:retry_attempt, Shapes::ShapeRef.new(shape: RetryAttempt, location_name: "RetryAttempt"))
     CanaryRun.add_member(:name, Shapes::ShapeRef.new(shape: CanaryName, location_name: "Name"))
     CanaryRun.add_member(:status, Shapes::ShapeRef.new(shape: CanaryRunStatus, location_name: "Status"))
     CanaryRun.add_member(:timeline, Shapes::ShapeRef.new(shape: CanaryRunTimeline, location_name: "Timeline"))
@@ -249,16 +255,19 @@ module Aws::Synthetics
 
     CanaryRunTimeline.add_member(:started, Shapes::ShapeRef.new(shape: Timestamp, location_name: "Started"))
     CanaryRunTimeline.add_member(:completed, Shapes::ShapeRef.new(shape: Timestamp, location_name: "Completed"))
+    CanaryRunTimeline.add_member(:metric_timestamp_for_run_and_retries, Shapes::ShapeRef.new(shape: Timestamp, location_name: "MetricTimestampForRunAndRetries"))
     CanaryRunTimeline.struct_class = Types::CanaryRunTimeline
 
     CanaryRuns.member = Shapes::ShapeRef.new(shape: CanaryRun)
 
     CanaryScheduleInput.add_member(:expression, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Expression"))
     CanaryScheduleInput.add_member(:duration_in_seconds, Shapes::ShapeRef.new(shape: MaxOneYearInSeconds, location_name: "DurationInSeconds"))
+    CanaryScheduleInput.add_member(:retry_config, Shapes::ShapeRef.new(shape: RetryConfigInput, location_name: "RetryConfig"))
     CanaryScheduleInput.struct_class = Types::CanaryScheduleInput
 
     CanaryScheduleOutput.add_member(:expression, Shapes::ShapeRef.new(shape: String, location_name: "Expression"))
     CanaryScheduleOutput.add_member(:duration_in_seconds, Shapes::ShapeRef.new(shape: MaxOneYearInSeconds, location_name: "DurationInSeconds"))
+    CanaryScheduleOutput.add_member(:retry_config, Shapes::ShapeRef.new(shape: RetryConfigOutput, location_name: "RetryConfig"))
     CanaryScheduleOutput.struct_class = Types::CanaryScheduleOutput
 
     CanaryStatus.add_member(:state, Shapes::ShapeRef.new(shape: CanaryState, location_name: "State"))
@@ -442,6 +451,12 @@ module Aws::Synthetics
 
     ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     ResourceNotFoundException.struct_class = Types::ResourceNotFoundException
+
+    RetryConfigInput.add_member(:max_retries, Shapes::ShapeRef.new(shape: MaxRetries, required: true, location_name: "MaxRetries"))
+    RetryConfigInput.struct_class = Types::RetryConfigInput
+
+    RetryConfigOutput.add_member(:max_retries, Shapes::ShapeRef.new(shape: MaxRetries, location_name: "MaxRetries"))
+    RetryConfigOutput.struct_class = Types::RetryConfigOutput
 
     RuntimeVersion.add_member(:version_name, Shapes::ShapeRef.new(shape: String, location_name: "VersionName"))
     RuntimeVersion.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))

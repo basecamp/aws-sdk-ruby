@@ -94,6 +94,8 @@ module Aws::Synthetics
 
     class CanaryRun
       attr_accessor id: ::String
+      attr_accessor scheduled_run_id: ::String
+      attr_accessor retry_attempt: ::Integer
       attr_accessor name: ::String
       attr_accessor status: Types::CanaryRunStatus
       attr_accessor timeline: Types::CanaryRunTimeline
@@ -127,18 +129,21 @@ module Aws::Synthetics
     class CanaryRunTimeline
       attr_accessor started: ::Time
       attr_accessor completed: ::Time
+      attr_accessor metric_timestamp_for_run_and_retries: ::Time
       SENSITIVE: []
     end
 
     class CanaryScheduleInput
       attr_accessor expression: ::String
       attr_accessor duration_in_seconds: ::Integer
+      attr_accessor retry_config: Types::RetryConfigInput
       SENSITIVE: []
     end
 
     class CanaryScheduleOutput
       attr_accessor expression: ::String
       attr_accessor duration_in_seconds: ::Integer
+      attr_accessor retry_config: Types::RetryConfigOutput
       SENSITIVE: []
     end
 
@@ -389,6 +394,16 @@ module Aws::Synthetics
 
     class ResourceNotFoundException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class RetryConfigInput
+      attr_accessor max_retries: ::Integer
+      SENSITIVE: []
+    end
+
+    class RetryConfigOutput
+      attr_accessor max_retries: ::Integer
       SENSITIVE: []
     end
 

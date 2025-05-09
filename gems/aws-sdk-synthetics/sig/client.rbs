@@ -105,7 +105,10 @@ module Aws
                            execution_role_arn: ::String,
                            schedule: {
                              expression: ::String,
-                             duration_in_seconds: ::Integer?
+                             duration_in_seconds: ::Integer?,
+                             retry_config: {
+                               max_retries: ::Integer
+                             }?
                            },
                            ?run_config: {
                              timeout_in_seconds: ::Integer?,
@@ -399,7 +402,10 @@ module Aws
                            ?runtime_version: ::String,
                            ?schedule: {
                              expression: ::String,
-                             duration_in_seconds: ::Integer?
+                             duration_in_seconds: ::Integer?,
+                             retry_config: {
+                               max_retries: ::Integer
+                             }?
                            },
                            ?run_config: {
                              timeout_in_seconds: ::Integer?,

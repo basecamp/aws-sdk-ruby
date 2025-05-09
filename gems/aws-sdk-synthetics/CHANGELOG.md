@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.64.0 (2025-05-09)
+------------------
+
+* Feature - Add support to retry a canary automatically after schedule run failures. Users can enable this feature by configuring the RetryConfig field when calling the CreateCanary or UpdateCanary API. Also includes changes in GetCanary and GetCanaryRuns to support retrieving retry configurations.
+
 1.63.0 (2025-05-07)
 ------------------
 

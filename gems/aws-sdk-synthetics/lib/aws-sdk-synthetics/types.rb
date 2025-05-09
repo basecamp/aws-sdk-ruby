@@ -431,6 +431,14 @@ module Aws::Synthetics
     #   A unique ID that identifies this canary run.
     #   @return [String]
     #
+    # @!attribute [rw] scheduled_run_id
+    #   The ID of the scheduled canary run.
+    #   @return [String]
+    #
+    # @!attribute [rw] retry_attempt
+    #   The count in number of the retry attempt.
+    #   @return [Integer]
+    #
     # @!attribute [rw] name
     #   The name of the canary.
     #   @return [String]
@@ -456,6 +464,8 @@ module Aws::Synthetics
     #
     class CanaryRun < Struct.new(
       :id,
+      :scheduled_run_id,
+      :retry_attempt,
       :name,
       :status,
       :timeline,
@@ -593,11 +603,17 @@ module Aws::Synthetics
     #   The end time of the run.
     #   @return [Time]
     #
+    # @!attribute [rw] metric_timestamp_for_run_and_retries
+    #   The time at which the metrics will be generated for this run or
+    #   retries.
+    #   @return [Time]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/CanaryRunTimeline AWS API Documentation
     #
     class CanaryRunTimeline < Struct.new(
       :started,
-      :completed)
+      :completed,
+      :metric_timestamp_for_run_and_retries)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -637,11 +653,16 @@ module Aws::Synthetics
     #   this field, the default of 0 is used.
     #   @return [Integer]
     #
+    # @!attribute [rw] retry_config
+    #   A structure that contains the retry configuration for a canary
+    #   @return [Types::RetryConfigInput]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/CanaryScheduleInput AWS API Documentation
     #
     class CanaryScheduleInput < Struct.new(
       :expression,
-      :duration_in_seconds)
+      :duration_in_seconds,
+      :retry_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -679,11 +700,16 @@ module Aws::Synthetics
     #   schedule in the `Expression` value.
     #   @return [Integer]
     #
+    # @!attribute [rw] retry_config
+    #   A structure that contains the retry configuration for a canary
+    #   @return [Types::RetryConfigOutput]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/CanaryScheduleOutput AWS API Documentation
     #
     class CanaryScheduleOutput < Struct.new(
       :expression,
-      :duration_in_seconds)
+      :duration_in_seconds,
+      :retry_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -695,13 +721,13 @@ module Aws::Synthetics
     #   @return [String]
     #
     # @!attribute [rw] state_reason
-    #   If the canary has insufficient permissions to run, this field
-    #   provides more details.
+    #   If the canary creation or update failed, this field provides details
+    #   on the failure.
     #   @return [String]
     #
     # @!attribute [rw] state_reason_code
-    #   If the canary cannot run or has failed, this field displays the
-    #   reason.
+    #   If the canary creation or update failed, this field displays the
+    #   reason code.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/CanaryStatus AWS API Documentation
@@ -1281,6 +1307,12 @@ module Aws::Synthetics
     #   A token that indicates that there is more data available. You can
     #   use this token in a subsequent `GetCanaryRuns` operation to retrieve
     #   the next set of results.
+    #
+    #   <note markdown="1"> When auto retry is enabled for the canary, the first subsequent
+    #   retry is suffixed with *1 indicating its the first retry and the
+    #   next subsequent try is suffixed with *2.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] max_results
@@ -1654,6 +1686,56 @@ module Aws::Synthetics
     #
     class ResourceNotFoundException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information about the canary's retry
+    # configuration.
+    #
+    # <note markdown="1"> The default account level concurrent execution limit from Lambda is
+    # 1000. When you have more than 1000 canaries, it's possible there are
+    # more than 1000 Lambda invocations due to retries and the console might
+    # hang. For more information on the Lambda execution limit, see
+    # [Understanding Lambda function scaling][1].
+    #
+    #  </note>
+    #
+    # <note markdown="1"> For canary with `MaxRetries = 2`, you need to set the
+    # `CanaryRunConfigInput.TimeoutInSeconds` to less than 600 seconds to
+    # avoid validation errors.
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html#:~:text=As%20your%20functions%20receive%20more,functions%20in%20an%20AWS%20Region
+    #
+    # @!attribute [rw] max_retries
+    #   The maximum number of retries. The value must be less than or equal
+    #   to 2.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/RetryConfigInput AWS API Documentation
+    #
+    class RetryConfigInput < Struct.new(
+      :max_retries)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information about the canary's retry
+    # configuration.
+    #
+    # @!attribute [rw] max_retries
+    #   The maximum number of retries. The value must be less than or equal
+    #   to 2.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/RetryConfigOutput AWS API Documentation
+    #
+    class RetryConfigOutput < Struct.new(
+      :max_retries)
       SENSITIVE = []
       include Aws::Structure
     end

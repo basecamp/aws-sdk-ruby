@@ -1145,7 +1145,7 @@ module Aws::Athena
 
     StartCalculationExecutionRequest.add_member(:session_id, Shapes::ShapeRef.new(shape: SessionId, required: true, location_name: "SessionId"))
     StartCalculationExecutionRequest.add_member(:description, Shapes::ShapeRef.new(shape: DescriptionString, location_name: "Description"))
-    StartCalculationExecutionRequest.add_member(:calculation_configuration, Shapes::ShapeRef.new(shape: CalculationConfiguration, deprecated: true, location_name: "CalculationConfiguration", metadata: {"deprecatedMessage" => "Kepler Post GA Tasks : https://sim.amazon.com/issues/ATHENA-39828"}))
+    StartCalculationExecutionRequest.add_member(:calculation_configuration, Shapes::ShapeRef.new(shape: CalculationConfiguration, deprecated: true, location_name: "CalculationConfiguration", metadata: {"deprecatedMessage" => "Structure is deprecated."}))
     StartCalculationExecutionRequest.add_member(:code_block, Shapes::ShapeRef.new(shape: CodeBlock, location_name: "CodeBlock"))
     StartCalculationExecutionRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "ClientRequestToken"))
     StartCalculationExecutionRequest.struct_class = Types::StartCalculationExecutionRequest

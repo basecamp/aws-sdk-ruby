@@ -688,6 +688,9 @@ module Aws::Synthetics
     #     schedule: { # required
     #       expression: "String", # required
     #       duration_in_seconds: 1,
+    #       retry_config: {
+    #         max_retries: 1, # required
+    #       },
     #     },
     #     run_config: {
     #       timeout_in_seconds: 1,
@@ -727,6 +730,7 @@ module Aws::Synthetics
     #   resp.canary.execution_role_arn #=> String
     #   resp.canary.schedule.expression #=> String
     #   resp.canary.schedule.duration_in_seconds #=> Integer
+    #   resp.canary.schedule.retry_config.max_retries #=> Integer
     #   resp.canary.run_config.timeout_in_seconds #=> Integer
     #   resp.canary.run_config.memory_in_mb #=> Integer
     #   resp.canary.run_config.active_tracing #=> Boolean
@@ -1011,6 +1015,7 @@ module Aws::Synthetics
     #   resp.canaries[0].execution_role_arn #=> String
     #   resp.canaries[0].schedule.expression #=> String
     #   resp.canaries[0].schedule.duration_in_seconds #=> Integer
+    #   resp.canaries[0].schedule.retry_config.max_retries #=> Integer
     #   resp.canaries[0].run_config.timeout_in_seconds #=> Integer
     #   resp.canaries[0].run_config.memory_in_mb #=> Integer
     #   resp.canaries[0].run_config.active_tracing #=> Boolean
@@ -1122,12 +1127,15 @@ module Aws::Synthetics
     #   resp.canaries_last_run #=> Array
     #   resp.canaries_last_run[0].canary_name #=> String
     #   resp.canaries_last_run[0].last_run.id #=> String
+    #   resp.canaries_last_run[0].last_run.scheduled_run_id #=> String
+    #   resp.canaries_last_run[0].last_run.retry_attempt #=> Integer
     #   resp.canaries_last_run[0].last_run.name #=> String
     #   resp.canaries_last_run[0].last_run.status.state #=> String, one of "RUNNING", "PASSED", "FAILED"
     #   resp.canaries_last_run[0].last_run.status.state_reason #=> String
     #   resp.canaries_last_run[0].last_run.status.state_reason_code #=> String, one of "CANARY_FAILURE", "EXECUTION_FAILURE"
     #   resp.canaries_last_run[0].last_run.timeline.started #=> Time
     #   resp.canaries_last_run[0].last_run.timeline.completed #=> Time
+    #   resp.canaries_last_run[0].last_run.timeline.metric_timestamp_for_run_and_retries #=> Time
     #   resp.canaries_last_run[0].last_run.artifact_s3_location #=> String
     #   resp.canaries_last_run[0].last_run.dry_run_config.dry_run_id #=> String
     #   resp.next_token #=> String
@@ -1254,6 +1262,7 @@ module Aws::Synthetics
     #   resp.canary.execution_role_arn #=> String
     #   resp.canary.schedule.expression #=> String
     #   resp.canary.schedule.duration_in_seconds #=> Integer
+    #   resp.canary.schedule.retry_config.max_retries #=> Integer
     #   resp.canary.run_config.timeout_in_seconds #=> Integer
     #   resp.canary.run_config.memory_in_mb #=> Integer
     #   resp.canary.run_config.active_tracing #=> Boolean
@@ -1307,6 +1316,12 @@ module Aws::Synthetics
     #   this token in a subsequent `GetCanaryRuns` operation to retrieve the
     #   next set of results.
     #
+    #   <note markdown="1"> When auto retry is enabled for the canary, the first subsequent retry
+    #   is suffixed with *1 indicating its the first retry and the next
+    #   subsequent try is suffixed with *2.
+    #
+    #    </note>
+    #
     # @option params [Integer] :max_results
     #   Specify this parameter to limit how many runs are returned each time
     #   you use the `GetCanaryRuns` operation. If you omit this parameter, the
@@ -1350,12 +1365,15 @@ module Aws::Synthetics
     #
     #   resp.canary_runs #=> Array
     #   resp.canary_runs[0].id #=> String
+    #   resp.canary_runs[0].scheduled_run_id #=> String
+    #   resp.canary_runs[0].retry_attempt #=> Integer
     #   resp.canary_runs[0].name #=> String
     #   resp.canary_runs[0].status.state #=> String, one of "RUNNING", "PASSED", "FAILED"
     #   resp.canary_runs[0].status.state_reason #=> String
     #   resp.canary_runs[0].status.state_reason_code #=> String, one of "CANARY_FAILURE", "EXECUTION_FAILURE"
     #   resp.canary_runs[0].timeline.started #=> Time
     #   resp.canary_runs[0].timeline.completed #=> Time
+    #   resp.canary_runs[0].timeline.metric_timestamp_for_run_and_retries #=> Time
     #   resp.canary_runs[0].artifact_s3_location #=> String
     #   resp.canary_runs[0].dry_run_config.dry_run_id #=> String
     #   resp.next_token #=> String
@@ -2090,6 +2108,9 @@ module Aws::Synthetics
     #     schedule: {
     #       expression: "String", # required
     #       duration_in_seconds: 1,
+    #       retry_config: {
+    #         max_retries: 1, # required
+    #       },
     #     },
     #     run_config: {
     #       timeout_in_seconds: 1,
@@ -2153,7 +2174,7 @@ module Aws::Synthetics
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-synthetics'
-      context[:gem_version] = '1.63.0'
+      context[:gem_version] = '1.64.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

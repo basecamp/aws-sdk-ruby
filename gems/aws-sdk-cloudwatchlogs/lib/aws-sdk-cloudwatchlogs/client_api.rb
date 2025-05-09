@@ -452,6 +452,7 @@ module Aws::CloudWatchLogs
     Source = Shapes::StringShape.new(name: 'Source')
     SourceTimezone = Shapes::StringShape.new(name: 'SourceTimezone')
     SplitString = Shapes::StructureShape.new(name: 'SplitString')
+    SplitStringDelimiter = Shapes::StringShape.new(name: 'SplitStringDelimiter')
     SplitStringEntries = Shapes::ListShape.new(name: 'SplitStringEntries')
     SplitStringEntry = Shapes::StructureShape.new(name: 'SplitStringEntry')
     StandardUnit = Shapes::StringShape.new(name: 'StandardUnit')
@@ -1764,7 +1765,7 @@ module Aws::CloudWatchLogs
     SplitStringEntries.member = Shapes::ShapeRef.new(shape: SplitStringEntry)
 
     SplitStringEntry.add_member(:source, Shapes::ShapeRef.new(shape: Source, required: true, location_name: "source"))
-    SplitStringEntry.add_member(:delimiter, Shapes::ShapeRef.new(shape: Delimiter, required: true, location_name: "delimiter"))
+    SplitStringEntry.add_member(:delimiter, Shapes::ShapeRef.new(shape: SplitStringDelimiter, required: true, location_name: "delimiter"))
     SplitStringEntry.struct_class = Types::SplitStringEntry
 
     StartLiveTailLogGroupIdentifiers.member = Shapes::ShapeRef.new(shape: LogGroupIdentifier)
