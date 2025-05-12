@@ -256,6 +256,9 @@ module Aws::Deadline
     GetTaskResponse = Shapes::StructureShape.new(name: 'GetTaskResponse')
     GetWorkerRequest = Shapes::StructureShape.new(name: 'GetWorkerRequest')
     GetWorkerResponse = Shapes::StructureShape.new(name: 'GetWorkerResponse')
+    HostConfiguration = Shapes::StructureShape.new(name: 'HostConfiguration')
+    HostConfigurationScript = Shapes::StringShape.new(name: 'HostConfigurationScript')
+    HostConfigurationScriptTimeoutSeconds = Shapes::IntegerShape.new(name: 'HostConfigurationScriptTimeoutSeconds')
     HostName = Shapes::StringShape.new(name: 'HostName')
     HostPropertiesRequest = Shapes::StructureShape.new(name: 'HostPropertiesRequest')
     HostPropertiesResponse = Shapes::StructureShape.new(name: 'HostPropertiesResponse')
@@ -916,6 +919,7 @@ module Aws::Deadline
     CreateFleetRequest.add_member(:max_worker_count, Shapes::ShapeRef.new(shape: MinZeroMaxInteger, required: true, location_name: "maxWorkerCount"))
     CreateFleetRequest.add_member(:configuration, Shapes::ShapeRef.new(shape: FleetConfiguration, required: true, location_name: "configuration"))
     CreateFleetRequest.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
+    CreateFleetRequest.add_member(:host_configuration, Shapes::ShapeRef.new(shape: HostConfiguration, location_name: "hostConfiguration"))
     CreateFleetRequest.struct_class = Types::CreateFleetRequest
 
     CreateFleetResponse.add_member(:fleet_id, Shapes::ShapeRef.new(shape: FleetId, required: true, location_name: "fleetId"))
@@ -1351,6 +1355,7 @@ module Aws::Deadline
     GetFleetResponse.add_member(:min_worker_count, Shapes::ShapeRef.new(shape: MinZeroMaxInteger, required: true, location_name: "minWorkerCount"))
     GetFleetResponse.add_member(:max_worker_count, Shapes::ShapeRef.new(shape: MinZeroMaxInteger, required: true, location_name: "maxWorkerCount"))
     GetFleetResponse.add_member(:configuration, Shapes::ShapeRef.new(shape: FleetConfiguration, required: true, location_name: "configuration"))
+    GetFleetResponse.add_member(:host_configuration, Shapes::ShapeRef.new(shape: HostConfiguration, location_name: "hostConfiguration"))
     GetFleetResponse.add_member(:capabilities, Shapes::ShapeRef.new(shape: FleetCapabilities, location_name: "capabilities"))
     GetFleetResponse.add_member(:role_arn, Shapes::ShapeRef.new(shape: IamRoleArn, required: true, location_name: "roleArn"))
     GetFleetResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: CreatedAt, required: true, location_name: "createdAt"))
@@ -1653,6 +1658,10 @@ module Aws::Deadline
     GetWorkerResponse.add_member(:updated_at, Shapes::ShapeRef.new(shape: UpdatedAt, location_name: "updatedAt"))
     GetWorkerResponse.add_member(:updated_by, Shapes::ShapeRef.new(shape: UpdatedBy, location_name: "updatedBy"))
     GetWorkerResponse.struct_class = Types::GetWorkerResponse
+
+    HostConfiguration.add_member(:script_body, Shapes::ShapeRef.new(shape: HostConfigurationScript, required: true, location_name: "scriptBody"))
+    HostConfiguration.add_member(:script_timeout_seconds, Shapes::ShapeRef.new(shape: HostConfigurationScriptTimeoutSeconds, location_name: "scriptTimeoutSeconds"))
+    HostConfiguration.struct_class = Types::HostConfiguration
 
     HostPropertiesRequest.add_member(:ip_addresses, Shapes::ShapeRef.new(shape: IpAddresses, location_name: "ipAddresses"))
     HostPropertiesRequest.add_member(:host_name, Shapes::ShapeRef.new(shape: HostName, location_name: "hostName"))
@@ -2731,6 +2740,7 @@ module Aws::Deadline
     UpdateFleetRequest.add_member(:min_worker_count, Shapes::ShapeRef.new(shape: MinZeroMaxInteger, location_name: "minWorkerCount"))
     UpdateFleetRequest.add_member(:max_worker_count, Shapes::ShapeRef.new(shape: MinZeroMaxInteger, location_name: "maxWorkerCount"))
     UpdateFleetRequest.add_member(:configuration, Shapes::ShapeRef.new(shape: FleetConfiguration, location_name: "configuration"))
+    UpdateFleetRequest.add_member(:host_configuration, Shapes::ShapeRef.new(shape: HostConfiguration, location_name: "hostConfiguration"))
     UpdateFleetRequest.struct_class = Types::UpdateFleetRequest
 
     UpdateFleetResponse.struct_class = Types::UpdateFleetResponse
@@ -2861,6 +2871,7 @@ module Aws::Deadline
     UpdateWorkerRequest.struct_class = Types::UpdateWorkerRequest
 
     UpdateWorkerResponse.add_member(:log, Shapes::ShapeRef.new(shape: LogConfiguration, location_name: "log"))
+    UpdateWorkerResponse.add_member(:host_configuration, Shapes::ShapeRef.new(shape: HostConfiguration, location_name: "hostConfiguration"))
     UpdateWorkerResponse.struct_class = Types::UpdateWorkerResponse
 
     UpdateWorkerScheduleRequest.add_member(:farm_id, Shapes::ShapeRef.new(shape: FarmId, required: true, location: "uri", location_name: "farmId"))

@@ -76,6 +76,7 @@ module Aws::MediaLive
     Av1GopSizeUnits = Shapes::StringShape.new(name: 'Av1GopSizeUnits')
     Av1Level = Shapes::StringShape.new(name: 'Av1Level')
     Av1LookAheadRateControl = Shapes::StringShape.new(name: 'Av1LookAheadRateControl')
+    Av1RateControlMode = Shapes::StringShape.new(name: 'Av1RateControlMode')
     Av1SceneChangeDetect = Shapes::StringShape.new(name: 'Av1SceneChangeDetect')
     Av1Settings = Shapes::StructureShape.new(name: 'Av1Settings')
     AvailBlanking = Shapes::StructureShape.new(name: 'AvailBlanking')
@@ -1402,6 +1403,8 @@ module Aws::MediaLive
     Av1Settings.add_member(:qvbr_quality_level, Shapes::ShapeRef.new(shape: __integerMin1Max10, location_name: "qvbrQualityLevel"))
     Av1Settings.add_member(:scene_change_detect, Shapes::ShapeRef.new(shape: Av1SceneChangeDetect, location_name: "sceneChangeDetect"))
     Av1Settings.add_member(:timecode_burnin_settings, Shapes::ShapeRef.new(shape: TimecodeBurninSettings, location_name: "timecodeBurninSettings"))
+    Av1Settings.add_member(:bitrate, Shapes::ShapeRef.new(shape: __integerMin50000Max8000000, location_name: "bitrate"))
+    Av1Settings.add_member(:rate_control_mode, Shapes::ShapeRef.new(shape: Av1RateControlMode, location_name: "rateControlMode"))
     Av1Settings.struct_class = Types::Av1Settings
 
     AvailBlanking.add_member(:avail_blanking_image, Shapes::ShapeRef.new(shape: InputLocation, location_name: "availBlankingImage"))
@@ -4290,6 +4293,7 @@ module Aws::MediaLive
     OutputDestination.add_member(:multiplex_settings, Shapes::ShapeRef.new(shape: MultiplexProgramChannelDestinationSettings, location_name: "multiplexSettings"))
     OutputDestination.add_member(:settings, Shapes::ShapeRef.new(shape: __listOfOutputDestinationSettings, location_name: "settings"))
     OutputDestination.add_member(:srt_settings, Shapes::ShapeRef.new(shape: __listOfSrtOutputDestinationSettings, location_name: "srtSettings"))
+    OutputDestination.add_member(:logical_interface_names, Shapes::ShapeRef.new(shape: __listOf__string, location_name: "logicalInterfaceNames"))
     OutputDestination.struct_class = Types::OutputDestination
 
     OutputDestinationSettings.add_member(:password_param, Shapes::ShapeRef.new(shape: __string, location_name: "passwordParam"))

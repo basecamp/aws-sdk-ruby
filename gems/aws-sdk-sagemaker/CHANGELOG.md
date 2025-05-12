@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.305.0 (2025-05-12)
+------------------
+
+* Feature - No API changes from previous release. This release migrated the model to Smithy keeping all features unchanged.
+
 1.304.0 (2025-05-07)
 ------------------
 

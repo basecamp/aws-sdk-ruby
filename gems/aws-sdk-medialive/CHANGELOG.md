@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.154.0 (2025-05-12)
+------------------
+
+* Feature - Add support to the AV1 rate control mode
+
 1.153.0 (2025-05-07)
 ------------------
 

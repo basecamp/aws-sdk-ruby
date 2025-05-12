@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.100.0 (2025-05-12)
+------------------
+
+* Feature - Documenting that EnabledLoggingStrategies is always present in responses of PlaybackConfiguration read operations.
+
 1.99.0 (2025-05-01)
 ------------------
 

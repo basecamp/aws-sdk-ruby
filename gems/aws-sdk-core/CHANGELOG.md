@@ -1,6 +1,15 @@
 Unreleased Changes
 ------------------
 
+3.224.0 (2025-05-12)
+------------------
+
+* Feature - Updated Aws::STS::Client with the latest API changes.
+
+* Feature - Updated Aws::SSOOIDC::Client with the latest API changes.
+
+* Feature - Updated Aws::SSO::Client with the latest API changes.
+
 * Feature - Support `ENV['AWS_DISABLE_HOST_PREFIX_INJECTION']` and `disable_host_prefix_injection` shared config to disable host prefix injection for all services.
 
 3.223.0 (2025-05-01)

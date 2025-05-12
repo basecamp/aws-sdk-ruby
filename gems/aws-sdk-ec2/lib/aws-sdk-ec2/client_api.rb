@@ -3767,11 +3767,12 @@ module Aws::EC2
     AllocateHostsRequest.add_member(:outpost_arn, Shapes::ShapeRef.new(shape: String, location_name: "OutpostArn"))
     AllocateHostsRequest.add_member(:host_maintenance, Shapes::ShapeRef.new(shape: HostMaintenance, location_name: "HostMaintenance"))
     AllocateHostsRequest.add_member(:asset_ids, Shapes::ShapeRef.new(shape: AssetIdList, location_name: "AssetId"))
+    AllocateHostsRequest.add_member(:availability_zone_id, Shapes::ShapeRef.new(shape: AvailabilityZoneId, location_name: "AvailabilityZoneId"))
     AllocateHostsRequest.add_member(:auto_placement, Shapes::ShapeRef.new(shape: AutoPlacement, location_name: "autoPlacement"))
     AllocateHostsRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "clientToken"))
     AllocateHostsRequest.add_member(:instance_type, Shapes::ShapeRef.new(shape: String, location_name: "instanceType"))
     AllocateHostsRequest.add_member(:quantity, Shapes::ShapeRef.new(shape: Integer, location_name: "quantity"))
-    AllocateHostsRequest.add_member(:availability_zone, Shapes::ShapeRef.new(shape: String, required: true, location_name: "availabilityZone"))
+    AllocateHostsRequest.add_member(:availability_zone, Shapes::ShapeRef.new(shape: String, location_name: "availabilityZone"))
     AllocateHostsRequest.struct_class = Types::AllocateHostsRequest
 
     AllocateHostsResult.add_member(:host_ids, Shapes::ShapeRef.new(shape: ResponseHostIdList, location_name: "hostIdSet"))
@@ -3833,6 +3834,7 @@ module Aws::EC2
 
     AnalysisLoadBalancerTarget.add_member(:address, Shapes::ShapeRef.new(shape: IpAddress, location_name: "address"))
     AnalysisLoadBalancerTarget.add_member(:availability_zone, Shapes::ShapeRef.new(shape: String, location_name: "availabilityZone"))
+    AnalysisLoadBalancerTarget.add_member(:availability_zone_id, Shapes::ShapeRef.new(shape: String, location_name: "availabilityZoneId"))
     AnalysisLoadBalancerTarget.add_member(:instance, Shapes::ShapeRef.new(shape: AnalysisComponent, location_name: "instance"))
     AnalysisLoadBalancerTarget.add_member(:port, Shapes::ShapeRef.new(shape: Port, location_name: "port"))
     AnalysisLoadBalancerTarget.struct_class = Types::AnalysisLoadBalancerTarget
@@ -4627,6 +4629,7 @@ module Aws::EC2
     CapacityReservationInfo.add_member(:instance_type, Shapes::ShapeRef.new(shape: String, location_name: "instanceType"))
     CapacityReservationInfo.add_member(:availability_zone, Shapes::ShapeRef.new(shape: AvailabilityZoneName, location_name: "availabilityZone"))
     CapacityReservationInfo.add_member(:tenancy, Shapes::ShapeRef.new(shape: CapacityReservationTenancy, location_name: "tenancy"))
+    CapacityReservationInfo.add_member(:availability_zone_id, Shapes::ShapeRef.new(shape: AvailabilityZoneId, location_name: "availabilityZoneId"))
     CapacityReservationInfo.struct_class = Types::CapacityReservationInfo
 
     CapacityReservationOptions.add_member(:usage_strategy, Shapes::ShapeRef.new(shape: FleetCapacityReservationUsageStrategy, location_name: "usageStrategy"))
@@ -8020,6 +8023,7 @@ module Aws::EC2
     DescribeReservedInstancesOfferingsRequest.add_member(:offering_class, Shapes::ShapeRef.new(shape: OfferingClassType, location_name: "OfferingClass"))
     DescribeReservedInstancesOfferingsRequest.add_member(:product_description, Shapes::ShapeRef.new(shape: RIProductDescription, location_name: "ProductDescription"))
     DescribeReservedInstancesOfferingsRequest.add_member(:reserved_instances_offering_ids, Shapes::ShapeRef.new(shape: ReservedInstancesOfferingIdStringList, location_name: "ReservedInstancesOfferingId"))
+    DescribeReservedInstancesOfferingsRequest.add_member(:availability_zone_id, Shapes::ShapeRef.new(shape: AvailabilityZoneId, location_name: "AvailabilityZoneId"))
     DescribeReservedInstancesOfferingsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     DescribeReservedInstancesOfferingsRequest.add_member(:filters, Shapes::ShapeRef.new(shape: FilterList, location_name: "Filter"))
     DescribeReservedInstancesOfferingsRequest.add_member(:instance_tenancy, Shapes::ShapeRef.new(shape: Tenancy, location_name: "instanceTenancy"))
@@ -9530,6 +9534,7 @@ module Aws::EC2
     Explanation.add_member(:addresses, Shapes::ShapeRef.new(shape: IpAddressList, location_name: "addressSet"))
     Explanation.add_member(:attached_to, Shapes::ShapeRef.new(shape: AnalysisComponent, location_name: "attachedTo"))
     Explanation.add_member(:availability_zones, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "availabilityZoneSet"))
+    Explanation.add_member(:availability_zone_ids, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "availabilityZoneIdSet"))
     Explanation.add_member(:cidrs, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "cidrSet"))
     Explanation.add_member(:component, Shapes::ShapeRef.new(shape: AnalysisComponent, location_name: "component"))
     Explanation.add_member(:customer_gateway, Shapes::ShapeRef.new(shape: AnalysisComponent, location_name: "customerGateway"))
@@ -14656,6 +14661,7 @@ module Aws::EC2
     ReservedInstances.add_member(:recurring_charges, Shapes::ShapeRef.new(shape: RecurringChargesList, location_name: "recurringCharges"))
     ReservedInstances.add_member(:scope, Shapes::ShapeRef.new(shape: scope, location_name: "scope"))
     ReservedInstances.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
+    ReservedInstances.add_member(:availability_zone_id, Shapes::ShapeRef.new(shape: String, location_name: "availabilityZoneId"))
     ReservedInstances.add_member(:reserved_instances_id, Shapes::ShapeRef.new(shape: String, location_name: "reservedInstancesId"))
     ReservedInstances.add_member(:instance_type, Shapes::ShapeRef.new(shape: InstanceType, location_name: "instanceType"))
     ReservedInstances.add_member(:availability_zone, Shapes::ShapeRef.new(shape: String, location_name: "availabilityZone"))
@@ -14674,6 +14680,7 @@ module Aws::EC2
     ReservedInstancesConfiguration.add_member(:instance_type, Shapes::ShapeRef.new(shape: InstanceType, location_name: "instanceType"))
     ReservedInstancesConfiguration.add_member(:platform, Shapes::ShapeRef.new(shape: String, location_name: "platform"))
     ReservedInstancesConfiguration.add_member(:scope, Shapes::ShapeRef.new(shape: scope, location_name: "scope"))
+    ReservedInstancesConfiguration.add_member(:availability_zone_id, Shapes::ShapeRef.new(shape: String, location_name: "availabilityZoneId"))
     ReservedInstancesConfiguration.struct_class = Types::ReservedInstancesConfiguration
 
     ReservedInstancesConfigurationList.member = Shapes::ShapeRef.new(shape: ReservedInstancesConfiguration, location_name: "item")
@@ -14728,6 +14735,7 @@ module Aws::EC2
     ReservedInstancesOffering.add_member(:pricing_details, Shapes::ShapeRef.new(shape: PricingDetailsList, location_name: "pricingDetailsSet"))
     ReservedInstancesOffering.add_member(:recurring_charges, Shapes::ShapeRef.new(shape: RecurringChargesList, location_name: "recurringCharges"))
     ReservedInstancesOffering.add_member(:scope, Shapes::ShapeRef.new(shape: scope, location_name: "scope"))
+    ReservedInstancesOffering.add_member(:availability_zone_id, Shapes::ShapeRef.new(shape: AvailabilityZoneId, location_name: "availabilityZoneId"))
     ReservedInstancesOffering.add_member(:reserved_instances_offering_id, Shapes::ShapeRef.new(shape: String, location_name: "reservedInstancesOfferingId"))
     ReservedInstancesOffering.add_member(:instance_type, Shapes::ShapeRef.new(shape: InstanceType, location_name: "instanceType"))
     ReservedInstancesOffering.add_member(:availability_zone, Shapes::ShapeRef.new(shape: String, location_name: "availabilityZone"))
@@ -17046,6 +17054,7 @@ module Aws::EC2
     VolumeStatusItem.add_member(:volume_id, Shapes::ShapeRef.new(shape: String, location_name: "volumeId"))
     VolumeStatusItem.add_member(:volume_status, Shapes::ShapeRef.new(shape: VolumeStatusInfo, location_name: "volumeStatus"))
     VolumeStatusItem.add_member(:attachment_statuses, Shapes::ShapeRef.new(shape: VolumeStatusAttachmentStatusList, location_name: "attachmentStatuses"))
+    VolumeStatusItem.add_member(:availability_zone_id, Shapes::ShapeRef.new(shape: String, location_name: "availabilityZoneId"))
     VolumeStatusItem.struct_class = Types::VolumeStatusItem
 
     VolumeStatusList.member = Shapes::ShapeRef.new(shape: VolumeStatusItem, location_name: "item")

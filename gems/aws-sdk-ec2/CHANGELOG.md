@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.523.0 (2025-05-12)
+------------------
+
+* Feature - EC2 - Adding support for AvailabilityZoneId
+
 1.522.0 (2025-05-08)
 ------------------
 

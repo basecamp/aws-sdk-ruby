@@ -200,8 +200,7 @@ module Aws::Deadline
     #     accepted modes and the configuration defaults that are included.
     #
     #   @option options [Boolean] :disable_host_prefix_injection (false)
-    #     Set to true to disable SDK automatically adding host prefix
-    #     to default service endpoint when available.
+    #     When `true`, the SDK will not prepend the modeled host prefix to the endpoint.
     #
     #   @option options [Boolean] :disable_request_compression (false)
     #     When set to 'true' the request body will not be compressed
@@ -1169,6 +1168,15 @@ module Aws::Deadline
     # @option params [required, Integer] :max_worker_count
     #   The maximum number of workers for the fleet.
     #
+    #   Deadline Cloud limits the number of workers to less than or equal to
+    #   the fleet's maximum worker count. The service maintains eventual
+    #   consistency for the worker count. If you make multiple rapid calls to
+    #   `CreateWorker` before the field updates, you might exceed your
+    #   fleet's maximum worker count. For example, if your `maxWorkerCount`
+    #   is 10 and you currently have 9 workers, making two quick
+    #   `CreateWorker` calls might successfully create 2 workers instead of 1,
+    #   resulting in 11 total workers.
+    #
     # @option params [required, Types::FleetConfiguration] :configuration
     #   The configuration settings for the fleet. Customer managed fleets are
     #   self-managed. Service managed Amazon EC2 fleets are managed by
@@ -1177,6 +1185,10 @@ module Aws::Deadline
     # @option params [Hash<String,String>] :tags
     #   Each tag consists of a tag key and a tag value. Tag keys and values
     #   are both required, but tag values can be empty strings.
+    #
+    # @option params [Types::HostConfiguration] :host_configuration
+    #   Provides a script that runs as a worker is starting up that you can
+    #   use to provide additional configuration for workers in your fleet.
     #
     # @return [Types::CreateFleetResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1284,6 +1296,10 @@ module Aws::Deadline
     #     },
     #     tags: {
     #       "String" => "String",
+    #     },
+    #     host_configuration: {
+    #       script_body: "HostConfigurationScript", # required
+    #       script_timeout_seconds: 1,
     #     },
     #   })
     #
@@ -1897,6 +1913,15 @@ module Aws::Deadline
     # assets held within a particular instance. You can specify certain
     # instance types to use, or let the worker know which instances types to
     # exclude.
+    #
+    # Deadline Cloud limits the number of workers to less than or equal to
+    # the fleet's maximum worker count. The service maintains eventual
+    # consistency for the worker count. If you make multiple rapid calls to
+    # `CreateWorker` before the field updates, you might exceed your
+    # fleet's maximum worker count. For example, if your `maxWorkerCount`
+    # is 10 and you currently have 9 workers, making two quick
+    # `CreateWorker` calls might successfully create 2 workers instead of 1,
+    # resulting in 11 total workers.
     #
     # @option params [required, String] :farm_id
     #   The farm ID of the farm to connect to the worker.
@@ -2565,6 +2590,7 @@ module Aws::Deadline
     #   * {Types::GetFleetResponse#min_worker_count #min_worker_count} => Integer
     #   * {Types::GetFleetResponse#max_worker_count #max_worker_count} => Integer
     #   * {Types::GetFleetResponse#configuration #configuration} => Types::FleetConfiguration
+    #   * {Types::GetFleetResponse#host_configuration #host_configuration} => Types::HostConfiguration
     #   * {Types::GetFleetResponse#capabilities #capabilities} => Types::FleetCapabilities
     #   * {Types::GetFleetResponse#role_arn #role_arn} => String
     #   * {Types::GetFleetResponse#created_at #created_at} => Time
@@ -2641,6 +2667,8 @@ module Aws::Deadline
     #   resp.configuration.service_managed_ec2.instance_capabilities.custom_attributes[0].values #=> Array
     #   resp.configuration.service_managed_ec2.instance_capabilities.custom_attributes[0].values[0] #=> String
     #   resp.configuration.service_managed_ec2.instance_market_options.type #=> String, one of "on-demand", "spot"
+    #   resp.host_configuration.script_body #=> String
+    #   resp.host_configuration.script_timeout_seconds #=> Integer
     #   resp.capabilities.amounts #=> Array
     #   resp.capabilities.amounts[0].name #=> String
     #   resp.capabilities.amounts[0].min #=> Float
@@ -6120,8 +6148,21 @@ module Aws::Deadline
     # @option params [Integer] :max_worker_count
     #   The maximum number of workers in the fleet.
     #
+    #   Deadline Cloud limits the number of workers to less than or equal to
+    #   the fleet's maximum worker count. The service maintains eventual
+    #   consistency for the worker count. If you make multiple rapid calls to
+    #   `CreateWorker` before the field updates, you might exceed your
+    #   fleet's maximum worker count. For example, if your `maxWorkerCount`
+    #   is 10 and you currently have 9 workers, making two quick
+    #   `CreateWorker` calls might successfully create 2 workers instead of 1,
+    #   resulting in 11 total workers.
+    #
     # @option params [Types::FleetConfiguration] :configuration
     #   The fleet configuration to update.
+    #
+    # @option params [Types::HostConfiguration] :host_configuration
+    #   Provides a script that runs as a worker is starting up that you can
+    #   use to provide additional configuration for workers in your fleet.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -6225,6 +6266,10 @@ module Aws::Deadline
     #           type: "on-demand", # required, accepts on-demand, spot
     #         },
     #       },
+    #     },
+    #     host_configuration: {
+    #       script_body: "HostConfigurationScript", # required
+    #       script_timeout_seconds: 1,
     #     },
     #   })
     #
@@ -6865,6 +6910,7 @@ module Aws::Deadline
     # @return [Types::UpdateWorkerResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateWorkerResponse#log #log} => Types::LogConfiguration
+    #   * {Types::UpdateWorkerResponse#host_configuration #host_configuration} => Types::HostConfiguration
     #
     # @example Request syntax with placeholder values
     #
@@ -6904,6 +6950,8 @@ module Aws::Deadline
     #   resp.log.parameters #=> Hash
     #   resp.log.parameters["String"] #=> String
     #   resp.log.error #=> String
+    #   resp.host_configuration.script_body #=> String
+    #   resp.host_configuration.script_timeout_seconds #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/deadline-2023-10-12/UpdateWorker AWS API Documentation
     #
@@ -7010,7 +7058,7 @@ module Aws::Deadline
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-deadline'
-      context[:gem_version] = '1.24.0'
+      context[:gem_version] = '1.25.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

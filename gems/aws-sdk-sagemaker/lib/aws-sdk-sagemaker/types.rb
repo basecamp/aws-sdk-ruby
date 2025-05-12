@@ -2130,12 +2130,13 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # <note markdown="1"> This data type is intended for use exclusively by SageMaker Canvas and
+    # <note markdown="1"> This data type is intended for use exclusively by
+    # SageMaker Canvas and
     # cannot be used in other contexts at the moment.
     #
     #  </note>
     #
-    # Specifies the compute configuration for an AutoML job V2.
+    #  Specifies the compute configuration for an AutoML job V2.
     #
     # @!attribute [rw] emr_serverless_compute_config
     #   The configuration for using [ EMR Serverless][1] to run the AutoML
@@ -20877,12 +20878,13 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # <note markdown="1"> This data type is intended for use exclusively by SageMaker Canvas and
+    # <note markdown="1"> This data type is intended for use exclusively by
+    # SageMaker Canvas and
     # cannot be used in other contexts at the moment.
     #
     #  </note>
     #
-    # Specifies the compute configuration for the EMR Serverless job.
+    #  Specifies the compute configuration for the EMR Serverless job.
     #
     # @!attribute [rw] execution_role_arn
     #   The ARN of the IAM role granting the AutoML job V2 the necessary
@@ -33606,14 +33608,6 @@ module Aws::SageMaker
     #   The name of the metric.
     #   @return [String]
     #
-    # @!attribute [rw] value
-    #   The value of the metric.
-    #   @return [Float]
-    #
-    # @!attribute [rw] set
-    #   The dataset split from which the AutoML job produced the metric.
-    #   @return [String]
-    #
     # @!attribute [rw] standard_metric_name
     #   The name of the standard metric.
     #
@@ -33627,13 +33621,21 @@ module Aws::SageMaker
     #   [1]: https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-model-support-validation.html#autopilot-metrics
     #   @return [String]
     #
+    # @!attribute [rw] value
+    #   The value of the metric.
+    #   @return [Float]
+    #
+    # @!attribute [rw] set
+    #   The dataset split from which the AutoML job produced the metric.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/MetricDatum AWS API Documentation
     #
     class MetricDatum < Struct.new(
       :metric_name,
+      :standard_metric_name,
       :value,
-      :set,
-      :standard_metric_name)
+      :set)
       SENSITIVE = []
       include Aws::Structure
     end

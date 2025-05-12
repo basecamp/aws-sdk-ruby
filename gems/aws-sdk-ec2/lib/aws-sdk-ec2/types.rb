@@ -1129,6 +1129,10 @@ module Aws::EC2
     #     specified.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] availability_zone_id
+    #   The ID of the Availability Zone.
+    #   @return [String]
+    #
     # @!attribute [rw] auto_placement
     #   Indicates whether the host accepts any untargeted instance launches
     #   that match its instance type configuration, or if it only accepts
@@ -1187,6 +1191,7 @@ module Aws::EC2
       :outpost_arn,
       :host_maintenance,
       :asset_ids,
+      :availability_zone_id,
       :auto_placement,
       :client_token,
       :instance_type,
@@ -1458,6 +1463,10 @@ module Aws::EC2
     #   The Availability Zone.
     #   @return [String]
     #
+    # @!attribute [rw] availability_zone_id
+    #   The ID of the Availability Zone.
+    #   @return [String]
+    #
     # @!attribute [rw] instance
     #   Information about the instance.
     #   @return [Types::AnalysisComponent]
@@ -1471,6 +1480,7 @@ module Aws::EC2
     class AnalysisLoadBalancerTarget < Struct.new(
       :address,
       :availability_zone,
+      :availability_zone_id,
       :instance,
       :port)
       SENSITIVE = []
@@ -5540,12 +5550,17 @@ module Aws::EC2
     #   The tenancy of the Capacity Reservation.
     #   @return [String]
     #
+    # @!attribute [rw] availability_zone_id
+    #   The ID of the Availability Zone.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CapacityReservationInfo AWS API Documentation
     #
     class CapacityReservationInfo < Struct.new(
       :instance_type,
       :availability_zone,
-      :tenancy)
+      :tenancy,
+      :availability_zone_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -26394,6 +26409,9 @@ module Aws::EC2
     #   * `modification-result.target-configuration.availability-zone` - The
     #     Availability Zone for the new Reserved Instances.
     #
+    #   * `modification-result.target-configuration.availability-zone-id` -
+    #     The ID of the Availability Zone for the new Reserved Instances.
+    #
     #   * `modification-result.target-configuration.instance-count ` - The
     #     number of new Reserved Instances.
     #
@@ -26449,6 +26467,9 @@ module Aws::EC2
     #
     # @!attribute [rw] availability_zone
     #   The Availability Zone in which the Reserved Instance can be used.
+    #
+    #   Either `AvailabilityZone` or `AvailabilityZoneId` can be specified,
+    #   but not both.
     #   @return [String]
     #
     # @!attribute [rw] include_marketplace
@@ -26501,6 +26522,13 @@ module Aws::EC2
     #   One or more Reserved Instances offering IDs.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] availability_zone_id
+    #   The ID of the Availability Zone.
+    #
+    #   Either `AvailabilityZone` or `AvailabilityZoneId` can be specified,
+    #   but not both.
+    #   @return [String]
+    #
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -26513,6 +26541,9 @@ module Aws::EC2
     #
     #   * `availability-zone` - The Availability Zone where the Reserved
     #     Instance can be used.
+    #
+    #   * `availability-zone-id` - The ID of the Availability Zone where the
+    #     Reserved Instance can be used.
     #
     #   * `duration` - The duration of the Reserved Instance (for example,
     #     one year or three years), in seconds (`31536000` \| `94608000`).
@@ -26588,6 +26619,7 @@ module Aws::EC2
       :offering_class,
       :product_description,
       :reserved_instances_offering_ids,
+      :availability_zone_id,
       :dry_run,
       :filters,
       :instance_tenancy,
@@ -26643,6 +26675,9 @@ module Aws::EC2
     #
     #   * `availability-zone` - The Availability Zone where the Reserved
     #     Instance can be used.
+    #
+    #   * `availability-zone-id` - The ID of the Availability Zone where the
+    #     Reserved Instance can be used.
     #
     #   * `duration` - The duration of the Reserved Instance (one year or
     #     three years), in seconds (`31536000` \| `94608000`).
@@ -35641,6 +35676,10 @@ module Aws::EC2
     #   The Availability Zones.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] availability_zone_ids
+    #   The IDs of the Availability Zones.
+    #   @return [Array<String>]
+    #
     # @!attribute [rw] cidrs
     #   The CIDR ranges.
     #   @return [Array<String>]
@@ -35842,6 +35881,7 @@ module Aws::EC2
       :addresses,
       :attached_to,
       :availability_zones,
+      :availability_zone_ids,
       :cidrs,
       :component,
       :customer_gateway,
@@ -63812,6 +63852,10 @@ module Aws::EC2
     #   Any tags assigned to the resource.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] availability_zone_id
+    #   The ID of the Availability Zone.
+    #   @return [String]
+    #
     # @!attribute [rw] reserved_instances_id
     #   The ID of the Reserved Instance.
     #   @return [String]
@@ -63866,6 +63910,7 @@ module Aws::EC2
       :recurring_charges,
       :scope,
       :tags,
+      :availability_zone_id,
       :reserved_instances_id,
       :instance_type,
       :availability_zone,
@@ -63909,6 +63954,10 @@ module Aws::EC2
     #   instances in a specific Availability Zone.
     #   @return [String]
     #
+    # @!attribute [rw] availability_zone_id
+    #   The ID of the Availability Zone.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReservedInstancesConfiguration AWS API Documentation
     #
     class ReservedInstancesConfiguration < Struct.new(
@@ -63916,7 +63965,8 @@ module Aws::EC2
       :instance_count,
       :instance_type,
       :platform,
-      :scope)
+      :scope,
+      :availability_zone_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -64125,6 +64175,10 @@ module Aws::EC2
     #   an Availability Zone.
     #   @return [String]
     #
+    # @!attribute [rw] availability_zone_id
+    #   The ID of the Availability Zone.
+    #   @return [String]
+    #
     # @!attribute [rw] reserved_instances_offering_id
     #   The ID of the Reserved Instance offering. This is the offering ID
     #   used in GetReservedInstancesExchangeQuote to confirm that an
@@ -64166,6 +64220,7 @@ module Aws::EC2
       :pricing_details,
       :recurring_charges,
       :scope,
+      :availability_zone_id,
       :reserved_instances_offering_id,
       :instance_type,
       :availability_zone,
@@ -75713,6 +75768,10 @@ module Aws::EC2
     #   Information about the instances to which the volume is attached.
     #   @return [Array<Types::VolumeStatusAttachmentStatus>]
     #
+    # @!attribute [rw] availability_zone_id
+    #   The ID of the Availability Zone.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VolumeStatusItem AWS API Documentation
     #
     class VolumeStatusItem < Struct.new(
@@ -75722,7 +75781,8 @@ module Aws::EC2
       :events,
       :volume_id,
       :volume_status,
-      :attachment_statuses)
+      :attachment_statuses,
+      :availability_zone_id)
       SENSITIVE = []
       include Aws::Structure
     end

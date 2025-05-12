@@ -385,7 +385,11 @@ module Aws
                               }
                             }?
                           },
-                          ?tags: Hash[::String, ::String]
+                          ?tags: Hash[::String, ::String],
+                          ?host_configuration: {
+                            script_body: ::String,
+                            script_timeout_seconds: ::Integer?
+                          }
                         ) -> _CreateFleetResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateFleetResponseSuccess
 
@@ -813,6 +817,7 @@ module Aws
         def min_worker_count: () -> ::Integer
         def max_worker_count: () -> ::Integer
         def configuration: () -> Types::FleetConfiguration
+        def host_configuration: () -> Types::HostConfiguration
         def capabilities: () -> Types::FleetCapabilities
         def role_arn: () -> ::String
         def created_at: () -> ::Time
@@ -2008,6 +2013,10 @@ module Aws
                                 type: ("on-demand" | "spot")
                               }
                             }?
+                          },
+                          ?host_configuration: {
+                            script_body: ::String,
+                            script_timeout_seconds: ::Integer?
                           }
                         ) -> _UpdateFleetResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateFleetResponseSuccess
@@ -2201,6 +2210,7 @@ module Aws
       interface _UpdateWorkerResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateWorkerResponse]
         def log: () -> Types::LogConfiguration
+        def host_configuration: () -> Types::HostConfiguration
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Deadline/Client.html#update_worker-instance_method
       def update_worker: (

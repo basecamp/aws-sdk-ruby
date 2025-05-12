@@ -48,8 +48,14 @@ module Aws::S3Control
         end
         if Aws::Endpoints::Matchers.set?(parameters.access_point_name) && (access_point_suffix = Aws::Endpoints::Matchers.substring(parameters.access_point_name, 0, 7, true)) && Aws::Endpoints::Matchers.string_equals?(access_point_suffix, "--xa-s3")
           if (partition_result = Aws::Endpoints::Matchers.aws_partition(parameters.region))
+            if Aws::Endpoints::Matchers.set?(parameters.endpoint) && Aws::Endpoints::Matchers.boolean_equals?(parameters.use_dual_stack, true)
+              raise ArgumentError, "Invalid Configuration: DualStack and custom endpoint are not supported"
+            end
             if Aws::Endpoints::Matchers.boolean_equals?(parameters.use_dual_stack, true)
               raise ArgumentError, "S3Express does not support Dual-stack."
+            end
+            if Aws::Endpoints::Matchers.set?(parameters.endpoint) && (url = Aws::Endpoints::Matchers.parse_url(parameters.endpoint))
+              return Aws::Endpoints::Endpoint.new(url: "#{url['scheme']}://#{url['authority']}", headers: {}, properties: {"authSchemes" => [{"disableDoubleEncoding" => true, "name" => "sigv4", "signingName" => "s3express", "signingRegion" => "#{parameters.region}"}]})
             end
             if (s3express_availability_zone_id = Aws::Endpoints::Matchers.substring(parameters.access_point_name, 7, 15, true)) && (s3express_availability_zone_delim = Aws::Endpoints::Matchers.substring(parameters.access_point_name, 15, 17, true)) && Aws::Endpoints::Matchers.string_equals?(s3express_availability_zone_delim, "--")
               if Aws::Endpoints::Matchers.boolean_equals?(parameters.use_fips, true)
@@ -86,6 +92,15 @@ module Aws::S3Control
         end
         if Aws::Endpoints::Matchers.set?(parameters.use_s3_express_control_endpoint) && Aws::Endpoints::Matchers.boolean_equals?(parameters.use_s3_express_control_endpoint, true)
           if (partition_result = Aws::Endpoints::Matchers.aws_partition(parameters.region))
+            if Aws::Endpoints::Matchers.set?(parameters.endpoint) && Aws::Endpoints::Matchers.boolean_equals?(parameters.use_dual_stack, true)
+              raise ArgumentError, "Invalid Configuration: DualStack and custom endpoint are not supported"
+            end
+            if Aws::Endpoints::Matchers.boolean_equals?(parameters.use_dual_stack, true)
+              raise ArgumentError, "S3Express does not support Dual-stack."
+            end
+            if Aws::Endpoints::Matchers.set?(parameters.endpoint) && (url = Aws::Endpoints::Matchers.parse_url(parameters.endpoint))
+              return Aws::Endpoints::Endpoint.new(url: "#{url['scheme']}://#{url['authority']}", headers: {}, properties: {"authSchemes" => [{"disableDoubleEncoding" => true, "name" => "sigv4", "signingName" => "s3express", "signingRegion" => "#{parameters.region}"}]})
+            end
             if Aws::Endpoints::Matchers.boolean_equals?(parameters.use_fips, true)
               return Aws::Endpoints::Endpoint.new(url: "https://s3express-control-fips.#{parameters.region}.#{partition_result['dnsSuffix']}", headers: {}, properties: {"authSchemes" => [{"disableDoubleEncoding" => true, "name" => "sigv4", "signingName" => "s3express", "signingRegion" => "#{parameters.region}"}]})
             end
