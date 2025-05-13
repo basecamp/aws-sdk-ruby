@@ -30,14 +30,16 @@ module Aws::DSQL
       attr_accessor deletion_protection_enabled: bool
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor client_token: ::String
+      attr_accessor multi_region_properties: Types::MultiRegionProperties
       SENSITIVE: []
     end
 
     class CreateClusterOutput
       attr_accessor identifier: ::String
       attr_accessor arn: ::String
-      attr_accessor status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETING" | "DELETED" | "FAILED")
+      attr_accessor status: ("CREATING" | "ACTIVE" | "IDLE" | "INACTIVE" | "UPDATING" | "DELETING" | "DELETED" | "FAILED" | "PENDING_SETUP" | "PENDING_DELETE")
       attr_accessor creation_time: ::Time
+      attr_accessor multi_region_properties: Types::MultiRegionProperties
       attr_accessor deletion_protection_enabled: bool
       SENSITIVE: []
     end
@@ -64,7 +66,7 @@ module Aws::DSQL
     class DeleteClusterOutput
       attr_accessor identifier: ::String
       attr_accessor arn: ::String
-      attr_accessor status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETING" | "DELETED" | "FAILED")
+      attr_accessor status: ("CREATING" | "ACTIVE" | "IDLE" | "INACTIVE" | "UPDATING" | "DELETING" | "DELETED" | "FAILED" | "PENDING_SETUP" | "PENDING_DELETE")
       attr_accessor creation_time: ::Time
       attr_accessor deletion_protection_enabled: bool
       SENSITIVE: []
@@ -84,11 +86,13 @@ module Aws::DSQL
     class GetClusterOutput
       attr_accessor identifier: ::String
       attr_accessor arn: ::String
-      attr_accessor status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETING" | "DELETED" | "FAILED")
+      attr_accessor status: ("CREATING" | "ACTIVE" | "IDLE" | "INACTIVE" | "UPDATING" | "DELETING" | "DELETED" | "FAILED" | "PENDING_SETUP" | "PENDING_DELETE")
       attr_accessor creation_time: ::Time
-      attr_accessor deletion_protection_enabled: bool
       attr_accessor witness_region: ::String
       attr_accessor linked_cluster_arns: ::Array[::String]
+      attr_accessor deletion_protection_enabled: bool
+      attr_accessor multi_region_properties: Types::MultiRegionProperties
+      attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: []
     end
 
@@ -136,6 +140,12 @@ module Aws::DSQL
       SENSITIVE: []
     end
 
+    class MultiRegionProperties
+      attr_accessor witness_region: ::String
+      attr_accessor clusters: ::Array[::String]
+      SENSITIVE: []
+    end
+
     class ResourceNotFoundException
       attr_accessor message: ::String
       attr_accessor resource_id: ::String
@@ -176,17 +186,18 @@ module Aws::DSQL
       attr_accessor identifier: ::String
       attr_accessor deletion_protection_enabled: bool
       attr_accessor client_token: ::String
+      attr_accessor multi_region_properties: Types::MultiRegionProperties
       SENSITIVE: []
     end
 
     class UpdateClusterOutput
       attr_accessor identifier: ::String
       attr_accessor arn: ::String
-      attr_accessor status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETING" | "DELETED" | "FAILED")
+      attr_accessor status: ("CREATING" | "ACTIVE" | "IDLE" | "INACTIVE" | "UPDATING" | "DELETING" | "DELETED" | "FAILED" | "PENDING_SETUP" | "PENDING_DELETE")
       attr_accessor creation_time: ::Time
-      attr_accessor deletion_protection_enabled: bool
       attr_accessor witness_region: ::String
       attr_accessor linked_cluster_arns: ::Array[::String]
+      attr_accessor deletion_protection_enabled: bool
       SENSITIVE: []
     end
 

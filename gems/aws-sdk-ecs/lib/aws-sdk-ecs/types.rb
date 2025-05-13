@@ -477,6 +477,19 @@ module Aws::ECS
     # have permissions to use the action or resource. Or, it might be
     # specifying an identifier that isn't valid.
     #
+    # The following list includes additional causes for the error:
+    #
+    # * The `RunTask` could not be processed because you use managed scaling
+    #   and there is a capacity error because the quota of tasks in the
+    #   `PROVISIONING` per cluster has been reached. For information about
+    #   the service quotas, see [Amazon ECS service quotas][1].
+    #
+    # ^
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-quotas.html
+    #
     # @!attribute [rw] message
     #   Message that describes the cause of the exception.
     #   @return [String]
@@ -510,7 +523,8 @@ module Aws::ECS
     #   @return [String]
     #
     # @!attribute [rw] configuration
-    #   The execute command configuration for the cluster.
+    #   The execute command and managed storage configuration for the
+    #   cluster.
     #   @return [Types::ClusterConfiguration]
     #
     # @!attribute [rw] status
@@ -3273,15 +3287,12 @@ module Aws::ECS
     #   @return [String]
     #
     # @!attribute [rw] principal_arn
-    #   The Amazon Resource Name (ARN) of the principal. It can be a user,
+    #   The Amazon Resource Name (ARN) of the principal. It can be an user,
     #   role, or the root user. If you specify the root user, it disables
     #   the account setting for all users, roles, and the root user of the
     #   account unless a user or role explicitly overrides these settings.
     #   If this field is omitted, the setting is changed only for the
     #   authenticated user.
-    #
-    #   In order to use this parameter, you must be the root user, or the
-    #   principal.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/DeleteAccountSettingRequest AWS API Documentation
@@ -5878,9 +5889,6 @@ module Aws::ECS
     #   user. If this field is omitted, the account settings are listed only
     #   for the authenticated user.
     #
-    #   In order to use this parameter, you must be the root user, or the
-    #   principal.
-    #
     #   <note markdown="1"> Federated users assume the account setting of the root user and
     #   can't have explicit account settings set for them.
     #
@@ -7241,17 +7249,40 @@ module Aws::ECS
     # The managed storage configuration for the cluster.
     #
     # @!attribute [rw] kms_key_id
-    #   Specify a Key Management Service key ID to encrypt the managed
-    #   storage.
+    #   Specify a Key Management Service key ID to encrypt Amazon ECS
+    #   managed storage.
+    #
+    #   When you specify a `kmsKeyId`, Amazon ECS uses the key to encrypt
+    #   data volumes managed by Amazon ECS that are attached to tasks in the
+    #   cluster. The following data volumes are managed by Amazon ECS:
+    #   Amazon EBS. For more information about encryption of Amazon EBS
+    #   volumes attached to Amazon ECS tasks, see [Encrypt data stored in
+    #   Amazon EBS volumes for Amazon ECS][1] in the *Amazon Elastic
+    #   Container Service Developer Guide*.
     #
     #   The key must be a single Region key.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ebs-kms-encryption.html
     #   @return [String]
     #
     # @!attribute [rw] fargate_ephemeral_storage_kms_key_id
-    #   Specify the Key Management Service key ID for the Fargate ephemeral
+    #   Specify the Key Management Service key ID for Fargate ephemeral
     #   storage.
     #
+    #   When you specify a `fargateEphemeralStorageKmsKeyId`, Amazon Web
+    #   Services Fargate uses the key to encrypt data at rest in ephemeral
+    #   storage. For more information about Fargate ephemeral storage
+    #   encryption, see [Customer managed keys for Amazon Web Services
+    #   Fargate ephemeral storage for Amazon ECS][1] in the *Amazon Elastic
+    #   Container Service Developer Guide*.
+    #
     #   The key must be a single Region key.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-storage-encryption.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/ManagedStorageConfiguration AWS API Documentation
@@ -8191,9 +8222,6 @@ module Aws::ECS
     #   or role explicitly overrides these settings. If this field is
     #   omitted, the setting is changed only for the authenticated user.
     #
-    #   In order to use this parameter, you must be the root user, or the
-    #   principal.
-    #
     #   <note markdown="1"> You must use the root user when you set the Fargate wait time
     #   (`fargateTaskRetirementWaitPeriod`).
     #
@@ -8554,13 +8582,38 @@ module Aws::ECS
     #   (`0.125` vCPUs) and `196608` CPU units (`192` vCPUs). If you do not
     #   specify a value, the parameter is ignored.
     #
-    #   This field is required for Fargate. For information about the valid
-    #   values, see [Task size][1] in the *Amazon Elastic Container Service
-    #   Developer Guide*.
+    #   If you're using the Fargate launch type, this field is required and
+    #   you must use one of the following values, which determines your
+    #   range of supported values for the `memory` parameter:
     #
+    #   The CPU units cannot be less than 1 vCPU when you use Windows
+    #   containers on Fargate.
     #
+    #   * 256 (.25 vCPU) - Available `memory` values: 512 (0.5 GB), 1024 (1
+    #     GB), 2048 (2 GB)
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size
+    #   * 512 (.5 vCPU) - Available `memory` values: 1024 (1 GB), 2048 (2
+    #     GB), 3072 (3 GB), 4096 (4 GB)
+    #
+    #   * 1024 (1 vCPU) - Available `memory` values: 2048 (2 GB), 3072 (3
+    #     GB), 4096 (4 GB), 5120 (5 GB), 6144 (6 GB), 7168 (7 GB), 8192 (8
+    #     GB)
+    #
+    #   * 2048 (2 vCPU) - Available `memory` values: 4096 (4 GB) and 16384
+    #     (16 GB) in increments of 1024 (1 GB)
+    #
+    #   * 4096 (4 vCPU) - Available `memory` values: 8192 (8 GB) and 30720
+    #     (30 GB) in increments of 1024 (1 GB)
+    #
+    #   * 8192 (8 vCPU) - Available `memory` values: 16 GB and 60 GB in 4 GB
+    #     increments
+    #
+    #     This option requires Linux platform `1.4.0` or later.
+    #
+    #   * 16384 (16vCPU) - Available `memory` values: 32GB and 120 GB in 8
+    #     GB increments
+    #
+    #     This option requires Linux platform `1.4.0` or later.
     #   @return [String]
     #
     # @!attribute [rw] memory
@@ -10335,10 +10388,12 @@ module Aws::ECS
     # [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ebs-volumes.html#ebs-volumes-configuration
     #
     # @!attribute [rw] encrypted
-    #   Indicates whether the volume should be encrypted. If no value is
-    #   specified, encryption is turned on by default. This parameter maps
-    #   1:1 with the `Encrypted` parameter of the [CreateVolume API][1] in
-    #   the *Amazon EC2 API Reference*.
+    #   Indicates whether the volume should be encrypted. If you turn on
+    #   Region-level Amazon EBS encryption by default but set this value as
+    #   `false`, the setting is overridden and the volume is encrypted with
+    #   the KMS key specified for Amazon EBS encryption by default. This
+    #   parameter maps 1:1 with the `Encrypted` parameter of the
+    #   [CreateVolume API][1] in the *Amazon EC2 API Reference*.
     #
     #
     #
@@ -10347,12 +10402,14 @@ module Aws::ECS
     #
     # @!attribute [rw] kms_key_id
     #   The Amazon Resource Name (ARN) identifier of the Amazon Web Services
-    #   Key Management Service key to use for Amazon EBS encryption. When
-    #   encryption is turned on and no Amazon Web Services Key Management
-    #   Service key is specified, the default Amazon Web Services managed
-    #   key for Amazon EBS volumes is used. This parameter maps 1:1 with the
-    #   `KmsKeyId` parameter of the [CreateVolume API][1] in the *Amazon EC2
-    #   API Reference*.
+    #   Key Management Service key to use for Amazon EBS encryption. When a
+    #   key is specified using this parameter, it overrides Amazon EBS
+    #   default encryption or any KMS key that you specified for
+    #   cluster-level managed storage encryption. This parameter maps 1:1
+    #   with the `KmsKeyId` parameter of the [CreateVolume API][1] in the
+    #   *Amazon EC2 API Reference*. For more information about encrypting
+    #   Amazon EBS volumes attached to tasks, see [Encrypt data stored in
+    #   Amazon EBS volumes attached to Amazon ECS tasks][2].
     #
     #   Amazon Web Services authenticates the Amazon Web Services Key
     #   Management Service key asynchronously. Therefore, if you specify an
@@ -10362,6 +10419,7 @@ module Aws::ECS
     #
     #
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateVolume.html
+    #   [2]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ebs-kms-encryption.html
     #   @return [String]
     #
     # @!attribute [rw] volume_type
@@ -10417,15 +10475,28 @@ module Aws::ECS
     #   @return [Integer]
     #
     # @!attribute [rw] snapshot_id
-    #   The snapshot that Amazon ECS uses to create the volume. You must
-    #   specify either a snapshot ID or a volume size. This parameter maps
-    #   1:1 with the `SnapshotId` parameter of the [CreateVolume API][1] in
-    #   the *Amazon EC2 API Reference*.
+    #   The snapshot that Amazon ECS uses to create volumes for attachment
+    #   to tasks maintained by the service. You must specify either
+    #   `snapshotId` or `sizeInGiB` in your volume configuration. This
+    #   parameter maps 1:1 with the `SnapshotId` parameter of the
+    #   [CreateVolume API][1] in the *Amazon EC2 API Reference*.
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateVolume.html
     #   @return [String]
+    #
+    # @!attribute [rw] volume_initialization_rate
+    #   The rate, in MiB/s, at which data is fetched from a snapshot of an
+    #   existing EBS volume to create new volumes for attachment to the
+    #   tasks maintained by the service. This property can be specified only
+    #   if you specify a `snapshotId`. For more information, see [Initialize
+    #   Amazon EBS volumes][1] in the *Amazon EBS User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/initalize-volume.html
+    #   @return [Integer]
     #
     # @!attribute [rw] iops
     #   The number of I/O operations per second (IOPS). For `gp3`, `io1`,
@@ -10495,7 +10566,7 @@ module Aws::ECS
     #   The filesystem type for the volume. For volumes created from a
     #   snapshot, you must specify the same filesystem type that the volume
     #   was using when the snapshot was created. If there is a filesystem
-    #   type mismatch, the task will fail to start.
+    #   type mismatch, the tasks will fail to start.
     #
     #   The available Linux filesystem types are  `ext3`, `ext4`, and `xfs`.
     #   If no value is specified, the `xfs` filesystem type is used by
@@ -10512,6 +10583,7 @@ module Aws::ECS
       :volume_type,
       :size_in_gi_b,
       :snapshot_id,
+      :volume_initialization_rate,
       :iops,
       :throughput,
       :tag_specifications,
@@ -11034,7 +11106,7 @@ module Aws::ECS
     # @!attribute [rw] stop_type
     #   How you want Amazon ECS to stop the service.
     #
-    #   The valid values are `ROLLBACK`.
+    #   The ROLLBACK and ABORT stopType aren't supported.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/StopServiceDeploymentRequest AWS API Documentation
@@ -11320,7 +11392,9 @@ module Aws::ECS
     #   "kernel.shmmni" | "kernel.shm_rmid_forced"`, and `Sysctls` that
     #   start with `"fs.mqueue.*"`
     #
-    #   Valid network namespace values: `Sysctls` that start with `"net.*"`
+    #   Valid network namespace values: `Sysctls` that start with `"net.*"`.
+    #   Only namespaced `Sysctls` that exist within the container starting
+    #   with "net.* are accepted.
     #
     #   All of these values are supported by Fargate.
     #   @return [String]
@@ -11539,13 +11613,38 @@ module Aws::ECS
     #   (`0.125` vCPUs) and `196608` CPU units (`192` vCPUs). If you do not
     #   specify a value, the parameter is ignored.
     #
-    #   This field is required for Fargate. For information about the valid
-    #   values, see [Task size][1] in the *Amazon Elastic Container Service
-    #   Developer Guide*.
+    #   If you're using the Fargate launch type, this field is required.
+    #   You must use one of the following values. These values determine the
+    #   range of supported values for the `memory` parameter:
     #
+    #   The CPU units cannot be less than 1 vCPU when you use Windows
+    #   containers on Fargate.
     #
+    #   * 256 (.25 vCPU) - Available `memory` values: 512 (0.5 GB), 1024 (1
+    #     GB), 2048 (2 GB)
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size
+    #   * 512 (.5 vCPU) - Available `memory` values: 1024 (1 GB), 2048 (2
+    #     GB), 3072 (3 GB), 4096 (4 GB)
+    #
+    #   * 1024 (1 vCPU) - Available `memory` values: 2048 (2 GB), 3072 (3
+    #     GB), 4096 (4 GB), 5120 (5 GB), 6144 (6 GB), 7168 (7 GB), 8192 (8
+    #     GB)
+    #
+    #   * 2048 (2 vCPU) - Available `memory` values: 4096 (4 GB) and 16384
+    #     (16 GB) in increments of 1024 (1 GB)
+    #
+    #   * 4096 (4 vCPU) - Available `memory` values: 8192 (8 GB) and 30720
+    #     (30 GB) in increments of 1024 (1 GB)
+    #
+    #   * 8192 (8 vCPU) - Available `memory` values: 16 GB and 60 GB in 4 GB
+    #     increments
+    #
+    #     This option requires Linux platform `1.4.0` or later.
+    #
+    #   * 16384 (16vCPU) - Available `memory` values: 32GB and 120 GB in 8
+    #     GB increments
+    #
+    #     This option requires Linux platform `1.4.0` or later.
     #   @return [String]
     #
     # @!attribute [rw] created_at
@@ -12029,15 +12128,35 @@ module Aws::ECS
     #
     #   If you're using the EC2 launch type or the external launch type,
     #   this field is optional. Supported values are between `128` CPU units
-    #   (`0.125` vCPUs) and `196608` CPU units (`192` vCPUs).
+    #   (`0.125` vCPUs) and `196608` CPU units (`192` vCPUs). The CPU units
+    #   cannot be less than 1 vCPU when you use Windows containers on
+    #   Fargate.
     #
-    #   This field is required for Fargate. For information about the valid
-    #   values, see [Task size][1] in the *Amazon Elastic Container Service
-    #   Developer Guide*.
+    #   * 256 (.25 vCPU) - Available `memory` values: 512 (0.5 GB), 1024 (1
+    #     GB), 2048 (2 GB)
     #
+    #   * 512 (.5 vCPU) - Available `memory` values: 1024 (1 GB), 2048 (2
+    #     GB), 3072 (3 GB), 4096 (4 GB)
     #
+    #   * 1024 (1 vCPU) - Available `memory` values: 2048 (2 GB), 3072 (3
+    #     GB), 4096 (4 GB), 5120 (5 GB), 6144 (6 GB), 7168 (7 GB), 8192 (8
+    #     GB)
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size
+    #   * 2048 (2 vCPU) - Available `memory` values: 4096 (4 GB) and 16384
+    #     (16 GB) in increments of 1024 (1 GB)
+    #
+    #   * 4096 (4 vCPU) - Available `memory` values: 8192 (8 GB) and 30720
+    #     (30 GB) in increments of 1024 (1 GB)
+    #
+    #   * 8192 (8 vCPU) - Available `memory` values: 16 GB and 60 GB in 4 GB
+    #     increments
+    #
+    #     This option requires Linux platform `1.4.0` or later.
+    #
+    #   * 16384 (16vCPU) - Available `memory` values: 32GB and 120 GB in 8
+    #     GB increments
+    #
+    #     This option requires Linux platform `1.4.0` or later.
     #   @return [String]
     #
     # @!attribute [rw] memory
@@ -12294,10 +12413,12 @@ module Aws::ECS
     # Amazon EBS volume, with one volume created for each task.
     #
     # @!attribute [rw] encrypted
-    #   Indicates whether the volume should be encrypted. If no value is
-    #   specified, encryption is turned on by default. This parameter maps
-    #   1:1 with the `Encrypted` parameter of the [CreateVolume API][1] in
-    #   the *Amazon EC2 API Reference*.
+    #   Indicates whether the volume should be encrypted. If you turn on
+    #   Region-level Amazon EBS encryption by default but set this value as
+    #   `false`, the setting is overridden and the volume is encrypted with
+    #   the KMS key specified for Amazon EBS encryption by default. This
+    #   parameter maps 1:1 with the `Encrypted` parameter of the
+    #   [CreateVolume API][1] in the *Amazon EC2 API Reference*.
     #
     #
     #
@@ -12306,12 +12427,14 @@ module Aws::ECS
     #
     # @!attribute [rw] kms_key_id
     #   The Amazon Resource Name (ARN) identifier of the Amazon Web Services
-    #   Key Management Service key to use for Amazon EBS encryption. When
-    #   encryption is turned on and no Amazon Web Services Key Management
-    #   Service key is specified, the default Amazon Web Services managed
-    #   key for Amazon EBS volumes is used. This parameter maps 1:1 with the
-    #   `KmsKeyId` parameter of the [CreateVolume API][1] in the *Amazon EC2
-    #   API Reference*.
+    #   Key Management Service key to use for Amazon EBS encryption. When a
+    #   key is specified using this parameter, it overrides Amazon EBS
+    #   default encryption or any KMS key that you specified for
+    #   cluster-level managed storage encryption. This parameter maps 1:1
+    #   with the `KmsKeyId` parameter of the [CreateVolume API][1] in the
+    #   *Amazon EC2 API Reference*. For more information about encrypting
+    #   Amazon EBS volumes attached to a task, see [Encrypt data stored in
+    #   Amazon EBS volumes attached to Amazon ECS tasks][2].
     #
     #   Amazon Web Services authenticates the Amazon Web Services Key
     #   Management Service key asynchronously. Therefore, if you specify an
@@ -12321,6 +12444,7 @@ module Aws::ECS
     #
     #
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateVolume.html
+    #   [2]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ebs-kms-encryption.html
     #   @return [String]
     #
     # @!attribute [rw] volume_type
@@ -12385,6 +12509,18 @@ module Aws::ECS
     #
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateVolume.html
     #   @return [String]
+    #
+    # @!attribute [rw] volume_initialization_rate
+    #   The rate, in MiB/s, at which data is fetched from a snapshot of an
+    #   existing Amazon EBS volume to create a new volume for attachment to
+    #   the task. This property can be specified only if you specify a
+    #   `snapshotId`. For more information, see [Initialize Amazon EBS
+    #   volumes][1] in the *Amazon EBS User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/initalize-volume.html
+    #   @return [Integer]
     #
     # @!attribute [rw] iops
     #   The number of I/O operations per second (IOPS). For `gp3`, `io1`,
@@ -12474,6 +12610,7 @@ module Aws::ECS
       :volume_type,
       :size_in_gi_b,
       :snapshot_id,
+      :volume_initialization_rate,
       :iops,
       :throughput,
       :tag_specifications,

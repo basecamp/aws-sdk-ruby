@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.191.0 (2025-05-13)
+------------------
+
+* Feature - This release extends functionality for Amazon EBS volumes attached to Amazon ECS tasks by adding support for the new EBS volumeInitializationRate parameter in ECS RunTask/StartTask/CreateService/UpdateService APIs.
+
 1.190.0 (2025-05-12)
 ------------------
 

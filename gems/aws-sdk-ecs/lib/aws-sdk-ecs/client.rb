@@ -1630,6 +1630,7 @@ module Aws::ECS
     #           volume_type: "EBSVolumeType",
     #           size_in_gi_b: 1,
     #           snapshot_id: "EBSSnapshotId",
+    #           volume_initialization_rate: 1,
     #           iops: 1,
     #           throughput: 1,
     #           tag_specifications: [
@@ -1791,6 +1792,7 @@ module Aws::ECS
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.volume_type #=> String
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.size_in_gi_b #=> Integer
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.snapshot_id #=> String
+    #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.volume_initialization_rate #=> Integer
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.iops #=> Integer
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.throughput #=> Integer
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.tag_specifications #=> Array
@@ -2172,15 +2174,12 @@ module Aws::ECS
     #   container instances is affected.
     #
     # @option params [String] :principal_arn
-    #   The Amazon Resource Name (ARN) of the principal. It can be a user,
+    #   The Amazon Resource Name (ARN) of the principal. It can be an user,
     #   role, or the root user. If you specify the root user, it disables the
     #   account setting for all users, roles, and the root user of the account
     #   unless a user or role explicitly overrides these settings. If this
     #   field is omitted, the setting is changed only for the authenticated
     #   user.
-    #
-    #   In order to use this parameter, you must be the root user, or the
-    #   principal.
     #
     # @return [Types::DeleteAccountSettingResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2724,6 +2723,7 @@ module Aws::ECS
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.volume_type #=> String
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.size_in_gi_b #=> Integer
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.snapshot_id #=> String
+    #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.volume_initialization_rate #=> Integer
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.iops #=> Integer
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.throughput #=> Integer
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.tag_specifications #=> Array
@@ -2852,7 +2852,7 @@ module Aws::ECS
     #             environment: [
     #             ], 
     #             essential: true, 
-    #             image: "ubuntu", 
+    #             image: "public.ecr.aws/docker/library/ubuntu:latest", 
     #             memory: 100, 
     #             mount_points: [
     #             ], 
@@ -3388,10 +3388,10 @@ module Aws::ECS
     #
     # @example Example: To deregister a revision of a task definition
     #
-    #   # This example deregisters the first revision of the curler task definition
+    #   # This example deregisters the first revision of the fargate-task task definition
     #
     #   resp = client.deregister_task_definition({
-    #     task_definition: "curler:1", 
+    #     task_definition: "fargate-task:1", 
     #   })
     #
     #   resp.to_h outputs the following:
@@ -3399,30 +3399,23 @@ module Aws::ECS
     #     task_definition: {
     #       container_definitions: [
     #         {
-    #           name: "curler", 
-    #           command: [
-    #             "curl -v http://example.com/", 
-    #           ], 
-    #           cpu: 100, 
-    #           entry_point: [
-    #           ], 
-    #           environment: [
-    #           ], 
+    #           name: "nginx", 
+    #           cpu: 256, 
     #           essential: true, 
-    #           image: "curl:latest", 
-    #           memory: 256, 
-    #           mount_points: [
-    #           ], 
+    #           image: "public.ecr.aws/docker/library/nginx:latest", 
+    #           memory: 128, 
     #           port_mappings: [
-    #           ], 
-    #           volumes_from: [
+    #             {
+    #               container_port: 80, 
+    #               host_port: 80, 
+    #               protocol: "tcp", 
+    #             }, 
     #           ], 
     #         }, 
     #       ], 
-    #       family: "curler", 
-    #       revision: 1, 
+    #       family: "fargate-task", 
     #       status: "INACTIVE", 
-    #       task_definition_arn: "arn:aws:ecs:us-west-2:123456789012:task-definition/curler:1", 
+    #       task_definition_arn: "arn:aws:ecs:us-west-2:123456789012:task-definition/fargate-task:1", 
     #       volumes: [
     #       ], 
     #     }, 
@@ -4363,6 +4356,7 @@ module Aws::ECS
     #   resp.service_revisions[0].volume_configurations[0].managed_ebs_volume.volume_type #=> String
     #   resp.service_revisions[0].volume_configurations[0].managed_ebs_volume.size_in_gi_b #=> Integer
     #   resp.service_revisions[0].volume_configurations[0].managed_ebs_volume.snapshot_id #=> String
+    #   resp.service_revisions[0].volume_configurations[0].managed_ebs_volume.volume_initialization_rate #=> Integer
     #   resp.service_revisions[0].volume_configurations[0].managed_ebs_volume.iops #=> Integer
     #   resp.service_revisions[0].volume_configurations[0].managed_ebs_volume.throughput #=> Integer
     #   resp.service_revisions[0].volume_configurations[0].managed_ebs_volume.tag_specifications #=> Array
@@ -4613,6 +4607,7 @@ module Aws::ECS
     #   resp.services[0].deployments[0].volume_configurations[0].managed_ebs_volume.volume_type #=> String
     #   resp.services[0].deployments[0].volume_configurations[0].managed_ebs_volume.size_in_gi_b #=> Integer
     #   resp.services[0].deployments[0].volume_configurations[0].managed_ebs_volume.snapshot_id #=> String
+    #   resp.services[0].deployments[0].volume_configurations[0].managed_ebs_volume.volume_initialization_rate #=> Integer
     #   resp.services[0].deployments[0].volume_configurations[0].managed_ebs_volume.iops #=> Integer
     #   resp.services[0].deployments[0].volume_configurations[0].managed_ebs_volume.throughput #=> Integer
     #   resp.services[0].deployments[0].volume_configurations[0].managed_ebs_volume.tag_specifications #=> Array
@@ -5553,9 +5548,6 @@ module Aws::ECS
     #   The ARN of the principal, which can be a user, role, or the root user.
     #   If this field is omitted, the account settings are listed only for the
     #   authenticated user.
-    #
-    #   In order to use this parameter, you must be the root user, or the
-    #   principal.
     #
     #   <note markdown="1"> Federated users assume the account setting of the root user and can't
     #   have explicit account settings set for them.
@@ -6832,9 +6824,6 @@ module Aws::ECS
     #   explicitly overrides these settings. If this field is omitted, the
     #   setting is changed only for the authenticated user.
     #
-    #   In order to use this parameter, you must be the root user, or the
-    #   principal.
-    #
     #   <note markdown="1"> You must use the root user when you set the Fargate wait time
     #   (`fargateTaskRetirementWaitPeriod`).
     #
@@ -7899,13 +7888,37 @@ module Aws::ECS
     #   (`0.125` vCPUs) and `196608` CPU units (`192` vCPUs). If you do not
     #   specify a value, the parameter is ignored.
     #
-    #   This field is required for Fargate. For information about the valid
-    #   values, see [Task size][1] in the *Amazon Elastic Container Service
-    #   Developer Guide*.
+    #   If you're using the Fargate launch type, this field is required and
+    #   you must use one of the following values, which determines your range
+    #   of supported values for the `memory` parameter:
     #
+    #   The CPU units cannot be less than 1 vCPU when you use Windows
+    #   containers on Fargate.
     #
+    #   * 256 (.25 vCPU) - Available `memory` values: 512 (0.5 GB), 1024 (1
+    #     GB), 2048 (2 GB)
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size
+    #   * 512 (.5 vCPU) - Available `memory` values: 1024 (1 GB), 2048 (2 GB),
+    #     3072 (3 GB), 4096 (4 GB)
+    #
+    #   * 1024 (1 vCPU) - Available `memory` values: 2048 (2 GB), 3072 (3 GB),
+    #     4096 (4 GB), 5120 (5 GB), 6144 (6 GB), 7168 (7 GB), 8192 (8 GB)
+    #
+    #   * 2048 (2 vCPU) - Available `memory` values: 4096 (4 GB) and 16384 (16
+    #     GB) in increments of 1024 (1 GB)
+    #
+    #   * 4096 (4 vCPU) - Available `memory` values: 8192 (8 GB) and 30720 (30
+    #     GB) in increments of 1024 (1 GB)
+    #
+    #   * 8192 (8 vCPU) - Available `memory` values: 16 GB and 60 GB in 4 GB
+    #     increments
+    #
+    #     This option requires Linux platform `1.4.0` or later.
+    #
+    #   * 16384 (16vCPU) - Available `memory` values: 32GB and 120 GB in 8 GB
+    #     increments
+    #
+    #     This option requires Linux platform `1.4.0` or later.
     #
     # @option params [String] :memory
     #   The amount of memory (in MiB) used by the task. It can be expressed as
@@ -8119,7 +8132,7 @@ module Aws::ECS
     #         ], 
     #         cpu: 10, 
     #         essential: true, 
-    #         image: "busybox", 
+    #         image: "public.ecr.aws/docker/library/busybox:latest", 
     #         memory: 10, 
     #       }, 
     #     ], 
@@ -8143,7 +8156,7 @@ module Aws::ECS
     #           environment: [
     #           ], 
     #           essential: true, 
-    #           image: "busybox", 
+    #           image: "public.ecr.aws/docker/library/busybox:latest", 
     #           memory: 10, 
     #           mount_points: [
     #           ], 
@@ -8655,17 +8668,10 @@ module Aws::ECS
     # * Run `RunTask` with the `clientToken` and the original set of
     #   parameters
     #
-    # If you get a `ClientException`error, the `RunTask` could not be
-    # processed because you use managed scaling and there is a capacity
-    # error because the quota of tasks in the `PROVISIONING` per cluster has
-    # been reached. For information about the service quotas, see [Amazon
-    # ECS service quotas][3].
-    #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html
     # [2]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ebs-volumes.html#ebs-volume-types
-    # [3]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-quotas.html
     #
     # @option params [Array<Types::CapacityProviderStrategyItem>] :capacity_provider_strategy
     #   The capacity provider strategy to use for the task.
@@ -9048,6 +9054,7 @@ module Aws::ECS
     #           volume_type: "EBSVolumeType",
     #           size_in_gi_b: 1,
     #           snapshot_id: "EBSSnapshotId",
+    #           volume_initialization_rate: 1,
     #           iops: 1,
     #           throughput: 1,
     #           tag_specifications: [
@@ -9480,6 +9487,7 @@ module Aws::ECS
     #           volume_type: "EBSVolumeType",
     #           size_in_gi_b: 1,
     #           snapshot_id: "EBSSnapshotId",
+    #           volume_initialization_rate: 1,
     #           iops: 1,
     #           throughput: 1,
     #           tag_specifications: [
@@ -9629,20 +9637,9 @@ module Aws::ECS
 
     # Stops an ongoing service deployment.
     #
-    # The following stop types are avaiable:
+    # <note markdown="1"> StopServiceDeployment isn't currently supported.
     #
-    # * ROLLBACK - This option rolls back the service deployment to the
-    #   previous service revision.
-    #
-    #   You can use this option even if you didn't configure the service
-    #   deployment for the rollback option.
-    #
-    # For more information, see [Stopping Amazon ECS service deployments][1]
-    # in the *Amazon Elastic Container Service Developer Guide*.
-    #
-    #
-    #
-    # [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/stop-service-deployment.html
+    #  </note>
     #
     # @option params [required, String] :service_deployment_arn
     #   The ARN of the service deployment that you want to stop.
@@ -9650,7 +9647,7 @@ module Aws::ECS
     # @option params [String] :stop_type
     #   How you want Amazon ECS to stop the service.
     #
-    #   The valid values are `ROLLBACK`.
+    #   The ROLLBACK and ABORT stopType aren't supported.
     #
     # @return [Types::StopServiceDeploymentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -11847,6 +11844,7 @@ module Aws::ECS
     #           volume_type: "EBSVolumeType",
     #           size_in_gi_b: 1,
     #           snapshot_id: "EBSSnapshotId",
+    #           volume_initialization_rate: 1,
     #           iops: 1,
     #           throughput: 1,
     #           tag_specifications: [
@@ -12008,6 +12006,7 @@ module Aws::ECS
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.volume_type #=> String
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.size_in_gi_b #=> Integer
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.snapshot_id #=> String
+    #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.volume_initialization_rate #=> Integer
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.iops #=> Integer
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.throughput #=> Integer
     #   resp.service.deployments[0].volume_configurations[0].managed_ebs_volume.tag_specifications #=> Array
@@ -12537,7 +12536,7 @@ module Aws::ECS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ecs'
-      context[:gem_version] = '1.190.0'
+      context[:gem_version] = '1.191.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
