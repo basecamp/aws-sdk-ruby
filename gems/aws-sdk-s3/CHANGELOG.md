@@ -1,5 +1,6 @@
 Unreleased Changes
 ------------------
+* Issue - Abort multipart download if object is modified during download.
 
 1.186.0 (2025-05-12)
 ------------------
