@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.43.0 (2025-05-15)
+------------------
+
+* Feature - Updated the descriptions for the AWS Control Tower Baseline APIs to make them more intuitive.
+
 1.42.0 (2025-05-13)
 ------------------
 
