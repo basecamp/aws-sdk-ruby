@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.192.0 (2025-05-16)
+------------------
+
+* Feature - This is an Amazon ECs documentation only release to support the change of the container exit "reason" field from 255 characters to 1024 characters.
+
 1.191.0 (2025-05-13)
 ------------------
 
