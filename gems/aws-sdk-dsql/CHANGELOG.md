@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.9.0 (2025-05-19)
+------------------
+
+* Feature - CreateMultiRegionCluster and DeleteMultiRegionCluster APIs removed
+
 1.8.0 (2025-05-13)
 ------------------
 

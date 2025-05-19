@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.524.0 (2025-05-19)
+------------------
+
+* Feature - This release includes new APIs for System Integrity Protection (SIP) configuration and automated root volume ownership delegation for EC2 Mac instances.
+
 1.523.0 (2025-05-12)
 ------------------
 

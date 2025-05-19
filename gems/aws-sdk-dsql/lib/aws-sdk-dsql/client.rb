@@ -469,63 +469,65 @@ module Aws::DSQL
 
     # @!group API Operations
 
-    # This operation creates a cluster in Amazon Aurora DSQL. You need the
-    # following permissions to use this operation.
+    # The CreateCluster API allows you to create both single-region clusters
+    # and multi-Region clusters. With the addition of the
+    # *multiRegionProperties* parameter, you can create a cluster with
+    # witness Region support and establish peer relationships with clusters
+    # in other Regions during creation.
     #
-    # Permission to create a cluster.
+    # <note markdown="1"> Creating multi-Region clusters requires additional IAM permissions
+    # beyond those needed for single-Region clusters, as detailed in the
+    # **Required permissions** section below.
+    #
+    #  </note>
+    #
+    # **Required permissions**
     #
     # dsql:CreateCluster
     #
-    # : Resources: arn:aws:dsql:*region*:*account-id*:cluster/*
+    # : Required to create a cluster.
     #
-    # Permission to add tags to a resource.
+    #   Resources: `arn:aws:dsql:region:account-id:cluster/*`
     #
     # dsql:TagResource
     #
-    # : Resources: arn:aws:dsql:*region*:*account-id*:cluster/*
+    # : Permission to add tags to a resource.
     #
-    # Permission to configure multi-region properties for a cluster.
+    #   Resources: `arn:aws:dsql:region:account-id:cluster/*`
     #
     # dsql:PutMultiRegionProperties
     #
-    # : Resources: arn:aws:dsql:*region*:*account-id*:cluster/*
+    # : Permission to configure multi-region properties for a cluster.
     #
-    # When specifying multiRegionProperties.clusters.
+    #   Resources: `arn:aws:dsql:region:account-id:cluster/*`
     #
     # dsql:AddPeerCluster
     #
-    # : Permission to add peer clusters.
+    # : When specifying `multiRegionProperties.clusters`, permission to add
+    #   peer clusters.
     #
     #   Resources:
     #
-    #   * Local cluster: arn:aws:dsql:*region*:*account-id*:cluster/*
+    #   * Local cluster: `arn:aws:dsql:region:account-id:cluster/*`
     #
     #   * Each peer cluster: exact ARN of each specified peer cluster
     #
-    # When specifying multiRegionProperties.witnessRegion.
-    #
     # dsql:PutWitnessRegion
     #
-    # : Permission to set a witness region.
+    # : When specifying `multiRegionProperties.witnessRegion`, permission to
+    #   set a witness Region. This permission is checked both in the cluster
+    #   Region and in the witness Region.
     #
-    #   Resources: arn:aws:dsql:*region*:*account-id*:cluster/*
+    #   Resources: `arn:aws:dsql:region:account-id:cluster/*`
     #
     #   Condition Keys: `dsql:WitnessRegion` (matching the specified witness
     #   region)
     #
-    #   <note markdown="1"> This permission is checked both in the cluster Region and in the
-    #   witness Region.
-    #
-    #    </note>
-    #
-    # **Important Notes for Multi-Region Operations**
-    #
-    #  * The witness region specified in
+    # * The witness Region specified in
     #   `multiRegionProperties.witnessRegion` cannot be the same as the
     #   cluster's Region.
     #
-    # * When updating clusters with peer relationships, permissions are
-    #   checked for both adding and removing peers.
+    # ^
     #
     # @option params [Boolean] :deletion_protection_enabled
     #   If enabled, you can't delete your cluster. You must first disable
@@ -605,89 +607,6 @@ module Aws::DSQL
       req.send_request(options)
     end
 
-    # Creates multi-Region clusters in Amazon Aurora DSQL. Multi-Region
-    # clusters require a linked Region list, which is an array of the
-    # Regions in which you want to create linked clusters. Multi-Region
-    # clusters require a witness Region, which participates in quorum in
-    # failure scenarios.
-    #
-    # @option params [required, Array<String>] :linked_region_list
-    #   An array of the Regions in which you want to create additional
-    #   clusters.
-    #
-    # @option params [Hash<String,Types::LinkedClusterProperties>] :cluster_properties
-    #   A mapping of properties to use when creating linked clusters.
-    #
-    # @option params [required, String] :witness_region
-    #   The witness Region of multi-Region clusters.
-    #
-    # @option params [String] :client_token
-    #   A unique, case-sensitive identifier that you provide to ensure the
-    #   idempotency of the request. Idempotency ensures that an API request
-    #   completes only once. With an idempotent request, if the original
-    #   request completes successfully. The subsequent retries with the same
-    #   client token return the result from the original successful request
-    #   and they have no additional effect.
-    #
-    #   If you don't specify a client token, the Amazon Web Services SDK
-    #   automatically generates one.
-    #
-    #   **A suitable default value is auto-generated.** You should normally
-    #   not need to pass this option.**
-    #
-    # @return [Types::CreateMultiRegionClustersOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
-    #
-    #   * {Types::CreateMultiRegionClustersOutput#linked_cluster_arns #linked_cluster_arns} => Array&lt;String&gt;
-    #
-    #
-    # @example Example: Create Multi Region Clusters
-    #
-    #   resp = client.create_multi_region_clusters({
-    #     linked_region_list: [
-    #       "us-east-1", 
-    #       "us-east-2", 
-    #     ], 
-    #     witness_region: "us-west-2", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     linked_cluster_arns: [
-    #       "arn:aws:dsql:us-east-1:111122223333:cluster/abcdefghijklmnopqrstu12345", 
-    #       "arn:aws:dsql:us-east-2:111122223333:cluster/klmnopqrstuvwxyzabcde54321", 
-    #     ], 
-    #   }
-    #
-    # @example Request syntax with placeholder values
-    #
-    #   resp = client.create_multi_region_clusters({
-    #     linked_region_list: ["Region"], # required
-    #     cluster_properties: {
-    #       "Region" => {
-    #         deletion_protection_enabled: false,
-    #         tags: {
-    #           "TagKey" => "TagValue",
-    #         },
-    #       },
-    #     },
-    #     witness_region: "Region", # required
-    #     client_token: "ClientToken",
-    #   })
-    #
-    # @example Response structure
-    #
-    #   resp.linked_cluster_arns #=> Array
-    #   resp.linked_cluster_arns[0] #=> String
-    #
-    # @see http://docs.aws.amazon.com/goto/WebAPI/dsql-2018-05-10/CreateMultiRegionClusters AWS API Documentation
-    #
-    # @overload create_multi_region_clusters(params = {})
-    # @param [Hash] params ({})
-    def create_multi_region_clusters(params = {}, options = {})
-      req = build_request(:create_multi_region_clusters, params)
-      req.send_request(options)
-    end
-
     # Deletes a cluster in Amazon Aurora DSQL.
     #
     # @option params [required, String] :identifier
@@ -713,7 +632,6 @@ module Aws::DSQL
     #   * {Types::DeleteClusterOutput#arn #arn} => String
     #   * {Types::DeleteClusterOutput#status #status} => String
     #   * {Types::DeleteClusterOutput#creation_time #creation_time} => Time
-    #   * {Types::DeleteClusterOutput#deletion_protection_enabled #deletion_protection_enabled} => Boolean
     #
     #
     # @example Example: Delete Cluster
@@ -735,7 +653,6 @@ module Aws::DSQL
     #   resp.arn #=> String
     #   resp.status #=> String, one of "CREATING", "ACTIVE", "IDLE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "PENDING_SETUP", "PENDING_DELETE"
     #   resp.creation_time #=> Time
-    #   resp.deletion_protection_enabled #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dsql-2018-05-10/DeleteCluster AWS API Documentation
     #
@@ -743,54 +660,6 @@ module Aws::DSQL
     # @param [Hash] params ({})
     def delete_cluster(params = {}, options = {})
       req = build_request(:delete_cluster, params)
-      req.send_request(options)
-    end
-
-    # Deletes a multi-Region cluster in Amazon Aurora DSQL.
-    #
-    # @option params [required, Array<String>] :linked_cluster_arns
-    #   The ARNs of the clusters linked to the cluster you want to delete.
-    #   also deletes these clusters as part of the operation.
-    #
-    # @option params [String] :client_token
-    #   A unique, case-sensitive identifier that you provide to ensure the
-    #   idempotency of the request. Idempotency ensures that an API request
-    #   completes only once. With an idempotent request, if the original
-    #   request completes successfully. The subsequent retries with the same
-    #   client token return the result from the original successful request
-    #   and they have no additional effect.
-    #
-    #   If you don't specify a client token, the Amazon Web Services SDK
-    #   automatically generates one.
-    #
-    #   **A suitable default value is auto-generated.** You should normally
-    #   not need to pass this option.**
-    #
-    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
-    #
-    #
-    # @example Example: Delete Multi Region Clusters
-    #
-    #   resp = client.delete_multi_region_clusters({
-    #     linked_cluster_arns: [
-    #       "arn:aws:dsql:us-east-1:111122223333:cluster/abcdefghijklmnopqrstu12345", 
-    #       "arn:aws:dsql:us-east-2:111122223333:cluster/klmnopqrstuvwxyzabcde54321", 
-    #     ], 
-    #   })
-    #
-    # @example Request syntax with placeholder values
-    #
-    #   resp = client.delete_multi_region_clusters({
-    #     linked_cluster_arns: ["ClusterArn"], # required
-    #     client_token: "ClientToken",
-    #   })
-    #
-    # @see http://docs.aws.amazon.com/goto/WebAPI/dsql-2018-05-10/DeleteMultiRegionClusters AWS API Documentation
-    #
-    # @overload delete_multi_region_clusters(params = {})
-    # @param [Hash] params ({})
-    def delete_multi_region_clusters(params = {}, options = {})
-      req = build_request(:delete_multi_region_clusters, params)
       req.send_request(options)
     end
 
@@ -805,8 +674,6 @@ module Aws::DSQL
     #   * {Types::GetClusterOutput#arn #arn} => String
     #   * {Types::GetClusterOutput#status #status} => String
     #   * {Types::GetClusterOutput#creation_time #creation_time} => Time
-    #   * {Types::GetClusterOutput#witness_region #witness_region} => String
-    #   * {Types::GetClusterOutput#linked_cluster_arns #linked_cluster_arns} => Array&lt;String&gt;
     #   * {Types::GetClusterOutput#deletion_protection_enabled #deletion_protection_enabled} => Boolean
     #   * {Types::GetClusterOutput#multi_region_properties #multi_region_properties} => Types::MultiRegionProperties
     #   * {Types::GetClusterOutput#tags #tags} => Hash&lt;String,String&gt;
@@ -830,9 +697,6 @@ module Aws::DSQL
     #   resp.arn #=> String
     #   resp.status #=> String, one of "CREATING", "ACTIVE", "IDLE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "PENDING_SETUP", "PENDING_DELETE"
     #   resp.creation_time #=> Time
-    #   resp.witness_region #=> String
-    #   resp.linked_cluster_arns #=> Array
-    #   resp.linked_cluster_arns[0] #=> String
     #   resp.deletion_protection_enabled #=> Boolean
     #   resp.multi_region_properties.witness_region #=> String
     #   resp.multi_region_properties.clusters #=> Array
@@ -1049,19 +913,72 @@ module Aws::DSQL
       req.send_request(options)
     end
 
-    # Updates a cluster.
+    # The *UpdateCluster* API allows you to modify both single-Region and
+    # multi-Region cluster configurations. With the *multiRegionProperties*
+    # parameter, you can add or modify witness Region support and manage
+    # peer relationships with clusters in other Regions.
     #
-    # **Example IAM Policy for Multi-Region Operations**
+    # <note markdown="1"> Note that updating multi-region clusters requires additional IAM
+    # permissions beyond those needed for standard cluster updates, as
+    # detailed in the Permissions section.
     #
-    # The following IAM policy grants permissions for multi-Region
-    # operations.
+    #  </note>
     #
-    # The `dsql:RemovePeerCluster` permission uses a wildcard ARN pattern to
-    # simplify permission management during updates.
+    # **Required permissions**
     #
-    # **Important Notes for Multi-Region Operations**
+    # dsql:UpdateCluster
     #
-    #  * The witness region specified in
+    # : Permission to update a DSQL cluster.
+    #
+    #   Resources: `arn:aws:dsql:region:account-id:cluster/cluster-id `
+    # ^
+    #
+    # dsql:PutMultiRegionProperties
+    #
+    # : Permission to configure multi-Region properties for a cluster.
+    #
+    #   Resources: `arn:aws:dsql:region:account-id:cluster/cluster-id `
+    # ^
+    #
+    # dsql:GetCluster
+    #
+    # : Permission to retrieve cluster information.
+    #
+    #   Resources: `arn:aws:dsql:region:account-id:cluster/cluster-id `
+    #
+    # dsql:AddPeerCluster
+    #
+    # : Permission to add peer clusters.
+    #
+    #   Resources:
+    #
+    #   * Local cluster: `arn:aws:dsql:region:account-id:cluster/cluster-id
+    #     `
+    #
+    #   * Each peer cluster: exact ARN of each specified peer cluster
+    #
+    # dsql:RemovePeerCluster
+    #
+    # : Permission to remove peer clusters. The *dsql:RemovePeerCluster*
+    #   permission uses a wildcard ARN pattern to simplify permission
+    #   management during updates.
+    #
+    #   Resources: `arn:aws:dsql:*:account-id:cluster/*`
+    # ^
+    #
+    # dsql:PutWitnessRegion
+    #
+    # : Permission to set a witness Region.
+    #
+    #   Resources: `arn:aws:dsql:region:account-id:cluster/cluster-id `
+    #
+    #   Condition Keys: dsql:WitnessRegion (matching the specified witness
+    #   Region)
+    #
+    #   **This permission is checked both in the cluster Region and in the
+    #   witness Region.**
+    #
+    # * The witness region specified in
     #   `multiRegionProperties.witnessRegion` cannot be the same as the
     #   cluster's Region.
     #
@@ -1101,9 +1018,6 @@ module Aws::DSQL
     #   * {Types::UpdateClusterOutput#arn #arn} => String
     #   * {Types::UpdateClusterOutput#status #status} => String
     #   * {Types::UpdateClusterOutput#creation_time #creation_time} => Time
-    #   * {Types::UpdateClusterOutput#witness_region #witness_region} => String
-    #   * {Types::UpdateClusterOutput#linked_cluster_arns #linked_cluster_arns} => Array&lt;String&gt;
-    #   * {Types::UpdateClusterOutput#deletion_protection_enabled #deletion_protection_enabled} => Boolean
     #
     #
     # @example Example: Update Cluster
@@ -1131,10 +1045,6 @@ module Aws::DSQL
     #   resp.arn #=> String
     #   resp.status #=> String, one of "CREATING", "ACTIVE", "IDLE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "PENDING_SETUP", "PENDING_DELETE"
     #   resp.creation_time #=> Time
-    #   resp.witness_region #=> String
-    #   resp.linked_cluster_arns #=> Array
-    #   resp.linked_cluster_arns[0] #=> String
-    #   resp.deletion_protection_enabled #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dsql-2018-05-10/UpdateCluster AWS API Documentation
     #
@@ -1163,7 +1073,7 @@ module Aws::DSQL
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-dsql'
-      context[:gem_version] = '1.8.0'
+      context[:gem_version] = '1.9.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

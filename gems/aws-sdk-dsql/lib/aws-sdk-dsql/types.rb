@@ -145,57 +145,6 @@ module Aws::DSQL
       include Aws::Structure
     end
 
-    # @!attribute [rw] linked_region_list
-    #   An array of the Regions in which you want to create additional
-    #   clusters.
-    #   @return [Array<String>]
-    #
-    # @!attribute [rw] cluster_properties
-    #   A mapping of properties to use when creating linked clusters.
-    #   @return [Hash<String,Types::LinkedClusterProperties>]
-    #
-    # @!attribute [rw] witness_region
-    #   The witness Region of multi-Region clusters.
-    #   @return [String]
-    #
-    # @!attribute [rw] client_token
-    #   A unique, case-sensitive identifier that you provide to ensure the
-    #   idempotency of the request. Idempotency ensures that an API request
-    #   completes only once. With an idempotent request, if the original
-    #   request completes successfully. The subsequent retries with the same
-    #   client token return the result from the original successful request
-    #   and they have no additional effect.
-    #
-    #   If you don't specify a client token, the Amazon Web Services SDK
-    #   automatically generates one.
-    #
-    #   **A suitable default value is auto-generated.** You should normally
-    #   not need to pass this option.
-    #   @return [String]
-    #
-    # @see http://docs.aws.amazon.com/goto/WebAPI/dsql-2018-05-10/CreateMultiRegionClustersInput AWS API Documentation
-    #
-    class CreateMultiRegionClustersInput < Struct.new(
-      :linked_region_list,
-      :cluster_properties,
-      :witness_region,
-      :client_token)
-      SENSITIVE = []
-      include Aws::Structure
-    end
-
-    # @!attribute [rw] linked_cluster_arns
-    #   An array that contains the ARNs of all linked clusters.
-    #   @return [Array<String>]
-    #
-    # @see http://docs.aws.amazon.com/goto/WebAPI/dsql-2018-05-10/CreateMultiRegionClustersOutput AWS API Documentation
-    #
-    class CreateMultiRegionClustersOutput < Struct.new(
-      :linked_cluster_arns)
-      SENSITIVE = []
-      include Aws::Structure
-    end
-
     # @!attribute [rw] identifier
     #   The ID of the cluster to delete.
     #   @return [String]
@@ -242,47 +191,13 @@ module Aws::DSQL
     #   The time of when the cluster was created.
     #   @return [Time]
     #
-    # @!attribute [rw] deletion_protection_enabled
-    #   Specifies whether deletion protection was enabled on the cluster.
-    #   @return [Boolean]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dsql-2018-05-10/DeleteClusterOutput AWS API Documentation
     #
     class DeleteClusterOutput < Struct.new(
       :identifier,
       :arn,
       :status,
-      :creation_time,
-      :deletion_protection_enabled)
-      SENSITIVE = []
-      include Aws::Structure
-    end
-
-    # @!attribute [rw] linked_cluster_arns
-    #   The ARNs of the clusters linked to the cluster you want to delete.
-    #   also deletes these clusters as part of the operation.
-    #   @return [Array<String>]
-    #
-    # @!attribute [rw] client_token
-    #   A unique, case-sensitive identifier that you provide to ensure the
-    #   idempotency of the request. Idempotency ensures that an API request
-    #   completes only once. With an idempotent request, if the original
-    #   request completes successfully. The subsequent retries with the same
-    #   client token return the result from the original successful request
-    #   and they have no additional effect.
-    #
-    #   If you don't specify a client token, the Amazon Web Services SDK
-    #   automatically generates one.
-    #
-    #   **A suitable default value is auto-generated.** You should normally
-    #   not need to pass this option.
-    #   @return [String]
-    #
-    # @see http://docs.aws.amazon.com/goto/WebAPI/dsql-2018-05-10/DeleteMultiRegionClustersInput AWS API Documentation
-    #
-    class DeleteMultiRegionClustersInput < Struct.new(
-      :linked_cluster_arns,
-      :client_token)
+      :creation_time)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -317,15 +232,6 @@ module Aws::DSQL
     #   The time of when the cluster was created.
     #   @return [Time]
     #
-    # @!attribute [rw] witness_region
-    #   The witness Region of the cluster. Applicable only for multi-Region
-    #   clusters.
-    #   @return [String]
-    #
-    # @!attribute [rw] linked_cluster_arns
-    #   The ARNs of the clusters linked to the retrieved cluster.
-    #   @return [Array<String>]
-    #
     # @!attribute [rw] deletion_protection_enabled
     #   Whether deletion protection is enabled in this cluster.
     #   @return [Boolean]
@@ -346,8 +252,6 @@ module Aws::DSQL
       :arn,
       :status,
       :creation_time,
-      :witness_region,
-      :linked_cluster_arns,
       :deletion_protection_enabled,
       :multi_region_properties,
       :tags)
@@ -394,25 +298,6 @@ module Aws::DSQL
     class InternalServerException < Struct.new(
       :message,
       :retry_after_seconds)
-      SENSITIVE = []
-      include Aws::Structure
-    end
-
-    # Properties of linked clusters.
-    #
-    # @!attribute [rw] deletion_protection_enabled
-    #   Whether deletion protection is enabled.
-    #   @return [Boolean]
-    #
-    # @!attribute [rw] tags
-    #   A map of key and value pairs the linked cluster is tagged with.
-    #   @return [Hash<String,String>]
-    #
-    # @see http://docs.aws.amazon.com/goto/WebAPI/dsql-2018-05-10/LinkedClusterProperties AWS API Documentation
-    #
-    class LinkedClusterProperties < Struct.new(
-      :deletion_protection_enabled,
-      :tags)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -682,29 +567,13 @@ module Aws::DSQL
     #   The time of when the cluster was created.
     #   @return [Time]
     #
-    # @!attribute [rw] witness_region
-    #   The Region that receives all data you write to linked clusters.
-    #   @return [String]
-    #
-    # @!attribute [rw] linked_cluster_arns
-    #   The ARNs of the clusters linked to the updated cluster. Applicable
-    #   only for multi-Region clusters.
-    #   @return [Array<String>]
-    #
-    # @!attribute [rw] deletion_protection_enabled
-    #   Whether deletion protection is enabled for the updated cluster.
-    #   @return [Boolean]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dsql-2018-05-10/UpdateClusterOutput AWS API Documentation
     #
     class UpdateClusterOutput < Struct.new(
       :identifier,
       :arn,
       :status,
-      :creation_time,
-      :witness_region,
-      :linked_cluster_arns,
-      :deletion_protection_enabled)
+      :creation_time)
       SENSITIVE = []
       include Aws::Structure
     end
