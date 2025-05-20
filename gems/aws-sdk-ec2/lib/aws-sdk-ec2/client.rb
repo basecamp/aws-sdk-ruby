@@ -27844,15 +27844,22 @@ module Aws::EC2
     #   * Local Zone
     # * Supported instance types
     #
-    #   * `hpc6a.48xlarge` \| `hpc6id.32xlarge` \| `hpc7a.12xlarge` \|
-    #     `hpc7a.24xlarge` \| `hpc7a.48xlarge` \| `hpc7a.96xlarge` \|
-    #     `hpc7g.4xlarge` \| `hpc7g.8xlarge` \| `hpc7g.16xlarge`
+    #   * Returns 3 network nodes in the response
     #
-    #   * `p3dn.24xlarge` \| `p4d.24xlarge` \| `p4de.24xlarge` \|
-    #     `p5.48xlarge` \| `p5e.48xlarge` \| `p5en.48xlarge`
+    #     * `hpc6a.48xlarge` \| `hpc6id.32xlarge` \| `hpc7a.12xlarge` \|
+    #       `hpc7a.24xlarge` \| `hpc7a.48xlarge` \| `hpc7a.96xlarge` \|
+    #       `hpc7g.4xlarge` \| `hpc7g.8xlarge` \| `hpc7g.16xlarge`
     #
-    #   * `trn1.2xlarge` \| `trn1.32xlarge` \| `trn1n.32xlarge` \|
-    #     `trn2.48xlarge` \| `trn2u.48xlarge`
+    #     * `p3dn.24xlarge` \| `p4d.24xlarge` \| `p4de.24xlarge` \|
+    #       `p5.48xlarge` \| `p5e.48xlarge` \| `p5en.48xlarge`
+    #
+    #     * `trn1.2xlarge` \| `trn1.32xlarge` \| `trn1n.32xlarge` \|
+    #       `trn2.48xlarge` \| `trn2u.48xlarge`
+    #   * Returns 4 network nodes in the response
+    #
+    #     * `p6-b200.48xlarge`
+    #
+    #     ^
     #
     # For more information, see [Amazon EC2 instance topology][1] in the
     # *Amazon EC2 User Guide*.
@@ -28207,6 +28214,9 @@ module Aws::EC2
     #   * `processor-info.supported-features` - The supported CPU features
     #     (`amd-sev-snp`).
     #
+    #   * `reboot-migration-support` - Indicates whether enabling reboot
+    #     migration is supported (`supported` \| `unsupported`).
+    #
     #   * `supported-boot-mode` - The boot mode (`legacy-bios` \| `uefi`).
     #
     #   * `supported-root-device-type` - The root device type (`ebs` \|
@@ -28382,6 +28392,7 @@ module Aws::EC2
     #   resp.instance_types[0].neuron_info.neuron_devices[0].memory_info.size_in_mi_b #=> Integer
     #   resp.instance_types[0].neuron_info.total_neuron_device_memory_in_mi_b #=> Integer
     #   resp.instance_types[0].phc_support #=> String, one of "unsupported", "supported"
+    #   resp.instance_types[0].reboot_migration_support #=> String, one of "unsupported", "supported"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeInstanceTypes AWS API Documentation
@@ -29123,6 +29134,7 @@ module Aws::EC2
     #   resp.reservations[0].instances[0].ipv_6_address #=> String
     #   resp.reservations[0].instances[0].tpm_support #=> String
     #   resp.reservations[0].instances[0].maintenance_options.auto_recovery #=> String, one of "disabled", "default"
+    #   resp.reservations[0].instances[0].maintenance_options.reboot_migration #=> String, one of "disabled", "default"
     #   resp.reservations[0].instances[0].current_instance_boot_mode #=> String, one of "legacy-bios", "uefi"
     #   resp.reservations[0].instances[0].network_performance_options.bandwidth_weighting #=> String, one of "default", "vpc-1", "ebs-1"
     #   resp.reservations[0].instances[0].operator.managed #=> Boolean
@@ -53021,9 +53033,14 @@ module Aws::EC2
     # for an unsupported instance type. For more information, see
     # [Simplified automatic recovery][1].
     #
+    # Modifies the reboot migration behavior during a user-initiated reboot
+    # of an instance that has a pending `system-reboot` event. For more
+    # information, see [Enable or disable reboot migration][2].
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-recover.html#instance-configuration-recovery
+    # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/schedevents_actions_reboot.html#reboot-migration
     #
     # @option params [required, String] :instance_id
     #   The ID of the instance.
@@ -53031,6 +53048,26 @@ module Aws::EC2
     # @option params [String] :auto_recovery
     #   Disables the automatic recovery behavior of your instance or sets it
     #   to default.
+    #
+    # @option params [String] :reboot_migration
+    #   Specifies whether to attempt reboot migration during a user-initiated
+    #   reboot of an instance that has a scheduled `system-reboot` event:
+    #
+    #   * `default` - Amazon EC2 attempts to migrate the instance to new
+    #     hardware (reboot migration). If successful, the `system-reboot`
+    #     event is cleared. If unsuccessful, an in-place reboot occurs and the
+    #     event remains scheduled.
+    #
+    #   * `disabled` - Amazon EC2 keeps the instance on the same hardware
+    #     (in-place reboot). The `system-reboot` event remains scheduled.
+    #
+    #   This setting only applies to supported instances that have a scheduled
+    #   reboot event. For more information, see [Enable or disable reboot
+    #   migration][1] in the *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/schedevents_actions_reboot.html#reboot-migration
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -53042,12 +53079,14 @@ module Aws::EC2
     #
     #   * {Types::ModifyInstanceMaintenanceOptionsResult#instance_id #instance_id} => String
     #   * {Types::ModifyInstanceMaintenanceOptionsResult#auto_recovery #auto_recovery} => String
+    #   * {Types::ModifyInstanceMaintenanceOptionsResult#reboot_migration #reboot_migration} => String
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.modify_instance_maintenance_options({
     #     instance_id: "InstanceId", # required
     #     auto_recovery: "disabled", # accepts disabled, default
+    #     reboot_migration: "disabled", # accepts disabled, default
     #     dry_run: false,
     #   })
     #
@@ -53055,6 +53094,7 @@ module Aws::EC2
     #
     #   resp.instance_id #=> String
     #   resp.auto_recovery #=> String, one of "disabled", "default"
+    #   resp.reboot_migration #=> String, one of "disabled", "default"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyInstanceMaintenanceOptions AWS API Documentation
     #
@@ -63188,6 +63228,7 @@ module Aws::EC2
     #   resp.instances[0].ipv_6_address #=> String
     #   resp.instances[0].tpm_support #=> String
     #   resp.instances[0].maintenance_options.auto_recovery #=> String, one of "disabled", "default"
+    #   resp.instances[0].maintenance_options.reboot_migration #=> String, one of "disabled", "default"
     #   resp.instances[0].current_instance_boot_mode #=> String, one of "legacy-bios", "uefi"
     #   resp.instances[0].network_performance_options.bandwidth_weighting #=> String, one of "default", "vpc-1", "ebs-1"
     #   resp.instances[0].operator.managed #=> Boolean
@@ -65847,7 +65888,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.524.0'
+      context[:gem_version] = '1.525.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

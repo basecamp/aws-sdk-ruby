@@ -4237,21 +4237,87 @@ module Aws::Glue
     #   The name of the connection type.
     #   @return [String]
     #
+    # @!attribute [rw] display_name
+    #   The human-readable name for the connection type that is displayed in
+    #   the Glue console.
+    #   @return [String]
+    #
+    # @!attribute [rw] vendor
+    #   The name of the vendor or provider that created or maintains this
+    #   connection type.
+    #   @return [String]
+    #
     # @!attribute [rw] description
     #   A description of the connection type.
     #   @return [String]
+    #
+    # @!attribute [rw] categories
+    #   A list of categories that this connection type belongs to.
+    #   Categories help users filter and find appropriate connection types
+    #   based on their use cases.
+    #   @return [Array<String>]
     #
     # @!attribute [rw] capabilities
     #   The supported authentication types, data interface types (compute
     #   environments), and data operations of the connector.
     #   @return [Types::Capabilities]
     #
+    # @!attribute [rw] logo_url
+    #   The URL of the logo associated with a connection type.
+    #   @return [String]
+    #
+    # @!attribute [rw] connection_type_variants
+    #   A list of variants available for this connection type. Different
+    #   variants may provide specialized configurations for specific use
+    #   cases or implementations of the same general connection type.
+    #   @return [Array<Types::ConnectionTypeVariant>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ConnectionTypeBrief AWS API Documentation
     #
     class ConnectionTypeBrief < Struct.new(
       :connection_type,
+      :display_name,
+      :vendor,
       :description,
-      :capabilities)
+      :categories,
+      :capabilities,
+      :logo_url,
+      :connection_type_variants)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents a variant of a connection type in Glue Data Catalog.
+    # Connection type variants provide specific configurations and behaviors
+    # for different implementations of the same general connection type.
+    #
+    # @!attribute [rw] connection_type_variant_name
+    #   The unique identifier for the connection type variant. This name is
+    #   used internally to identify the specific variant of a connection
+    #   type.
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   The human-readable name for the connection type variant that is
+    #   displayed in the Glue console.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A detailed description of the connection type variant, including its
+    #   purpose, use cases, and any specific configuration requirements.
+    #   @return [String]
+    #
+    # @!attribute [rw] logo_url
+    #   The URL of the logo associated with a connection type variant.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ConnectionTypeVariant AWS API Documentation
+    #
+    class ConnectionTypeVariant < Struct.new(
+      :connection_type_variant_name,
+      :display_name,
+      :description,
+      :logo_url)
       SENSITIVE = []
       include Aws::Structure
     end

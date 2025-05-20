@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.33.0 (2025-05-20)
+------------------
+
+* Feature - Code Generated Changes, see `./build_tools` or `aws-sdk-core`'s CHANGELOG.md for details.
+
 * Feature - PrivateNetworks has been removed from the SDK because it has been discontinued.
 
 1.32.0 (2025-05-12)

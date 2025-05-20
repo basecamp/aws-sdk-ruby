@@ -14941,13 +14941,23 @@ module Aws::Glue
     #
     #   resp.connection_types #=> Array
     #   resp.connection_types[0].connection_type #=> String, one of "JDBC", "SFTP", "MONGODB", "KAFKA", "NETWORK", "MARKETPLACE", "CUSTOM", "SALESFORCE", "VIEW_VALIDATION_REDSHIFT", "VIEW_VALIDATION_ATHENA", "GOOGLEADS", "GOOGLESHEETS", "GOOGLEANALYTICS4", "SERVICENOW", "MARKETO", "SAPODATA", "ZENDESK", "JIRACLOUD", "NETSUITEERP", "HUBSPOT", "FACEBOOKADS", "INSTAGRAMADS", "ZOHOCRM", "SALESFORCEPARDOT", "SALESFORCEMARKETINGCLOUD", "SLACK", "STRIPE", "INTERCOM", "SNAPCHATADS"
+    #   resp.connection_types[0].display_name #=> String
+    #   resp.connection_types[0].vendor #=> String
     #   resp.connection_types[0].description #=> String
+    #   resp.connection_types[0].categories #=> Array
+    #   resp.connection_types[0].categories[0] #=> String
     #   resp.connection_types[0].capabilities.supported_authentication_types #=> Array
     #   resp.connection_types[0].capabilities.supported_authentication_types[0] #=> String, one of "BASIC", "OAUTH2", "CUSTOM", "IAM"
     #   resp.connection_types[0].capabilities.supported_data_operations #=> Array
     #   resp.connection_types[0].capabilities.supported_data_operations[0] #=> String, one of "READ", "WRITE"
     #   resp.connection_types[0].capabilities.supported_compute_environments #=> Array
     #   resp.connection_types[0].capabilities.supported_compute_environments[0] #=> String, one of "SPARK", "ATHENA", "PYTHON"
+    #   resp.connection_types[0].logo_url #=> String
+    #   resp.connection_types[0].connection_type_variants #=> Array
+    #   resp.connection_types[0].connection_type_variants[0].connection_type_variant_name #=> String
+    #   resp.connection_types[0].connection_type_variants[0].display_name #=> String
+    #   resp.connection_types[0].connection_type_variants[0].description #=> String
+    #   resp.connection_types[0].connection_type_variants[0].logo_url #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListConnectionTypes AWS API Documentation
@@ -20264,7 +20274,7 @@ module Aws::Glue
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-glue'
-      context[:gem_version] = '1.217.0'
+      context[:gem_version] = '1.218.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

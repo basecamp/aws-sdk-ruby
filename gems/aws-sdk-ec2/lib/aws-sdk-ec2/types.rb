@@ -23133,6 +23133,9 @@ module Aws::EC2
     #   * `processor-info.supported-features` - The supported CPU features
     #     (`amd-sev-snp`).
     #
+    #   * `reboot-migration-support` - Indicates whether enabling reboot
+    #     migration is supported (`supported` \| `unsupported`).
+    #
     #   * `supported-boot-mode` - The boot mode (`legacy-bios` \| `uefi`).
     #
     #   * `supported-root-device-type` - The root device type (`ebs` \|
@@ -44892,10 +44895,33 @@ module Aws::EC2
     #   your instance.
     #   @return [String]
     #
+    # @!attribute [rw] reboot_migration
+    #   Specifies whether to attempt reboot migration during a
+    #   user-initiated reboot of an instance that has a scheduled
+    #   `system-reboot` event:
+    #
+    #   * `default` - Amazon EC2 attempts to migrate the instance to new
+    #     hardware (reboot migration). If successful, the `system-reboot`
+    #     event is cleared. If unsuccessful, an in-place reboot occurs and
+    #     the event remains scheduled.
+    #
+    #   * `disabled` - Amazon EC2 keeps the instance on the same hardware
+    #     (in-place reboot). The `system-reboot` event remains scheduled.
+    #
+    #   This setting only applies to supported instances that have a
+    #   scheduled reboot event. For more information, see [Enable or disable
+    #   reboot migration][1] in the *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/schedevents_actions_reboot.html#reboot-migration
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceMaintenanceOptions AWS API Documentation
     #
     class InstanceMaintenanceOptions < Struct.new(
-      :auto_recovery)
+      :auto_recovery,
+      :reboot_migration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -47167,6 +47193,17 @@ module Aws::EC2
     #   clock (PHC) is supported.
     #   @return [String]
     #
+    # @!attribute [rw] reboot_migration_support
+    #   Indicates whether reboot migration during a user-initiated reboot is
+    #   supported for instances that have a scheduled `system-reboot` event.
+    #   For more information, see [Enable or disable reboot migration][1] in
+    #   the *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/schedevents_actions_reboot.html#reboot-migration
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceTypeInfo AWS API Documentation
     #
     class InstanceTypeInfo < Struct.new(
@@ -47199,7 +47236,8 @@ module Aws::EC2
       :nitro_tpm_info,
       :media_accelerator_info,
       :neuron_info,
-      :phc_support)
+      :phc_support,
+      :reboot_migration_support)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -54008,6 +54046,28 @@ module Aws::EC2
     #   to default.
     #   @return [String]
     #
+    # @!attribute [rw] reboot_migration
+    #   Specifies whether to attempt reboot migration during a
+    #   user-initiated reboot of an instance that has a scheduled
+    #   `system-reboot` event:
+    #
+    #   * `default` - Amazon EC2 attempts to migrate the instance to new
+    #     hardware (reboot migration). If successful, the `system-reboot`
+    #     event is cleared. If unsuccessful, an in-place reboot occurs and
+    #     the event remains scheduled.
+    #
+    #   * `disabled` - Amazon EC2 keeps the instance on the same hardware
+    #     (in-place reboot). The `system-reboot` event remains scheduled.
+    #
+    #   This setting only applies to supported instances that have a
+    #   scheduled reboot event. For more information, see [Enable or disable
+    #   reboot migration][1] in the *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/schedevents_actions_reboot.html#reboot-migration
+    #   @return [String]
+    #
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -54020,6 +54080,7 @@ module Aws::EC2
     class ModifyInstanceMaintenanceOptionsRequest < Struct.new(
       :instance_id,
       :auto_recovery,
+      :reboot_migration,
       :dry_run)
       SENSITIVE = []
       include Aws::Structure
@@ -54034,11 +54095,34 @@ module Aws::EC2
     #   your instance.
     #   @return [String]
     #
+    # @!attribute [rw] reboot_migration
+    #   Specifies whether to attempt reboot migration during a
+    #   user-initiated reboot of an instance that has a scheduled
+    #   `system-reboot` event:
+    #
+    #   * `default` - Amazon EC2 attempts to migrate the instance to new
+    #     hardware (reboot migration). If successful, the `system-reboot`
+    #     event is cleared. If unsuccessful, an in-place reboot occurs and
+    #     the event remains scheduled.
+    #
+    #   * `disabled` - Amazon EC2 keeps the instance on the same hardware
+    #     (in-place reboot). The `system-reboot` event remains scheduled.
+    #
+    #   This setting only applies to supported instances that have a
+    #   scheduled reboot event. For more information, see [Enable or disable
+    #   reboot migration][1] in the *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/schedevents_actions_reboot.html#reboot-migration
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyInstanceMaintenanceOptionsResult AWS API Documentation
     #
     class ModifyInstanceMaintenanceOptionsResult < Struct.new(
       :instance_id,
-      :auto_recovery)
+      :auto_recovery,
+      :reboot_migration)
       SENSITIVE = []
       include Aws::Structure
     end

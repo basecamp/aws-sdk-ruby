@@ -264,6 +264,8 @@ module Aws::Glue
     ConnectionType = Shapes::StringShape.new(name: 'ConnectionType')
     ConnectionTypeBrief = Shapes::StructureShape.new(name: 'ConnectionTypeBrief')
     ConnectionTypeList = Shapes::ListShape.new(name: 'ConnectionTypeList')
+    ConnectionTypeVariant = Shapes::StructureShape.new(name: 'ConnectionTypeVariant')
+    ConnectionTypeVariantList = Shapes::ListShape.new(name: 'ConnectionTypeVariantList')
     ConnectionsList = Shapes::StructureShape.new(name: 'ConnectionsList')
     ConnectorDataSource = Shapes::StructureShape.new(name: 'ConnectorDataSource')
     ConnectorDataTarget = Shapes::StructureShape.new(name: 'ConnectorDataTarget')
@@ -525,6 +527,7 @@ module Aws::Glue
     DirectKafkaSource = Shapes::StructureShape.new(name: 'DirectKafkaSource')
     DirectKinesisSource = Shapes::StructureShape.new(name: 'DirectKinesisSource')
     DirectSchemaChangePolicy = Shapes::StructureShape.new(name: 'DirectSchemaChangePolicy')
+    DisplayName = Shapes::StringShape.new(name: 'DisplayName')
     Double = Shapes::FloatShape.new(name: 'Double')
     DoubleColumnStatisticsData = Shapes::StructureShape.new(name: 'DoubleColumnStatisticsData')
     DoubleValue = Shapes::FloatShape.new(name: 'DoubleValue')
@@ -1506,6 +1509,7 @@ module Aws::Glue
     UpdatedTimestamp = Shapes::StringShape.new(name: 'UpdatedTimestamp')
     UpsertRedshiftTargetOptions = Shapes::StructureShape.new(name: 'UpsertRedshiftTargetOptions')
     UriString = Shapes::StringShape.new(name: 'UriString')
+    UrlString = Shapes::StringShape.new(name: 'UrlString')
     UsageProfileDefinition = Shapes::StructureShape.new(name: 'UsageProfileDefinition')
     UsageProfileDefinitionList = Shapes::ListShape.new(name: 'UsageProfileDefinitionList')
     UserDefinedFunction = Shapes::StructureShape.new(name: 'UserDefinedFunction')
@@ -1517,6 +1521,7 @@ module Aws::Glue
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
     ValueString = Shapes::StringShape.new(name: 'ValueString')
     ValueStringList = Shapes::ListShape.new(name: 'ValueStringList')
+    Vendor = Shapes::StringShape.new(name: 'Vendor')
     VersionId = Shapes::IntegerShape.new(name: 'VersionId')
     VersionLongNumber = Shapes::IntegerShape.new(name: 'VersionLongNumber')
     VersionMismatchException = Shapes::StructureShape.new(name: 'VersionMismatchException')
@@ -2433,11 +2438,24 @@ module Aws::Glue
     ConnectionStringList.member = Shapes::ShapeRef.new(shape: ConnectionString)
 
     ConnectionTypeBrief.add_member(:connection_type, Shapes::ShapeRef.new(shape: ConnectionType, location_name: "ConnectionType"))
+    ConnectionTypeBrief.add_member(:display_name, Shapes::ShapeRef.new(shape: DisplayName, location_name: "DisplayName"))
+    ConnectionTypeBrief.add_member(:vendor, Shapes::ShapeRef.new(shape: Vendor, location_name: "Vendor"))
     ConnectionTypeBrief.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "Description"))
+    ConnectionTypeBrief.add_member(:categories, Shapes::ShapeRef.new(shape: ListOfString, location_name: "Categories"))
     ConnectionTypeBrief.add_member(:capabilities, Shapes::ShapeRef.new(shape: Capabilities, location_name: "Capabilities"))
+    ConnectionTypeBrief.add_member(:logo_url, Shapes::ShapeRef.new(shape: UrlString, location_name: "LogoUrl"))
+    ConnectionTypeBrief.add_member(:connection_type_variants, Shapes::ShapeRef.new(shape: ConnectionTypeVariantList, location_name: "ConnectionTypeVariants"))
     ConnectionTypeBrief.struct_class = Types::ConnectionTypeBrief
 
     ConnectionTypeList.member = Shapes::ShapeRef.new(shape: ConnectionTypeBrief)
+
+    ConnectionTypeVariant.add_member(:connection_type_variant_name, Shapes::ShapeRef.new(shape: DisplayName, location_name: "ConnectionTypeVariantName"))
+    ConnectionTypeVariant.add_member(:display_name, Shapes::ShapeRef.new(shape: DisplayName, location_name: "DisplayName"))
+    ConnectionTypeVariant.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "Description"))
+    ConnectionTypeVariant.add_member(:logo_url, Shapes::ShapeRef.new(shape: UrlString, location_name: "LogoUrl"))
+    ConnectionTypeVariant.struct_class = Types::ConnectionTypeVariant
+
+    ConnectionTypeVariantList.member = Shapes::ShapeRef.new(shape: ConnectionTypeVariant)
 
     ConnectionsList.add_member(:connections, Shapes::ShapeRef.new(shape: ConnectionStringList, location_name: "Connections"))
     ConnectionsList.struct_class = Types::ConnectionsList

@@ -1005,8 +1005,21 @@ module Aws::Glue
 
     class ConnectionTypeBrief
       attr_accessor connection_type: ("JDBC" | "SFTP" | "MONGODB" | "KAFKA" | "NETWORK" | "MARKETPLACE" | "CUSTOM" | "SALESFORCE" | "VIEW_VALIDATION_REDSHIFT" | "VIEW_VALIDATION_ATHENA" | "GOOGLEADS" | "GOOGLESHEETS" | "GOOGLEANALYTICS4" | "SERVICENOW" | "MARKETO" | "SAPODATA" | "ZENDESK" | "JIRACLOUD" | "NETSUITEERP" | "HUBSPOT" | "FACEBOOKADS" | "INSTAGRAMADS" | "ZOHOCRM" | "SALESFORCEPARDOT" | "SALESFORCEMARKETINGCLOUD" | "SLACK" | "STRIPE" | "INTERCOM" | "SNAPCHATADS")
+      attr_accessor display_name: ::String
+      attr_accessor vendor: ::String
       attr_accessor description: ::String
+      attr_accessor categories: ::Array[::String]
       attr_accessor capabilities: Types::Capabilities
+      attr_accessor logo_url: ::String
+      attr_accessor connection_type_variants: ::Array[Types::ConnectionTypeVariant]
+      SENSITIVE: []
+    end
+
+    class ConnectionTypeVariant
+      attr_accessor connection_type_variant_name: ::String
+      attr_accessor display_name: ::String
+      attr_accessor description: ::String
+      attr_accessor logo_url: ::String
       SENSITIVE: []
     end
 

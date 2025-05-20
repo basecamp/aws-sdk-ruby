@@ -1921,6 +1921,7 @@ module Aws::EC2
     InstanceNetworkPerformanceOptionsRequest = Shapes::StructureShape.new(name: 'InstanceNetworkPerformanceOptionsRequest')
     InstancePrivateIpAddress = Shapes::StructureShape.new(name: 'InstancePrivateIpAddress')
     InstancePrivateIpAddressList = Shapes::ListShape.new(name: 'InstancePrivateIpAddressList')
+    InstanceRebootMigrationState = Shapes::StringShape.new(name: 'InstanceRebootMigrationState')
     InstanceRequirements = Shapes::StructureShape.new(name: 'InstanceRequirements')
     InstanceRequirementsRequest = Shapes::StructureShape.new(name: 'InstanceRequirementsRequest')
     InstanceRequirementsWithMetadataRequest = Shapes::StructureShape.new(name: 'InstanceRequirementsWithMetadataRequest')
@@ -2722,6 +2723,7 @@ module Aws::EC2
     RdsDbProxyArn = Shapes::StringShape.new(name: 'RdsDbProxyArn')
     ReasonCodesList = Shapes::ListShape.new(name: 'ReasonCodesList')
     RebootInstancesRequest = Shapes::StructureShape.new(name: 'RebootInstancesRequest')
+    RebootMigrationSupport = Shapes::StringShape.new(name: 'RebootMigrationSupport')
     RecurringCharge = Shapes::StructureShape.new(name: 'RecurringCharge')
     RecurringChargeFrequency = Shapes::StringShape.new(name: 'RecurringChargeFrequency')
     RecurringChargesList = Shapes::ListShape.new(name: 'RecurringChargesList')
@@ -11252,6 +11254,7 @@ module Aws::EC2
     InstanceList.member = Shapes::ShapeRef.new(shape: Instance, location_name: "item")
 
     InstanceMaintenanceOptions.add_member(:auto_recovery, Shapes::ShapeRef.new(shape: InstanceAutoRecoveryState, location_name: "autoRecovery"))
+    InstanceMaintenanceOptions.add_member(:reboot_migration, Shapes::ShapeRef.new(shape: InstanceRebootMigrationState, location_name: "rebootMigration"))
     InstanceMaintenanceOptions.struct_class = Types::InstanceMaintenanceOptions
 
     InstanceMaintenanceOptionsRequest.add_member(:auto_recovery, Shapes::ShapeRef.new(shape: InstanceAutoRecoveryState, location_name: "AutoRecovery"))
@@ -11533,6 +11536,7 @@ module Aws::EC2
     InstanceTypeInfo.add_member(:media_accelerator_info, Shapes::ShapeRef.new(shape: MediaAcceleratorInfo, location_name: "mediaAcceleratorInfo"))
     InstanceTypeInfo.add_member(:neuron_info, Shapes::ShapeRef.new(shape: NeuronInfo, location_name: "neuronInfo"))
     InstanceTypeInfo.add_member(:phc_support, Shapes::ShapeRef.new(shape: PhcSupport, location_name: "phcSupport"))
+    InstanceTypeInfo.add_member(:reboot_migration_support, Shapes::ShapeRef.new(shape: RebootMigrationSupport, location_name: "rebootMigrationSupport"))
     InstanceTypeInfo.struct_class = Types::InstanceTypeInfo
 
     InstanceTypeInfoFromInstanceRequirements.add_member(:instance_type, Shapes::ShapeRef.new(shape: String, location_name: "instanceType"))
@@ -12801,11 +12805,13 @@ module Aws::EC2
 
     ModifyInstanceMaintenanceOptionsRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location_name: "InstanceId"))
     ModifyInstanceMaintenanceOptionsRequest.add_member(:auto_recovery, Shapes::ShapeRef.new(shape: InstanceAutoRecoveryState, location_name: "AutoRecovery"))
+    ModifyInstanceMaintenanceOptionsRequest.add_member(:reboot_migration, Shapes::ShapeRef.new(shape: InstanceRebootMigrationState, location_name: "RebootMigration"))
     ModifyInstanceMaintenanceOptionsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     ModifyInstanceMaintenanceOptionsRequest.struct_class = Types::ModifyInstanceMaintenanceOptionsRequest
 
     ModifyInstanceMaintenanceOptionsResult.add_member(:instance_id, Shapes::ShapeRef.new(shape: String, location_name: "instanceId"))
     ModifyInstanceMaintenanceOptionsResult.add_member(:auto_recovery, Shapes::ShapeRef.new(shape: InstanceAutoRecoveryState, location_name: "autoRecovery"))
+    ModifyInstanceMaintenanceOptionsResult.add_member(:reboot_migration, Shapes::ShapeRef.new(shape: InstanceRebootMigrationState, location_name: "rebootMigration"))
     ModifyInstanceMaintenanceOptionsResult.struct_class = Types::ModifyInstanceMaintenanceOptionsResult
 
     ModifyInstanceMetadataDefaultsRequest.add_member(:http_tokens, Shapes::ShapeRef.new(shape: MetadataDefaultHttpTokensState, location_name: "HttpTokens"))

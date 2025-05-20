@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.525.0 (2025-05-20)
+------------------
+
+* Feature - This release expands the ModifyInstanceMaintenanceOptions API to enable or disable instance migration during customer-initiated reboots for EC2 Scheduled Reboot Events.
+
 1.524.0 (2025-05-19)
 ------------------
 

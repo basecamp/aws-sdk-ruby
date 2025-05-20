@@ -11192,11 +11192,13 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::ModifyInstanceMaintenanceOptionsResult]
         def instance_id: () -> ::String
         def auto_recovery: () -> ("disabled" | "default")
+        def reboot_migration: () -> ("disabled" | "default")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#modify_instance_maintenance_options-instance_method
       def modify_instance_maintenance_options: (
                                                  instance_id: ::String,
                                                  ?auto_recovery: ("disabled" | "default"),
+                                                 ?reboot_migration: ("disabled" | "default"),
                                                  ?dry_run: bool
                                                ) -> _ModifyInstanceMaintenanceOptionsResponseSuccess
                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyInstanceMaintenanceOptionsResponseSuccess
