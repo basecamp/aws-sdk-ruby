@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.526.0 (2025-05-21)
+------------------
+
+* Feature - Release of Dualstack and Ipv6-only EC2 Public DNS hostnames
+
 1.525.0 (2025-05-20)
 ------------------
 

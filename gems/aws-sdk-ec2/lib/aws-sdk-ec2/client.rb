@@ -11891,12 +11891,18 @@ module Aws::EC2
     #   resp.network_interface.interface_type #=> String, one of "interface", "natGateway", "efa", "efa-only", "trunk", "load_balancer", "network_load_balancer", "vpc_endpoint", "branch", "transit_gateway", "lambda", "quicksight", "global_accelerator_managed", "api_gateway_managed", "gateway_load_balancer", "gateway_load_balancer_endpoint", "iot_rules_managed", "aws_codestar_connections_managed"
     #   resp.network_interface.ipv_6_addresses #=> Array
     #   resp.network_interface.ipv_6_addresses[0].ipv_6_address #=> String
+    #   resp.network_interface.ipv_6_addresses[0].public_ipv_6_dns_name #=> String
     #   resp.network_interface.ipv_6_addresses[0].is_primary_ipv_6 #=> Boolean
     #   resp.network_interface.mac_address #=> String
     #   resp.network_interface.network_interface_id #=> String
     #   resp.network_interface.outpost_arn #=> String
     #   resp.network_interface.owner_id #=> String
     #   resp.network_interface.private_dns_name #=> String
+    #   resp.network_interface.public_dns_name #=> String
+    #   resp.network_interface.public_ip_dns_name_options.dns_hostname_type #=> String
+    #   resp.network_interface.public_ip_dns_name_options.public_ipv_4_dns_name #=> String
+    #   resp.network_interface.public_ip_dns_name_options.public_ipv_6_dns_name #=> String
+    #   resp.network_interface.public_ip_dns_name_options.public_dual_stack_dns_name #=> String
     #   resp.network_interface.private_ip_address #=> String
     #   resp.network_interface.private_ip_addresses #=> Array
     #   resp.network_interface.private_ip_addresses[0].association.allocation_id #=> String
@@ -33520,12 +33526,18 @@ module Aws::EC2
     #   resp.network_interfaces[0].interface_type #=> String, one of "interface", "natGateway", "efa", "efa-only", "trunk", "load_balancer", "network_load_balancer", "vpc_endpoint", "branch", "transit_gateway", "lambda", "quicksight", "global_accelerator_managed", "api_gateway_managed", "gateway_load_balancer", "gateway_load_balancer_endpoint", "iot_rules_managed", "aws_codestar_connections_managed"
     #   resp.network_interfaces[0].ipv_6_addresses #=> Array
     #   resp.network_interfaces[0].ipv_6_addresses[0].ipv_6_address #=> String
+    #   resp.network_interfaces[0].ipv_6_addresses[0].public_ipv_6_dns_name #=> String
     #   resp.network_interfaces[0].ipv_6_addresses[0].is_primary_ipv_6 #=> Boolean
     #   resp.network_interfaces[0].mac_address #=> String
     #   resp.network_interfaces[0].network_interface_id #=> String
     #   resp.network_interfaces[0].outpost_arn #=> String
     #   resp.network_interfaces[0].owner_id #=> String
     #   resp.network_interfaces[0].private_dns_name #=> String
+    #   resp.network_interfaces[0].public_dns_name #=> String
+    #   resp.network_interfaces[0].public_ip_dns_name_options.dns_hostname_type #=> String
+    #   resp.network_interfaces[0].public_ip_dns_name_options.public_ipv_4_dns_name #=> String
+    #   resp.network_interfaces[0].public_ip_dns_name_options.public_ipv_6_dns_name #=> String
+    #   resp.network_interfaces[0].public_ip_dns_name_options.public_dual_stack_dns_name #=> String
     #   resp.network_interfaces[0].private_ip_address #=> String
     #   resp.network_interfaces[0].private_ip_addresses #=> Array
     #   resp.network_interfaces[0].private_ip_addresses[0].association.allocation_id #=> String
@@ -43561,6 +43573,15 @@ module Aws::EC2
     #
     # This is an idempotent operation. If you perform the operation more
     # than once, Amazon EC2 doesn't return an error.
+    #
+    # An address cannot be disassociated if the all of the following
+    # conditions are met:
+    #
+    # * Network interface has a `publicDualStackDnsName` publicDnsName
+    #
+    # * Public IPv4 address is the primary public IPv4 address
+    #
+    # * Network interface only has one remaining public IPv4 address
     #
     # @option params [String] :association_id
     #   The association ID. This parameter is required.
@@ -54447,6 +54468,72 @@ module Aws::EC2
       req.send_request(options)
     end
 
+    # Modify public hostname options for a network interface. For more
+    # information, see [EC2 instance hostnames, DNS names, and domains][1]
+    # in the *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-naming.html
+    #
+    # @option params [required, String] :network_interface_id
+    #   A network interface ID.
+    #
+    # @option params [required, String] :hostname_type
+    #   The public hostname type. For more information, see [EC2 instance
+    #   hostnames, DNS names, and domains][1] in the *Amazon EC2 User Guide*.
+    #
+    #   * `public-dual-stack-dns-name`: A dual-stack public hostname for a
+    #     network interface. Requests from within the VPC resolve to both the
+    #     private IPv4 address and the IPv6 Global Unicast Address of the
+    #     network interface. Requests from the internet resolve to both the
+    #     public IPv4 and the IPv6 GUA address of the network interface.
+    #
+    #   * `public-ipv4-dns-name`: An IPv4-enabled public hostname for a
+    #     network interface. Requests from within the VPC resolve to the
+    #     private primary IPv4 address of the network interface. Requests from
+    #     the internet resolve to the public IPv4 address of the network
+    #     interface.
+    #
+    #   * `public-ipv6-dns-name`: An IPv6-enabled public hostname for a
+    #     network interface. Requests from within the VPC or from the internet
+    #     resolve to the IPv6 GUA of the network interface.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-naming.html
+    #
+    # @option params [Boolean] :dry_run
+    #   Checks whether you have the required permissions for the operation,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #
+    # @return [Types::ModifyPublicIpDnsNameOptionsResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ModifyPublicIpDnsNameOptionsResult#successful #successful} => Boolean
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.modify_public_ip_dns_name_options({
+    #     network_interface_id: "NetworkInterfaceId", # required
+    #     hostname_type: "public-dual-stack-dns-name", # required, accepts public-dual-stack-dns-name, public-ipv4-dns-name, public-ipv6-dns-name
+    #     dry_run: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.successful #=> Boolean
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyPublicIpDnsNameOptions AWS API Documentation
+    #
+    # @overload modify_public_ip_dns_name_options(params = {})
+    # @param [Hash] params ({})
+    def modify_public_ip_dns_name_options(params = {}, options = {})
+      req = build_request(:modify_public_ip_dns_name_options, params)
+      req.send_request(options)
+    end
+
     # Modifies the configuration of your Reserved Instances, such as the
     # Availability Zone, instance count, or instance type. The Reserved
     # Instances to be modified must be identical, except for Availability
@@ -65247,9 +65334,9 @@ module Aws::EC2
     # volumes with the `DeleteOnTermination` block device mapping parameter
     # set to `true` are automatically deleted. For more information about
     # the differences between stopping and terminating instances, see
-    # [Amazon EC2 instance state changes][2] in the *Amazon EC2 User Guide*.
+    # [Instance lifecycle][2] in the *Amazon EC2 User Guide*.
     #
-    # For information about troubleshooting, see [Troubleshooting
+    # For more information about troubleshooting, see [Troubleshooting
     # terminating your instance][3] in the *Amazon EC2 User Guide*.
     #
     #
@@ -65888,7 +65975,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.525.0'
+      context[:gem_version] = '1.526.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

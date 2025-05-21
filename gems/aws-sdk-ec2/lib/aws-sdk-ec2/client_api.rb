@@ -2361,6 +2361,8 @@ module Aws::EC2
     ModifyNetworkInterfaceAttributeRequest = Shapes::StructureShape.new(name: 'ModifyNetworkInterfaceAttributeRequest')
     ModifyPrivateDnsNameOptionsRequest = Shapes::StructureShape.new(name: 'ModifyPrivateDnsNameOptionsRequest')
     ModifyPrivateDnsNameOptionsResult = Shapes::StructureShape.new(name: 'ModifyPrivateDnsNameOptionsResult')
+    ModifyPublicIpDnsNameOptionsRequest = Shapes::StructureShape.new(name: 'ModifyPublicIpDnsNameOptionsRequest')
+    ModifyPublicIpDnsNameOptionsResult = Shapes::StructureShape.new(name: 'ModifyPublicIpDnsNameOptionsResult')
     ModifyReservedInstancesRequest = Shapes::StructureShape.new(name: 'ModifyReservedInstancesRequest')
     ModifyReservedInstancesResult = Shapes::StructureShape.new(name: 'ModifyReservedInstancesResult')
     ModifyRouteServerRequest = Shapes::StructureShape.new(name: 'ModifyRouteServerRequest')
@@ -2695,6 +2697,8 @@ module Aws::EC2
     ProvisionedBandwidth = Shapes::StructureShape.new(name: 'ProvisionedBandwidth')
     PtrUpdateStatus = Shapes::StructureShape.new(name: 'PtrUpdateStatus')
     PublicIpAddress = Shapes::StringShape.new(name: 'PublicIpAddress')
+    PublicIpDnsNameOptions = Shapes::StructureShape.new(name: 'PublicIpDnsNameOptions')
+    PublicIpDnsOption = Shapes::StringShape.new(name: 'PublicIpDnsOption')
     PublicIpStringList = Shapes::ListShape.new(name: 'PublicIpStringList')
     PublicIpv4Pool = Shapes::StructureShape.new(name: 'PublicIpv4Pool')
     PublicIpv4PoolIdStringList = Shapes::ListShape.new(name: 'PublicIpv4PoolIdStringList')
@@ -12974,6 +12978,14 @@ module Aws::EC2
     ModifyPrivateDnsNameOptionsResult.add_member(:return, Shapes::ShapeRef.new(shape: Boolean, location_name: "return"))
     ModifyPrivateDnsNameOptionsResult.struct_class = Types::ModifyPrivateDnsNameOptionsResult
 
+    ModifyPublicIpDnsNameOptionsRequest.add_member(:network_interface_id, Shapes::ShapeRef.new(shape: NetworkInterfaceId, required: true, location_name: "NetworkInterfaceId"))
+    ModifyPublicIpDnsNameOptionsRequest.add_member(:hostname_type, Shapes::ShapeRef.new(shape: PublicIpDnsOption, required: true, location_name: "HostnameType"))
+    ModifyPublicIpDnsNameOptionsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    ModifyPublicIpDnsNameOptionsRequest.struct_class = Types::ModifyPublicIpDnsNameOptionsRequest
+
+    ModifyPublicIpDnsNameOptionsResult.add_member(:successful, Shapes::ShapeRef.new(shape: Boolean, location_name: "successful"))
+    ModifyPublicIpDnsNameOptionsResult.struct_class = Types::ModifyPublicIpDnsNameOptionsResult
+
     ModifyReservedInstancesRequest.add_member(:reserved_instances_ids, Shapes::ShapeRef.new(shape: ReservedInstancesIdStringList, required: true, location_name: "ReservedInstancesId"))
     ModifyReservedInstancesRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "clientToken"))
     ModifyReservedInstancesRequest.add_member(:target_configurations, Shapes::ShapeRef.new(shape: ReservedInstancesConfigurationList, required: true, location_name: "ReservedInstancesConfigurationSetItemType"))
@@ -13684,6 +13696,8 @@ module Aws::EC2
     NetworkInterface.add_member(:outpost_arn, Shapes::ShapeRef.new(shape: String, location_name: "outpostArn"))
     NetworkInterface.add_member(:owner_id, Shapes::ShapeRef.new(shape: String, location_name: "ownerId"))
     NetworkInterface.add_member(:private_dns_name, Shapes::ShapeRef.new(shape: String, location_name: "privateDnsName"))
+    NetworkInterface.add_member(:public_dns_name, Shapes::ShapeRef.new(shape: String, location_name: "publicDnsName"))
+    NetworkInterface.add_member(:public_ip_dns_name_options, Shapes::ShapeRef.new(shape: PublicIpDnsNameOptions, location_name: "publicIpDnsNameOptions"))
     NetworkInterface.add_member(:private_ip_address, Shapes::ShapeRef.new(shape: String, location_name: "privateIpAddress"))
     NetworkInterface.add_member(:private_ip_addresses, Shapes::ShapeRef.new(shape: NetworkInterfacePrivateIpAddressList, location_name: "privateIpAddressesSet"))
     NetworkInterface.add_member(:ipv_4_prefixes, Shapes::ShapeRef.new(shape: Ipv4PrefixesList, location_name: "ipv4PrefixSet"))
@@ -13741,6 +13755,7 @@ module Aws::EC2
     NetworkInterfaceIdSet.member = Shapes::ShapeRef.new(shape: String, location_name: "item")
 
     NetworkInterfaceIpv6Address.add_member(:ipv_6_address, Shapes::ShapeRef.new(shape: String, location_name: "ipv6Address"))
+    NetworkInterfaceIpv6Address.add_member(:public_ipv_6_dns_name, Shapes::ShapeRef.new(shape: String, location_name: "publicIpv6DnsName"))
     NetworkInterfaceIpv6Address.add_member(:is_primary_ipv_6, Shapes::ShapeRef.new(shape: Boolean, location_name: "isPrimaryIpv6"))
     NetworkInterfaceIpv6Address.struct_class = Types::NetworkInterfaceIpv6Address
 
@@ -14237,6 +14252,12 @@ module Aws::EC2
     PtrUpdateStatus.add_member(:status, Shapes::ShapeRef.new(shape: String, location_name: "status"))
     PtrUpdateStatus.add_member(:reason, Shapes::ShapeRef.new(shape: String, location_name: "reason"))
     PtrUpdateStatus.struct_class = Types::PtrUpdateStatus
+
+    PublicIpDnsNameOptions.add_member(:dns_hostname_type, Shapes::ShapeRef.new(shape: String, location_name: "dnsHostnameType"))
+    PublicIpDnsNameOptions.add_member(:public_ipv_4_dns_name, Shapes::ShapeRef.new(shape: String, location_name: "publicIpv4DnsName"))
+    PublicIpDnsNameOptions.add_member(:public_ipv_6_dns_name, Shapes::ShapeRef.new(shape: String, location_name: "publicIpv6DnsName"))
+    PublicIpDnsNameOptions.add_member(:public_dual_stack_dns_name, Shapes::ShapeRef.new(shape: String, location_name: "publicDualStackDnsName"))
+    PublicIpDnsNameOptions.struct_class = Types::PublicIpDnsNameOptions
 
     PublicIpStringList.member = Shapes::ShapeRef.new(shape: String, location_name: "PublicIp")
 
@@ -22947,6 +22968,14 @@ module Aws::EC2
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: ModifyPrivateDnsNameOptionsRequest)
         o.output = Shapes::ShapeRef.new(shape: ModifyPrivateDnsNameOptionsResult)
+      end)
+
+      api.add_operation(:modify_public_ip_dns_name_options, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ModifyPublicIpDnsNameOptions"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ModifyPublicIpDnsNameOptionsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ModifyPublicIpDnsNameOptionsResult)
       end)
 
       api.add_operation(:modify_reserved_instances, Seahorse::Model::Operation.new.tap do |o|

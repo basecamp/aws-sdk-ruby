@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.9.0 (2025-05-21)
+------------------
+
+* Feature - Modified validation to allow expectedCustomerSpend array with zero elements in Partner Opportunity operations.
+
 1.8.0 (2025-05-12)
 ------------------
 

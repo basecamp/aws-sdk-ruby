@@ -55160,6 +55160,65 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @!attribute [rw] network_interface_id
+    #   A network interface ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] hostname_type
+    #   The public hostname type. For more information, see [EC2 instance
+    #   hostnames, DNS names, and domains][1] in the *Amazon EC2 User
+    #   Guide*.
+    #
+    #   * `public-dual-stack-dns-name`: A dual-stack public hostname for a
+    #     network interface. Requests from within the VPC resolve to both
+    #     the private IPv4 address and the IPv6 Global Unicast Address of
+    #     the network interface. Requests from the internet resolve to both
+    #     the public IPv4 and the IPv6 GUA address of the network interface.
+    #
+    #   * `public-ipv4-dns-name`: An IPv4-enabled public hostname for a
+    #     network interface. Requests from within the VPC resolve to the
+    #     private primary IPv4 address of the network interface. Requests
+    #     from the internet resolve to the public IPv4 address of the
+    #     network interface.
+    #
+    #   * `public-ipv6-dns-name`: An IPv6-enabled public hostname for a
+    #     network interface. Requests from within the VPC or from the
+    #     internet resolve to the IPv6 GUA of the network interface.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-naming.html
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the operation,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyPublicIpDnsNameOptionsRequest AWS API Documentation
+    #
+    class ModifyPublicIpDnsNameOptionsRequest < Struct.new(
+      :network_interface_id,
+      :hostname_type,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] successful
+    #   Whether or not the request was successful.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyPublicIpDnsNameOptionsResult AWS API Documentation
+    #
+    class ModifyPublicIpDnsNameOptionsResult < Struct.new(
+      :successful)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains the parameters for ModifyReservedInstances.
     #
     # @!attribute [rw] reserved_instances_ids
@@ -58974,8 +59033,34 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] private_dns_name
-    #   The private DNS name.
+    #   The private hostname. For more information, see [EC2 instance
+    #   hostnames, DNS names, and domains][1] in the *Amazon EC2 User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-naming.html
     #   @return [String]
+    #
+    # @!attribute [rw] public_dns_name
+    #   A public hostname. For more information, see [EC2 instance
+    #   hostnames, DNS names, and domains][1] in the *Amazon EC2 User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-naming.html
+    #   @return [String]
+    #
+    # @!attribute [rw] public_ip_dns_name_options
+    #   Public hostname type options. For more information, see [EC2
+    #   instance hostnames, DNS names, and domains][1] in the *Amazon EC2
+    #   User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-naming.html
+    #   @return [Types::PublicIpDnsNameOptions]
     #
     # @!attribute [rw] private_ip_address
     #   The IPv4 address of the network interface within the subnet.
@@ -59061,6 +59146,8 @@ module Aws::EC2
       :outpost_arn,
       :owner_id,
       :private_dns_name,
+      :public_dns_name,
+      :public_ip_dns_name_options,
       :private_ip_address,
       :private_ip_addresses,
       :ipv_4_prefixes,
@@ -59270,6 +59357,18 @@ module Aws::EC2
     #   The IPv6 address.
     #   @return [String]
     #
+    # @!attribute [rw] public_ipv_6_dns_name
+    #   An IPv6-enabled public hostname for a network interface. Requests
+    #   from within the VPC or from the internet resolve to the IPv6 GUA of
+    #   the network interface. For more information, see [EC2 instance
+    #   hostnames, DNS names, and domains][1] in the *Amazon EC2 User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-naming.html
+    #   @return [String]
+    #
     # @!attribute [rw] is_primary_ipv_6
     #   Determines if an IPv6 address associated with a network interface is
     #   the primary IPv6 address. When you enable an IPv6 GUA address to be
@@ -59287,6 +59386,7 @@ module Aws::EC2
     #
     class NetworkInterfaceIpv6Address < Struct.new(
       :ipv_6_address,
+      :public_ipv_6_dns_name,
       :is_primary_ipv_6)
       SENSITIVE = []
       include Aws::Structure
@@ -61493,6 +61593,55 @@ module Aws::EC2
       :value,
       :status,
       :reason)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Public hostname type options. For more information, see [EC2 instance
+    # hostnames, DNS names, and domains][1] in the *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-naming.html
+    #
+    # @!attribute [rw] dns_hostname_type
+    #   The public hostname type. For more information, see [EC2 instance
+    #   hostnames, DNS names, and domains][1] in the *Amazon EC2 User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-naming.html
+    #   @return [String]
+    #
+    # @!attribute [rw] public_ipv_4_dns_name
+    #   An IPv4-enabled public hostname for a network interface. Requests
+    #   from within the VPC resolve to the private primary IPv4 address of
+    #   the network interface. Requests from the internet resolve to the
+    #   public IPv4 address of the network interface.
+    #   @return [String]
+    #
+    # @!attribute [rw] public_ipv_6_dns_name
+    #   An IPv6-enabled public hostname for a network interface. Requests
+    #   from within the VPC or from the internet resolve to the IPv6 GUA of
+    #   the network interface.
+    #   @return [String]
+    #
+    # @!attribute [rw] public_dual_stack_dns_name
+    #   A dual-stack public hostname for a network interface. Requests from
+    #   within the VPC resolve to both the private IPv4 address and the IPv6
+    #   Global Unicast Address of the network interface. Requests from the
+    #   internet resolve to both the public IPv4 and the IPv6 GUA address of
+    #   the network interface.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/PublicIpDnsNameOptions AWS API Documentation
+    #
+    class PublicIpDnsNameOptions < Struct.new(
+      :dns_hostname_type,
+      :public_ipv_4_dns_name,
+      :public_ipv_6_dns_name,
+      :public_dual_stack_dns_name)
       SENSITIVE = []
       include Aws::Structure
     end

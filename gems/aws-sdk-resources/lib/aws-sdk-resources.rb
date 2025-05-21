@@ -305,7 +305,6 @@ module Aws
   autoload :Pipes, 'aws-sdk-pipes'
   autoload :Polly, 'aws-sdk-polly'
   autoload :Pricing, 'aws-sdk-pricing'
-  autoload :PrivateNetworks, 'aws-sdk-privatenetworks'
   autoload :PrometheusService, 'aws-sdk-prometheusservice'
   autoload :Proton, 'aws-sdk-proton'
   autoload :QApps, 'aws-sdk-qapps'

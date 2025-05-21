@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.106.0 (2025-05-21)
+------------------
+
+* Feature - Doc only update that addresses a customer reported issue.
+
 1.105.0 (2025-05-12)
 ------------------
 

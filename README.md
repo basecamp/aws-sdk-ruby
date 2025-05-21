@@ -428,7 +428,6 @@ RubyGems.org page under "LINKS" section.
 | AWS Parallel Computing Service                        | Aws::PCS                                 | aws-sdk-pcs                                 | 2023-02-10  |
 | AWS Performance Insights                              | Aws::PI                                  | aws-sdk-pi                                  | 2018-02-27  |
 | AWS Price List Service                                | Aws::Pricing                             | aws-sdk-pricing                             | 2017-10-15  |
-| AWS Private 5G                                        | Aws::PrivateNetworks                     | aws-sdk-privatenetworks                     | 2021-12-03  |
 | AWS Proton                                            | Aws::Proton                              | aws-sdk-proton                              | 2020-07-20  |
 | AWS RDS DataService                                   | Aws::RDSDataService                      | aws-sdk-rdsdataservice                      | 2018-08-01  |
 | AWS Resilience Hub                                    | Aws::ResilienceHub                       | aws-sdk-resiliencehub                       | 2020-04-30  |

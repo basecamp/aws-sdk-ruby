@@ -1005,6 +1005,37 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Contains information about a condition evaluation result during an
+    # async execution. This event is generated when a condition node in the
+    # flow evaluates its conditions.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] node_name
+    #   The name of the condition node that evaluated the conditions.
+    #   @return [String]
+    #
+    # @!attribute [rw] satisfied_conditions
+    #   A list of conditions that were satisfied during the evaluation.
+    #   @return [Array<Types::SatisfiedCondition>]
+    #
+    # @!attribute [rw] timestamp
+    #   The timestamp when the condition evaluation occurred.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ConditionResultEvent AWS API Documentation
+    #
+    class ConditionResultEvent < Struct.new(
+      :node_name,
+      :satisfied_conditions,
+      :timestamp)
+      SENSITIVE = [:satisfied_conditions]
+      include Aws::Structure
+    end
+
     # There was a conflict performing an operation. Resolve the conflict and
     # retry your request.
     #
@@ -1599,6 +1630,282 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Contains the content of an async execution input or output field.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @note FlowExecutionContent is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of FlowExecutionContent corresponding to the set member.
+    #
+    # @!attribute [rw] document
+    #   The document content of the field, which can contain text or
+    #   structured data.
+    #   @return [Hash,Array,String,Numeric,Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/FlowExecutionContent AWS API Documentation
+    #
+    class FlowExecutionContent < Struct.new(
+      :document,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Document < FlowExecutionContent; end
+      class Unknown < FlowExecutionContent; end
+    end
+
+    # Contains information about an error that occurred during an async
+    # execution.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] error
+    #   The error code for the type of error that occurred.
+    #   @return [String]
+    #
+    # @!attribute [rw] message
+    #   A descriptive message that provides details about the error.
+    #   @return [String]
+    #
+    # @!attribute [rw] node_name
+    #   The name of the node in the flow where the error occurred (if
+    #   applicable).
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/FlowExecutionError AWS API Documentation
+    #
+    class FlowExecutionError < Struct.new(
+      :error,
+      :message,
+      :node_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents an event that occurred during an async execution. This is a
+    # union type that can contain one of several event types, such as node
+    # input and output events; flow input and output events; condition node
+    # result events, or failure events.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @note FlowExecutionEvent is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of FlowExecutionEvent corresponding to the set member.
+    #
+    # @!attribute [rw] condition_result_event
+    #   Contains information about a condition evaluation result during the
+    #   async execution. This event is generated when a condition node in
+    #   the flow evaluates its conditions.
+    #   @return [Types::ConditionResultEvent]
+    #
+    # @!attribute [rw] flow_failure_event
+    #   Contains information about a failure that occurred at the flow level
+    #   during execution.
+    #   @return [Types::FlowFailureEvent]
+    #
+    # @!attribute [rw] flow_input_event
+    #   Contains information about the inputs provided to the flow at the
+    #   start of execution.
+    #   @return [Types::FlowExecutionInputEvent]
+    #
+    # @!attribute [rw] flow_output_event
+    #   Contains information about the outputs produced by the flow at the
+    #   end of execution.
+    #   @return [Types::FlowExecutionOutputEvent]
+    #
+    # @!attribute [rw] node_failure_event
+    #   Contains information about a failure that occurred at a specific
+    #   node during execution.
+    #   @return [Types::NodeFailureEvent]
+    #
+    # @!attribute [rw] node_input_event
+    #   Contains information about the inputs provided to a specific node
+    #   during execution.
+    #   @return [Types::NodeInputEvent]
+    #
+    # @!attribute [rw] node_output_event
+    #   Contains information about the outputs produced by a specific node
+    #   during execution.
+    #   @return [Types::NodeOutputEvent]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/FlowExecutionEvent AWS API Documentation
+    #
+    class FlowExecutionEvent < Struct.new(
+      :condition_result_event,
+      :flow_failure_event,
+      :flow_input_event,
+      :flow_output_event,
+      :node_failure_event,
+      :node_input_event,
+      :node_output_event,
+      :unknown)
+      SENSITIVE = [:condition_result_event, :flow_failure_event, :flow_input_event, :flow_output_event, :node_failure_event, :node_input_event, :node_output_event]
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class ConditionResultEvent < FlowExecutionEvent; end
+      class FlowFailureEvent < FlowExecutionEvent; end
+      class FlowInputEvent < FlowExecutionEvent; end
+      class FlowOutputEvent < FlowExecutionEvent; end
+      class NodeFailureEvent < FlowExecutionEvent; end
+      class NodeInputEvent < FlowExecutionEvent; end
+      class NodeOutputEvent < FlowExecutionEvent; end
+      class Unknown < FlowExecutionEvent; end
+    end
+
+    # Contains information about the inputs provided to the flow at the
+    # start of async execution.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] fields
+    #   A list of input fields provided to the flow.
+    #   @return [Array<Types::FlowInputField>]
+    #
+    # @!attribute [rw] node_name
+    #   The name of the node that receives the inputs.
+    #   @return [String]
+    #
+    # @!attribute [rw] timestamp
+    #   The timestamp when the inputs are provided.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/FlowExecutionInputEvent AWS API Documentation
+    #
+    class FlowExecutionInputEvent < Struct.new(
+      :fields,
+      :node_name,
+      :timestamp)
+      SENSITIVE = [:fields]
+      include Aws::Structure
+    end
+
+    # Contains information about the outputs produced by the flow during an
+    # async execution.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] fields
+    #   A list of output fields produced by the flow.
+    #   @return [Array<Types::FlowOutputField>]
+    #
+    # @!attribute [rw] node_name
+    #   The name of the node that produces the outputs.
+    #   @return [String]
+    #
+    # @!attribute [rw] timestamp
+    #   The timestamp when the outputs are produced.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/FlowExecutionOutputEvent AWS API Documentation
+    #
+    class FlowExecutionOutputEvent < Struct.new(
+      :fields,
+      :node_name,
+      :timestamp)
+      SENSITIVE = [:fields]
+      include Aws::Structure
+    end
+
+    # Contains summary information about a flow's async execution,
+    # including its status, timestamps, and identifiers.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp when the async execution was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] ended_at
+    #   The timestamp when the async execution ended. This field is only
+    #   populated when the execution has completed, failed, timed out, or
+    #   been aborted.
+    #   @return [Time]
+    #
+    # @!attribute [rw] execution_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies the async
+    #   execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_alias_identifier
+    #   The unique identifier of the flow alias used for the execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_identifier
+    #   The unique identifier of the flow.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_version
+    #   The version of the flow used for the execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The current status of the async execution.
+    #
+    #   Async executions time out after 24 hours.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/FlowExecutionSummary AWS API Documentation
+    #
+    class FlowExecutionSummary < Struct.new(
+      :created_at,
+      :ended_at,
+      :execution_arn,
+      :flow_alias_identifier,
+      :flow_identifier,
+      :flow_version,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about a failure that occurred at the flow level
+    # during an async execution.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] error_code
+    #   The error code that identifies the type of failure that occurred.
+    #   @return [String]
+    #
+    # @!attribute [rw] error_message
+    #   A descriptive message that provides details about the failure.
+    #   @return [String]
+    #
+    # @!attribute [rw] timestamp
+    #   The timestamp when the failure occurred.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/FlowFailureEvent AWS API Documentation
+    #
+    class FlowFailureEvent < Struct.new(
+      :error_code,
+      :error_message,
+      :timestamp)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains information about an input into the prompt flow and where to
     # send it.
     #
@@ -1649,6 +1956,32 @@ module Aws::BedrockAgentRuntime
 
       class Document < FlowInputContent; end
       class Unknown < FlowInputContent; end
+    end
+
+    # Represents an input field provided to a flow during an async
+    # execution.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] content
+    #   The content of the input field, which can contain text or structured
+    #   data.
+    #   @return [Types::FlowExecutionContent]
+    #
+    # @!attribute [rw] name
+    #   The name of the input field as defined in the flow's input schema.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/FlowInputField AWS API Documentation
+    #
+    class FlowInputField < Struct.new(
+      :content,
+      :name)
+      SENSITIVE = [:content]
+      include Aws::Structure
     end
 
     # The content structure containing input information for multi-turn flow
@@ -1745,6 +2078,33 @@ module Aws::BedrockAgentRuntime
       :node_type,
       :event_type)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents an output field produced by a flow during an async
+    # execution.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] content
+    #   The content of the output field, which can contain text or
+    #   structured data.
+    #   @return [Types::FlowExecutionContent]
+    #
+    # @!attribute [rw] name
+    #   The name of the output field as defined in the flow's output
+    #   schema.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/FlowOutputField AWS API Documentation
+    #
+    class FlowOutputField < Struct.new(
+      :content,
+      :name)
+      SENSITIVE = [:content]
       include Aws::Structure
     end
 
@@ -2474,6 +2834,154 @@ module Aws::BedrockAgentRuntime
     class GetAgentMemoryResponse < Struct.new(
       :memory_contents,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] execution_identifier
+    #   The unique identifier of the async execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_alias_identifier
+    #   The unique identifier of the flow alias used for the async
+    #   execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_identifier
+    #   The unique identifier of the flow.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/GetExecutionFlowSnapshotRequest AWS API Documentation
+    #
+    class GetExecutionFlowSnapshotRequest < Struct.new(
+      :execution_identifier,
+      :flow_alias_identifier,
+      :flow_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] customer_encryption_key_arn
+    #   The Amazon Resource Name (ARN) of the customer managed KMS key
+    #   that's used to encrypt the flow snapshot.
+    #   @return [String]
+    #
+    # @!attribute [rw] definition
+    #   The flow definition used for the async execution, including the
+    #   nodes, connections, and configuration at the time when the execution
+    #   started.
+    #
+    #   The definition returns as a string that follows the structure of a
+    #   [FlowDefinition][1] object.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_FlowDefinition.html
+    #   @return [String]
+    #
+    # @!attribute [rw] execution_role_arn
+    #   The Amazon Resource Name (ARN) of the IAM service role that's used
+    #   by the async execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_alias_identifier
+    #   The unique identifier of the flow alias used for the async
+    #   execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_identifier
+    #   The unique identifier of the flow.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_version
+    #   The version of the flow used for the async execution.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/GetExecutionFlowSnapshotResponse AWS API Documentation
+    #
+    class GetExecutionFlowSnapshotResponse < Struct.new(
+      :customer_encryption_key_arn,
+      :definition,
+      :execution_role_arn,
+      :flow_alias_identifier,
+      :flow_identifier,
+      :flow_version)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] execution_identifier
+    #   The unique identifier of the async execution to retrieve.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_alias_identifier
+    #   The unique identifier of the flow alias used for the execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_identifier
+    #   The unique identifier of the flow.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/GetFlowExecutionRequest AWS API Documentation
+    #
+    class GetFlowExecutionRequest < Struct.new(
+      :execution_identifier,
+      :flow_alias_identifier,
+      :flow_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ended_at
+    #   The timestamp when the async execution ended. This field is only
+    #   populated when the execution has completed, failed, timed out, or
+    #   been aborted.
+    #   @return [Time]
+    #
+    # @!attribute [rw] errors
+    #   A list of errors that occurred during the async execution. Each
+    #   error includes an error code, message, and the node where the error
+    #   occurred, if applicable.
+    #   @return [Array<Types::FlowExecutionError>]
+    #
+    # @!attribute [rw] execution_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies the async
+    #   execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_alias_identifier
+    #   The unique identifier of the flow alias used for the execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_identifier
+    #   The unique identifier of the flow.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_version
+    #   The version of the flow used for the execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] started_at
+    #   The timestamp when the async execution started.
+    #   @return [Time]
+    #
+    # @!attribute [rw] status
+    #   The current status of the async execution.
+    #
+    #   Async executions time out after 24 hours.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/GetFlowExecutionResponse AWS API Documentation
+    #
+    class GetFlowExecutionResponse < Struct.new(
+      :ended_at,
+      :errors,
+      :execution_arn,
+      :flow_alias_identifier,
+      :flow_identifier,
+      :flow_version,
+      :started_at,
+      :status)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4325,6 +4833,119 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # @!attribute [rw] event_type
+    #   The type of events to retrieve. Specify `Node` for node-level events
+    #   or `Flow` for flow-level events.
+    #   @return [String]
+    #
+    # @!attribute [rw] execution_identifier
+    #   The unique identifier of the async execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_alias_identifier
+    #   The unique identifier of the flow alias used for the execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_identifier
+    #   The unique identifier of the flow.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of events to return in a single response. If more
+    #   events exist than the specified maxResults value, a token is
+    #   included in the response so that the remaining results can be
+    #   retrieved.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   A token to retrieve the next set of results. This value is returned
+    #   in the response if more results are available.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ListFlowExecutionEventsRequest AWS API Documentation
+    #
+    class ListFlowExecutionEventsRequest < Struct.new(
+      :event_type,
+      :execution_identifier,
+      :flow_alias_identifier,
+      :flow_identifier,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] flow_execution_events
+    #   A list of events that occurred during the async execution. Events
+    #   can include node inputs and outputs, flow inputs and outputs,
+    #   condition results, and failure events.
+    #   @return [Array<Types::FlowExecutionEvent>]
+    #
+    # @!attribute [rw] next_token
+    #   A token to retrieve the next set of results. This value is returned
+    #   if more results are available.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ListFlowExecutionEventsResponse AWS API Documentation
+    #
+    class ListFlowExecutionEventsResponse < Struct.new(
+      :flow_execution_events,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] flow_alias_identifier
+    #   The unique identifier of the flow alias to list executions for.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_identifier
+    #   The unique identifier of the flow to list executions for.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of async executions to return in a single
+    #   response. If more executions exist than the specified maxResults
+    #   value, a token is included in the response so that the remaining
+    #   results can be retrieved.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   A token to retrieve the next set of results. This value is returned
+    #   in the response if more results are available.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ListFlowExecutionsRequest AWS API Documentation
+    #
+    class ListFlowExecutionsRequest < Struct.new(
+      :flow_alias_identifier,
+      :flow_identifier,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] flow_execution_summaries
+    #   A list of async execution summaries. Each summary includes the
+    #   execution ARN, flow identifier, flow alias identifier, flow version,
+    #   status, and timestamps.
+    #   @return [Array<Types::FlowExecutionSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   A token to retrieve the next set of results. This value is returned
+    #   if more results are available.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ListFlowExecutionsResponse AWS API Documentation
+    #
+    class ListFlowExecutionsResponse < Struct.new(
+      :flow_execution_summaries,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] invocation_identifier
     #   The unique identifier (in UUID format) for the invocation to list
     #   invocation steps for.
@@ -4588,7 +5209,7 @@ module Aws::BedrockAgentRuntime
     #   @return [String]
     #
     # @!attribute [rw] end_time
-    #   In the final response, `endTime` is the end time time of the agent
+    #   In the final response, `endTime` is the end time of the agent
     #   invocation operation.
     #   @return [Time]
     #
@@ -4784,6 +5405,178 @@ module Aws::BedrockAgentRuntime
     class ModelPerformanceConfiguration < Struct.new(
       :performance_config)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains the content of a flow node's input or output field for an
+    # async execution.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @note NodeExecutionContent is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of NodeExecutionContent corresponding to the set member.
+    #
+    # @!attribute [rw] document
+    #   The document content of the field, which can contain text or
+    #   structured data.
+    #   @return [Hash,Array,String,Numeric,Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/NodeExecutionContent AWS API Documentation
+    #
+    class NodeExecutionContent < Struct.new(
+      :document,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Document < NodeExecutionContent; end
+      class Unknown < NodeExecutionContent; end
+    end
+
+    # Contains information about a failure that occurred at a specific node
+    # during a flow's async execution.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] error_code
+    #   The error code that identifies the type of failure that occurred at
+    #   the node.
+    #   @return [String]
+    #
+    # @!attribute [rw] error_message
+    #   A descriptive message that provides details about the node failure.
+    #   @return [String]
+    #
+    # @!attribute [rw] node_name
+    #   The name of the node where the failure occurred.
+    #   @return [String]
+    #
+    # @!attribute [rw] timestamp
+    #   The timestamp when the node failure occurred.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/NodeFailureEvent AWS API Documentation
+    #
+    class NodeFailureEvent < Struct.new(
+      :error_code,
+      :error_message,
+      :node_name,
+      :timestamp)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the inputs provided to a specific node
+    # during a flow's async execution.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] fields
+    #   A list of input fields provided to the node.
+    #   @return [Array<Types::NodeInputField>]
+    #
+    # @!attribute [rw] node_name
+    #   The name of the node that received the inputs.
+    #   @return [String]
+    #
+    # @!attribute [rw] timestamp
+    #   The timestamp when the inputs were provided to the node.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/NodeInputEvent AWS API Documentation
+    #
+    class NodeInputEvent < Struct.new(
+      :fields,
+      :node_name,
+      :timestamp)
+      SENSITIVE = [:fields]
+      include Aws::Structure
+    end
+
+    # Represents an input field provided to a node during a flow's async
+    # execution.
+    #
+    # @!attribute [rw] content
+    #   The content of the input field, which can contain text or structured
+    #   data.
+    #   @return [Types::NodeExecutionContent]
+    #
+    # @!attribute [rw] name
+    #   The name of the input field as defined in the node's input schema.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/NodeInputField AWS API Documentation
+    #
+    class NodeInputField < Struct.new(
+      :content,
+      :name)
+      SENSITIVE = [:content]
+      include Aws::Structure
+    end
+
+    # Contains information about the outputs produced by a specific node
+    # during a flow's async execution.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] fields
+    #   A list of output fields produced by the node.
+    #   @return [Array<Types::NodeOutputField>]
+    #
+    # @!attribute [rw] node_name
+    #   The name of the node that produced the outputs.
+    #   @return [String]
+    #
+    # @!attribute [rw] timestamp
+    #   The timestamp when the outputs were produced by the node.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/NodeOutputEvent AWS API Documentation
+    #
+    class NodeOutputEvent < Struct.new(
+      :fields,
+      :node_name,
+      :timestamp)
+      SENSITIVE = [:fields]
+      include Aws::Structure
+    end
+
+    # Represents an output field produced by a node during a flow's async
+    # execution.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] content
+    #   The content of the output field, which can contain text or
+    #   structured data.
+    #   @return [Types::NodeExecutionContent]
+    #
+    # @!attribute [rw] name
+    #   The name of the output field as defined in the node's output
+    #   schema.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/NodeOutputField AWS API Documentation
+    #
+    class NodeOutputField < Struct.new(
+      :content,
+      :name)
+      SENSITIVE = [:content]
       include Aws::Structure
     end
 
@@ -7018,6 +7811,26 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Represents a condition that was satisfied during a condition node
+    # evaluation in a flow's async execution.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] condition_name
+    #   The name of the condition that was satisfied.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/SatisfiedCondition AWS API Documentation
+    #
+    class SatisfiedCondition < Struct.new(
+      :condition_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The number of requests exceeds the service quota. Resubmit your
     # request later.
     #
@@ -7199,6 +8012,97 @@ module Aws::BedrockAgentRuntime
     class Span < Struct.new(
       :end,
       :start)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] flow_alias_identifier
+    #   The unique identifier of the flow alias to use for the async
+    #   execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_execution_name
+    #   The unique name for the async execution. If you don't provide one,
+    #   a system-generated name is used.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_identifier
+    #   The unique identifier of the flow to execute.
+    #   @return [String]
+    #
+    # @!attribute [rw] inputs
+    #   The input data required for the async execution. This must match the
+    #   input schema defined in the flow.
+    #   @return [Array<Types::FlowInput>]
+    #
+    # @!attribute [rw] model_performance_configuration
+    #   The performance settings for the foundation model used in the async
+    #   execution.
+    #   @return [Types::ModelPerformanceConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/StartFlowExecutionRequest AWS API Documentation
+    #
+    class StartFlowExecutionRequest < Struct.new(
+      :flow_alias_identifier,
+      :flow_execution_name,
+      :flow_identifier,
+      :inputs,
+      :model_performance_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] execution_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies the async
+    #   execution.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/StartFlowExecutionResponse AWS API Documentation
+    #
+    class StartFlowExecutionResponse < Struct.new(
+      :execution_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] execution_identifier
+    #   The unique identifier of the async execution to stop.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_alias_identifier
+    #   The unique identifier of the flow alias used for the execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] flow_identifier
+    #   The unique identifier of the flow.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/StopFlowExecutionRequest AWS API Documentation
+    #
+    class StopFlowExecutionRequest < Struct.new(
+      :execution_identifier,
+      :flow_alias_identifier,
+      :flow_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] execution_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies the async
+    #   execution that was stopped.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The updated status of the async execution after the stop request.
+    #   This will typically be ABORTED if the execution was successfully
+    #   stopped.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/StopFlowExecutionResponse AWS API Documentation
+    #
+    class StopFlowExecutionResponse < Struct.new(
+      :execution_arn,
+      :status)
       SENSITIVE = []
       include Aws::Structure
     end

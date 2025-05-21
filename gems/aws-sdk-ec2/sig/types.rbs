@@ -11897,6 +11897,18 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class ModifyPublicIpDnsNameOptionsRequest
+      attr_accessor network_interface_id: ::String
+      attr_accessor hostname_type: ("public-dual-stack-dns-name" | "public-ipv4-dns-name" | "public-ipv6-dns-name")
+      attr_accessor dry_run: bool
+      SENSITIVE: []
+    end
+
+    class ModifyPublicIpDnsNameOptionsResult
+      attr_accessor successful: bool
+      SENSITIVE: []
+    end
+
     class ModifyReservedInstancesRequest
       attr_accessor reserved_instances_ids: ::Array[::String]
       attr_accessor client_token: ::String
@@ -12778,6 +12790,8 @@ module Aws::EC2
       attr_accessor outpost_arn: ::String
       attr_accessor owner_id: ::String
       attr_accessor private_dns_name: ::String
+      attr_accessor public_dns_name: ::String
+      attr_accessor public_ip_dns_name_options: Types::PublicIpDnsNameOptions
       attr_accessor private_ip_address: ::String
       attr_accessor private_ip_addresses: ::Array[Types::NetworkInterfacePrivateIpAddress]
       attr_accessor ipv_4_prefixes: ::Array[Types::Ipv4PrefixSpecification]
@@ -12843,6 +12857,7 @@ module Aws::EC2
 
     class NetworkInterfaceIpv6Address
       attr_accessor ipv_6_address: ::String
+      attr_accessor public_ipv_6_dns_name: ::String
       attr_accessor is_primary_ipv_6: bool
       SENSITIVE: []
     end
@@ -13372,6 +13387,14 @@ module Aws::EC2
       attr_accessor value: ::String
       attr_accessor status: ::String
       attr_accessor reason: ::String
+      SENSITIVE: []
+    end
+
+    class PublicIpDnsNameOptions
+      attr_accessor dns_hostname_type: ::String
+      attr_accessor public_ipv_4_dns_name: ::String
+      attr_accessor public_ipv_6_dns_name: ::String
+      attr_accessor public_dual_stack_dns_name: ::String
       SENSITIVE: []
     end
 

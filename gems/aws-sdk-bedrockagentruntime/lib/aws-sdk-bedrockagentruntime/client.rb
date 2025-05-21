@@ -859,6 +859,116 @@ module Aws::BedrockAgentRuntime
       req.send_request(options)
     end
 
+    # Retrieves the flow definition snapshot used for an asynchronous
+    # execution. The snapshot represents the flow metadata and definition as
+    # it existed at the time the asynchronous execution was started. Note
+    # that even if the flow is edited after an execution starts, the
+    # snapshot connected to the execution remains unchanged.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @option params [required, String] :execution_identifier
+    #   The unique identifier of the async execution.
+    #
+    # @option params [required, String] :flow_alias_identifier
+    #   The unique identifier of the flow alias used for the async execution.
+    #
+    # @option params [required, String] :flow_identifier
+    #   The unique identifier of the flow.
+    #
+    # @return [Types::GetExecutionFlowSnapshotResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetExecutionFlowSnapshotResponse#customer_encryption_key_arn #customer_encryption_key_arn} => String
+    #   * {Types::GetExecutionFlowSnapshotResponse#definition #definition} => String
+    #   * {Types::GetExecutionFlowSnapshotResponse#execution_role_arn #execution_role_arn} => String
+    #   * {Types::GetExecutionFlowSnapshotResponse#flow_alias_identifier #flow_alias_identifier} => String
+    #   * {Types::GetExecutionFlowSnapshotResponse#flow_identifier #flow_identifier} => String
+    #   * {Types::GetExecutionFlowSnapshotResponse#flow_version #flow_version} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_execution_flow_snapshot({
+    #     execution_identifier: "FlowExecutionIdentifier", # required
+    #     flow_alias_identifier: "FlowAliasIdentifier", # required
+    #     flow_identifier: "FlowIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.customer_encryption_key_arn #=> String
+    #   resp.definition #=> String
+    #   resp.execution_role_arn #=> String
+    #   resp.flow_alias_identifier #=> String
+    #   resp.flow_identifier #=> String
+    #   resp.flow_version #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/GetExecutionFlowSnapshot AWS API Documentation
+    #
+    # @overload get_execution_flow_snapshot(params = {})
+    # @param [Hash] params ({})
+    def get_execution_flow_snapshot(params = {}, options = {})
+      req = build_request(:get_execution_flow_snapshot, params)
+      req.send_request(options)
+    end
+
+    # Retrieves details about a specific asynchronous execution of a flow,
+    # including its status, start and end times, and any errors that
+    # occurred during execution.
+    #
+    # @option params [required, String] :execution_identifier
+    #   The unique identifier of the async execution to retrieve.
+    #
+    # @option params [required, String] :flow_alias_identifier
+    #   The unique identifier of the flow alias used for the execution.
+    #
+    # @option params [required, String] :flow_identifier
+    #   The unique identifier of the flow.
+    #
+    # @return [Types::GetFlowExecutionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetFlowExecutionResponse#ended_at #ended_at} => Time
+    #   * {Types::GetFlowExecutionResponse#errors #errors} => Array&lt;Types::FlowExecutionError&gt;
+    #   * {Types::GetFlowExecutionResponse#execution_arn #execution_arn} => String
+    #   * {Types::GetFlowExecutionResponse#flow_alias_identifier #flow_alias_identifier} => String
+    #   * {Types::GetFlowExecutionResponse#flow_identifier #flow_identifier} => String
+    #   * {Types::GetFlowExecutionResponse#flow_version #flow_version} => String
+    #   * {Types::GetFlowExecutionResponse#started_at #started_at} => Time
+    #   * {Types::GetFlowExecutionResponse#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_flow_execution({
+    #     execution_identifier: "FlowExecutionIdentifier", # required
+    #     flow_alias_identifier: "FlowAliasIdentifier", # required
+    #     flow_identifier: "FlowIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.ended_at #=> Time
+    #   resp.errors #=> Array
+    #   resp.errors[0].error #=> String, one of "ExecutionTimedOut"
+    #   resp.errors[0].message #=> String
+    #   resp.errors[0].node_name #=> String
+    #   resp.execution_arn #=> String
+    #   resp.flow_alias_identifier #=> String
+    #   resp.flow_identifier #=> String
+    #   resp.flow_version #=> String
+    #   resp.started_at #=> Time
+    #   resp.status #=> String, one of "Running", "Succeeded", "Failed", "TimedOut", "Aborted"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/GetFlowExecution AWS API Documentation
+    #
+    # @overload get_flow_execution(params = {})
+    # @param [Hash] params ({})
+    def get_flow_execution(params = {}, options = {})
+      req = build_request(:get_flow_execution, params)
+      req.send_request(options)
+    end
+
     # Retrieves the details of a specific invocation step within an
     # invocation in a session. For more information about sessions, see
     # [Store and retrieve conversation history and context with Amazon
@@ -3898,6 +4008,159 @@ module Aws::BedrockAgentRuntime
       req.send_request(options, &block)
     end
 
+    # Lists events that occurred during an asynchronous execution of a flow.
+    # Events provide detailed information about the execution progress,
+    # including node inputs and outputs, flow inputs and outputs, condition
+    # results, and failure events.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @option params [required, String] :event_type
+    #   The type of events to retrieve. Specify `Node` for node-level events
+    #   or `Flow` for flow-level events.
+    #
+    # @option params [required, String] :execution_identifier
+    #   The unique identifier of the async execution.
+    #
+    # @option params [required, String] :flow_alias_identifier
+    #   The unique identifier of the flow alias used for the execution.
+    #
+    # @option params [required, String] :flow_identifier
+    #   The unique identifier of the flow.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of events to return in a single response. If more
+    #   events exist than the specified maxResults value, a token is included
+    #   in the response so that the remaining results can be retrieved.
+    #
+    # @option params [String] :next_token
+    #   A token to retrieve the next set of results. This value is returned in
+    #   the response if more results are available.
+    #
+    # @return [Types::ListFlowExecutionEventsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListFlowExecutionEventsResponse#flow_execution_events #flow_execution_events} => Array&lt;Types::FlowExecutionEvent&gt;
+    #   * {Types::ListFlowExecutionEventsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_flow_execution_events({
+    #     event_type: "Node", # required, accepts Node, Flow
+    #     execution_identifier: "FlowExecutionIdentifier", # required
+    #     flow_alias_identifier: "FlowAliasIdentifier", # required
+    #     flow_identifier: "FlowIdentifier", # required
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.flow_execution_events #=> Array
+    #   resp.flow_execution_events[0].condition_result_event.node_name #=> String
+    #   resp.flow_execution_events[0].condition_result_event.satisfied_conditions #=> Array
+    #   resp.flow_execution_events[0].condition_result_event.satisfied_conditions[0].condition_name #=> String
+    #   resp.flow_execution_events[0].condition_result_event.timestamp #=> Time
+    #   resp.flow_execution_events[0].flow_failure_event.error_code #=> String, one of "VALIDATION", "INTERNAL_SERVER", "NODE_EXECUTION_FAILED"
+    #   resp.flow_execution_events[0].flow_failure_event.error_message #=> String
+    #   resp.flow_execution_events[0].flow_failure_event.timestamp #=> Time
+    #   resp.flow_execution_events[0].flow_input_event.fields #=> Array
+    #   resp.flow_execution_events[0].flow_input_event.fields[0].name #=> String
+    #   resp.flow_execution_events[0].flow_input_event.node_name #=> String
+    #   resp.flow_execution_events[0].flow_input_event.timestamp #=> Time
+    #   resp.flow_execution_events[0].flow_output_event.fields #=> Array
+    #   resp.flow_execution_events[0].flow_output_event.fields[0].name #=> String
+    #   resp.flow_execution_events[0].flow_output_event.node_name #=> String
+    #   resp.flow_execution_events[0].flow_output_event.timestamp #=> Time
+    #   resp.flow_execution_events[0].node_failure_event.error_code #=> String, one of "VALIDATION", "DEPENDENCY_FAILED", "BAD_GATEWAY", "INTERNAL_SERVER"
+    #   resp.flow_execution_events[0].node_failure_event.error_message #=> String
+    #   resp.flow_execution_events[0].node_failure_event.node_name #=> String
+    #   resp.flow_execution_events[0].node_failure_event.timestamp #=> Time
+    #   resp.flow_execution_events[0].node_input_event.fields #=> Array
+    #   resp.flow_execution_events[0].node_input_event.fields[0].name #=> String
+    #   resp.flow_execution_events[0].node_input_event.node_name #=> String
+    #   resp.flow_execution_events[0].node_input_event.timestamp #=> Time
+    #   resp.flow_execution_events[0].node_output_event.fields #=> Array
+    #   resp.flow_execution_events[0].node_output_event.fields[0].name #=> String
+    #   resp.flow_execution_events[0].node_output_event.node_name #=> String
+    #   resp.flow_execution_events[0].node_output_event.timestamp #=> Time
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ListFlowExecutionEvents AWS API Documentation
+    #
+    # @overload list_flow_execution_events(params = {})
+    # @param [Hash] params ({})
+    def list_flow_execution_events(params = {}, options = {})
+      req = build_request(:list_flow_execution_events, params)
+      req.send_request(options)
+    end
+
+    # Lists all asynchronous executions for a flow. Results can be paginated
+    # and include summary information about each execution, such as status,
+    # start and end times, and the execution's Amazon Resource Name (ARN).
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @option params [String] :flow_alias_identifier
+    #   The unique identifier of the flow alias to list executions for.
+    #
+    # @option params [required, String] :flow_identifier
+    #   The unique identifier of the flow to list executions for.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of async executions to return in a single response.
+    #   If more executions exist than the specified maxResults value, a token
+    #   is included in the response so that the remaining results can be
+    #   retrieved.
+    #
+    # @option params [String] :next_token
+    #   A token to retrieve the next set of results. This value is returned in
+    #   the response if more results are available.
+    #
+    # @return [Types::ListFlowExecutionsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListFlowExecutionsResponse#flow_execution_summaries #flow_execution_summaries} => Array&lt;Types::FlowExecutionSummary&gt;
+    #   * {Types::ListFlowExecutionsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_flow_executions({
+    #     flow_alias_identifier: "FlowAliasIdentifier",
+    #     flow_identifier: "FlowIdentifier", # required
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.flow_execution_summaries #=> Array
+    #   resp.flow_execution_summaries[0].created_at #=> Time
+    #   resp.flow_execution_summaries[0].ended_at #=> Time
+    #   resp.flow_execution_summaries[0].execution_arn #=> String
+    #   resp.flow_execution_summaries[0].flow_alias_identifier #=> String
+    #   resp.flow_execution_summaries[0].flow_identifier #=> String
+    #   resp.flow_execution_summaries[0].flow_version #=> String
+    #   resp.flow_execution_summaries[0].status #=> String, one of "Running", "Succeeded", "Failed", "TimedOut", "Aborted"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ListFlowExecutions AWS API Documentation
+    #
+    # @overload list_flow_executions(params = {})
+    # @param [Hash] params ({})
+    def list_flow_executions(params = {}, options = {})
+      req = build_request(:list_flow_executions, params)
+      req.send_request(options)
+    end
+
     # Lists all invocation steps associated with a session and optionally,
     # an invocation within the session. For more information about sessions,
     # see [Store and retrieve conversation history and context with Amazon
@@ -5556,6 +5819,120 @@ module Aws::BedrockAgentRuntime
       req.send_request(options, &block)
     end
 
+    # Starts an asynchronous execution of an Amazon Bedrock flow. Unlike
+    # synchronous flows that run until completion or time out after five
+    # minutes, you can run asynchronous flows for longer durations.
+    # Asynchronous flows also yield control so that your application can
+    # perform other tasks.
+    #
+    # This operation returns an Amazon Resource Name (ARN) that you can use
+    # to track and manage your flow's async execution.
+    #
+    # <note markdown="1"> Asynchronous flows is in preview release for Amazon Bedrock and is
+    # subject to change.
+    #
+    #  </note>
+    #
+    # @option params [required, String] :flow_alias_identifier
+    #   The unique identifier of the flow alias to use for the async
+    #   execution.
+    #
+    # @option params [String] :flow_execution_name
+    #   The unique name for the async execution. If you don't provide one, a
+    #   system-generated name is used.
+    #
+    # @option params [required, String] :flow_identifier
+    #   The unique identifier of the flow to execute.
+    #
+    # @option params [required, Array<Types::FlowInput>] :inputs
+    #   The input data required for the async execution. This must match the
+    #   input schema defined in the flow.
+    #
+    # @option params [Types::ModelPerformanceConfiguration] :model_performance_configuration
+    #   The performance settings for the foundation model used in the async
+    #   execution.
+    #
+    # @return [Types::StartFlowExecutionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartFlowExecutionResponse#execution_arn #execution_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_flow_execution({
+    #     flow_alias_identifier: "FlowAliasIdentifier", # required
+    #     flow_execution_name: "FlowExecutionName",
+    #     flow_identifier: "FlowIdentifier", # required
+    #     inputs: [ # required
+    #       {
+    #         content: { # required
+    #           document: {
+    #           },
+    #         },
+    #         node_input_name: "NodeInputName",
+    #         node_name: "NodeName", # required
+    #         node_output_name: "NodeOutputName",
+    #       },
+    #     ],
+    #     model_performance_configuration: {
+    #       performance_config: {
+    #         latency: "standard", # accepts standard, optimized
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.execution_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/StartFlowExecution AWS API Documentation
+    #
+    # @overload start_flow_execution(params = {})
+    # @param [Hash] params ({})
+    def start_flow_execution(params = {}, options = {})
+      req = build_request(:start_flow_execution, params)
+      req.send_request(options)
+    end
+
+    # Stops an Amazon Bedrock flow's asynchronous execution. This operation
+    # prevents further processing of the flow and changes the execution
+    # status to `Aborted`.
+    #
+    # @option params [required, String] :execution_identifier
+    #   The unique identifier of the async execution to stop.
+    #
+    # @option params [required, String] :flow_alias_identifier
+    #   The unique identifier of the flow alias used for the execution.
+    #
+    # @option params [required, String] :flow_identifier
+    #   The unique identifier of the flow.
+    #
+    # @return [Types::StopFlowExecutionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StopFlowExecutionResponse#execution_arn #execution_arn} => String
+    #   * {Types::StopFlowExecutionResponse#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.stop_flow_execution({
+    #     execution_identifier: "FlowExecutionIdentifier", # required
+    #     flow_alias_identifier: "FlowAliasIdentifier", # required
+    #     flow_identifier: "FlowIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.execution_arn #=> String
+    #   resp.status #=> String, one of "Running", "Succeeded", "Failed", "TimedOut", "Aborted"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/StopFlowExecution AWS API Documentation
+    #
+    # @overload stop_flow_execution(params = {})
+    # @param [Hash] params ({})
+    def stop_flow_execution(params = {}, options = {})
+      req = build_request(:stop_flow_execution, params)
+      req.send_request(options)
+    end
+
     # Associate tags with a resource. For more information, see [Tagging
     # resources][1] in the Amazon Bedrock User Guide.
     #
@@ -5686,7 +6063,7 @@ module Aws::BedrockAgentRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagentruntime'
-      context[:gem_version] = '1.55.0'
+      context[:gem_version] = '1.56.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

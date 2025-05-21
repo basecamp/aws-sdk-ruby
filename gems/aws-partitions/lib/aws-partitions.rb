@@ -543,7 +543,6 @@ module Aws
             'Pipes' => 'pipes',
             'Polly' => 'polly',
             'Pricing' => 'api.pricing',
-            'PrivateNetworks' => 'private-networks',
             'PrometheusService' => 'aps',
             'Proton' => 'proton',
             'QApps' => 'data.qapps',

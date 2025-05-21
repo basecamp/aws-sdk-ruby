@@ -11477,6 +11477,18 @@ module Aws
                                            ) -> _ModifyPrivateDnsNameOptionsResponseSuccess
                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyPrivateDnsNameOptionsResponseSuccess
 
+      interface _ModifyPublicIpDnsNameOptionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ModifyPublicIpDnsNameOptionsResult]
+        def successful: () -> bool
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#modify_public_ip_dns_name_options-instance_method
+      def modify_public_ip_dns_name_options: (
+                                               network_interface_id: ::String,
+                                               hostname_type: ("public-dual-stack-dns-name" | "public-ipv4-dns-name" | "public-ipv6-dns-name"),
+                                               ?dry_run: bool
+                                             ) -> _ModifyPublicIpDnsNameOptionsResponseSuccess
+                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyPublicIpDnsNameOptionsResponseSuccess
+
       interface _ModifyReservedInstancesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ModifyReservedInstancesResult]
         def reserved_instances_modification_id: () -> ::String

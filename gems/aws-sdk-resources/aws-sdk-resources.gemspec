@@ -315,7 +315,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency('aws-sdk-pipes', '~> 1')
   spec.add_dependency('aws-sdk-polly', '~> 1')
   spec.add_dependency('aws-sdk-pricing', '~> 1')
-  spec.add_dependency('aws-sdk-privatenetworks', '~> 1')
   spec.add_dependency('aws-sdk-prometheusservice', '~> 1')
   spec.add_dependency('aws-sdk-proton', '~> 1')
   spec.add_dependency('aws-sdk-qapps', '~> 1')

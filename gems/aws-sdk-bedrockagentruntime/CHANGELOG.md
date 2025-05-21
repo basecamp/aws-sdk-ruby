@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.56.0 (2025-05-21)
+------------------
+
+* Feature - Amazon Bedrock introduces asynchronous flows (in preview), which let you run flows for longer durations and yield control so that your application can perform other tasks and you don't have to actively monitor the flow's progress.
+
 1.55.0 (2025-05-13)
 ------------------
 

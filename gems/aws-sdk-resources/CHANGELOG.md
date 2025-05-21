@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+3.227.0 (2025-05-21)
+------------------
+
+* Feature - Removed a dependency on the deprecated `aws-sdk-privatenetworks` gem.
+
 3.226.0 (2025-04-29)
 ------------------
 
