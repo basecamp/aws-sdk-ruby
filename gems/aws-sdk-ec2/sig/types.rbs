@@ -166,6 +166,19 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class ActiveVpnTunnelStatus
+      attr_accessor phase_1_encryption_algorithm: ::String
+      attr_accessor phase_2_encryption_algorithm: ::String
+      attr_accessor phase_1_integrity_algorithm: ::String
+      attr_accessor phase_2_integrity_algorithm: ::String
+      attr_accessor phase_1_dh_group: ::Integer
+      attr_accessor phase_2_dh_group: ::Integer
+      attr_accessor ike_version: ::String
+      attr_accessor provisioning_status: ("available" | "pending" | "failed")
+      attr_accessor provisioning_status_reason: ::String
+      SENSITIVE: []
+    end
+
     class AddIpamOperatingRegion
       attr_accessor region_name: ::String
       SENSITIVE: []
@@ -3348,6 +3361,7 @@ module Aws::EC2
       attr_accessor vpn_gateway_id: ::String
       attr_accessor transit_gateway_id: ::String
       attr_accessor tag_specifications: ::Array[Types::TagSpecification]
+      attr_accessor pre_shared_key_storage: ::String
       attr_accessor dry_run: bool
       attr_accessor options: Types::VpnConnectionOptionsSpecification
       SENSITIVE: []
@@ -8444,6 +8458,18 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class GetActiveVpnTunnelStatusRequest
+      attr_accessor vpn_connection_id: ::String
+      attr_accessor vpn_tunnel_outside_ip_address: ::String
+      attr_accessor dry_run: bool
+      SENSITIVE: []
+    end
+
+    class GetActiveVpnTunnelStatusResult
+      attr_accessor active_vpn_tunnel_status: Types::ActiveVpnTunnelStatus
+      SENSITIVE: []
+    end
+
     class GetAllowedImagesSettingsRequest
       attr_accessor dry_run: bool
       SENSITIVE: []
@@ -9192,6 +9218,7 @@ module Aws::EC2
       attr_accessor vpn_connection_id: ::String
       attr_accessor vpn_connection_device_type_id: ::String
       attr_accessor internet_key_exchange_version: ::String
+      attr_accessor sample_type: ::String
       attr_accessor dry_run: bool
       SENSITIVE: []
     end
@@ -12499,6 +12526,7 @@ module Aws::EC2
       attr_accessor tunnel_options: Types::ModifyVpnTunnelOptionsSpecification
       attr_accessor dry_run: bool
       attr_accessor skip_tunnel_replacement: bool
+      attr_accessor pre_shared_key_storage: ::String
       SENSITIVE: [:tunnel_options]
     end
 
@@ -16816,6 +16844,7 @@ module Aws::EC2
       attr_accessor routes: ::Array[Types::VpnStaticRoute]
       attr_accessor tags: ::Array[Types::Tag]
       attr_accessor vgw_telemetry: ::Array[Types::VgwTelemetry]
+      attr_accessor pre_shared_key_arn: ::String
       attr_accessor vpn_connection_id: ::String
       attr_accessor state: ("pending" | "available" | "deleting" | "deleted")
       attr_accessor customer_gateway_configuration: ::String

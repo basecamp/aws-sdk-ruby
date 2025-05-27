@@ -535,6 +535,63 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # Contains information about the current security configuration of an
+    # active VPN tunnel.
+    #
+    # @!attribute [rw] phase_1_encryption_algorithm
+    #   The encryption algorithm negotiated in Phase 1 IKE negotiations.
+    #   @return [String]
+    #
+    # @!attribute [rw] phase_2_encryption_algorithm
+    #   The encryption algorithm negotiated in Phase 2 IKE negotiations.
+    #   @return [String]
+    #
+    # @!attribute [rw] phase_1_integrity_algorithm
+    #   The integrity algorithm negotiated in Phase 1 IKE negotiations.
+    #   @return [String]
+    #
+    # @!attribute [rw] phase_2_integrity_algorithm
+    #   The integrity algorithm negotiated in Phase 2 IKE negotiations.
+    #   @return [String]
+    #
+    # @!attribute [rw] phase_1_dh_group
+    #   The Diffie-Hellman group number being used in Phase 1 IKE
+    #   negotiations.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] phase_2_dh_group
+    #   The Diffie-Hellman group number being used in Phase 2 IKE
+    #   negotiations.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] ike_version
+    #   The version of the Internet Key Exchange (IKE) protocol being used.
+    #   @return [String]
+    #
+    # @!attribute [rw] provisioning_status
+    #   The current provisioning status of the VPN tunnel.
+    #   @return [String]
+    #
+    # @!attribute [rw] provisioning_status_reason
+    #   The reason for the current provisioning status.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ActiveVpnTunnelStatus AWS API Documentation
+    #
+    class ActiveVpnTunnelStatus < Struct.new(
+      :phase_1_encryption_algorithm,
+      :phase_2_encryption_algorithm,
+      :phase_1_integrity_algorithm,
+      :phase_2_integrity_algorithm,
+      :phase_1_dh_group,
+      :phase_2_dh_group,
+      :ike_version,
+      :provisioning_status,
+      :provisioning_status_reason)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Add an operating Region to an IPAM. Operating Regions are Amazon Web
     # Services Regions where the IPAM is allowed to manage IP address CIDRs.
     # IPAM only discovers and monitors resources in the Amazon Web Services
@@ -15207,6 +15264,12 @@ module Aws::EC2
     #   The tags to apply to the VPN connection.
     #   @return [Array<Types::TagSpecification>]
     #
+    # @!attribute [rw] pre_shared_key_storage
+    #   Specifies the storage mode for the pre-shared key (PSK). Valid
+    #   values are `Standard`" (stored in the Site-to-Site VPN service) or
+    #   `SecretsManager` (stored in Amazon Web Services Secrets Manager).
+    #   @return [String]
+    #
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -15226,6 +15289,7 @@ module Aws::EC2
       :vpn_gateway_id,
       :transit_gateway_id,
       :tag_specifications,
+      :pre_shared_key_storage,
       :dry_run,
       :options)
       SENSITIVE = []
@@ -38419,6 +38483,44 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @!attribute [rw] vpn_connection_id
+    #   The ID of the VPN connection for which to retrieve the active tunnel
+    #   status.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpn_tunnel_outside_ip_address
+    #   The external IP address of the VPN tunnel for which to retrieve the
+    #   active status.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetActiveVpnTunnelStatusRequest AWS API Documentation
+    #
+    class GetActiveVpnTunnelStatusRequest < Struct.new(
+      :vpn_connection_id,
+      :vpn_tunnel_outside_ip_address,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] active_vpn_tunnel_status
+    #   Information about the current security configuration of the VPN
+    #   tunnel.
+    #   @return [Types::ActiveVpnTunnelStatus]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetActiveVpnTunnelStatusResult AWS API Documentation
+    #
+    class GetActiveVpnTunnelStatusResult < Struct.new(
+      :active_vpn_tunnel_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -41357,6 +41459,12 @@ module Aws::EC2
     #   versions: `ikev1` or `ikev2`.
     #   @return [String]
     #
+    # @!attribute [rw] sample_type
+    #   The type of sample configuration to generate. Valid values are
+    #   "compatibility" (includes IKEv1) or "recommended" (throws
+    #   UnsupportedOperationException for IKEv1).
+    #   @return [String]
+    #
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -41370,6 +41478,7 @@ module Aws::EC2
       :vpn_connection_id,
       :vpn_connection_device_type_id,
       :internet_key_exchange_version,
+      :sample_type,
       :dry_run)
       SENSITIVE = []
       include Aws::Structure
@@ -57677,6 +57786,12 @@ module Aws::EC2
     #   Valid values: `True` \| `False`
     #   @return [Boolean]
     #
+    # @!attribute [rw] pre_shared_key_storage
+    #   Specifies the storage mode for the pre-shared key (PSK). Valid
+    #   values are `Standard` (stored in Site-to-Site VPN service) or
+    #   `SecretsManager` (stored in Amazon Web Services Secrets Manager).
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVpnTunnelOptionsRequest AWS API Documentation
     #
     class ModifyVpnTunnelOptionsRequest < Struct.new(
@@ -57684,7 +57799,8 @@ module Aws::EC2
       :vpn_tunnel_outside_ip_address,
       :tunnel_options,
       :dry_run,
-      :skip_tunnel_replacement)
+      :skip_tunnel_replacement,
+      :pre_shared_key_storage)
       SENSITIVE = [:tunnel_options]
       include Aws::Structure
     end
@@ -77313,6 +77429,11 @@ module Aws::EC2
     #   Information about the VPN tunnel.
     #   @return [Array<Types::VgwTelemetry>]
     #
+    # @!attribute [rw] pre_shared_key_arn
+    #   The Amazon Resource Name (ARN) of the Secrets Manager secret storing
+    #   the pre-shared key(s) for the VPN connection.
+    #   @return [String]
+    #
     # @!attribute [rw] vpn_connection_id
     #   The ID of the VPN connection.
     #   @return [String]
@@ -77354,6 +77475,7 @@ module Aws::EC2
       :routes,
       :tags,
       :vgw_telemetry,
+      :pre_shared_key_arn,
       :vpn_connection_id,
       :state,
       :customer_gateway_configuration,

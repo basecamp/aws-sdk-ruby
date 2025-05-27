@@ -17159,6 +17159,11 @@ module Aws::EC2
     # @option params [Array<Types::TagSpecification>] :tag_specifications
     #   The tags to apply to the VPN connection.
     #
+    # @option params [String] :pre_shared_key_storage
+    #   Specifies the storage mode for the pre-shared key (PSK). Valid values
+    #   are `Standard`" (stored in the Site-to-Site VPN service) or
+    #   `SecretsManager` (stored in Amazon Web Services Secrets Manager).
+    #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -17190,6 +17195,7 @@ module Aws::EC2
     #         ],
     #       },
     #     ],
+    #     pre_shared_key_storage: "String",
     #     dry_run: false,
     #     options: {
     #       enable_acceleration: false,
@@ -17323,6 +17329,7 @@ module Aws::EC2
     #   resp.vpn_connection.vgw_telemetry[0].status #=> String, one of "UP", "DOWN"
     #   resp.vpn_connection.vgw_telemetry[0].status_message #=> String
     #   resp.vpn_connection.vgw_telemetry[0].certificate_arn #=> String
+    #   resp.vpn_connection.pre_shared_key_arn #=> String
     #   resp.vpn_connection.vpn_connection_id #=> String
     #   resp.vpn_connection.state #=> String, one of "pending", "available", "deleting", "deleted"
     #   resp.vpn_connection.customer_gateway_configuration #=> String
@@ -42160,6 +42167,7 @@ module Aws::EC2
     #   resp.vpn_connections[0].vgw_telemetry[0].status #=> String, one of "UP", "DOWN"
     #   resp.vpn_connections[0].vgw_telemetry[0].status_message #=> String
     #   resp.vpn_connections[0].vgw_telemetry[0].certificate_arn #=> String
+    #   resp.vpn_connections[0].pre_shared_key_arn #=> String
     #   resp.vpn_connections[0].vpn_connection_id #=> String
     #   resp.vpn_connections[0].state #=> String, one of "pending", "available", "deleting", "deleted"
     #   resp.vpn_connections[0].customer_gateway_configuration #=> String
@@ -45873,6 +45881,55 @@ module Aws::EC2
     # @param [Hash] params ({})
     def export_verified_access_instance_client_configuration(params = {}, options = {})
       req = build_request(:export_verified_access_instance_client_configuration, params)
+      req.send_request(options)
+    end
+
+    # Returns the currently negotiated security parameters for an active VPN
+    # tunnel, including IKE version, DH groups, encryption algorithms, and
+    # integrity algorithms.
+    #
+    # @option params [required, String] :vpn_connection_id
+    #   The ID of the VPN connection for which to retrieve the active tunnel
+    #   status.
+    #
+    # @option params [required, String] :vpn_tunnel_outside_ip_address
+    #   The external IP address of the VPN tunnel for which to retrieve the
+    #   active status.
+    #
+    # @option params [Boolean] :dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request.
+    #
+    # @return [Types::GetActiveVpnTunnelStatusResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetActiveVpnTunnelStatusResult#active_vpn_tunnel_status #active_vpn_tunnel_status} => Types::ActiveVpnTunnelStatus
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_active_vpn_tunnel_status({
+    #     vpn_connection_id: "VpnConnectionId", # required
+    #     vpn_tunnel_outside_ip_address: "String", # required
+    #     dry_run: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.active_vpn_tunnel_status.phase_1_encryption_algorithm #=> String
+    #   resp.active_vpn_tunnel_status.phase_2_encryption_algorithm #=> String
+    #   resp.active_vpn_tunnel_status.phase_1_integrity_algorithm #=> String
+    #   resp.active_vpn_tunnel_status.phase_2_integrity_algorithm #=> String
+    #   resp.active_vpn_tunnel_status.phase_1_dh_group #=> Integer
+    #   resp.active_vpn_tunnel_status.phase_2_dh_group #=> Integer
+    #   resp.active_vpn_tunnel_status.ike_version #=> String
+    #   resp.active_vpn_tunnel_status.provisioning_status #=> String, one of "available", "pending", "failed"
+    #   resp.active_vpn_tunnel_status.provisioning_status_reason #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetActiveVpnTunnelStatus AWS API Documentation
+    #
+    # @overload get_active_vpn_tunnel_status(params = {})
+    # @param [Hash] params ({})
+    def get_active_vpn_tunnel_status(params = {}, options = {})
+      req = build_request(:get_active_vpn_tunnel_status, params)
       req.send_request(options)
     end
 
@@ -49990,6 +50047,11 @@ module Aws::EC2
     #   customer gateway device. You can specify one of the following
     #   versions: `ikev1` or `ikev2`.
     #
+    # @option params [String] :sample_type
+    #   The type of sample configuration to generate. Valid values are
+    #   "compatibility" (includes IKEv1) or "recommended" (throws
+    #   UnsupportedOperationException for IKEv1).
+    #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -50006,6 +50068,7 @@ module Aws::EC2
     #     vpn_connection_id: "VpnConnectionId", # required
     #     vpn_connection_device_type_id: "VpnConnectionDeviceTypeId", # required
     #     internet_key_exchange_version: "String",
+    #     sample_type: "String",
     #     dry_run: false,
     #   })
     #
@@ -57453,6 +57516,7 @@ module Aws::EC2
     #   resp.vpn_connection.vgw_telemetry[0].status #=> String, one of "UP", "DOWN"
     #   resp.vpn_connection.vgw_telemetry[0].status_message #=> String
     #   resp.vpn_connection.vgw_telemetry[0].certificate_arn #=> String
+    #   resp.vpn_connection.pre_shared_key_arn #=> String
     #   resp.vpn_connection.vpn_connection_id #=> String
     #   resp.vpn_connection.state #=> String, one of "pending", "available", "deleting", "deleted"
     #   resp.vpn_connection.customer_gateway_configuration #=> String
@@ -57583,6 +57647,7 @@ module Aws::EC2
     #   resp.vpn_connection.vgw_telemetry[0].status #=> String, one of "UP", "DOWN"
     #   resp.vpn_connection.vgw_telemetry[0].status_message #=> String
     #   resp.vpn_connection.vgw_telemetry[0].certificate_arn #=> String
+    #   resp.vpn_connection.pre_shared_key_arn #=> String
     #   resp.vpn_connection.vpn_connection_id #=> String
     #   resp.vpn_connection.state #=> String, one of "pending", "available", "deleting", "deleted"
     #   resp.vpn_connection.customer_gateway_configuration #=> String
@@ -57686,6 +57751,7 @@ module Aws::EC2
     #   resp.vpn_connection.vgw_telemetry[0].status #=> String, one of "UP", "DOWN"
     #   resp.vpn_connection.vgw_telemetry[0].status_message #=> String
     #   resp.vpn_connection.vgw_telemetry[0].certificate_arn #=> String
+    #   resp.vpn_connection.pre_shared_key_arn #=> String
     #   resp.vpn_connection.vpn_connection_id #=> String
     #   resp.vpn_connection.state #=> String, one of "pending", "available", "deleting", "deleted"
     #   resp.vpn_connection.customer_gateway_configuration #=> String
@@ -57733,6 +57799,11 @@ module Aws::EC2
     #   only applicable when turning on or off `EnableTunnelLifecycleControl`.
     #
     #   Valid values: `True` \| `False`
+    #
+    # @option params [String] :pre_shared_key_storage
+    #   Specifies the storage mode for the pre-shared key (PSK). Valid values
+    #   are `Standard` (stored in Site-to-Site VPN service) or
+    #   `SecretsManager` (stored in Amazon Web Services Secrets Manager).
     #
     # @return [Types::ModifyVpnTunnelOptionsResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -57801,6 +57872,7 @@ module Aws::EC2
     #     },
     #     dry_run: false,
     #     skip_tunnel_replacement: false,
+    #     pre_shared_key_storage: "String",
     #   })
     #
     # @example Response structure
@@ -57864,6 +57936,7 @@ module Aws::EC2
     #   resp.vpn_connection.vgw_telemetry[0].status #=> String, one of "UP", "DOWN"
     #   resp.vpn_connection.vgw_telemetry[0].status_message #=> String
     #   resp.vpn_connection.vgw_telemetry[0].certificate_arn #=> String
+    #   resp.vpn_connection.pre_shared_key_arn #=> String
     #   resp.vpn_connection.vpn_connection_id #=> String
     #   resp.vpn_connection.state #=> String, one of "pending", "available", "deleting", "deleted"
     #   resp.vpn_connection.customer_gateway_configuration #=> String
@@ -65975,7 +66048,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.527.0'
+      context[:gem_version] = '1.528.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

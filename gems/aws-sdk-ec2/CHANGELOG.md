@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.528.0 (2025-05-27)
+------------------
+
+* Feature - This release adds three features - option to store AWS Site-to-Site VPN pre-shared keys in AWS Secrets Manager, GetActiveVpnTunnelStatus API to check the in-use VPN algorithms, and SampleType option in GetVpnConnectionDeviceSampleConfiguration API to get recommended sample configs for VPN devices.
+
 1.527.0 (2025-05-23)
 ------------------
 
