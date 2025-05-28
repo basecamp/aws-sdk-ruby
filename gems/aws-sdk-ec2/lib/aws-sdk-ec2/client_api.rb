@@ -776,6 +776,8 @@ module Aws::EC2
     DeleteSecurityGroupRequest = Shapes::StructureShape.new(name: 'DeleteSecurityGroupRequest')
     DeleteSecurityGroupResult = Shapes::StructureShape.new(name: 'DeleteSecurityGroupResult')
     DeleteSnapshotRequest = Shapes::StructureShape.new(name: 'DeleteSnapshotRequest')
+    DeleteSnapshotResultSet = Shapes::ListShape.new(name: 'DeleteSnapshotResultSet')
+    DeleteSnapshotReturnCode = Shapes::StructureShape.new(name: 'DeleteSnapshotReturnCode')
     DeleteSpotDatafeedSubscriptionRequest = Shapes::StructureShape.new(name: 'DeleteSpotDatafeedSubscriptionRequest')
     DeleteSubnetCidrReservationRequest = Shapes::StructureShape.new(name: 'DeleteSubnetCidrReservationRequest')
     DeleteSubnetCidrReservationResult = Shapes::StructureShape.new(name: 'DeleteSubnetCidrReservationResult')
@@ -3056,6 +3058,7 @@ module Aws::EC2
     SnapshotLocationEnum = Shapes::StringShape.new(name: 'SnapshotLocationEnum')
     SnapshotRecycleBinInfo = Shapes::StructureShape.new(name: 'SnapshotRecycleBinInfo')
     SnapshotRecycleBinInfoList = Shapes::ListShape.new(name: 'SnapshotRecycleBinInfoList')
+    SnapshotReturnCodes = Shapes::StringShape.new(name: 'SnapshotReturnCodes')
     SnapshotSet = Shapes::ListShape.new(name: 'SnapshotSet')
     SnapshotState = Shapes::StringShape.new(name: 'SnapshotState')
     SnapshotTaskDetail = Shapes::StructureShape.new(name: 'SnapshotTaskDetail')
@@ -6688,6 +6691,12 @@ module Aws::EC2
     DeleteSnapshotRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     DeleteSnapshotRequest.struct_class = Types::DeleteSnapshotRequest
 
+    DeleteSnapshotResultSet.member = Shapes::ShapeRef.new(shape: DeleteSnapshotReturnCode, location_name: "item")
+
+    DeleteSnapshotReturnCode.add_member(:snapshot_id, Shapes::ShapeRef.new(shape: SnapshotId, location_name: "snapshotId"))
+    DeleteSnapshotReturnCode.add_member(:return_code, Shapes::ShapeRef.new(shape: SnapshotReturnCodes, location_name: "returnCode"))
+    DeleteSnapshotReturnCode.struct_class = Types::DeleteSnapshotReturnCode
+
     DeleteSpotDatafeedSubscriptionRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     DeleteSpotDatafeedSubscriptionRequest.struct_class = Types::DeleteSpotDatafeedSubscriptionRequest
 
@@ -6936,9 +6945,12 @@ module Aws::EC2
     DeprovisionedAddressSet.member = Shapes::ShapeRef.new(shape: String, location_name: "item")
 
     DeregisterImageRequest.add_member(:image_id, Shapes::ShapeRef.new(shape: ImageId, required: true, location_name: "ImageId"))
+    DeregisterImageRequest.add_member(:delete_associated_snapshots, Shapes::ShapeRef.new(shape: Boolean, location_name: "DeleteAssociatedSnapshots"))
     DeregisterImageRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     DeregisterImageRequest.struct_class = Types::DeregisterImageRequest
 
+    DeregisterImageResult.add_member(:return, Shapes::ShapeRef.new(shape: Boolean, location_name: "return"))
+    DeregisterImageResult.add_member(:delete_snapshot_results, Shapes::ShapeRef.new(shape: DeleteSnapshotResultSet, location_name: "deleteSnapshotResultSet"))
     DeregisterImageResult.struct_class = Types::DeregisterImageResult
 
     DeregisterInstanceEventNotificationAttributesRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))

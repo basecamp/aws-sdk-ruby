@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.529.0 (2025-05-28)
+------------------
+
+* Feature - Enable the option to automatically delete underlying Amazon EBS snapshots when deregistering Amazon Machine Images (AMIs)
+
 1.528.0 (2025-05-27)
 ------------------
 

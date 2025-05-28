@@ -3992,6 +3992,12 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class DeleteSnapshotReturnCode
+      attr_accessor snapshot_id: ::String
+      attr_accessor return_code: ("success" | "skipped" | "missing-permissions" | "internal-error" | "client-error")
+      SENSITIVE: []
+    end
+
     class DeleteSpotDatafeedSubscriptionRequest
       attr_accessor dry_run: bool
       SENSITIVE: []
@@ -4371,11 +4377,15 @@ module Aws::EC2
 
     class DeregisterImageRequest
       attr_accessor image_id: ::String
+      attr_accessor delete_associated_snapshots: bool
       attr_accessor dry_run: bool
       SENSITIVE: []
     end
 
-    class DeregisterImageResult < Aws::EmptyStructure
+    class DeregisterImageResult
+      attr_accessor return: bool
+      attr_accessor delete_snapshot_results: ::Array[Types::DeleteSnapshotReturnCode]
+      SENSITIVE: []
     end
 
     class DeregisterInstanceEventNotificationAttributesRequest

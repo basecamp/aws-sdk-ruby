@@ -5352,10 +5352,13 @@ module Aws
 
       interface _DeregisterImageResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeregisterImageResult]
+        def return: () -> bool
+        def delete_snapshot_results: () -> ::Array[Types::DeleteSnapshotReturnCode]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#deregister_image-instance_method
       def deregister_image: (
                               image_id: ::String,
+                              ?delete_associated_snapshots: bool,
                               ?dry_run: bool
                             ) -> _DeregisterImageResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeregisterImageResponseSuccess

@@ -4397,9 +4397,9 @@ module Aws::EC2
     end
 
     # Removes your Amazon Web Services account from the launch permissions
-    # for the specified AMI. For more information, see [ Cancel having an
-    # AMI shared with your Amazon Web Services account][1] in the *Amazon
-    # EC2 User Guide*.
+    # for the specified AMI. For more information, see [Cancel having an AMI
+    # shared with your Amazon Web Services account][1] in the *Amazon EC2
+    # User Guide*.
     #
     #
     #
@@ -4844,7 +4844,7 @@ module Aws::EC2
     # unencrypted snapshots.
     #
     # For information about the prerequisites when copying an AMI, see [Copy
-    # an AMI][2] in the *Amazon EC2 User Guide*.
+    # an Amazon EC2 AMI][2] in the *Amazon EC2 User Guide*.
     #
     #
     #
@@ -4853,8 +4853,8 @@ module Aws::EC2
     #
     # @option params [String] :client_token
     #   Unique, case-sensitive identifier you provide to ensure idempotency of
-    #   the request. For more information, see [Ensuring idempotency][1] in
-    #   the *Amazon EC2 API Reference*.
+    #   the request. For more information, see [Ensuring idempotency in Amazon
+    #   EC2 API requests][1] in the *Amazon EC2 API Reference*.
     #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.**
@@ -4971,7 +4971,8 @@ module Aws::EC2
     #   If you do not specify a value, the AMI copy operation is completed on
     #   a best-effort basis.
     #
-    #   For more information, see [ Time-based copies][1].
+    #   For more information, see [Time-based copies for Amazon EBS snapshots
+    #   and EBS-backed AMIs][1].
     #
     #
     #
@@ -7764,8 +7765,8 @@ module Aws::EC2
     # launch an instance from this new AMI, the instance automatically
     # launches with those additional volumes.
     #
-    # For more information, see [Create an Amazon EBS-backed Linux AMI][1]
-    # in the *Amazon Elastic Compute Cloud User Guide*.
+    # For more information, see [Create an Amazon EBS-backed AMI][1] in the
+    # *Amazon Elastic Compute Cloud User Guide*.
     #
     #
     #
@@ -12432,15 +12433,15 @@ module Aws::EC2
     #
     # To use this API, you must have the required permissions. For more
     # information, see [Permissions for storing and restoring AMIs using
-    # Amazon S3][2] in the *Amazon EC2 User Guide*.
+    # S3][2] in the *Amazon EC2 User Guide*.
     #
-    # For more information, see [Store and restore an AMI using Amazon
-    # S3][3] in the *Amazon EC2 User Guide*.
+    # For more information, see [Store and restore an AMI using S3][3] in
+    # the *Amazon EC2 User Guide*.
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateStoreImageTask.html
-    # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html#ami-s3-permissions
+    # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/work-with-ami-store-restore.html#ami-s3-permissions
     # [3]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html
     #
     # @option params [required, String] :bucket
@@ -13616,14 +13617,14 @@ module Aws::EC2
     #
     # To use this API, you must have the required permissions. For more
     # information, see [Permissions for storing and restoring AMIs using
-    # Amazon S3][1] in the *Amazon EC2 User Guide*.
+    # S3][1] in the *Amazon EC2 User Guide*.
     #
-    # For more information, see [Store and restore an AMI using Amazon
-    # S3][2] in the *Amazon EC2 User Guide*.
+    # For more information, see [Store and restore an AMI using S3][2] in
+    # the *Amazon EC2 User Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html#ami-s3-permissions
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/work-with-ami-store-restore.html#ami-s3-permissions
     # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html
     #
     # @option params [required, String] :image_id
@@ -21716,16 +21717,21 @@ module Aws::EC2
     # be restored before its retention period expires, after which it is
     # permanently deleted. If the deregistered AMI doesn't match a
     # retention rule, it is permanently deleted immediately. For more
-    # information, see [Recycle Bin][1] in the *Amazon EBS User Guide*.
+    # information, see [Recover deleted Amazon EBS snapshots and EBS-backed
+    # AMIs with Recycle Bin][1] in the *Amazon EBS User Guide*.
+    #
+    # When deregistering an EBS-backed AMI, you can optionally delete its
+    # associated snapshots at the same time. However, if a snapshot is
+    # associated with multiple AMIs, it won't be deleted even if specified
+    # for deletion, although the AMI will still be deregistered.
     #
     # Deregistering an AMI does not delete the following:
     #
     # * Instances already launched from the AMI. You'll continue to incur
     #   usage costs for the instances until you terminate them.
     #
-    # * For EBS-backed AMIs: The snapshots that were created of the root and
-    #   data volumes of the instance during AMI creation. You'll continue
-    #   to incur snapshot storage costs.
+    # * For EBS-backed AMIs: Snapshots that are associated with multiple
+    #   AMIs. You'll continue to incur snapshot storage costs.
     #
     # * For instance store-backed AMIs: The files uploaded to Amazon S3
     #   during AMI creation. You'll continue to incur S3 storage costs.
@@ -21741,20 +21747,42 @@ module Aws::EC2
     # @option params [required, String] :image_id
     #   The ID of the AMI.
     #
+    # @option params [Boolean] :delete_associated_snapshots
+    #   Specifies whether to delete the snapshots associated with the AMI
+    #   during deregistration.
+    #
+    #   <note markdown="1"> If a snapshot is associated with multiple AMIs, it is not deleted,
+    #   regardless of this setting.
+    #
+    #    </note>
+    #
+    #   Default: The snapshots are not deleted.
+    #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
     #   If you have the required permissions, the error response is
     #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
     #
-    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    # @return [Types::DeregisterImageResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeregisterImageResult#return #return} => Boolean
+    #   * {Types::DeregisterImageResult#delete_snapshot_results #delete_snapshot_results} => Array&lt;Types::DeleteSnapshotReturnCode&gt;
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.deregister_image({
     #     image_id: "ImageId", # required
+    #     delete_associated_snapshots: false,
     #     dry_run: false,
     #   })
+    #
+    # @example Response structure
+    #
+    #   resp.return #=> Boolean
+    #   resp.delete_snapshot_results #=> Array
+    #   resp.delete_snapshot_results[0].snapshot_id #=> String
+    #   resp.delete_snapshot_results[0].return_code #=> String, one of "success", "skipped", "missing-permissions", "internal-error", "client-error"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeregisterImage AWS API Documentation
     #
@@ -37741,14 +37769,14 @@ module Aws::EC2
     #
     # To use this API, you must have the required permissions. For more
     # information, see [Permissions for storing and restoring AMIs using
-    # Amazon S3][1] in the *Amazon EC2 User Guide*.
+    # S3][1] in the *Amazon EC2 User Guide*.
     #
-    # For more information, see [Store and restore an AMI using Amazon
-    # S3][2] in the *Amazon EC2 User Guide*.
+    # For more information, see [Store and restore an AMI using S3][2] in
+    # the *Amazon EC2 User Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html#ami-s3-permissions
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/work-with-ami-store-restore.html#ami-s3-permissions
     # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html
     #
     # @option params [Array<String>] :image_ids
@@ -43077,7 +43105,7 @@ module Aws::EC2
     #
     #
     # [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetImageBlockPublicAccessState.html
-    # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/sharingamis-intro.html#block-public-access-to-amis
+    # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-public-access-to-amis.html
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -43110,8 +43138,8 @@ module Aws::EC2
 
     # Cancels the deprecation of the specified AMI.
     #
-    # For more information, see [Deprecate an AMI][1] in the *Amazon EC2
-    # User Guide*.
+    # For more information, see [Deprecate an Amazon EC2 AMI][1] in the
+    # *Amazon EC2 User Guide*.
     #
     #
     #
@@ -43158,12 +43186,12 @@ module Aws::EC2
     # deregistration protection, you won’t immediately be able to deregister
     # the AMI.
     #
-    # For more information, see [Protect an AMI from deregistration][1] in
-    # the *Amazon EC2 User Guide*.
+    # For more information, see [Protect an Amazon EC2 AMI from
+    # deregistration][1] in the *Amazon EC2 User Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/deregister-ami.html#ami-deregistration-protection
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-deregistration-protection.html
     #
     # @option params [required, String] :image_id
     #   The ID of the AMI.
@@ -44900,8 +44928,8 @@ module Aws::EC2
     #
     # Only the AMI owner can re-enable a disabled AMI.
     #
-    # For more information, see [Disable an AMI][1] in the *Amazon EC2 User
-    # Guide*.
+    # For more information, see [Disable an Amazon EC2 AMI][1] in the
+    # *Amazon EC2 User Guide*.
     #
     #
     #
@@ -44956,7 +44984,7 @@ module Aws::EC2
     #
     #
     # [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetImageBlockPublicAccessState.html
-    # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/sharingamis-intro.html#block-public-access-to-amis
+    # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-public-access-to-amis.html
     #
     # @option params [required, String] :image_block_public_access_state
     #   Specify `block-new-sharing` to enable block public access for AMIs at
@@ -45052,12 +45080,12 @@ module Aws::EC2
     # To allow the AMI to be deregistered, you must first disable
     # deregistration protection using DisableImageDeregistrationProtection.
     #
-    # For more information, see [Protect an AMI from deregistration][1] in
-    # the *Amazon EC2 User Guide*.
+    # For more information, see [Protect an Amazon EC2 AMI from
+    # deregistration][1] in the *Amazon EC2 User Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/deregister-ami.html#ami-deregistration-protection
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-deregistration-protection.html
     #
     # @option params [required, String] :image_id
     #   The ID of the AMI.
@@ -46822,7 +46850,7 @@ module Aws::EC2
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/sharingamis-intro.html#block-public-access-to-amis
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-public-access-to-amis.html
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -59097,8 +59125,7 @@ module Aws::EC2
     # instance launched from the AMI is encrypted.
     #
     # For more information, see [Create an AMI from a snapshot][1] and [Use
-    # encryption with Amazon EBS-backed AMIs][3] in the *Amazon EC2 User
-    # Guide*.
+    # encryption with EBS-backed AMIs][3] in the *Amazon EC2 User Guide*.
     #
     # **Amazon Web Services Marketplace product codes**
     #
@@ -59140,7 +59167,7 @@ module Aws::EC2
     #   The full path to your AMI manifest in Amazon S3 storage. The specified
     #   bucket must have the `aws-exec-read` canned access control list (ACL)
     #   to ensure that it can be accessed by Amazon EC2. For more information,
-    #   see [Canned ACLs][1] in the *Amazon S3 Service Developer Guide*.
+    #   see [Canned ACL][1] in the *Amazon S3 Service Developer Guide*.
     #
     #
     #
@@ -59154,8 +59181,9 @@ module Aws::EC2
     #   you can publish AMIs that include billable software and list them on
     #   the Amazon Web Services Marketplace. You must first register as a
     #   seller on the Amazon Web Services Marketplace. For more information,
-    #   see [Getting started as a seller][1] and [AMI-based products][2] in
-    #   the *Amazon Web Services Marketplace Seller Guide*.
+    #   see [Getting started as an Amazon Web Services Marketplace seller][1]
+    #   and [AMI-based products in Amazon Web Services Marketplace][2] in the
+    #   *Amazon Web Services Marketplace Seller Guide*.
     #
     #
     #
@@ -59171,8 +59199,8 @@ module Aws::EC2
     #
     #    </note>
     #
-    #   For more information, see [Boot modes][1] in the *Amazon EC2 User
-    #   Guide*.
+    #   For more information, see [Instance launch behavior with Amazon EC2
+    #   boot modes][1] in the *Amazon EC2 User Guide*.
     #
     #
     #
@@ -59190,8 +59218,8 @@ module Aws::EC2
     #   Base64 representation of the non-volatile UEFI variable store. To
     #   retrieve the UEFI data, use the [GetInstanceUefiData][1] command. You
     #   can inspect and modify the UEFI data by using the [python-uefivars
-    #   tool][2] on GitHub. For more information, see [UEFI Secure Boot][3] in
-    #   the *Amazon EC2 User Guide*.
+    #   tool][2] on GitHub. For more information, see [UEFI Secure Boot for
+    #   Amazon EC2 instances][3] in the *Amazon EC2 User Guide*.
     #
     #
     #
@@ -59268,8 +59296,8 @@ module Aws::EC2
     #   If you create an AMI on an Outpost, then all backing snapshots must be
     #   on the same Outpost or in the Region of that Outpost. AMIs on an
     #   Outpost that include local snapshots can be used to launch instances
-    #   on the same Outpost only. For more information, [Amazon EBS local
-    #   snapshots on Outposts][1] in the *Amazon EBS User Guide*.
+    #   on the same Outpost only. For more information, [Create AMIs from
+    #   local snapshots][1] in the *Amazon EBS User Guide*.
     #
     #
     #
@@ -61948,7 +61976,8 @@ module Aws::EC2
     end
 
     # Restores an AMI from the Recycle Bin. For more information, see
-    # [Recycle Bin][1] in the *Amazon EC2 User Guide*.
+    # [Recover deleted Amazon EBS snapshots and EBS-back AMIs with Recycle
+    # Bin][1] in the *Amazon EC2 User Guide*.
     #
     #
     #
@@ -66048,7 +66077,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.528.0'
+      context[:gem_version] = '1.529.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
