@@ -1,6 +1,8 @@
 Unreleased Changes
 ------------------
 
+* Issue - Signal data in http response listeners prior to writing, so that data can be inspected or verified before potential mutation.
+
 3.224.0 (2025-05-12)
 ------------------
 
