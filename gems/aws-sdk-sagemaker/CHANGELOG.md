@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.306.0 (2025-05-29)
+------------------
+
+* Feature - Add maintenance status field to DescribeMlflowTrackingServer API response
+
 1.305.0 (2025-05-12)
 ------------------
 

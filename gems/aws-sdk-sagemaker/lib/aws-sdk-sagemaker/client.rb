@@ -15564,6 +15564,7 @@ module Aws::SageMaker
     #   * {Types::DescribeMlflowTrackingServerResponse#mlflow_version #mlflow_version} => String
     #   * {Types::DescribeMlflowTrackingServerResponse#role_arn #role_arn} => String
     #   * {Types::DescribeMlflowTrackingServerResponse#tracking_server_status #tracking_server_status} => String
+    #   * {Types::DescribeMlflowTrackingServerResponse#tracking_server_maintenance_status #tracking_server_maintenance_status} => String
     #   * {Types::DescribeMlflowTrackingServerResponse#is_active #is_active} => String
     #   * {Types::DescribeMlflowTrackingServerResponse#tracking_server_url #tracking_server_url} => String
     #   * {Types::DescribeMlflowTrackingServerResponse#weekly_maintenance_window_start #weekly_maintenance_window_start} => String
@@ -15588,6 +15589,7 @@ module Aws::SageMaker
     #   resp.mlflow_version #=> String
     #   resp.role_arn #=> String
     #   resp.tracking_server_status #=> String, one of "Creating", "Created", "CreateFailed", "Updating", "Updated", "UpdateFailed", "Deleting", "DeleteFailed", "Stopping", "Stopped", "StopFailed", "Starting", "Started", "StartFailed", "MaintenanceInProgress", "MaintenanceComplete", "MaintenanceFailed"
+    #   resp.tracking_server_maintenance_status #=> String, one of "MaintenanceInProgress", "MaintenanceComplete", "MaintenanceFailed"
     #   resp.is_active #=> String, one of "Active", "Inactive"
     #   resp.tracking_server_url #=> String
     #   resp.weekly_maintenance_window_start #=> String
@@ -29938,7 +29940,7 @@ module Aws::SageMaker
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sagemaker'
-      context[:gem_version] = '1.305.0'
+      context[:gem_version] = '1.306.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

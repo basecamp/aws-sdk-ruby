@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.188.0 (2025-05-29)
+------------------
+
+* Feature - Adding checksum support for S3 PutBucketOwnershipControls API.
+
 1.187.0 (2025-05-28)
 ------------------
 

@@ -16730,6 +16730,11 @@ module Aws::SageMaker
     #   The current creation status of the described MLflow Tracking Server.
     #   @return [String]
     #
+    # @!attribute [rw] tracking_server_maintenance_status
+    #   The current maintenance status of the described MLflow Tracking
+    #   Server.
+    #   @return [String]
+    #
     # @!attribute [rw] is_active
     #   Whether the described MLflow Tracking Server is currently active.
     #   @return [String]
@@ -16779,6 +16784,7 @@ module Aws::SageMaker
       :mlflow_version,
       :role_arn,
       :tracking_server_status,
+      :tracking_server_maintenance_status,
       :is_active,
       :tracking_server_url,
       :weekly_maintenance_window_start,
