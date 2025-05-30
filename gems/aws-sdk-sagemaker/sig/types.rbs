@@ -4369,6 +4369,14 @@ module Aws::SageMaker
       SENSITIVE: []
     end
 
+    class Ec2CapacityReservation
+      attr_accessor ec2_capacity_reservation_id: ::String
+      attr_accessor total_instance_count: ::Integer
+      attr_accessor available_instance_count: ::Integer
+      attr_accessor used_by_current_endpoint: ::Integer
+      SENSITIVE: []
+    end
+
     class Edge
       attr_accessor source_arn: ::String
       attr_accessor destination_arn: ::String
@@ -8326,6 +8334,23 @@ module Aws::SageMaker
       attr_accessor managed_instance_scaling: Types::ProductionVariantManagedInstanceScaling
       attr_accessor routing_config: Types::ProductionVariantRoutingConfig
       attr_accessor inference_ami_version: ("al2-ami-sagemaker-inference-gpu-2" | "al2-ami-sagemaker-inference-gpu-2-1" | "al2-ami-sagemaker-inference-gpu-3-1" | "al2-ami-sagemaker-inference-neuron-2")
+      attr_accessor capacity_reservation_config: Types::ProductionVariantCapacityReservationConfig
+      SENSITIVE: []
+    end
+
+    class ProductionVariantCapacityReservationConfig
+      attr_accessor capacity_reservation_preference: ("capacity-reservations-only")
+      attr_accessor ml_reservation_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ProductionVariantCapacityReservationSummary
+      attr_accessor ml_reservation_arn: ::String
+      attr_accessor capacity_reservation_preference: ("capacity-reservations-only")
+      attr_accessor total_instance_count: ::Integer
+      attr_accessor available_instance_count: ::Integer
+      attr_accessor used_by_current_endpoint: ::Integer
+      attr_accessor ec2_capacity_reservations: ::Array[Types::Ec2CapacityReservation]
       SENSITIVE: []
     end
 
@@ -8379,6 +8404,7 @@ module Aws::SageMaker
       attr_accessor desired_serverless_config: Types::ProductionVariantServerlessConfig
       attr_accessor managed_instance_scaling: Types::ProductionVariantManagedInstanceScaling
       attr_accessor routing_config: Types::ProductionVariantRoutingConfig
+      attr_accessor capacity_reservation_config: Types::ProductionVariantCapacityReservationSummary
       SENSITIVE: []
     end
 
@@ -9917,6 +9943,7 @@ module Aws::SageMaker
       attr_accessor project_id: ::String
       attr_accessor environment_id: ::String
       attr_accessor project_s3_path: ::String
+      attr_accessor single_sign_on_application_arn: ::String
       SENSITIVE: []
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.307.0 (2025-05-30)
+------------------
+
+* Feature - Release new parameter CapacityReservationConfig in ProductionVariant
+
 1.306.0 (2025-05-29)
 ------------------
 
