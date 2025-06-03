@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.118.0 (2025-06-03)
+------------------
+
+* Feature - Adds support to set the routing mode for a custom domain name.
+
 1.117.0 (2025-06-02)
 ------------------
 

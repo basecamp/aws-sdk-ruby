@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.77.0 (2025-06-03)
+------------------
+
+* Feature - Adds support to create routing rules and set the routing mode for a custom domain name.
+
 1.76.0 (2025-06-02)
 ------------------
 
