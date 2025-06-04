@@ -1,6 +1,8 @@
 Unreleased Changes
 ------------------
 
+* Issue - Fix RPCv2 parser to handle flattened list and flattened map members correctly for `AwsQueryCompatible` services.
+
 3.225.0 (2025-06-02)
 ------------------
 
