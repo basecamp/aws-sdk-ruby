@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.103.0 (2025-06-05)
+------------------
+
+* Feature - AWS KMS announces the support for on-demand rotation of symmetric-encryption KMS keys with imported key material (EXTERNAL origin).
+
 1.102.0 (2025-06-02)
 ------------------
 
