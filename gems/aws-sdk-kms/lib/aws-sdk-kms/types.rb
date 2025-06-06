@@ -1703,7 +1703,8 @@ module Aws::KMS
     # @!attribute [rw] key_material_id
     #   The identifier of the key material used to decrypt the ciphertext.
     #   This field is present only when the operation uses a symmetric
-    #   encryption KMS key.
+    #   encryption KMS key. This field is omitted if the request includes
+    #   the `Recipient` parameter.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kms-2014-11-01/DecryptResponse AWS API Documentation
@@ -2457,19 +2458,12 @@ module Aws::KMS
     #   The encryption algorithm that was used to encrypt the plaintext.
     #   @return [String]
     #
-    # @!attribute [rw] key_material_id
-    #   The identifier of the key material used to encrypt the ciphertext.
-    #   This field is present only when the operation uses a symmetric
-    #   encryption KMS key.
-    #   @return [String]
-    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kms-2014-11-01/EncryptResponse AWS API Documentation
     #
     class EncryptResponse < Struct.new(
       :ciphertext_blob,
       :key_id,
-      :encryption_algorithm,
-      :key_material_id)
+      :encryption_algorithm)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2677,6 +2671,8 @@ module Aws::KMS
     #
     # @!attribute [rw] key_material_id
     #   The identifier of the key material used to encrypt the private key.
+    #   This field is omitted if the request includes the `Recipient`
+    #   parameter.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kms-2014-11-01/GenerateDataKeyPairResponse AWS API Documentation
@@ -3017,6 +3013,8 @@ module Aws::KMS
     #
     # @!attribute [rw] key_material_id
     #   The identifier of the key material used to encrypt the data key.
+    #   This field is omitted if the request includes the `Recipient`
+    #   parameter.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kms-2014-11-01/GenerateDataKeyResponse AWS API Documentation

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.104.0 (2025-06-06)
+------------------
+
+* Feature - Remove unpopulated KeyMaterialId from Encrypt Response
+
 1.103.0 (2025-06-05)
 ------------------
 

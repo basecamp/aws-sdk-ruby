@@ -4582,7 +4582,6 @@ module Aws::KMS
     #   * {Types::EncryptResponse#ciphertext_blob #ciphertext_blob} => String
     #   * {Types::EncryptResponse#key_id #key_id} => String
     #   * {Types::EncryptResponse#encryption_algorithm #encryption_algorithm} => String
-    #   * {Types::EncryptResponse#key_material_id #key_material_id} => String
     #
     #
     # @example Example: To encrypt data with a symmetric encryption KMS key
@@ -4637,7 +4636,6 @@ module Aws::KMS
     #   resp.ciphertext_blob #=> String
     #   resp.key_id #=> String
     #   resp.encryption_algorithm #=> String, one of "SYMMETRIC_DEFAULT", "RSAES_OAEP_SHA_1", "RSAES_OAEP_SHA_256", "SM2PKE"
-    #   resp.key_material_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kms-2014-11-01/Encrypt AWS API Documentation
     #
@@ -10932,7 +10930,7 @@ module Aws::KMS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-kms'
-      context[:gem_version] = '1.103.0'
+      context[:gem_version] = '1.104.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

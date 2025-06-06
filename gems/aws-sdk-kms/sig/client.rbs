@@ -309,7 +309,6 @@ module Aws
         def ciphertext_blob: () -> ::String
         def key_id: () -> ::String
         def encryption_algorithm: () -> ("SYMMETRIC_DEFAULT" | "RSAES_OAEP_SHA_1" | "RSAES_OAEP_SHA_256" | "SM2PKE")
-        def key_material_id: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/KMS/Client.html#encrypt-instance_method
       def encrypt: (

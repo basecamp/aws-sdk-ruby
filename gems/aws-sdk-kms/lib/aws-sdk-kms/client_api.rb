@@ -473,7 +473,6 @@ module Aws::KMS
     EncryptResponse.add_member(:ciphertext_blob, Shapes::ShapeRef.new(shape: CiphertextType, location_name: "CiphertextBlob"))
     EncryptResponse.add_member(:key_id, Shapes::ShapeRef.new(shape: KeyIdType, location_name: "KeyId"))
     EncryptResponse.add_member(:encryption_algorithm, Shapes::ShapeRef.new(shape: EncryptionAlgorithmSpec, location_name: "EncryptionAlgorithm"))
-    EncryptResponse.add_member(:key_material_id, Shapes::ShapeRef.new(shape: BackingKeyIdType, location_name: "KeyMaterialId"))
     EncryptResponse.struct_class = Types::EncryptResponse
 
     EncryptionAlgorithmSpecList.member = Shapes::ShapeRef.new(shape: EncryptionAlgorithmSpec)
