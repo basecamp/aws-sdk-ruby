@@ -1,6 +1,9 @@
 Unreleased Changes
 ------------------
 
+3.225.2 (2025-06-10)
+------------------
+
 * Issue - Only load required `cgi` modules for Ruby 3.5.
 
 3.225.1 (2025-06-05)
