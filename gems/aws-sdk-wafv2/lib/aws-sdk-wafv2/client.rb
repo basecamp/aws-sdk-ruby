@@ -1253,6 +1253,20 @@ module Aws::WAFV2
     #                   },
     #                   enable_regex_in_path: false,
     #                 },
+    #                 aws_managed_rules_anti_d_do_s_rule_set: {
+    #                   client_side_action_config: { # required
+    #                     challenge: { # required
+    #                       usage_of_action: "ENABLED", # required, accepts ENABLED, DISABLED
+    #                       sensitivity: "LOW", # accepts LOW, MEDIUM, HIGH
+    #                       exempt_uri_regular_expressions: [
+    #                         {
+    #                           regex_string: "RegexPatternString",
+    #                         },
+    #                       ],
+    #                     },
+    #                   },
+    #                   sensitivity_to_block: "LOW", # accepts LOW, MEDIUM, HIGH
+    #                 },
     #               },
     #             ],
     #             rule_action_overrides: [
@@ -2471,6 +2485,20 @@ module Aws::WAFV2
     #                   },
     #                   enable_regex_in_path: false,
     #                 },
+    #                 aws_managed_rules_anti_d_do_s_rule_set: {
+    #                   client_side_action_config: { # required
+    #                     challenge: { # required
+    #                       usage_of_action: "ENABLED", # required, accepts ENABLED, DISABLED
+    #                       sensitivity: "LOW", # accepts LOW, MEDIUM, HIGH
+    #                       exempt_uri_regular_expressions: [
+    #                         {
+    #                           regex_string: "RegexPatternString",
+    #                         },
+    #                       ],
+    #                     },
+    #                   },
+    #                   sensitivity_to_block: "LOW", # accepts LOW, MEDIUM, HIGH
+    #                 },
     #               },
     #             ],
     #             rule_action_overrides: [
@@ -2870,6 +2898,14 @@ module Aws::WAFV2
     #
     #
     #   [1]: http://aws.amazon.com/waf/pricing/
+    #
+    # @option params [Types::OnSourceDDoSProtectionConfig] :on_source_d_do_s_protection_config
+    #   Specifies the type of DDoS protection to apply to web request data for
+    #   a web ACL. For most scenarios, it is recommended to use the default
+    #   protection level, `ACTIVE_UNDER_DDOS`. If a web ACL is associated with
+    #   multiple Application Load Balancers, the changes you make to DDoS
+    #   protection in that web ACL will apply to all associated Application
+    #   Load Balancers.
     #
     # @return [Types::CreateWebACLResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3544,6 +3580,20 @@ module Aws::WAFV2
     #                   },
     #                   enable_regex_in_path: false,
     #                 },
+    #                 aws_managed_rules_anti_d_do_s_rule_set: {
+    #                   client_side_action_config: { # required
+    #                     challenge: { # required
+    #                       usage_of_action: "ENABLED", # required, accepts ENABLED, DISABLED
+    #                       sensitivity: "LOW", # accepts LOW, MEDIUM, HIGH
+    #                       exempt_uri_regular_expressions: [
+    #                         {
+    #                           regex_string: "RegexPatternString",
+    #                         },
+    #                       ],
+    #                     },
+    #                   },
+    #                   sensitivity_to_block: "LOW", # accepts LOW, MEDIUM, HIGH
+    #                 },
     #               },
     #             ],
     #             rule_action_overrides: [
@@ -3825,6 +3875,9 @@ module Aws::WAFV2
     #           default_size_inspection_limit: "KB_16", # required, accepts KB_16, KB_32, KB_48, KB_64
     #         },
     #       },
+    #     },
+    #     on_source_d_do_s_protection_config: {
+    #       alb_low_reputation_mode: "ACTIVE_UNDER_DDOS", # required, accepts ACTIVE_UNDER_DDOS, ALWAYS_ON
     #     },
     #   })
     #
@@ -5358,6 +5411,11 @@ module Aws::WAFV2
     #   resp.rule_group.rules[0].statement.managed_rule_group_statement.managed_rule_group_configs[0].aws_managed_rules_acfp_rule_set.response_inspection.json.failure_values #=> Array
     #   resp.rule_group.rules[0].statement.managed_rule_group_statement.managed_rule_group_configs[0].aws_managed_rules_acfp_rule_set.response_inspection.json.failure_values[0] #=> String
     #   resp.rule_group.rules[0].statement.managed_rule_group_statement.managed_rule_group_configs[0].aws_managed_rules_acfp_rule_set.enable_regex_in_path #=> Boolean
+    #   resp.rule_group.rules[0].statement.managed_rule_group_statement.managed_rule_group_configs[0].aws_managed_rules_anti_d_do_s_rule_set.client_side_action_config.challenge.usage_of_action #=> String, one of "ENABLED", "DISABLED"
+    #   resp.rule_group.rules[0].statement.managed_rule_group_statement.managed_rule_group_configs[0].aws_managed_rules_anti_d_do_s_rule_set.client_side_action_config.challenge.sensitivity #=> String, one of "LOW", "MEDIUM", "HIGH"
+    #   resp.rule_group.rules[0].statement.managed_rule_group_statement.managed_rule_group_configs[0].aws_managed_rules_anti_d_do_s_rule_set.client_side_action_config.challenge.exempt_uri_regular_expressions #=> Array
+    #   resp.rule_group.rules[0].statement.managed_rule_group_statement.managed_rule_group_configs[0].aws_managed_rules_anti_d_do_s_rule_set.client_side_action_config.challenge.exempt_uri_regular_expressions[0].regex_string #=> String
+    #   resp.rule_group.rules[0].statement.managed_rule_group_statement.managed_rule_group_configs[0].aws_managed_rules_anti_d_do_s_rule_set.sensitivity_to_block #=> String, one of "LOW", "MEDIUM", "HIGH"
     #   resp.rule_group.rules[0].statement.managed_rule_group_statement.rule_action_overrides #=> Array
     #   resp.rule_group.rules[0].statement.managed_rule_group_statement.rule_action_overrides[0].name #=> String
     #   resp.rule_group.rules[0].statement.managed_rule_group_statement.rule_action_overrides[0].action_to_use.block.custom_response.response_code #=> Integer
@@ -8053,6 +8111,20 @@ module Aws::WAFV2
     #                   },
     #                   enable_regex_in_path: false,
     #                 },
+    #                 aws_managed_rules_anti_d_do_s_rule_set: {
+    #                   client_side_action_config: { # required
+    #                     challenge: { # required
+    #                       usage_of_action: "ENABLED", # required, accepts ENABLED, DISABLED
+    #                       sensitivity: "LOW", # accepts LOW, MEDIUM, HIGH
+    #                       exempt_uri_regular_expressions: [
+    #                         {
+    #                           regex_string: "RegexPatternString",
+    #                         },
+    #                       ],
+    #                     },
+    #                   },
+    #                   sensitivity_to_block: "LOW", # accepts LOW, MEDIUM, HIGH
+    #                 },
     #               },
     #             ],
     #             rule_action_overrides: [
@@ -8496,6 +8568,14 @@ module Aws::WAFV2
     #
     #
     #   [1]: http://aws.amazon.com/waf/pricing/
+    #
+    # @option params [Types::OnSourceDDoSProtectionConfig] :on_source_d_do_s_protection_config
+    #   Specifies the type of DDoS protection to apply to web request data for
+    #   a web ACL. For most scenarios, it is recommended to use the default
+    #   protection level, `ACTIVE_UNDER_DDOS`. If a web ACL is associated with
+    #   multiple Application Load Balancers, the changes you make to DDoS
+    #   protection in that web ACL will apply to all associated Application
+    #   Load Balancers.
     #
     # @return [Types::UpdateWebACLResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -9171,6 +9251,20 @@ module Aws::WAFV2
     #                   },
     #                   enable_regex_in_path: false,
     #                 },
+    #                 aws_managed_rules_anti_d_do_s_rule_set: {
+    #                   client_side_action_config: { # required
+    #                     challenge: { # required
+    #                       usage_of_action: "ENABLED", # required, accepts ENABLED, DISABLED
+    #                       sensitivity: "LOW", # accepts LOW, MEDIUM, HIGH
+    #                       exempt_uri_regular_expressions: [
+    #                         {
+    #                           regex_string: "RegexPatternString",
+    #                         },
+    #                       ],
+    #                     },
+    #                   },
+    #                   sensitivity_to_block: "LOW", # accepts LOW, MEDIUM, HIGH
+    #                 },
     #               },
     #             ],
     #             rule_action_overrides: [
@@ -9448,6 +9542,9 @@ module Aws::WAFV2
     #         },
     #       },
     #     },
+    #     on_source_d_do_s_protection_config: {
+    #       alb_low_reputation_mode: "ACTIVE_UNDER_DDOS", # required, accepts ACTIVE_UNDER_DDOS, ALWAYS_ON
+    #     },
     #   })
     #
     # @example Response structure
@@ -9481,7 +9578,7 @@ module Aws::WAFV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-wafv2'
-      context[:gem_version] = '1.110.0'
+      context[:gem_version] = '1.111.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

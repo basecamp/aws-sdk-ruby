@@ -723,6 +723,20 @@ module Aws
                                             }?
                                           }?,
                                           enable_regex_in_path: bool?
+                                        }?,
+                                        aws_managed_rules_anti_d_do_s_rule_set: {
+                                          client_side_action_config: {
+                                            challenge: {
+                                              usage_of_action: ("ENABLED" | "DISABLED"),
+                                              sensitivity: ("LOW" | "MEDIUM" | "HIGH")?,
+                                              exempt_uri_regular_expressions: Array[
+                                                {
+                                                  regex_string: ::String?
+                                                },
+                                              ]?
+                                            }
+                                          },
+                                          sensitivity_to_block: ("LOW" | "MEDIUM" | "HIGH")?
                                         }?
                                       },
                                     ]?,
@@ -1653,6 +1667,20 @@ module Aws
                                                }?
                                              }?,
                                              enable_regex_in_path: bool?
+                                           }?,
+                                           aws_managed_rules_anti_d_do_s_rule_set: {
+                                             client_side_action_config: {
+                                               challenge: {
+                                                 usage_of_action: ("ENABLED" | "DISABLED"),
+                                                 sensitivity: ("LOW" | "MEDIUM" | "HIGH")?,
+                                                 exempt_uri_regular_expressions: Array[
+                                                   {
+                                                     regex_string: ::String?
+                                                   },
+                                                 ]?
+                                               }
+                                             },
+                                             sensitivity_to_block: ("LOW" | "MEDIUM" | "HIGH")?
                                            }?
                                          },
                                        ]?,
@@ -2567,6 +2595,20 @@ module Aws
                                             }?
                                           }?,
                                           enable_regex_in_path: bool?
+                                        }?,
+                                        aws_managed_rules_anti_d_do_s_rule_set: {
+                                          client_side_action_config: {
+                                            challenge: {
+                                              usage_of_action: ("ENABLED" | "DISABLED"),
+                                              sensitivity: ("LOW" | "MEDIUM" | "HIGH")?,
+                                              exempt_uri_regular_expressions: Array[
+                                                {
+                                                  regex_string: ::String?
+                                                },
+                                              ]?
+                                            }
+                                          },
+                                          sensitivity_to_block: ("LOW" | "MEDIUM" | "HIGH")?
                                         }?
                                       },
                                     ]?,
@@ -2845,6 +2887,9 @@ module Aws
                               request_body: Hash[("CLOUDFRONT" | "API_GATEWAY" | "COGNITO_USER_POOL" | "APP_RUNNER_SERVICE" | "VERIFIED_ACCESS_INSTANCE"), {
                                   default_size_inspection_limit: ("KB_16" | "KB_32" | "KB_48" | "KB_64")
                                 }]?
+                            },
+                            ?on_source_d_do_s_protection_config: {
+                              alb_low_reputation_mode: ("ACTIVE_UNDER_DDOS" | "ALWAYS_ON")
                             }
                           ) -> _CreateWebACLResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateWebACLResponseSuccess
@@ -4154,6 +4199,20 @@ module Aws
                                                }?
                                              }?,
                                              enable_regex_in_path: bool?
+                                           }?,
+                                           aws_managed_rules_anti_d_do_s_rule_set: {
+                                             client_side_action_config: {
+                                               challenge: {
+                                                 usage_of_action: ("ENABLED" | "DISABLED"),
+                                                 sensitivity: ("LOW" | "MEDIUM" | "HIGH")?,
+                                                 exempt_uri_regular_expressions: Array[
+                                                   {
+                                                     regex_string: ::String?
+                                                   },
+                                                 ]?
+                                               }
+                                             },
+                                             sensitivity_to_block: ("LOW" | "MEDIUM" | "HIGH")?
                                            }?
                                          },
                                        ]?,
@@ -5064,6 +5123,20 @@ module Aws
                                             }?
                                           }?,
                                           enable_regex_in_path: bool?
+                                        }?,
+                                        aws_managed_rules_anti_d_do_s_rule_set: {
+                                          client_side_action_config: {
+                                            challenge: {
+                                              usage_of_action: ("ENABLED" | "DISABLED"),
+                                              sensitivity: ("LOW" | "MEDIUM" | "HIGH")?,
+                                              exempt_uri_regular_expressions: Array[
+                                                {
+                                                  regex_string: ::String?
+                                                },
+                                              ]?
+                                            }
+                                          },
+                                          sensitivity_to_block: ("LOW" | "MEDIUM" | "HIGH")?
                                         }?
                                       },
                                     ]?,
@@ -5337,6 +5410,9 @@ module Aws
                               request_body: Hash[("CLOUDFRONT" | "API_GATEWAY" | "COGNITO_USER_POOL" | "APP_RUNNER_SERVICE" | "VERIFIED_ACCESS_INSTANCE"), {
                                   default_size_inspection_limit: ("KB_16" | "KB_32" | "KB_48" | "KB_64")
                                 }]?
+                            },
+                            ?on_source_d_do_s_protection_config: {
+                              alb_low_reputation_mode: ("ACTIVE_UNDER_DDOS" | "ALWAYS_ON")
                             }
                           ) -> _UpdateWebACLResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateWebACLResponseSuccess
