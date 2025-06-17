@@ -224,7 +224,8 @@ module Aws
                                           priority: ::Integer?,
                                           override: {
                                             action: ("DROP_TO_ALERT")?
-                                          }?
+                                          }?,
+                                          deep_threat_inspection: bool?
                                         },
                                       ]?,
                                       stateful_default_actions: Array[::String]?,
@@ -384,7 +385,10 @@ module Aws
                                  source_arn: ::String?,
                                  source_update_token: ::String?
                                },
-                               ?analyze_rule_group: bool
+                               ?analyze_rule_group: bool,
+                               ?summary_configuration: {
+                                 rule_options: Array[("SID" | "MSG" | "METADATA")]?
+                               }
                              ) -> _CreateRuleGroupResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateRuleGroupResponseSuccess
 
@@ -673,6 +677,20 @@ module Aws
                                         ) -> _DescribeRuleGroupMetadataResponseSuccess
                                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeRuleGroupMetadataResponseSuccess
 
+      interface _DescribeRuleGroupSummaryResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeRuleGroupSummaryResponse]
+        def rule_group_name: () -> ::String
+        def description: () -> ::String
+        def summary: () -> Types::Summary
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFirewall/Client.html#describe_rule_group_summary-instance_method
+      def describe_rule_group_summary: (
+                                         ?rule_group_name: ::String,
+                                         ?rule_group_arn: ::String,
+                                         ?type: ("STATELESS" | "STATEFUL")
+                                       ) -> _DescribeRuleGroupSummaryResponseSuccess
+                                     | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeRuleGroupSummaryResponseSuccess
+
       interface _DescribeTLSInspectionConfigurationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeTLSInspectionConfigurationResponse]
         def update_token: () -> ::String
@@ -844,7 +862,7 @@ module Aws
                               ?next_token: ::String,
                               ?max_results: ::Integer,
                               ?scope: ("MANAGED" | "ACCOUNT"),
-                              ?managed_type: ("AWS_MANAGED_THREAT_SIGNATURES" | "AWS_MANAGED_DOMAIN_LISTS"),
+                              ?managed_type: ("AWS_MANAGED_THREAT_SIGNATURES" | "AWS_MANAGED_DOMAIN_LISTS" | "ACTIVE_THREAT_DEFENSE"),
                               ?type: ("STATELESS" | "STATEFUL")
                             ) -> _ListRuleGroupsResponseSuccess
                           | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListRuleGroupsResponseSuccess
@@ -1125,7 +1143,8 @@ module Aws
                                           priority: ::Integer?,
                                           override: {
                                             action: ("DROP_TO_ALERT")?
-                                          }?
+                                          }?,
+                                          deep_threat_inspection: bool?
                                         },
                                       ]?,
                                       stateful_default_actions: Array[::String]?,
@@ -1314,7 +1333,10 @@ module Aws
                                  source_arn: ::String?,
                                  source_update_token: ::String?
                                },
-                               ?analyze_rule_group: bool
+                               ?analyze_rule_group: bool,
+                               ?summary_configuration: {
+                                 rule_options: Array[("SID" | "MSG" | "METADATA")]?
+                               }
                              ) -> _UpdateRuleGroupResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateRuleGroupResponseSuccess
 

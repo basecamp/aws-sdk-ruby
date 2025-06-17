@@ -195,6 +195,7 @@ module Aws::NetworkFirewall
       attr_accessor encryption_configuration: Types::EncryptionConfiguration
       attr_accessor source_metadata: Types::SourceMetadata
       attr_accessor analyze_rule_group: bool
+      attr_accessor summary_configuration: Types::SummaryConfiguration
       SENSITIVE: []
     end
 
@@ -433,6 +434,20 @@ module Aws::NetworkFirewall
       attr_accessor update_token: ::String
       attr_accessor rule_group: Types::RuleGroup
       attr_accessor rule_group_response: Types::RuleGroupResponse
+      SENSITIVE: []
+    end
+
+    class DescribeRuleGroupSummaryRequest
+      attr_accessor rule_group_name: ::String
+      attr_accessor rule_group_arn: ::String
+      attr_accessor type: ("STATELESS" | "STATEFUL")
+      SENSITIVE: []
+    end
+
+    class DescribeRuleGroupSummaryResponse
+      attr_accessor rule_group_name: ::String
+      attr_accessor description: ::String
+      attr_accessor summary: Types::Summary
       SENSITIVE: []
     end
 
@@ -785,7 +800,7 @@ module Aws::NetworkFirewall
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
       attr_accessor scope: ("MANAGED" | "ACCOUNT")
-      attr_accessor managed_type: ("AWS_MANAGED_THREAT_SIGNATURES" | "AWS_MANAGED_DOMAIN_LISTS")
+      attr_accessor managed_type: ("AWS_MANAGED_THREAT_SIGNATURES" | "AWS_MANAGED_DOMAIN_LISTS" | "ACTIVE_THREAT_DEFENSE")
       attr_accessor type: ("STATELESS" | "STATEFUL")
       SENSITIVE: []
     end
@@ -959,12 +974,20 @@ module Aws::NetworkFirewall
       attr_accessor sns_topic: ::String
       attr_accessor last_modified_time: ::Time
       attr_accessor analysis_results: ::Array[Types::AnalysisResult]
+      attr_accessor summary_configuration: Types::SummaryConfiguration
       SENSITIVE: []
     end
 
     class RuleOption
       attr_accessor keyword: ::String
       attr_accessor settings: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class RuleSummary
+      attr_accessor sid: ::String
+      attr_accessor msg: ::String
+      attr_accessor metadata: ::String
       SENSITIVE: []
     end
 
@@ -1086,6 +1109,7 @@ module Aws::NetworkFirewall
       attr_accessor resource_arn: ::String
       attr_accessor priority: ::Integer
       attr_accessor override: Types::StatefulRuleGroupOverride
+      attr_accessor deep_threat_inspection: bool
       SENSITIVE: []
     end
 
@@ -1115,6 +1139,16 @@ module Aws::NetworkFirewall
     class SubnetMapping
       attr_accessor subnet_id: ::String
       attr_accessor ip_address_type: ("DUALSTACK" | "IPV4" | "IPV6")
+      SENSITIVE: []
+    end
+
+    class Summary
+      attr_accessor rule_summaries: ::Array[Types::RuleSummary]
+      SENSITIVE: []
+    end
+
+    class SummaryConfiguration
+      attr_accessor rule_options: ::Array[("SID" | "MSG" | "METADATA")]
       SENSITIVE: []
     end
 
@@ -1351,6 +1385,7 @@ module Aws::NetworkFirewall
       attr_accessor encryption_configuration: Types::EncryptionConfiguration
       attr_accessor source_metadata: Types::SourceMetadata
       attr_accessor analyze_rule_group: bool
+      attr_accessor summary_configuration: Types::SummaryConfiguration
       SENSITIVE: []
     end
 

@@ -1054,6 +1054,7 @@ module Aws::NetworkFirewall
     #           override: {
     #             action: "DROP_TO_ALERT", # accepts DROP_TO_ALERT
     #           },
+    #           deep_threat_inspection: false,
     #         },
     #       ],
     #       stateful_default_actions: ["CollectionMember_String"],
@@ -1238,6 +1239,17 @@ module Aws::NetworkFirewall
     #   the rule group for you. To run the stateless rule group analyzer
     #   without creating the rule group, set `DryRun` to `TRUE`.
     #
+    # @option params [Types::SummaryConfiguration] :summary_configuration
+    #   An object that contains a `RuleOptions` array of strings. You use
+    #   `RuleOptions` to determine which of the following RuleSummary values
+    #   are returned in response to `DescribeRuleGroupSummary`.
+    #
+    #   * `Metadata` - returns
+    #
+    #   * `Msg`
+    #
+    #   * `SID`
+    #
     # @return [Types::CreateRuleGroupResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateRuleGroupResponse#update_token #update_token} => String
@@ -1373,6 +1385,9 @@ module Aws::NetworkFirewall
     #       source_update_token: "UpdateToken",
     #     },
     #     analyze_rule_group: false,
+    #     summary_configuration: {
+    #       rule_options: ["SID"], # accepts SID, MSG, METADATA
+    #     },
     #   })
     #
     # @example Response structure
@@ -1401,6 +1416,8 @@ module Aws::NetworkFirewall
     #   resp.rule_group_response.analysis_results[0].identified_rule_ids[0] #=> String
     #   resp.rule_group_response.analysis_results[0].identified_type #=> String, one of "STATELESS_RULE_FORWARDING_ASYMMETRICALLY", "STATELESS_RULE_CONTAINS_TCP_FLAGS"
     #   resp.rule_group_response.analysis_results[0].analysis_detail #=> String
+    #   resp.rule_group_response.summary_configuration.rule_options #=> Array
+    #   resp.rule_group_response.summary_configuration.rule_options[0] #=> String, one of "SID", "MSG", "METADATA"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/CreateRuleGroup AWS API Documentation
     #
@@ -1814,7 +1831,7 @@ module Aws::NetworkFirewall
     # the firewall owner or the transit gateway owner can delete the
     # attachment.
     #
-    # After you delete a transit gateway attachment, traffic will no longer
+    # After you delete a transit gateway attachment, raffic will no longer
     # flow through the firewall endpoints.
     #
     # After you initiate the delete operation, use DescribeFirewall to
@@ -1933,6 +1950,8 @@ module Aws::NetworkFirewall
     #   resp.rule_group_response.analysis_results[0].identified_rule_ids[0] #=> String
     #   resp.rule_group_response.analysis_results[0].identified_type #=> String, one of "STATELESS_RULE_FORWARDING_ASYMMETRICALLY", "STATELESS_RULE_CONTAINS_TCP_FLAGS"
     #   resp.rule_group_response.analysis_results[0].analysis_detail #=> String
+    #   resp.rule_group_response.summary_configuration.rule_options #=> Array
+    #   resp.rule_group_response.summary_configuration.rule_options[0] #=> String, one of "SID", "MSG", "METADATA"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/DeleteRuleGroup AWS API Documentation
     #
@@ -2232,6 +2251,7 @@ module Aws::NetworkFirewall
     #   resp.firewall_policy.stateful_rule_group_references[0].resource_arn #=> String
     #   resp.firewall_policy.stateful_rule_group_references[0].priority #=> Integer
     #   resp.firewall_policy.stateful_rule_group_references[0].override.action #=> String, one of "DROP_TO_ALERT"
+    #   resp.firewall_policy.stateful_rule_group_references[0].deep_threat_inspection #=> Boolean
     #   resp.firewall_policy.stateful_default_actions #=> Array
     #   resp.firewall_policy.stateful_default_actions[0] #=> String
     #   resp.firewall_policy.stateful_engine_options.rule_order #=> String, one of "DEFAULT_ACTION_ORDER", "STRICT_ORDER"
@@ -2523,6 +2543,8 @@ module Aws::NetworkFirewall
     #   resp.rule_group_response.analysis_results[0].identified_rule_ids[0] #=> String
     #   resp.rule_group_response.analysis_results[0].identified_type #=> String, one of "STATELESS_RULE_FORWARDING_ASYMMETRICALLY", "STATELESS_RULE_CONTAINS_TCP_FLAGS"
     #   resp.rule_group_response.analysis_results[0].analysis_detail #=> String
+    #   resp.rule_group_response.summary_configuration.rule_options #=> Array
+    #   resp.rule_group_response.summary_configuration.rule_options[0] #=> String, one of "SID", "MSG", "METADATA"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/DescribeRuleGroup AWS API Documentation
     #
@@ -2594,6 +2616,69 @@ module Aws::NetworkFirewall
     # @param [Hash] params ({})
     def describe_rule_group_metadata(params = {}, options = {})
       req = build_request(:describe_rule_group_metadata, params)
+      req.send_request(options)
+    end
+
+    # Returns detailed information for a stateful rule group.
+    #
+    # For active threat defense Amazon Web Services managed rule groups,
+    # this operation provides insight into the protections enabled by the
+    # rule group, based on Suricata rule metadata fields. Summaries are
+    # available for rule groups you manage and for active threat defense
+    # Amazon Web Services managed rule groups.
+    #
+    # To modify how threat information appears in summaries, use the
+    # `SummaryConfiguration` parameter in UpdateRuleGroup.
+    #
+    # @option params [String] :rule_group_name
+    #   The descriptive name of the rule group. You can't change the name of
+    #   a rule group after you create it.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #
+    # @option params [String] :rule_group_arn
+    #   Required. The Amazon Resource Name (ARN) of the rule group.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #
+    # @option params [String] :type
+    #   The type of rule group you want a summary for. This is a required
+    #   field.
+    #
+    #   Valid value: `STATEFUL`
+    #
+    #   Note that `STATELESS` exists but is not currently supported. If you
+    #   provide `STATELESS`, an exception is returned.
+    #
+    # @return [Types::DescribeRuleGroupSummaryResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeRuleGroupSummaryResponse#rule_group_name #rule_group_name} => String
+    #   * {Types::DescribeRuleGroupSummaryResponse#description #description} => String
+    #   * {Types::DescribeRuleGroupSummaryResponse#summary #summary} => Types::Summary
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_rule_group_summary({
+    #     rule_group_name: "ResourceName",
+    #     rule_group_arn: "ResourceArn",
+    #     type: "STATELESS", # accepts STATELESS, STATEFUL
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.rule_group_name #=> String
+    #   resp.description #=> String
+    #   resp.summary.rule_summaries #=> Array
+    #   resp.summary.rule_summaries[0].sid #=> String
+    #   resp.summary.rule_summaries[0].msg #=> String
+    #   resp.summary.rule_summaries[0].metadata #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/DescribeRuleGroupSummary AWS API Documentation
+    #
+    # @overload describe_rule_group_summary(params = {})
+    # @param [Hash] params ({})
+    def describe_rule_group_summary(params = {}, options = {})
+      req = build_request(:describe_rule_group_summary, params)
       req.send_request(options)
     end
 
@@ -3352,7 +3437,7 @@ module Aws::NetworkFirewall
     #     next_token: "PaginationToken",
     #     max_results: 1,
     #     scope: "MANAGED", # accepts MANAGED, ACCOUNT
-    #     managed_type: "AWS_MANAGED_THREAT_SIGNATURES", # accepts AWS_MANAGED_THREAT_SIGNATURES, AWS_MANAGED_DOMAIN_LISTS
+    #     managed_type: "AWS_MANAGED_THREAT_SIGNATURES", # accepts AWS_MANAGED_THREAT_SIGNATURES, AWS_MANAGED_DOMAIN_LISTS, ACTIVE_THREAT_DEFENSE
     #     type: "STATELESS", # accepts STATELESS, STATEFUL
     #   })
     #
@@ -3630,9 +3715,8 @@ module Aws::NetworkFirewall
     # creation of routing components between the transit gateway and
     # firewall endpoints.
     #
-    # Only the transit gateway owner can reject the attachment. After
-    # rejection, no traffic will flow through the firewall endpoints for
-    # this attachment.
+    # Only the firewall owner can reject the attachment. After rejection, no
+    # traffic will flow through the firewall endpoints for this attachment.
     #
     # Use DescribeFirewall to monitor the rejection status. To accept the
     # attachment instead of rejecting it, use
@@ -4431,6 +4515,7 @@ module Aws::NetworkFirewall
     #           override: {
     #             action: "DROP_TO_ALERT", # accepts DROP_TO_ALERT
     #           },
+    #           deep_threat_inspection: false,
     #         },
     #       ],
     #       stateful_default_actions: ["CollectionMember_String"],
@@ -4757,6 +4842,11 @@ module Aws::NetworkFirewall
     #   the rule group for you. To run the stateless rule group analyzer
     #   without updating the rule group, set `DryRun` to `TRUE`.
     #
+    # @option params [Types::SummaryConfiguration] :summary_configuration
+    #   Updates the selected summary configuration for a rule group.
+    #
+    #   Changes affect subsequent responses from DescribeRuleGroupSummary.
+    #
     # @return [Types::UpdateRuleGroupResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateRuleGroupResponse#update_token #update_token} => String
@@ -4887,6 +4977,9 @@ module Aws::NetworkFirewall
     #       source_update_token: "UpdateToken",
     #     },
     #     analyze_rule_group: false,
+    #     summary_configuration: {
+    #       rule_options: ["SID"], # accepts SID, MSG, METADATA
+    #     },
     #   })
     #
     # @example Response structure
@@ -4915,6 +5008,8 @@ module Aws::NetworkFirewall
     #   resp.rule_group_response.analysis_results[0].identified_rule_ids[0] #=> String
     #   resp.rule_group_response.analysis_results[0].identified_type #=> String, one of "STATELESS_RULE_FORWARDING_ASYMMETRICALLY", "STATELESS_RULE_CONTAINS_TCP_FLAGS"
     #   resp.rule_group_response.analysis_results[0].analysis_detail #=> String
+    #   resp.rule_group_response.summary_configuration.rule_options #=> Array
+    #   resp.rule_group_response.summary_configuration.rule_options[0] #=> String, one of "SID", "MSG", "METADATA"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/UpdateRuleGroup AWS API Documentation
     #
@@ -5171,7 +5266,7 @@ module Aws::NetworkFirewall
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-networkfirewall'
-      context[:gem_version] = '1.69.0'
+      context[:gem_version] = '1.70.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

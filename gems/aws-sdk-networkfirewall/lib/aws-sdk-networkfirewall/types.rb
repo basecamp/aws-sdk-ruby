@@ -1146,6 +1146,18 @@ module Aws::NetworkFirewall
     #   analyzer without creating the rule group, set `DryRun` to `TRUE`.
     #   @return [Boolean]
     #
+    # @!attribute [rw] summary_configuration
+    #   An object that contains a `RuleOptions` array of strings. You use
+    #   `RuleOptions` to determine which of the following RuleSummary values
+    #   are returned in response to `DescribeRuleGroupSummary`.
+    #
+    #   * `Metadata` - returns
+    #
+    #   * `Msg`
+    #
+    #   * `SID`
+    #   @return [Types::SummaryConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/CreateRuleGroupRequest AWS API Documentation
     #
     class CreateRuleGroupRequest < Struct.new(
@@ -1159,7 +1171,8 @@ module Aws::NetworkFirewall
       :dry_run,
       :encryption_configuration,
       :source_metadata,
-      :analyze_rule_group)
+      :analyze_rule_group,
+      :summary_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2229,6 +2242,73 @@ module Aws::NetworkFirewall
       :update_token,
       :rule_group,
       :rule_group_response)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] rule_group_name
+    #   The descriptive name of the rule group. You can't change the name
+    #   of a rule group after you create it.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #   @return [String]
+    #
+    # @!attribute [rw] rule_group_arn
+    #   Required. The Amazon Resource Name (ARN) of the rule group.
+    #
+    #   You must specify the ARN or the name, and you can specify both.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of rule group you want a summary for. This is a required
+    #   field.
+    #
+    #   Valid value: `STATEFUL`
+    #
+    #   Note that `STATELESS` exists but is not currently supported. If you
+    #   provide `STATELESS`, an exception is returned.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/DescribeRuleGroupSummaryRequest AWS API Documentation
+    #
+    class DescribeRuleGroupSummaryRequest < Struct.new(
+      :rule_group_name,
+      :rule_group_arn,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] rule_group_name
+    #   The descriptive name of the rule group. You can't change the name
+    #   of a rule group after you create it.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description of the rule group.
+    #   @return [String]
+    #
+    # @!attribute [rw] summary
+    #   A complex type that contains rule information based on the rule
+    #   group's configured summary settings. The content varies depending
+    #   on the fields that you specified to extract in your
+    #   SummaryConfiguration. When you haven't configured any summary
+    #   settings, this returns an empty array. The response might include:
+    #
+    #   * Rule identifiers
+    #
+    #   * Rule descriptions
+    #
+    #   * Any metadata fields that you specified in your
+    #     SummaryConfiguration
+    #   @return [Types::Summary]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/DescribeRuleGroupSummaryResponse AWS API Documentation
+    #
+    class DescribeRuleGroupSummaryResponse < Struct.new(
+      :rule_group_name,
+      :description,
+      :summary)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4911,6 +4991,16 @@ module Aws::NetworkFirewall
     #   in the list of analysis results.
     #   @return [Array<Types::AnalysisResult>]
     #
+    # @!attribute [rw] summary_configuration
+    #   A complex type containing the currently selected rule option fields
+    #   that will be displayed for rule summarization returned by
+    #   DescribeRuleGroupSummary.
+    #
+    #   * The `RuleOptions` specified in SummaryConfiguration
+    #
+    #   * Rule metadata organization preferences
+    #   @return [Types::SummaryConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/RuleGroupResponse AWS API Documentation
     #
     class RuleGroupResponse < Struct.new(
@@ -4928,7 +5018,8 @@ module Aws::NetworkFirewall
       :source_metadata,
       :sns_topic,
       :last_modified_time,
-      :analysis_results)
+      :analysis_results,
+      :summary_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4963,6 +5054,39 @@ module Aws::NetworkFirewall
     class RuleOption < Struct.new(
       :keyword,
       :settings)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A complex type containing details about a Suricata rule. Contains:
+    #
+    # * `SID`
+    #
+    # * `Msg`
+    #
+    # * `Metadata`
+    #
+    # Summaries are available for rule groups you manage and for active
+    # threat defense Amazon Web Services managed rule groups.
+    #
+    # @!attribute [rw] sid
+    #   The unique identifier (Signature ID) of the Suricata rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] msg
+    #   The contents taken from the rule's msg field.
+    #   @return [String]
+    #
+    # @!attribute [rw] metadata
+    #   The contents of the rule's metadata.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/RuleSummary AWS API Documentation
+    #
+    class RuleSummary < Struct.new(
+      :sid,
+      :msg,
+      :metadata)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5644,12 +5768,32 @@ module Aws::NetworkFirewall
     #   the rule group within a policy.
     #   @return [Types::StatefulRuleGroupOverride]
     #
+    # @!attribute [rw] deep_threat_inspection
+    #   Network Firewall plans to augment the active threat defense managed
+    #   rule group with an additional deep threat inspection capability.
+    #   When this capability is released, Amazon Web Services will analyze
+    #   service logs of network traffic processed by these rule groups to
+    #   identify threat indicators across customers. Amazon Web Services
+    #   will use these threat indicators to improve the active threat
+    #   defense managed rule groups and protect the security of Amazon Web
+    #   Services customers and services.
+    #
+    #   <note markdown="1"> Customers can opt-out of deep threat inspection at any time through
+    #   the Network Firewall console or API. When customers opt out, Network
+    #   Firewall will not use the network traffic processed by those
+    #   customers' active threat defense rule groups for rule group
+    #   improvement.
+    #
+    #    </note>
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/StatefulRuleGroupReference AWS API Documentation
     #
     class StatefulRuleGroupReference < Struct.new(
       :resource_arn,
       :priority,
-      :override)
+      :override,
+      :deep_threat_inspection)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5783,6 +5927,52 @@ module Aws::NetworkFirewall
     class SubnetMapping < Struct.new(
       :subnet_id,
       :ip_address_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A complex type containing summaries of security protections provided
+    # by a rule group.
+    #
+    # Network Firewall extracts this information from selected fields in the
+    # rule group's Suricata rules, based on your SummaryConfiguration
+    # settings.
+    #
+    # @!attribute [rw] rule_summaries
+    #   An array of RuleSummary objects containing individual rule details
+    #   that had been configured by the rulegroup's SummaryConfiguration.
+    #   @return [Array<Types::RuleSummary>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/Summary AWS API Documentation
+    #
+    class Summary < Struct.new(
+      :rule_summaries)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A complex type that specifies which Suricata rule metadata fields to
+    # use when displaying threat information. Contains:
+    #
+    # * `RuleOptions` - The Suricata rule options fields to extract and
+    #   display
+    #
+    # ^
+    #
+    # These settings affect how threat information appears in both the
+    # console and API responses. Summaries are available for rule groups you
+    # manage and for active threat defense Amazon Web Services managed rule
+    # groups.
+    #
+    # @!attribute [rw] rule_options
+    #   Specifies the selected rule options returned by
+    #   DescribeRuleGroupSummary.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/SummaryConfiguration AWS API Documentation
+    #
+    class SummaryConfiguration < Struct.new(
+      :rule_options)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7102,6 +7292,12 @@ module Aws::NetworkFirewall
     #   analyzer without updating the rule group, set `DryRun` to `TRUE`.
     #   @return [Boolean]
     #
+    # @!attribute [rw] summary_configuration
+    #   Updates the selected summary configuration for a rule group.
+    #
+    #   Changes affect subsequent responses from DescribeRuleGroupSummary.
+    #   @return [Types::SummaryConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/UpdateRuleGroupRequest AWS API Documentation
     #
     class UpdateRuleGroupRequest < Struct.new(
@@ -7115,7 +7311,8 @@ module Aws::NetworkFirewall
       :dry_run,
       :encryption_configuration,
       :source_metadata,
-      :analyze_rule_group)
+      :analyze_rule_group,
+      :summary_configuration)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -71,6 +71,7 @@ module Aws::NetworkFirewall
     CreateVpcEndpointAssociationResponse = Shapes::StructureShape.new(name: 'CreateVpcEndpointAssociationResponse')
     CustomAction = Shapes::StructureShape.new(name: 'CustomAction')
     CustomActions = Shapes::ListShape.new(name: 'CustomActions')
+    DeepThreatInspection = Shapes::BooleanShape.new(name: 'DeepThreatInspection')
     DeleteFirewallPolicyRequest = Shapes::StructureShape.new(name: 'DeleteFirewallPolicyRequest')
     DeleteFirewallPolicyResponse = Shapes::StructureShape.new(name: 'DeleteFirewallPolicyResponse')
     DeleteFirewallRequest = Shapes::StructureShape.new(name: 'DeleteFirewallRequest')
@@ -101,6 +102,8 @@ module Aws::NetworkFirewall
     DescribeRuleGroupMetadataResponse = Shapes::StructureShape.new(name: 'DescribeRuleGroupMetadataResponse')
     DescribeRuleGroupRequest = Shapes::StructureShape.new(name: 'DescribeRuleGroupRequest')
     DescribeRuleGroupResponse = Shapes::StructureShape.new(name: 'DescribeRuleGroupResponse')
+    DescribeRuleGroupSummaryRequest = Shapes::StructureShape.new(name: 'DescribeRuleGroupSummaryRequest')
+    DescribeRuleGroupSummaryResponse = Shapes::StructureShape.new(name: 'DescribeRuleGroupSummaryResponse')
     DescribeTLSInspectionConfigurationRequest = Shapes::StructureShape.new(name: 'DescribeTLSInspectionConfigurationRequest')
     DescribeTLSInspectionConfigurationResponse = Shapes::StructureShape.new(name: 'DescribeTLSInspectionConfigurationResponse')
     DescribeVpcEndpointAssociationRequest = Shapes::StructureShape.new(name: 'DescribeVpcEndpointAssociationRequest')
@@ -247,6 +250,8 @@ module Aws::NetworkFirewall
     RuleOption = Shapes::StructureShape.new(name: 'RuleOption')
     RuleOptions = Shapes::ListShape.new(name: 'RuleOptions')
     RuleOrder = Shapes::StringShape.new(name: 'RuleOrder')
+    RuleSummaries = Shapes::ListShape.new(name: 'RuleSummaries')
+    RuleSummary = Shapes::StructureShape.new(name: 'RuleSummary')
     RuleTargets = Shapes::ListShape.new(name: 'RuleTargets')
     RuleVariableName = Shapes::StringShape.new(name: 'RuleVariableName')
     RuleVariables = Shapes::StructureShape.new(name: 'RuleVariables')
@@ -293,6 +298,10 @@ module Aws::NetworkFirewall
     StreamExceptionPolicy = Shapes::StringShape.new(name: 'StreamExceptionPolicy')
     SubnetMapping = Shapes::StructureShape.new(name: 'SubnetMapping')
     SubnetMappings = Shapes::ListShape.new(name: 'SubnetMappings')
+    Summary = Shapes::StructureShape.new(name: 'Summary')
+    SummaryConfiguration = Shapes::StructureShape.new(name: 'SummaryConfiguration')
+    SummaryRuleOption = Shapes::StringShape.new(name: 'SummaryRuleOption')
+    SummaryRuleOptions = Shapes::ListShape.new(name: 'SummaryRuleOptions')
     SupportedAvailabilityZones = Shapes::MapShape.new(name: 'SupportedAvailabilityZones')
     SyncState = Shapes::StructureShape.new(name: 'SyncState')
     SyncStateConfig = Shapes::MapShape.new(name: 'SyncStateConfig')
@@ -514,6 +523,7 @@ module Aws::NetworkFirewall
     CreateRuleGroupRequest.add_member(:encryption_configuration, Shapes::ShapeRef.new(shape: EncryptionConfiguration, location_name: "EncryptionConfiguration"))
     CreateRuleGroupRequest.add_member(:source_metadata, Shapes::ShapeRef.new(shape: SourceMetadata, location_name: "SourceMetadata"))
     CreateRuleGroupRequest.add_member(:analyze_rule_group, Shapes::ShapeRef.new(shape: Boolean, location_name: "AnalyzeRuleGroup"))
+    CreateRuleGroupRequest.add_member(:summary_configuration, Shapes::ShapeRef.new(shape: SummaryConfiguration, location_name: "SummaryConfiguration"))
     CreateRuleGroupRequest.struct_class = Types::CreateRuleGroupRequest
 
     CreateRuleGroupResponse.add_member(:update_token, Shapes::ShapeRef.new(shape: UpdateToken, required: true, location_name: "UpdateToken"))
@@ -684,6 +694,16 @@ module Aws::NetworkFirewall
     DescribeRuleGroupResponse.add_member(:rule_group, Shapes::ShapeRef.new(shape: RuleGroup, location_name: "RuleGroup"))
     DescribeRuleGroupResponse.add_member(:rule_group_response, Shapes::ShapeRef.new(shape: RuleGroupResponse, required: true, location_name: "RuleGroupResponse"))
     DescribeRuleGroupResponse.struct_class = Types::DescribeRuleGroupResponse
+
+    DescribeRuleGroupSummaryRequest.add_member(:rule_group_name, Shapes::ShapeRef.new(shape: ResourceName, location_name: "RuleGroupName"))
+    DescribeRuleGroupSummaryRequest.add_member(:rule_group_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "RuleGroupArn"))
+    DescribeRuleGroupSummaryRequest.add_member(:type, Shapes::ShapeRef.new(shape: RuleGroupType, location_name: "Type"))
+    DescribeRuleGroupSummaryRequest.struct_class = Types::DescribeRuleGroupSummaryRequest
+
+    DescribeRuleGroupSummaryResponse.add_member(:rule_group_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location_name: "RuleGroupName"))
+    DescribeRuleGroupSummaryResponse.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "Description"))
+    DescribeRuleGroupSummaryResponse.add_member(:summary, Shapes::ShapeRef.new(shape: Summary, location_name: "Summary"))
+    DescribeRuleGroupSummaryResponse.struct_class = Types::DescribeRuleGroupSummaryResponse
 
     DescribeTLSInspectionConfigurationRequest.add_member(:tls_inspection_configuration_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "TLSInspectionConfigurationArn"))
     DescribeTLSInspectionConfigurationRequest.add_member(:tls_inspection_configuration_name, Shapes::ShapeRef.new(shape: ResourceName, location_name: "TLSInspectionConfigurationName"))
@@ -1103,6 +1123,7 @@ module Aws::NetworkFirewall
     RuleGroupResponse.add_member(:sns_topic, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "SnsTopic"))
     RuleGroupResponse.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: LastUpdateTime, location_name: "LastModifiedTime"))
     RuleGroupResponse.add_member(:analysis_results, Shapes::ShapeRef.new(shape: AnalysisResultList, location_name: "AnalysisResults"))
+    RuleGroupResponse.add_member(:summary_configuration, Shapes::ShapeRef.new(shape: SummaryConfiguration, location_name: "SummaryConfiguration"))
     RuleGroupResponse.struct_class = Types::RuleGroupResponse
 
     RuleGroups.member = Shapes::ShapeRef.new(shape: RuleGroupMetadata)
@@ -1114,6 +1135,13 @@ module Aws::NetworkFirewall
     RuleOption.struct_class = Types::RuleOption
 
     RuleOptions.member = Shapes::ShapeRef.new(shape: RuleOption)
+
+    RuleSummaries.member = Shapes::ShapeRef.new(shape: RuleSummary)
+
+    RuleSummary.add_member(:sid, Shapes::ShapeRef.new(shape: CollectionMember_String, location_name: "SID"))
+    RuleSummary.add_member(:msg, Shapes::ShapeRef.new(shape: CollectionMember_String, location_name: "Msg"))
+    RuleSummary.add_member(:metadata, Shapes::ShapeRef.new(shape: CollectionMember_String, location_name: "Metadata"))
+    RuleSummary.struct_class = Types::RuleSummary
 
     RuleTargets.member = Shapes::ShapeRef.new(shape: CollectionMember_String)
 
@@ -1212,6 +1240,7 @@ module Aws::NetworkFirewall
     StatefulRuleGroupReference.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceArn, required: true, location_name: "ResourceArn"))
     StatefulRuleGroupReference.add_member(:priority, Shapes::ShapeRef.new(shape: Priority, location_name: "Priority", metadata: {"box" => true}))
     StatefulRuleGroupReference.add_member(:override, Shapes::ShapeRef.new(shape: StatefulRuleGroupOverride, location_name: "Override"))
+    StatefulRuleGroupReference.add_member(:deep_threat_inspection, Shapes::ShapeRef.new(shape: DeepThreatInspection, location_name: "DeepThreatInspection"))
     StatefulRuleGroupReference.struct_class = Types::StatefulRuleGroupReference
 
     StatefulRuleGroupReferences.member = Shapes::ShapeRef.new(shape: StatefulRuleGroupReference)
@@ -1244,6 +1273,14 @@ module Aws::NetworkFirewall
     SubnetMapping.struct_class = Types::SubnetMapping
 
     SubnetMappings.member = Shapes::ShapeRef.new(shape: SubnetMapping)
+
+    Summary.add_member(:rule_summaries, Shapes::ShapeRef.new(shape: RuleSummaries, location_name: "RuleSummaries"))
+    Summary.struct_class = Types::Summary
+
+    SummaryConfiguration.add_member(:rule_options, Shapes::ShapeRef.new(shape: SummaryRuleOptions, location_name: "RuleOptions"))
+    SummaryConfiguration.struct_class = Types::SummaryConfiguration
+
+    SummaryRuleOptions.member = Shapes::ShapeRef.new(shape: SummaryRuleOption)
 
     SupportedAvailabilityZones.key = Shapes::ShapeRef.new(shape: AvailabilityZone)
     SupportedAvailabilityZones.value = Shapes::ShapeRef.new(shape: AvailabilityZoneMetadata)
@@ -1436,6 +1473,7 @@ module Aws::NetworkFirewall
     UpdateRuleGroupRequest.add_member(:encryption_configuration, Shapes::ShapeRef.new(shape: EncryptionConfiguration, location_name: "EncryptionConfiguration"))
     UpdateRuleGroupRequest.add_member(:source_metadata, Shapes::ShapeRef.new(shape: SourceMetadata, location_name: "SourceMetadata"))
     UpdateRuleGroupRequest.add_member(:analyze_rule_group, Shapes::ShapeRef.new(shape: Boolean, location_name: "AnalyzeRuleGroup"))
+    UpdateRuleGroupRequest.add_member(:summary_configuration, Shapes::ShapeRef.new(shape: SummaryConfiguration, location_name: "SummaryConfiguration"))
     UpdateRuleGroupRequest.struct_class = Types::UpdateRuleGroupRequest
 
     UpdateRuleGroupResponse.add_member(:update_token, Shapes::ShapeRef.new(shape: UpdateToken, required: true, location_name: "UpdateToken"))
@@ -1817,6 +1855,18 @@ module Aws::NetworkFirewall
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: DescribeRuleGroupMetadataRequest)
         o.output = Shapes::ShapeRef.new(shape: DescribeRuleGroupMetadataResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+      end)
+
+      api.add_operation(:describe_rule_group_summary, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeRuleGroupSummary"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeRuleGroupSummaryRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeRuleGroupSummaryResponse)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)

@@ -271,8 +271,7 @@ module Aws::Bedrock
     # @!attribute [rw] model_source_config
     #   The data source for the model. The Amazon S3 URI in the model source
     #   must be for the Amazon-managed Amazon S3 bucket containing your
-    #   model artifacts. SageMaker AI creates this bucket when you run your
-    #   first SageMaker AI training job.
+    #   model artifacts.
     #   @return [Types::ModelDataSource]
     #
     # @!attribute [rw] model_kms_key_arn
@@ -7874,15 +7873,7 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
-    # The Amazon S3 data source of the model to import. For the
-    # [CreateCustomModel][1] API operation, you must specify the Amazon S3
-    # URI for the Amazon-managed Amazon S3 bucket containing your model
-    # artifacts. SageMaker AI creates this bucket when you run your first
-    # SageMaker AI training job.
-    #
-    #
-    #
-    # [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModel.html
+    # The Amazon S3 data source of the model to import.
     #
     # @!attribute [rw] s3_uri
     #   The URI of the Amazon S3 data source.

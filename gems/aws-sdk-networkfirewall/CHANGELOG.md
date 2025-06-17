@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.70.0 (2025-06-17)
+------------------
+
+* Feature - Release of Active Threat Defense in Network Firewall
+
 1.69.0 (2025-06-16)
 ------------------
 

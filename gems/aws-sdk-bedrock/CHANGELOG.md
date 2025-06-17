@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.49.0 (2025-06-17)
+------------------
+
+* Feature - This release of the SDK has the API and documentation for the createcustommodel API. This feature lets you copy a trained model into Amazon Bedrock for inference.
+
 1.48.0 (2025-06-16)
 ------------------
 

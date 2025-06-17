@@ -537,10 +537,8 @@ module Aws::Bedrock
       req.send_request(options)
     end
 
-    # Creates a new custom model in Amazon Bedrock from an existing
-    # SageMaker AI-trained Amazon Nova model stored in an Amazon-managed
-    # Amazon S3 bucket. After the model is active, you can use it for
-    # inference.
+    # Creates a new custom model in Amazon Bedrock. After the model is
+    # active, you can use it for inference.
     #
     # To use the model for inference, you must purchase Provisioned
     # Throughput for it. You can't use On-demand inference with these
@@ -558,32 +556,20 @@ module Aws::Bedrock
     #
     # * `Failed` - Creation process encountered an error
     #
-    # For more information about creating custom models, including specific
-    # model requirements, see [Import a SageMaker AI-trained Amazon Nova
-    # model][2] in the Amazon Bedrock User Guide.
-    #
-    # <note markdown="1"> You use the `CreateCustomModel` API to import only SageMaker
-    # AI-trained Amazon Nova models. To import open-source models, you use
-    # the [CreateModelImportJob][3].
-    #
-    #  </note>
-    #
     # **Related APIs**
     #
-    # * [GetCustomModel][4]
+    # * [GetCustomModel][2]
     #
-    # * [ListCustomModels][5]
+    # * [ListCustomModels][3]
     #
-    # * [DeleteCustomModel][6]
+    # * [DeleteCustomModel][4]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html
-    # [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/create-custom-model-from-existing.html
-    # [3]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html
-    # [4]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModel.html
-    # [5]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModels.html
-    # [6]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModel.html
+    # [2]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModel.html
+    # [3]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModels.html
+    # [4]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModel.html
     #
     # @option params [required, String] :model_name
     #   A unique name for the custom model.
@@ -591,8 +577,7 @@ module Aws::Bedrock
     # @option params [required, Types::ModelDataSource] :model_source_config
     #   The data source for the model. The Amazon S3 URI in the model source
     #   must be for the Amazon-managed Amazon S3 bucket containing your model
-    #   artifacts. SageMaker AI creates this bucket when you run your first
-    #   SageMaker AI training job.
+    #   artifacts.
     #
     # @option params [String] :model_kms_key_arn
     #   The Amazon Resource Name (ARN) of the customer managed KMS key to
@@ -5180,7 +5165,7 @@ module Aws::Bedrock
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrock'
-      context[:gem_version] = '1.48.0'
+      context[:gem_version] = '1.49.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
