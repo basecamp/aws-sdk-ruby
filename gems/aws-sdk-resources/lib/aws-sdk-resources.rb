@@ -7,6 +7,7 @@ module Aws
   # service gems
   autoload :ACM, 'aws-sdk-acm'
   autoload :ACMPCA, 'aws-sdk-acmpca'
+  autoload :AIOps, 'aws-sdk-aiops'
   autoload :APIGateway, 'aws-sdk-apigateway'
   autoload :ARCZonalShift, 'aws-sdk-arczonalshift'
   autoload :AccessAnalyzer, 'aws-sdk-accessanalyzer'

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+3.231.0 (2025-06-18)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-aiops` gem.
+
 3.230.0 (2025-06-17)
 ------------------
 

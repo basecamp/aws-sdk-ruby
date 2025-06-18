@@ -247,6 +247,7 @@ module Aws
           {
             'ACM' => 'acm',
             'ACMPCA' => 'acm-pca',
+            'AIOps' => 'aiops',
             'APIGateway' => 'apigateway',
             'ARCZonalShift' => 'arc-zonal-shift',
             'AccessAnalyzer' => 'access-analyzer',

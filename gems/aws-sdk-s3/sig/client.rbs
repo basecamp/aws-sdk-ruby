@@ -369,7 +369,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Client.html#delete_bucket_intelligent_tiering_configuration-instance_method
       def delete_bucket_intelligent_tiering_configuration: (
                                                              bucket: ::String,
-                                                             id: ::String
+                                                             id: ::String,
+                                                             ?expected_bucket_owner: ::String
                                                            ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -574,7 +575,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Client.html#get_bucket_intelligent_tiering_configuration-instance_method
       def get_bucket_intelligent_tiering_configuration: (
                                                           bucket: ::String,
-                                                          id: ::String
+                                                          id: ::String,
+                                                          ?expected_bucket_owner: ::String
                                                         ) -> _GetBucketIntelligentTieringConfigurationResponseSuccess
                                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetBucketIntelligentTieringConfigurationResponseSuccess
 
@@ -1019,6 +1021,7 @@ module Aws
         def request_charged: () -> ("requester")
         def replication_status: () -> ("COMPLETE" | "PENDING" | "FAILED" | "REPLICA" | "COMPLETED")
         def parts_count: () -> ::Integer
+        def tag_count: () -> ::Integer
         def object_lock_mode: () -> ("GOVERNANCE" | "COMPLIANCE")
         def object_lock_retain_until_date: () -> ::Time
         def object_lock_legal_hold_status: () -> ("ON" | "OFF")
@@ -1074,7 +1077,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Client.html#list_bucket_intelligent_tiering_configurations-instance_method
       def list_bucket_intelligent_tiering_configurations: (
                                                             bucket: ::String,
-                                                            ?continuation_token: ::String
+                                                            ?continuation_token: ::String,
+                                                            ?expected_bucket_owner: ::String
                                                           ) -> _ListBucketIntelligentTieringConfigurationsResponseSuccess
                                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBucketIntelligentTieringConfigurationsResponseSuccess
 
@@ -1421,6 +1425,7 @@ module Aws
       def put_bucket_intelligent_tiering_configuration: (
                                                           bucket: ::String,
                                                           id: ::String,
+                                                          ?expected_bucket_owner: ::String,
                                                           intelligent_tiering_configuration: {
                                                             id: ::String,
                                                             filter: {
@@ -2138,6 +2143,26 @@ module Aws
                                      ?expected_bucket_owner: ::String
                                    ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      interface _RenameObjectResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::RenameObjectOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Client.html#rename_object-instance_method
+      def rename_object: (
+                           bucket: ::String,
+                           key: ::String,
+                           rename_source: ::String,
+                           ?destination_if_match: ::String,
+                           ?destination_if_none_match: ::String,
+                           ?destination_if_modified_since: ::Time,
+                           ?destination_if_unmodified_since: ::Time,
+                           ?source_if_match: ::String,
+                           ?source_if_none_match: ::String,
+                           ?source_if_modified_since: ::Time,
+                           ?source_if_unmodified_since: ::Time,
+                           ?client_token: ::String
+                         ) -> _RenameObjectResponseSuccess
+                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RenameObjectResponseSuccess
 
       interface _RestoreObjectResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::RestoreObjectOutput]

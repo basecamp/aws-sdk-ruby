@@ -17,6 +17,7 @@ Gem::Specification.new do |spec|
   # service gems
   spec.add_dependency('aws-sdk-acm', '~> 1')
   spec.add_dependency('aws-sdk-acmpca', '~> 1')
+  spec.add_dependency('aws-sdk-aiops', '~> 1')
   spec.add_dependency('aws-sdk-apigateway', '~> 1')
   spec.add_dependency('aws-sdk-arczonalshift', '~> 1')
   spec.add_dependency('aws-sdk-accessanalyzer', '~> 1')

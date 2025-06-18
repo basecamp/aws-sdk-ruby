@@ -459,6 +459,7 @@ module Aws::S3
     class DeleteBucketIntelligentTieringConfigurationRequest
       attr_accessor bucket: ::String
       attr_accessor id: ::String
+      attr_accessor expected_bucket_owner: ::String
       SENSITIVE: []
     end
 
@@ -735,6 +736,7 @@ module Aws::S3
     class GetBucketIntelligentTieringConfigurationRequest
       attr_accessor bucket: ::String
       attr_accessor id: ::String
+      attr_accessor expected_bucket_owner: ::String
       SENSITIVE: []
     end
 
@@ -1194,6 +1196,7 @@ module Aws::S3
       attr_accessor request_charged: ("requester")
       attr_accessor replication_status: ("COMPLETE" | "PENDING" | "FAILED" | "REPLICA" | "COMPLETED")
       attr_accessor parts_count: ::Integer
+      attr_accessor tag_count: ::Integer
       attr_accessor object_lock_mode: ("GOVERNANCE" | "COMPLIANCE")
       attr_accessor object_lock_retain_until_date: ::Time
       attr_accessor object_lock_legal_hold_status: ("ON" | "OFF")
@@ -1223,6 +1226,9 @@ module Aws::S3
       attr_accessor expected_bucket_owner: ::String
       attr_accessor checksum_mode: ("ENABLED")
       SENSITIVE: [:sse_customer_key]
+    end
+
+    class IdempotencyParameterMismatch < Aws::EmptyStructure
     end
 
     class IndexDocument
@@ -1404,6 +1410,7 @@ module Aws::S3
     class ListBucketIntelligentTieringConfigurationsRequest
       attr_accessor bucket: ::String
       attr_accessor continuation_token: ::String
+      attr_accessor expected_bucket_owner: ::String
       SENSITIVE: []
     end
 
@@ -1934,6 +1941,7 @@ module Aws::S3
     class PutBucketIntelligentTieringConfigurationRequest
       attr_accessor bucket: ::String
       attr_accessor id: ::String
+      attr_accessor expected_bucket_owner: ::String
       attr_accessor intelligent_tiering_configuration: Types::IntelligentTieringConfiguration
       SENSITIVE: []
     end
@@ -2269,6 +2277,25 @@ module Aws::S3
     class RedirectAllRequestsTo
       attr_accessor host_name: ::String
       attr_accessor protocol: ("http" | "https")
+      SENSITIVE: []
+    end
+
+    class RenameObjectOutput < Aws::EmptyStructure
+    end
+
+    class RenameObjectRequest
+      attr_accessor bucket: ::String
+      attr_accessor key: ::String
+      attr_accessor rename_source: ::String
+      attr_accessor destination_if_match: ::String
+      attr_accessor destination_if_none_match: ::String
+      attr_accessor destination_if_modified_since: ::Time
+      attr_accessor destination_if_unmodified_since: ::Time
+      attr_accessor source_if_match: ::String
+      attr_accessor source_if_none_match: ::String
+      attr_accessor source_if_modified_since: ::Time
+      attr_accessor source_if_unmodified_since: ::Time
+      attr_accessor client_token: ::String
       SENSITIVE: []
     end
 

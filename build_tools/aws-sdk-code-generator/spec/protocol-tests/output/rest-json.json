@@ -1323,6 +1323,30 @@
                     },
                     "body": "{\n    \"greeting\": \"hello\",\n    \"name\": \"Phreddy\"\n}"
                 }
+            },
+            {
+                "id": "RestJsonHttpPayloadWithStructureAndEmptyResponseBody",
+                "given": {
+                    "name": "HttpPayloadWithStructure",
+                    "http": {
+                        "method": "PUT",
+                        "requestUri": "/HttpPayloadWithStructure",
+                        "responseCode": 200
+                    },
+                    "output": {
+                        "shape": "HttpPayloadWithStructureInputOutput"
+                    },
+                    "documentation": "<p>This example serializes a structure in the payload.</p> <p>Note that serializing a structure changes the wrapper element name to match the targeted structure.</p>",
+                    "idempotent": true
+                },
+                "description": "Serializes a structure in the payload",
+                "result": {
+                    "nested": null
+                },
+                "response": {
+                    "status_code": 200,
+                    "body": ""
+                }
             }
         ]
     },

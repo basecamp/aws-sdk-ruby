@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.311.0 (2025-06-18)
+------------------
+
+* Feature - Add support for p6-b200 instance type for SageMaker Hyperpod
+
 1.310.0 (2025-06-16)
 ------------------
 

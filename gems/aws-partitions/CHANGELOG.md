@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.1118.0 (2025-06-18)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::AIOps`.
+
 1.1117.0 (2025-06-17)
 ------------------
 

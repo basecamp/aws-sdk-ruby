@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.190.0 (2025-06-18)
+------------------
+
+* Feature - Added support for renaming objects within the same bucket using the new RenameObject API.
+
 1.189.1 (2025-06-10)
 ------------------
 

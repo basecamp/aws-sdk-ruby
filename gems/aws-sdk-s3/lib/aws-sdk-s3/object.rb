@@ -470,6 +470,24 @@ module Aws::S3
       data[:parts_count]
     end
 
+    # The number of tags, if any, on the object, when you have the relevant
+    # permission to read object tags.
+    #
+    # You can use [GetObjectTagging][1] to retrieve the tag set associated
+    # with an object.
+    #
+    # <note markdown="1"> This functionality is not supported for directory buckets.
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectTagging.html
+    # @return [Integer]
+    def tag_count
+      data[:tag_count]
+    end
+
     # The Object Lock mode, if any, that's in effect for this object. This
     # header is only returned if the requester has the
     # `s3:GetObjectRetention` permission. For more information about S3

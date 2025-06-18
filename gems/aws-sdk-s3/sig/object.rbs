@@ -125,6 +125,9 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Object.html#parts_count-instance_method
       def parts_count: () -> ::Integer
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Object.html#tag_count-instance_method
+      def tag_count: () -> ::Integer
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Object.html#object_lock_mode-instance_method
       def object_lock_mode: () -> ("GOVERNANCE" | "COMPLIANCE")
 
