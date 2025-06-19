@@ -8748,6 +8748,10 @@ module Aws::SageMaker
     #
     #   [1]: https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html
     #
+    # @option params [Array<Types::CreateTemplateProvider>] :template_providers
+    #   An array of template provider configurations for creating
+    #   infrastructure resources for the project.
+    #
     # @return [Types::CreateProjectOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateProjectOutput#project_arn #project_arn} => String
@@ -8773,6 +8777,21 @@ module Aws::SageMaker
     #       {
     #         key: "TagKey", # required
     #         value: "TagValue", # required
+    #       },
+    #     ],
+    #     template_providers: [
+    #       {
+    #         cfn_template_provider: {
+    #           template_name: "CfnTemplateName", # required
+    #           template_url: "CfnTemplateURL", # required
+    #           role_arn: "RoleArn",
+    #           parameters: [
+    #             {
+    #               key: "CfnStackParameterKey", # required
+    #               value: "CfnStackParameterValue",
+    #             },
+    #           ],
+    #         },
     #       },
     #     ],
     #   })
@@ -17140,6 +17159,7 @@ module Aws::SageMaker
     #   * {Types::DescribeProjectOutput#service_catalog_provisioning_details #service_catalog_provisioning_details} => Types::ServiceCatalogProvisioningDetails
     #   * {Types::DescribeProjectOutput#service_catalog_provisioned_product_details #service_catalog_provisioned_product_details} => Types::ServiceCatalogProvisionedProductDetails
     #   * {Types::DescribeProjectOutput#project_status #project_status} => String
+    #   * {Types::DescribeProjectOutput#template_provider_details #template_provider_details} => Array&lt;Types::TemplateProviderDetail&gt;
     #   * {Types::DescribeProjectOutput#created_by #created_by} => Types::UserContext
     #   * {Types::DescribeProjectOutput#creation_time #creation_time} => Time
     #   * {Types::DescribeProjectOutput#last_modified_time #last_modified_time} => Time
@@ -17166,6 +17186,16 @@ module Aws::SageMaker
     #   resp.service_catalog_provisioned_product_details.provisioned_product_id #=> String
     #   resp.service_catalog_provisioned_product_details.provisioned_product_status_message #=> String
     #   resp.project_status #=> String, one of "Pending", "CreateInProgress", "CreateCompleted", "CreateFailed", "DeleteInProgress", "DeleteFailed", "DeleteCompleted", "UpdateInProgress", "UpdateCompleted", "UpdateFailed"
+    #   resp.template_provider_details #=> Array
+    #   resp.template_provider_details[0].cfn_template_provider_detail.template_name #=> String
+    #   resp.template_provider_details[0].cfn_template_provider_detail.template_url #=> String
+    #   resp.template_provider_details[0].cfn_template_provider_detail.role_arn #=> String
+    #   resp.template_provider_details[0].cfn_template_provider_detail.parameters #=> Array
+    #   resp.template_provider_details[0].cfn_template_provider_detail.parameters[0].key #=> String
+    #   resp.template_provider_details[0].cfn_template_provider_detail.parameters[0].value #=> String
+    #   resp.template_provider_details[0].cfn_template_provider_detail.stack_detail.name #=> String
+    #   resp.template_provider_details[0].cfn_template_provider_detail.stack_detail.id #=> String
+    #   resp.template_provider_details[0].cfn_template_provider_detail.stack_detail.status_message #=> String
     #   resp.created_by.user_profile_arn #=> String
     #   resp.created_by.user_profile_name #=> String
     #   resp.created_by.domain_id #=> String
@@ -29094,6 +29124,9 @@ module Aws::SageMaker
     #   [1]: https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html
     #   [2]: https://docs.aws.amazon.com/servicecatalog/latest/adminguide/constraints-resourceupdate.html
     #
+    # @option params [Array<Types::UpdateTemplateProvider>] :template_providers_to_update
+    #   The template providers to update in the project.
+    #
     # @return [Types::UpdateProjectOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateProjectOutput#project_arn #project_arn} => String
@@ -29116,6 +29149,20 @@ module Aws::SageMaker
     #       {
     #         key: "TagKey", # required
     #         value: "TagValue", # required
+    #       },
+    #     ],
+    #     template_providers_to_update: [
+    #       {
+    #         cfn_template_provider: {
+    #           template_name: "CfnTemplateName", # required
+    #           template_url: "CfnTemplateURL", # required
+    #           parameters: [
+    #             {
+    #               key: "CfnStackParameterKey", # required
+    #               value: "CfnStackParameterValue",
+    #             },
+    #           ],
+    #         },
     #       },
     #     ],
     #   })
@@ -29975,7 +30022,7 @@ module Aws::SageMaker
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sagemaker'
-      context[:gem_version] = '1.311.0'
+      context[:gem_version] = '1.312.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

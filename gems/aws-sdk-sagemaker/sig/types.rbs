@@ -644,6 +644,55 @@ module Aws::SageMaker
       SENSITIVE: []
     end
 
+    class CfnCreateTemplateProvider
+      attr_accessor template_name: ::String
+      attr_accessor template_url: ::String
+      attr_accessor role_arn: ::String
+      attr_accessor parameters: ::Array[Types::CfnStackCreateParameter]
+      SENSITIVE: []
+    end
+
+    class CfnStackCreateParameter
+      attr_accessor key: ::String
+      attr_accessor value: ::String
+      SENSITIVE: []
+    end
+
+    class CfnStackDetail
+      attr_accessor name: ::String
+      attr_accessor id: ::String
+      attr_accessor status_message: ::String
+      SENSITIVE: []
+    end
+
+    class CfnStackParameter
+      attr_accessor key: ::String
+      attr_accessor value: ::String
+      SENSITIVE: []
+    end
+
+    class CfnStackUpdateParameter
+      attr_accessor key: ::String
+      attr_accessor value: ::String
+      SENSITIVE: []
+    end
+
+    class CfnTemplateProviderDetail
+      attr_accessor template_name: ::String
+      attr_accessor template_url: ::String
+      attr_accessor role_arn: ::String
+      attr_accessor parameters: ::Array[Types::CfnStackParameter]
+      attr_accessor stack_detail: Types::CfnStackDetail
+      SENSITIVE: []
+    end
+
+    class CfnUpdateTemplateProvider
+      attr_accessor template_name: ::String
+      attr_accessor template_url: ::String
+      attr_accessor parameters: ::Array[Types::CfnStackUpdateParameter]
+      SENSITIVE: []
+    end
+
     class Channel
       attr_accessor channel_name: ::String
       attr_accessor data_source: Types::DataSource
@@ -1911,6 +1960,7 @@ module Aws::SageMaker
       attr_accessor project_description: ::String
       attr_accessor service_catalog_provisioning_details: Types::ServiceCatalogProvisioningDetails
       attr_accessor tags: ::Array[Types::Tag]
+      attr_accessor template_providers: ::Array[Types::CreateTemplateProvider]
       SENSITIVE: []
     end
 
@@ -1946,6 +1996,11 @@ module Aws::SageMaker
 
     class CreateStudioLifecycleConfigResponse
       attr_accessor studio_lifecycle_config_arn: ::String
+      SENSITIVE: []
+    end
+
+    class CreateTemplateProvider
+      attr_accessor cfn_template_provider: Types::CfnCreateTemplateProvider
       SENSITIVE: []
     end
 
@@ -3930,6 +3985,7 @@ module Aws::SageMaker
       attr_accessor service_catalog_provisioning_details: Types::ServiceCatalogProvisioningDetails
       attr_accessor service_catalog_provisioned_product_details: Types::ServiceCatalogProvisionedProductDetails
       attr_accessor project_status: ("Pending" | "CreateInProgress" | "CreateCompleted" | "CreateFailed" | "DeleteInProgress" | "DeleteFailed" | "DeleteCompleted" | "UpdateInProgress" | "UpdateCompleted" | "UpdateFailed")
+      attr_accessor template_provider_details: ::Array[Types::TemplateProviderDetail]
       attr_accessor created_by: Types::UserContext
       attr_accessor creation_time: ::Time
       attr_accessor last_modified_time: ::Time
@@ -8454,6 +8510,7 @@ module Aws::SageMaker
       attr_accessor project_status: ("Pending" | "CreateInProgress" | "CreateCompleted" | "CreateFailed" | "DeleteInProgress" | "DeleteFailed" | "DeleteCompleted" | "UpdateInProgress" | "UpdateCompleted" | "UpdateFailed")
       attr_accessor created_by: Types::UserContext
       attr_accessor creation_time: ::Time
+      attr_accessor template_provider_details: ::Array[Types::TemplateProviderDetail]
       attr_accessor tags: ::Array[Types::Tag]
       attr_accessor last_modified_time: ::Time
       attr_accessor last_modified_by: Types::UserContext
@@ -9418,6 +9475,11 @@ module Aws::SageMaker
     class TargetTrackingScalingPolicyConfiguration
       attr_accessor metric_specification: Types::MetricSpecification
       attr_accessor target_value: ::Float
+      SENSITIVE: []
+    end
+
+    class TemplateProviderDetail
+      attr_accessor cfn_template_provider_detail: Types::CfnTemplateProviderDetail
       SENSITIVE: []
     end
 
@@ -10435,6 +10497,7 @@ module Aws::SageMaker
       attr_accessor project_description: ::String
       attr_accessor service_catalog_provisioning_update_details: Types::ServiceCatalogProvisioningUpdateDetails
       attr_accessor tags: ::Array[Types::Tag]
+      attr_accessor template_providers_to_update: ::Array[Types::UpdateTemplateProvider]
       SENSITIVE: []
     end
 
@@ -10453,6 +10516,11 @@ module Aws::SageMaker
 
     class UpdateSpaceResponse
       attr_accessor space_arn: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateTemplateProvider
+      attr_accessor cfn_template_provider: Types::CfnUpdateTemplateProvider
       SENSITIVE: []
     end
 

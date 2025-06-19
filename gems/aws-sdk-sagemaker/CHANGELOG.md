@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.312.0 (2025-06-19)
+------------------
+
+* Feature - This release introduces alternative support for utilizing CFN templates from S3 for SageMaker Projects.
+
 1.311.0 (2025-06-18)
 ------------------
 

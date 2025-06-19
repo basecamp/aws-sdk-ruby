@@ -3861,6 +3861,21 @@ module Aws
                                 key: ::String,
                                 value: ::String
                               },
+                            ],
+                            ?template_providers: Array[
+                              {
+                                cfn_template_provider: {
+                                  template_name: ::String,
+                                  template_url: ::String,
+                                  role_arn: ::String?,
+                                  parameters: Array[
+                                    {
+                                      key: ::String,
+                                      value: ::String?
+                                    },
+                                  ]?
+                                }?
+                              },
                             ]
                           ) -> _CreateProjectResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateProjectResponseSuccess
@@ -6271,6 +6286,7 @@ module Aws
         def service_catalog_provisioning_details: () -> Types::ServiceCatalogProvisioningDetails
         def service_catalog_provisioned_product_details: () -> Types::ServiceCatalogProvisionedProductDetails
         def project_status: () -> ("Pending" | "CreateInProgress" | "CreateCompleted" | "CreateFailed" | "DeleteInProgress" | "DeleteFailed" | "DeleteCompleted" | "UpdateInProgress" | "UpdateCompleted" | "UpdateFailed")
+        def template_provider_details: () -> ::Array[Types::TemplateProviderDetail]
         def created_by: () -> Types::UserContext
         def creation_time: () -> ::Time
         def last_modified_time: () -> ::Time
@@ -9842,6 +9858,20 @@ module Aws
                               {
                                 key: ::String,
                                 value: ::String
+                              },
+                            ],
+                            ?template_providers_to_update: Array[
+                              {
+                                cfn_template_provider: {
+                                  template_name: ::String,
+                                  template_url: ::String,
+                                  parameters: Array[
+                                    {
+                                      key: ::String,
+                                      value: ::String?
+                                    },
+                                  ]?
+                                }?
                               },
                             ]
                           ) -> _UpdateProjectResponseSuccess
