@@ -470,7 +470,10 @@ module Aws
                                     input_enabled: bool?,
                                     output_enabled: bool?
                                   },
-                                ]
+                                ],
+                                tier_config: {
+                                  tier_name: ("CLASSIC" | "STANDARD")
+                                }?
                               },
                               ?content_policy_config: {
                                 filters_config: Array[
@@ -485,7 +488,10 @@ module Aws
                                     input_enabled: bool?,
                                     output_enabled: bool?
                                   },
-                                ]
+                                ],
+                                tier_config: {
+                                  tier_name: ("CLASSIC" | "STANDARD")
+                                }?
                               },
                               ?word_policy_config: {
                                 words_config: Array[
@@ -1542,7 +1548,10 @@ module Aws
                                     input_enabled: bool?,
                                     output_enabled: bool?
                                   },
-                                ]
+                                ],
+                                tier_config: {
+                                  tier_name: ("CLASSIC" | "STANDARD")
+                                }?
                               },
                               ?content_policy_config: {
                                 filters_config: Array[
@@ -1557,7 +1566,10 @@ module Aws
                                     input_enabled: bool?,
                                     output_enabled: bool?
                                   },
-                                ]
+                                ],
+                                tier_config: {
+                                  tier_name: ("CLASSIC" | "STANDARD")
+                                }?
                               },
                               ?word_policy_config: {
                                 words_config: Array[

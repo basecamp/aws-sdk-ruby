@@ -5285,6 +5285,8 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # A request to create a data quality ruleset.
+    #
     # @!attribute [rw] name
     #   A unique name for the data quality ruleset.
     #   @return [String]
@@ -7623,6 +7625,51 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # A summary of metrics showing the total counts of processed rows and
+    # rules, including their pass/fail statistics based on row-level
+    # results.
+    #
+    # @!attribute [rw] total_rows_processed
+    #   The total number of rows that were processed during the data quality
+    #   evaluation.
+    #   @return [Float]
+    #
+    # @!attribute [rw] total_rows_passed
+    #   The total number of rows that passed all applicable data quality
+    #   rules.
+    #   @return [Float]
+    #
+    # @!attribute [rw] total_rows_failed
+    #   The total number of rows that failed one or more data quality rules.
+    #   @return [Float]
+    #
+    # @!attribute [rw] total_rules_processed
+    #   The total number of data quality rules that were evaluated.
+    #   @return [Float]
+    #
+    # @!attribute [rw] total_rules_passed
+    #   The total number of data quality rules that passed their evaluation
+    #   criteria.
+    #   @return [Float]
+    #
+    # @!attribute [rw] total_rules_failed
+    #   The total number of data quality rules that failed their evaluation
+    #   criteria.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DataQualityAggregatedMetrics AWS API Documentation
+    #
+    class DataQualityAggregatedMetrics < Struct.new(
+      :total_rows_processed,
+      :total_rows_passed,
+      :total_rows_failed,
+      :total_rules_processed,
+      :total_rules_passed,
+      :total_rules_failed)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes the result of the evaluation of a data quality analyzer.
     #
     # @!attribute [rw] name
@@ -7822,6 +7869,12 @@ module Aws::Glue
     #   observations generated after evaluating the rules and analyzers.
     #   @return [Array<Types::DataQualityObservation>]
     #
+    # @!attribute [rw] aggregated_metrics
+    #   A summary of `DataQualityAggregatedMetrics` objects showing the
+    #   total counts of processed rows and rules, including their pass/fail
+    #   statistics based on row-level results.
+    #   @return [Types::DataQualityAggregatedMetrics]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DataQualityResult AWS API Documentation
     #
     class DataQualityResult < Struct.new(
@@ -7838,7 +7891,8 @@ module Aws::Glue
       :ruleset_evaluation_run_id,
       :rule_results,
       :analyzer_results,
-      :observations)
+      :observations,
+      :aggregated_metrics)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7991,6 +8045,11 @@ module Aws::Glue
     #   The evaluated rule.
     #   @return [String]
     #
+    # @!attribute [rw] rule_metrics
+    #   A map containing metrics associated with the evaluation of the rule
+    #   based on row-level results.
+    #   @return [Hash<String,Float>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DataQualityRuleResult AWS API Documentation
     #
     class DataQualityRuleResult < Struct.new(
@@ -7999,8 +8058,9 @@ module Aws::Glue
       :evaluation_message,
       :result,
       :evaluated_metrics,
-      :evaluated_rule)
-      SENSITIVE = [:description, :evaluation_message, :evaluated_metrics, :evaluated_rule]
+      :evaluated_rule,
+      :rule_metrics)
+      SENSITIVE = [:description, :evaluation_message, :evaluated_metrics, :evaluated_rule, :rule_metrics]
       include Aws::Structure
     end
 
@@ -11930,6 +11990,8 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # The response for the data quality result.
+    #
     # @!attribute [rw] result_id
     #   A unique result ID for the data quality result.
     #   @return [String]
@@ -11994,6 +12056,12 @@ module Aws::Glue
     #   observations generated after evaluating the rules and analyzers.
     #   @return [Array<Types::DataQualityObservation>]
     #
+    # @!attribute [rw] aggregated_metrics
+    #   A summary of `DataQualityAggregatedMetrics` objects showing the
+    #   total counts of processed rows and rules, including their pass/fail
+    #   statistics based on row-level results.
+    #   @return [Types::DataQualityAggregatedMetrics]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDataQualityResultResponse AWS API Documentation
     #
     class GetDataQualityResultResponse < Struct.new(
@@ -12010,7 +12078,8 @@ module Aws::Glue
       :ruleset_evaluation_run_id,
       :rule_results,
       :analyzer_results,
-      :observations)
+      :observations,
+      :aggregated_metrics)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -12027,6 +12096,8 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # The response for the Data Quality rule recommendation run.
+    #
     # @!attribute [rw] run_id
     #   The unique run identifier associated with this run.
     #   @return [String]
@@ -12223,6 +12294,8 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # Returns the data quality ruleset response.
+    #
     # @!attribute [rw] name
     #   The name of the ruleset.
     #   @return [String]
@@ -24197,6 +24270,8 @@ module Aws::Glue
     #
     class StartCrawlerScheduleResponse < Aws::EmptyStructure; end
 
+    # The request of the Data Quality rule recommendation request.
+    #
     # @!attribute [rw] data_source
     #   The data source (Glue table) associated with this run.
     #   @return [Types::DataSource]

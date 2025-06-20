@@ -207,6 +207,9 @@ module Aws::Bedrock
     GuardrailContentFilterType = Shapes::StringShape.new(name: 'GuardrailContentFilterType')
     GuardrailContentFilters = Shapes::ListShape.new(name: 'GuardrailContentFilters')
     GuardrailContentFiltersConfig = Shapes::ListShape.new(name: 'GuardrailContentFiltersConfig')
+    GuardrailContentFiltersTier = Shapes::StructureShape.new(name: 'GuardrailContentFiltersTier')
+    GuardrailContentFiltersTierConfig = Shapes::StructureShape.new(name: 'GuardrailContentFiltersTierConfig')
+    GuardrailContentFiltersTierName = Shapes::StringShape.new(name: 'GuardrailContentFiltersTierName')
     GuardrailContentPolicy = Shapes::StructureShape.new(name: 'GuardrailContentPolicy')
     GuardrailContentPolicyConfig = Shapes::StructureShape.new(name: 'GuardrailContentPolicyConfig')
     GuardrailContextualGroundingAction = Shapes::StringShape.new(name: 'GuardrailContextualGroundingAction')
@@ -275,6 +278,9 @@ module Aws::Bedrock
     GuardrailTopicType = Shapes::StringShape.new(name: 'GuardrailTopicType')
     GuardrailTopics = Shapes::ListShape.new(name: 'GuardrailTopics')
     GuardrailTopicsConfig = Shapes::ListShape.new(name: 'GuardrailTopicsConfig')
+    GuardrailTopicsTier = Shapes::StructureShape.new(name: 'GuardrailTopicsTier')
+    GuardrailTopicsTierConfig = Shapes::StructureShape.new(name: 'GuardrailTopicsTierConfig')
+    GuardrailTopicsTierName = Shapes::StringShape.new(name: 'GuardrailTopicsTierName')
     GuardrailVersion = Shapes::StringShape.new(name: 'GuardrailVersion')
     GuardrailWord = Shapes::StructureShape.new(name: 'GuardrailWord')
     GuardrailWordAction = Shapes::StringShape.new(name: 'GuardrailWordAction')
@@ -1277,10 +1283,18 @@ module Aws::Bedrock
 
     GuardrailContentFiltersConfig.member = Shapes::ShapeRef.new(shape: GuardrailContentFilterConfig)
 
+    GuardrailContentFiltersTier.add_member(:tier_name, Shapes::ShapeRef.new(shape: GuardrailContentFiltersTierName, required: true, location_name: "tierName"))
+    GuardrailContentFiltersTier.struct_class = Types::GuardrailContentFiltersTier
+
+    GuardrailContentFiltersTierConfig.add_member(:tier_name, Shapes::ShapeRef.new(shape: GuardrailContentFiltersTierName, required: true, location_name: "tierName"))
+    GuardrailContentFiltersTierConfig.struct_class = Types::GuardrailContentFiltersTierConfig
+
     GuardrailContentPolicy.add_member(:filters, Shapes::ShapeRef.new(shape: GuardrailContentFilters, location_name: "filters"))
+    GuardrailContentPolicy.add_member(:tier, Shapes::ShapeRef.new(shape: GuardrailContentFiltersTier, location_name: "tier"))
     GuardrailContentPolicy.struct_class = Types::GuardrailContentPolicy
 
     GuardrailContentPolicyConfig.add_member(:filters_config, Shapes::ShapeRef.new(shape: GuardrailContentFiltersConfig, required: true, location_name: "filtersConfig"))
+    GuardrailContentPolicyConfig.add_member(:tier_config, Shapes::ShapeRef.new(shape: GuardrailContentFiltersTierConfig, location_name: "tierConfig"))
     GuardrailContentPolicyConfig.struct_class = Types::GuardrailContentPolicyConfig
 
     GuardrailContextualGroundingFilter.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailContextualGroundingFilterType, required: true, location_name: "type"))
@@ -1424,14 +1438,22 @@ module Aws::Bedrock
     GuardrailTopicExamples.member = Shapes::ShapeRef.new(shape: GuardrailTopicExample)
 
     GuardrailTopicPolicy.add_member(:topics, Shapes::ShapeRef.new(shape: GuardrailTopics, required: true, location_name: "topics"))
+    GuardrailTopicPolicy.add_member(:tier, Shapes::ShapeRef.new(shape: GuardrailTopicsTier, location_name: "tier"))
     GuardrailTopicPolicy.struct_class = Types::GuardrailTopicPolicy
 
     GuardrailTopicPolicyConfig.add_member(:topics_config, Shapes::ShapeRef.new(shape: GuardrailTopicsConfig, required: true, location_name: "topicsConfig"))
+    GuardrailTopicPolicyConfig.add_member(:tier_config, Shapes::ShapeRef.new(shape: GuardrailTopicsTierConfig, location_name: "tierConfig"))
     GuardrailTopicPolicyConfig.struct_class = Types::GuardrailTopicPolicyConfig
 
     GuardrailTopics.member = Shapes::ShapeRef.new(shape: GuardrailTopic)
 
     GuardrailTopicsConfig.member = Shapes::ShapeRef.new(shape: GuardrailTopicConfig)
+
+    GuardrailTopicsTier.add_member(:tier_name, Shapes::ShapeRef.new(shape: GuardrailTopicsTierName, required: true, location_name: "tierName"))
+    GuardrailTopicsTier.struct_class = Types::GuardrailTopicsTier
+
+    GuardrailTopicsTierConfig.add_member(:tier_name, Shapes::ShapeRef.new(shape: GuardrailTopicsTierName, required: true, location_name: "tierName"))
+    GuardrailTopicsTierConfig.struct_class = Types::GuardrailTopicsTierConfig
 
     GuardrailWord.add_member(:text, Shapes::ShapeRef.new(shape: GuardrailWordTextString, required: true, location_name: "text"))
     GuardrailWord.add_member(:input_action, Shapes::ShapeRef.new(shape: GuardrailWordAction, location_name: "inputAction"))

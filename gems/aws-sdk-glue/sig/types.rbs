@@ -1727,6 +1727,16 @@ module Aws::Glue
       SENSITIVE: []
     end
 
+    class DataQualityAggregatedMetrics
+      attr_accessor total_rows_processed: ::Float
+      attr_accessor total_rows_passed: ::Float
+      attr_accessor total_rows_failed: ::Float
+      attr_accessor total_rules_processed: ::Float
+      attr_accessor total_rules_passed: ::Float
+      attr_accessor total_rules_failed: ::Float
+      SENSITIVE: []
+    end
+
     class DataQualityAnalyzerResult
       attr_accessor name: ::String
       attr_accessor description: ::String
@@ -1777,6 +1787,7 @@ module Aws::Glue
       attr_accessor rule_results: ::Array[Types::DataQualityRuleResult]
       attr_accessor analyzer_results: ::Array[Types::DataQualityAnalyzerResult]
       attr_accessor observations: ::Array[Types::DataQualityObservation]
+      attr_accessor aggregated_metrics: Types::DataQualityAggregatedMetrics
       SENSITIVE: []
     end
 
@@ -1820,7 +1831,8 @@ module Aws::Glue
       attr_accessor result: ("PASS" | "FAIL" | "ERROR")
       attr_accessor evaluated_metrics: ::Hash[::String, ::Float]
       attr_accessor evaluated_rule: ::String
-      SENSITIVE: [:description, :evaluation_message, :evaluated_metrics, :evaluated_rule]
+      attr_accessor rule_metrics: ::Hash[::String, ::Float]
+      SENSITIVE: [:description, :evaluation_message, :evaluated_metrics, :evaluated_rule, :rule_metrics]
     end
 
     class DataQualityRulesetEvaluationRunDescription
@@ -2959,6 +2971,7 @@ module Aws::Glue
       attr_accessor rule_results: ::Array[Types::DataQualityRuleResult]
       attr_accessor analyzer_results: ::Array[Types::DataQualityAnalyzerResult]
       attr_accessor observations: ::Array[Types::DataQualityObservation]
+      attr_accessor aggregated_metrics: Types::DataQualityAggregatedMetrics
       SENSITIVE: []
     end
 

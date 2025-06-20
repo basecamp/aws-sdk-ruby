@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.51.0 (2025-06-20)
+------------------
+
+* Feature - Add support for tiers in Content Filters and Denied Topics for Amazon Bedrock Guardrails.
+
 1.50.0 (2025-06-19)
 ------------------
 

@@ -967,13 +967,25 @@ module Aws::Bedrock
       SENSITIVE: [:input_action, :output_action]
     end
 
+    class GuardrailContentFiltersTier
+      attr_accessor tier_name: ("CLASSIC" | "STANDARD")
+      SENSITIVE: [:tier_name]
+    end
+
+    class GuardrailContentFiltersTierConfig
+      attr_accessor tier_name: ("CLASSIC" | "STANDARD")
+      SENSITIVE: [:tier_name]
+    end
+
     class GuardrailContentPolicy
       attr_accessor filters: ::Array[Types::GuardrailContentFilter]
+      attr_accessor tier: Types::GuardrailContentFiltersTier
       SENSITIVE: []
     end
 
     class GuardrailContentPolicyConfig
       attr_accessor filters_config: ::Array[Types::GuardrailContentFilterConfig]
+      attr_accessor tier_config: Types::GuardrailContentFiltersTierConfig
       SENSITIVE: []
     end
 
@@ -1127,12 +1139,24 @@ module Aws::Bedrock
 
     class GuardrailTopicPolicy
       attr_accessor topics: ::Array[Types::GuardrailTopic]
+      attr_accessor tier: Types::GuardrailTopicsTier
       SENSITIVE: []
     end
 
     class GuardrailTopicPolicyConfig
       attr_accessor topics_config: ::Array[Types::GuardrailTopicConfig]
+      attr_accessor tier_config: Types::GuardrailTopicsTierConfig
       SENSITIVE: []
+    end
+
+    class GuardrailTopicsTier
+      attr_accessor tier_name: ("CLASSIC" | "STANDARD")
+      SENSITIVE: [:tier_name]
+    end
+
+    class GuardrailTopicsTierConfig
+      attr_accessor tier_name: ("CLASSIC" | "STANDARD")
+      SENSITIVE: [:tier_name]
     end
 
     class GuardrailWord

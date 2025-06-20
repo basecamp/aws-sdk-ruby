@@ -392,6 +392,7 @@ module Aws::Glue
     DataLakePrincipalString = Shapes::StringShape.new(name: 'DataLakePrincipalString')
     DataOperation = Shapes::StringShape.new(name: 'DataOperation')
     DataOperations = Shapes::ListShape.new(name: 'DataOperations')
+    DataQualityAggregatedMetrics = Shapes::StructureShape.new(name: 'DataQualityAggregatedMetrics')
     DataQualityAnalyzerResult = Shapes::StructureShape.new(name: 'DataQualityAnalyzerResult')
     DataQualityAnalyzerResults = Shapes::ListShape.new(name: 'DataQualityAnalyzerResults')
     DataQualityEncryption = Shapes::StructureShape.new(name: 'DataQualityEncryption')
@@ -1185,6 +1186,7 @@ module Aws::Glue
     RoleArn = Shapes::StringShape.new(name: 'RoleArn')
     RoleString = Shapes::StringShape.new(name: 'RoleString')
     RowTag = Shapes::StringShape.new(name: 'RowTag')
+    RuleMetricsMap = Shapes::MapShape.new(name: 'RuleMetricsMap')
     RulesetNames = Shapes::ListShape.new(name: 'RulesetNames')
     RunId = Shapes::StringShape.new(name: 'RunId')
     RunIdentifier = Shapes::StructureShape.new(name: 'RunIdentifier')
@@ -3051,6 +3053,14 @@ module Aws::Glue
 
     DataOperations.member = Shapes::ShapeRef.new(shape: DataOperation)
 
+    DataQualityAggregatedMetrics.add_member(:total_rows_processed, Shapes::ShapeRef.new(shape: NullableDouble, location_name: "TotalRowsProcessed"))
+    DataQualityAggregatedMetrics.add_member(:total_rows_passed, Shapes::ShapeRef.new(shape: NullableDouble, location_name: "TotalRowsPassed"))
+    DataQualityAggregatedMetrics.add_member(:total_rows_failed, Shapes::ShapeRef.new(shape: NullableDouble, location_name: "TotalRowsFailed"))
+    DataQualityAggregatedMetrics.add_member(:total_rules_processed, Shapes::ShapeRef.new(shape: NullableDouble, location_name: "TotalRulesProcessed"))
+    DataQualityAggregatedMetrics.add_member(:total_rules_passed, Shapes::ShapeRef.new(shape: NullableDouble, location_name: "TotalRulesPassed"))
+    DataQualityAggregatedMetrics.add_member(:total_rules_failed, Shapes::ShapeRef.new(shape: NullableDouble, location_name: "TotalRulesFailed"))
+    DataQualityAggregatedMetrics.struct_class = Types::DataQualityAggregatedMetrics
+
     DataQualityAnalyzerResult.add_member(:name, Shapes::ShapeRef.new(shape: NameString, location_name: "Name"))
     DataQualityAnalyzerResult.add_member(:description, Shapes::ShapeRef.new(shape: DataQualityRuleResultDescription, location_name: "Description"))
     DataQualityAnalyzerResult.add_member(:evaluation_message, Shapes::ShapeRef.new(shape: DataQualityRuleResultDescription, location_name: "EvaluationMessage"))
@@ -3094,6 +3104,7 @@ module Aws::Glue
     DataQualityResult.add_member(:rule_results, Shapes::ShapeRef.new(shape: DataQualityRuleResults, location_name: "RuleResults"))
     DataQualityResult.add_member(:analyzer_results, Shapes::ShapeRef.new(shape: DataQualityAnalyzerResults, location_name: "AnalyzerResults"))
     DataQualityResult.add_member(:observations, Shapes::ShapeRef.new(shape: DataQualityObservations, location_name: "Observations"))
+    DataQualityResult.add_member(:aggregated_metrics, Shapes::ShapeRef.new(shape: DataQualityAggregatedMetrics, location_name: "AggregatedMetrics"))
     DataQualityResult.struct_class = Types::DataQualityResult
 
     DataQualityResultDescription.add_member(:result_id, Shapes::ShapeRef.new(shape: HashString, location_name: "ResultId"))
@@ -3137,6 +3148,7 @@ module Aws::Glue
     DataQualityRuleResult.add_member(:result, Shapes::ShapeRef.new(shape: DataQualityRuleResultStatus, location_name: "Result"))
     DataQualityRuleResult.add_member(:evaluated_metrics, Shapes::ShapeRef.new(shape: EvaluatedMetricsMap, location_name: "EvaluatedMetrics"))
     DataQualityRuleResult.add_member(:evaluated_rule, Shapes::ShapeRef.new(shape: DataQualityRuleResultDescription, location_name: "EvaluatedRule"))
+    DataQualityRuleResult.add_member(:rule_metrics, Shapes::ShapeRef.new(shape: RuleMetricsMap, location_name: "RuleMetrics"))
     DataQualityRuleResult.struct_class = Types::DataQualityRuleResult
 
     DataQualityRuleResults.member = Shapes::ShapeRef.new(shape: DataQualityRuleResult)
@@ -4004,6 +4016,7 @@ module Aws::Glue
     GetDataQualityResultResponse.add_member(:rule_results, Shapes::ShapeRef.new(shape: DataQualityRuleResults, location_name: "RuleResults"))
     GetDataQualityResultResponse.add_member(:analyzer_results, Shapes::ShapeRef.new(shape: DataQualityAnalyzerResults, location_name: "AnalyzerResults"))
     GetDataQualityResultResponse.add_member(:observations, Shapes::ShapeRef.new(shape: DataQualityObservations, location_name: "Observations"))
+    GetDataQualityResultResponse.add_member(:aggregated_metrics, Shapes::ShapeRef.new(shape: DataQualityAggregatedMetrics, location_name: "AggregatedMetrics"))
     GetDataQualityResultResponse.struct_class = Types::GetDataQualityResultResponse
 
     GetDataQualityRuleRecommendationRunRequest.add_member(:run_id, Shapes::ShapeRef.new(shape: HashString, required: true, location_name: "RunId"))
@@ -5890,6 +5903,9 @@ module Aws::Glue
 
     RetentionMetrics.add_member(:iceberg_metrics, Shapes::ShapeRef.new(shape: IcebergRetentionMetrics, location_name: "IcebergMetrics"))
     RetentionMetrics.struct_class = Types::RetentionMetrics
+
+    RuleMetricsMap.key = Shapes::ShapeRef.new(shape: NameString)
+    RuleMetricsMap.value = Shapes::ShapeRef.new(shape: NullableDouble)
 
     RulesetNames.member = Shapes::ShapeRef.new(shape: NameString)
 

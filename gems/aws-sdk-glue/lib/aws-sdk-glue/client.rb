@@ -1028,6 +1028,8 @@ module Aws::Glue
     #   resp.results[0].rule_results[0].evaluated_metrics #=> Hash
     #   resp.results[0].rule_results[0].evaluated_metrics["NameString"] #=> Float
     #   resp.results[0].rule_results[0].evaluated_rule #=> String
+    #   resp.results[0].rule_results[0].rule_metrics #=> Hash
+    #   resp.results[0].rule_results[0].rule_metrics["NameString"] #=> Float
     #   resp.results[0].analyzer_results #=> Array
     #   resp.results[0].analyzer_results[0].name #=> String
     #   resp.results[0].analyzer_results[0].description #=> String
@@ -1044,6 +1046,12 @@ module Aws::Glue
     #   resp.results[0].observations[0].metric_based_observation.metric_values.upper_limit #=> Float
     #   resp.results[0].observations[0].metric_based_observation.new_rules #=> Array
     #   resp.results[0].observations[0].metric_based_observation.new_rules[0] #=> String
+    #   resp.results[0].aggregated_metrics.total_rows_processed #=> Float
+    #   resp.results[0].aggregated_metrics.total_rows_passed #=> Float
+    #   resp.results[0].aggregated_metrics.total_rows_failed #=> Float
+    #   resp.results[0].aggregated_metrics.total_rules_processed #=> Float
+    #   resp.results[0].aggregated_metrics.total_rules_passed #=> Float
+    #   resp.results[0].aggregated_metrics.total_rules_failed #=> Float
     #   resp.results_not_found #=> Array
     #   resp.results_not_found[0] #=> String
     #
@@ -8424,6 +8432,7 @@ module Aws::Glue
     #   * {Types::GetDataQualityResultResponse#rule_results #rule_results} => Array&lt;Types::DataQualityRuleResult&gt;
     #   * {Types::GetDataQualityResultResponse#analyzer_results #analyzer_results} => Array&lt;Types::DataQualityAnalyzerResult&gt;
     #   * {Types::GetDataQualityResultResponse#observations #observations} => Array&lt;Types::DataQualityObservation&gt;
+    #   * {Types::GetDataQualityResultResponse#aggregated_metrics #aggregated_metrics} => Types::DataQualityAggregatedMetrics
     #
     # @example Request syntax with placeholder values
     #
@@ -8457,6 +8466,8 @@ module Aws::Glue
     #   resp.rule_results[0].evaluated_metrics #=> Hash
     #   resp.rule_results[0].evaluated_metrics["NameString"] #=> Float
     #   resp.rule_results[0].evaluated_rule #=> String
+    #   resp.rule_results[0].rule_metrics #=> Hash
+    #   resp.rule_results[0].rule_metrics["NameString"] #=> Float
     #   resp.analyzer_results #=> Array
     #   resp.analyzer_results[0].name #=> String
     #   resp.analyzer_results[0].description #=> String
@@ -8473,6 +8484,12 @@ module Aws::Glue
     #   resp.observations[0].metric_based_observation.metric_values.upper_limit #=> Float
     #   resp.observations[0].metric_based_observation.new_rules #=> Array
     #   resp.observations[0].metric_based_observation.new_rules[0] #=> String
+    #   resp.aggregated_metrics.total_rows_processed #=> Float
+    #   resp.aggregated_metrics.total_rows_passed #=> Float
+    #   resp.aggregated_metrics.total_rows_failed #=> Float
+    #   resp.aggregated_metrics.total_rules_processed #=> Float
+    #   resp.aggregated_metrics.total_rules_passed #=> Float
+    #   resp.aggregated_metrics.total_rules_failed #=> Float
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDataQualityResult AWS API Documentation
     #
@@ -20289,7 +20306,7 @@ module Aws::Glue
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-glue'
-      context[:gem_version] = '1.220.0'
+      context[:gem_version] = '1.221.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

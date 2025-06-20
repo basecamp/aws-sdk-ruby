@@ -1053,11 +1053,18 @@ module Aws::ECS
     #   The image used to start a container. This string is passed directly
     #   to the Docker daemon. By default, images in the Docker Hub registry
     #   are available. Other repositories are specified with either `
-    #   repository-url/image:tag ` or ` repository-url/image@digest `. Up to
-    #   255 letters (uppercase and lowercase), numbers, hyphens,
-    #   underscores, colons, periods, forward slashes, and number signs are
-    #   allowed. This parameter maps to `Image` in the docker container
-    #   create command and the `IMAGE` parameter of docker run.
+    #   repository-url/image:tag ` or ` repository-url/image@digest `. For
+    #   images using tags (repository-url/image:tag), up to 255 characters
+    #   total are allowed, including letters (uppercase and lowercase),
+    #   numbers, hyphens, underscores, colons, periods, forward slashes, and
+    #   number signs (#). For images using digests
+    #   (repository-url/image@digest), the 255 character limit applies only
+    #   to the repository URL and image name (everything before the @ sign).
+    #   The only supported hash function is sha256, and the hash value after
+    #   sha256: must be exactly 64 characters (only letters A-F, a-f, and
+    #   numbers 0-9 are allowed). This parameter maps to `Image` in the
+    #   docker container create command and the `IMAGE` parameter of docker
+    #   run.
     #
     #   * When a new task starts, the Amazon ECS container agent pulls the
     #     latest version of the specified image and tag for the container to
@@ -13429,19 +13436,21 @@ module Aws::ECS
     #
     #   The following list provides the valid transitions:
     #
-    #   * Update the Fargate launch type to an EC2 capacity provider.
+    #   * Update the Fargate launch type to an Auto Scaling group capacity
+    #     provider.
     #
     #   * Update the Amazon EC2 launch type to a Fargate capacity provider.
     #
-    #   * Update the Fargate capacity provider to an EC2 capacity provider.
+    #   * Update the Fargate capacity provider to an Auto Scaling group
+    #     capacity provider.
     #
     #   * Update the Amazon EC2 capacity provider to a Fargate capacity
     #     provider.
     #
-    #   * Update the EC2 or Fargate capacity provider back to the launch
-    #     type.
+    #   * Update the Auto Scaling group or Fargate capacity provider back to
+    #     the launch type.
     #
-    #     Pass an empty list in the `capacityProvider` parameter.
+    #     Pass an empty list in the `capacityProviderStrategy` parameter.
     #
     #   For information about Amazon Web Services CDK considerations, see
     #   [Amazon Web Services CDK considerations][1].

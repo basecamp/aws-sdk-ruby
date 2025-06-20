@@ -3461,6 +3461,7 @@ module Aws
         def rule_results: () -> ::Array[Types::DataQualityRuleResult]
         def analyzer_results: () -> ::Array[Types::DataQualityAnalyzerResult]
         def observations: () -> ::Array[Types::DataQualityObservation]
+        def aggregated_metrics: () -> Types::DataQualityAggregatedMetrics
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#get_data_quality_result-instance_method
       def get_data_quality_result: (

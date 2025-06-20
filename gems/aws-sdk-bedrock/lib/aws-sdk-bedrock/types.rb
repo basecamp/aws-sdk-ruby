@@ -3941,6 +3941,60 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # The tier that your guardrail uses for content filters.
+    #
+    # @!attribute [rw] tier_name
+    #   The tier that your guardrail uses for content filters. Valid values
+    #   include:
+    #
+    #   * `CLASSIC` tier – Provides established guardrails functionality
+    #     supporting English, French, and Spanish languages.
+    #
+    #   * `STANDARD` tier – Provides a more robust solution than the
+    #     `CLASSIC` tier and has more comprehensive language support. This
+    #     tier requires that your guardrail use [cross-Region inference][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailContentFiltersTier AWS API Documentation
+    #
+    class GuardrailContentFiltersTier < Struct.new(
+      :tier_name)
+      SENSITIVE = [:tier_name]
+      include Aws::Structure
+    end
+
+    # The tier that your guardrail uses for content filters. Consider using
+    # a tier that balances performance, accuracy, and compatibility with
+    # your existing generative AI workflows.
+    #
+    # @!attribute [rw] tier_name
+    #   The tier that your guardrail uses for content filters. Valid values
+    #   include:
+    #
+    #   * `CLASSIC` tier – Provides established guardrails functionality
+    #     supporting English, French, and Spanish languages.
+    #
+    #   * `STANDARD` tier – Provides a more robust solution than the
+    #     `CLASSIC` tier and has more comprehensive language support. This
+    #     tier requires that your guardrail use [cross-Region inference][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailContentFiltersTierConfig AWS API Documentation
+    #
+    class GuardrailContentFiltersTierConfig < Struct.new(
+      :tier_name)
+      SENSITIVE = [:tier_name]
+      include Aws::Structure
+    end
+
     # Contains details about how to handle harmful content.
     #
     # This data type is used in the following API operations:
@@ -3958,10 +4012,15 @@ module Aws::Bedrock
     #   apply to prompts and model responses.
     #   @return [Array<Types::GuardrailContentFilter>]
     #
+    # @!attribute [rw] tier
+    #   The tier that your guardrail uses for content filters.
+    #   @return [Types::GuardrailContentFiltersTier]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailContentPolicy AWS API Documentation
     #
     class GuardrailContentPolicy < Struct.new(
-      :filters)
+      :filters,
+      :tier)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3973,10 +4032,15 @@ module Aws::Bedrock
     #   apply to prompts and model responses.
     #   @return [Array<Types::GuardrailContentFilterConfig>]
     #
+    # @!attribute [rw] tier_config
+    #   The tier that your guardrail uses for content filters.
+    #   @return [Types::GuardrailContentFiltersTierConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailContentPolicyConfig AWS API Documentation
     #
     class GuardrailContentPolicyConfig < Struct.new(
-      :filters_config)
+      :filters_config,
+      :tier_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4994,10 +5058,15 @@ module Aws::Bedrock
     #   A list of policies related to topics that the guardrail should deny.
     #   @return [Array<Types::GuardrailTopic>]
     #
+    # @!attribute [rw] tier
+    #   The tier that your guardrail uses for denied topic filters.
+    #   @return [Types::GuardrailTopicsTier]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailTopicPolicy AWS API Documentation
     #
     class GuardrailTopicPolicy < Struct.new(
-      :topics)
+      :topics,
+      :tier)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5009,11 +5078,70 @@ module Aws::Bedrock
     #   A list of policies related to topics that the guardrail should deny.
     #   @return [Array<Types::GuardrailTopicConfig>]
     #
+    # @!attribute [rw] tier_config
+    #   The tier that your guardrail uses for denied topic filters.
+    #   @return [Types::GuardrailTopicsTierConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailTopicPolicyConfig AWS API Documentation
     #
     class GuardrailTopicPolicyConfig < Struct.new(
-      :topics_config)
+      :topics_config,
+      :tier_config)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The tier that your guardrail uses for denied topic filters.
+    #
+    # @!attribute [rw] tier_name
+    #   The tier that your guardrail uses for denied topic filters. Valid
+    #   values include:
+    #
+    #   * `CLASSIC` tier – Provides established guardrails functionality
+    #     supporting English, French, and Spanish languages.
+    #
+    #   * `STANDARD` tier – Provides a more robust solution than the
+    #     `CLASSIC` tier and has more comprehensive language support. This
+    #     tier requires that your guardrail use [cross-Region inference][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailTopicsTier AWS API Documentation
+    #
+    class GuardrailTopicsTier < Struct.new(
+      :tier_name)
+      SENSITIVE = [:tier_name]
+      include Aws::Structure
+    end
+
+    # The tier that your guardrail uses for denied topic filters. Consider
+    # using a tier that balances performance, accuracy, and compatibility
+    # with your existing generative AI workflows.
+    #
+    # @!attribute [rw] tier_name
+    #   The tier that your guardrail uses for denied topic filters. Valid
+    #   values include:
+    #
+    #   * `CLASSIC` tier – Provides established guardrails functionality
+    #     supporting English, French, and Spanish languages.
+    #
+    #   * `STANDARD` tier – Provides a more robust solution than the
+    #     `CLASSIC` tier and has more comprehensive language support. This
+    #     tier requires that your guardrail use [cross-Region inference][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailTopicsTierConfig AWS API Documentation
+    #
+    class GuardrailTopicsTierConfig < Struct.new(
+      :tier_name)
+      SENSITIVE = [:tier_name]
       include Aws::Structure
     end
 

@@ -1238,6 +1238,9 @@ module Aws::Bedrock
     #           output_enabled: false,
     #         },
     #       ],
+    #       tier_config: {
+    #         tier_name: "CLASSIC", # required, accepts CLASSIC, STANDARD
+    #       },
     #     },
     #     content_policy_config: {
     #       filters_config: [ # required
@@ -1253,6 +1256,9 @@ module Aws::Bedrock
     #           output_enabled: false,
     #         },
     #       ],
+    #       tier_config: {
+    #         tier_name: "CLASSIC", # required, accepts CLASSIC, STANDARD
+    #       },
     #     },
     #     word_policy_config: {
     #       words_config: [
@@ -2808,6 +2814,7 @@ module Aws::Bedrock
     #   resp.topic_policy.topics[0].output_action #=> String, one of "BLOCK", "NONE"
     #   resp.topic_policy.topics[0].input_enabled #=> Boolean
     #   resp.topic_policy.topics[0].output_enabled #=> Boolean
+    #   resp.topic_policy.tier.tier_name #=> String, one of "CLASSIC", "STANDARD"
     #   resp.content_policy.filters #=> Array
     #   resp.content_policy.filters[0].type #=> String, one of "SEXUAL", "VIOLENCE", "HATE", "INSULTS", "MISCONDUCT", "PROMPT_ATTACK"
     #   resp.content_policy.filters[0].input_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
@@ -2820,6 +2827,7 @@ module Aws::Bedrock
     #   resp.content_policy.filters[0].output_action #=> String, one of "BLOCK", "NONE"
     #   resp.content_policy.filters[0].input_enabled #=> Boolean
     #   resp.content_policy.filters[0].output_enabled #=> Boolean
+    #   resp.content_policy.tier.tier_name #=> String, one of "CLASSIC", "STANDARD"
     #   resp.word_policy.words #=> Array
     #   resp.word_policy.words[0].text #=> String
     #   resp.word_policy.words[0].input_action #=> String, one of "BLOCK", "NONE"
@@ -4934,6 +4942,9 @@ module Aws::Bedrock
     #           output_enabled: false,
     #         },
     #       ],
+    #       tier_config: {
+    #         tier_name: "CLASSIC", # required, accepts CLASSIC, STANDARD
+    #       },
     #     },
     #     content_policy_config: {
     #       filters_config: [ # required
@@ -4949,6 +4960,9 @@ module Aws::Bedrock
     #           output_enabled: false,
     #         },
     #       ],
+    #       tier_config: {
+    #         tier_name: "CLASSIC", # required, accepts CLASSIC, STANDARD
+    #       },
     #     },
     #     word_policy_config: {
     #       words_config: [
@@ -5165,7 +5179,7 @@ module Aws::Bedrock
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrock'
-      context[:gem_version] = '1.50.0'
+      context[:gem_version] = '1.51.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
