@@ -412,6 +412,7 @@ module Aws
   autoload :WorkSpaces, 'aws-sdk-workspaces'
   autoload :WorkSpacesThinClient, 'aws-sdk-workspacesthinclient'
   autoload :WorkSpacesWeb, 'aws-sdk-workspacesweb'
+  autoload :WorkspacesInstances, 'aws-sdk-workspacesinstances'
   autoload :XRay, 'aws-sdk-xray'
   # end service gems
 end

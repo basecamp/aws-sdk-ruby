@@ -657,6 +657,7 @@ RubyGems.org page under "LINKS" section.
 | Amazon WorkSpaces                                     | Aws::WorkSpaces                          | aws-sdk-workspaces                          | 2015-04-08  |
 | Amazon WorkSpaces Thin Client                         | Aws::WorkSpacesThinClient                | aws-sdk-workspacesthinclient                | 2023-08-22  |
 | Amazon WorkSpaces Web                                 | Aws::WorkSpacesWeb                       | aws-sdk-workspacesweb                       | 2020-07-08  |
+| Amazon Workspaces Instances                           | Aws::WorkspacesInstances                 | aws-sdk-workspacesinstances                 | 2022-07-26  |
 | AmazonApiGatewayManagementApi                         | Aws::ApiGatewayManagementApi             | aws-sdk-apigatewaymanagementapi             | 2018-11-29  |
 | AmazonApiGatewayV2                                    | Aws::ApiGatewayV2                        | aws-sdk-apigatewayv2                        | 2018-11-29  |
 | AmazonConnectCampaignService                          | Aws::ConnectCampaignService              | aws-sdk-connectcampaignservice              | 2021-01-30  |

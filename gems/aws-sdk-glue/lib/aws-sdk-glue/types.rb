@@ -3423,6 +3423,22 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # The configuration for a compaction optimizer. This configuration
+    # defines how data files in your table will be compacted to improve
+    # query performance and reduce storage costs.
+    #
+    # @!attribute [rw] iceberg_configuration
+    #   The configuration for an Iceberg compaction optimizer.
+    #   @return [Types::IcebergCompactionConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CompactionConfiguration AWS API Documentation
+    #
+    class CompactionConfiguration < Struct.new(
+      :iceberg_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A structure that contains compaction metrics for the optimizer run.
     #
     # @!attribute [rw] iceberg_metrics
@@ -15449,6 +15465,44 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # The configuration for an Iceberg compaction optimizer. This
+    # configuration defines parameters for optimizing the layout of data
+    # files in Iceberg tables.
+    #
+    # @!attribute [rw] strategy
+    #   The strategy to use for compaction. Valid values are:
+    #
+    #   * `binpack`: Combines small files into larger files, typically
+    #     targeting sizes over 100MB, while applying any pending deletes.
+    #     This is the recommended compaction strategy for most use cases.
+    #
+    #   * `sort`: Organizes data based on specified columns which are sorted
+    #     hierarchically during compaction, improving query performance for
+    #     filtered operations. This strategy is recommended when your
+    #     queries frequently filter on specific columns. To use this
+    #     strategy, you must first define a sort order in your Iceberg table
+    #     properties using the `sort_order` table property.
+    #
+    #   * `z-order`: Optimizes data organization by blending multiple
+    #     attributes into a single scalar value that can be used for
+    #     sorting, allowing efficient querying across multiple dimensions.
+    #     This strategy is recommended when you need to query data across
+    #     multiple dimensions simultaneously. To use this strategy, you must
+    #     first define a sort order in your Iceberg table properties using
+    #     the `sort_order` table property.
+    #
+    #   If an input is not provided, the default value 'binpack' will be
+    #   used.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/IcebergCompactionConfiguration AWS API Documentation
+    #
+    class IcebergCompactionConfiguration < Struct.new(
+      :strategy)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Compaction metrics for Iceberg for the optimizer run.
     #
     # @!attribute [rw] number_of_bytes_compacted
@@ -25751,6 +25805,12 @@ module Aws::Glue
     #   that are in a customer VPC.
     #   @return [Types::TableOptimizerVpcConfiguration]
     #
+    # @!attribute [rw] compaction_configuration
+    #   The configuration for a compaction optimizer. This configuration
+    #   defines how data files in your table will be compacted to improve
+    #   query performance and reduce storage costs.
+    #   @return [Types::CompactionConfiguration]
+    #
     # @!attribute [rw] retention_configuration
     #   The configuration for a snapshot retention optimizer.
     #   @return [Types::RetentionConfiguration]
@@ -25765,6 +25825,7 @@ module Aws::Glue
       :role_arn,
       :enabled,
       :vpc_configuration,
+      :compaction_configuration,
       :retention_configuration,
       :orphan_file_deletion_configuration)
       SENSITIVE = []
@@ -25802,6 +25863,31 @@ module Aws::Glue
     #   run.
     #   @return [Types::CompactionMetrics]
     #
+    # @!attribute [rw] compaction_strategy
+    #   The strategy used for the compaction run. Indicates which algorithm
+    #   was applied to determine how files were selected and combined during
+    #   the compaction process. Valid values are:
+    #
+    #   * `binpack`: Combines small files into larger files, typically
+    #     targeting sizes over 100MB, while applying any pending deletes.
+    #     This is the recommended compaction strategy for most use cases.
+    #
+    #   * `sort`: Organizes data based on specified columns which are sorted
+    #     hierarchically during compaction, improving query performance for
+    #     filtered operations. This strategy is recommended when your
+    #     queries frequently filter on specific columns. To use this
+    #     strategy, you must first define a sort order in your Iceberg table
+    #     properties using the `sort_order` table property.
+    #
+    #   * `z-order`: Optimizes data organization by blending multiple
+    #     attributes into a single scalar value that can be used for
+    #     sorting, allowing efficient querying across multiple dimensions.
+    #     This strategy is recommended when you need to query data across
+    #     multiple dimensions simultaneously. To use this strategy, you must
+    #     first define a sort order in your Iceberg table properties using
+    #     the `sort_order` table property.
+    #   @return [String]
+    #
     # @!attribute [rw] retention_metrics
     #   A `RetentionMetrics` object containing metrics for the optimizer
     #   run.
@@ -25821,6 +25907,7 @@ module Aws::Glue
       :metrics,
       :error,
       :compaction_metrics,
+      :compaction_strategy,
       :retention_metrics,
       :orphan_file_deletion_metrics)
       SENSITIVE = []

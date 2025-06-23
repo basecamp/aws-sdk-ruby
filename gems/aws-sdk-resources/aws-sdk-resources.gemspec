@@ -419,6 +419,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency('aws-sdk-workspaces', '~> 1')
   spec.add_dependency('aws-sdk-workspacesthinclient', '~> 1')
   spec.add_dependency('aws-sdk-workspacesweb', '~> 1')
+  spec.add_dependency('aws-sdk-workspacesinstances', '~> 1')
   spec.add_dependency('aws-sdk-xray', '~> 1')
   # end service gems
 

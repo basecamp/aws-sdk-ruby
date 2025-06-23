@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.1120.0 (2025-06-23)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::WorkspacesInstances`.
+
 1.1119.0 (2025-06-20)
 ------------------
 

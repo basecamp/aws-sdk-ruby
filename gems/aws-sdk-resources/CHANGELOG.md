@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+3.232.0 (2025-06-23)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-workspacesinstances` gem.
+
 3.231.0 (2025-06-18)
 ------------------
 

@@ -2243,6 +2243,7 @@ module Aws::Glue
     #   resp.table_optimizers[0].table_optimizer.configuration.role_arn #=> String
     #   resp.table_optimizers[0].table_optimizer.configuration.enabled #=> Boolean
     #   resp.table_optimizers[0].table_optimizer.configuration.vpc_configuration.glue_connection_name #=> String
+    #   resp.table_optimizers[0].table_optimizer.configuration.compaction_configuration.iceberg_configuration.strategy #=> String, one of "binpack", "sort", "z-order"
     #   resp.table_optimizers[0].table_optimizer.configuration.retention_configuration.iceberg_configuration.snapshot_retention_period_in_days #=> Integer
     #   resp.table_optimizers[0].table_optimizer.configuration.retention_configuration.iceberg_configuration.number_of_snapshots_to_retain #=> Integer
     #   resp.table_optimizers[0].table_optimizer.configuration.retention_configuration.iceberg_configuration.clean_expired_files #=> Boolean
@@ -2261,6 +2262,7 @@ module Aws::Glue
     #   resp.table_optimizers[0].table_optimizer.last_run.compaction_metrics.iceberg_metrics.dpu_hours #=> Float
     #   resp.table_optimizers[0].table_optimizer.last_run.compaction_metrics.iceberg_metrics.number_of_dpus #=> Integer
     #   resp.table_optimizers[0].table_optimizer.last_run.compaction_metrics.iceberg_metrics.job_duration_in_hour #=> Float
+    #   resp.table_optimizers[0].table_optimizer.last_run.compaction_strategy #=> String, one of "binpack", "sort", "z-order"
     #   resp.table_optimizers[0].table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_data_files_deleted #=> Integer
     #   resp.table_optimizers[0].table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_manifest_files_deleted #=> Integer
     #   resp.table_optimizers[0].table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_manifest_lists_deleted #=> Integer
@@ -5314,6 +5316,11 @@ module Aws::Glue
     #       enabled: false,
     #       vpc_configuration: {
     #         glue_connection_name: "glueConnectionNameString",
+    #       },
+    #       compaction_configuration: {
+    #         iceberg_configuration: {
+    #           strategy: "binpack", # accepts binpack, sort, z-order
+    #         },
     #       },
     #       retention_configuration: {
     #         iceberg_configuration: {
@@ -12937,6 +12944,7 @@ module Aws::Glue
     #   resp.table_optimizer.configuration.role_arn #=> String
     #   resp.table_optimizer.configuration.enabled #=> Boolean
     #   resp.table_optimizer.configuration.vpc_configuration.glue_connection_name #=> String
+    #   resp.table_optimizer.configuration.compaction_configuration.iceberg_configuration.strategy #=> String, one of "binpack", "sort", "z-order"
     #   resp.table_optimizer.configuration.retention_configuration.iceberg_configuration.snapshot_retention_period_in_days #=> Integer
     #   resp.table_optimizer.configuration.retention_configuration.iceberg_configuration.number_of_snapshots_to_retain #=> Integer
     #   resp.table_optimizer.configuration.retention_configuration.iceberg_configuration.clean_expired_files #=> Boolean
@@ -12955,6 +12963,7 @@ module Aws::Glue
     #   resp.table_optimizer.last_run.compaction_metrics.iceberg_metrics.dpu_hours #=> Float
     #   resp.table_optimizer.last_run.compaction_metrics.iceberg_metrics.number_of_dpus #=> Integer
     #   resp.table_optimizer.last_run.compaction_metrics.iceberg_metrics.job_duration_in_hour #=> Float
+    #   resp.table_optimizer.last_run.compaction_strategy #=> String, one of "binpack", "sort", "z-order"
     #   resp.table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_data_files_deleted #=> Integer
     #   resp.table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_manifest_files_deleted #=> Integer
     #   resp.table_optimizer.last_run.retention_metrics.iceberg_metrics.number_of_manifest_lists_deleted #=> Integer
@@ -16140,6 +16149,7 @@ module Aws::Glue
     #   resp.table_optimizer_runs[0].compaction_metrics.iceberg_metrics.dpu_hours #=> Float
     #   resp.table_optimizer_runs[0].compaction_metrics.iceberg_metrics.number_of_dpus #=> Integer
     #   resp.table_optimizer_runs[0].compaction_metrics.iceberg_metrics.job_duration_in_hour #=> Float
+    #   resp.table_optimizer_runs[0].compaction_strategy #=> String, one of "binpack", "sort", "z-order"
     #   resp.table_optimizer_runs[0].retention_metrics.iceberg_metrics.number_of_data_files_deleted #=> Integer
     #   resp.table_optimizer_runs[0].retention_metrics.iceberg_metrics.number_of_manifest_files_deleted #=> Integer
     #   resp.table_optimizer_runs[0].retention_metrics.iceberg_metrics.number_of_manifest_lists_deleted #=> Integer
@@ -20014,6 +20024,11 @@ module Aws::Glue
     #       vpc_configuration: {
     #         glue_connection_name: "glueConnectionNameString",
     #       },
+    #       compaction_configuration: {
+    #         iceberg_configuration: {
+    #           strategy: "binpack", # accepts binpack, sort, z-order
+    #         },
+    #       },
     #       retention_configuration: {
     #         iceberg_configuration: {
     #           snapshot_retention_period_in_days: 1,
@@ -20306,7 +20321,7 @@ module Aws::Glue
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-glue'
-      context[:gem_version] = '1.221.0'
+      context[:gem_version] = '1.222.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -650,6 +650,7 @@ module Aws
             'WorkSpaces' => 'workspaces',
             'WorkSpacesThinClient' => 'thinclient',
             'WorkSpacesWeb' => 'workspaces-web',
+            'WorkspacesInstances' => 'workspaces-instances',
             'XRay' => 'xray',
           }
           # end service ids

@@ -225,7 +225,9 @@ module Aws::Glue
     ColumnValuesString = Shapes::StringShape.new(name: 'ColumnValuesString')
     CommentString = Shapes::StringShape.new(name: 'CommentString')
     CommitIdString = Shapes::StringShape.new(name: 'CommitIdString')
+    CompactionConfiguration = Shapes::StructureShape.new(name: 'CompactionConfiguration')
     CompactionMetrics = Shapes::StructureShape.new(name: 'CompactionMetrics')
+    CompactionStrategy = Shapes::StringShape.new(name: 'CompactionStrategy')
     Comparator = Shapes::StringShape.new(name: 'Comparator')
     Compatibility = Shapes::StringShape.new(name: 'Compatibility')
     CompressionType = Shapes::StringShape.new(name: 'CompressionType')
@@ -796,6 +798,7 @@ module Aws::Glue
     HudiTargetList = Shapes::ListShape.new(name: 'HudiTargetList')
     HyperTargetCompressionType = Shapes::StringShape.new(name: 'HyperTargetCompressionType')
     IAMRoleArn = Shapes::StringShape.new(name: 'IAMRoleArn')
+    IcebergCompactionConfiguration = Shapes::StructureShape.new(name: 'IcebergCompactionConfiguration')
     IcebergCompactionMetrics = Shapes::StructureShape.new(name: 'IcebergCompactionMetrics')
     IcebergInput = Shapes::StructureShape.new(name: 'IcebergInput')
     IcebergOrphanFileDeletionConfiguration = Shapes::StructureShape.new(name: 'IcebergOrphanFileDeletionConfiguration')
@@ -2326,6 +2329,9 @@ module Aws::Glue
     ColumnStatisticsTaskStoppingException.struct_class = Types::ColumnStatisticsTaskStoppingException
 
     ColumnValueStringList.member = Shapes::ShapeRef.new(shape: ColumnValuesString)
+
+    CompactionConfiguration.add_member(:iceberg_configuration, Shapes::ShapeRef.new(shape: IcebergCompactionConfiguration, location_name: "icebergConfiguration"))
+    CompactionConfiguration.struct_class = Types::CompactionConfiguration
 
     CompactionMetrics.add_member(:iceberg_metrics, Shapes::ShapeRef.new(shape: IcebergCompactionMetrics, location_name: "IcebergMetrics"))
     CompactionMetrics.struct_class = Types::CompactionMetrics
@@ -4674,6 +4680,9 @@ module Aws::Glue
 
     HudiTargetList.member = Shapes::ShapeRef.new(shape: HudiTarget)
 
+    IcebergCompactionConfiguration.add_member(:strategy, Shapes::ShapeRef.new(shape: CompactionStrategy, location_name: "strategy"))
+    IcebergCompactionConfiguration.struct_class = Types::IcebergCompactionConfiguration
+
     IcebergCompactionMetrics.add_member(:number_of_bytes_compacted, Shapes::ShapeRef.new(shape: metricCounts, location_name: "NumberOfBytesCompacted"))
     IcebergCompactionMetrics.add_member(:number_of_files_compacted, Shapes::ShapeRef.new(shape: metricCounts, location_name: "NumberOfFilesCompacted"))
     IcebergCompactionMetrics.add_member(:dpu_hours, Shapes::ShapeRef.new(shape: dpuHours, location_name: "DpuHours"))
@@ -6704,6 +6713,7 @@ module Aws::Glue
     TableOptimizerConfiguration.add_member(:role_arn, Shapes::ShapeRef.new(shape: ArnString, location_name: "roleArn"))
     TableOptimizerConfiguration.add_member(:enabled, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "enabled"))
     TableOptimizerConfiguration.add_member(:vpc_configuration, Shapes::ShapeRef.new(shape: TableOptimizerVpcConfiguration, location_name: "vpcConfiguration"))
+    TableOptimizerConfiguration.add_member(:compaction_configuration, Shapes::ShapeRef.new(shape: CompactionConfiguration, location_name: "compactionConfiguration"))
     TableOptimizerConfiguration.add_member(:retention_configuration, Shapes::ShapeRef.new(shape: RetentionConfiguration, location_name: "retentionConfiguration"))
     TableOptimizerConfiguration.add_member(:orphan_file_deletion_configuration, Shapes::ShapeRef.new(shape: OrphanFileDeletionConfiguration, location_name: "orphanFileDeletionConfiguration"))
     TableOptimizerConfiguration.struct_class = Types::TableOptimizerConfiguration
@@ -6714,6 +6724,7 @@ module Aws::Glue
     TableOptimizerRun.add_member(:metrics, Shapes::ShapeRef.new(shape: RunMetrics, deprecated: true, location_name: "metrics", metadata: {"deprecatedMessage" => "Metrics has been replaced by optimizer type specific metrics such as IcebergCompactionMetrics"}))
     TableOptimizerRun.add_member(:error, Shapes::ShapeRef.new(shape: MessageString, location_name: "error"))
     TableOptimizerRun.add_member(:compaction_metrics, Shapes::ShapeRef.new(shape: CompactionMetrics, location_name: "compactionMetrics"))
+    TableOptimizerRun.add_member(:compaction_strategy, Shapes::ShapeRef.new(shape: CompactionStrategy, location_name: "compactionStrategy"))
     TableOptimizerRun.add_member(:retention_metrics, Shapes::ShapeRef.new(shape: RetentionMetrics, location_name: "retentionMetrics"))
     TableOptimizerRun.add_member(:orphan_file_deletion_metrics, Shapes::ShapeRef.new(shape: OrphanFileDeletionMetrics, location_name: "orphanFileDeletionMetrics"))
     TableOptimizerRun.struct_class = Types::TableOptimizerRun

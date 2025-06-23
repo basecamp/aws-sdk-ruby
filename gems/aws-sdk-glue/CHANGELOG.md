@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.222.0 (2025-06-23)
+------------------
+
+* Feature - AWS Glue now supports sort and z-order strategy for managed automated compaction for Iceberg tables in addition to binpack.
+
 1.221.0 (2025-06-20)
 ------------------
 

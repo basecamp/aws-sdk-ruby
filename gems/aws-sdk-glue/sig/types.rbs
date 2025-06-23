@@ -889,6 +889,11 @@ module Aws::Glue
       SENSITIVE: []
     end
 
+    class CompactionConfiguration
+      attr_accessor iceberg_configuration: Types::IcebergCompactionConfiguration
+      SENSITIVE: []
+    end
+
     class CompactionMetrics
       attr_accessor iceberg_metrics: Types::IcebergCompactionMetrics
       SENSITIVE: []
@@ -3847,6 +3852,11 @@ module Aws::Glue
       SENSITIVE: []
     end
 
+    class IcebergCompactionConfiguration
+      attr_accessor strategy: ("binpack" | "sort" | "z-order")
+      SENSITIVE: []
+    end
+
     class IcebergCompactionMetrics
       attr_accessor number_of_bytes_compacted: ::Integer
       attr_accessor number_of_files_compacted: ::Integer
@@ -6301,6 +6311,7 @@ module Aws::Glue
       attr_accessor role_arn: ::String
       attr_accessor enabled: bool
       attr_accessor vpc_configuration: Types::TableOptimizerVpcConfiguration
+      attr_accessor compaction_configuration: Types::CompactionConfiguration
       attr_accessor retention_configuration: Types::RetentionConfiguration
       attr_accessor orphan_file_deletion_configuration: Types::OrphanFileDeletionConfiguration
       SENSITIVE: []
@@ -6313,6 +6324,7 @@ module Aws::Glue
       attr_accessor metrics: Types::RunMetrics
       attr_accessor error: ::String
       attr_accessor compaction_metrics: Types::CompactionMetrics
+      attr_accessor compaction_strategy: ("binpack" | "sort" | "z-order")
       attr_accessor retention_metrics: Types::RetentionMetrics
       attr_accessor orphan_file_deletion_metrics: Types::OrphanFileDeletionMetrics
       SENSITIVE: []

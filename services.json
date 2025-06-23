@@ -1322,6 +1322,9 @@
   "WorkSpacesWeb": {
     "models": "workspaces-web/2020-07-08"
   },
+  "WorkspacesInstances": {
+    "models": "workspaces-instances/2022-07-26"
+  },
   "XRay": {
     "models": "xray/2016-04-12"
   }
