@@ -1,10 +1,7 @@
 Unreleased Changes
 ------------------
 
-3.226.1 (2025-06-23)
-------------------
-
-* Issue - Fixed spelling error (`singaling` to `signaling`) in event_emitter error.
+* Issue - Fixed spelling in the `Aws::Errors::SignalEventError` error message.
 
 3.226.0 (2025-06-17)
 ------------------
