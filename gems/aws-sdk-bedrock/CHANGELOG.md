@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.52.0 (2025-06-24)
+------------------
+
+* Feature - We are making ListFoundationModelAgreementOffers, DeleteFoundationModelAgreement, CreateFoundationModelAgreement, GetFoundationModelAvailability, PutUseCaseForModelAccess and GetUseCaseForModelAccess APIs public, previously they were console.
+
 1.51.0 (2025-06-20)
 ------------------
 

@@ -9467,6 +9467,23 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html
     #   @return [Array<Types::TagSpecification>]
     #
+    # @!attribute [rw] snapshot_location
+    #   <note markdown="1"> Only supported for instances in Local Zones. If the source instance
+    #   is not in a Local Zone, omit this parameter.
+    #
+    #    </note>
+    #
+    #   The Amazon S3 location where the snapshots will be stored.
+    #
+    #   * To create local snapshots in the same Local Zone as the source
+    #     instance, specify `local`.
+    #
+    #   * To create regional snapshots in the parent Region of the Local
+    #     Zone, specify `regional` or omit this parameter.
+    #
+    #   Default: `regional`
+    #   @return [String]
+    #
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -9531,6 +9548,7 @@ module Aws::EC2
     #
     class CreateImageRequest < Struct.new(
       :tag_specifications,
+      :snapshot_location,
       :dry_run,
       :instance_id,
       :name,
@@ -12478,7 +12496,7 @@ module Aws::EC2
     #   * To create local snapshots in the same Local Zone as the source
     #     instance, specify `local`.
     #
-    #   * To create a regional snapshots in the parent Region of the Local
+    #   * To create regional snapshots in the parent Region of the Local
     #     Zone, specify `regional` or omit this parameter.
     #
     #   Default value: `regional`
@@ -34160,6 +34178,21 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html
     #   @return [String]
     #
+    # @!attribute [rw] availability_zone
+    #   The Availability Zone where the EBS volume will be created (for
+    #   example, `us-east-1a`).
+    #
+    #   Either `AvailabilityZone` or `AvailabilityZoneId` can be specified,
+    #   but not both. If neither is specified, Amazon EC2 automatically
+    #   selects an Availability Zone within the Region.
+    #
+    #   This parameter is not supported when using [CreateImage][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html
+    #   @return [String]
+    #
     # @!attribute [rw] encrypted
     #   Indicates whether the encryption state of an EBS volume is changed
     #   while being restored from a backing snapshot. The effect of setting
@@ -34246,6 +34279,21 @@ module Aws::EC2
     #   [2]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html
     #   @return [Integer]
     #
+    # @!attribute [rw] availability_zone_id
+    #   The ID of the Availability Zone where the EBS volume will be created
+    #   (for example, `use1-az1`).
+    #
+    #   Either `AvailabilityZone` or `AvailabilityZoneId` can be specified,
+    #   but not both. If neither is specified, Amazon EC2 automatically
+    #   selects an Availability Zone within the Region.
+    #
+    #   This parameter is not supported when using [CreateImage][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EbsBlockDevice AWS API Documentation
     #
     class EbsBlockDevice < Struct.new(
@@ -34257,8 +34305,10 @@ module Aws::EC2
       :kms_key_id,
       :throughput,
       :outpost_arn,
+      :availability_zone,
       :encrypted,
-      :volume_initialization_rate)
+      :volume_initialization_rate,
+      :availability_zone_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -44253,10 +44303,14 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] public_dns_name
-    #   \[IPv4 only\] The public DNS name assigned to the instance. This
-    #   name is not available until the instance enters the `running` state.
-    #   This name is only available if you've enabled DNS hostnames for
-    #   your VPC.
+    #   The public DNS name assigned to the instance. This name is not
+    #   available until the instance enters the `running` state. This name
+    #   is only available if you've enabled DNS hostnames for your VPC. The
+    #   format of this name depends on the [public hostname type][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hostname-types.html#public-hostnames
     #   @return [String]
     #
     # @!attribute [rw] state_transition_reason

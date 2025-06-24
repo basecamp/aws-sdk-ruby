@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.532.0 (2025-06-24)
+------------------
+
+* Feature - This release allows you to create and register AMIs while maintaining their underlying EBS snapshots within Local Zones.
+
 1.531.0 (2025-06-09)
 ------------------
 

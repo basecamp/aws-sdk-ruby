@@ -93,7 +93,12 @@ module Aws
                                         ?tags: Hash[::String, ::String],
                                         ?tag_key_boundaries: Array[::String],
                                         ?chatbot_notification_channel: Hash[::String, Array[::String]],
-                                        ?is_cloud_trail_event_history_enabled: bool
+                                        ?is_cloud_trail_event_history_enabled: bool,
+                                        ?cross_account_configurations: Array[
+                                          {
+                                            source_role_arn: ::String?
+                                          },
+                                        ]
                                       ) -> _CreateInvestigationGroupResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateInvestigationGroupResponseSuccess
 
@@ -126,6 +131,7 @@ module Aws
         def chatbot_notification_channel: () -> ::Hash[::String, ::Array[::String]]
         def tag_key_boundaries: () -> ::Array[::String]
         def is_cloud_trail_event_history_enabled: () -> bool
+        def cross_account_configurations: () -> ::Array[Types::CrossAccountConfiguration]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/AIOps/Client.html#get_investigation_group-instance_method
       def get_investigation_group: (
@@ -210,7 +216,12 @@ module Aws
                                         },
                                         ?tag_key_boundaries: Array[::String],
                                         ?chatbot_notification_channel: Hash[::String, Array[::String]],
-                                        ?is_cloud_trail_event_history_enabled: bool
+                                        ?is_cloud_trail_event_history_enabled: bool,
+                                        ?cross_account_configurations: Array[
+                                          {
+                                            source_role_arn: ::String?
+                                          },
+                                        ]
                                       ) -> _UpdateInvestigationGroupResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateInvestigationGroupResponseSuccess
     end

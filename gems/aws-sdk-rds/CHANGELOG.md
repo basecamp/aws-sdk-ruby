@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.281.0 (2025-06-24)
+------------------
+
+* Feature - Adding support for RDS on Dedicated Local Zones, including local backup target, snapshot availability zone and snapshot target
+
 1.280.0 (2025-06-11)
 ------------------
 

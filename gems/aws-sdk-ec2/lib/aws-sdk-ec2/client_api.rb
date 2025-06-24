@@ -5294,6 +5294,7 @@ module Aws::EC2
     CreateFpgaImageResult.struct_class = Types::CreateFpgaImageResult
 
     CreateImageRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
+    CreateImageRequest.add_member(:snapshot_location, Shapes::ShapeRef.new(shape: SnapshotLocationEnum, location_name: "SnapshotLocation"))
     CreateImageRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     CreateImageRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location_name: "instanceId"))
     CreateImageRequest.add_member(:name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "name"))
@@ -9266,8 +9267,10 @@ module Aws::EC2
     EbsBlockDevice.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: String, location_name: "kmsKeyId"))
     EbsBlockDevice.add_member(:throughput, Shapes::ShapeRef.new(shape: Integer, location_name: "throughput"))
     EbsBlockDevice.add_member(:outpost_arn, Shapes::ShapeRef.new(shape: String, location_name: "outpostArn"))
+    EbsBlockDevice.add_member(:availability_zone, Shapes::ShapeRef.new(shape: String, location_name: "availabilityZone"))
     EbsBlockDevice.add_member(:encrypted, Shapes::ShapeRef.new(shape: Boolean, location_name: "encrypted"))
     EbsBlockDevice.add_member(:volume_initialization_rate, Shapes::ShapeRef.new(shape: Integer, location_name: "VolumeInitializationRate"))
+    EbsBlockDevice.add_member(:availability_zone_id, Shapes::ShapeRef.new(shape: String, location_name: "AvailabilityZoneId"))
     EbsBlockDevice.struct_class = Types::EbsBlockDevice
 
     EbsBlockDeviceResponse.add_member(:encrypted, Shapes::ShapeRef.new(shape: Boolean, location_name: "encrypted"))

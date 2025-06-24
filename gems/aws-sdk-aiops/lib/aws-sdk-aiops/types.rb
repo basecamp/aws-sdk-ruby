@@ -38,15 +38,14 @@ module Aws::AIOps
     end
 
     # @!attribute [rw] name
-    #   A name for the investigation group.
+    #   Provides a name for the investigation group.
     #   @return [String]
     #
     # @!attribute [rw] role_arn
-    #   Specify the ARN of the IAM role that Amazon Q Developer operational
-    #   investigations will use when it gathers investigation data. The
-    #   permissions in this role determine which of your resources that
-    #   Amazon Q Developer operational investigations will have access to
-    #   during investigations.
+    #   Specify the ARN of the IAM role that CloudWatch investigations will
+    #   use when it gathers investigation data. The permissions in this role
+    #   determine which of your resources that CloudWatch investigations
+    #   will have access to during investigations.
     #
     #   For more information, see [How to control what data Amazon Q has
     #   access to during investigations][1].
@@ -58,10 +57,10 @@ module Aws::AIOps
     #
     # @!attribute [rw] encryption_configuration
     #   Use this structure if you want to use a customer managed KMS key to
-    #   encrypt your investigation data. If you omit this parameter, Amazon
-    #   Q Developer operational investigations will use an Amazon Web
-    #   Services key to encrypt the data. For more information, see
-    #   [Encryption of investigation data][1].
+    #   encrypt your investigation data. If you omit this parameter,
+    #   CloudWatch investigations will use an Amazon Web Services key to
+    #   encrypt the data. For more information, see [Encryption of
+    #   investigation data][1].
     #
     #
     #
@@ -109,15 +108,14 @@ module Aws::AIOps
     #   @return [Array<String>]
     #
     # @!attribute [rw] chatbot_notification_channel
-    #   Use this structure to integrate Amazon Q Developer operational
-    #   investigations with Amazon Q in chat applications. This structure is
-    #   a string array. For the first string, specify the ARN of an Amazon
-    #   SNS topic. For the array of strings, specify the ARNs of one or more
-    #   Amazon Q in chat applications configurations that you want to
-    #   associate with that topic. For more information about these
-    #   configuration ARNs, see [Getting started with Amazon Q in chat
-    #   applications][1] and [Resource type defined by Amazon Web Services
-    #   Chatbot][2].
+    #   Use this structure to integrate CloudWatch investigations with
+    #   Amazon Q in chat applications. This structure is a string array. For
+    #   the first string, specify the ARN of an Amazon SNS topic. For the
+    #   array of strings, specify the ARNs of one or more Amazon Q in chat
+    #   applications configurations that you want to associate with that
+    #   topic. For more information about these configuration ARNs, see
+    #   [Getting started with Amazon Q in chat applications][1] and
+    #   [Resource type defined by Amazon Web Services Chatbot][2].
     #
     #
     #
@@ -126,10 +124,15 @@ module Aws::AIOps
     #   @return [Hash<String,Array<String>>]
     #
     # @!attribute [rw] is_cloud_trail_event_history_enabled
-    #   Specify `true` to enable Amazon Q Developer operational
-    #   investigations to have access to change events that are recorded by
-    #   CloudTrail. The default is `true`.
+    #   Specify `true` to enable CloudWatch investigations to have access to
+    #   change events that are recorded by CloudTrail. The default is
+    #   `true`.
     #   @return [Boolean]
+    #
+    # @!attribute [rw] cross_account_configurations
+    #   Number of `sourceAccountId` values that have been configured for
+    #   cross-account access.
+    #   @return [Array<Types::CrossAccountConfiguration>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/aiops-2018-05-10/CreateInvestigationGroupInput AWS API Documentation
     #
@@ -141,7 +144,8 @@ module Aws::AIOps
       :tags,
       :tag_key_boundaries,
       :chatbot_notification_channel,
-      :is_cloud_trail_event_history_enabled)
+      :is_cloud_trail_event_history_enabled,
+      :cross_account_configurations)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -154,6 +158,22 @@ module Aws::AIOps
     #
     class CreateInvestigationGroupOutput < Struct.new(
       :arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information about the cross-account
+    # configuration in the account.
+    #
+    # @!attribute [rw] source_role_arn
+    #   The ARN of an existing role which will be used to do investigations
+    #   on your behalf.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/aiops-2018-05-10/CrossAccountConfiguration AWS API Documentation
+    #
+    class CrossAccountConfiguration < Struct.new(
+      :source_role_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -330,9 +350,15 @@ module Aws::AIOps
     #   @return [Array<String>]
     #
     # @!attribute [rw] is_cloud_trail_event_history_enabled
-    #   Specifies whether Amazon Q Developer operational investigationshas
-    #   access to change events that are recorded by CloudTrail.
+    #   Specifies whether CloudWatch investigationshas access to change
+    #   events that are recorded by CloudTrail.
     #   @return [Boolean]
+    #
+    # @!attribute [rw] cross_account_configurations
+    #   Lists the `AWSAccountId` of the accounts configured for
+    #   cross-account access and the results of the last scan performed on
+    #   each account.
+    #   @return [Array<Types::CrossAccountConfiguration>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/aiops-2018-05-10/GetInvestigationGroupResponse AWS API Documentation
     #
@@ -348,7 +374,8 @@ module Aws::AIOps
       :retention_in_days,
       :chatbot_notification_channel,
       :tag_key_boundaries,
-      :is_cloud_trail_event_history_enabled)
+      :is_cloud_trail_event_history_enabled,
+      :cross_account_configurations)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -438,10 +465,9 @@ module Aws::AIOps
     end
 
     # @!attribute [rw] resource_arn
-    #   The ARN of the Amazon Q Developer operational investigations
-    #   resource that you want to view tags for. You can use the
-    #   [ListInvestigationGroups][1] operation to find the ARNs of
-    #   investigation groups.
+    #   The ARN of the CloudWatch investigations resource that you want to
+    #   view tags for. You can use the [ListInvestigationGroups][1]
+    #   operation to find the ARNs of investigation groups.
     #
     #   The ARN format for an investigation group is
     #   `arn:aws:aiops:Region:account-id:investigation-group:investigation-group-id
@@ -614,13 +640,12 @@ module Aws::AIOps
     #   @return [String]
     #
     # @!attribute [rw] role_arn
-    #   Specify this field if you want to change the IAM role that Amazon Q
-    #   Developer operational investigations will use when it gathers
-    #   investigation data. To do so, specify the ARN of the new role.
+    #   Specify this field if you want to change the IAM role that
+    #   CloudWatch investigations will use when it gathers investigation
+    #   data. To do so, specify the ARN of the new role.
     #
     #   The permissions in this role determine which of your resources that
-    #   Amazon Q Developer operational investigations will have access to
-    #   during investigations.
+    #   CloudWatch investigations will have access to during investigations.
     #
     #   For more information, see [EHow to control what data Amazon Q has
     #   access to during investigations][1].
@@ -632,10 +657,10 @@ module Aws::AIOps
     #
     # @!attribute [rw] encryption_configuration
     #   Use this structure if you want to use a customer managed KMS key to
-    #   encrypt your investigation data. If you omit this parameter, Amazon
-    #   Q Developer operational investigations will use an Amazon Web
-    #   Services key to encrypt the data. For more information, see
-    #   [Encryption of investigation data][1].
+    #   encrypt your investigation data. If you omit this parameter,
+    #   CloudWatch investigations will use an Amazon Web Services key to
+    #   encrypt the data. For more information, see [Encryption of
+    #   investigation data][1].
     #
     #
     #
@@ -660,15 +685,14 @@ module Aws::AIOps
     #   @return [Array<String>]
     #
     # @!attribute [rw] chatbot_notification_channel
-    #   Use this structure to integrate Amazon Q Developer operational
-    #   investigations with Amazon Q in chat applications. This structure is
-    #   a string array. For the first string, specify the ARN of an Amazon
-    #   SNS topic. For the array of strings, specify the ARNs of one or more
-    #   Amazon Q in chat applications configurations that you want to
-    #   associate with that topic. For more information about these
-    #   configuration ARNs, see [Getting started with Amazon Q in chat
-    #   applications][1] and [Resource type defined by Amazon Web Services
-    #   Chatbot][2].
+    #   Use this structure to integrate CloudWatch investigations with
+    #   Amazon Q in chat applications. This structure is a string array. For
+    #   the first string, specify the ARN of an Amazon SNS topic. For the
+    #   array of strings, specify the ARNs of one or more Amazon Q in chat
+    #   applications configurations that you want to associate with that
+    #   topic. For more information about these configuration ARNs, see
+    #   [Getting started with Amazon Q in chat applications][1] and
+    #   [Resource type defined by Amazon Web Services Chatbot][2].
     #
     #
     #
@@ -677,10 +701,16 @@ module Aws::AIOps
     #   @return [Hash<String,Array<String>>]
     #
     # @!attribute [rw] is_cloud_trail_event_history_enabled
-    #   Specify `true` to enable Amazon Q Developer operational
-    #   investigations to have access to change events that are recorded by
-    #   CloudTrail. The default is `true`.
+    #   Specify `true` to enable CloudWatch investigations to have access to
+    #   change events that are recorded by CloudTrail. The default is
+    #   `true`.
     #   @return [Boolean]
+    #
+    # @!attribute [rw] cross_account_configurations
+    #   Used to configure cross-account access for an investigation group.
+    #   It allows the investigation group to access resources in other
+    #   accounts.
+    #   @return [Array<Types::CrossAccountConfiguration>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/aiops-2018-05-10/UpdateInvestigationGroupRequest AWS API Documentation
     #
@@ -690,7 +720,8 @@ module Aws::AIOps
       :encryption_configuration,
       :tag_key_boundaries,
       :chatbot_notification_channel,
-      :is_cloud_trail_event_history_enabled)
+      :is_cloud_trail_event_history_enabled,
+      :cross_account_configurations)
       SENSITIVE = []
       include Aws::Structure
     end

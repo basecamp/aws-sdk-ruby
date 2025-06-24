@@ -7770,6 +7770,15 @@ module Aws::EC2
     # launch an instance from this new AMI, the instance automatically
     # launches with those additional volumes.
     #
+    # The location of the source instance determines where you can create
+    # the snapshots of the AMI:
+    #
+    # * If the source instance is in a Region, you must create the snapshots
+    #   in the same Region as the instance.
+    #
+    # * If the source instance is in a Local Zone, you can create the
+    #   snapshots in the same Local Zone or in its parent Region.
+    #
     # For more information, see [Create an Amazon EBS-backed AMI][1] in the
     # *Amazon Elastic Compute Cloud User Guide*.
     #
@@ -7796,6 +7805,22 @@ module Aws::EC2
     #
     #
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html
+    #
+    # @option params [String] :snapshot_location
+    #   <note markdown="1"> Only supported for instances in Local Zones. If the source instance is
+    #   not in a Local Zone, omit this parameter.
+    #
+    #    </note>
+    #
+    #   The Amazon S3 location where the snapshots will be stored.
+    #
+    #   * To create local snapshots in the same Local Zone as the source
+    #     instance, specify `local`.
+    #
+    #   * To create regional snapshots in the parent Region of the Local Zone,
+    #     specify `regional` or omit this parameter.
+    #
+    #   Default: `regional`
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -7898,6 +7923,7 @@ module Aws::EC2
     #         ],
     #       },
     #     ],
+    #     snapshot_location: "regional", # accepts regional, local
     #     dry_run: false,
     #     instance_id: "InstanceId", # required
     #     name: "String", # required
@@ -7914,8 +7940,10 @@ module Aws::EC2
     #           kms_key_id: "String",
     #           throughput: 1,
     #           outpost_arn: "String",
+    #           availability_zone: "String",
     #           encrypted: false,
     #           volume_initialization_rate: 1,
+    #           availability_zone_id: "String",
     #         },
     #         no_device: "String",
     #         device_name: "String",
@@ -7941,9 +7969,8 @@ module Aws::EC2
     #
     # An EC2 Instance Connect Endpoint allows you to connect to an instance,
     # without requiring the instance to have a public IPv4 address. For more
-    # information, see [Connect to your instances without requiring a public
-    # IPv4 address using EC2 Instance Connect Endpoint][1] in the *Amazon
-    # EC2 User Guide*.
+    # information, see [Connect to your instances using EC2 Instance Connect
+    # Endpoint][1] in the *Amazon EC2 User Guide*.
     #
     #
     #
@@ -13480,8 +13507,8 @@ module Aws::EC2
     #   * To create local snapshots in the same Local Zone as the source
     #     instance, specify `local`.
     #
-    #   * To create a regional snapshots in the parent Region of the Local
-    #     Zone, specify `regional` or omit this parameter.
+    #   * To create regional snapshots in the parent Region of the Local Zone,
+    #     specify `regional` or omit this parameter.
     #
     #   Default value: `regional`
     #
@@ -26391,8 +26418,10 @@ module Aws::EC2
     #   resp.block_device_mappings[0].ebs.kms_key_id #=> String
     #   resp.block_device_mappings[0].ebs.throughput #=> Integer
     #   resp.block_device_mappings[0].ebs.outpost_arn #=> String
+    #   resp.block_device_mappings[0].ebs.availability_zone #=> String
     #   resp.block_device_mappings[0].ebs.encrypted #=> Boolean
     #   resp.block_device_mappings[0].ebs.volume_initialization_rate #=> Integer
+    #   resp.block_device_mappings[0].ebs.availability_zone_id #=> String
     #   resp.block_device_mappings[0].no_device #=> String
     #   resp.block_device_mappings[0].device_name #=> String
     #   resp.block_device_mappings[0].virtual_name #=> String
@@ -26708,8 +26737,10 @@ module Aws::EC2
     #   resp.images[0].block_device_mappings[0].ebs.kms_key_id #=> String
     #   resp.images[0].block_device_mappings[0].ebs.throughput #=> Integer
     #   resp.images[0].block_device_mappings[0].ebs.outpost_arn #=> String
+    #   resp.images[0].block_device_mappings[0].ebs.availability_zone #=> String
     #   resp.images[0].block_device_mappings[0].ebs.encrypted #=> Boolean
     #   resp.images[0].block_device_mappings[0].ebs.volume_initialization_rate #=> Integer
+    #   resp.images[0].block_device_mappings[0].ebs.availability_zone_id #=> String
     #   resp.images[0].block_device_mappings[0].no_device #=> String
     #   resp.images[0].block_device_mappings[0].device_name #=> String
     #   resp.images[0].block_device_mappings[0].virtual_name #=> String
@@ -36961,8 +36992,10 @@ module Aws::EC2
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].ebs.kms_key_id #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].ebs.throughput #=> Integer
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].ebs.outpost_arn #=> String
+    #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].ebs.availability_zone #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].ebs.encrypted #=> Boolean
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].ebs.volume_initialization_rate #=> Integer
+    #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].ebs.availability_zone_id #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].no_device #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].device_name #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].block_device_mappings[0].virtual_name #=> String
@@ -37425,8 +37458,10 @@ module Aws::EC2
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.kms_key_id #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.throughput #=> Integer
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.outpost_arn #=> String
+    #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.availability_zone #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.encrypted #=> Boolean
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.volume_initialization_rate #=> Integer
+    #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.availability_zone_id #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].no_device #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].device_name #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].virtual_name #=> String
@@ -59383,8 +59418,10 @@ module Aws::EC2
     #           kms_key_id: "String",
     #           throughput: 1,
     #           outpost_arn: "String",
+    #           availability_zone: "String",
     #           encrypted: false,
     #           volume_initialization_rate: 1,
+    #           availability_zone_id: "String",
     #         },
     #         no_device: "String",
     #         device_name: "String",
@@ -60907,8 +60944,10 @@ module Aws::EC2
     #                 kms_key_id: "String",
     #                 throughput: 1,
     #                 outpost_arn: "String",
+    #                 availability_zone: "String",
     #                 encrypted: false,
     #                 volume_initialization_rate: 1,
+    #                 availability_zone_id: "String",
     #               },
     #               no_device: "String",
     #               device_name: "String",
@@ -61405,8 +61444,10 @@ module Aws::EC2
     #             kms_key_id: "String",
     #             throughput: 1,
     #             outpost_arn: "String",
+    #             availability_zone: "String",
     #             encrypted: false,
     #             volume_initialization_rate: 1,
+    #             availability_zone_id: "String",
     #           },
     #           no_device: "String",
     #           device_name: "String",
@@ -61534,8 +61575,10 @@ module Aws::EC2
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.kms_key_id #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.throughput #=> Integer
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.outpost_arn #=> String
+    #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.availability_zone #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.encrypted #=> Boolean
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.volume_initialization_rate #=> Integer
+    #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].ebs.availability_zone_id #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].no_device #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].device_name #=> String
     #   resp.spot_instance_requests[0].launch_specification.block_device_mappings[0].virtual_name #=> String
@@ -63111,8 +63154,10 @@ module Aws::EC2
     #           kms_key_id: "String",
     #           throughput: 1,
     #           outpost_arn: "String",
+    #           availability_zone: "String",
     #           encrypted: false,
     #           volume_initialization_rate: 1,
+    #           availability_zone_id: "String",
     #         },
     #         no_device: "String",
     #         device_name: "String",
@@ -63961,7 +64006,7 @@ module Aws::EC2
     #   create a new one or use an existing one), it must be in the same
     #   Region where the report generation request is made, and it must have
     #   an appropriate bucket policy. For a sample S3 policy, see *Sample
-    #   Amazon S3 policy* under .
+    #   Amazon S3 policy* under [Examples][1].
     #
     # * Trusted access must be enabled for the service for which the
     #   declarative policy will enforce a baseline configuration. If you use
@@ -63971,7 +64016,7 @@ module Aws::EC2
     #   `ec2.amazonaws.com`. For more information on how to enable trusted
     #   access with the Amazon Web Services CLI and Amazon Web Services
     #   SDKs, see [Using Organizations with other Amazon Web Services
-    #   services][1] in the *Amazon Web Services Organizations User Guide*.
+    #   services][2] in the *Amazon Web Services Organizations User Guide*.
     #
     # * Only one report per organization can be generated at a time.
     #   Attempting to generate a report while another is in progress will
@@ -63979,12 +64024,13 @@ module Aws::EC2
     #
     # For more information, including the required IAM permissions to run
     # this API, see [Generating the account status report for declarative
-    # policies][2] in the *Amazon Web Services Organizations User Guide*.
+    # policies][3] in the *Amazon Web Services Organizations User Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
-    # [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_declarative_status-report.html
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_StartDeclarativePoliciesReport.html#API_StartDeclarativePoliciesReport_Examples
+    # [2]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html
+    # [3]: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_declarative_status-report.html
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -65199,32 +65245,33 @@ module Aws::EC2
       req.send_request(options)
     end
 
-    # Stops an Amazon EBS-backed instance. For more information, see [Stop
-    # and start Amazon EC2 instances][1] in the *Amazon EC2 User Guide*.
+    # Stops an Amazon EBS-backed instance. You can restart your instance at
+    # any time using the [StartInstances][1] API. For more information, see
+    # [Stop and start Amazon EC2 instances][2] in the *Amazon EC2 User
+    # Guide*.
     #
-    # When you stop an instance, we shut it down. You can restart your
-    # instance at any time.
+    # When you stop an instance, we shut it down.
     #
     # You can use the Stop operation together with the Hibernate parameter
     # to hibernate an instance if the instance is [enabled for
-    # hibernation][2] and meets the [hibernation prerequisites][3]. Stopping
+    # hibernation][3] and meets the [hibernation prerequisites][4]. Stopping
     # an instance doesn't preserve data stored in RAM, while hibernation
     # does. If hibernation fails, a normal shutdown occurs. For more
-    # information, see [Hibernate your Amazon EC2 instance][4] in the
+    # information, see [Hibernate your Amazon EC2 instance][5] in the
     # *Amazon EC2 User Guide*.
     #
     # If your instance appears stuck in the `stopping` state, there might be
     # an issue with the underlying host computer. You can use the Stop
     # operation together with the Force parameter to force stop your
     # instance. For more information, see [Troubleshoot Amazon EC2 instance
-    # stop issues][5] in the *Amazon EC2 User Guide*.
+    # stop issues][6] in the *Amazon EC2 User Guide*.
     #
     # Stopping and hibernating an instance differs from rebooting or
     # terminating it. For example, a stopped or hibernated instance retains
     # its root volume and any data volumes, unlike terminated instances
     # where these volumes are automatically deleted. For more information
     # about the differences between stopping, hibernating, rebooting, and
-    # terminating instances, see [Amazon EC2 instance state changes][6] in
+    # terminating instances, see [Amazon EC2 instance state changes][7] in
     # the *Amazon EC2 User Guide*.
     #
     # We don't charge for instance usage or data transfer fees when an
@@ -65237,12 +65284,13 @@ module Aws::EC2
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html
-    # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/enabling-hibernation.html
-    # [3]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html
-    # [4]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Hibernate.html
-    # [5]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesStopping.html
-    # [6]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_StartInstances.html
+    # [2]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html
+    # [3]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/enabling-hibernation.html
+    # [4]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html
+    # [5]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Hibernate.html
+    # [6]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesStopping.html
+    # [7]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html
     #
     # @option params [required, Array<String>] :instance_ids
     #   The IDs of the instances.
@@ -66093,7 +66141,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.531.0'
+      context[:gem_version] = '1.532.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

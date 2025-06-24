@@ -22,6 +22,8 @@ module Aws::AIOps
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     CreateInvestigationGroupInput = Shapes::StructureShape.new(name: 'CreateInvestigationGroupInput')
     CreateInvestigationGroupOutput = Shapes::StructureShape.new(name: 'CreateInvestigationGroupOutput')
+    CrossAccountConfiguration = Shapes::StructureShape.new(name: 'CrossAccountConfiguration')
+    CrossAccountConfigurations = Shapes::ListShape.new(name: 'CrossAccountConfigurations')
     DeleteInvestigationGroupPolicyOutput = Shapes::StructureShape.new(name: 'DeleteInvestigationGroupPolicyOutput')
     DeleteInvestigationGroupPolicyRequest = Shapes::StructureShape.new(name: 'DeleteInvestigationGroupPolicyRequest')
     DeleteInvestigationGroupRequest = Shapes::StructureShape.new(name: 'DeleteInvestigationGroupRequest')
@@ -89,10 +91,16 @@ module Aws::AIOps
     CreateInvestigationGroupInput.add_member(:tag_key_boundaries, Shapes::ShapeRef.new(shape: TagKeyBoundaries, location_name: "tagKeyBoundaries"))
     CreateInvestigationGroupInput.add_member(:chatbot_notification_channel, Shapes::ShapeRef.new(shape: ChatbotNotificationChannel, location_name: "chatbotNotificationChannel"))
     CreateInvestigationGroupInput.add_member(:is_cloud_trail_event_history_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "isCloudTrailEventHistoryEnabled"))
+    CreateInvestigationGroupInput.add_member(:cross_account_configurations, Shapes::ShapeRef.new(shape: CrossAccountConfigurations, location_name: "crossAccountConfigurations"))
     CreateInvestigationGroupInput.struct_class = Types::CreateInvestigationGroupInput
 
     CreateInvestigationGroupOutput.add_member(:arn, Shapes::ShapeRef.new(shape: InvestigationGroupArn, location_name: "arn"))
     CreateInvestigationGroupOutput.struct_class = Types::CreateInvestigationGroupOutput
+
+    CrossAccountConfiguration.add_member(:source_role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "sourceRoleArn"))
+    CrossAccountConfiguration.struct_class = Types::CrossAccountConfiguration
+
+    CrossAccountConfigurations.member = Shapes::ShapeRef.new(shape: CrossAccountConfiguration)
 
     DeleteInvestigationGroupPolicyOutput.struct_class = Types::DeleteInvestigationGroupPolicyOutput
 
@@ -131,6 +139,7 @@ module Aws::AIOps
     GetInvestigationGroupResponse.add_member(:chatbot_notification_channel, Shapes::ShapeRef.new(shape: ChatbotNotificationChannel, location_name: "chatbotNotificationChannel"))
     GetInvestigationGroupResponse.add_member(:tag_key_boundaries, Shapes::ShapeRef.new(shape: TagKeyBoundaries, location_name: "tagKeyBoundaries"))
     GetInvestigationGroupResponse.add_member(:is_cloud_trail_event_history_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "isCloudTrailEventHistoryEnabled"))
+    GetInvestigationGroupResponse.add_member(:cross_account_configurations, Shapes::ShapeRef.new(shape: CrossAccountConfigurations, location_name: "crossAccountConfigurations"))
     GetInvestigationGroupResponse.struct_class = Types::GetInvestigationGroupResponse
 
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "message"))
@@ -203,6 +212,7 @@ module Aws::AIOps
     UpdateInvestigationGroupRequest.add_member(:tag_key_boundaries, Shapes::ShapeRef.new(shape: TagKeyBoundaries, location_name: "tagKeyBoundaries"))
     UpdateInvestigationGroupRequest.add_member(:chatbot_notification_channel, Shapes::ShapeRef.new(shape: ChatbotNotificationChannel, location_name: "chatbotNotificationChannel"))
     UpdateInvestigationGroupRequest.add_member(:is_cloud_trail_event_history_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "isCloudTrailEventHistoryEnabled"))
+    UpdateInvestigationGroupRequest.add_member(:cross_account_configurations, Shapes::ShapeRef.new(shape: CrossAccountConfigurations, location_name: "crossAccountConfigurations"))
     UpdateInvestigationGroupRequest.struct_class = Types::UpdateInvestigationGroupRequest
 
     ValidationException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "message"))

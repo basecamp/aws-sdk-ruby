@@ -27,11 +27,17 @@ module Aws::AIOps
       attr_accessor tag_key_boundaries: ::Array[::String]
       attr_accessor chatbot_notification_channel: ::Hash[::String, ::Array[::String]]
       attr_accessor is_cloud_trail_event_history_enabled: bool
+      attr_accessor cross_account_configurations: ::Array[Types::CrossAccountConfiguration]
       SENSITIVE: []
     end
 
     class CreateInvestigationGroupOutput
       attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class CrossAccountConfiguration
+      attr_accessor source_role_arn: ::String
       SENSITIVE: []
     end
 
@@ -88,6 +94,7 @@ module Aws::AIOps
       attr_accessor chatbot_notification_channel: ::Hash[::String, ::Array[::String]]
       attr_accessor tag_key_boundaries: ::Array[::String]
       attr_accessor is_cloud_trail_event_history_enabled: bool
+      attr_accessor cross_account_configurations: ::Array[Types::CrossAccountConfiguration]
       SENSITIVE: []
     end
 
@@ -182,6 +189,7 @@ module Aws::AIOps
       attr_accessor tag_key_boundaries: ::Array[::String]
       attr_accessor chatbot_notification_channel: ::Hash[::String, ::Array[::String]]
       attr_accessor is_cloud_trail_event_history_enabled: bool
+      attr_accessor cross_account_configurations: ::Array[Types::CrossAccountConfiguration]
       SENSITIVE: []
     end
 
