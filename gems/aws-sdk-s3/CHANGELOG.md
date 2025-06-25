@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.191.0 (2025-06-25)
+------------------
+
+* Feature - Adds support for additional server-side encryption mode and storage class values for accessing Amazon FSx data from Amazon S3 using S3 Access Points
+
 1.190.0 (2025-06-18)
 ------------------
 

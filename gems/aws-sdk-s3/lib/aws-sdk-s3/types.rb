@@ -945,7 +945,13 @@ module Aws::S3
     #
     # @!attribute [rw] server_side_encryption
     #   The server-side encryption algorithm used when storing this object
-    #   in Amazon S3 (for example, `AES256`, `aws:kms`).
+    #   in Amazon S3.
+    #
+    #   <note markdown="1"> When accessing data stored in Amazon FSx file systems using S3
+    #   access points, the only valid server side encryption option is
+    #   `aws:fsx`.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] version_id
@@ -1481,7 +1487,13 @@ module Aws::S3
     #
     # @!attribute [rw] server_side_encryption
     #   The server-side encryption algorithm used when you store this object
-    #   in Amazon S3 (for example, `AES256`, `aws:kms`, `aws:kms:dsse`).
+    #   in Amazon S3 or Amazon FSx.
+    #
+    #   <note markdown="1"> When accessing data stored in Amazon FSx file systems using S3
+    #   access points, the only valid server side encryption option is
+    #   `aws:fsx`.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] sse_customer_algorithm
@@ -2037,6 +2049,14 @@ module Aws::S3
     #     encryption-related request headers, you must ensure the encryption
     #     key is the same customer managed key that you specified for the
     #     directory bucket's default encryption configuration.
+    #
+    #   * <b>S3 access points for Amazon FSx </b> - When accessing data
+    #     stored in Amazon FSx file systems using S3 access points, the only
+    #     valid server side encryption option is `aws:fsx`. All Amazon FSx
+    #     file systems have encryption configured by default and are
+    #     encrypted at rest. Data is automatically encrypted before being
+    #     written to the file system, and automatically decrypted as it is
+    #     read. These processes are handled transparently by Amazon FSx.
     #
     #
     #
@@ -2912,7 +2932,13 @@ module Aws::S3
     #
     # @!attribute [rw] server_side_encryption
     #   The server-side encryption algorithm used when you store this object
-    #   in Amazon S3 (for example, `AES256`, `aws:kms`).
+    #   in Amazon S3 or Amazon FSx.
+    #
+    #   <note markdown="1"> When accessing data stored in Amazon FSx file systems using S3
+    #   access points, the only valid server side encryption option is
+    #   `aws:fsx`.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] sse_customer_algorithm
@@ -3380,7 +3406,7 @@ module Aws::S3
     #
     # @!attribute [rw] server_side_encryption
     #   The server-side encryption algorithm used when you store this object
-    #   in Amazon S3 (for example, `AES256`, `aws:kms`).
+    #   in Amazon S3 or Amazon FSx.
     #
     #   * <b>Directory buckets </b> - For directory buckets, there are only
     #     two supported options for server-side encryption: server-side
@@ -3422,6 +3448,14 @@ module Aws::S3
     #     directory bucket.
     #
     #      </note>
+    #
+    #   * <b>S3 access points for Amazon FSx </b> - When accessing data
+    #     stored in Amazon FSx file systems using S3 access points, the only
+    #     valid server side encryption option is `aws:fsx`. All Amazon FSx
+    #     file systems have encryption configured by default and are
+    #     encrypted at rest. Data is automatically encrypted before being
+    #     written to the file system, and automatically decrypted as it is
+    #     read. These processes are handled transparently by Amazon FSx.
     #
     #
     #
@@ -3689,6 +3723,12 @@ module Aws::S3
     # @!attribute [rw] server_side_encryption
     #   The server-side encryption algorithm used when you store objects in
     #   the directory bucket.
+    #
+    #   <note markdown="1"> When accessing data stored in Amazon FSx file systems using S3
+    #   access points, the only valid server side encryption option is
+    #   `aws:fsx`.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] ssekms_key_id
@@ -3752,6 +3792,14 @@ module Aws::S3
     #   keys (SSE-KMS) (`aws:kms`). By default, Amazon S3 encrypts data with
     #   SSE-S3. For more information, see [Protecting data with server-side
     #   encryption][1] in the *Amazon S3 User Guide*.
+    #
+    #   <b>S3 access points for Amazon FSx </b> - When accessing data stored
+    #   in Amazon FSx file systems using S3 access points, the only valid
+    #   server side encryption option is `aws:fsx`. All Amazon FSx file
+    #   systems have encryption configured by default and are encrypted at
+    #   rest. Data is automatically encrypted before being written to the
+    #   file system, and automatically decrypted as it is read. These
+    #   processes are handled transparently by Amazon FSx.
     #
     #
     #
@@ -7763,7 +7811,13 @@ module Aws::S3
     #
     # @!attribute [rw] server_side_encryption
     #   The server-side encryption algorithm used when you store this object
-    #   in Amazon S3.
+    #   in Amazon S3 or Amazon FSx.
+    #
+    #   <note markdown="1"> When accessing data stored in Amazon FSx file systems using S3
+    #   access points, the only valid server side encryption option is
+    #   `aws:fsx`.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] metadata
@@ -9011,7 +9065,13 @@ module Aws::S3
     #
     # @!attribute [rw] server_side_encryption
     #   The server-side encryption algorithm used when you store this object
-    #   in Amazon S3 (for example, `AES256`, `aws:kms`, `aws:kms:dsse`).
+    #   in Amazon S3 or Amazon FSx.
+    #
+    #   <note markdown="1"> When accessing data stored in Amazon FSx file systems using S3
+    #   access points, the only valid server side encryption option is
+    #   `aws:fsx`.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] metadata
@@ -10130,9 +10190,16 @@ module Aws::S3
     #   `Filter` is required if the `LifecycleRule` does not contain a
     #   `Prefix` element.
     #
+    #   For more information about `Tag` filters, see [Adding filters to
+    #   Lifecycle rules][1] in the *Amazon S3 User Guide*.
+    #
     #   <note markdown="1"> `Tag` filters are not supported for directory buckets.
     #
     #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/intro-lifecycle-filters.html
     #   @return [Types::LifecycleRuleFilter]
     #
     # @!attribute [rw] status
@@ -15197,7 +15264,13 @@ module Aws::S3
     #
     # @!attribute [rw] server_side_encryption
     #   The server-side encryption algorithm used when you store this object
-    #   in Amazon S3.
+    #   in Amazon S3 or Amazon FSx.
+    #
+    #   <note markdown="1"> When accessing data stored in Amazon FSx file systems using S3
+    #   access points, the only valid server side encryption option is
+    #   `aws:fsx`.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] version_id
@@ -15709,8 +15782,7 @@ module Aws::S3
     #
     # @!attribute [rw] server_side_encryption
     #   The server-side encryption algorithm that was used when you store
-    #   this object in Amazon S3 (for example, `AES256`, `aws:kms`,
-    #   `aws:kms:dsse`).
+    #   this object in Amazon S3 or Amazon FSx.
     #
     #   * <b>General purpose buckets </b> - You have four mutually exclusive
     #     options to protect data using server-side encryption in Amazon S3,
@@ -15764,6 +15836,14 @@ module Aws::S3
     #     directory bucket.
     #
     #      </note>
+    #
+    #   * <b>S3 access points for Amazon FSx </b> - When accessing data
+    #     stored in Amazon FSx file systems using S3 access points, the only
+    #     valid server side encryption option is `aws:fsx`. All Amazon FSx
+    #     file systems have encryption configured by default and are
+    #     encrypted at rest. Data is automatically encrypted before being
+    #     written to the file system, and automatically decrypted as it is
+    #     read. These processes are handled transparently by Amazon FSx.
     #
     #
     #
@@ -16642,15 +16722,19 @@ module Aws::S3
     #
     # @!attribute [rw] client_token
     #   A unique string with a max of 64 ASCII characters in the ASCII range
-    #   of 33 - 126. `RenameObject` supports idempotency using a client
-    #   token. To make an idempotent API request using `RenameObject`,
-    #   specify a client token in the request. You should not reuse the same
-    #   client token for other API requests. If you retry a request that
-    #   completed successfully using the same client token and the same
-    #   parameters, the retry succeeds without performing any further
-    #   actions. If you retry a successful request using the same client
-    #   token, but one or more of the parameters are different, the retry
-    #   fails and an `IdempotentParameterMismatch` error is returned.
+    #   of 33 - 126.
+    #
+    #   <note markdown="1"> `RenameObject` supports idempotency using a client token. To make an
+    #   idempotent API request using `RenameObject`, specify a client token
+    #   in the request. You should not reuse the same client token for other
+    #   API requests. If you retry a request that completed successfully
+    #   using the same client token and the same parameters, the retry
+    #   succeeds without performing any further actions. If you retry a
+    #   successful request using the same client token, but one or more of
+    #   the parameters are different, the retry fails and an
+    #   `IdempotentParameterMismatch` error is returned.
+    #
+    #    </note>
     #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.
@@ -18390,7 +18474,13 @@ module Aws::S3
     #
     # @!attribute [rw] server_side_encryption
     #   The server-side encryption algorithm used when you store this object
-    #   in Amazon S3 (for example, `AES256`, `aws:kms`).
+    #   in Amazon S3 or Amazon FSx.
+    #
+    #   <note markdown="1"> When accessing data stored in Amazon FSx file systems using S3
+    #   access points, the only valid server side encryption option is
+    #   `aws:fsx`.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] sse_customer_algorithm
@@ -18788,7 +18878,13 @@ module Aws::S3
 
     # @!attribute [rw] server_side_encryption
     #   The server-side encryption algorithm used when you store this object
-    #   in Amazon S3 (for example, `AES256`, `aws:kms`).
+    #   in Amazon S3 or Amazon FSx.
+    #
+    #   <note markdown="1"> When accessing data stored in Amazon FSx file systems using S3
+    #   access points, the only valid server side encryption option is
+    #   `aws:fsx`.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] etag
@@ -19521,7 +19617,13 @@ module Aws::S3
     #
     # @!attribute [rw] server_side_encryption
     #   The server-side encryption algorithm used when storing requested
-    #   object in Amazon S3 (for example, AES256, `aws:kms`).
+    #   object in Amazon S3 or Amazon FSx.
+    #
+    #   <note markdown="1"> When accessing data stored in Amazon FSx file systems using S3
+    #   access points, the only valid server side encryption option is
+    #   `aws:fsx`.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] sse_customer_algorithm
