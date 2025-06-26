@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.1121.0 (2025-06-26)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::KeyspacesStreams`.
+
 1.1120.0 (2025-06-23)
 ------------------
 

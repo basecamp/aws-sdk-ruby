@@ -451,6 +451,7 @@ module Aws
             'Kendra' => 'kendra',
             'KendraRanking' => 'kendra-ranking',
             'Keyspaces' => 'cassandra',
+            'KeyspacesStreams' => 'cassandra-streams',
             'Kinesis' => 'kinesis',
             'KinesisAnalytics' => 'kinesisanalytics',
             'KinesisAnalyticsV2' => 'kinesisanalytics',

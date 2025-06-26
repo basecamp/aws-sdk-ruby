@@ -11983,6 +11983,10 @@ module Aws::EC2
     #   The Amazon Resource Name (ARN) of the core network.
     #   @return [String]
     #
+    # @!attribute [rw] odb_network_arn
+    #   The Amazon Resource Name (ARN) of the ODB network.
+    #   @return [String]
+    #
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -12042,6 +12046,7 @@ module Aws::EC2
       :local_gateway_id,
       :carrier_gateway_id,
       :core_network_arn,
+      :odb_network_arn,
       :dry_run,
       :route_table_id,
       :destination_cidr_block,
@@ -18639,11 +18644,7 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] cidr
-    #   The CIDR you want to deprovision from the pool. Enter the CIDR you
-    #   want to deprovision with a netmask of `/32`. You must rerun this
-    #   command for each IP address in the CIDR range. If your CIDR is a
-    #   `/24`, you will have to run this command to deprovision each of the
-    #   256 IP addresses in the `/24` CIDR.
+    #   The CIDR you want to deprovision from the pool.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeprovisionPublicIpv4PoolCidrRequest AWS API Documentation
@@ -63518,6 +63519,10 @@ module Aws::EC2
     #   The Amazon Resource Name (ARN) of the core network.
     #   @return [String]
     #
+    # @!attribute [rw] odb_network_arn
+    #   The Amazon Resource Name (ARN) of the ODB network.
+    #   @return [String]
+    #
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -63575,6 +63580,7 @@ module Aws::EC2
       :local_gateway_id,
       :carrier_gateway_id,
       :core_network_arn,
+      :odb_network_arn,
       :dry_run,
       :route_table_id,
       :destination_cidr_block,
@@ -66301,6 +66307,10 @@ module Aws::EC2
     #   The Amazon Resource Name (ARN) of the core network.
     #   @return [String]
     #
+    # @!attribute [rw] odb_network_arn
+    #   The Amazon Resource Name (ARN) of the ODB network.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/Route AWS API Documentation
     #
     class Route < Struct.new(
@@ -66319,7 +66329,8 @@ module Aws::EC2
       :origin,
       :state,
       :vpc_peering_connection_id,
-      :core_network_arn)
+      :core_network_arn,
+      :odb_network_arn)
       SENSITIVE = []
       include Aws::Structure
     end

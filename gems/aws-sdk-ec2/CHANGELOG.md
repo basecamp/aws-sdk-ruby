@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.533.0 (2025-06-26)
+------------------
+
+* Feature - This release adds support for OdbNetworkArn as a target in VPC Route Tables
+
 1.532.0 (2025-06-24)
 ------------------
 

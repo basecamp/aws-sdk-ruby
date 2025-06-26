@@ -2628,6 +2628,7 @@ module Aws::EC2
       attr_accessor local_gateway_id: ::String
       attr_accessor carrier_gateway_id: ::String
       attr_accessor core_network_arn: ::String
+      attr_accessor odb_network_arn: ::String
       attr_accessor dry_run: bool
       attr_accessor route_table_id: ::String
       attr_accessor destination_cidr_block: ::String
@@ -13839,6 +13840,7 @@ module Aws::EC2
       attr_accessor local_gateway_id: ::String
       attr_accessor carrier_gateway_id: ::String
       attr_accessor core_network_arn: ::String
+      attr_accessor odb_network_arn: ::String
       attr_accessor dry_run: bool
       attr_accessor route_table_id: ::String
       attr_accessor destination_cidr_block: ::String
@@ -14414,6 +14416,7 @@ module Aws::EC2
       attr_accessor state: ("active" | "blackhole")
       attr_accessor vpc_peering_connection_id: ::String
       attr_accessor core_network_arn: ::String
+      attr_accessor odb_network_arn: ::String
       SENSITIVE: []
     end
 

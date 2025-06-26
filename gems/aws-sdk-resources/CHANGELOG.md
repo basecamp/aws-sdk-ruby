@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+3.233.0 (2025-06-26)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-keyspacesstreams` gem.
+
 3.232.0 (2025-06-23)
 ------------------
 

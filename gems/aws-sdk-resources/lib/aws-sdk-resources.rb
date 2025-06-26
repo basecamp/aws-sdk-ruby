@@ -213,6 +213,7 @@ module Aws
   autoload :Kendra, 'aws-sdk-kendra'
   autoload :KendraRanking, 'aws-sdk-kendraranking'
   autoload :Keyspaces, 'aws-sdk-keyspaces'
+  autoload :KeyspacesStreams, 'aws-sdk-keyspacesstreams'
   autoload :Kinesis, 'aws-sdk-kinesis'
   autoload :KinesisAnalytics, 'aws-sdk-kinesisanalytics'
   autoload :KinesisAnalyticsV2, 'aws-sdk-kinesisanalyticsv2'

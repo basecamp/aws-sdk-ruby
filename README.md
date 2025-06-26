@@ -571,6 +571,7 @@ RubyGems.org page under "LINKS" section.
 | Amazon Interactive Video Service RealTime             | Aws::IVSRealTime                         | aws-sdk-ivsrealtime                         | 2020-07-14  |
 | Amazon Kendra Intelligent Ranking                     | Aws::KendraRanking                       | aws-sdk-kendraranking                       | 2022-10-19  |
 | Amazon Keyspaces                                      | Aws::Keyspaces                           | aws-sdk-keyspaces                           | 2022-02-10  |
+| Amazon Keyspaces Streams                              | Aws::KeyspacesStreams                    | aws-sdk-keyspacesstreams                    | 2024-09-09  |
 | Amazon Kinesis                                        | Aws::Kinesis                             | aws-sdk-kinesis                             | 2013-12-02  |
 | Amazon Kinesis Analytics                              | Aws::KinesisAnalytics                    | aws-sdk-kinesisanalytics                    | 2015-08-14  |
 | Amazon Kinesis Analytics                              | Aws::KinesisAnalyticsV2                  | aws-sdk-kinesisanalyticsv2                  | 2018-05-23  |

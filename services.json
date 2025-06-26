@@ -665,6 +665,9 @@
   "Keyspaces": {
     "models": "keyspaces/2022-02-10"
   },
+  "KeyspacesStreams": {
+    "models": "keyspacesstreams/2024-09-09"
+  },
   "Kinesis": {
     "models": "kinesis/2013-12-02"
   },

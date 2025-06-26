@@ -12591,6 +12591,9 @@ module Aws::EC2
     # @option params [String] :core_network_arn
     #   The Amazon Resource Name (ARN) of the core network.
     #
+    # @option params [String] :odb_network_arn
+    #   The Amazon Resource Name (ARN) of the ODB network.
+    #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -12656,6 +12659,7 @@ module Aws::EC2
     #     local_gateway_id: "LocalGatewayId",
     #     carrier_gateway_id: "CarrierGatewayId",
     #     core_network_arn: "CoreNetworkArn",
+    #     odb_network_arn: "OdbNetworkArn",
     #     dry_run: false,
     #     route_table_id: "RouteTableId", # required
     #     destination_cidr_block: "String",
@@ -13100,6 +13104,7 @@ module Aws::EC2
     #   resp.route_table.routes[0].state #=> String, one of "active", "blackhole"
     #   resp.route_table.routes[0].vpc_peering_connection_id #=> String
     #   resp.route_table.routes[0].core_network_arn #=> String
+    #   resp.route_table.routes[0].odb_network_arn #=> String
     #   resp.route_table.tags #=> Array
     #   resp.route_table.tags[0].key #=> String
     #   resp.route_table.tags[0].value #=> String
@@ -21710,11 +21715,7 @@ module Aws::EC2
     #   The ID of the pool that you want to deprovision the CIDR from.
     #
     # @option params [required, String] :cidr
-    #   The CIDR you want to deprovision from the pool. Enter the CIDR you
-    #   want to deprovision with a netmask of `/32`. You must rerun this
-    #   command for each IP address in the CIDR range. If your CIDR is a
-    #   `/24`, you will have to run this command to deprovision each of the
-    #   256 IP addresses in the `/24` CIDR.
+    #   The CIDR you want to deprovision from the pool.
     #
     # @return [Types::DeprovisionPublicIpv4PoolCidrResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -35358,6 +35359,7 @@ module Aws::EC2
     #   resp.route_tables[0].routes[0].state #=> String, one of "active", "blackhole"
     #   resp.route_tables[0].routes[0].vpc_peering_connection_id #=> String
     #   resp.route_tables[0].routes[0].core_network_arn #=> String
+    #   resp.route_tables[0].routes[0].odb_network_arn #=> String
     #   resp.route_tables[0].tags #=> Array
     #   resp.route_tables[0].tags[0].key #=> String
     #   resp.route_tables[0].tags[0].value #=> String
@@ -60376,6 +60378,9 @@ module Aws::EC2
     # @option params [String] :core_network_arn
     #   The Amazon Resource Name (ARN) of the core network.
     #
+    # @option params [String] :odb_network_arn
+    #   The Amazon Resource Name (ARN) of the ODB network.
+    #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -60437,6 +60442,7 @@ module Aws::EC2
     #     local_gateway_id: "LocalGatewayId",
     #     carrier_gateway_id: "CarrierGatewayId",
     #     core_network_arn: "CoreNetworkArn",
+    #     odb_network_arn: "OdbNetworkArn",
     #     dry_run: false,
     #     route_table_id: "RouteTableId", # required
     #     destination_cidr_block: "String",
@@ -66141,7 +66147,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.532.0'
+      context[:gem_version] = '1.533.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
