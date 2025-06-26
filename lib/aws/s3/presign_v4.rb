@@ -52,7 +52,7 @@ module AWS
 
         request.headers.clear
         request.headers['host'] = request.host
-        signed_headers = 'Host'
+        signed_headers = 'host'
 
         if options[:acl]
           request.add_param("x-amz-acl", options[:acl].to_s.gsub(/_/, '-'))
@@ -60,8 +60,8 @@ module AWS
 
         # must be sent along with the PUT request headers
         if options[:content_md5]
-          request.headers['Content-MD5'] = options[:content_md5]
-          signed_headers << ';Content-MD5'
+          request.headers['content-md5'] = options[:content_md5]
+          signed_headers << ';content-md5'
         end
 
         request_params = Core::Signers::S3::QUERY_PARAMS.map do |p|
